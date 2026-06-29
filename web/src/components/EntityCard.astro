@@ -1,0 +1,184 @@
+---
+/**
+ * The approved "synthesis chassis" entity card, ported to production and bound
+ * to real snapshot data. Pure assembly of the SSR chart components (server-
+ * rendered, crawlable) plus card chrome: bezel -> hero (momentum ring + gate +
+ * percentile) -> dial row (velocity gauge + convergence quadrant + citation
+ * gauge) -> 4-cell readout -> series row (commit heatmap + citation bars).
+ * The derived-signals band and the editorial verdict live on the page around
+ * this chassis, not inside it. Null citation axis flows through each component's
+ * own honest null state; nothing is fabricated.
+ */
+import type { Entity } from '../lib/data';
+import { snapshot, commitSeries, entitiesInCohort, STATUS_LABEL } from '../lib/data';
+import { cohortColor, cohortLabel, fmtZsafe } from '../lib/cohorts';
+import MomentumRing from './charts/MomentumRing.astro';
+import GateGlyph from './charts/GateGlyph.astro';
+import PercentileStrip from './charts/PercentileStrip.astro';
+import Gauge from './charts/Gauge.astro';
+import Quadrant from './charts/Quadrant.astro';
+import CommitHeatmap from './charts/CommitHeatmap.astro';
+import CitBars from './charts/CitBars.astro';
+
+export interface Props { entity: Entity; }
+const { entity: e } = Astro.props;
+const a1 = e.axes.github_commit_velocity;
+const a2 = e.axes.openalex_citation_momentum;
+const cs = commitSeries(e.entity_id);
+
+const cohortRanked = entitiesInCohort(e.cohort);
+const cohortN = cohortRanked.length;
+const rank = cohortRanked.findIndex((x) => x.entity_id === e.entity_id) + 1;
+const color = cohortColor(e.cohort);
+
+const velRising = e.convergent_axes.includes('github_commit_velocity');
+const citRising = e.convergent_axes.includes('openalex_citation_momentum');
+const gateVerdict = velRising && citRising ? 'both axes pass'
+  : velRising || citRising ? 'one axis passes' : 'gate shut';
+const isRising = e.status === 'rising';
+const accentClass = isRising ? 'rising' : e.status === 'watch' ? 'watch' : 'tracked';
+const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
+---
+<article class={`ecard ${accentClass}`}>
+  <header class="bezel">
+    <div class="id">
+      <div class="toprow">
+        <span class="sysname">{e.name}</span>
+        <span class="etype">{e.entity_type}</span>
+        {e.incumbent && <span class="etype">incumbent</span>}
+      </div>
+      <div class="sub mono">
+        <span class="cohort-dot" style={`background:${color}`}></span>{cohortLabel(e.cohort)}
+        <span class="dot">·</span> n = {cohortN}
+        <span class="dot">·</span> <a href={`https://github.com/${e.github_repo}`}>github.com/{e.github_repo}</a>
+      </div>
+    </div>
+    <span class={`lamp ${accentClass}`}><span class="led"></span>{STATUS_LABEL[e.status]} · conf {e.confidence}</span>
+  </header>
+
+  <div class="face">
+    <!-- HERO band -->
+    <div class="hero">
+      <div class="ringwrap">
+        <span class="ml">momentum</span>
+        <MomentumRing momentum={e.momentum} percentile={e.percentile} color={color} size={104} />
+      </div>
+      <div class="gatewrap">
+        <span class="gl">convergence gate</span>
+        <GateGlyph entity={e} />
+        <span class="gateverdict">{gateVerdict}</span>
+      </div>
+      <div class="pcol">
+        <div class="row1">
+          <span class="lbl">position in cohort distribution</span>
+          <span class="rk">rank <b>#{rank}</b> of {cohortN}</span>
+        </div>
+        <PercentileStrip percentile={e.percentile} color={color} />
+        <span class="lbl" style="margin-top:2px">momentum is the combined velocity and citation signal, percentile within cohort</span>
+      </div>
+    </div>
+
+    <!-- DIAL row -->
+    <div class="dialrow">
+      <div class="dialwrap">
+        <span class="dlab">velocity z</span>
+        <Gauge z={a1.cohort_z} slope={a1.slope} axisLabel="velocity z" slopeUnit="/wk" color="var(--velocity)" />
+        <span class="dval">log-slope {fmtSlope(a1.slope)}/wk</span>
+      </div>
+      <div class="quad-cell">
+        <div class="quad-cap"><span>convergence plane</span><span>upper-right = rising</span></div>
+        <Quadrant entity={e} />
+      </div>
+      <div class="dialwrap">
+        <span class="dlab">citation z</span>
+        <Gauge z={a2.cohort_z} slope={a2.slope} axisLabel="citation z" slopeUnit="/yr" color="var(--citation)" />
+        <span class="dval">{a2.status === 'present' ? `log-slope ${fmtSlope(a2.slope)}/yr` : 'no citation axis'}</span>
+      </div>
+    </div>
+
+    <!-- 4-cell readout -->
+    <div class="readout">
+      <div class="ro"><div class="k">rank in cohort</div><div class={`v ${isRising ? 'teal' : 'amber'}`}>#{rank}</div><div class="s">of {cohortN} systems</div></div>
+      <div class="ro"><div class="k">weekly commits</div><div class="v teal">{a1.recent_weekly_commits ?? 'n/a'}</div><div class="s">{(a1.cohort_z ?? 0) >= 0 ? 'rising trend' : 'flat trend'}</div></div>
+      <div class="ro"><div class="k">total citations</div><div class="v amber">{a2.status === 'present' ? a2.total_citations.toLocaleString() : 'n/a'}</div><div class="s">{a2.status === 'present' ? 'present' : 'no axis'}</div></div>
+      <div class="ro"><div class="k">momentum</div><div class="v">{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</div><div class="s">{e.percentile != null ? `percentile p${e.percentile}` : 'unranked'}</div></div>
+    </div>
+
+    <!-- SERIES row -->
+    <div class="seriesrow">
+      <div class="sblock">
+        <div class="sh"><span>weekly commit heatmap</span><span class="tot teal">{a1.recent_weekly_commits ?? 'n/a'}/wk</span></div>
+        <CommitHeatmap series={cs} color="var(--velocity)" />
+      </div>
+      <div class="sblock">
+        <div class="sh"><span>citations by year</span><span class="tot amber">{a2.status === 'present' ? `total ${a2.total_citations.toLocaleString()}` : 'no axis'}</span></div>
+        <CitBars entity={e} />
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .ecard { background: var(--surface); border: 1px solid var(--hairline); border-radius: 14px; box-shadow: var(--shadow-card); overflow: hidden; position: relative; }
+  .ecard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 1; }
+  .ecard.rising::before { background: linear-gradient(90deg, var(--velocity), #7fa39c 70%, var(--citation)); }
+  .ecard.watch::before { background: linear-gradient(90deg, var(--citation), #c9b48a 70%, var(--hairline-2)); }
+  .ecard.tracked::before { background: var(--hairline-2); }
+
+  .bezel { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 20px 14px; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, var(--surface), var(--paper)); }
+  .bezel .id { min-width: 0; }
+  .bezel .toprow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .bezel .sysname { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; letter-spacing: -.02em; line-height: 1; }
+  .etype { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); border: 1px solid var(--hairline); border-radius: 4px; padding: 2px 6px; }
+  .bezel .sub { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 10px; letter-spacing: .03em; color: var(--ink-mute); flex-wrap: wrap; }
+  .bezel .sub a { color: var(--ink-mute); }
+  .bezel .sub a:hover { color: var(--velocity); }
+  .bezel .cohort-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .bezel .dot { opacity: .4; }
+  .lamp { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; white-space: nowrap; flex: none; }
+  .lamp .led { width: 10px; height: 10px; border-radius: 50%; }
+  .lamp.rising { color: var(--velocity); } .lamp.rising .led { background: var(--velocity); box-shadow: 0 0 0 2px rgba(12,110,99,.18); }
+  .lamp.watch { color: var(--citation); } .lamp.watch .led { background: var(--citation); box-shadow: 0 0 0 2px rgba(176,100,28,.18); }
+  .lamp.tracked { color: var(--ink-mute); } .lamp.tracked .led { background: var(--ink-mute); }
+
+  .face { padding: 16px 18px; display: flex; flex-direction: column; gap: 13px; }
+  .hero { display: grid; grid-template-columns: auto auto 1fr; gap: 18px; align-items: center; padding: 14px 16px; border: 1px solid var(--hairline); border-radius: 11px; background: var(--paper); }
+  .hero .ringwrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .hero .ringwrap .ml, .hero .gatewrap .gl { font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+  .hero .gatewrap { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 14px; border-left: 1px solid var(--hairline); border-right: 1px solid var(--hairline); }
+  .hero .gateverdict { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-soft); text-align: center; }
+  .hero .pcol { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .hero .pcol .row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .hero .lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
+  .hero .rk { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); font-weight: 600; white-space: nowrap; }
+  .hero .rk b { color: var(--velocity); } .ecard.watch .hero .rk b { color: var(--citation); }
+
+  .dialrow { display: grid; grid-template-columns: 1fr 1.34fr 1fr; gap: 9px; align-items: stretch; }
+  .dialwrap { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 4px 6px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); }
+  .dialwrap .dlab { font-family: var(--font-mono); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-mute); }
+  .dialwrap .dval { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-mute); }
+  .quad-cell { border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); padding: 7px 8px 4px; display: flex; flex-direction: column; }
+  .quad-cap { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-mute); display: flex; justify-content: space-between; margin-bottom: 2px; }
+
+  .readout { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; }
+  .ro { background: var(--surface); padding: 10px 12px; }
+  .ro .k { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-mute); }
+  .ro .v { font-family: var(--font-display); font-weight: 600; font-size: 1.28rem; letter-spacing: -.02em; margin-top: 2px; line-height: 1.05; }
+  .ro .v.teal { color: var(--velocity); } .ro .v.amber { color: var(--citation); }
+  .ro .s { font-family: var(--font-mono); font-size: 9px; color: var(--ink-mute); margin-top: 2px; }
+
+  .seriesrow { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .sblock { padding: 11px 13px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); }
+  .sblock .sh { font-family: var(--font-mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .sblock .sh .tot { font-weight: 600; }
+  .sblock .sh .tot.amber { color: var(--citation); } .sblock .sh .tot.teal { color: var(--velocity); }
+
+  @media (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; gap: 14px; }
+    .hero .gatewrap { border: none; padding: 0; }
+    .dialrow { grid-template-columns: 1fr; }
+    .readout { grid-template-columns: repeat(2,1fr); }
+    .seriesrow { grid-template-columns: 1fr; }
+    .bezel { flex-direction: column; }
+  }
+</style>
