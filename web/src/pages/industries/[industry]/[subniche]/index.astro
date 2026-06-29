@@ -18,7 +18,7 @@ const path = `/industries/${ind.slug}/${sn.slug}/`;
 const desc = `Evidaxis momentum measurements for ${sn.label}: ${es.length} open AI systems measured on development velocity and citation momentum within the cohort.`;
 const listJson = itemListDataset({ path, name: `${sn.label} by Evidaxis momentum`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
 ---
-<Base title={`${sn.label} — Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path }])]}>
+<Base title={`${sn.label}, Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path }])]}>
   <section class="section">
     <div class="wrap">
       <div class="mono muted" style="font-size:.74rem;margin-bottom:.6rem">

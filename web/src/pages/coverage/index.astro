@@ -5,14 +5,14 @@ import { snapshot, industries, entitiesInCohort, SNAP_DATE } from '../../lib/dat
 import { itemListDataset, breadcrumb } from '../../lib/jsonld';
 const inds = [...industries().values()];
 const allCohorts = inds.flatMap((ind) => [...ind.subniches.values()].map((sn) => ({ ind, sn })));
-const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts in this pilot — and an explicit account of what is not yet measured. Silence means not-yet-measured, never low quality.`;
+const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts in this pilot, plus an explicit account of what is not yet measured. Silence means not-yet-measured, never low quality.`;
 const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: snapshot.entities });
 ---
-<Base title="Coverage atlas — Evidaxis" description={desc} canonical="/coverage/" jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }])]}>
+<Base title="Coverage atlas | Evidaxis" description={desc} canonical="/coverage/" jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }])]}>
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Coverage atlas · Pilot 2026</p>
-      <h1>What we measure — and what we don’t.</h1>
+      <h1>What we measure, and what we don’t.</h1>
       <p class="lead" style="max-width:62ch">Transparency is part of the instrument. This pilot covers {allCohorts.length} cohorts across {inds.length} industries. Absence from Evidaxis means <em>not yet measured</em>, never a negative judgment.</p>
 
       <div class="stack" style="margin-top:2rem">
@@ -40,7 +40,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
         <ul class="prose" style="margin-top:.7rem;margin-bottom:0">
           <li><strong>Closed-source systems.</strong> Private SaaS leaves few public, hard-to-game signals; this pilot tracks OSS / research-native systems where the data is rich and tamper-resistant.</li>
           <li><strong>Systems without a paper.</strong> Several tracked systems (e.g. in coding agents) have no academic publication, so they have no citation axis and cannot, by construction, satisfy the two-axis gate. They are shown, honestly, as single-axis.</li>
-          <li><strong>New systems.</strong> Genuinely new (2024–25) systems lack the citation history to confirm momentum yet. They accrue it over time — the observatory’s value compounds.</li>
+          <li><strong>New systems.</strong> Genuinely new (2024–25) systems lack the citation history to confirm momentum yet. They accrue it over time, and the observatory’s value compounds.</li>
           <li><strong>Beyond AI.</strong> The taxonomy reserves room beyond AI; this pilot measures three AI frontiers only.</li>
         </ul>
       </div>

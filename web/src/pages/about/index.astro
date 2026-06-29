@@ -2,14 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { snapshot, SNAP_DATE } from '../../lib/data';
 import { orgGraph } from '../../lib/jsonld';
-const desc = 'About Evidaxis — an independent observatory of momentum in open AI systems. Integrity commitments, governance, licensing, and how to cite. Data is CC0.';
+const desc = 'About Evidaxis, an independent observatory of momentum in open AI systems. Integrity commitments, governance, licensing, and how to cite. Data is CC0.';
 ---
-<Base title="About & integrity — Evidaxis" description={desc} canonical="/about/" jsonLd={orgGraph()}>
+<Base title="About & integrity | Evidaxis" description={desc} canonical="/about/" jsonLd={orgGraph()}>
   <section class="section">
     <div class="wrap prose">
       <p class="eyebrow">About</p>
       <h1>An institute for measuring momentum.</h1>
-      <p class="lead">Evidaxis is an independent observatory. It measures open AI systems by the rate of change of their public signals and publishes the results as open data, so that anyone — researchers, journalists, funders, and AI systems themselves — can cite a transparent, reproducible source.</p>
+      <p class="lead">Evidaxis is an independent observatory. It measures open AI systems by the rate of change of their public signals and publishes the results as open data, so that anyone, whether researchers, journalists, funders, or AI systems themselves, can cite a transparent, reproducible source.</p>
 
       <h2>Integrity commitments</h2>
       <ul class="prose">
@@ -27,10 +27,10 @@ const desc = 'About Evidaxis — an independent observatory of momentum in open 
       <p>The full dataset for a date is at <span class="mono">evidaxis.org/snapshots/{SNAP_DATE}/</span> with a downloadable JSON. All data is released under <strong>CC0 1.0</strong> (public domain); methodology prose under CC-BY-4.0; code under Apache-2.0.</p>
 
       <h2>Correct a record</h2>
-      <p>Corrections and inclusion requests are welcome and handled through a public correction log — measurements are governed, not edited on request. Evidaxis measures systems, not people: there is no personal profile or claimable face anywhere on the surface.</p>
+      <p>Corrections and inclusion requests are welcome and handled through a public correction log; measurements are governed, not edited on request. Evidaxis measures systems, not people: there is no personal profile or claimable face anywhere on the surface.</p>
 
       <h2>Governance</h2>
-      <p>Evidaxis is run as an independent, institution-first observatory: the methodology and the public record are the front, not any individual. Methodology changes are versioned and public; a standing commitment to a published quarterly integrity report and an independent adjudication panel governs disputes. The observatory is built to run for a decade — its value compounds with every snapshot.</p>
+      <p>Evidaxis is run as an independent, institution-first observatory: the methodology and the public record are the front, not any individual. Methodology changes are versioned and public; a standing commitment to a published quarterly integrity report and an independent adjudication panel governs disputes. The observatory is built to run for a decade, and its value compounds with every snapshot.</p>
 
       <p class="mono muted" style="font-size:.74rem;border-top:1px solid var(--hairline);padding-top:1rem;margin-top:2rem">
         methodology {snapshot.methodology_version} · snapshot {snapshot.snapshot_id} · data CC0-1.0

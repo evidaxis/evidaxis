@@ -59,14 +59,18 @@ export function citationSeries(e: Entity): { year: number; n: number }[] {
   return Object.entries(by).map(([y, n]) => ({ year: +y, n: n as number })).sort((a, b) => a.year - b.year);
 }
 
+// Em-dash (U+2014) is the brand's #1 "AI-written" tell; strip it from any label
+// surfaced from the raw data (the published dataset keeps its value untouched).
+export const cleanLabel = (s: string) => s.replace(/\s*—\s*/g, ', ');
+
 export const industries = () => {
   const map = new Map<string, { slug: string; label: string; subniches: Map<string, { slug: string; label: string; cohortKey: string }> }>();
   for (const [ck, c] of Object.entries(snapshot.cohorts)) {
     if (!map.has(c.industry)) {
       const node = taxonomy.nodes.find((n: any) => n.level === 'industry' && n.slug === c.industry);
-      map.set(c.industry, { slug: c.industry, label: node?.name ?? c.industry, subniches: new Map() });
+      map.set(c.industry, { slug: c.industry, label: cleanLabel(node?.name ?? c.industry), subniches: new Map() });
     }
-    map.get(c.industry)!.subniches.set(c.sub_niche, { slug: c.sub_niche, label: c.label, cohortKey: ck });
+    map.get(c.industry)!.subniches.set(c.sub_niche, { slug: c.sub_niche, label: cleanLabel(c.label), cohortKey: ck });
   }
   return map;
 };
@@ -84,5 +88,5 @@ export const AXIS_LABEL: Record<string, string> = {
   openalex_citation_momentum: 'Citation momentum',
 };
 
-export const fmtZ = (z: number | null) => (z == null ? '—' : (z >= 0 ? '+' : '') + z.toFixed(2));
-export const fmtSlope = (s: number | null) => (s == null ? '—' : (s >= 0 ? '+' : '') + s.toFixed(3));
+export const fmtZ = (z: number | null) => (z == null ? 'no axis' : (z >= 0 ? '+' : '') + z.toFixed(2));
+export const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));

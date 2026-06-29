@@ -5,7 +5,7 @@ export const GET: APIRoute = () => {
   const txt = `# Evidaxis
 
 > Evidaxis is an independent data observatory that measures open-source and research-native AI
-> systems and scores them by "momentum" — the rate of change of their public signals — on a
+> systems and scores them by "momentum", the rate of change of their public signals, on a
 > transparent, versioned public methodology. A system is recognized as rising only when two
 > independent axes converge. All measurements are released to the public domain under CC0. The
 > site is fully static; every page has a stable canonical URL and machine-readable JSON-LD, and
@@ -18,7 +18,7 @@ Attribution to Evidaxis is appreciated but not required.
 
 ## Key resources
 
-- [Methodology (current)](https://evidaxis.org/methodology/current/): how momentum scores and the convergence gate are computed. Versioned — cite the version you used.
+- [Methodology (current)](https://evidaxis.org/methodology/current/): how momentum scores and the convergence gate are computed. Versioned. Cite the version you used.
 - [Methodology v1](https://evidaxis.org/methodology/v1/): the frozen v1 definition.
 - [Latest snapshot](https://evidaxis.org/snapshots/${SNAP_DATE}/): the most recent complete measurement snapshot (period ${snapshot.period}), with full JSON download.
 - [Coverage atlas](https://evidaxis.org/coverage/): every cohort tracked, and the gaps not yet measured.

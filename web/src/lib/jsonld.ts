@@ -89,7 +89,7 @@ export function entityGraph(e: Entity, snap: Snapshot) {
     '@type': typeForEntity(e.entity_type),
     '@id': `${SITE}/e/${e.entity_id}/#entity`,
     name: e.name,
-    description: `${e.name} — an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
+    description: `${e.name}, an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
     codeRepository: `https://github.com/${e.github_repo}`,
     url: e.homepage ?? `https://github.com/${e.github_repo}`,
     sameAs: [`https://github.com/${e.github_repo}`, ...(e.homepage ? [e.homepage] : [])],

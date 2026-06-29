@@ -1,9 +1,9 @@
-# Evidaxis — public CC0 data observatory. We WANT to be crawled, indexed, trained on, and cited.
+# Evidaxis, public CC0 data observatory. We WANT to be crawled, indexed, trained on, and cited.
 
 User-agent: *
 Allow: /
 
-# AI training + retrieval crawlers (explicitly welcomed — this is public-domain data)
+# AI training + retrieval crawlers (explicitly welcomed, this is public-domain data)
 User-agent: GPTBot
 Allow: /
 User-agent: OAI-SearchBot

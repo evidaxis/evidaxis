@@ -9,23 +9,23 @@ import { snapshot } from '../lib/data';
 
 <h2>Principles</h2>
 <ul class="prose">
-  <li><strong>Slope, not size.</strong> Every axis is the log-slope of a trend — momentum, not magnitude. Stars, totals, and raw counts are never scored.</li>
+  <li><strong>Slope, not size.</strong> Every axis is the log-slope of a trend: momentum, not magnitude. Stars, totals, and raw counts are never scored.</li>
   <li><strong>Within cohort.</strong> A system is compared only to peers in its sub-niche, so “rising” is relative, and a small fast-mover can show more momentum than a large incumbent.</li>
   <li><strong>Convergence.</strong> One signal can be gamed or noisy. Recognition requires two independent axes rising at once.</li>
   <li><strong>Positive-only.</strong> Evidaxis publishes who is rising. There is no “worst” list and no negative label.</li>
   <li><strong>Systems, not people.</strong> The measured unit is always a system. Individuals are never named or scored; there is no <span class="mono">/persons</span> surface anywhere in the data or API.</li>
 </ul>
 
-<h2>Axis 1 — Development velocity</h2>
+<h2>Axis 1: Development velocity</h2>
 <p class="prose">The least-squares slope of <span class="mono">log(1 + weekly&nbsp;commits)</span> over the trailing 26 weeks. A fast, leading signal of where active work is accelerating.</p>
 <pre class="formula">velocity = slope( log(1 + commits_w) ),  w ∈ last 26 weeks</pre>
 
-<h2>Axis 2 — Citation momentum</h2>
+<h2>Axis 2: Citation momentum</h2>
 <p class="prose">
   The slope of <span class="mono">log(1 + citations/year)</span> to the system’s canonical paper (OpenAlex),
-  measuring recent acceleration of scholarly impact — a slow, confirming signal. To make it a
+  measuring recent acceleration of scholarly impact, a slow, confirming signal. To make it a
   <em>momentum</em> rather than an all-time-growth measure we drop the partial current year and, when
-  four or more completed years exist, the earliest (birth) year — whose anomalously low count would
+  four or more completed years exist, the earliest (birth) year, whose anomalously low count would
   otherwise inflate the slope of a cooling paper. At least three completed years are required.
 </p>
 <pre class="formula">citation = slope( log(1 + cites_y) ),  y ∈ completed years, birth year dropped</pre>
@@ -37,10 +37,10 @@ import { snapshot } from '../lib/data';
   (log stars for velocity, log total citations for citations) so that scale is removed and only
   relative momentum remains.
 </p>
-<pre class="formula">z = clamp( (slope − median) / (1.4826 · MAD), ±3 ) ;  z ← residual on log(size)</pre>
+<pre class="formula">z = clamp( (slope - median) / (1.4826 · MAD), ±3 ) ;  z ← residual on log(size)</pre>
 
 <h2>The convergence gate</h2>
-<p class="prose">A system is <strong>Rising</strong> when at least two axes are present and at least two are rising. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 0. Development velocity additionally requires a minimum of {String(5)} average weekly commits — a dormant repository is never rising on a sliver of noise.</p>
+<p class="prose">A system is <strong>Rising</strong> when at least two axes are present and at least two are rising. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 0. Development velocity additionally requires a minimum of {String(5)} average weekly commits, since a dormant repository is never rising on a sliver of noise.</p>
 <pre class="formula">Rising  ⟺  |axes_present| ≥ 2  ∧  |axes_rising| ≥ 2
 axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)</pre>
 <p class="prose">
@@ -50,20 +50,20 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
 </p>
 
 <h2>Momentum score</h2>
-<p class="prose">A 0–100 within-cohort momentum readout: the mean of an entity’s present-axis z-scores, mapped linearly. It is a convenience view; the gate, not the score, decides recognition.</p>
+<p class="prose">A 0 to 100 within-cohort momentum readout: the mean of an entity’s present-axis z-scores, mapped linearly. It is a convenience view; the gate, not the score, decides recognition.</p>
 <pre class="formula">momentum = clamp( 50 + 12.5 · mean(z_present), 0, 100 )</pre>
 
 <h2>Versioning &amp; honesty</h2>
 <p class="prose">
   Every record carries its <span class="mono">methodology_version</span> and <span class="mono">snapshot_id</span>.
   Methodology is frozen, not recomputed: a correction is a new version on a new row, never an edit to an
-  old one — so a citation of “momentum 60.4, {snapshot.period}” stays meaningful forever. The full data
+  old one, so a citation of “momentum 60.4, {snapshot.period}” stays meaningful forever. The full data
   is byte-reproducible from each snapshot’s manifest.
 </p>
 
 <h2>Known limitations (stated, not hidden)</h2>
 <ul class="prose">
-  <li><strong>Citation lag.</strong> OpenAlex citations are annual and trail real activity by years, so a genuinely new (2024–25) system cannot yet show citation momentum. The convergence signal sharpens as the weekly time-series accumulates — this is why Evidaxis is a long-running observatory, not a one-shot ranking.</li>
+  <li><strong>Citation lag.</strong> OpenAlex citations are annual and trail real activity by years, so a genuinely new (2024 to 25) system cannot yet show citation momentum. The convergence signal sharpens as the weekly time-series accumulates. This is why Evidaxis is a long-running observatory, not a one-shot ranking.</li>
   <li><strong>Coverage is partial.</strong> See the <a href="/coverage/">coverage atlas</a> for exactly what is and is not measured. Silence means “not yet measured,” never “low quality.”</li>
   <li><strong>Source undercount.</strong> <a href="https://openalex.org/">OpenAlex</a> undercounts some papers versus other indexes; we use only relative slopes, never absolute magnitudes, to stay robust to this.</li>
 </ul>
@@ -71,9 +71,9 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
 <h2>References &amp; primary sources</h2>
 <p class="prose">Every score traces to a public source. The axes and transforms above are computed from:</p>
 <ul class="prose">
-  <li><strong>Development velocity</strong> — weekly commit counts from the <a href="https://docs.github.com/en/rest/metrics/statistics">GitHub REST statistics API</a> (<span class="mono">/repos/&#123;owner&#125;/&#123;repo&#125;/stats/commit_activity</span>).</li>
-  <li><strong>Citation momentum</strong> — yearly citation counts from <a href="https://docs.openalex.org/api-entities/works">OpenAlex Works</a> (<span class="mono">counts_by_year</span>), an open scientometric index.</li>
-  <li><strong>Robust normalization</strong> — the median and median absolute deviation (MAD); the scale factor <span class="mono">1.4826</span> makes the MAD a consistent estimator of the standard deviation for normal data (Rousseeuw &amp; Croux, 1993, <em>JASA</em>).</li>
-  <li><strong>License</strong> — all data is released under the <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Public Domain Dedication</a>.</li>
-  <li><strong>Vocabulary</strong> — see the <a href="/glossary/">Evidaxis glossary</a> for definitions of every term used here.</li>
+  <li><strong>Development velocity</strong>: weekly commit counts from the <a href="https://docs.github.com/en/rest/metrics/statistics">GitHub REST statistics API</a> (<span class="mono">/repos/&#123;owner&#125;/&#123;repo&#125;/stats/commit_activity</span>).</li>
+  <li><strong>Citation momentum</strong>: yearly citation counts from <a href="https://docs.openalex.org/api-entities/works">OpenAlex Works</a> (<span class="mono">counts_by_year</span>), an open scientometric index.</li>
+  <li><strong>Robust normalization</strong>: the median and median absolute deviation (MAD); the scale factor <span class="mono">1.4826</span> makes the MAD a consistent estimator of the standard deviation for normal data (Rousseeuw &amp; Croux, 1993, <em>JASA</em>).</li>
+  <li><strong>License</strong>: all data is released under the <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Public Domain Dedication</a>.</li>
+  <li><strong>Vocabulary</strong>: see the <a href="/glossary/">Evidaxis glossary</a> for definitions of every term used here.</li>
 </ul>

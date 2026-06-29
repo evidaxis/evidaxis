@@ -48,12 +48,12 @@ if (!e.incumbent && e.status !== 'rising') {
 // embeddable badge snippet
 const badgePath = `/badge/${e.entity_id}/${snapshot.period}.svg`;
 const badgeMd = `[![Evidaxis: ${e.name}](https://evidaxis.org${badgePath})](https://evidaxis.org/e/${e.entity_id})`;
-const a2note = a2.status === 'absent' ? 'No academic paper exists for this system, so it has no citation axis — it cannot satisfy the two-axis convergence gate.'
+const a2note = a2.status === 'absent' ? 'No academic paper exists for this system, so it has no citation axis. It cannot satisfy the two-axis convergence gate.'
   : a2.status === 'insufficient' ? 'The associated paper is too recent (< 2 completed citation years) to compute a stable momentum slope. Measured on one axis for now.'
   : null;
 const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}/100, status ${e.status}, in the ${e.sub_niche} cohort. Computed on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
 ---
-<Base title={`${e.name} — Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} jsonLd={[entityGraph(e, snapshot), crumbs]}>
+<Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} jsonLd={[entityGraph(e, snapshot), crumbs]}>
   <section class="section" style="padding-bottom:1.5rem">
     <div class="wrap">
       <div class="mono muted" style="font-size:.74rem;margin-bottom:.7rem">
@@ -74,7 +74,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
           </p>
         </div>
         <div class="readout" style="text-align:right;flex:none">
-          <div class="big" style={e.status==='rising'?'color:var(--velocity-ink)':''}>{e.momentum != null ? e.momentum.toFixed(1) : '—'}</div>
+          <div class="big" style={e.status==='rising'?'color:var(--velocity-ink)':''}>{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</div>
           <div class="unit">momentum · /100</div>
           {e.momentum != null && <div class="unit mono" style="margin-top:.3rem">within {cohortN}-system cohort</div>}
         </div>
@@ -96,7 +96,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
           <div style="margin-top:14px">
             {cs.length>=2 ? <Sparkline values={cs} color="var(--velocity)" width={460} height={70} label={`${e.name} commit velocity`} /> : <span class="muted mono">no series</span>}
           </div>
-          <div class="mono muted" style="font-size:.72rem;margin-top:8px">{a1.recent_weekly_commits ?? '—'} commits/wk recent · {a1.stars_not_scored?.toLocaleString()} stars (not scored)</div>
+          <div class="mono muted" style="font-size:.72rem;margin-top:8px">{a1.recent_weekly_commits ?? 'n/a'} commits/wk recent · {a1.stars_not_scored?.toLocaleString()} stars (not scored)</div>
         </div>
 
         <div class="panel" style="padding:20px">
@@ -149,7 +149,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
         </div>
         <div class="panel" style="padding:18px 20px">
           <div class="eyebrow">Embed this badge</div>
-          <div style="margin:.7rem 0"><img src={badgePath} alt={`Evidaxis ${e.status} — ${e.name}`} width="232" height="56" style="max-width:100%;height:auto"/></div>
+          <div style="margin:.7rem 0"><img src={badgePath} alt={`Evidaxis ${e.status}, ${e.name}`} width="232" height="56" style="max-width:100%;height:auto"/></div>
           <pre class="formula" style="margin:0;font-size:.72rem;border-left-color:var(--citation)">{badgeMd}</pre>
         </div>
       </div>

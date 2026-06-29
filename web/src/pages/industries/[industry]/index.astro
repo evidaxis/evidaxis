@@ -15,13 +15,13 @@ const SITE = 'https://evidaxis.org';
 const listJson = {
   '@context': 'https://schema.org', '@type': 'CollectionPage',
   '@id': `${SITE}/industries/${slug}/#page`, url: `${SITE}/industries/${slug}/`,
-  name: `${label} — Evidaxis`, isPartOf: { '@id': `${SITE}/#website` },
+  name: `${label}, Evidaxis`, isPartOf: { '@id': `${SITE}/#website` },
   about: { '@type': 'ItemList', name: `${label} sub-niches`, numberOfItems: subs.length,
     itemListElement: subs.map((sn: any, i: number) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/industries/${slug}/${sn.slug}/`, name: sn.label })) },
 };
 const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: label, path: `/industries/${slug}/` }]);
 ---
-<Base title={`${label} — Evidaxis`} description={desc} canonical={`/industries/${slug}/`} jsonLd={[listJson, crumbs]}>
+<Base title={`${label}, Evidaxis`} description={desc} canonical={`/industries/${slug}/`} jsonLd={[listJson, crumbs]}>
   <nav class="wrap mono muted" style="font-size:.74rem;padding-top:1rem"><a href="/coverage/" style="border:none;color:inherit">coverage</a> / <span>{label}</span></nav>
   <section class="section">
     <div class="wrap">
