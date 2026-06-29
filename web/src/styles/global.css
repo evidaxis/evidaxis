@@ -65,6 +65,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { overflow-x: hidden; }
 body {
   margin: 0;
   background: var(--paper);
@@ -75,7 +76,11 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;            /* no element forces a horizontal scroll on mobile */
 }
+/* media/embeds never exceed their column (the rank table scrolls inside its own
+   overflow-x:auto wrapper, so its min-width is intentionally exempt) */
+img, svg, video, pre, canvas { max-width: 100%; }
 
 /* faint graph-paper texture - the observatory grid, barely there */
 body::before {
@@ -106,6 +111,7 @@ hr { border: none; border-top: 1px solid var(--hairline-2); margin: 2.5rem 0; }
   text-transform: uppercase; color: var(--ink-mute); }
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+@media (max-width: 760px) { .wrap { padding: 0 18px; } }
 .prose { max-width: var(--maxw-text); }
 .muted { color: var(--ink-mute); }
 
