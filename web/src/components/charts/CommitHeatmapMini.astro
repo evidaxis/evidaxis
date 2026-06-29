@@ -1,0 +1,30 @@
+---
+/**
+ * Compact commit heatmap for table rows: real commitSeries -> heatmapCells, no
+ * figcaption (row carries the count). Empty series -> tiny "no series".
+ */
+import { heatmapCells } from '../../lib/charts';
+
+export interface Props {
+  series: number[];
+  color?: string;
+  weeks?: number;
+}
+const { series, color = 'var(--velocity)', weeks = 26 } = Astro.props;
+const shown = series.slice(-weeks);
+const cells = heatmapCells(shown);
+const cell = 5, gap = 1.4;
+const cols = Math.max(1, cells.length);
+const W = cols * (cell + gap), H = cell + 1;
+const total = shown.reduce((a, b) => a + b, 0);
+---
+{cells.length > 0 ? (
+  <svg width="100%" height={H * 2} viewBox={`0 0 ${W} ${H}`} role="img"
+       aria-label={`commit activity, ${cells.length} weeks, ${total} commits`} preserveAspectRatio="xMinYMid meet" style={`color:${color}`}>
+    {cells.map((c) => (
+      <rect x={c.index * (cell + gap)} y="0.5" width={cell} height={cell} rx="1" fill="currentColor" fill-opacity={(0.12 + c.intensity * 0.84).toFixed(3)} />
+    ))}
+  </svg>
+) : (
+  <span class="mono muted" style="font-size:.68rem">no series</span>
+)}

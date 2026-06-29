@@ -1,0 +1,74 @@
+---
+/**
+ * Signed cohort-z gauge (a1 velocity or a2 citation). Needle + active arc from
+ * the zero mark via gaugeNeedle(). NULL-SAFE: when z is null (citation axis
+ * absent) it renders an honest "no citation axis" state, never a fake value.
+ * Recolours in the dark band via the passed CSS-var color (default currentColor).
+ */
+import { polar, arcPath, gaugeNeedle } from '../../lib/charts';
+import { fmtSlope } from '../../lib/data';
+import { fmtZsafe } from '../../lib/cohorts';
+
+export interface Props {
+  z: number | null;
+  slope?: number | null;
+  axisLabel?: string;        // 'velocity z' | 'citation z'
+  slopeUnit?: string;        // '/wk' | '/yr'
+  color?: string;            // var(--velocity) | var(--citation)
+  size?: number;             // outer px (default 120)
+}
+const { z, slope = null, axisLabel = 'z', slopeUnit = '', color = 'currentColor', size = 120 } = Astro.props;
+
+const W = size, H = Math.round(size * 0.82);
+const cx = W / 2, cy = W / 2, r = Math.round(size * 0.36);
+const A0 = -135, A1 = 135;
+const tickIds = [-2, -1, 0, 1, 2];
+const zeroPt = polar(cx, cy, r + 8, A0 + (A1 - A0) * 0.5);
+const titleId = `g-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `g-d-${Math.random().toString(36).slice(2, 8)}`;
+
+const present = z != null && isFinite(z);
+let g = present ? gaugeNeedle(z as number, cx, cy, r) : null;
+// active arc between zero mark and value
+let arcA = 0, arcB = 0, showArc = false, neg = false;
+if (g) {
+  neg = (z as number) < 0;
+  arcA = Math.min(g.zeroDeg, g.deg);
+  arcB = Math.max(g.zeroDeg, g.deg);
+  showArc = Math.abs(arcB - arcA) > 0.5;
+}
+const arcColor = neg ? 'var(--hairline-2)' : color;
+---
+{present ? (
+  <figure class="evchart" style="margin:0">
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
+      <title id={titleId}>{axisLabel} gauge</title>
+      <desc id={descId}>{axisLabel} {fmtZsafe(z)} within cohort{slope != null ? `, log-slope ${fmtSlope(slope)}${slopeUnit}` : ''}.</desc>
+      <path d={arcPath(cx, cy, r, A0, A1)} fill="none" stroke="var(--hairline)" stroke-width="10" stroke-linecap="round" />
+      {tickIds.map((t) => {
+        const fr = (t + 2) / 4, dg = A0 + (A1 - A0) * fr;
+        const pA = polar(cx, cy, r - 7, dg), pB = polar(cx, cy, r - 2, dg);
+        return <line x1={pA.x} y1={pA.y} x2={pB.x} y2={pB.y}
+          stroke={t === 0 ? 'var(--ink-mute)' : 'var(--grid)'} stroke-width={t === 0 ? 1.5 : 1} />;
+      })}
+      <text x={zeroPt.x} y={zeroPt.y + 3} text-anchor="middle" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">0</text>
+      {showArc && <path d={arcPath(cx, cy, r, arcA, arcB)} fill="none" stroke={arcColor} stroke-width="10" stroke-linecap="round" />}
+      <line x1={g!.base.x} y1={g!.base.y} x2={g!.tip.x} y2={g!.tip.y}
+            stroke={neg ? 'var(--ink-mute)' : color} stroke-width="2.6" stroke-linecap="round" />
+      <circle cx={cx} cy={cy} r="4.4" fill="var(--surface)" stroke={neg ? 'var(--ink-mute)' : color} stroke-width="2" />
+      <text x={cx} y={cy + 22} text-anchor="middle" font-size="12.5" font-weight="600"
+            fill={neg ? 'var(--ink-soft)' : color} class="svgtxt">{fmtZsafe(z)}</text>
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt>{axisLabel}</dt><dd><data value={String(z)}>{fmtZsafe(z)}</data> &sigma;</dd></div>
+        {slope != null && <div><dt>slope</dt><dd><data value={String(slope)}>{fmtSlope(slope)}{slopeUnit}</data></dd></div>}
+      </dl>
+    </figcaption>
+  </figure>
+) : (
+  <div class="chart-null" role="img" aria-label={`${axisLabel}: no citation axis`}>
+    <span class="nx">&empty;</span>
+    <span>no citation axis</span>
+  </div>
+)}

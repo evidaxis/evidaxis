@@ -1,0 +1,77 @@
+---
+/**
+ * Convergence-gate glyph: a velocity arrow and a citation arrow feeding a gate;
+ * each arrow passes through only when its axis is in convergent_axes. Both pass
+ * -> a single beam exits the gate (rising). Verdict text derives from the real
+ * convergent_axes membership. Null citation axis -> citation arrow shows an
+ * honest "no axis" dash, never a false pass.
+ */
+import type { Entity } from '../../lib/data';
+
+export interface Props {
+  entity: Entity;
+  width?: number;
+  height?: number;
+}
+const { entity, width = 110, height = 56 } = Astro.props;
+
+const conv = entity.convergent_axes ?? [];
+const vPass = conv.includes('github_commit_velocity');
+const citPresent = entity.axes.openalex_citation_momentum.status === 'present'
+  || entity.axes.openalex_citation_momentum.cohort_z != null;
+const cPass = conv.includes('openalex_citation_momentum');
+
+const gateX = width * 0.62;
+const gap = width * 0.07;
+const vY = height * 0.34, cY = height * 0.66;
+
+let verdict: string;
+if (vPass && cPass) verdict = 'both axes pass, gate open';
+else if (!citPresent) verdict = 'velocity only, citation axis absent';
+else if (vPass || cPass) verdict = `${vPass ? 'velocity' : 'citation'} passes, gate shut`;
+else verdict = 'gate shut';
+
+const titleId = `gg-t-${Math.random().toString(36).slice(2, 8)}`;
+
+// arrow geometry helper values
+const startX = width * 0.07;
+function arrowEnd(pass: boolean) { return pass ? gateX - 2 : gateX - 14; }
+---
+<figure class="evchart" style="margin:0;display:flex;flex-direction:column;align-items:center;gap:4px">
+  <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={titleId}>
+    <title id={titleId}>Convergence gate: {verdict}</title>
+    {/* gate posts */}
+    <line x1={gateX} y1={height * 0.12} x2={gateX} y2={height * 0.88} stroke="var(--ink-mute)" stroke-width="2" stroke-linecap="round" />
+    <line x1={gateX + gap} y1={height * 0.12} x2={gateX + gap} y2={height * 0.88} stroke="var(--ink-mute)" stroke-width="2" stroke-linecap="round" />
+
+    {/* velocity arrow */}
+    <line x1={startX} y1={vY} x2={arrowEnd(vPass)} y2={vY} stroke={vPass ? 'var(--velocity)' : 'var(--hairline-2)'} stroke-width="2.2" stroke-linecap="round" stroke-dasharray={vPass ? '' : '3 3'} />
+    <path d={`M${arrowEnd(vPass) - 5} ${vY - 4} L${arrowEnd(vPass)} ${vY} L${arrowEnd(vPass) - 5} ${vY + 4}`} fill="none" stroke={vPass ? 'var(--velocity)' : 'var(--hairline-2)'} stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    {vPass ? (
+      <>
+        <line x1={gateX + gap} y1={vY} x2={width - 6} y2={vY} stroke="var(--velocity)" stroke-width="2.2" stroke-linecap="round" />
+        <path d={`M${width - 11} ${vY - 4} L${width - 6} ${vY} L${width - 11} ${vY + 4}`} fill="none" stroke="var(--velocity)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      </>
+    ) : (
+      <text x={gateX - 9} y={vY + 3} text-anchor="end" font-size="9" fill="var(--hairline-2)" font-weight="700" class="svgtxt">&times;</text>
+    )}
+
+    {/* citation arrow */}
+    <line x1={startX} y1={cY} x2={arrowEnd(cPass)} y2={cY} stroke={cPass ? 'var(--citation)' : 'var(--hairline-2)'} stroke-width="2.2" stroke-linecap="round" stroke-dasharray={cPass ? '' : '3 3'} />
+    <path d={`M${arrowEnd(cPass) - 5} ${cY - 4} L${arrowEnd(cPass)} ${cY} L${arrowEnd(cPass) - 5} ${cY + 4}`} fill="none" stroke={cPass ? 'var(--citation)' : 'var(--hairline-2)'} stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    {cPass ? (
+      <>
+        <line x1={gateX + gap} y1={cY} x2={width - 6} y2={cY} stroke="var(--citation)" stroke-width="2.2" stroke-linecap="round" />
+        <path d={`M${width - 11} ${cY - 4} L${width - 6} ${cY} L${width - 11} ${cY + 4}`} fill="none" stroke="var(--citation)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      </>
+    ) : (
+      <text x={gateX - 9} y={cY + 3} text-anchor="end" font-size="9" fill="var(--hairline-2)" font-weight="700" class="svgtxt" set:html={citPresent ? '&times;' : '&empty;'} />
+    )}
+  </svg>
+  <figcaption class="chart-cap">
+    <dl class="chart-dl" style="justify-content:center">
+      <div><dt>gate</dt><dd><data value={String(conv.length)}>{conv.length}</data> of 2 axes</dd></div>
+    </dl>
+    <p class="chart-verdict" style="text-align:center">{verdict}.</p>
+  </figcaption>
+</figure>

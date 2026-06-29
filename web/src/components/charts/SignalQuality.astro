@@ -1,0 +1,65 @@
+---
+/**
+ * "Methodology gate" footnote (show-your-work). Renders the per-entity
+ * signalQuality disclosure from derived.ts: how much data backed this entity
+ * (commit weeks, citation years) and which derived signals shipped vs reserved.
+ * Visible list, not hidden: the reserved column IS the rigor story.
+ */
+import type { Entity } from '../../lib/data';
+import { signalQuality } from '../../lib/derived';
+import SnapshotProvenance from './SnapshotProvenance.astro';
+
+export interface Props {
+  entity: Entity;
+  series: number[];            // real commitSeries(entity_id)
+}
+const { entity, series } = Astro.props;
+const q = signalQuality(entity, series);
+---
+<figure class="evchart sigquality">
+  <figcaption class="chart-cap sq-head">
+    <span class="sq-title mono">methodology gate</span>
+    <SnapshotProvenance />
+  </figcaption>
+  <dl class="chart-dl sq-counts">
+    <div><dt>commit weeks</dt><dd><data value={String(q.commit_weeks)}>{q.commit_weeks}</data></dd></div>
+    <div><dt>citation years</dt><dd><data value={String(q.citation_years)}>{q.citation_years}</data></dd></div>
+    <div><dt>shipped</dt><dd><data value={String(q.derived_shipped.length)}>{q.derived_shipped.length}</data></dd></div>
+    <div><dt>reserved</dt><dd><data value={String(q.derived_reserved.length)}>{q.derived_reserved.length}</data></dd></div>
+  </dl>
+  <div class="sq-cols">
+    <div class="sq-col">
+      <h4 class="mono">shipped</h4>
+      <ul>{q.derived_shipped.map((s) => <li class="mono shipped"><span class="dot" aria-hidden="true"></span>{s}</li>)}</ul>
+    </div>
+    <div class="sq-col">
+      <h4 class="mono">reserved</h4>
+      <ul>{q.derived_reserved.map((s) => <li class="mono reserved"><span class="dot" aria-hidden="true"></span>{s}</li>)}</ul>
+    </div>
+  </div>
+  <details class="chart-data">
+    <summary>Full signal ledger</summary>
+    <table>
+      <thead><tr><th>Signal</th><th>State</th></tr></thead>
+      <tbody>
+        {q.derived_shipped.map((s) => <tr><td>{s}</td><td>shipped</td></tr>)}
+        {q.derived_reserved.map((s) => <tr><td>{s}</td><td>reserved</td></tr>)}
+      </tbody>
+    </table>
+  </details>
+</figure>
+<style>
+  .sigquality { color: var(--ink); border: 1px solid var(--hairline); border-radius: 10px; padding: 12px 14px;
+    background: var(--surface); }
+  .sigquality .sq-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 8px; flex-wrap: wrap; }
+  .sigquality .sq-title { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+  .sigquality .sq-counts { margin-bottom: 10px; }
+  .sigquality .sq-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sigquality .sq-col h4 { margin: 0 0 5px; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-mute); font-weight: 500; }
+  .sigquality .sq-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+  .sigquality .sq-col li { font-size: 11px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }
+  .sigquality .sq-col li .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+  .sigquality li.shipped .dot { background: var(--velocity); }
+  .sigquality li.reserved .dot { background: var(--ink-mute); opacity: .55; }
+</style>

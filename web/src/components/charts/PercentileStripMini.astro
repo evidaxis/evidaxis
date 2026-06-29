@@ -1,0 +1,26 @@
+---
+/**
+ * Compact percentile strip for table rows: track + p50 tick + marker, no
+ * figcaption (the row carries the <data> text). Null-safe.
+ */
+import { scaleLinear } from '../../lib/charts';
+
+export interface Props {
+  percentile: number | null;
+  color?: string;
+  width?: number;
+  height?: number;
+}
+const { percentile, color = 'currentColor', width = 90, height = 12 } = Astro.props;
+const bx = 1, bw = width - 2, by = 3, bh = 6;
+const sx = scaleLinear([0, 100], [bx, bx + bw]);
+const present = percentile != null && isFinite(percentile);
+const mx = present ? sx(percentile as number) : bx;
+---
+<svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img"
+     aria-label={present ? `percentile p${percentile}` : 'percentile n/a'} preserveAspectRatio="none">
+  <rect x={bx} y={by} width={bw} height={bh} rx="3" fill="var(--paper-2)" />
+  {present && <rect x={bx} y={by} width={bw * ((percentile as number) / 100)} height={bh} rx="3" fill={color} fill-opacity="0.3" />}
+  <line x1={sx(50)} y1={by} x2={sx(50)} y2={by + bh} stroke="var(--grid)" stroke-width="0.8" />
+  {present && <circle cx={mx} cy={by + bh / 2} r="2.6" fill={color} stroke="var(--surface)" stroke-width="1" />}
+</svg>

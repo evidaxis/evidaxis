@@ -1,0 +1,80 @@
+---
+/**
+ * SHIP-WITH-CAVEAT — commit-axis Sharpe (log-linear slope / residual std of the
+ * ~52-week fit), with a +/- CI band (HAC / Newey-West). 3-state:
+ *   SHIP/CAVEAT -> value + a horizontal CI band readout + N (dof) + technique
+ *   RESERVED    -> "reserved: <reason>" from derived.ts (never a number)
+ * The CI is the rigor surface: a value with its uncertainty, not a bare point.
+ */
+import { commitSharpe } from '../../lib/derived';
+import { scaleLinear } from '../../lib/charts';
+import SnapshotProvenance from './SnapshotProvenance.astro';
+
+export interface Props {
+  series: number[];            // real commitSeries(id)
+  width?: number;
+  height?: number;
+}
+const { series, width = 240, height = 92 } = Astro.props;
+const sig = commitSharpe(series);
+const reserved = 'reserved' in sig;
+const titleId = `sh-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `sh-d-${Math.random().toString(36).slice(2, 8)}`;
+
+let lo = 0, hi = 0, val = 0, dof = 0;
+if (!reserved) { [lo, hi] = sig.ci; val = sig.value; dof = sig.dof; }
+// scale: pad the domain around the CI and zero so the band has air
+const loD = Math.min(0, lo) - Math.abs(hi - lo) * 0.4 - 0.005;
+const hiD = Math.max(0, hi) + Math.abs(hi - lo) * 0.4 + 0.005;
+const sx = scaleLinear([loD, hiD], [16, width - 16]);
+const axisY = 48;
+const fmt = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(3);
+const signed = !reserved && lo > 0;        // CI excludes 0 => directionally resolved
+---
+{!reserved ? (
+  <figure class="evchart sigcard">
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
+      <title id={titleId}>commit-axis Sharpe</title>
+      <desc id={descId}>
+        log-linear slope over residual std, value {fmt(val)} with 95% CI {fmt(lo)} to {fmt(hi)}, {dof} degrees of freedom.
+        {signed ? ' CI excludes zero.' : ' CI spans zero.'}
+      </desc>
+      {/* axis */}
+      <line x1="16" y1={axisY} x2={width - 16} y2={axisY} stroke="var(--grid)" stroke-width="1" />
+      {/* zero mark */}
+      <line x1={sx(0)} y1={axisY - 12} x2={sx(0)} y2={axisY + 12} stroke="var(--ink-mute)" stroke-width="1" />
+      <text x={sx(0)} y={axisY + 22} text-anchor="middle" font-size="7" fill="var(--ink-mute)" class="svgtxt">0</text>
+      {/* CI band */}
+      <rect x={sx(lo)} y={axisY - 6} width={Math.max(1, sx(hi) - sx(lo))} height="12" rx="3"
+            fill={signed ? 'var(--velocity)' : 'var(--ink-mute)'} fill-opacity="0.22" />
+      <line x1={sx(lo)} y1={axisY - 7} x2={sx(lo)} y2={axisY + 7} stroke={signed ? 'var(--velocity)' : 'var(--ink-mute)'} stroke-width="1.5" />
+      <line x1={sx(hi)} y1={axisY - 7} x2={sx(hi)} y2={axisY + 7} stroke={signed ? 'var(--velocity)' : 'var(--ink-mute)'} stroke-width="1.5" />
+      {/* point estimate */}
+      <circle cx={sx(val)} cy={axisY} r="4" fill={signed ? 'var(--velocity)' : 'var(--ink-soft)'} stroke="var(--surface)" stroke-width="1.4" />
+      {/* readout */}
+      <text x="16" y="16" font-size="13" font-weight="600" fill={signed ? 'var(--velocity)' : 'var(--ink)'} class="svgtxt">{fmt(val)}</text>
+      <text x={width - 16} y="16" text-anchor="end" font-size="8" fill="var(--ink-mute)" class="svgtxt">95% CI {fmt(lo)}, {fmt(hi)}</text>
+      <text x={sx(lo)} y={axisY + 22} text-anchor="middle" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">{fmt(lo)}</text>
+      <text x={sx(hi)} y={axisY + 22} text-anchor="middle" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">{fmt(hi)}</text>
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt>sharpe</dt><dd><data value={String(val)}>{fmt(val)}</data></dd></div>
+        <div><dt>95% ci</dt><dd><data value={String(lo)}>{fmt(lo)}</data>, <data value={String(hi)}>{fmt(hi)}</data></dd></div>
+        <div><dt>dof</dt><dd><data value={String(dof)}>{dof}</data></dd></div>
+      </dl>
+      <SnapshotProvenance />
+    </figcaption>
+  </figure>
+) : (
+  <div class="chart-null sigreserved" role="note" aria-label={`commit Sharpe reserved: ${sig.reason}`}>
+    <span class="rlabel mono">commit Sharpe</span>
+    <span class="rstate mono">reserved: {sig.reason}</span>
+  </div>
+)}
+<style>
+  .sigcard { color: var(--ink); }
+  .sigreserved { gap: 5px; }
+  .sigreserved .rlabel { font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); }
+  .sigreserved .rstate { font-size: 11px; color: var(--ink-soft); text-align: center; }
+</style>

@@ -1,0 +1,29 @@
+---
+/**
+ * Inline "snapshot 1 of N" provenance marker for derived signals. Single-snapshot
+ * honesty (DESIGN-PORT-PLAN.md §1): the observatory has observed once, so every
+ * derived signal must declare how much longitudinal evidence backs it. Reads the
+ * real snapshot count from the data layer; never overstates history.
+ */
+import { snapshot, SNAP_DATE } from '../../lib/data';
+
+export interface Props {
+  total?: number;          // total snapshots observed (default 1: only one exists)
+  index?: number;          // 1-based index of the current snapshot (default 1)
+}
+const { total = 1, index = 1 } = Astro.props;
+---
+<span class="snap-prov mono">
+  snapshot <data value={String(index)}>{index}</data> of <data value={String(total)}>{total}</data>
+  <span class="sep">&middot;</span>
+  <time datetime={SNAP_DATE}>{SNAP_DATE}</time>
+  <span class="sep">&middot;</span>
+  {snapshot.methodology_version}
+</span>
+<style>
+  .snap-prov { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    font-size: 10px; letter-spacing: .04em; color: var(--ink-mute);
+    border: 1px solid var(--hairline); border-radius: 999px; padding: 2px 10px; }
+  .snap-prov data { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+  .snap-prov .sep { opacity: .5; }
+</style>

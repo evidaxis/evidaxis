@@ -1,0 +1,47 @@
+---
+/**
+ * Percentile strip within the cohort: a track with p25/p50/p75 ticks and a
+ * marker at the entity's percentile. Null-safe (calibration entities may have
+ * no percentile -> honest empty track + "n/a").
+ */
+import { scaleLinear } from '../../lib/charts';
+
+export interface Props {
+  percentile: number | null;
+  color?: string;
+  width?: number;
+  height?: number;
+}
+const { percentile, color = 'currentColor', width = 240, height = 30 } = Astro.props;
+const bx = 2, bw = width - 4, by = 9, bh = 8;
+const sx = scaleLinear([0, 100], [bx, bx + bw]);
+const present = percentile != null && isFinite(percentile);
+const mx = present ? sx(percentile as number) : bx;
+const titleId = `ps-t-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="evchart" style="margin:0">
+  <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={titleId} preserveAspectRatio="none">
+    <title id={titleId}>{present ? `percentile ${percentile} within cohort` : 'percentile not yet scored'}</title>
+    <rect x={bx} y={by} width={bw} height={bh} rx="4" fill="var(--paper-2)" />
+    {present && <rect x={bx} y={by} width={bw * ((percentile as number) / 100)} height={bh} rx="4" fill={color} fill-opacity="0.30" />}
+    {[25, 50, 75].map((q) => (
+      <>
+        <line x1={sx(q)} y1={by - 1} x2={sx(q)} y2={by + bh + 1} stroke="var(--grid)" stroke-width="1" />
+        <text x={sx(q)} y={height - 1} text-anchor="middle" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">p{q}</text>
+      </>
+    ))}
+    {present && (
+      <>
+        <line x1={mx} y1={by - 3} x2={mx} y2={by + bh + 3} stroke={color} stroke-width="2" />
+        <circle cx={mx} cy={by + bh / 2} r="3.4" fill={color} stroke="var(--surface)" stroke-width="1.2" />
+      </>
+    )}
+    <text x={bx} y={height - 1} font-size="6.5" fill="var(--ink-mute)" class="svgtxt">p0</text>
+    <text x={bx + bw} y={height - 1} text-anchor="end" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">p100</text>
+  </svg>
+  <figcaption class="chart-cap">
+    <dl class="chart-dl">
+      <div><dt>percentile</dt><dd>{present ? <data value={String(percentile)}>p{percentile}</data> : <data value="">n/a</data>}</dd></div>
+    </dl>
+  </figcaption>
+</figure>

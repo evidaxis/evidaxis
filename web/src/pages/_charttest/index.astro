@@ -1,0 +1,174 @@
+---
+/**
+ * BUILD-ONLY verification page for the chart component library. Not linked, not
+ * in the sitemap by intent (underscore route). Renders EVERY chart + derived
+ * component with REAL data for three representative entities so all states show:
+ *   - top-by-momentum (Boltz)  : watch, citation axis present, <26 commit weeks
+ *                                 -> Sharpe RESERVES, changepoint fires
+ *   - a watch (dora-rs)         : citation axis absent, 52 commit weeks
+ *                                 -> Sharpe ships, swing accelerating
+ *   - no-citation (LeRobot)     : single-axis, citation axis absent
+ *                                 -> all citation charts show the honest null state
+ * Both a light context and the dark .band context are rendered so the recolour
+ * is verifiable. Driven entirely by lib/data + lib/derived + lib/charts (SSR).
+ */
+import '../../styles/global.css';
+import { entities, commitSeries, citationSeries, snapshot, SNAP_DATE } from '../../lib/data';
+
+import Scatter from '../../components/charts/Scatter.astro';
+import Beeswarm from '../../components/charts/Beeswarm.astro';
+import Quadrant from '../../components/charts/Quadrant.astro';
+import Gauge from '../../components/charts/Gauge.astro';
+import GaugeMini from '../../components/charts/GaugeMini.astro';
+import MomentumRing from '../../components/charts/MomentumRing.astro';
+import Donut from '../../components/charts/Donut.astro';
+import PercentileStrip from '../../components/charts/PercentileStrip.astro';
+import PercentileStripMini from '../../components/charts/PercentileStripMini.astro';
+import GateGlyph from '../../components/charts/GateGlyph.astro';
+import CommitHeatmap from '../../components/charts/CommitHeatmap.astro';
+import CommitHeatmapMini from '../../components/charts/CommitHeatmapMini.astro';
+import CitBars from '../../components/charts/CitBars.astro';
+import CitArea from '../../components/charts/CitArea.astro';
+import CommitFlat from '../../components/charts/CommitFlat.astro';
+import Sparkline from '../../components/Sparkline.astro';
+
+import SwingSignal from '../../components/charts/SwingSignal.astro';
+import SharpeSignal from '../../components/charts/SharpeSignal.astro';
+import ChangepointSignal from '../../components/charts/ChangepointSignal.astro';
+import LagSignal from '../../components/charts/LagSignal.astro';
+import AlphaSignal from '../../components/charts/AlphaSignal.astro';
+import GateEtaSignal from '../../components/charts/GateEtaSignal.astro';
+import SignalQuality from '../../components/charts/SignalQuality.astro';
+import SnapshotProvenance from '../../components/charts/SnapshotProvenance.astro';
+
+// pick three representative entities by id (verified against snapshot.json)
+const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+const top = byMom[0];                                                   // e_9VD4D2XPK7H Boltz
+const watch = entities.find((e) => e.status === 'watch' && e.entity_id !== top.entity_id)!; // dora-rs
+const noCit = entities.find((e) => e.axes.openalex_citation_momentum.cohort_z == null)!;     // LeRobot
+
+const reps = [
+  { tag: 'top-by-momentum', e: top },
+  { tag: 'watch', e: watch },
+  { tag: 'no citation axis', e: noCit },
+];
+const seriesOf = (id: string) => commitSeries(id);
+const a1 = (e: typeof top) => e.axes.github_commit_velocity;
+const a2 = (e: typeof top) => e.axes.openalex_citation_momentum;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Evidaxis chart component test</title>
+</head>
+<body>
+  <main class="wrap" style="padding:2rem 1.2rem 5rem;max-width:1180px;margin:0 auto">
+    <h1 style="font-size:1.4rem">Chart component verification</h1>
+    <p class="meta">
+      snapshot <b>{snapshot.snapshot_id}</b> &middot; period <b>{snapshot.period}</b> &middot;
+      <time datetime={SNAP_DATE}>{SNAP_DATE}</time> &middot; {entities.length} systems
+    </p>
+    <p class="meta">
+      representatives:
+      {reps.map((r, i) => <span>{i ? ' / ' : ''}<b>{r.e.name}</b> ({r.tag})</span>)}
+    </p>
+
+    {/* ---- all-entity charts ---- */}
+    <section class="grp">
+      <h2>Scatter (all entities)</h2>
+      <Scatter />
+    </section>
+    <section class="grp">
+      <h2>Beeswarm (all entities, by cohort)</h2>
+      <Beeswarm />
+    </section>
+    <section class="grp">
+      <h2>Donut pair (convergence %, coverage %)</h2>
+      <div class="row">
+        <Donut numerator={snapshot.counts.rising} denominator={snapshot.counts.entities} label="convergence" />
+        <Donut numerator={snapshot.counts.axis2_present} denominator={snapshot.counts.entities} label="axis coverage" />
+      </div>
+    </section>
+
+    {/* ---- per-entity primitive charts ---- */}
+    {reps.map(({ tag, e }) => (
+      <section class="grp ent">
+        <h2>{e.name} <span class="tag mono">{tag}</span></h2>
+        <p class="meta">cohort {e.cohort} &middot; status {e.status} &middot; momentum {e.momentum ?? 'n/a'} &middot;
+          velocity z {a1(e).cohort_z ?? 'n/a'} &middot; citation {a2(e).status}</p>
+
+        <div class="grid">
+          <div class="cell"><h3>MomentumRing</h3><MomentumRing momentum={e.momentum} percentile={e.percentile} color="var(--velocity)" /></div>
+          <div class="cell"><h3>GateGlyph</h3><GateGlyph entity={e} /></div>
+          <div class="cell"><h3>PercentileStrip</h3><PercentileStrip percentile={e.percentile} /></div>
+          <div class="cell"><h3>PercentileStripMini</h3><PercentileStripMini percentile={e.percentile} /></div>
+          <div class="cell"><h3>Gauge velocity</h3><Gauge z={a1(e).cohort_z} slope={a1(e).slope} axisLabel="velocity z" slopeUnit="/wk" color="var(--velocity)" /></div>
+          <div class="cell"><h3>Gauge citation (null-safe)</h3><Gauge z={a2(e).cohort_z} slope={a2(e).slope} axisLabel="citation z" slopeUnit="/yr" color="var(--citation)" /></div>
+          <div class="cell"><h3>GaugeMini velocity</h3><GaugeMini z={a1(e).cohort_z} color="var(--velocity)" /></div>
+          <div class="cell"><h3>GaugeMini citation</h3><GaugeMini z={a2(e).cohort_z} color="var(--citation)" /></div>
+          <div class="cell"><h3>Quadrant</h3><Quadrant entity={e} /></div>
+        </div>
+
+        <div class="grid">
+          <div class="cell wide"><h3>CommitHeatmap (real weekly)</h3><CommitHeatmap series={seriesOf(e.entity_id)} /></div>
+          <div class="cell"><h3>CommitHeatmapMini</h3><CommitHeatmapMini series={seriesOf(e.entity_id)} /></div>
+          <div class="cell wide"><h3>CommitFlat</h3><CommitFlat series={seriesOf(e.entity_id)} /></div>
+          <div class="cell wide"><h3>CitBars (null-safe)</h3><CitBars entity={e} /></div>
+          <div class="cell wide"><h3>CitArea (null-safe)</h3><CitArea entity={e} /></div>
+          <div class="cell wide"><h3>Sparkline commits</h3><Sparkline values={seriesOf(e.entity_id)} caption={true} label={`${e.name} commits`} unit="commits/wk" color="var(--velocity)" /></div>
+          <div class="cell wide"><h3>Sparkline citations</h3><Sparkline values={citationSeries(e).map((p) => p.n)} caption={true} label={`${e.name} citations`} unit="citations" color="var(--citation)" /></div>
+        </div>
+
+        {/* ---- derived signals (3-state) ---- */}
+        <h3 class="dh">Derived signals</h3>
+        <div class="grid">
+          <div class="cell wide"><h3>SwingSignal</h3><SwingSignal series={seriesOf(e.entity_id)} /></div>
+          <div class="cell wide"><h3>SharpeSignal</h3><SharpeSignal series={seriesOf(e.entity_id)} /></div>
+          <div class="cell wide"><h3>ChangepointSignal</h3><ChangepointSignal series={seriesOf(e.entity_id)} /></div>
+          <div class="cell wide"><h3>LagSignal (reserved)</h3><LagSignal /></div>
+          <div class="cell wide"><h3>AlphaSignal (reserved)</h3><AlphaSignal /></div>
+          <div class="cell wide"><h3>GateEtaSignal (reserved)</h3><GateEtaSignal /></div>
+        </div>
+        <div class="grid">
+          <div class="cell wide"><h3>SignalQuality (methodology gate)</h3><SignalQuality entity={e} series={seriesOf(e.entity_id)} /></div>
+          <div class="cell"><h3>SnapshotProvenance</h3><SnapshotProvenance /></div>
+        </div>
+      </section>
+    ))}
+
+    {/* ---- dark band recolour check ---- */}
+    <section class="band" style="margin-top:3rem;padding:2rem 1.2rem;border-radius:12px">
+      <div class="wrap">
+        <h2 style="color:inherit">Dark band recolour (same components)</h2>
+        <Scatter />
+        <div class="grid" style="margin-top:1.5rem">
+          <div class="cell"><h3>MomentumRing</h3><MomentumRing momentum={top.momentum} percentile={top.percentile} color="var(--velocity)" /></div>
+          <div class="cell"><h3>Gauge velocity</h3><Gauge z={a1(top).cohort_z} slope={a1(top).slope} axisLabel="velocity z" slopeUnit="/wk" color="var(--velocity)" /></div>
+          <div class="cell wide"><h3>SwingSignal</h3><SwingSignal series={seriesOf(watch.entity_id)} /></div>
+          <div class="cell wide"><h3>SharpeSignal</h3><SharpeSignal series={seriesOf(watch.entity_id)} /></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <style>
+    body { background: var(--paper); }
+    .grp { margin: 2rem 0; padding-top: 1.4rem; border-top: 1px solid var(--hairline); }
+    .grp > h2 { font-size: 1.05rem; margin: 0 0 .8rem; }
+    .ent > h2 .tag { font-size: .65rem; color: var(--ink-mute); margin-left: .5rem; border: 1px solid var(--hairline-2);
+      border-radius: 999px; padding: 2px 8px; vertical-align: middle; }
+    .dh { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--velocity);
+      margin: 1.6rem 0 .4rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin: .6rem 0 1.4rem; }
+    .cell { background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: .9rem; }
+    .cell.wide { grid-column: span 2; }
+    .cell h3 { font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-mute);
+      margin: 0 0 .6rem; font-weight: 500; }
+    .row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .band .cell { background: rgba(255,255,255,.04); border-color: var(--hairline); }
+    .band h2, .band h3 { color: #efe9dc; }
+  </style>
+</body>
+</html>

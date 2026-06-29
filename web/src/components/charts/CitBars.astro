@@ -1,0 +1,79 @@
+---
+/**
+ * Citations-by-year bars + connecting trend line, from citationSeries(e).
+ * FALLBACK: when the citation axis is not present (a2.status !== 'present')
+ * renders an honest "no citation axis" state, never a fake bar.
+ */
+import { scaleLinear, linePath } from '../../lib/charts';
+import { citationSeries } from '../../lib/data';
+import type { Entity } from '../../lib/data';
+
+export interface Props {
+  entity: Entity;
+  color?: string;
+  width?: number;
+  height?: number;
+}
+const { entity, color = 'var(--citation)', width = 240, height = 72 } = Astro.props;
+const a2 = entity.axes.openalex_citation_momentum;
+const present = a2.status === 'present';
+const series = present ? citationSeries(entity) : [];
+const hasData = series.length > 0;
+
+const m = { t: 16, r: 4, b: 14, l: 4 };
+const iw = width - m.l - m.r, ih = height - m.t - m.b;
+const max = Math.max(1, ...series.map((s) => s.n));
+const bw = hasData ? iw / series.length : 0;
+const sy = scaleLinear([0, max], [m.t + ih, m.t]);
+const pts = series.map((s, i) => ({ x: m.l + i * bw + bw / 2, y: sy(s.n) }));
+const total = a2.total_citations;
+const titleId = `cb-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `cb-d-${Math.random().toString(36).slice(2, 8)}`;
+---
+{present && hasData ? (
+  <figure class="evchart" style={`color:${color}`}>
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`} preserveAspectRatio="none">
+      <title id={titleId}>Citations by year</title>
+      <desc id={descId}>{series.map((s) => `${s.year}: ${s.n}`).join(', ')}. Total {total} citations.</desc>
+      {series.map((s, i) => {
+        const h = ih * (s.n / max), x = m.l + i * bw, by = m.t + ih - h;
+        const alpha = 0.3 + 0.55 * (series.length > 1 ? i / (series.length - 1) : 1);
+        return (
+          <>
+            <rect x={x + 2} y={by} width={Math.max(0, bw - 4)} height={h} rx="1.5" fill="currentColor" fill-opacity={alpha.toFixed(3)}>
+              <title>{s.year}: {s.n} citations</title>
+            </rect>
+            <rect x={x + 2} y={by} width={Math.max(0, bw - 4)} height="2" rx="1" fill="currentColor" />
+            <text x={x + bw / 2} y={height - 3} text-anchor="middle" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">{String(s.year).slice(2)}</text>
+            <text x={x + bw / 2} y={by - 1.8} text-anchor="middle" font-size="6.5" fill="currentColor" font-weight="600" class="svgtxt">{s.n}</text>
+          </>
+        );
+      })}
+      {pts.length >= 2 && <path d={linePath(pts)} fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />}
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt class="amber">total cites</dt><dd class="amber"><data value={String(total)}>{total}</data></dd></div>
+        <div><dt>years</dt><dd><data value={String(series.length)}>{series.length}</data></dd></div>
+        <div><dt>latest yr</dt><dd><data value={String(series[series.length - 1].n)}>{series[series.length - 1].n}</data></dd></div>
+      </dl>
+    </figcaption>
+    <details class="chart-data">
+      <summary>Citations by year</summary>
+      <table>
+        <thead><tr><th>Year</th><th class="num">Citations</th></tr></thead>
+        <tbody>
+          {series.map((s) => (
+            <tr><td><time datetime={String(s.year)}>{s.year}</time></td><td class="num"><data value={String(s.n)}>{s.n}</data></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
+  </figure>
+) : (
+  <div class="chart-null" role="img" aria-label="no citation axis for this system">
+    <span class="nx">&empty;</span>
+    <span>no citation axis</span>
+    <span style="font-size:9px;opacity:.8">axis status: {a2.status}</span>
+  </div>
+)}

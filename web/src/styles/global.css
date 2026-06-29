@@ -309,3 +309,53 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
 .band-chart-ttl::before { content: ""; width: 18px; height: 1px; background: #3a3a30; }
 /* stronger halo on dark-band dots (entrance/glow is JS-optional) */
 .band .glow figure svg circle { filter: drop-shadow(0 0 6px rgba(255,255,255,.34)); }
+
+/* ============================================================================
+   CHART COMPONENT SHELL (SSR charts in components/charts/*). Every chart is a
+   <figure> with a visible structured <figcaption><dl> + a collapsed-but-crawlable
+   <details><table>. currentColor + the signal vars let charts recolour inside
+   the dark .band automatically.
+   ========================================================================== */
+.evchart { margin: 0; color: var(--ink); }
+.evchart > svg { display: block; width: 100%; height: auto; }
+.evchart .svgtxt { font-family: var(--font-mono); }
+/* Rising-quadrant wash. Use a LITERAL rgba (not var()): headless Chromium and
+   some non-CSS-aware SVG paint paths fail to resolve a custom property whose
+   value is functional rgba() on the `fill` property / presentation attribute,
+   rendering the rect solid black. The dark-band variant overrides below. */
+.evchart .rise-wash { fill: rgba(12,110,99,.055); }
+.band .evchart .rise-wash { fill: rgba(39,194,173,.16); }
+
+.chart-cap { margin-top: 9px; }
+.chart-dl { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0;
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); }
+.chart-dl > div { display: inline-flex; align-items: baseline; gap: 5px; }
+.chart-dl dt { letter-spacing: .06em; text-transform: uppercase; font-size: 9.5px; }
+.chart-dl dd { margin: 0; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 500; }
+.chart-dl dd data { font-variant-numeric: tabular-nums; }
+.chart-dl .teal { color: var(--velocity); }
+.chart-dl .amber { color: var(--citation); }
+.chart-dl .slate { color: var(--slate); }
+.chart-verdict { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft);
+  margin-top: 6px; line-height: 1.5; }
+
+.chart-data { margin-top: 8px; }
+.chart-data > summary { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-mute); cursor: pointer; list-style: revert; }
+.chart-data > summary:hover { color: var(--velocity); }
+.chart-data table { width: 100%; border-collapse: collapse; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 11px; }
+.chart-data th, .chart-data td { text-align: left; padding: 4px 8px;
+  border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+.chart-data th { font-weight: 500; font-size: 9.5px; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--ink-mute); }
+.chart-data td { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.chart-data td.num, .chart-data th.num { text-align: right; }
+
+/* honest null-axis state */
+.chart-null { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; min-height: 90px; border: 1px dashed var(--hairline-2); border-radius: 10px;
+  background: repeating-linear-gradient(45deg, transparent, transparent 7px,
+    color-mix(in srgb, var(--ink-mute) 5%, transparent) 7px, color-mix(in srgb, var(--ink-mute) 5%, transparent) 8px);
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); text-align: center; padding: 14px; }
+.chart-null .nx { font-size: 15px; opacity: .55; }
