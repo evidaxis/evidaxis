@@ -1,0 +1,49 @@
+name: web-ci
+
+# Quality gate for the static site: unit tests, a clean build, and the dist
+# invariants (em-dash = 0, charts server-rendered, JSON-LD valid, head essentials,
+# single h1). Must stay green before the redesign is promoted to production.
+
+on:
+  push:
+    paths:
+      - "web/**"
+      - "data/**"
+      - "taxonomy/**"
+      - ".github/workflows/web-ci.yml"
+  pull_request:
+    paths:
+      - "web/**"
+      - "data/**"
+      - "taxonomy/**"
+  workflow_dispatch:
+
+jobs:
+  build-test-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install (web)
+        working-directory: web
+        run: npm ci
+
+      - name: Unit tests (vitest)
+        working-directory: web
+        run: npm run test:run
+
+      - name: Build (astro, reads ../data + ../taxonomy)
+        working-directory: web
+        run: npm run build
+
+      - name: Verify dist invariants (GEO / em-dash / JSON-LD / a11y head)
+        working-directory: web
+        run: npm run check

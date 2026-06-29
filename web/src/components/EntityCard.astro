@@ -43,7 +43,7 @@ const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') 
   <header class="bezel">
     <div class="id">
       <div class="toprow">
-        <span class="sysname">{e.name}</span>
+        <h1 class="sysname">{e.name}</h1>
         <span class="etype">{e.entity_type}</span>
         {e.incumbent && <span class="etype">incumbent</span>}
       </div>
@@ -128,7 +128,7 @@ const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') 
   .bezel { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 20px 14px; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, var(--surface), var(--paper)); }
   .bezel .id { min-width: 0; }
   .bezel .toprow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .bezel .sysname { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; letter-spacing: -.02em; line-height: 1; }
+  .bezel .sysname { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; letter-spacing: -.02em; line-height: 1; }
   .etype { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); border: 1px solid var(--hairline); border-radius: 4px; padding: 2px 6px; }
   .bezel .sub { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 10px; letter-spacing: .03em; color: var(--ink-mute); flex-wrap: wrap; }
   .bezel .sub a { color: var(--ink-mute); }
