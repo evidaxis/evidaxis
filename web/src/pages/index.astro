@@ -105,15 +105,15 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
           <div class="axis-list">
             <div class="axis-item rv">
               <span class="axis-chip vel">velocity</span>
-              <div><h4>Development velocity</h4><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
+              <div><h3>Development velocity</h3><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
             </div>
             <div class="axis-item rv">
               <span class="axis-chip cit">citation</span>
-              <div><h4>Citation momentum</h4><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
+              <div><h3>Citation momentum</h3><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
             </div>
             <div class="axis-item rv">
               <span class="axis-chip gate">gate</span>
-              <div><h4>The convergence gate</h4><p>A system earns the Rising badge only when both axes rise at once. One axis alone is Watch, awaiting a second.</p></div>
+              <div><h3>The convergence gate</h3><p>A system earns the Rising badge only when both axes rise at once. One axis alone is Watch, awaiting a second.</p></div>
             </div>
           </div>
           <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up.</div>
@@ -297,7 +297,7 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
   .axis-chip.vel { color: var(--velocity); background: var(--rise-wash); border: 1px solid rgba(12,110,99,.25); }
   .axis-chip.cit { color: var(--citation); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
   .axis-chip.gate { color: var(--ink-mute); background: var(--paper-2); border: 1px solid var(--hairline); }
-  .axis-item h4 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -.01em; }
+  .axis-item h3 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -.01em; }
   .axis-item p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
   .gate-note { margin-top: 26px; font-size: .95rem; color: var(--ink-soft); background: var(--paper-2); border: 1px solid var(--hairline); border-left: 2px solid var(--velocity); border-radius: 0 10px 10px 0; padding: 16px 18px; }
   .gate-note b { color: var(--ink); }

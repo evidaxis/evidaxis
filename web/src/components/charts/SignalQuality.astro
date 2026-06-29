@@ -29,11 +29,11 @@ const q = signalQuality(entity, series);
   </dl>
   <div class="sq-cols">
     <div class="sq-col">
-      <h4 class="mono">shipped</h4>
+      <p class="mono sq-h">shipped</p>
       <ul>{q.derived_shipped.map((s) => <li class="mono shipped"><span class="dot" aria-hidden="true"></span>{s}</li>)}</ul>
     </div>
     <div class="sq-col">
-      <h4 class="mono">reserved</h4>
+      <p class="mono sq-h">reserved</p>
       <ul>{q.derived_reserved.map((s) => <li class="mono reserved"><span class="dot" aria-hidden="true"></span>{s}</li>)}</ul>
     </div>
   </div>
@@ -55,7 +55,7 @@ const q = signalQuality(entity, series);
   .sigquality .sq-title { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
   .sigquality .sq-counts { margin-bottom: 10px; }
   .sigquality .sq-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .sigquality .sq-col h4 { margin: 0 0 5px; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
+  .sigquality .sq-col .sq-h { margin: 0 0 5px; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
     color: var(--ink-mute); font-weight: 500; }
   .sigquality .sq-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
   .sigquality .sq-col li { font-size: 11px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }

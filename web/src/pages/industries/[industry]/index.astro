@@ -34,7 +34,7 @@ const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: lab
           return (
             <a class="card" href={`/industries/${slug}/${sn.slug}/`}>
               <div class="row" style="justify-content:space-between;align-items:baseline">
-                <h3 style="margin:0">{sn.label}</h3>
+                <h2 style="margin:0;font-size:1.12rem">{sn.label}</h2>
                 <span class="mono muted" style="font-size:.74rem">{es.length} systems</span>
               </div>
               {top.length>0 && <p class="muted" style="font-size:.86rem;margin:.5rem 0 0">Signals: {top.map((e)=>e.name).join(', ')}</p>}

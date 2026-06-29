@@ -4,7 +4,7 @@ import MethodologyBody from '../../../components/MethodologyBody.astro';
 import { methodologyGraph } from '../../../lib/jsonld';
 // Stable alias to the active version. Canonical points at the versioned page so
 // citations of /current collapse onto /v1.
-const desc = 'Evidaxis Methodology (current): the active definition of how momentum is measured. Two axes, within-cohort normalization, a convergence gate. Versioned and frozen per snapshot.';
+const desc = 'Evidaxis methodology: how momentum is measured. Two independent axes, within-cohort normalization, and a convergence gate. Versioned per snapshot.';
 ---
 <Base title="Methodology | Evidaxis" description={desc} canonical="/methodology/v1/" jsonLd={methodologyGraph('m1', '/methodology/v1/')}>
   <section class="section">

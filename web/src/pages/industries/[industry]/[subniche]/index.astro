@@ -15,7 +15,7 @@ export function getStaticPaths() {
 const { ind, sn } = Astro.props;
 const es = entitiesInCohort(sn.cohortKey);
 const path = `/industries/${ind.slug}/${sn.slug}/`;
-const desc = `Evidaxis momentum measurements for ${sn.label}: ${es.length} open AI systems measured on development velocity and citation momentum within the cohort.`;
+const desc = `Evidaxis momentum for ${sn.label}: ${es.length} open AI systems scored on development velocity and citation momentum.`;
 const listJson = itemListDataset({ path, name: `${sn.label} by Evidaxis momentum`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
 ---
 <Base title={`${sn.label}, Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path }])]}>

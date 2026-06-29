@@ -133,7 +133,7 @@ footer { margin-top: 5rem; border-top: 1px solid var(--hairline-2); background: 
 footer .wrap { padding-top: 2.4rem; padding-bottom: 3rem; }
 footer .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
 @media (max-width: 720px){ footer .cols { grid-template-columns: 1fr 1fr; } }
-footer h4 { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+footer .foot-h { margin: 0 0 .55rem; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
 footer a { display: block; color: var(--ink-soft); border: none; font-size: .9rem; margin-bottom: .3rem; }
 footer a:hover { color: var(--velocity); }
 

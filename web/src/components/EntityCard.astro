@@ -107,8 +107,8 @@ const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') 
     <!-- SERIES row -->
     <div class="seriesrow">
       <div class="sblock">
-        <div class="sh"><span>weekly commit heatmap</span><span class="tot teal">{a1.recent_weekly_commits ?? 'n/a'}/wk</span></div>
-        <CommitHeatmap series={cs} color="var(--velocity)" />
+        <div class="sh"><span>commit heatmap, last 26 weeks</span><span class="tot teal">{a1.recent_weekly_commits ?? 'n/a'}/wk</span></div>
+        <CommitHeatmap series={cs} weeks={26} color="var(--velocity)" />
       </div>
       <div class="sblock">
         <div class="sh"><span>citations by year</span><span class="tot amber">{a2.status === 'present' ? `total ${a2.total_citations.toLocaleString()}` : 'no axis'}</span></div>

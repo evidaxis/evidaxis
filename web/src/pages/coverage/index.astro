@@ -5,7 +5,7 @@ import { snapshot, industries, entitiesInCohort, SNAP_DATE } from '../../lib/dat
 import { itemListDataset, breadcrumb } from '../../lib/jsonld';
 const inds = [...industries().values()];
 const allCohorts = inds.flatMap((ind) => [...ind.subniches.values()].map((sn) => ({ ind, sn })));
-const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts in this pilot, plus an explicit account of what is not yet measured. Silence means not-yet-measured, never low quality.`;
+const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts, plus an explicit map of what is not yet measured.`;
 const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: snapshot.entities });
 ---
 <Base title="Coverage atlas | Evidaxis" description={desc} canonical="/coverage/" jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }])]}>
@@ -22,7 +22,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
           return (
             <div class="panel" style="padding:20px 22px">
               <div class="row" style="justify-content:space-between;align-items:baseline">
-                <h3 style="margin:0"><a href={`/industries/${ind.slug}/${sn.slug}/`} style="border:none">{sn.label}</a></h3>
+                <h2 style="margin:0;font-size:1.12rem"><a href={`/industries/${ind.slug}/${sn.slug}/`} style="border:none">{sn.label}</a></h2>
                 <span class="mono muted" style="font-size:.74rem">{ind.label} · {es.length} systems · {withCite} with citation axis</span>
               </div>
               <div class="row" style="margin-top:.9rem;gap:8px">
