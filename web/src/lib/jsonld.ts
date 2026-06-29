@@ -195,6 +195,31 @@ export function snapshotDataset(snap: Snapshot) {
         measurementTechnique: `${SITE}/methodology/current/`,
         citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
         keywords: ['AI systems', 'momentum', 'open data', 'software ecosystems'],
+        // Canonical machine surface: the variables this dataset measures. Only the
+        // primary, universally-present quantities are declared here; per-entity
+        // derived signals are emitted on each entity page and only when shipped
+        // (reserved signals are never published as a number).
+        variableMeasured: [
+          {
+            '@type': 'PropertyValue',
+            name: 'Evidaxis Momentum Score',
+            description: 'Within-pilot percentile of the combined two-axis signal.',
+            minValue: 0, maxValue: 100, unitText: 'points',
+            measurementTechnique: `${SITE}/methodology/current/`,
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Development-velocity z-score (within cohort)',
+            description: 'Log-slope of weekly commit activity, robust-z normalized within the cohort.',
+            measurementTechnique: `${SITE}/methodology/current/#velocity`,
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Citation-momentum z-score (within cohort)',
+            description: 'Log-slope of yearly citations to the system paper, robust-z normalized within the cohort. Absent for systems with no measurable citation axis.',
+            measurementTechnique: `${SITE}/methodology/current/#citation`,
+          },
+        ],
         distribution: [
           { '@type': 'DataDownload', name: 'Full snapshot (JSON)', contentUrl: `${SITE}/snapshots/${snap.snapshot_date}/snapshot.json`, encodingFormat: 'application/json' },
         ],

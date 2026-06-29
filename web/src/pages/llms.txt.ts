@@ -1,7 +1,12 @@
 import type { APIRoute } from 'astro';
-import { snapshot, SNAP_DATE } from '../lib/data';
+import { snapshot, SNAP_DATE, entities } from '../lib/data';
+import { cohortLabel } from '../lib/cohorts';
 
 export const GET: APIRoute = () => {
+  const ranked = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+  const systemList = ranked
+    .map((e) => `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}, status ${e.status}, cohort ${cohortLabel(e.cohort)}. JSON: https://evidaxis.org/e/${e.entity_id}.json`)
+    .join('\n');
   const txt = `# Evidaxis
 
 > Evidaxis is an independent data observatory that measures open-source and research-native AI
@@ -29,6 +34,10 @@ Each measured system has a canonical record at https://evidaxis.org/e/{entity_id
 record and JSON-LD) and a machine-readable record at https://evidaxis.org/e/{entity_id}.json. Cite the
 record plus the snapshot period, e.g. "Evidaxis momentum for {System}, snapshot ${snapshot.period}
 (https://evidaxis.org/e/{entity_id})".
+
+## Tracked systems (snapshot ${snapshot.period}, ranked by momentum)
+
+${systemList}
 
 ## Machine-readable access (no API needed)
 
