@@ -1,0 +1,38 @@
+---
+export interface Props {
+  values: number[];
+  width?: number;
+  height?: number;
+  color?: string;
+  fill?: boolean;
+  dot?: boolean;        // mark the last point
+  label?: string;
+}
+const { values, width = 132, height = 34, color = 'var(--ink)', fill = true, dot = true, label } = Astro.props;
+const pad = 3;
+const pts = values.filter((v) => typeof v === 'number' && isFinite(v));
+let path = '', area = '', lastX = 0, lastY = 0;
+if (pts.length >= 2) {
+  const min = Math.min(...pts), max = Math.max(...pts);
+  const span = max - min || 1;
+  const stepX = (width - pad * 2) / (pts.length - 1);
+  const coords = pts.map((v, i) => {
+    const x = pad + i * stepX;
+    const y = height - pad - ((v - min) / span) * (height - pad * 2);
+    return [x, y] as const;
+  });
+  path = coords.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+  area = `${path} L${coords[coords.length - 1][0].toFixed(1)} ${height - pad} L${pad} ${height - pad} Z`;
+  [lastX, lastY] = coords[coords.length - 1];
+}
+---
+{pts.length >= 2 ? (
+  <svg class="spark" width={width} height={height} viewBox={`0 0 ${width} ${height}`}
+       role="img" aria-label={label ?? 'trend'} preserveAspectRatio="none">
+    {fill && <path d={area} fill={color} fill-opacity="0.10" />}
+    <path d={path} fill="none" stroke={color} stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+    {dot && <circle cx={lastX} cy={lastY} r="2.2" fill={color} />}
+  </svg>
+) : (
+  <span class="mono muted" style="font-size:.72rem">no series</span>
+)}

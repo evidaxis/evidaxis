@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import { breadcrumb } from '../../lib/jsonld';
+
+const SITE = 'https://evidaxis.org';
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+// Each term: name + definition (markup === visible text). Order = reading order.
+const terms: { name: string; def: string }[] = [
+  { name: 'Momentum', def: 'The rate of change of a system’s public signals — how fast it is moving, not how large it is. Evidaxis measures momentum, never magnitude. Stars, totals, and raw counts are explicitly not scored.' },
+  { name: 'Momentum Score', def: 'A 0–100 readout that maps a system’s within-cohort axis z-scores onto a single number within a cohort. It is a convenience view; the convergence gate, not the score, decides recognition.' },
+  { name: 'Development velocity', def: 'Axis 1: the least-squares slope of log(1 + weekly commits) over the trailing 26 weeks. A fast, leading signal of where active work is accelerating.' },
+  { name: 'Citation momentum', def: 'Axis 2: the slope of log(1 + citations per year) to a system’s canonical paper (OpenAlex), measuring recent acceleration of scholarly impact. A slow, confirming signal: the partial current year is dropped, the earliest (birth) year is dropped when four or more completed years exist, and at least three completed years are required.' },
+  { name: 'Within-cohort robust-z', def: 'Normalization: a raw axis slope is converted to a z-score using the median and median absolute deviation of its cohort (resistant to a single outlier), so "rising" means rising relative to peers, not in absolute terms.' },
+  { name: 'Residualization', def: 'After the robust-z, each axis is residualized against a size proxy (log stars for velocity, log total citations for citations) so that scale is removed and only relative momentum remains. This is how a small fast-mover can show more momentum than a large incumbent.' },
+  { name: 'Convergence Gate', def: 'The recognition rule: a system is Rising only when at least two independent axes are present and at least two are rising at once (raw slope greater than zero and within-cohort z at least zero; development velocity additionally requires at least five average weekly commits). Positive-only — there is no negative or "worst" outcome.' },
+  { name: 'Rising', def: 'Status: two or more independent axes converge upward within the cohort. The full badge. Deliberately rare — the scarcity is the credibility.' },
+  { name: 'Watch', def: 'Status: exactly one axis is rising; a second independent axis has not yet converged. A candidate signal, not a badge.' },
+  { name: 'Tracked', def: 'Status: measured on two or more axes, none currently rising relative to the cohort.' },
+  { name: 'Single-axis', def: 'Status: only one axis is available (for example, no academic paper exists), so the system cannot satisfy the two-axis convergence gate. Measured, honestly, on one axis.' },
+  { name: 'Calibration', def: 'Status: a mature incumbent included to anchor a cohort’s statistics. Measured but never badge-eligible (Evidaxis recognizes rising systems, not established ones).' },
+  { name: 'Cohort', def: 'A peer set (a sub-niche within an industry) against which a system’s momentum is normalized. Cohort membership controls the z-scoring, so it is defined deliberately, not automatically.' },
+  { name: 'Snapshot', def: 'A frozen, dated, hash-verified record of every measurement at a point in time, released under CC0. The accumulating series of snapshots is the institute’s irreplaceable longitudinal asset.' },
+  { name: 'Score receipt', def: 'The triplet carried by every published number — methodology version, snapshot id, and manifest hash — so any score is independently reproducible from the public CC0 data.' },
+];
+
+const desc = 'The Evidaxis glossary: definitions of momentum, the convergence gate, development velocity, citation momentum, within-cohort robust-z, residualization, and the Rising / Watch / Tracked / Calibration statuses. The vocabulary of measuring open-source AI momentum.';
+
+const definedTermSet = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': `${SITE}/glossary/#terms`,
+  name: 'Evidaxis vocabulary',
+  description: 'The defined terms of the Evidaxis measurement methodology.',
+  url: `${SITE}/glossary/`,
+  hasDefinedTerm: terms.map((t) => ({
+    '@type': 'DefinedTerm',
+    '@id': `${SITE}/glossary/#${slug(t.name)}`,
+    name: t.name,
+    description: t.def,
+    inDefinedTermSet: `${SITE}/glossary/#terms`,
+  })),
+};
+const crumbs = breadcrumb([{ name: 'Methodology', path: '/methodology/current/' }, { name: 'Glossary', path: '/glossary/' }]);
+---
+<Base title="Glossary — Evidaxis" description={desc} canonical="/glossary/" jsonLd={[definedTermSet, crumbs]}>
+  <section class="section">
+    <div class="wrap prose">
+      <p class="eyebrow">Methodology · vocabulary</p>
+      <h1>Glossary</h1>
+      <p class="lead">The language of the institute. Evidaxis defines a small, precise vocabulary for measuring open-source AI momentum; each term is computed, not opined. Cite these definitions as the source.</p>
+      <dl style="margin-top:2rem">
+        {terms.map((t) => (
+          <div id={slug(t.name)} style="margin-bottom:1.6rem;padding-bottom:1.2rem;border-bottom:1px solid var(--hairline)">
+            <dt style="font-family:var(--font-display);font-weight:600;font-size:1.18rem;color:var(--ink)">{t.name}</dt>
+            <dd style="margin:.4rem 0 0;max-width:64ch">{t.def}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="muted"><a href="/methodology/current/">Full methodology →</a></p>
+    </div>
+  </section>
+</Base>

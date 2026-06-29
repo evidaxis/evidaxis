@@ -1,0 +1,40 @@
+# Evidaxis — public CC0 data observatory. We WANT to be crawled, indexed, trained on, and cited.
+
+User-agent: *
+Allow: /
+
+# AI training + retrieval crawlers (explicitly welcomed — this is public-domain data)
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: CCBot
+Allow: /
+
+# Classic search
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://evidaxis.org/sitemap-index.xml

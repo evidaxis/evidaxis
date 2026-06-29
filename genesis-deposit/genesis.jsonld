@@ -1,0 +1,98 @@
+{
+  "@context": ["https://schema.org", {"evidaxis": "https://evidaxis.org/ns#"}],
+  "@type": ["Dataset", "evidaxis:SeedCoverageSnapshot"],
+  "@id": "https://evidaxis.org/snapshots/2026-06-27/#dataset",
+  "name": "Evidaxis Genesis Seed Coverage Map of Public AI Systems (v1 Pilot, 2026-06) — Bounded Curated Seed, Not a Census",
+  "identifier": "10.5281/zenodo.PLACEHOLDER",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "creator": {"@id": "https://evidaxis.org/#org"},
+  "publisher": {"@id": "https://evidaxis.org/#org"},
+  "datePublished": "2026-06-27",
+  "version": "m1",
+  "measurementTechnique": "https://evidaxis.org/methodology/v1/",
+
+  "evidaxis:snapshotRole": "genesis_seed_coverage_map",
+  "evidaxis:coverageEpochId": "coverage_epoch_0_seed",
+  "evidaxis:isAuthoritative": false,
+  "evidaxis:isExhaustive": false,
+  "evidaxis:isCensus": false,
+  "evidaxis:isCuratedSeed": true,
+  "evidaxis:leaderboardClaim": false,
+  "evidaxis:rankPresent": false,
+  "evidaxis:risingResolvableAtThisSnapshot": false,
+
+  "evidaxis:coverageEnvelope": {
+    "@type": "evidaxis:CoverageEnvelope",
+    "constructionMode": "hand_curated_seed_manifest",
+    "constructionNote": "Genesis entities were seeded by hand (P5: first ~200 nodes curated manually), NOT sampled from an enumerated population. There is therefore no population denominator at genesis; the denominator IS the published seed manifest.",
+    "sources": [
+      {"id": "github", "endpoint": "api.github.com (per-repo commit history)", "role": "axis-1 commit-velocity", "pulledAt": "2026-06-27"},
+      {"id": "openalex", "endpoint": "api.openalex.org/works (per-work citations-by-year)", "role": "axis-2 citation-momentum", "pulledAt": "2026-06-27"}
+    ],
+    "seedManifestRef": "https://evidaxis.org/snapshots/2026-06-27/provenance.json",
+    "seedManifestHash": "222c9c9e1329902321455b4b853655be6973bb3dc46cfd47af395d9e2ede762d",
+    "cohorts": ["robotics-embodied", "ai-drug-discovery", "ai-coding-agents"],
+    "entityTypes": ["org", "repo", "model"],
+    "excludedEntityTypes": ["person"],
+    "outOfEnvelopeByPolicy": ["closed_weight_models", "commercial_api_only_systems", "non_api_sources"],
+    "eligibilityRuleURI": "https://evidaxis.org/methodology/v1/#universe",
+    "observationWindow": {"start": "2025-07-01", "end": "2026-06-27", "note": "GitHub: last 26 weekly commit counts; OpenAlex: citations-by-year"},
+    "completenessClaim": "bounded-curated-seed-not-a-sample-of-any-population",
+    "coverageMode": "seed_bounded_non_exhaustive",
+    "scopeLimitations": ["three_cohorts_only", "closed_models:out_of_envelope_by_policy", "orgs:deferred_v2", "non_api_sources:excluded", "single_observation_point_t0"]
+  },
+
+  "evidaxis:absenceSemantics": {
+    "@type": "evidaxis:AbsenceSemantics",
+    "notListedMeans": "undefined",
+    "interpretationRule": "not_yet_seeded_by_genesis_curation",
+    "inferenceScope": "bounded-curated-seed-not-merit",
+    "notListedDoesNotMean": ["not_rising", "low_quality", "excluded_by_judgment", "inferior", "failed", "outside_AI", "evaluated_and_omitted"],
+    "individualNegativeSpacePolicy": "aggregate_only_non_members_never_named",
+    "famousAbsenceRule": "A system absent from this genesis seed (including major closed-lab models such as GPT-class systems) was simply not in the hand-curated 3-cohort seed manifest, or is out of the open-source-signal envelope by declared policy. Its absence is 'undefined / not-yet-seeded', never 'not-rising' and never an Evidaxis completeness claim about AI.",
+    "inferenceProhibition": "Absence implies an entity was either not in the genesis hand-curated seed manifest or outside the declared v1 open-source-signal envelope. No claim is made regarding growth trajectory, quality, or global status. Absence is not an Evidaxis assessment.",
+    "noPopulationInferenceRule": "No count in this artifact denotes a population of AI systems. Counts describe the curated seed, not the field. 'How many AI systems exist' is undefined here."
+  },
+
+  "evidaxis:nonRisingMemberSemantics": {
+    "@type": "evidaxis:NonRisingMemberSemantics",
+    "observedNotRisingMeans": "insufficient_sustained_window_at_t0",
+    "doesNotMean": ["not_rising", "low_quality", "inferior", "failed", "rejected", "evaluated_negatively"],
+    "individualMemberJudgmentPolicy": "no_per_entity_merit_claim; watch and observed tiers are coverage states at t0, not verdicts",
+    "equivalenceToAbsence": "For any named member of the seed that is not Rising, the semantics are identical to absence: a single-observation-point window artifact, never a negative on the named system. Emitting the cohort confers NO Rising-negative on any member.",
+    "perMemberRisingNegativeProhibited": true
+  },
+
+  "evidaxis:aggregateCohortOutcomes": {
+    "@type": "evidaxis:AggregateOutcomeCensus",
+    "denominatorIsLayered": true,
+    "thereIsNoSingleDenominator": true,
+    "denominatorIsAPopulation": false,
+    "ladder": {
+      "seeded_systems": 19,
+      "axis2_present": 9,
+      "observed_with_signal": 19,
+      "watch_single_axis": 5,
+      "tracked_two_axis_none_rising": 12,
+      "calibration_incumbents_not_badge_eligible": 2,
+      "rising": {"value": 0, "interpretation": "window-undefined-at-t0", "rate": "undefined"}
+    },
+    "ladderNote": "These counts describe the hand-curated genesis seed of 19 systems across 3 cohorts. 19 is the seed size, NOT a population of AI systems and NOT a denominator over which any rate is defined. Two of the 19 are mature incumbents included only to calibrate cohort z-scores (not badge-eligible).",
+    "rateInterpretationProhibition": "rising is NOT a numerator over any count here; no rising-rate, share, or percentage is defined for a genesis curated seed.",
+    "individualNonMembersNamed": false,
+    "futureLayersWhenSearchDriven": "When the v2+ collector becomes search/enumeration-driven, a true discovery-frontier ladder (candidates_returned / candidates_admitted / candidates_excluded per CoverageCell) will be published as the real aggregate denominator. At genesis there is no such enumeration; the seed manifest is the denominator."
+  },
+
+  "evidaxis:calibrationEvent": {
+    "@type": "evidaxis:CalibrationEvent",
+    "calibrationRole": "seed",
+    "calibrationType": "ExploratoryPilotSeed",
+    "supersededBy": null,
+    "supersedableBy": "any_later_snapshot",
+    "rebaselinePolicy": "Re-anchored on universe expansion or annual cadence; expansion creates a NEW coverage epoch and a comparability note. It never rewrites genesis counts and never converts a prior absence into a judgment.",
+    "comparabilityScope": {
+      "valid_within": ["coverage_epoch_0_seed", "methodology m1", "github+openalex source scope", "same observation window"],
+      "invalid_across": ["expanded_universe_without_epoch_marker", "changed_source_scope_without_versioning", "different_resolution_rules_without_mapping", "any_cross_provider_leaderboard_comparison"]
+    }
+  }
+}

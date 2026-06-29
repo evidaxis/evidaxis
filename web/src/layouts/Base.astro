@@ -1,0 +1,115 @@
+---
+import '@fontsource/spectral/400.css';
+import '@fontsource/spectral/500.css';
+import '@fontsource/spectral/600.css';
+import '@fontsource/spectral/700.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import { SNAP_DATE, snapshot } from '../lib/data';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical: string;            // path, e.g. "/e/e_x/"
+  jsonLd?: object | object[];
+  ogType?: string;
+  ogImage?: string;             // path; defaults to the brand card
+  jsonTwin?: string;            // path to the machine-readable JSON twin (entity/snapshot)
+}
+const { title, description, canonical, jsonLd, ogType = 'website', ogImage = '/og.png', jsonTwin } = Astro.props;
+const site = 'https://evidaxis.org';
+const url = site + canonical;
+const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const nav = [
+  ['/coverage/', 'Coverage'],
+  ['/methodology/current/', 'Methodology'],
+  [`/snapshots/${SNAP_DATE}/`, 'Snapshot'],
+  ['/about/', 'About'],
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url} />
+  <meta name="theme-color" content="#f5f3ec" />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content="Evidaxis" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={url} />
+  <meta property="og:image" content={site + ogImage} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={site + ogImage} />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  {jsonTwin && <link rel="alternate" type="application/json" href={jsonTwin} />}
+  {blocks.map((b) => (
+    <script type="application/ld+json" set:html={JSON.stringify(b)} />
+  ))}
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap bar">
+      <a href="/" class="brand" aria-label="Evidaxis home">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 21 L12 12 L21 4" stroke="var(--citation)" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M3 21 L12 12 L21 19" stroke="var(--velocity)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="2.4" fill="var(--ink)"/>
+        </svg>
+        Evidaxis
+      </a>
+      <nav class="nav">
+        {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <div class="brand" style="font-size:1.05rem;margin-bottom:.5rem">
+            <svg class="glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="width:18px;height:18px">
+              <path d="M3 21 L12 12 L21 4" stroke="var(--citation)" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M3 21 L12 12 L21 19" stroke="var(--velocity)" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="2.4" fill="var(--ink)"/>
+            </svg>Evidaxis
+          </div>
+          <p class="muted" style="font-size:.86rem;max-width:30ch">An independent observatory of momentum in open AI systems. Measurements released to the public domain under CC0.</p>
+        </div>
+        <div>
+          <h4>Institute</h4>
+          <a href="/methodology/current/">Methodology</a>
+          <a href="/glossary/">Glossary</a>
+          <a href="/coverage/">Coverage atlas</a>
+          <a href={`/snapshots/${SNAP_DATE}/`}>Latest snapshot</a>
+          <a href="/about/">About &amp; integrity</a>
+        </div>
+        <div>
+          <h4>Open data</h4>
+          <a href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Snapshot JSON</a>
+          <a href="/llms.txt">llms.txt</a>
+          <a href="https://github.com/evidaxis">GitHub</a>
+          <a href="/about/#cite">How to cite</a>
+        </div>
+      </div>
+      <p class="mono muted" style="font-size:.72rem;margin-top:2rem;border-top:1px solid var(--hairline);padding-top:1rem">
+        Evidaxis · methodology {snapshot.methodology_version} · snapshot {snapshot.snapshot_id} · data CC0-1.0 · code Apache-2.0 · independent observatory · © 2026
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

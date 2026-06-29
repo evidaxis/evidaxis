@@ -1,0 +1,235 @@
+{
+  "generated_for_snapshot": "90e607b982fa",
+  "policy": "Wayback Save-Page-Now + Software Heritage Save-Code-Now; async, throttled, public-content-only; pointers held under each archive's own legal basis; NO IPFS for expressive bytes (depr-22).",
+  "repos": {
+    "All-Hands-AI/OpenHands": {
+      "source_url": "https://github.com/All-Hands-AI/OpenHands",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204450/https://github.com/OpenHands/OpenHands"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/All-Hands-AI/OpenHands"
+      }
+    },
+    "DeepGraphLearning/torchdrug": {
+      "source_url": "https://github.com/DeepGraphLearning/torchdrug",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204526/https://github.com/DeepGraphLearning/torchdrug"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/DeepGraphLearning/torchdrug"
+      }
+    },
+    "Genesis-Embodied-AI/Genesis": {
+      "source_url": "https://github.com/Genesis-Embodied-AI/Genesis",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204604/https://github.com/Genesis-Embodied-AI/genesis-world"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/Genesis-Embodied-AI/Genesis"
+      }
+    },
+    "aqlaboratory/openfold": {
+      "source_url": "https://github.com/aqlaboratory/openfold",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204636/https://github.com/aqlaboratory/openfold"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/aqlaboratory/openfold"
+      }
+    },
+    "block/goose": {
+      "source_url": "https://github.com/block/goose",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204713/https://github.com/aaif-goose/goose"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/block/goose"
+      }
+    },
+    "cline/cline": {
+      "source_url": "https://github.com/cline/cline",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204745/https://github.com/cline/cline"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/cline/cline"
+      }
+    },
+    "continuedev/continue": {
+      "source_url": "https://github.com/continuedev/continue",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204824/https://github.com/continuedev/continue"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/continuedev/continue"
+      }
+    },
+    "deepchem/deepchem": {
+      "source_url": "https://github.com/deepchem/deepchem",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204856/https://github.com/deepchem/deepchem"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/deepchem/deepchem"
+      }
+    },
+    "dora-rs/dora": {
+      "source_url": "https://github.com/dora-rs/dora",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628204934/https://github.com/dora-rs/dora"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/dora-rs/dora"
+      }
+    },
+    "facebookresearch/esm": {
+      "source_url": "https://github.com/facebookresearch/esm",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205005/https://github.com/facebookresearch/esm"
+      },
+      "software_heritage": {
+        "status": "ok",
+        "save_request_status": "accepted",
+        "save_task_status": "pending",
+        "origin_url": "https://github.com/facebookresearch/esm"
+      }
+    },
+    "facebookresearch/habitat-lab": {
+      "source_url": "https://github.com/facebookresearch/habitat-lab",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205037/https://github.com/facebookresearch/habitat-lab"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "google-deepmind/mujoco": {
+      "source_url": "https://github.com/google-deepmind/mujoco",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205108/https://github.com/google-deepmind/mujoco"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "huggingface/lerobot": {
+      "source_url": "https://github.com/huggingface/lerobot",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205139/https://github.com/huggingface/lerobot"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "isaac-sim/IsaacLab": {
+      "source_url": "https://github.com/isaac-sim/IsaacLab",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205211/https://github.com/isaac-sim/IsaacLab"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "jwohlwend/boltz": {
+      "source_url": "https://github.com/jwohlwend/boltz",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205245/https://github.com/jwohlwend/boltz"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "microsoft/Graphormer": {
+      "source_url": "https://github.com/microsoft/Graphormer",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205316/https://github.com/microsoft/Graphormer"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "openvla/openvla": {
+      "source_url": "https://github.com/openvla/openvla",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205348/https://github.com/openvla/openvla"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "paul-gauthier/aider": {
+      "source_url": "https://github.com/paul-gauthier/aider",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205425/https://github.com/Aider-AI/aider"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    },
+    "princeton-nlp/SWE-agent": {
+      "source_url": "https://github.com/princeton-nlp/SWE-agent",
+      "wayback": {
+        "status": "ok",
+        "archived_url": "https://web.archive.org/web/20260628205506/https://github.com/SWE-agent/SWE-agent"
+      },
+      "software_heritage": {
+        "status": "failed",
+        "http": 429
+      }
+    }
+  }
+}

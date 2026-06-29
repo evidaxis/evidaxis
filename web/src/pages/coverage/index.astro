@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import { snapshot, industries, entitiesInCohort, SNAP_DATE } from '../../lib/data';
+import { itemListDataset, breadcrumb } from '../../lib/jsonld';
+const inds = [...industries().values()];
+const allCohorts = inds.flatMap((ind) => [...ind.subniches.values()].map((sn) => ({ ind, sn })));
+const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts in this pilot — and an explicit account of what is not yet measured. Silence means not-yet-measured, never low quality.`;
+const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: snapshot.entities });
+---
+<Base title="Coverage atlas — Evidaxis" description={desc} canonical="/coverage/" jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }])]}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Coverage atlas · Pilot 2026</p>
+      <h1>What we measure — and what we don’t.</h1>
+      <p class="lead" style="max-width:62ch">Transparency is part of the instrument. This pilot covers {allCohorts.length} cohorts across {inds.length} industries. Absence from Evidaxis means <em>not yet measured</em>, never a negative judgment.</p>
+
+      <div class="stack" style="margin-top:2rem">
+        {allCohorts.map(({ ind, sn }) => {
+          const es = entitiesInCohort(sn.cohortKey);
+          const withCite = es.filter((e) => e.axes.openalex_citation_momentum.status === 'present').length;
+          return (
+            <div class="panel" style="padding:20px 22px">
+              <div class="row" style="justify-content:space-between;align-items:baseline">
+                <h3 style="margin:0"><a href={`/industries/${ind.slug}/${sn.slug}/`} style="border:none">{sn.label}</a></h3>
+                <span class="mono muted" style="font-size:.74rem">{ind.label} · {es.length} systems · {withCite} with citation axis</span>
+              </div>
+              <div class="row" style="margin-top:.9rem;gap:8px">
+                {es.map((e) => (
+                  <a href={`/e/${e.entity_id}/`} class="badge" style={`text-transform:none;${e.status==='rising'?'border-color:var(--velocity);color:var(--velocity-ink)':e.status==='watch'?'border-color:var(--citation);color:var(--citation-ink)':''}`}>{e.name}</a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div class="panel" style="padding:22px;margin-top:2rem;border-left:3px solid var(--citation)">
+        <div class="eyebrow" style="color:var(--citation-ink)">Known gaps (declared)</div>
+        <ul class="prose" style="margin-top:.7rem;margin-bottom:0">
+          <li><strong>Closed-source systems.</strong> Private SaaS leaves few public, hard-to-game signals; this pilot tracks OSS / research-native systems where the data is rich and tamper-resistant.</li>
+          <li><strong>Systems without a paper.</strong> Several tracked systems (e.g. in coding agents) have no academic publication, so they have no citation axis and cannot, by construction, satisfy the two-axis gate. They are shown, honestly, as single-axis.</li>
+          <li><strong>New systems.</strong> Genuinely new (2024–25) systems lack the citation history to confirm momentum yet. They accrue it over time — the observatory’s value compounds.</li>
+          <li><strong>Beyond AI.</strong> The taxonomy reserves room beyond AI; this pilot measures three AI frontiers only.</li>
+        </ul>
+      </div>
+      <p class="muted" style="margin-top:1.4rem"><a href={`/snapshots/${SNAP_DATE}/`}>See the full snapshot →</a></p>
+    </div>
+  </section>
+</Base>

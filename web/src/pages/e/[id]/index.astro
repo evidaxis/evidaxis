@@ -1,0 +1,186 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Sparkline from '../../../components/Sparkline.astro';
+import StatusBadge from '../../../components/StatusBadge.astro';
+import { entities, snapshot, commitSeries, citationSeries, fmtZ, fmtSlope, industries, entitiesInCohort } from '../../../lib/data';
+import { entityGraph, breadcrumb } from '../../../lib/jsonld';
+
+export function getStaticPaths() {
+  return entities.map((e) => ({ params: { id: e.entity_id }, props: { e } }));
+}
+const { e } = Astro.props;
+const a1 = e.axes.github_commit_velocity;
+const a2 = e.axes.openalex_citation_momentum;
+const cs = commitSeries(e.entity_id);
+const cit = citationSeries(e);
+const indSlug = [...industries().values()].find((i) => i.slug === e.industry)?.slug ?? e.industry;
+
+const cohortRanked = entitiesInCohort(e.cohort);
+const cohortN = cohortRanked.length;
+const indLabel = [...industries().values()].find((i) => i.slug === e.industry)?.label ?? e.industry;
+const related = cohortRanked.filter((x) => x.entity_id !== e.entity_id).slice(0, 6);
+const crumbs = breadcrumb([
+  { name: 'Coverage', path: '/coverage/' },
+  { name: indLabel, path: `/industries/${e.industry}/` },
+  { name: e.sub_niche, path: `/industries/${e.industry}/${e.sub_niche}/` },
+  { name: e.name, path: `/e/${e.entity_id}/` },
+]);
+
+// paper link (axis-2 source)
+const paperUrl = e.openalex_work_ids?.length ? `https://openalex.org/${e.openalex_work_ids[0]}` : null;
+
+// what would make it Rising (only for non-rising, non-calibration)
+const velRising = e.convergent_axes.includes('github_commit_velocity');
+const citRising = e.convergent_axes.includes('openalex_citation_momentum');
+let pathToRising: string | null = null;
+if (!e.incumbent && e.status !== 'rising') {
+  const need: string[] = [];
+  if (!velRising) need.push(a1.recent_weekly_commits != null && a1.recent_weekly_commits < 5
+    ? 'development velocity to recover (≥ 5 commits/week and a positive within-cohort slope)'
+    : 'development velocity to turn positive within its cohort');
+  if (!citRising) need.push(a2.status === 'absent'
+    ? 'a second measurable axis to exist (no academic paper is currently tracked)'
+    : a2.status === 'insufficient' ? 'its citation history to mature (≥ 3 completed years) and rise'
+    : 'citation momentum to turn positive within its cohort');
+  pathToRising = need.join('; ');
+}
+
+// embeddable badge snippet
+const badgePath = `/badge/${e.entity_id}/${snapshot.period}.svg`;
+const badgeMd = `[![Evidaxis: ${e.name}](https://evidaxis.org${badgePath})](https://evidaxis.org/e/${e.entity_id})`;
+const a2note = a2.status === 'absent' ? 'No academic paper exists for this system, so it has no citation axis — it cannot satisfy the two-axis convergence gate.'
+  : a2.status === 'insufficient' ? 'The associated paper is too recent (< 2 completed citation years) to compute a stable momentum slope. Measured on one axis for now.'
+  : null;
+const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}/100, status ${e.status}, in the ${e.sub_niche} cohort. Computed on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
+---
+<Base title={`${e.name} — Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} jsonLd={[entityGraph(e, snapshot), crumbs]}>
+  <section class="section" style="padding-bottom:1.5rem">
+    <div class="wrap">
+      <div class="mono muted" style="font-size:.74rem;margin-bottom:.7rem">
+        <a href="/coverage/" style="border:none;color:inherit">coverage</a> /
+        <a href={`/industries/${indSlug}/${e.sub_niche}/`} style="border:none;color:inherit">{e.sub_niche}</a> / <span>{e.entity_id}</span>
+      </div>
+
+      <div class="row" style="justify-content:space-between;align-items:flex-start;gap:24px">
+        <div style="min-width:0">
+          <div class="row" style="gap:14px">
+            <h1 style="margin:0">{e.name}</h1>
+            <StatusBadge status={e.status} />
+            {e.incumbent && <span class="badge">incumbent</span>}
+          </div>
+          <p class="mono muted" style="font-size:.8rem;margin:.5rem 0 0">
+            {e.entity_type} · {e.sub_niche} · <a href={`https://github.com/${e.github_repo}`} style="color:inherit">github.com/{e.github_repo}</a>
+            {e.homepage && <> · <a href={e.homepage} style="color:inherit">homepage</a></>}
+          </p>
+        </div>
+        <div class="readout" style="text-align:right;flex:none">
+          <div class="big" style={e.status==='rising'?'color:var(--velocity-ink)':''}>{e.momentum != null ? e.momentum.toFixed(1) : '—'}</div>
+          <div class="unit">momentum · /100</div>
+          {e.momentum != null && <div class="unit mono" style="margin-top:.3rem">within {cohortN}-system cohort</div>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-bottom:2rem">
+    <div class="wrap">
+      <!-- axes -->
+      <div class="grid cols-2" style="gap:18px">
+        <div class="panel" style="padding:20px">
+          <div class="row" style="justify-content:space-between">
+            <div><div class="eyebrow" style="color:var(--velocity-ink)">Development velocity</div>
+              <div class="mono muted" style="font-size:.72rem">log-slope of weekly commits · 26 wks</div></div>
+            <div class="mono" style="font-size:.78rem;text-align:right">
+              z <b style="color:var(--velocity-ink)">{fmtZ(a1.cohort_z)}</b><br/>slope {fmtSlope(a1.slope)}</div>
+          </div>
+          <div style="margin-top:14px">
+            {cs.length>=2 ? <Sparkline values={cs} color="var(--velocity)" width={460} height={70} label={`${e.name} commit velocity`} /> : <span class="muted mono">no series</span>}
+          </div>
+          <div class="mono muted" style="font-size:.72rem;margin-top:8px">{a1.recent_weekly_commits ?? '—'} commits/wk recent · {a1.stars_not_scored?.toLocaleString()} stars (not scored)</div>
+        </div>
+
+        <div class="panel" style="padding:20px">
+          <div class="row" style="justify-content:space-between">
+            <div><div class="eyebrow" style="color:var(--citation-ink)">Citation momentum</div>
+              <div class="mono muted" style="font-size:.72rem">log-slope of citations / yr{a2.proxy ? ` · proxy: ${a2.proxy}` : ''}</div></div>
+            <div class="mono" style="font-size:.78rem;text-align:right">
+              z <b style="color:var(--citation-ink)">{fmtZ(a2.cohort_z)}</b><br/>slope {fmtSlope(a2.slope)}</div>
+          </div>
+          <div style="margin-top:14px">
+            {a2.status==='present' && cit.length>=2
+              ? <Sparkline values={cit.map(p=>p.n)} color="var(--citation)" width={460} height={70} label={`${e.name} citation momentum`} />
+              : <div class="mono muted" style="font-size:.8rem;padding:18px 0">{a2note}</div>}
+          </div>
+          {a2.status==='present' && <div class="mono muted" style="font-size:.72rem;margin-top:8px">{a2.total_citations.toLocaleString()} total citations · {cit.length} years</div>}
+        </div>
+      </div>
+
+      <!-- verdict -->
+      <div class="panel" style="padding:22px;margin-top:18px">
+        <div class="eyebrow">Verdict</div>
+        <p style="font-size:1.05rem;margin:.5rem 0 0;max-width:64ch">
+          {e.status === 'rising' && <>Both independent axes are rising within the {e.sub_niche} cohort. <strong>{e.name}</strong> meets the convergence gate.</>}
+          {e.status === 'watch' && <><strong>{e.name}</strong> is rising on <strong>{e.convergent_axes.map(a=>a==='github_commit_velocity'?'development velocity':'citation momentum').join(' and ')}</strong>, but a second independent axis has not yet converged. It is on watch.</>}
+          {e.status === 'calibration' && <><strong>{e.name}</strong> is a mature incumbent included to calibrate its cohort. It is measured but not badge-eligible.</>}
+          {(e.status==='tracked'||e.status==='single-axis') && <><strong>{e.name}</strong> is tracked. No axis is currently rising relative to its cohort{a2.status!=='present' ? ', and it has no second (citation) axis available' : ''}.</>}
+        </p>
+        {pathToRising && (
+          <p class="mono" style="font-size:.82rem;margin:.9rem 0 0;color:var(--ink-soft);border-left:3px solid var(--citation);padding-left:12px">
+            <span style="color:var(--citation-ink)">Path to Rising:</span> needs {pathToRising}.
+          </p>
+        )}
+        <div class="meta" style="margin-top:1rem">
+          <span>axes present <b>{e.axes_present.length}/2</b></span>
+          <span>axes rising <b>{e.convergent_axes.length}</b></span>
+          <span>confidence <b>{e.confidence}</b></span>
+          {e.percentile!=null && <span>cohort percentile <b>{e.percentile}</b></span>}
+        </div>
+      </div>
+
+      <!-- sources + embeddable badge -->
+      <div class="grid cols-2" style="gap:14px;margin-top:14px">
+        <div class="panel" style="padding:18px 20px">
+          <div class="eyebrow">Sources</div>
+          <div class="stack" style="margin-top:.6rem">
+            <div><a href={`https://github.com/${e.github_repo}`}>github.com/{e.github_repo}</a> <span class="mono muted" style="font-size:.7rem">· development-velocity axis</span></div>
+            {paperUrl && <div><a href={paperUrl}>OpenAlex paper</a> <span class="mono muted" style="font-size:.7rem">· citation-momentum axis{a2.proxy ? ` (proxy: ${a2.proxy})` : ''}</span></div>}
+            {e.homepage && <div><a href={e.homepage}>{e.homepage.replace(/^https?:\/\//,'').replace(/\/$/,'')}</a> <span class="mono muted" style="font-size:.7rem">· homepage</span></div>}
+          </div>
+        </div>
+        <div class="panel" style="padding:18px 20px">
+          <div class="eyebrow">Embed this badge</div>
+          <div style="margin:.7rem 0"><img src={badgePath} alt={`Evidaxis ${e.status} — ${e.name}`} width="232" height="56" style="max-width:100%;height:auto"/></div>
+          <pre class="formula" style="margin:0;font-size:.72rem;border-left-color:var(--citation)">{badgeMd}</pre>
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <div style="margin-top:1.6rem">
+          <div class="eyebrow">Others in {e.sub_niche}</div>
+          <div class="row" style="margin-top:.6rem;gap:8px">
+            {related.map((r) => (
+              <a href={`/e/${r.entity_id}/`} class="badge" style={`text-transform:none;${r.status==='rising'?'border-color:var(--velocity);color:var(--velocity-ink)':r.status==='watch'?'border-color:var(--citation);color:var(--citation-ink)':''}`}>
+                {r.name}{r.momentum != null ? ` · ${r.momentum.toFixed(0)}` : ''}
+              </a>
+            ))}
+          </div>
+          <p style="margin:.7rem 0 0"><a href={`/industries/${e.industry}/${e.sub_niche}/`}>Full {e.sub_niche} cohort →</a></p>
+        </div>
+      )}
+
+      <!-- receipt -->
+      <div class="meta mono" style="margin-top:1.8rem;padding-top:1rem;border-top:1px solid var(--hairline)">
+        <span>entity_id <b>{e.entity_id}</b></span>
+        <span>methodology <b>{snapshot.methodology_version}</b></span>
+        <span>snapshot <b>{snapshot.snapshot_id}</b></span>
+        <span>period <b>{snapshot.period}</b></span>
+        <span><a href={`/e/${e.entity_id}.json`}>record JSON ↓</a></span>
+        <span><a href={`/snapshots/${snapshot.snapshot_date}/`}>source snapshot</a></span>
+      </div>
+      <p class="mono muted" style="font-size:.72rem;margin-top:.8rem">
+        Score derived from public data on Evidaxis methodology {snapshot.methodology_version}; never edited by hand. Cite as:
+        “Evidaxis, {e.name}, entity {e.entity_id}, snapshot {snapshot.period}.”
+      </p>
+    </div>
+  </section>
+</Base>

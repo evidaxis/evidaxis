@@ -1,0 +1,8 @@
+# machine-auditable redirects (P5). /e/{id}/{slug} -> /e/{id} is also enforced in vercel.json.
+rules:
+  - from: '/e/:entity_id/:slug'
+    to: '/e/:entity_id'
+    status: 301
+  - from: '/methodology'
+    to: '/methodology/current'
+    status: 301

@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import EntityTable from '../components/EntityTable.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import { snapshot, entities, industries, SNAP_DATE, entitiesInCohort } from '../lib/data';
+import { orgGraph } from '../lib/jsonld';
+
+const rising = entities.filter((e) => e.status === 'rising').sort((a,b)=>(b.momentum??0)-(a.momentum??0));
+const watch = entities.filter((e) => e.status === 'watch').sort((a,b)=>(b.momentum??0)-(a.momentum??0));
+const c = snapshot.counts;
+const inds = [...industries().values()];
+const desc = `Evidaxis is an independent observatory that measures open AI systems by the rate of change of their public signals. It covers a hand-curated seed of ${c.entities} public systems across ${Object.keys(snapshot.cohorts).length} cohorts: a coverage map, not a population. Momentum is recognized only when two independent axes converge. Open data, CC0.`;
+---
+<Base title="Evidaxis — an observatory of momentum in open AI systems" description={desc} canonical="/" jsonLd={orgGraph()}>
+  <!-- HERO -->
+  <section class="section" style="padding-top:3.6rem">
+    <div class="wrap">
+      <p class="eyebrow reveal">Evidaxis · Pilot 2026</p>
+      <h1 class="reveal" style="max-width:16ch;margin-top:.3rem">An observatory of momentum in open AI&nbsp;systems.</h1>
+      <p class="lead reveal" style="max-width:62ch">
+        We measure open-source and research-native AI systems by the <em>rate of change</em> of
+        their public signals — not their size. A system is recognized as <strong>rising</strong>
+        only when two independent axes move together. Every measurement is released to the public
+        domain under CC0.
+      </p>
+      <div class="meta reveal" style="margin-top:1.6rem">
+        <span><b>{c.entities}</b> systems</span>
+        <span><b>{Object.keys(snapshot.cohorts).length}</b> cohorts</span>
+        <span>snapshot <b>{snapshot.snapshot_id}</b></span>
+        <span>period <b>{snapshot.period}</b></span>
+        <span>methodology <b>{snapshot.methodology_version}</b></span>
+      </div>
+      <div class="row reveal" style="margin-top:1.6rem">
+        <a class="badge" href="/methodology/current/" style="text-transform:none;font-size:.8rem;padding:7px 14px">Read the methodology →</a>
+        <a class="badge" href="/coverage/" style="text-transform:none;font-size:.8rem;padding:7px 14px">Coverage atlas →</a>
+        <a class="badge" href={`/snapshots/${SNAP_DATE}/snapshot.json`} style="text-transform:none;font-size:.8rem;padding:7px 14px">Download snapshot (JSON) ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE METHOD / why convergence -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">The instrument</p>
+      <div class="grid cols-2" style="align-items:start;gap:36px">
+        <div class="prose">
+          <h2>Two axes. One gate.</h2>
+          <p>
+            Each system is measured on independent axes that move on different timescales.
+            <strong style="color:var(--velocity-ink)">Development velocity</strong> is the log-slope of
+            commit activity — a fast, leading signal. <strong style="color:var(--citation-ink)">Citation
+            momentum</strong> is the log-slope of yearly citations to the system’s paper — a slow,
+            confirming signal. Each is normalized <em>within its cohort</em>, so “rising” means rising
+            relative to peers, not simply large.
+          </p>
+          <p>
+            A system earns the <strong>Rising</strong> badge only when <strong>both</strong> axes are
+            rising at once. Stars and raw size are never scored. The gate publishes only positive
+            recognition — there is no “worst” list.
+          </p>
+        </div>
+        <div class="panel" style="padding:26px 22px">
+          <svg viewBox="0 0 360 214" width="100%" height="auto" role="img" aria-label="Two independent axes converging at a node" style="max-width:380px;font-family:'IBM Plex Mono',ui-monospace,monospace">
+            <!-- axes -->
+            <line x1="52" y1="150" x2="334" y2="150" stroke="var(--hairline-2)" stroke-width="1"/>
+            <line x1="52" y1="150" x2="52" y2="26" stroke="var(--hairline-2)" stroke-width="1"/>
+            <text x="334" y="164" font-size="8.5" text-anchor="end" fill="var(--ink-mute)">time →</text>
+            <!-- curves: citation (upper-left start) + velocity (lower-left start) converge at node -->
+            <path d="M56 118 C 152 114, 234 96, 288 50" fill="none" stroke="var(--citation)" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M56 142 C 164 138, 238 106, 288 50" fill="none" stroke="var(--velocity)" stroke-width="2.4" stroke-linecap="round"/>
+            <!-- node -->
+            <circle cx="288" cy="50" r="10.5" fill="none" stroke="var(--ink)" stroke-width="1" opacity=".35"/>
+            <circle cx="288" cy="50" r="5" fill="var(--ink)"/>
+            <text x="288" y="32" font-size="11" text-anchor="middle" fill="var(--ink-soft)">convergence</text>
+            <!-- legend below the axis (no overlap with the plot) -->
+            <line x1="56" y1="176" x2="74" y2="176" stroke="var(--velocity)" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="82" y="180" font-size="10.5" fill="var(--velocity-ink)">development velocity ↑</text>
+            <line x1="56" y1="197" x2="74" y2="197" stroke="var(--citation)" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="82" y="201" font-size="10.5" fill="var(--citation-ink)">citation momentum ↑</text>
+          </svg>
+          <p class="mono muted" style="font-size:.74rem;margin:1rem auto 0;max-width:36ch;text-align:center">
+            Rising = development velocity ∧ citation momentum, both above the cohort median.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATE OF THE SNAPSHOT -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">State of snapshot {snapshot.snapshot_id}</p>
+      <h2 style="max-width:22ch">Convergence is rare — and that is the&nbsp;point.</h2>
+      <p class="prose">
+        At a baseline snapshot, very few systems show both axes rising at once: a fast-moving codebase
+        is often years ahead of its citations, and a genuinely new system has no citation history yet.
+        That scarcity is by design — the signal sharpens as the weekly time-series accumulates. Below,
+        the systems whose <strong>one</strong> axis is already rising: candidates on the way to
+        convergence.
+      </p>
+
+      <div class="grid cols-3" style="margin:1.8rem 0 2.4rem">
+        <div class="card"><div class="readout"><span class="big" style="color:var(--velocity-ink)">{c.rising}</span></div>
+          <div class="row" style="margin-top:.4rem"><StatusBadge status="rising" /></div>
+          <p class="muted" style="font-size:.84rem;margin:.6rem 0 0">Both axes rising. The full badge.</p></div>
+        <div class="card"><div class="readout"><span class="big" style="color:var(--citation-ink)">{c.watch}</span></div>
+          <div class="row" style="margin-top:.4rem"><StatusBadge status="watch" /></div>
+          <p class="muted" style="font-size:.84rem;margin:.6rem 0 0">One axis rising, awaiting a second.</p></div>
+        <div class="card"><div class="readout"><span class="big">{c.tracked + c.calibration}</span></div>
+          <div class="row" style="margin-top:.4rem"><StatusBadge status="tracked" /> <StatusBadge status="calibration" /></div>
+          <p class="muted" style="font-size:.84rem;margin:.6rem 0 0">Measured for cohort context.</p></div>
+      </div>
+
+      {rising.length > 0 && (
+        <div style="margin-bottom:2rem">
+          <h3>Rising</h3>
+          <EntityTable entities={rising} />
+        </div>
+      )}
+
+      <h3>Watch — candidate signals</h3>
+      <p class="muted" style="font-size:.9rem;max-width:60ch">One independent axis is rising. Not yet a convergence badge.</p>
+      <EntityTable entities={watch} />
+    </div>
+  </section>
+
+  <!-- COVERAGE -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Coverage</p>
+      <h2>Three frontiers, this pilot.</h2>
+      <div class="grid cols-3" style="margin-top:1.4rem">
+        {[...industries().values()].flatMap((ind) => [...ind.subniches.values()]).map((sn) => {
+          const es = entitiesInCohort(sn.cohortKey);
+          return (
+            <a class="card" href={`/industries/${[...industries().values()].find(i=>[...i.subniches.values()].some(s=>s.cohortKey===sn.cohortKey))!.slug}/${sn.slug}/`}>
+              <div class="eyebrow">{es.length} systems</div>
+              <h3 style="margin:.3rem 0 .2rem;font-size:1.05rem">{sn.label}</h3>
+              <div class="mono muted" style="font-size:.74rem">
+                {es.filter(e=>e.status==='watch').length} watch · {es.filter(e=>e.axes.openalex_citation_momentum.status==='present').length} with citation axis
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p style="margin-top:1.6rem"><a href="/coverage/">Full coverage atlas, with the gaps we do not yet measure →</a></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,54 @@
+{
+  "taxonomy_version": "tax_1",
+  "nodes": [
+    {
+      "taxon_id": "t_32e83e92",
+      "level": "domain",
+      "slug": "ai",
+      "name": "Artificial Intelligence",
+      "parent": null
+    },
+    {
+      "taxon_id": "t_7793ba1a",
+      "level": "industry",
+      "slug": "robotics",
+      "name": "Robotics & Embodied AI",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_06e54c87",
+      "level": "sub_niche",
+      "slug": "embodied-ai",
+      "name": "Robotics & Embodied AI",
+      "parent": "robotics"
+    },
+    {
+      "taxon_id": "t_e9ffc2f9",
+      "level": "industry",
+      "slug": "ai-for-science",
+      "name": "AI for Science",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_03ea62f4",
+      "level": "sub_niche",
+      "slug": "drug-discovery",
+      "name": "AI for Science — Molecular & Drug Discovery",
+      "parent": "ai-for-science"
+    },
+    {
+      "taxon_id": "t_7fac3916",
+      "level": "industry",
+      "slug": "developer-tools",
+      "name": "AI Agents for Software Engineering",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_99e33c2e",
+      "level": "sub_niche",
+      "slug": "coding-agents",
+      "name": "AI Agents for Software Engineering",
+      "parent": "developer-tools"
+    }
+  ]
+}

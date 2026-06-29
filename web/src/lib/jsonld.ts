@@ -1,0 +1,250 @@
+/** JSON-LD builders. v1 frozen external contract — property names are load-bearing
+ *  (Google indexes them, LLMs train on them). Do not rename. */
+import type { Entity, Snapshot } from './data';
+
+const SITE = 'https://evidaxis.org';
+const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
+const ORG_ID = `${SITE}/#org`;
+const CATALOG_ID = `${SITE}/#catalog`;
+const FOUNDED = '2026-06';
+// sameAs grows as off-site profiles land. Wikidata QID / Zenodo DOI / X / LinkedIn appended here.
+const SAME_AS = [
+  'https://github.com/evidaxis',
+  'https://huggingface.co/evidaxis',
+];
+
+const typeForEntity = (t: string) =>
+  t === 'org' || t === 'company' || t === 'lab' ? 'Organization'
+  : t === 'model' || t === 'product' || t === 'app' ? 'SoftwareApplication'
+  : 'SoftwareSourceCode';
+
+// Self-consistent Organization stub spread into every @graph so deep pages resolve
+// their creator/publisher @id locally; the full node on home/about accretes by @id.
+const orgRef = () => ({ '@type': 'Organization', '@id': ORG_ID, name: 'Evidaxis', url: SITE + '/' });
+
+export function orgGraph() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': ORG_ID,
+        name: 'Evidaxis',
+        alternateName: 'Evidaxis Observatory',
+        url: SITE + '/',
+        slogan: 'An observatory of momentum in open AI systems',
+        description:
+          'Evidaxis is an independent data observatory that measures open-source and research-native AI systems by the rate of change of their public signals, and publishes the results as open datasets under CC0.',
+        disambiguatingDescription:
+          'Independent open-data observatory measuring open-source AI momentum; not a company, product, or person.',
+        foundingDate: FOUNDED,
+        logo: { '@type': 'ImageObject', url: SITE + '/logo.png', width: 600, height: 600 },
+        image: SITE + '/logo.png',
+        knowsAbout: ['momentum measurement', 'open-source AI', 'software ecosystems', 'open data', 'scientometrics'],
+        sameAs: SAME_AS,
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE}/#website`,
+        url: SITE + '/',
+        name: 'Evidaxis',
+        description: 'Open observatory scoring AI systems by measured momentum, published as CC0 datasets.',
+        inLanguage: 'en',
+        publisher: { '@id': ORG_ID },
+      },
+      {
+        '@type': 'DataCatalog',
+        '@id': CATALOG_ID,
+        name: 'Evidaxis Open Measurements',
+        description: 'The open corpus of Evidaxis measurements: weekly snapshots and per-cohort momentum measurements of open-source AI systems, released under CC0.',
+        url: SITE + '/',
+        license: CC0,
+        isAccessibleForFree: true,
+        publisher: { '@id': ORG_ID },
+        creator: { '@id': ORG_ID },
+      },
+    ],
+  };
+}
+
+export function entityGraph(e: Entity, snap: Snapshot) {
+  const a1 = e.axes.github_commit_velocity;
+  const a2 = e.axes.openalex_citation_momentum;
+  const vars: any[] = [];
+  if (e.momentum != null)
+    vars.push({ '@type': 'PropertyValue', name: 'Evidaxis Momentum Score', value: e.momentum, minValue: 0, maxValue: 100, unitText: 'points', measurementTechnique: `${SITE}/methodology/${snap.methodology_version === 'm1' ? 'v1' : snap.methodology_version}/` });
+  if (a1.cohort_z != null)
+    vars.push({ '@type': 'PropertyValue', name: 'Development-velocity z-score (within cohort)', value: a1.cohort_z });
+  if (a2.cohort_z != null)
+    vars.push({ '@type': 'PropertyValue', name: 'Citation-momentum z-score (within cohort)', value: a2.cohort_z });
+
+  const desc =
+    `Independent Evidaxis measurement of ${e.name}, an open ${e.entity_type} in the ${e.sub_niche} cohort. ` +
+    (e.momentum != null ? `Momentum score ${e.momentum.toFixed(1)}/100. ` : '') +
+    `Status: ${e.status}. ${e.convergent_axes.length} of 2 independent axes rising. ` +
+    `Computed on Evidaxis methodology ${snap.methodology_version} from public signals (snapshot ${snap.snapshot_date}).`;
+
+  const paperId = e.openalex_work_ids?.[0];
+  const entityNode: any = {
+    '@type': typeForEntity(e.entity_type),
+    '@id': `${SITE}/e/${e.entity_id}/#entity`,
+    name: e.name,
+    description: `${e.name} — an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
+    codeRepository: `https://github.com/${e.github_repo}`,
+    url: e.homepage ?? `https://github.com/${e.github_repo}`,
+    sameAs: [`https://github.com/${e.github_repo}`, ...(e.homepage ? [e.homepage] : [])],
+    subjectOf: { '@id': `${SITE}/e/${e.entity_id}/#dataset` },
+  };
+  if (paperId) entityNode.citation = { '@type': 'ScholarlyArticle', '@id': `https://openalex.org/${paperId}`, sameAs: `https://openalex.org/${paperId}` };
+
+  const graph: any[] = [
+    orgRef(),
+    {
+      '@type': 'Dataset',
+      '@id': `${SITE}/e/${e.entity_id}/#dataset`,
+      name: `Evidaxis measurement: ${e.name}`,
+      description: desc,
+      url: `${SITE}/e/${e.entity_id}/`,
+      identifier: e.entity_id,
+      license: CC0,
+      isAccessibleForFree: true,
+      creator: { '@id': ORG_ID },
+      publisher: { '@id': ORG_ID },
+      includedInDataCatalog: { '@id': CATALOG_ID },
+      datePublished: snap.snapshot_date,
+      dateModified: snap.snapshot_date,
+      temporalCoverage: snap.snapshot_date,
+      isBasedOn: `${SITE}/snapshots/${snap.snapshot_date}/`,
+      citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
+      measurementTechnique: `${SITE}/methodology/current/`,
+      keywords: ['AI', e.industry, e.sub_niche, 'momentum', 'open source'],
+      sameAs: `https://github.com/${e.github_repo}`,
+      mainEntity: { '@id': `${SITE}/e/${e.entity_id}/#entity` },
+      variableMeasured: vars,
+      distribution: {
+        '@type': 'DataDownload',
+        contentUrl: `${SITE}/e/${e.entity_id}.json`,
+        encodingFormat: 'application/json',
+      },
+    },
+    entityNode,
+  ];
+
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
+export function itemListDataset(opts: {
+  path: string; name: string; description: string; period?: string; snap: Snapshot; entities: Entity[];
+}) {
+  const { path, name, description, period, snap, entities } = opts;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      orgRef(),
+      {
+        '@type': 'Dataset',
+        '@id': `${SITE}${path}#dataset`,
+        name, description,
+        url: SITE + path,
+        license: CC0,
+        isAccessibleForFree: true,
+        creator: { '@id': ORG_ID },
+        publisher: { '@id': ORG_ID },
+        includedInDataCatalog: { '@id': CATALOG_ID },
+        datePublished: snap.snapshot_date,
+        dateModified: snap.snapshot_date,
+        ...(period ? { temporalCoverage: period } : {}),
+        isBasedOn: `${SITE}/snapshots/${snap.snapshot_date}/`,
+        citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
+        mainEntity: { '@id': `${SITE}${path}#list` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${SITE}${path}#list`,
+        itemListOrder: 'https://schema.org/ItemListUnordered',
+        numberOfItems: entities.length,
+        itemListElement: entities.map((e) => ({
+          '@type': 'ListItem', url: `${SITE}/e/${e.entity_id}/`, name: e.name,
+        })),
+      },
+    ],
+  };
+}
+
+export function snapshotDataset(snap: Snapshot) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      orgRef(),
+      {
+        '@type': 'Dataset',
+        '@id': `${SITE}/snapshots/${snap.snapshot_date}/#dataset`,
+        name: `Evidaxis snapshot ${snap.snapshot_date}`,
+        description:
+          `Complete Evidaxis measurement snapshot for ${snap.snapshot_date}: momentum scores and per-axis signals for ${snap.counts.entities} tracked AI systems across ${Object.keys(snap.cohorts).length} cohorts, computed on methodology ${snap.methodology_version}. Released to the public domain under CC0.`,
+        url: `${SITE}/snapshots/${snap.snapshot_date}/`,
+        identifier: `evidaxis-snapshot-${snap.snapshot_date}`,
+        license: CC0,
+        isAccessibleForFree: true,
+        creator: { '@id': ORG_ID },
+        publisher: { '@id': ORG_ID },
+        includedInDataCatalog: { '@id': CATALOG_ID },
+        datePublished: snap.snapshot_date,
+        dateModified: snap.snapshot_date,
+        temporalCoverage: snap.snapshot_date,
+        measurementTechnique: `${SITE}/methodology/current/`,
+        citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
+        keywords: ['AI systems', 'momentum', 'open data', 'software ecosystems'],
+        distribution: [
+          { '@type': 'DataDownload', name: 'Full snapshot (JSON)', contentUrl: `${SITE}/snapshots/${snap.snapshot_date}/snapshot.json`, encodingFormat: 'application/json' },
+        ],
+      },
+    ],
+  };
+}
+
+export function breadcrumb(items: { name: string; path: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem', position: i + 1, name: it.name, item: SITE + it.path,
+    })),
+  };
+}
+
+const METHODOLOGY_FROZEN = '2026-06-27';   // stable — must NOT churn per snapshot
+
+export function methodologyGraph(version: string, canonicalVersionPath: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      orgRef(),
+      {
+        '@type': ['TechArticle', 'CreativeWork'],
+        '@id': `${SITE}${canonicalVersionPath}#doc`,
+        name: `Evidaxis Methodology ${version}`,
+        headline: 'How Evidaxis measures momentum',
+        description: 'The complete, versioned definition of how Evidaxis collects signals, normalizes them within cohorts, and decides which systems are rising.',
+        url: SITE + canonicalVersionPath,
+        version: version.replace(/^m/, ''),
+        datePublished: METHODOLOGY_FROZEN,
+        dateModified: METHODOLOGY_FROZEN,
+        license: 'https://creativecommons.org/licenses/by/4.0/',
+        creator: { '@id': ORG_ID },
+        publisher: { '@id': ORG_ID },
+        inLanguage: 'en',
+        hasDefinedTerm: { '@id': `${SITE}${canonicalVersionPath}#terms` },
+      },
+      {
+        '@type': 'DefinedTermSet',
+        '@id': `${SITE}${canonicalVersionPath}#terms`,
+        name: 'Evidaxis scoring terms',
+        hasDefinedTerm: [
+          { '@type': 'DefinedTerm', name: 'Momentum Score', description: 'A 0–100 composite of an entity’s within-cohort axis z-scores, measuring rate-of-change relative to peers.', inDefinedTermSet: `${SITE}${canonicalVersionPath}#terms` },
+          { '@type': 'DefinedTerm', name: 'Convergence Gate', description: 'A system is "Rising" only when at least two independent axes are simultaneously rising. Positive-only.', inDefinedTermSet: `${SITE}${canonicalVersionPath}#terms` },
+        ],
+      },
+    ],
+  };
+}

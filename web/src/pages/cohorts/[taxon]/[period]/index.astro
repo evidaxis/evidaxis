@@ -1,0 +1,35 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import EntityTable from '../../../../components/EntityTable.astro';
+import { industries, entitiesInCohort, snapshot } from '../../../../lib/data';
+import { itemListDataset, breadcrumb } from '../../../../lib/jsonld';
+
+export function getStaticPaths() {
+  const out: any[] = [];
+  for (const ind of industries().values())
+    for (const sn of ind.subniches.values())
+      out.push({ params: { taxon: sn.slug, period: snapshot.period },
+        props: { ind: { slug: ind.slug, label: ind.label }, sn } });
+  return out;
+}
+const { ind, sn } = Astro.props;
+const es = entitiesInCohort(sn.cohortKey);
+const path = `/cohorts/${sn.slug}/${snapshot.period}/`;
+const desc = `${sn.label} cohort by Evidaxis momentum for period ${snapshot.period}: ${es.length} open AI systems, computed on methodology ${snapshot.methodology_version} from snapshot ${snapshot.snapshot_date}.`;
+const listJson = itemListDataset({ path, name: `${sn.label} cohort momentum — ${snapshot.period}`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
+---
+<Base title={`${sn.label} cohort momentum · ${snapshot.period} — Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path: `/industries/${ind.slug}/${sn.slug}/` }, { name: snapshot.period, path }])]}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Cohort momentum · {snapshot.period}</p>
+      <h1>{sn.label}</h1>
+      <p class="lead" style="max-width:60ch">By Evidaxis momentum, period {snapshot.period}. An unordered cohort view, permalinked and reproducible from snapshot {snapshot.snapshot_id}.</p>
+      <div class="meta mono" style="margin:1rem 0 1.4rem">
+        <span>methodology <b>{snapshot.methodology_version}</b></span>
+        <span>snapshot <b>{snapshot.snapshot_id}</b></span>
+        <span><a href={`/industries/${ind.slug}/${sn.slug}/`}>cohort hub</a></span>
+      </div>
+      <EntityTable entities={es} />
+    </div>
+  </section>
+</Base>

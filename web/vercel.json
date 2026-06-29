@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/e/:entity_id/:slug", "destination": "/e/:entity_id", "permanent": true },
+    { "source": "/methodology", "destination": "/methodology/current", "permanent": true },
+    { "source": "/rankings/:taxon/:period", "destination": "/cohorts/:taxon/:period", "permanent": true }
+  ]
+}

@@ -1,0 +1,35 @@
+# --- secrets (AI Checker lesson: never commit keys; no service-role keys sitting as targets) ---
+.env
+.env.*
+*.env
+etl/.env
+**/.github.env
+secrets/
+*.pem
+*.key
+
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- node / astro ---
+node_modules/
+web/node_modules/
+web/dist/
+web/.astro/
+.DS_Store
+
+# --- vercel ---
+.vercel/
+BRAND-KIT.md
+ROADMAP.md
+DECISIONS.md
+MINT-STEPS.md
+
+# --- internal future-v3 architecture (spine): design-reasoning + event-ledger schemas.
+# Heavily entangled with internal review/governance notes; kept PRIVATE until v3 ships
+# clean. The LIVE method stays public (etl/collect.py + the site /methodology + the
+# CC0 deposit recipe); genesis reproducibility does not depend on spine. (leak-audit 2026-06-28)
+spine/

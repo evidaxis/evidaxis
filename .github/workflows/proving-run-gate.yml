@@ -1,0 +1,46 @@
+name: proving-run-gate
+
+# PRE_INGEST_CONTRACT §4/§7 — the reproducibility-CI + spine gate. This is the machine-checkable
+# GREEN condition that gates leaving PRE-INGEST mode. It must stay green before any production
+# accession, public snapshot, Zenodo DOI, or API-surface growth.
+
+on:
+  push:
+    paths: ["spine/**", "etl/**", "data/**", ".github/workflows/proving-run-gate.yml"]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * *"   # nightly public rebuild → byte-diff → fail loud
+
+jobs:
+  proving-run-gate:
+    runs-on: ubuntu-latest
+    # Production hardening: pin by digest from spine/runtime.lock once set, e.g.
+    #   container: python:3.12-slim@sha256:<digest-from-runtime.lock>
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python (pinned)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned spine runtime
+        run: python -m pip install --require-hashes=false -r spine/requirements.txt
+
+      - name: proving-run-gate (validate · firewall · byte-reproducibility · HALT)
+        run: python spine/ci_gate.py
+
+      - name: Guard — no new v2 production accession (fetcher_version < 3.0)
+        run: |
+          # HALT clause: any committed snapshot by a <3.0 collector must be flagged provisional.
+          fail=0
+          for f in $(find data/snapshots -name snapshot.json 2>/dev/null); do
+            fv=$(python -c "import json,sys;print(json.load(open('$f')).get('fetcher_version',''))")
+            prov=$(python -c "import json,sys;print(json.load(open('$f')).get('provisional'))")
+            case "$fv" in
+              collect/2*) [ "$prov" = "True" ] || { echo "::error::$f ($fv) not provisional"; fail=1; } ;;
+            esac
+          done
+          exit $fail

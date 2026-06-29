@@ -1,0 +1,37 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import EntityTable from '../../../../components/EntityTable.astro';
+import { industries, entitiesInCohort, snapshot } from '../../../../lib/data';
+import { itemListDataset, breadcrumb } from '../../../../lib/jsonld';
+
+export function getStaticPaths() {
+  const out: any[] = [];
+  for (const ind of industries().values())
+    for (const sn of ind.subniches.values())
+      out.push({ params: { industry: ind.slug, subniche: sn.slug },
+        props: { ind: { slug: ind.slug, label: ind.label }, sn } });
+  return out;
+}
+const { ind, sn } = Astro.props;
+const es = entitiesInCohort(sn.cohortKey);
+const path = `/industries/${ind.slug}/${sn.slug}/`;
+const desc = `Evidaxis momentum measurements for ${sn.label}: ${es.length} open AI systems measured on development velocity and citation momentum within the cohort.`;
+const listJson = itemListDataset({ path, name: `${sn.label} by Evidaxis momentum`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
+---
+<Base title={`${sn.label} — Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path }])]}>
+  <section class="section">
+    <div class="wrap">
+      <div class="mono muted" style="font-size:.74rem;margin-bottom:.6rem">
+        <a href="/coverage/" style="border:none;color:inherit">coverage</a> /
+        <a href={`/industries/${ind.slug}/`} style="border:none;color:inherit">{ind.label}</a> / <span>{sn.label}</span>
+      </div>
+      <p class="eyebrow">Cohort</p>
+      <h1>{sn.label}</h1>
+      <p class="lead" style="max-width:60ch">{es.length} systems in this cohort, by within-cohort momentum at period {snapshot.period}.</p>
+      <div class="row" style="margin:1rem 0 1.6rem">
+        <a class="badge" href={`/cohorts/${sn.slug}/${snapshot.period}/`} style="text-transform:none;font-size:.82rem;padding:7px 13px">Permalinked cohort snapshot · {snapshot.period} →</a>
+      </div>
+      <EntityTable entities={es} />
+    </div>
+  </section>
+</Base>

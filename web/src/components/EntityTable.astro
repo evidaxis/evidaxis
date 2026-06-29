@@ -1,0 +1,49 @@
+---
+import type { Entity } from '../lib/data';
+import { commitSeries, citationSeries } from '../lib/data';
+import Sparkline from './Sparkline.astro';
+import StatusBadge from './StatusBadge.astro';
+export interface Props { entities: Entity[]; }
+const { entities } = Astro.props;
+---
+<div style="overflow-x:auto">
+<table class="table">
+  <thead>
+    <tr>
+      <th>System</th>
+      <th>Status</th>
+      <th class="num">Momentum</th>
+      <th>Dev velocity</th>
+      <th>Citation momentum</th>
+    </tr>
+  </thead>
+  <tbody>
+    {entities.map((e, i) => {
+      const a1 = e.axes.github_commit_velocity;
+      const a2 = e.axes.openalex_citation_momentum;
+      const cs = commitSeries(e.entity_id);
+      const cit = citationSeries(e).map((p) => p.n);
+      return (
+        <tr>
+          <td>
+            <a href={`/e/${e.entity_id}/`} style="font-weight:500;border:none">{e.name}</a>
+            <div class="mono muted" style="font-size:.68rem">{e.entity_id}</div>
+          </td>
+          <td><StatusBadge status={e.status} /></td>
+          <td class="num">{e.momentum != null ? e.momentum.toFixed(1) : '—'}</td>
+          <td>
+            {cs.length >= 2
+              ? <Sparkline values={cs} color="var(--velocity)" width={104} height={28} label={`${e.name} commit velocity`} />
+              : <span class="mono muted" style="font-size:.72rem">—</span>}
+          </td>
+          <td>
+            {a2.status === 'present' && cit.length >= 2
+              ? <Sparkline values={cit} color="var(--citation)" width={104} height={28} label={`${e.name} citation momentum`} />
+              : <span class="mono muted" style="font-size:.72rem">{a2.status === 'absent' ? 'no paper' : a2.status === 'insufficient' ? 'too young' : '—'}</span>}
+          </td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,6 @@
+---
+import { STATUS_LABEL } from '../lib/data';
+export interface Props { status: keyof typeof STATUS_LABEL; }
+const { status } = Astro.props;
+---
+<span class={`badge ${status}`}>{STATUS_LABEL[status]}</span>

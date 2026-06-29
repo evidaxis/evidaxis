@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "version": "0.2",
+    "note": "Pilot seed: 3 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
+    "axis2_research_source": "verified via OpenAlex API, 2026-06-27"
+  },
+  "domain": { "slug": "ai", "label": "Artificial Intelligence" },
+  "verticals": {
+    "robotics-embodied": {
+      "label": "Robotics & Embodied AI",
+      "industry_slug": "robotics",
+      "subniche_slug": "embodied-ai",
+      "entities": [
+        { "github_repo": "huggingface/lerobot", "entity_type": "repo", "name": "LeRobot", "homepage": "https://github.com/huggingface/lerobot", "openalex_work_ids": [], "note": "Paper exists but 0 citations indexed; axis-2 not yet usable." },
+        { "github_repo": "Genesis-Embodied-AI/Genesis", "entity_type": "repo", "name": "Genesis", "homepage": "https://github.com/Genesis-Embodied-AI/Genesis", "openalex_work_ids": [], "note": "No canonical peer paper in OpenAlex; axis-2 absent." },
+        { "github_repo": "openvla/openvla", "entity_type": "repo", "name": "OpenVLA", "homepage": "https://openvla.github.io/", "openalex_work_ids": ["W4399695759"] },
+        { "github_repo": "dora-rs/dora", "entity_type": "repo", "name": "dora-rs", "homepage": "https://github.com/dora-rs/dora", "openalex_work_ids": [], "note": "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent." },
+        { "github_repo": "isaac-sim/IsaacLab", "entity_type": "repo", "name": "Isaac Lab", "homepage": "https://github.com/isaac-sim/IsaacLab", "openalex_work_ids": ["W4367016688"], "axis2_proxy": "Orbit (the predecessor framework that became Isaac Lab)" },
+        { "github_repo": "facebookresearch/habitat-lab", "entity_type": "repo", "name": "Habitat-Lab", "homepage": "https://aihabitat.org/", "openalex_work_ids": ["W2929928372"], "note": "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not." },
+        { "github_repo": "google-deepmind/mujoco", "entity_type": "repo", "name": "MuJoCo", "homepage": "https://mujoco.org/", "openalex_work_ids": ["W2158782408"], "incumbent": true, "note": "Mature incumbent — included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)." }
+      ]
+    },
+    "ai-drug-discovery": {
+      "label": "AI for Science — Molecular & Drug Discovery",
+      "industry_slug": "ai-for-science",
+      "subniche_slug": "drug-discovery",
+      "entities": [
+        { "github_repo": "jwohlwend/boltz", "entity_type": "repo", "name": "Boltz", "homepage": "https://github.com/jwohlwend/boltz", "openalex_work_ids": ["W4404565424"] },
+        { "github_repo": "aqlaboratory/openfold", "entity_type": "repo", "name": "OpenFold", "homepage": "https://github.com/aqlaboratory/openfold", "openalex_work_ids": ["W4396895148", "W4309643848"], "note": "Published + bioRxiv preprint summed by year." },
+        { "github_repo": "deepchem/deepchem", "entity_type": "repo", "name": "DeepChem", "homepage": "https://deepchem.io/", "openalex_work_ids": ["W2594183968"], "axis2_proxy": "MoleculeNet (the standard DeepChem citation)" },
+        { "github_repo": "DeepGraphLearning/torchdrug", "entity_type": "repo", "name": "TorchDrug", "homepage": "https://torchdrug.ai/", "openalex_work_ids": ["W4226239309"], "note": "Low absolute counts; slope noisy." },
+        { "github_repo": "microsoft/Graphormer", "entity_type": "repo", "name": "Graphormer", "homepage": "https://github.com/microsoft/Graphormer", "openalex_work_ids": ["W3169622372"], "note": "OpenAlex undercounts; slope declining post-2022." },
+        { "github_repo": "facebookresearch/esm", "entity_type": "repo", "name": "ESM / ESMFold", "homepage": "https://github.com/facebookresearch/esm", "openalex_work_ids": ["W4327550249", "W4286500588"], "incumbent": true, "note": "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year." }
+      ]
+    },
+    "ai-coding-agents": {
+      "label": "AI Agents for Software Engineering",
+      "industry_slug": "developer-tools",
+      "subniche_slug": "coding-agents",
+      "entities": [
+        { "github_repo": "All-Hands-AI/OpenHands", "entity_type": "repo", "name": "OpenHands", "homepage": "https://github.com/All-Hands-AI/OpenHands", "openalex_work_ids": ["W4403885061"], "note": "Paper young (2024); citation slope insufficient (<2 completed years)." },
+        { "github_repo": "princeton-nlp/SWE-agent", "entity_type": "repo", "name": "SWE-agent", "homepage": "https://swe-agent.com/", "openalex_work_ids": ["W4399114781"], "note": "Paper young (2024); citation slope insufficient." },
+        { "github_repo": "cline/cline", "entity_type": "repo", "name": "Cline", "homepage": "https://cline.bot/", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." },
+        { "github_repo": "paul-gauthier/aider", "entity_type": "repo", "name": "Aider", "homepage": "https://aider.chat/", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." },
+        { "github_repo": "continuedev/continue", "entity_type": "repo", "name": "Continue", "homepage": "https://continue.dev/", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." },
+        { "github_repo": "block/goose", "entity_type": "repo", "name": "Goose", "homepage": "https://github.com/block/goose", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." }
+      ]
+    }
+  }
+}

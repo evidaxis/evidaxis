@@ -1,0 +1,21 @@
+---
+import Base from '../../../layouts/Base.astro';
+import MethodologyBody from '../../../components/MethodologyBody.astro';
+import { methodologyGraph } from '../../../lib/jsonld';
+// Stable alias to the active version. Canonical points at the versioned page so
+// citations of /current collapse onto /v1.
+const desc = 'Evidaxis Methodology (current) — the active definition of how momentum is measured. Two axes, within-cohort normalization, a convergence gate. Versioned and frozen per snapshot.';
+---
+<Base title="Methodology — Evidaxis" description={desc} canonical="/methodology/v1/" jsonLd={methodologyGraph('m1', '/methodology/v1/')}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Methodology · current = v1</p>
+      <h1>How Evidaxis measures momentum</h1>
+      <MethodologyBody />
+      <p class="mono muted" style="font-size:.74rem;margin-top:2rem;border-top:1px solid var(--hairline);padding-top:1rem">
+        The current active methodology is <b>v1</b>. The frozen, permalinked version lives at
+        <a href="/methodology/v1/">/methodology/v1</a>. Cite the version you used.
+      </p>
+    </div>
+  </section>
+</Base>
