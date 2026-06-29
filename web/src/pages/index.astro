@@ -1,149 +1,380 @@
 ---
 import Base from '../layouts/Base.astro';
-import EntityTable from '../components/EntityTable.astro';
-import StatusBadge from '../components/StatusBadge.astro';
-import { snapshot, entities, industries, SNAP_DATE, entitiesInCohort } from '../lib/data';
-import { orgGraph } from '../lib/jsonld';
+import Scatter from '../components/charts/Scatter.astro';
+import Beeswarm from '../components/charts/Beeswarm.astro';
+import Donut from '../components/charts/Donut.astro';
+import CitBars from '../components/charts/CitBars.astro';
+import Sparkline from '../components/Sparkline.astro';
+import RankTable from '../components/RankTable.astro';
+import { snapshot, entities, industries, entitiesInCohort, SNAP_DATE, commitSeries } from '../lib/data';
+import { cohortColor, cohortLabel, COHORT_ORDER } from '../lib/cohorts';
+import { orgGraph, snapshotDataset } from '../lib/jsonld';
 
-const rising = entities.filter((e) => e.status === 'rising').sort((a,b)=>(b.momentum??0)-(a.momentum??0));
-const watch = entities.filter((e) => e.status === 'watch').sort((a,b)=>(b.momentum??0)-(a.momentum??0));
 const c = snapshot.counts;
-const inds = [...industries().values()];
-const desc = `Evidaxis is an independent observatory that measures open AI systems by the rate of change of their public signals. It covers a hand-curated seed of ${c.entities} public systems across ${Object.keys(snapshot.cohorts).length} cohorts: a coverage map, not a population. Momentum is recognized only when two independent axes converge. Open data, CC0.`;
+const nCohorts = Object.keys(snapshot.cohorts).length;
+const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+const hero = byMom.find((e) => e.axes.openalex_citation_momentum.status === 'present') ?? byMom[0];
+const topWatch = byMom.find((e) => e.status === 'watch');
+const topTracked = byMom.find((e) => e.status === 'tracked');
+const heroVz = hero.axes.github_commit_velocity.cohort_z;
+const heroCz = hero.axes.openalex_citation_momentum.cohort_z;
+const fz = (z: number | null) => (z == null ? 'no axis' : (z >= 0 ? '+' : '') + z.toFixed(2));
+
+const cohortDesc: Record<string, string> = {
+  'robotics-embodied': 'Policies, simulators and embodied agents.',
+  'ai-drug-discovery': 'Structure prediction and molecular modeling.',
+  'ai-coding-agents': 'Autonomous coding and software-engineering agents.',
+};
+const cohortSlug = (key: string) => {
+  for (const ind of industries().values())
+    for (const sn of ind.subniches.values())
+      if (sn.cohortKey === key) return `/industries/${ind.slug}/${sn.slug}/`;
+  return '/coverage/';
+};
+
+const desc = `Evidaxis is an independent observatory that measures open AI systems by the rate of change of their public signals, not their size. It tracks a hand-curated seed of ${c.entities} public systems across ${nCohorts} cohorts: a coverage map, not a population. A system is recognized as rising only when two independent axes, development velocity and citation momentum, move together. Open data, CC0.`;
 ---
-<Base title="Evidaxis — an observatory of momentum in open AI systems" description={desc} canonical="/" jsonLd={orgGraph()}>
-  <!-- HERO -->
-  <section class="section" style="padding-top:3.6rem">
-    <div class="wrap">
-      <p class="eyebrow reveal">Evidaxis · Pilot 2026</p>
-      <h1 class="reveal" style="max-width:16ch;margin-top:.3rem">An observatory of momentum in open AI&nbsp;systems.</h1>
-      <p class="lead reveal" style="max-width:62ch">
-        We measure open-source and research-native AI systems by the <em>rate of change</em> of
-        their public signals — not their size. A system is recognized as <strong>rising</strong>
-        only when two independent axes move together. Every measurement is released to the public
-        domain under CC0.
-      </p>
-      <div class="meta reveal" style="margin-top:1.6rem">
-        <span><b>{c.entities}</b> systems</span>
-        <span><b>{Object.keys(snapshot.cohorts).length}</b> cohorts</span>
-        <span>snapshot <b>{snapshot.snapshot_id}</b></span>
-        <span>period <b>{snapshot.period}</b></span>
-        <span>methodology <b>{snapshot.methodology_version}</b></span>
-      </div>
-      <div class="row reveal" style="margin-top:1.6rem">
-        <a class="badge" href="/methodology/current/" style="text-transform:none;font-size:.8rem;padding:7px 14px">Read the methodology →</a>
-        <a class="badge" href="/coverage/" style="text-transform:none;font-size:.8rem;padding:7px 14px">Coverage atlas →</a>
-        <a class="badge" href={`/snapshots/${SNAP_DATE}/snapshot.json`} style="text-transform:none;font-size:.8rem;padding:7px 14px">Download snapshot (JSON) ↓</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE METHOD / why convergence -->
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">The instrument</p>
-      <div class="grid cols-2" style="align-items:start;gap:36px">
-        <div class="prose">
-          <h2>Two axes. One gate.</h2>
-          <p>
-            Each system is measured on independent axes that move on different timescales.
-            <strong style="color:var(--velocity-ink)">Development velocity</strong> is the log-slope of
-            commit activity — a fast, leading signal. <strong style="color:var(--citation-ink)">Citation
-            momentum</strong> is the log-slope of yearly citations to the system’s paper — a slow,
-            confirming signal. Each is normalized <em>within its cohort</em>, so “rising” means rising
-            relative to peers, not simply large.
-          </p>
-          <p>
-            A system earns the <strong>Rising</strong> badge only when <strong>both</strong> axes are
-            rising at once. Stars and raw size are never scored. The gate publishes only positive
-            recognition — there is no “worst” list.
-          </p>
+<Base
+  title="Evidaxis, an observatory of momentum in open AI systems"
+  description={desc}
+  canonical="/"
+  jsonLd={[orgGraph(), snapshotDataset(snapshot)]}
+  jsonTwin={`/snapshots/${SNAP_DATE}/snapshot.json`}
+>
+  <!-- ================= HERO ================= -->
+  <section class="hero" style="border-top:none">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow rv">Evidaxis · Pilot 2026</span>
+        <h1 class="rv">An observatory of <span class="em">momentum</span> in open AI systems.</h1>
+        <p class="lead rv">We measure open-source and research-native AI systems by the rate of change of their public signals, not their size. A system is recognized as rising only when two independent axes move together. Every measurement is released to the public domain under CC0.</p>
+        <div class="metastrip mono rv">
+          <span><b>{c.entities}</b> systems</span><span class="dot">·</span>
+          <span><b>{nCohorts}</b> cohorts</span><span class="dot">·</span>
+          <span>snapshot <b>{snapshot.snapshot_id}</b></span><span class="dot">·</span>
+          <span>period <b>{snapshot.period}</b></span><span class="dot">·</span>
+          <span>methodology <b>{snapshot.methodology_version}</b></span>
         </div>
-        <div class="panel" style="padding:26px 22px">
-          <svg viewBox="0 0 360 214" width="100%" height="auto" role="img" aria-label="Two independent axes converging at a node" style="max-width:380px;font-family:'IBM Plex Mono',ui-monospace,monospace">
-            <!-- axes -->
-            <line x1="52" y1="150" x2="334" y2="150" stroke="var(--hairline-2)" stroke-width="1"/>
-            <line x1="52" y1="150" x2="52" y2="26" stroke="var(--hairline-2)" stroke-width="1"/>
-            <text x="334" y="164" font-size="8.5" text-anchor="end" fill="var(--ink-mute)">time →</text>
-            <!-- curves: citation (upper-left start) + velocity (lower-left start) converge at node -->
-            <path d="M56 118 C 152 114, 234 96, 288 50" fill="none" stroke="var(--citation)" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M56 142 C 164 138, 238 106, 288 50" fill="none" stroke="var(--velocity)" stroke-width="2.4" stroke-linecap="round"/>
-            <!-- node -->
-            <circle cx="288" cy="50" r="10.5" fill="none" stroke="var(--ink)" stroke-width="1" opacity=".35"/>
-            <circle cx="288" cy="50" r="5" fill="var(--ink)"/>
-            <text x="288" y="32" font-size="11" text-anchor="middle" fill="var(--ink-soft)">convergence</text>
-            <!-- legend below the axis (no overlap with the plot) -->
-            <line x1="56" y1="176" x2="74" y2="176" stroke="var(--velocity)" stroke-width="2.6" stroke-linecap="round"/>
-            <text x="82" y="180" font-size="10.5" fill="var(--velocity-ink)">development velocity ↑</text>
-            <line x1="56" y1="197" x2="74" y2="197" stroke="var(--citation)" stroke-width="2.6" stroke-linecap="round"/>
-            <text x="82" y="201" font-size="10.5" fill="var(--citation-ink)">citation momentum ↑</text>
-          </svg>
-          <p class="mono muted" style="font-size:.74rem;margin:1rem auto 0;max-width:36ch;text-align:center">
-            Rising = development velocity ∧ citation momentum, both above the cohort median.
-          </p>
+        <div class="hero-cta rv">
+          <a class="ghost" href="/methodology/current/">Read the methodology <span aria-hidden="true">&rarr;</span></a>
+          <a class="textlink" href="/coverage/">Coverage atlas <span class="arr" aria-hidden="true">&rarr;</span></a>
+          <a class="textlink" href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Download snapshot (JSON) <span aria-hidden="true">&darr;</span></a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- STATE OF THE SNAPSHOT -->
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">State of snapshot {snapshot.snapshot_id}</p>
-      <h2 style="max-width:22ch">Convergence is rare — and that is the&nbsp;point.</h2>
-      <p class="prose">
-        At a baseline snapshot, very few systems show both axes rising at once: a fast-moving codebase
-        is often years ahead of its citations, and a genuinely new system has no citation history yet.
-        That scarcity is by design — the signal sharpens as the weekly time-series accumulates. Below,
-        the systems whose <strong>one</strong> axis is already rising: candidates on the way to
-        convergence.
-      </p>
-
-      <div class="grid cols-3" style="margin:1.8rem 0 2.4rem">
-        <div class="card"><div class="readout"><span class="big" style="color:var(--velocity-ink)">{c.rising}</span></div>
-          <div class="row" style="margin-top:.4rem"><StatusBadge status="rising" /></div>
-          <p class="muted" style="font-size:.84rem;margin:.6rem 0 0">Both axes rising. The full badge.</p></div>
-        <div class="card"><div class="readout"><span class="big" style="color:var(--citation-ink)">{c.watch}</span></div>
-          <div class="row" style="margin-top:.4rem"><StatusBadge status="watch" /></div>
-          <p class="muted" style="font-size:.84rem;margin:.6rem 0 0">One axis rising, awaiting a second.</p></div>
-        <div class="card"><div class="readout"><span class="big">{c.tracked + c.calibration}</span></div>
-          <div class="row" style="margin-top:.4rem"><StatusBadge status="tracked" /> <StatusBadge status="calibration" /></div>
-          <p class="muted" style="font-size:.84rem;margin:.6rem 0 0">Measured for cohort context.</p></div>
-      </div>
-
-      {rising.length > 0 && (
-        <div style="margin-bottom:2rem">
-          <h3>Rising</h3>
-          <EntityTable entities={rising} />
-        </div>
-      )}
-
-      <h3>Watch — candidate signals</h3>
-      <p class="muted" style="font-size:.9rem;max-width:60ch">One independent axis is rising. Not yet a convergence badge.</p>
-      <EntityTable entities={watch} />
-    </div>
-  </section>
-
-  <!-- COVERAGE -->
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">Coverage</p>
-      <h2>Three frontiers, this pilot.</h2>
-      <div class="grid cols-3" style="margin-top:1.4rem">
-        {[...industries().values()].flatMap((ind) => [...ind.subniches.values()]).map((sn) => {
-          const es = entitiesInCohort(sn.cohortKey);
-          return (
-            <a class="card" href={`/industries/${[...industries().values()].find(i=>[...i.subniches.values()].some(s=>s.cohortKey===sn.cohortKey))!.slug}/${sn.slug}/`}>
-              <div class="eyebrow">{es.length} systems</div>
-              <h3 style="margin:.3rem 0 .2rem;font-size:1.05rem">{sn.label}</h3>
-              <div class="mono muted" style="font-size:.74rem">
-                {es.filter(e=>e.status==='watch').length} watch · {es.filter(e=>e.axes.openalex_citation_momentum.status==='present').length} with citation axis
+      <div class="stage rv">
+        <div class="mock-main">
+          <div class="panel float">
+            <div class="panel-bar">
+              <div class="tl"><i></i><i></i><i></i></div>
+              <span class="addr">evidaxis.org / snapshot / {snapshot.snapshot_id} / {hero.name}</span>
+              <span class="tag">LIVE</span>
+            </div>
+            <div class="panel-body">
+              <div class="mock-head">
+                <span class="mono mock-sys">{hero.name} · citations / year</span>
+                <span class="mono mock-axis">cohort {cohortLabel(hero.cohort)}</span>
               </div>
-            </a>
-          );
-        })}
+              <CitBars entity={hero} />
+            </div>
+          </div>
+          <div class="statcard sc-1">
+            <div class="k">momentum</div>
+            <div class="v teal">{hero.momentum ?? 'n/a'}</div>
+            <div class="sub">{hero.name} · top signal</div>
+          </div>
+          <div class="statcard sc-2">
+            <div class="k">rising this snapshot</div>
+            <div class="v">{c.rising}<span style="font-size:14px;color:var(--ink-mute)"> / {c.entities}</span></div>
+            <div class="sub">convergence is the exception</div>
+          </div>
+        </div>
       </div>
-      <p style="margin-top:1.6rem"><a href="/coverage/">Full coverage atlas, with the gaps we do not yet measure →</a></p>
+    </div>
+  </section>
+
+  <!-- ================= 1.0 THE INSTRUMENT ================= -->
+  <section id="methodology">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num rv">1.0, The instrument</span></div>
+      <h2 class="rv">Two axes. One gate.</h2>
+      <p class="sec-sub rv">Each axis is normalized within its cohort, so &ldquo;rising&rdquo; means rising relative to peers, not simply large. Stars and raw size are never scored. The gate publishes only positive recognition, there is no &ldquo;worst&rdquo; list.</p>
+
+      <div class="axes-grid">
+        <div>
+          <div class="axis-list">
+            <div class="axis-item rv">
+              <span class="axis-chip vel">velocity</span>
+              <div><h4>Development velocity</h4><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
+            </div>
+            <div class="axis-item rv">
+              <span class="axis-chip cit">citation</span>
+              <div><h4>Citation momentum</h4><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
+            </div>
+            <div class="axis-item rv">
+              <span class="axis-chip gate">gate</span>
+              <div><h4>The convergence gate</h4><p>A system earns the Rising badge only when both axes rise at once. One axis alone is Watch, awaiting a second.</p></div>
+            </div>
+          </div>
+          <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up.</div>
+        </div>
+
+        <div class="rv">
+          <div class="panel">
+            <div class="panel-bar">
+              <div class="tl"><i></i><i></i><i></i></div>
+              <span class="addr">VELOCITY &times; CITATION · cohort-z</span>
+              <span class="tag">{c.rising} RISING</span>
+            </div>
+            <div class="panel-body"><Scatter /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2.0 THE SIGNATURE (dark band) ================= -->
+  <section class="band glow" aria-label="Convergence, the signature view">
+    <div class="wrap">
+      <span class="sec-num rv">2.0, The signature</span>
+      <div class="band-head rv"><h2>Two independent axes. One rare convergence.</h2></div>
+      <p class="band-sub rv">For one breath, the daylight ledger goes dark and the instrument glows. Where development velocity and citation momentum agree, a system rises, and at this baseline snapshot almost none do.</p>
+
+      <div class="band-charts">
+        <div class="rv">
+          <div class="band-chart-ttl">Convergence scatter · {snapshot.snapshot_id}</div>
+          <Scatter />
+          <p class="howto"><b>How to read:</b> up-and-right is convergence. A ringed dot is a system where both axes rose this period; {c.rising === 0 ? 'none do at this snapshot.' : `${c.rising} do.`}</p>
+        </div>
+        <div class="rv">
+          <div class="band-chart-ttl">Momentum by cohort · beeswarm</div>
+          <Beeswarm />
+          <p class="howto"><b>How to read:</b> each dot is a system placed by momentum; the bar is the cohort median.</p>
+        </div>
+      </div>
+
+      <div class="band-legend rv">
+        {COHORT_ORDER.map((k) => (
+          <span class="key" style={`color:${cohortColor(k)}`}><i></i>{cohortLabel(k)}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3.0 STATE OF SNAPSHOT ================= -->
+  <section id="snapshot">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num rv">3.0, State of snapshot {snapshot.snapshot_id}</span></div>
+      <h2 class="rv">Convergence is rare, and that is the point.</h2>
+      <p class="sec-sub rv">Across {c.entities} systems in period {snapshot.period}, {c.rising === 0 ? 'none yet cross the gate' : `${c.rising} cross the gate`}. A fast-moving codebase is often years ahead of its citations, and a genuinely new system has no citation history yet. The instrument is built to make recognition expensive; the signal sharpens as the weekly series accumulates.</p>
+
+      <div class="stat-row">
+        <div class="stat rising rv">
+          <div class="top"><span class="label">Rising</span><span class="badge rising">both axes</span></div>
+          <div class="num">{c.rising}</div>
+          <div class="delta">{c.rising === 0 ? 'no convergence this snapshot, by design' : 'the full badge, velocity + citations'}</div>
+          <div class="spark-wrap empty">{c.rising === 0 ? 'awaiting the first convergence' : ''}</div>
+        </div>
+        <div class="stat watch rv">
+          <div class="top"><span class="label">Watch</span><span class="badge watch">one axis</span></div>
+          <div class="num">{c.watch}</div>
+          <div class="delta">one axis rising, awaiting a second</div>
+          <div class="spark-wrap">{topWatch && <Sparkline values={commitSeries(topWatch.entity_id)} color="var(--citation)" height={32} />}</div>
+        </div>
+        <div class="stat tracked rv">
+          <div class="top"><span class="label">Tracked</span><span class="badge tracked">context</span></div>
+          <div class="num">{c.tracked + c.calibration}</div>
+          <div class="delta">measured for cohort context</div>
+          <div class="spark-wrap">{topTracked && <Sparkline values={commitSeries(topTracked.entity_id)} color="var(--ink-mute)" height={32} />}</div>
+        </div>
+      </div>
+
+      <RankTable title="Ranking" />
+    </div>
+  </section>
+
+  <!-- ================= 4.0 COVERAGE ================= -->
+  <section id="coverage">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num rv">4.0, Coverage</span></div>
+      <h2 class="rv">{nCohorts} frontiers, this pilot.</h2>
+      <p class="sec-sub rv">The pilot is intentionally narrow: {nCohorts} cohorts, every score independently reproducible. Each system is normalized only against its own cohort. This is a coverage map, not a census of the field.</p>
+
+      <div class="cov-grid">
+        <div>
+          <div class="cohort-cards">
+            {COHORT_ORDER.map((k) => {
+              const es = entitiesInCohort(k);
+              return (
+                <a class="cohort rv" href={cohortSlug(k)}>
+                  <span class="swatch" style={`background:${cohortColor(k)}`}></span>
+                  <div class="meta">
+                    <div class="name">{cohortLabel(k)}</div>
+                    <div class="desc">{cohortDesc[k] ?? ''}</div>
+                  </div>
+                  <div class="count">{es.length}<span>SYSTEMS</span></div>
+                </a>
+              );
+            })}
+          </div>
+
+          <div class="panel swarm-card rv">
+            <div class="panel-bar">
+              <div class="tl"><i></i><i></i><i></i></div>
+              <span class="addr">momentum by cohort · all {c.entities} systems</span>
+              <span class="tag">{c.entities} SYSTEMS</span>
+            </div>
+            <div class="panel-body"><Beeswarm /></div>
+          </div>
+
+          <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, with the gaps we do not yet measure <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+        </div>
+
+        <div class="cov-right">
+          <div class="donut-pair rv">
+            <div class="donut-card">
+              <Donut numerator={c.rising} denominator={c.entities} label="convergence" />
+              <div class="cap">cross the gate<br>(both axes rising)</div>
+            </div>
+            <div class="donut-card">
+              <Donut numerator={c.axis2_present} denominator={c.entities} label="axis coverage" color="var(--citation)" />
+              <div class="cap">have a measurable<br>citation axis</div>
+            </div>
+          </div>
+
+          <div class="panel rv">
+            <div class="panel-bar">
+              <div class="tl"><i></i><i></i><i></i></div>
+              <span class="addr">{hero.name} · citations by year</span>
+              <span class="tag" style="color:var(--citation)">CITATION AXIS</span>
+            </div>
+            <div class="panel-body"><CitBars entity={hero} /></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </Base>
+
+<style>
+  /* ---- hero ---- */
+  .hero { padding: 84px 0 60px; position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0,1.02fr) minmax(0,1.18fr); gap: 54px; align-items: center; }
+  .hero h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.6rem,5.4vw,4.15rem); line-height: 1.02; letter-spacing: -.03em; margin: 20px 0 0; max-width: 13ch; }
+  .hero h1 .em { font-style: italic; font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em; }
+  .lead { font-size: clamp(1rem,1.5vw,1.16rem); color: var(--ink-soft); margin: 24px 0 0; max-width: 46ch; line-height: 1.62; }
+  .metastrip { margin-top: 28px; font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-mute); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+  .metastrip b { color: var(--velocity); font-weight: 500; }
+  .metastrip .dot { opacity: .4; }
+  .hero-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+  .ghost { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink); border: 1px solid var(--ink); border-radius: 100px; padding: 11px 19px; display: inline-flex; align-items: center; gap: 7px; transition: all .2s; }
+  .ghost:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+  .textlink { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink-soft); display: inline-flex; gap: 6px; align-items: center; transition: color .18s; }
+  .textlink:hover { color: var(--velocity); }
+  .textlink .arr { transition: transform .2s; }
+  .textlink:hover .arr { transform: translateX(3px); }
+  .stage { position: relative; perspective: 1600px; }
+  .mock-main { transform: rotateY(-7deg) rotateX(2deg) rotate(-.6deg); transform-origin: 60% 50%; }
+  .mock-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 10px; }
+  .mock-sys { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+  .mock-axis { font-size: 11px; color: var(--velocity); }
+  .statcard { position: absolute; background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; box-shadow: var(--shadow-float); padding: 12px 14px; }
+  .statcard .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+  .statcard .v { font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.05; margin-top: 3px; letter-spacing: -.02em; }
+  .statcard .v.teal { color: var(--velocity); }
+  .statcard .sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft); margin-top: 3px; }
+  .sc-1 { top: -26px; left: -30px; animation: floaty 7s ease-in-out infinite; }
+  .sc-2 { bottom: -22px; right: -26px; animation: floaty 8s ease-in-out infinite .8s; }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  @media (prefers-reduced-motion: reduce) { .sc-1, .sc-2 { animation: none; } }
+
+  /* ---- instrument ---- */
+  .axes-grid { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 48px; align-items: start; margin-top: 34px; }
+  .axis-list { display: flex; flex-direction: column; margin-top: 6px; }
+  .axis-item { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; padding: 20px 0; border-top: 1px solid var(--hairline); }
+  .axis-item:first-child { border-top: 0; padding-top: 0; }
+  .axis-chip { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: 6px 11px; border-radius: 7px; white-space: nowrap; font-weight: 500; align-self: start; }
+  .axis-chip.vel { color: var(--velocity); background: var(--rise-wash); border: 1px solid rgba(12,110,99,.25); }
+  .axis-chip.cit { color: var(--citation); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
+  .axis-chip.gate { color: var(--ink-mute); background: var(--paper-2); border: 1px solid var(--hairline); }
+  .axis-item h4 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -.01em; }
+  .axis-item p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
+  .gate-note { margin-top: 26px; font-size: .95rem; color: var(--ink-soft); background: var(--paper-2); border: 1px solid var(--hairline); border-left: 2px solid var(--velocity); border-radius: 0 10px 10px 0; padding: 16px 18px; }
+  .gate-note b { color: var(--ink); }
+
+  /* ---- dark band layout (skin + retheme live in global.css .band) ---- */
+  .band-head { text-align: center; max-width: 32ch; margin: 0 auto 14px; }
+  .band-head h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em; font-size: clamp(2.1rem,4vw,3.4rem); line-height: 1.08; }
+  .band-sub { text-align: center; max-width: 58ch; margin: 0 auto 50px; font-size: 1.05rem; line-height: 1.62; }
+  .band-charts { display: grid; grid-template-columns: 1.32fr 1fr; gap: 46px; align-items: center; }
+  .band-chart-ttl { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; color: var(--ink-mute); }
+  .band-chart-ttl::before { content: ""; width: 18px; height: 1px; background: currentColor; opacity: .5; }
+  .band-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 36px; justify-content: center; }
+  .band-legend .key { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .02em; }
+  .band-legend .key i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: currentColor; box-shadow: 0 0 8px currentColor; }
+  .howto { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; color: var(--ink-mute); }
+  .howto b { color: var(--ink-soft); font-weight: 500; }
+  .howto::before { content: "\22B3"; flex: none; color: var(--velocity); }
+
+  /* ---- stat cards ---- */
+  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 36px; }
+  .stat { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px; box-shadow: var(--shadow-card); position: relative; }
+  .stat .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .stat .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+  .stat .num { font-family: var(--font-display); font-weight: 600; font-size: 3.1rem; line-height: 1; letter-spacing: -.04em; margin: 14px 0 0; }
+  .stat .delta { font-family: var(--font-mono); font-size: 12px; margin-top: 8px; color: var(--ink-soft); }
+  .stat .spark-wrap { margin-top: 14px; min-height: 32px; }
+  .stat .spark-wrap.empty { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); display: flex; align-items: center; }
+  .stat.rising .num { color: var(--velocity); }
+  .stat.watch .num { color: var(--citation); }
+  .stat.tracked .num { color: var(--ink-soft); }
+
+  /* ---- coverage ---- */
+  .cov-grid { display: grid; grid-template-columns: 1.18fr .82fr; gap: 44px; align-items: start; margin-top: 40px; }
+  .cohort-cards { display: flex; flex-direction: column; gap: 16px; }
+  .cohort { display: flex; align-items: center; gap: 18px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 22px; box-shadow: var(--shadow-card); transition: transform .2s, box-shadow .2s; }
+  .cohort:hover { transform: translateY(-2px); box-shadow: var(--shadow-float); }
+  .cohort .swatch { width: 13px; height: 13px; border-radius: 50%; flex: none; }
+  .cohort .meta { flex: 1; }
+  .cohort .name { font-family: var(--font-display); font-weight: 600; font-size: 1.18rem; letter-spacing: -.01em; }
+  .cohort .desc { font-size: .9rem; color: var(--ink-soft); margin-top: 2px; }
+  .cohort .count { font-family: var(--font-display); font-weight: 600; font-size: 1.7rem; color: var(--ink); line-height: 1; letter-spacing: -.02em; text-align: right; }
+  .cohort .count span { font-family: var(--font-mono); font-size: .62rem; font-weight: 400; color: var(--ink-mute); letter-spacing: .08em; display: block; margin-top: 3px; }
+  .swarm-card { margin-top: 16px; }
+  .cov-right { display: flex; flex-direction: column; gap: 16px; }
+  .donut-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .donut-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px 16px; text-align: center; box-shadow: var(--shadow-card); }
+  .donut-card .cap { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); margin-top: 10px; line-height: 1.45; }
+
+  /* ---- reveal ---- */
+  .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+
+  /* ---- responsive ---- */
+  @media (max-width: 980px) { .band-charts { grid-template-columns: 1fr; gap: 42px; } }
+  @media (max-width: 760px) {
+    .hero { padding: 40px 0 30px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 46px; }
+    .axes-grid { grid-template-columns: 1fr; gap: 30px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .cov-grid { grid-template-columns: 1fr; gap: 28px; }
+    .statcard { position: static; margin: 12px 0 0; display: inline-block; animation: none; }
+    .mock-main { transform: none; }
+  }
+  @media (max-width: 420px) { .donut-pair { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  // reveal-on-scroll, respects reduced-motion
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = Array.from(document.querySelectorAll('.rv'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach((n) => n.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((es) => {
+      es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    items.forEach((n, i) => { (n as HTMLElement).style.transitionDelay = (Math.min(i, 6) * 45) + 'ms'; io.observe(n); });
+  }
+</script>
