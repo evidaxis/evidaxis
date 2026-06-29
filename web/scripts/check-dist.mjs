@@ -74,6 +74,17 @@ for (const file of htmlFiles) {
   if (h1 > 1) errors.push(`${r}: ${h1} <h1> elements (expected 1)`);
   if (h1 === 0) warns.push(`${r}: no <h1>`);
 
+  // 5b. heading order: no skipped levels (h2 -> h4 without an h3)
+  const levels = [...html.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]));
+  let prev = 0;
+  for (const lvl of levels) {
+    if (prev !== 0 && lvl > prev + 1) {
+      errors.push(`${r}: heading level skip h${prev} -> h${lvl} (no intermediate h${prev + 1})`);
+      break;
+    }
+    prev = lvl;
+  }
+
   // GEO soft: chart-bearing pages should carry real numeric text
   const svgImg = (html.match(/role="img"/g) || []).length;
   const dataVals = (html.match(/<data value=/g) || []).length;
