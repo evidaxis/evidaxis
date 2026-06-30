@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install pinned spine runtime
-        run: python -m pip install --require-hashes=false -r spine/requirements.txt
+        run: python -m pip install -r spine/requirements.txt
 
       - name: proving-run-gate (validate · firewall · byte-reproducibility · HALT)
         run: python spine/ci_gate.py
