@@ -43,24 +43,26 @@ def _weekly(base, growth, n=30):
     return [max(0, round(base + growth * i)) for i in range(n)]
 
 
-# axis-1 commit-activity series chosen so the within-cohort robust-z signs are:
-#   RISE +0.83, WATCH +0.52, INC -0.52, TRACK -2.21  (verified offline)
+# m2 gate (z>=1 + cohort_size>=5): a 5-entity cohort with EXTREME axis-1 separation so the two
+# positive-slope outliers (rise, watch) clamp well above the z>=1 rising floor and the three
+# decliners sit clearly below. (Flat stars neutralize the axis-1 size-residualize.)
 WEEKLY = {
-    "acme/rise": _weekly(2, 1.4),    # steep up   -> z>0, recent high  -> axis1 rising
-    "acme/watch": _weekly(5, 0.7),   # up         -> z>0, recent high  -> axis1 rising
-    "acme/inc": _weekly(30, -0.4),   # mild down  -> z<0               -> axis1 not rising
-    "acme/track": _weekly(28, -1.0),  # steep down -> z<0, recent low   -> axis1 not rising
+    "acme/rise": _weekly(1, 4.0),    # extreme up -> axis1 z clamps high (>=1) -> axis1 rising
+    "acme/watch": _weekly(2, 3.0),   # extreme up -> axis1 z >= 1               -> axis1 rising
+    "acme/inc": _weekly(40, -0.6),   # declining  -> axis1 z < 0                -> not rising
+    "acme/track": _weekly(35, -1.0),  # declining  -> axis1 z < 0                -> not rising
+    "acme/ctx": _weekly(30, -0.8),   # declining  -> axis1 z < 0  (cohort padder to n=5)
 }
 
-# axis-2 OpenAlex citation series. current year (CY) is PARTIAL -> dropped by the
-# collector; 5 completed years (CY-5..CY-1) -> >=4 -> earliest dropped, fit on 4.
-# Engineered axis-2 residualized z signs (verified offline against axis2_total):
-#   RISE +3.03 (rising), WATCH -0.65, INC +0.55, TRACK -0.63.
+# axis-2 OpenAlex citation series. current year (CY) is PARTIAL -> dropped; 5 completed years
+# -> earliest (birth) dropped, fit on 4. Totals kept SIMILAR across the cohort so the axis-2
+# size-residualize is ~no-op; only RISE accelerates (the lone axis-2 riser).
 CITES = {
-    "W_RISE": {CY - 5: 5, CY - 4: 10, CY - 3: 30, CY - 2: 60, CY - 1: 120, CY: 40},    # accelerating
-    "W_WATCH": {CY - 5: 80, CY - 4: 70, CY - 3: 55, CY - 2: 40, CY - 1: 25, CY: 5},    # declining
-    "W_INC": {CY - 5: 200, CY - 4: 210, CY - 3: 205, CY - 2: 215, CY - 1: 220, CY: 50},  # flat/big
-    "W_TRACK": {CY - 5: 90, CY - 4: 60, CY - 3: 45, CY - 2: 35, CY - 1: 20, CY: 4},    # declining
+    "W_RISE": {CY - 5: 5, CY - 4: 12, CY - 3: 28, CY - 2: 55, CY - 1: 110, CY: 40},   # accelerating -> axis2 rising
+    "W_WATCH": {CY - 5: 95, CY - 4: 72, CY - 3: 50, CY - 2: 32, CY - 1: 16, CY: 5},   # declining
+    "W_INC": {CY - 5: 45, CY - 4: 46, CY - 3: 44, CY - 2: 45, CY - 1: 44, CY: 10},    # flat
+    "W_TRACK": {CY - 5: 90, CY - 4: 68, CY - 3: 46, CY - 2: 30, CY - 1: 15, CY: 4},   # declining
+    "W_CTX": {CY - 5: 85, CY - 4: 64, CY - 3: 44, CY - 2: 30, CY - 1: 16, CY: 6},     # declining
 }
 
 # Expected per-repo: (display name, work-id list, incumbent?, expected status, expected rising?)
@@ -69,6 +71,7 @@ EXPECT = {
     "acme/watch": ("Watch Tower", ["W_WATCH"], False, "watch", False),
     "acme/inc": ("Inc Engine", ["W_INC"], True, "calibration", False),
     "acme/track": ("TrackLab", ["W_TRACK"], False, "tracked", False),
+    "acme/ctx": ("Context Pad", ["W_CTX"], False, "tracked", False),
 }
 
 FLAT_STARS = 1000  # identical across the cohort -> axis-1 residualize is a no-op
@@ -167,8 +170,8 @@ def test_snapshot_written_and_entity_count(run_pipeline):
     repo = run_pipeline()
     snapshot, snap_dir = _load_snapshot(repo)
     assert snap_dir.exists()
-    assert snapshot["counts"]["entities"] == len(EXPECT) == 4
-    assert len(snapshot["entities"]) == 4
+    assert snapshot["counts"]["entities"] == len(EXPECT) == 5
+    assert len(snapshot["entities"]) == 5
     # static header fields are emitted
     assert snapshot["schema_version"] == collect.SCHEMA_VER
     assert snapshot["methodology_version"] == collect.METHODOLOGY_VERSION
@@ -205,8 +208,8 @@ def test_convergence_gate_counts(run_pipeline):
     assert c["rising"] == 1
     assert c["watch"] == 1
     assert c["calibration"] == 1
-    assert c["tracked"] == 1
-    assert c["axis2_present"] == 4
+    assert c["tracked"] == 2
+    assert c["axis2_present"] == 5
     # rising entity has 2 convergent axes; watch has exactly 1
     by = _by_repo(snap)
     assert len(by["acme/rise"]["convergent_axes"]) == 2
@@ -225,8 +228,8 @@ def test_momentum_and_percentile_bounds(run_pipeline):
         if m is not None:
             assert e["percentile"] is not None
             pcts.append(e["percentile"])
-    # all four are scored on >=1 axis here
-    assert len(pcts) == 4
+    # all five are scored on >=1 axis here
+    assert len(pcts) == 5
     assert min(pcts) == 0 and max(pcts) == 100
     # the rising entity sits at the top of the cohort by momentum
     by = _by_repo(snap)
@@ -390,9 +393,11 @@ def test_reproducibility_two_runs(run_pipeline):
 # above does not reach.
 
 WEEKLY2 = {
-    "x/single": _weekly(20, -1.0),   # declining, recent ~0 -> axis1 NOT rising
-    "x/insuff": _weekly(3, 1.2),     # rising axis1
-    "x/absent": _weekly(2, 1.0),     # rising axis1
+    # two CLOSE decliners (small spread -> tiny MAD) + one lone steep riser, so the riser's
+    # within-cohort z clamps to +3 (>= the m2 z>=1 floor) -> axis1 rising -> 'watch'.
+    "x/single": _weekly(20, -1.0),   # declining -> axis1 NOT rising -> single-axis (axis2 absent)
+    "x/absent": _weekly(20, -0.95),  # declining (close to single) -> NOT the rising outlier
+    "x/insuff": _weekly(1, 10.0),    # lone steep riser -> axis1 z clamps high (>=1) -> axis1 rising -> watch
     # "x/nodata" deliberately returns None from the faked _get_json (404 -> skipped)
 }
 # x/insuff has an OpenAlex work with only 2 completed years -> axis-2 'insufficient'.
