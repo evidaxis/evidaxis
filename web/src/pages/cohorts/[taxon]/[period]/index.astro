@@ -16,9 +16,9 @@ const { ind, sn } = Astro.props;
 const es = entitiesInCohort(sn.cohortKey);
 const path = `/cohorts/${sn.slug}/${snapshot.period}/`;
 const desc = `${sn.label} cohort by Evidaxis momentum for period ${snapshot.period}: ${es.length} open AI systems, computed on methodology ${snapshot.methodology_version} from snapshot ${snapshot.snapshot_date}.`;
-const listJson = itemListDataset({ path, name: `${sn.label} cohort momentum — ${snapshot.period}`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
+const listJson = itemListDataset({ path, name: `${sn.label} cohort momentum, ${snapshot.period}`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
 ---
-<Base title={`${sn.label} cohort momentum · ${snapshot.period} — Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path: `/industries/${ind.slug}/${sn.slug}/` }, { name: snapshot.period, path }])]}>
+<Base title={`${sn.label} cohort momentum · ${snapshot.period} · Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: ind.label, path: `/industries/${ind.slug}/` }, { name: sn.label, path: `/industries/${ind.slug}/${sn.slug}/` }, { name: snapshot.period, path }])]}>
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Cohort momentum · {snapshot.period}</p>

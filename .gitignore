@@ -14,6 +14,17 @@ __pycache__/
 .venv/
 venv/
 
+# --- test / QA artifacts (audit baseline) ---
+.coverage
+.coverage.*
+.pytest_cache/
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+mutants/
+.mutmut-cache
+html/
+
 # --- node / astro ---
 node_modules/
 web/node_modules/
@@ -27,6 +38,10 @@ BRAND-KIT.md
 ROADMAP.md
 DECISIONS.md
 MINT-STEPS.md
+MINT-PASTE.md
+AUDIT-BASELINE-TASK.md
+AUDIT-BASELINE.md
+evidaxis-genesis-deposit.zip
 
 # --- internal future-v3 architecture (spine): design-reasoning + event-ledger schemas.
 # Heavily entangled with internal review/governance notes; kept PRIVATE until v3 ships

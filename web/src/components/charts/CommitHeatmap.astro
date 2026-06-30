@@ -1,0 +1,65 @@
+---
+/**
+ * Weekly commit heatmap driven by the REAL commitSeries (provenance weekly).
+ * Intensity per cell via heatmapCells() (value / series-max). This replaces the
+ * prototype's seeded-PRNG fake path. Empty / all-zero series renders a flat
+ * faint row honestly. Recolours in the dark band (uses currentColor for cells).
+ */
+import { heatmapCells } from '../../lib/charts';
+
+export interface Props {
+  series: number[];
+  color?: string;        // base color; cells modulate opacity by intensity
+  weeks?: number;        // trailing weeks to show (default all)
+  label?: string;
+}
+const { series, color = 'var(--velocity)', weeks, label = 'weekly commits' } = Astro.props;
+const shown = weeks ? series.slice(-weeks) : series;
+const cells = heatmapCells(shown);
+const cell = 8, gap = 2;
+const cols = Math.max(1, cells.length);
+const W = cols * (cell + gap), H = cell + 2;
+const total = shown.reduce((a, b) => a + b, 0);
+const peak = shown.reduce((mx, v) => (v > mx ? v : mx), 0);
+const nonZero = shown.filter((v) => v > 0).length;
+const titleId = `ch-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `ch-d-${Math.random().toString(36).slice(2, 8)}`;
+---
+{cells.length > 0 ? (
+  <figure class="evchart">
+    <svg width="100%" height={H * 3} viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby={`${titleId} ${descId}`} preserveAspectRatio="xMinYMid meet" style={`color:${color}`}>
+      <title id={titleId}>{label}, {cells.length} weeks</title>
+      <desc id={descId}>{cells.length} weeks of commits, peak {peak} in a week, {nonZero} active weeks, {total} total.</desc>
+      {cells.map((c) => (
+        <rect x={c.index * (cell + gap)} y="1" width={cell} height={cell} rx="1.6"
+          fill="currentColor" fill-opacity={(0.1 + c.intensity * 0.88).toFixed(3)}>
+          <title>week {c.index + 1}: {c.value} commits</title>
+        </rect>
+      ))}
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt>weeks</dt><dd><data value={String(cells.length)}>{cells.length}</data></dd></div>
+        <div><dt>peak/wk</dt><dd><data value={String(peak)}>{peak}</data></dd></div>
+        <div><dt>active</dt><dd><data value={String(nonZero)}>{nonZero}</data></dd></div>
+        <div><dt>total</dt><dd><data value={String(total)}>{total}</data></dd></div>
+      </dl>
+    </figcaption>
+    <details class="chart-data">
+      <summary>Weekly commits, {cells.length} weeks</summary>
+      <table>
+        <thead><tr><th class="num">Week</th><th class="num">Commits</th></tr></thead>
+        <tbody>
+          {cells.map((c) => (
+            <tr><td class="num">{c.index + 1}</td><td class="num"><data value={String(c.value)}>{c.value}</data></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
+  </figure>
+) : (
+  <div class="chart-null" role="img" aria-label="no commit series">
+    <span class="nx">&empty;</span>
+    <span>no commit series</span>
+  </div>
+)}

@@ -1,13 +1,19 @@
 ---
-import '@fontsource/spectral/400.css';
-import '@fontsource/spectral/500.css';
-import '@fontsource/spectral/600.css';
-import '@fontsource/spectral/700.css';
-import '@fontsource/ibm-plex-sans/400.css';
-import '@fontsource/ibm-plex-sans/500.css';
-import '@fontsource/ibm-plex-sans/600.css';
-import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
+// Self-hosted fonts, latin subset only (CWV: ~10 woff2, latin-only).
+// The two LCP faces (Familjen Grotesk 600 display + IBM Plex Sans 400 body)
+// are declared in global.css against stable /fonts/ paths so they can be
+// <link rel=preload>ed by exact URL; the remaining weights load via @fontsource.
+import '@fontsource/familjen-grotesk/latin-400.css';
+import '@fontsource/familjen-grotesk/latin-500.css';
+import '@fontsource/familjen-grotesk/latin-700.css';
+import '@fontsource/familjen-grotesk/latin-400-italic.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-400-italic.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/spectral/latin-400-italic.css';
+import '@fontsource/spectral/latin-400.css';
 import '../styles/global.css';
 import { SNAP_DATE, snapshot } from '../lib/data';
 
@@ -39,7 +45,9 @@ const nav = [
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={url} />
-  <meta name="theme-color" content="#f5f3ec" />
+  <meta name="theme-color" content="#f7f7f5" />
+  <link rel="preload" href="/fonts/familjen-grotesk-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   <meta property="og:type" content={ogType} />
   <meta property="og:site_name" content="Evidaxis" />
   <meta property="og:title" content={title} />
@@ -61,9 +69,10 @@ const nav = [
     <div class="wrap bar">
       <a href="/" class="brand" aria-label="Evidaxis home">
         <svg class="glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 21 L12 12 L21 4" stroke="var(--citation)" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M3 21 L12 12 L21 19" stroke="var(--velocity)" stroke-width="1.6" stroke-linecap="round"/>
-          <circle cx="12" cy="12" r="2.4" fill="var(--ink)"/>
+          <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="var(--ink)" stroke-width="1.5"/>
+          <path d="M6 18 L18 6" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="7.4" cy="7.4" r="2" fill="var(--velocity)"/>
+          <circle cx="16.6" cy="16.6" r="2" fill="var(--citation)"/>
         </svg>
         Evidaxis
       </a>
@@ -83,15 +92,16 @@ const nav = [
         <div>
           <div class="brand" style="font-size:1.05rem;margin-bottom:.5rem">
             <svg class="glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="width:18px;height:18px">
-              <path d="M3 21 L12 12 L21 4" stroke="var(--citation)" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M3 21 L12 12 L21 19" stroke="var(--velocity)" stroke-width="1.6" stroke-linecap="round"/>
-              <circle cx="12" cy="12" r="2.4" fill="var(--ink)"/>
+              <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="var(--ink)" stroke-width="1.5"/>
+              <path d="M6 18 L18 6" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="7.4" cy="7.4" r="2" fill="var(--velocity)"/>
+              <circle cx="16.6" cy="16.6" r="2" fill="var(--citation)"/>
             </svg>Evidaxis
           </div>
           <p class="muted" style="font-size:.86rem;max-width:30ch">An independent observatory of momentum in open AI systems. Measurements released to the public domain under CC0.</p>
         </div>
         <div>
-          <h4>Institute</h4>
+          <p class="foot-h">Institute</p>
           <a href="/methodology/current/">Methodology</a>
           <a href="/glossary/">Glossary</a>
           <a href="/coverage/">Coverage atlas</a>
@@ -99,7 +109,7 @@ const nav = [
           <a href="/about/">About &amp; integrity</a>
         </div>
         <div>
-          <h4>Open data</h4>
+          <p class="foot-h">Open data</p>
           <a href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Snapshot JSON</a>
           <a href="/llms.txt">llms.txt</a>
           <a href="https://github.com/evidaxis">GitHub</a>

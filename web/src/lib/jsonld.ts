@@ -7,10 +7,17 @@ const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
 const ORG_ID = `${SITE}/#org`;
 const CATALOG_ID = `${SITE}/#catalog`;
 const FOUNDED = '2026-06';
+// Genesis dataset DOI (Zenodo). The DOI belongs to the genesis SNAPSHOT dataset, not the org,
+// so it is emitted on that snapshot's Dataset node (identifier + sameAs), not in org sameAs.
+// Future weekly snapshots mint their own version DOIs under the concept DOI.
+const GENESIS_SNAPSHOT = '2026-06-27';
+const GENESIS_DOI = '10.5281/zenodo.21076012';
 // sameAs grows as off-site profiles land. Wikidata QID / Zenodo DOI / X / LinkedIn appended here.
 const SAME_AS = [
   'https://github.com/evidaxis',
-  'https://huggingface.co/evidaxis',
+  // huggingface.co/evidaxis dropped from sameAs 2026-06-30: the HF org publicly lists a named
+  // person (a person-free leak via structured data) and has no public datasets/models yet.
+  // Re-add once the HF org is both person-free and populated.
 ];
 
 const typeForEntity = (t: string) =>
@@ -89,7 +96,7 @@ export function entityGraph(e: Entity, snap: Snapshot) {
     '@type': typeForEntity(e.entity_type),
     '@id': `${SITE}/e/${e.entity_id}/#entity`,
     name: e.name,
-    description: `${e.name} — an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
+    description: `${e.name}, an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
     codeRepository: `https://github.com/${e.github_repo}`,
     url: e.homepage ?? `https://github.com/${e.github_repo}`,
     sameAs: [`https://github.com/${e.github_repo}`, ...(e.homepage ? [e.homepage] : [])],
@@ -172,6 +179,8 @@ export function itemListDataset(opts: {
 }
 
 export function snapshotDataset(snap: Snapshot) {
+  const isGenesis = snap.snapshot_date === GENESIS_SNAPSHOT;
+  const doiUrl = `https://doi.org/${GENESIS_DOI}`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -183,7 +192,10 @@ export function snapshotDataset(snap: Snapshot) {
         description:
           `Complete Evidaxis measurement snapshot for ${snap.snapshot_date}: momentum scores and per-axis signals for ${snap.counts.entities} tracked AI systems across ${Object.keys(snap.cohorts).length} cohorts, computed on methodology ${snap.methodology_version}. Released to the public domain under CC0.`,
         url: `${SITE}/snapshots/${snap.snapshot_date}/`,
-        identifier: `evidaxis-snapshot-${snap.snapshot_date}`,
+        identifier: isGenesis
+          ? { '@type': 'PropertyValue', propertyID: 'DOI', value: GENESIS_DOI, url: doiUrl }
+          : `evidaxis-snapshot-${snap.snapshot_date}`,
+        ...(isGenesis ? { sameAs: doiUrl } : {}),
         license: CC0,
         isAccessibleForFree: true,
         creator: { '@id': ORG_ID },
@@ -195,6 +207,31 @@ export function snapshotDataset(snap: Snapshot) {
         measurementTechnique: `${SITE}/methodology/current/`,
         citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
         keywords: ['AI systems', 'momentum', 'open data', 'software ecosystems'],
+        // Canonical machine surface: the variables this dataset measures. Only the
+        // primary, universally-present quantities are declared here; per-entity
+        // derived signals are emitted on each entity page and only when shipped
+        // (reserved signals are never published as a number).
+        variableMeasured: [
+          {
+            '@type': 'PropertyValue',
+            name: 'Evidaxis Momentum Score',
+            description: 'Within-pilot percentile of the combined two-axis signal.',
+            minValue: 0, maxValue: 100, unitText: 'points',
+            measurementTechnique: `${SITE}/methodology/current/`,
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Development-velocity z-score (within cohort)',
+            description: 'Log-slope of weekly commit activity, robust-z normalized within the cohort.',
+            measurementTechnique: `${SITE}/methodology/current/#velocity`,
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'Citation-momentum z-score (within cohort)',
+            description: 'Log-slope of yearly citations to the system paper, robust-z normalized within the cohort. Absent for systems with no measurable citation axis.',
+            measurementTechnique: `${SITE}/methodology/current/#citation`,
+          },
+        ],
         distribution: [
           { '@type': 'DataDownload', name: 'Full snapshot (JSON)', contentUrl: `${SITE}/snapshots/${snap.snapshot_date}/snapshot.json`, encodingFormat: 'application/json' },
         ],

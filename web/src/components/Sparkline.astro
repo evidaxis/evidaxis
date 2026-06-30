@@ -1,4 +1,10 @@
 ---
+/**
+ * SSR sparkline. Extended (M2): now emits role="img" + <title>/<desc> and a
+ * <figcaption> with a structured <dl> of the numeric range, so the values are
+ * machine-readable in the static HTML, not inferred from the path. When wrapped
+ * inline (caption={false}) it keeps the bare-svg behaviour the old callers use.
+ */
 export interface Props {
   values: number[];
   width?: number;
@@ -7,13 +13,19 @@ export interface Props {
   fill?: boolean;
   dot?: boolean;        // mark the last point
   label?: string;
+  caption?: boolean;    // wrap in <figure> + <figcaption><dl> (default off, back-compat)
+  unit?: string;        // unit for the range dl ('commits/wk', 'citations', ...)
 }
-const { values, width = 132, height = 34, color = 'var(--ink)', fill = true, dot = true, label } = Astro.props;
+const {
+  values, width = 132, height = 34, color = 'var(--ink)',
+  fill = true, dot = true, label, caption = false, unit = '',
+} = Astro.props;
 const pad = 3;
 const pts = values.filter((v) => typeof v === 'number' && isFinite(v));
 let path = '', area = '', lastX = 0, lastY = 0;
+let min = 0, max = 0;
 if (pts.length >= 2) {
-  const min = Math.min(...pts), max = Math.max(...pts);
+  min = Math.min(...pts); max = Math.max(...pts);
   const span = max - min || 1;
   const stepX = (width - pad * 2) / (pts.length - 1);
   const coords = pts.map((v, i) => {
@@ -25,14 +37,41 @@ if (pts.length >= 2) {
   area = `${path} L${coords[coords.length - 1][0].toFixed(1)} ${height - pad} L${pad} ${height - pad} Z`;
   [lastX, lastY] = coords[coords.length - 1];
 }
+const aria = label ?? 'trend';
+const titleId = `sl-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `sl-d-${Math.random().toString(36).slice(2, 8)}`;
+const last = pts.length ? pts[pts.length - 1] : null;
 ---
 {pts.length >= 2 ? (
-  <svg class="spark" width={width} height={height} viewBox={`0 0 ${width} ${height}`}
-       role="img" aria-label={label ?? 'trend'} preserveAspectRatio="none">
-    {fill && <path d={area} fill={color} fill-opacity="0.10" />}
-    <path d={path} fill="none" stroke={color} stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
-    {dot && <circle cx={lastX} cy={lastY} r="2.2" fill={color} />}
-  </svg>
+  caption ? (
+    <figure style="margin:0">
+      <svg class="spark" width={width} height={height} viewBox={`0 0 ${width} ${height}`}
+           role="img" aria-labelledby={`${titleId} ${descId}`} preserveAspectRatio="none">
+        <title id={titleId}>{aria}</title>
+        <desc id={descId}>{pts.length} points, range {min} to {max}{unit ? ` ${unit}` : ''}.</desc>
+        {fill && <path d={area} fill={color} fill-opacity="0.10" />}
+        <path d={path} fill="none" stroke={color} stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+        {dot && <circle cx={lastX} cy={lastY} r="2.2" fill={color} />}
+      </svg>
+      <figcaption class="chart-cap">
+        <dl class="chart-dl">
+          <div><dt>min</dt><dd><data value={String(min)}>{min}{unit ? ` ${unit}` : ''}</data></dd></div>
+          <div><dt>max</dt><dd><data value={String(max)}>{max}{unit ? ` ${unit}` : ''}</data></dd></div>
+          <div><dt>latest</dt><dd><data value={String(last)}>{last}{unit ? ` ${unit}` : ''}</data></dd></div>
+          <div><dt>points</dt><dd><data value={String(pts.length)}>{pts.length}</data></dd></div>
+        </dl>
+      </figcaption>
+    </figure>
+  ) : (
+    <svg class="spark" width={width} height={height} viewBox={`0 0 ${width} ${height}`}
+         role="img" aria-labelledby={`${titleId} ${descId}`} preserveAspectRatio="none">
+      <title id={titleId}>{aria}</title>
+      <desc id={descId}>{pts.length} points, range {min} to {max}{unit ? ` ${unit}` : ''}.</desc>
+      {fill && <path d={area} fill={color} fill-opacity="0.10" />}
+      <path d={path} fill="none" stroke={color} stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" />
+      {dot && <circle cx={lastX} cy={lastY} r="2.2" fill={color} />}
+    </svg>
+  )
 ) : (
   <span class="mono muted" style="font-size:.72rem">no series</span>
 )}

@@ -1,30 +1,62 @@
 /* ============================================================================
-   Evidaxis — design system. "The instrument, not the brochure."
-   Archival paper · warm ink · two signal colours (velocity=teal, citation=ochre).
-   Spectral (journal serif) / IBM Plex Sans (body) / IBM Plex Mono (every datum).
+   Evidaxis - design system v-final. "The instrument, not the brochure."
+   Cool instrument canvas · two signal colours (velocity=teal, citation=amber)
+   + one slate accent. Familjen Grotesk (display) / IBM Plex Sans (body) /
+   IBM Plex Mono (every datum). Spectral kept only for italic accents.
    ========================================================================== */
-:root {
-  --paper:        #f5f3ec;
-  --surface:      #fcfbf7;
-  --surface-2:    #efece2;
-  --ink:          #1b1813;
-  --ink-soft:     #4a443a;
-  --ink-mute:     #756d5f;
-  --hairline:     #e0dac d;
-  --hairline:     #e2dcce;
-  --hairline-2:   #cabf a8;
-  --hairline-2:   #cdc2ab;
 
-  --velocity:     #0c6e63;   /* development-velocity axis */
+/* The 2 LCP faces are self-declared against stable /fonts/ paths so they can be
+   <link rel=preload>ed by exact URL (the hashed @fontsource bundle URLs can't).
+   The remaining weights load via @fontsource latin-subset imports in Base.astro. */
+@font-face {
+  font-family: 'Familjen Grotesk';
+  font-style: normal; font-weight: 600; font-display: swap;
+  src: url(/fonts/familjen-grotesk-latin-600-normal.woff2) format('woff2'),
+       url(/fonts/familjen-grotesk-latin-600-normal.woff) format('woff');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url(/fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2'),
+       url(/fonts/ibm-plex-sans-latin-400-normal.woff) format('woff');
+}
+
+:root {
+  /* ---- cool INSTRUMENT canvas (v-final palette) ---- */
+  --paper:        #f7f7f5;
+  --paper-2:      #f0f0ec;
+  --surface:      #ffffff;
+  --ink:          #191814;
+  --ink-soft:     #46443d;
+  --ink-mute:     #5f584a;   /* darkened for WCAG-AA mono caption contrast */
+  --hairline:     #e4e2d9;
+  --grid:         #e7e5dc;
+
+  --velocity:     #0c6e63;   /* teal, development-velocity axis */
+  --citation:     #b0641c;   /* amber, citation-momentum axis (data only) */
+  --slate:        #4b5d8f;   /* single cool slate accent */
+  --rise-wash:    rgba(12,110,99,.055);
+
+  /* cohort accents (mirror the signal colours + slate) */
+  --c1:           #0c6e63;
+  --c2:           #b0641c;
+  --c3:           #4b5d8f;
+
+  --shadow-card:  0 1px 2px rgba(25,24,20,.04), 0 8px 28px -18px rgba(25,24,20,.22);
+  --shadow-float: 0 2px 6px rgba(25,24,20,.06), 0 24px 60px -28px rgba(25,24,20,.34);
+
+  /* ---- aliases: keep old var names alive so existing pages render unchanged --- */
+  --surface-2:    var(--paper-2);
+  --hairline-2:   #cdc8bb;   /* slightly stronger divider on the cool canvas */
   --velocity-ink: #0a564d;
-  --citation:     #b0641c;   /* citation-momentum axis */
   --citation-ink: #8a4d12;
-  --rising:       #0c6e63;   /* convergence badge */
+  --rising:       var(--velocity);
   --neg:          #9a3b2e;
 
-  --font-display: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-display: 'Familjen Grotesk', system-ui, -apple-system, sans-serif;
   --font-body:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --font-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-serif:   'Spectral', Georgia, 'Times New Roman', serif;
 
   --maxw: 1080px;
   --maxw-text: 720px;
@@ -33,6 +65,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { overflow-x: hidden; }
 body {
   margin: 0;
   background: var(--paper);
@@ -43,23 +76,27 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;            /* no element forces a horizontal scroll on mobile */
 }
+/* media/embeds never exceed their column (the rank table scrolls inside its own
+   overflow-x:auto wrapper, so its min-width is intentionally exempt) */
+img, svg, video, pre, canvas { max-width: 100%; }
 
-/* faint graph-paper texture — the observatory grid, barely there */
+/* faint graph-paper texture - the observatory grid, barely there */
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background-image:
-    linear-gradient(var(--hairline) 1px, transparent 1px),
-    linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 32px 32px;
-  opacity: .35;
+  opacity: .5;
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
           mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
 }
 
-h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.15;
-  letter-spacing: -0.01em; color: var(--ink); margin: 0 0 .4em; }
-h1 { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.1rem); font-weight: 700; letter-spacing: -0.02em; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.12;
+  letter-spacing: -0.02em; color: var(--ink); margin: 0 0 .4em; }
+h1 { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.1rem); font-weight: 600; letter-spacing: -0.025em; }
 h2 { font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.9rem); }
 h3 { font-size: 1.18rem; }
 p { margin: 0 0 1rem; max-width: var(--maxw-text); }
@@ -74,6 +111,7 @@ hr { border: none; border-top: 1px solid var(--hairline-2); margin: 2.5rem 0; }
   text-transform: uppercase; color: var(--ink-mute); }
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+@media (max-width: 760px) { .wrap { padding: 0 18px; } }
 .prose { max-width: var(--maxw-text); }
 .muted { color: var(--ink-mute); }
 
@@ -95,7 +133,7 @@ footer { margin-top: 5rem; border-top: 1px solid var(--hairline-2); background: 
 footer .wrap { padding-top: 2.4rem; padding-bottom: 3rem; }
 footer .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
 @media (max-width: 720px){ footer .cols { grid-template-columns: 1fr 1fr; } }
-footer h4 { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+footer .foot-h { margin: 0 0 .55rem; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
 footer a { display: block; color: var(--ink-soft); border: none; font-size: .9rem; margin-bottom: .3rem; }
 footer a:hover { color: var(--velocity); }
 
@@ -111,12 +149,37 @@ footer a:hover { color: var(--velocity); }
 .badge.calibration::before { background: var(--ink-mute); }
 .badge.tracked::before, .badge.single-axis::before { background: var(--hairline-2); }
 
-/* ---- cards / panels ------------------------------------------------------ */
-.panel { background: var(--surface); border: 1px solid var(--hairline-2); border-radius: var(--r); }
-.card { background: var(--surface); border: 1px solid var(--hairline-2); border-radius: var(--r);
-  padding: 18px 20px; transition: border-color .15s, transform .15s, box-shadow .15s; }
+/* ---- cards / panels (shadowed, 12px radius, browser-chrome framing) ------ */
+.panel { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px;
+  box-shadow: var(--shadow-card); overflow: hidden; }
+.panel.float { box-shadow: var(--shadow-float); }
+.panel-bar { display: flex; align-items: center; gap: 8px; padding: 11px 14px;
+  border-bottom: 1px solid var(--hairline); background: linear-gradient(var(--surface), var(--paper)); }
+.panel-bar .tl { display: flex; gap: 6px; }
+.panel-bar .tl i { width: 9px; height: 9px; border-radius: 50%; background: var(--hairline); display: block; }
+.panel-bar .addr { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); margin-left: 6px;
+  background: var(--paper); border: 1px solid var(--hairline); border-radius: 6px; padding: 3px 9px; }
+.panel-bar .tag { font-family: var(--font-mono); font-size: 10px; color: var(--velocity);
+  letter-spacing: .08em; white-space: nowrap; margin-left: auto; }
+.panel-body { padding: 18px; }
+
+.card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px;
+  box-shadow: var(--shadow-card); padding: 18px 20px;
+  transition: border-color .15s, transform .15s, box-shadow .15s; }
 a.card { color: inherit; }
-a.card:hover { border-color: var(--hairline-2); transform: translateY(-2px); box-shadow: 0 6px 22px -16px rgba(40,30,10,.5); }
+a.card:hover { border-color: color-mix(in srgb, var(--velocity) 30%, var(--hairline));
+  transform: translateY(-2px); box-shadow: var(--shadow-float); }
+
+/* floating stat-card (browser-chrome mockup callouts) */
+.statcard { background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px;
+  box-shadow: var(--shadow-float); padding: 12px 14px; }
+.statcard .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); }
+.statcard .v { font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.05;
+  margin-top: 3px; letter-spacing: -.02em; }
+.statcard .v.teal { color: var(--velocity); }
+.statcard .sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft); margin-top: 3px; }
+.chk { color: var(--velocity); font-weight: 600; }
 
 /* ---- data tables --------------------------------------------------------- */
 .table { width: 100%; border-collapse: collapse; font-size: .9rem; }
@@ -157,7 +220,7 @@ a.card:hover { border-color: var(--hairline-2); transform: translateY(-2px); box
 .section + .section { border-top: 1px solid var(--hairline); }
 .lead { font-size: 1.16rem; line-height: 1.55; color: var(--ink-soft); font-family: var(--font-display); font-weight: 400; }
 
-/* one calm orchestrated reveal — content is ALWAYS visible (never hidden behind
+/* one calm orchestrated reveal - content is ALWAYS visible (never hidden behind
    an animation); we only animate a gentle settle via @starting-style where supported. */
 .reveal { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) {
@@ -176,4 +239,129 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
 .prose h2 { margin-top: 2.2rem; }
 
 /* keyboard focus */
-:focus-visible { outline: 2px solid var(--velocity); outline-offset: 2px; border-radius: 2px; }
+:focus-visible { outline: 2px solid var(--velocity); outline-offset: 3px; border-radius: 3px; }
+
+/* ============================================================================
+   v-final additions - section numbering, how-to-read, axis chips, dark band.
+   ========================================================================== */
+
+/* ---- section numbering (sec-num) ---------------------------------------- */
+.sec-num { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em;
+  color: var(--velocity); display: inline-flex; align-items: center; gap: 8px; }
+.sec-num::before { content: ""; width: 22px; height: 1px; background: var(--velocity); opacity: .55; }
+
+/* eyebrow tick (matches proto) */
+.eyebrow::before { content: ""; display: inline-block; width: 18px; height: 1px;
+  background: var(--ink-mute); opacity: .6; margin-right: 9px; vertical-align: middle; }
+
+/* ---- how-to-read caption ------------------------------------------------- */
+.howto { font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); line-height: 1.5;
+  display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; }
+.howto::before { content: "\22B3"; color: var(--velocity); flex: none; }
+
+/* ---- two-axes instrument: axis chips + gate note ------------------------- */
+.axis-chip { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em;
+  text-transform: uppercase; padding: 6px 11px; border-radius: 7px; white-space: nowrap;
+  font-weight: 500; align-self: start; }
+.axis-chip.vel { color: var(--velocity); background: var(--rise-wash); border: 1px solid rgba(12,110,99,.25); }
+.axis-chip.cit { color: var(--citation); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
+.axis-chip.gate { color: var(--ink-mute); background: var(--paper-2); border: 1px solid var(--hairline); }
+.gate-note { margin-top: 26px; font-size: .95rem; color: var(--ink-soft); background: var(--paper-2);
+  border: 1px solid var(--hairline); border-left: 2px solid var(--velocity); border-radius: 0 10px 10px 0;
+  padding: 16px 18px; }
+.gate-note b { color: var(--ink); }
+
+/* section sub-headline */
+.sec-sub { color: var(--ink-soft); max-width: 62ch; font-size: 1.04rem; margin: 14px 0 0; }
+
+/* ============================================================================
+   DARK SIGNATURE BAND (V3) - midnight retheme. Charts inside inherit the
+   re-mapped --ink/--surface/--velocity vars so SSR SVGs recolour automatically.
+   ========================================================================== */
+.band { background: #14140f; color: #efe9dc; border-top: none;
+  position: relative; overflow: hidden; padding: 96px 0 100px;
+  /* retheme tokens for everything rendered inside the band */
+  --ink:        #f2ece0;
+  --ink-soft:   #cdc6b6;
+  --ink-mute:   #9b9482;
+  --surface:    #14140f;   /* dot stroke = bg */
+  --hairline:   #2a2a22;
+  --grid:       #2d2d24;
+  --c1:         #27c2ad;
+  --c2:         #f0982f;
+  --c3:         #8ea0e6;
+  --velocity:   #27c2ad;
+  --citation:   #f0982f;
+  --slate:      #8ea0e6;
+  --rise-wash:  rgba(39,194,173,.16);
+}
+.band::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(820px 480px at 72% 30%, rgba(39,194,173,.13), transparent 62%),
+    radial-gradient(680px 420px at 22% 78%, rgba(240,152,47,.09), transparent 60%); }
+.band .wrap { position: relative; z-index: 1; }
+.band .sec-num { color: #27c2ad; display: block; text-align: center; margin-bottom: 14px; }
+.band .sec-num::before { display: none; }
+.band-head { text-align: center; max-width: 32ch; margin: 0 auto 14px; }
+.band-head h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em;
+  font-size: clamp(2.1rem, 4vw, 3.4rem); color: #f2ece0; line-height: 1.08; }
+.band-sub { text-align: center; color: #cdc6b6; max-width: 58ch; margin: 0 auto 50px;
+  font-size: 1.05rem; line-height: 1.62; }
+.band-charts { display: grid; grid-template-columns: 1.32fr 1fr; gap: 46px; align-items: center; }
+@media (max-width: 760px){ .band-charts { grid-template-columns: 1fr; gap: 36px; } }
+.band-chart-ttl { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: #9b9482; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px; }
+.band-chart-ttl::before { content: ""; width: 18px; height: 1px; background: #3a3a30; }
+/* stronger halo on dark-band dots (entrance/glow is JS-optional) */
+.band .glow figure svg circle { filter: drop-shadow(0 0 6px rgba(255,255,255,.34)); }
+
+/* ============================================================================
+   CHART COMPONENT SHELL (SSR charts in components/charts/*). Every chart is a
+   <figure> with a visible structured <figcaption><dl> + a collapsed-but-crawlable
+   <details><table>. currentColor + the signal vars let charts recolour inside
+   the dark .band automatically.
+   ========================================================================== */
+.evchart { margin: 0; color: var(--ink); }
+.evchart > svg { display: block; width: 100%; height: auto; }
+.evchart .svgtxt { font-family: var(--font-mono); }
+/* Rising-quadrant wash. Use a LITERAL rgba (not var()): headless Chromium and
+   some non-CSS-aware SVG paint paths fail to resolve a custom property whose
+   value is functional rgba() on the `fill` property / presentation attribute,
+   rendering the rect solid black. The dark-band variant overrides below. */
+.evchart .rise-wash { fill: rgba(12,110,99,.055); }
+.band .evchart .rise-wash { fill: rgba(39,194,173,.16); }
+
+.chart-cap { margin-top: 9px; }
+.chart-dl { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0;
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); }
+.chart-dl > div { display: inline-flex; align-items: baseline; gap: 5px; }
+.chart-dl dt { letter-spacing: .06em; text-transform: uppercase; font-size: 9.5px; }
+.chart-dl dd { margin: 0; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 500; }
+.chart-dl dd data { font-variant-numeric: tabular-nums; }
+.chart-dl .teal { color: var(--velocity); }
+.chart-dl .amber { color: var(--citation); }
+.chart-dl .slate { color: var(--slate); }
+.chart-verdict { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft);
+  margin-top: 6px; line-height: 1.5; }
+
+.chart-data { margin-top: 8px; }
+.chart-data > summary { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-mute); cursor: pointer; list-style: revert; }
+.chart-data > summary:hover { color: var(--velocity); }
+.chart-data table { width: 100%; border-collapse: collapse; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 11px; }
+.chart-data th, .chart-data td { text-align: left; padding: 4px 8px;
+  border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+.chart-data th { font-weight: 500; font-size: 9.5px; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--ink-mute); }
+.chart-data td { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.chart-data td.num, .chart-data th.num { text-align: right; }
+
+/* honest null-axis state */
+.chart-null { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; min-height: 90px; border: 1px dashed var(--hairline-2); border-radius: 10px;
+  background: repeating-linear-gradient(45deg, transparent, transparent 7px,
+    color-mix(in srgb, var(--ink-mute) 5%, transparent) 7px, color-mix(in srgb, var(--ink-mute) 5%, transparent) 8px);
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); text-align: center; padding: 14px; }
+.chart-null .nx { font-size: 15px; opacity: .55; }

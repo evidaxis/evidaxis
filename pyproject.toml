@@ -1,0 +1,55 @@
+# Evidaxis — Python audit-baseline tooling config (pytest / coverage / ruff / mypy).
+# Added by the investor-grade audit baseline (AUDIT-BASELINE.md). The collector and
+# spine are stdlib-first; this file only configures the QA toolchain, it ships no runtime deps.
+
+[tool.pytest.ini_options]
+# Local full run covers etl/ (public) + spine/ (gitignored, local discipline).
+# Public CI invokes `pytest tests/` explicitly so it never needs the gitignored spine/.
+testpaths = ["tests", "spine/tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-q -ra"
+filterwarnings = ["error::DeprecationWarning:evidaxis.*"]
+
+[tool.coverage.run]
+branch = true
+source = ["etl", "spine"]
+omit = ["*/.venv/*", "*/tests/*", "*/genesis-deposit/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = ['if __name__ == "__main__":', "raise NotImplementedError"]
+
+[tool.ruff]
+line-length = 200            # the collector intentionally uses dense, comment-rich lines
+target-version = "py314"
+extend-exclude = [".venv", "spine/.venv", "web", "node_modules", "genesis-deposit/code"]
+
+[tool.ruff.lint]
+# High-signal ruleset: real defects (pyflakes F, bugbear B, pylint-errors PLE,
+# syntax E9, ruff RUF). Stylistic multi-statement rules (E70x) are intentionally
+# NOT selected — the dense one-line style is a deliberate author choice.
+select = ["F", "B", "E9", "PLE", "RUF"]
+ignore = ["B008"]
+
+[tool.ruff.lint.per-file-ignores]
+# etl/collect.py and etl/archive_pin.py are BYTE-FROZEN by the genesis Zenodo DOI
+# (a verbatim copy lives in genesis-deposit/code/, enforced by tests/test_genesis_deposit_sync.py).
+# They carry a few pre-existing cosmetic findings (unused local, zip without strict=,
+# ambiguous-char comment, empty f-string) that CANNOT be fixed without re-depositing
+# under a new versioned DOI. Accepted as a documented baseline (see AUDIT-BASELINE.md);
+# clean them in the next deposit revision, not in place.
+"etl/collect.py" = ["B007", "B905", "F841", "F541", "RUF003"]
+"etl/archive_pin.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.14"
+ignore_missing_imports = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+# Lenient baseline: catch real type errors on annotated code without demanding
+# full annotation coverage of the day-1 build slice. Tighten in a later pass.
+check_untyped_defs = true
+exclude = ['(^|/)\.venv/', '^genesis-deposit/', '^web/', '^tests/', '^spine/tests/']

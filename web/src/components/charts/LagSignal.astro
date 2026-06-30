@@ -1,0 +1,34 @@
+---
+/**
+ * RESERVE — code-leads-citation lag. Renders the honest reserved state with the
+ * machine-readable reason from derived.ts. No number is invented: the visible
+ * reserved row IS the rigor story (DESIGN-PORT-PLAN.md §1). The reason is real
+ * (citation series too short / axis absent for cross-correlation).
+ */
+import { lag } from '../../lib/derived';
+import SnapshotProvenance from './SnapshotProvenance.astro';
+const sig = lag();
+---
+<figure class="evchart reserved-sig" role="note" aria-label={`code-leads-citation lag reserved: ${sig.reason}`}>
+  <div class="rhead">
+    <span class="rname mono">code-leads-citation lag</span>
+    <span class="rtag mono">reserved</span>
+  </div>
+  <p class="rreason">reserved: {sig.reason}</p>
+  <figcaption class="chart-cap">
+    <dl class="chart-dl">
+      <div><dt>status</dt><dd><data value="reserved">reserved</data></dd></div>
+      <div><dt>value</dt><dd>insufficient data</dd></div>
+    </dl>
+    <SnapshotProvenance />
+  </figcaption>
+</figure>
+<style>
+  .reserved-sig { color: var(--ink); border: 1px dashed var(--hairline-2); border-radius: 10px; padding: 12px 14px;
+    background: color-mix(in srgb, var(--surface-2) 35%, transparent); }
+  .reserved-sig .rhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .reserved-sig .rname { font-size: 10px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); }
+  .reserved-sig .rtag { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute);
+    border: 1px solid var(--hairline-2); border-radius: 999px; padding: 1px 8px; }
+  .reserved-sig .rreason { margin: 8px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+</style>

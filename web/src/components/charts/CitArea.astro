@@ -1,0 +1,62 @@
+---
+/**
+ * Cumulative citation area from citationSeries(e) (the watch-twin "axis that
+ * passes" panel). Fallback honest null state when the citation axis is absent.
+ */
+import { scaleLinear, linePath, areaPath } from '../../lib/charts';
+import { citationSeries } from '../../lib/data';
+import type { Entity } from '../../lib/data';
+
+export interface Props {
+  entity: Entity;
+  color?: string;
+  width?: number;
+  height?: number;
+}
+const { entity, color = 'var(--citation)', width = 240, height = 52 } = Astro.props;
+const a2 = entity.axes.openalex_citation_momentum;
+const present = a2.status === 'present';
+const raw = present ? citationSeries(entity) : [];
+
+// cumulative
+let acc = 0;
+const cum = raw.map((s) => ({ year: s.year, n: (acc += s.n) }));
+const hasData = cum.length >= 2;
+
+const m = { t: 6, r: 4, b: 14, l: 4 };
+const iw = width - m.l - m.r, ih = height - m.t - m.b;
+const max = Math.max(1, ...cum.map((s) => s.n));
+const bw = cum.length > 1 ? iw / (cum.length - 1) : 0;
+const sy = scaleLinear([0, max], [m.t + ih, m.t]);
+const pts = cum.map((s, i) => ({ x: m.l + i * bw, y: sy(s.n) }));
+const baseline = m.t + ih;
+const titleId = `ca-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `ca-d-${Math.random().toString(36).slice(2, 8)}`;
+---
+{present && hasData ? (
+  <figure class="evchart" style={`color:${color}`}>
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`} preserveAspectRatio="none">
+      <title id={titleId}>Cumulative citations</title>
+      <desc id={descId}>Cumulative citations: {cum.map((s) => `${s.year} ${s.n}`).join(', ')}.</desc>
+      <path d={areaPath(pts, baseline)} fill="currentColor" fill-opacity="0.13" />
+      <path d={linePath(pts)} fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      {pts.map((p) => <circle cx={p.x} cy={p.y} r="2" fill="currentColor" stroke="var(--surface)" stroke-width="1" />)}
+      <text x={width - 3} y={height - 3} text-anchor="end" font-size="6.5" fill="currentColor" class="svgtxt">rising</text>
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt class="amber">cumulative</dt><dd class="amber"><data value={String(cum[cum.length - 1].n)}>{cum[cum.length - 1].n}</data></dd></div>
+        <div><dt>years</dt><dd><data value={String(cum.length)}>{cum.length}</data></dd></div>
+      </dl>
+    </figcaption>
+    <details class="chart-data">
+      <summary>Cumulative citations by year</summary>
+      <table>
+        <thead><tr><th>Year</th><th class="num">Cumulative</th></tr></thead>
+        <tbody>{cum.map((s) => (<tr><td><time datetime={String(s.year)}>{s.year}</time></td><td class="num"><data value={String(s.n)}>{s.n}</data></td></tr>))}</tbody>
+      </table>
+    </details>
+  </figure>
+) : (
+  <div class="chart-null" role="img" aria-label="no citation axis"><span class="nx">&empty;</span><span>no citation axis</span></div>
+)}

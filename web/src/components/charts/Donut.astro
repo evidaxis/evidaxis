@@ -1,0 +1,42 @@
+---
+/**
+ * Single static donut showing one count-ratio as a percentage. Two intended
+ * uses (the page passes the pair): convergence % = counts.rising / counts.entities,
+ * coverage % = counts.axis2_present / counts.entities. Static SSR arc via
+ * donutDash(); the % text and the raw count are both in the HTML.
+ */
+import { donutDash } from '../../lib/charts';
+
+export interface Props {
+  numerator: number;
+  denominator: number;
+  label: string;            // 'convergence' | 'axis coverage'
+  color?: string;
+  size?: number;
+}
+const { numerator, denominator, label, color = 'currentColor', size = 132 } = Astro.props;
+const pct = denominator > 0 ? (numerator / denominator) * 100 : 0;
+const cx = size / 2, cy = size / 2, r = size / 2 - 12;
+const dash = donutDash(pct, r);
+const pctRounded = Math.round(pct);
+const titleId = `dn-t-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="evchart" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+  <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-labelledby={titleId}>
+    <title id={titleId}>{label}: {pctRounded} percent ({numerator} of {denominator})</title>
+    <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--hairline)" stroke-width="9" />
+    {numerator > 0 && (
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} stroke-width="9" stroke-linecap="round"
+        stroke-dasharray={dash.dashArray} stroke-dashoffset={dash.dashOffset}
+        transform={`rotate(-90 ${cx} ${cy})`} />
+    )}
+    <text x={cx} y={cy - 2} text-anchor="middle" dominant-baseline="middle" font-size={size * 0.26} font-weight="600" fill="var(--ink)" style="font-family:var(--font-display)">{pctRounded}%</text>
+    <text x={cx} y={cy + size * 0.17} text-anchor="middle" font-size={size * 0.08} fill="var(--ink-mute)" class="svgtxt">{numerator}/{denominator}</text>
+  </svg>
+  <figcaption class="chart-cap">
+    <dl class="chart-dl" style="justify-content:center">
+      <div><dt>{label}</dt><dd><data value={String(Number(pct.toFixed(1)))}>{pctRounded}%</data></dd></div>
+      <div><dt>count</dt><dd><data value={String(numerator)}>{numerator}</data> of <data value={String(denominator)}>{denominator}</data></dd></div>
+    </dl>
+  </figcaption>
+</figure>

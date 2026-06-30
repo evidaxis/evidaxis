@@ -16,6 +16,7 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
+      filter: (page) => !page.includes('/charttest'),
       serialize(item) {
         const u = item.url;
         item.lastmod = (u.includes('/methodology/') || u.includes('/about/')) ? METHODOLOGY_FROZEN : SNAP_DATE;

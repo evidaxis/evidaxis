@@ -1,0 +1,109 @@
+---
+/**
+ * Momentum beeswarm grouped by cohort, with a per-cohort median line.
+ * Deterministic index-based jitter via beeswarmLayout(). Null momentum entities
+ * (calibration) are listed in the <details> table but not plotted (no y).
+ */
+import { scaleLinear, beeswarmLayout } from '../../lib/charts';
+import { entities as allEntities } from '../../lib/data';
+import type { Entity } from '../../lib/data';
+import { cohortColor, cohortLabel, COHORT_ORDER } from '../../lib/cohorts';
+
+export interface Props {
+  entities?: Entity[];
+  width?: number;
+  height?: number;
+}
+const { entities = allEntities, width = 560, height = 300 } = Astro.props;
+
+const m = { t: 18, r: 18, b: 44, l: 44 };
+const iw = width - m.l - m.r;
+const ih = height - m.t - m.b;
+const cohorts = COHORT_ORDER.filter((k) => entities.some((e) => e.cohort === k));
+const colW = iw / cohorts.length;
+const sy = scaleLinear([0, 100], [m.t + ih, m.t]);
+
+const median = (xs: number[]): number => {
+  if (!xs.length) return NaN;
+  const s = [...xs].sort((a, b) => a - b);
+  const mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+};
+
+const groups = cohorts.map((key, ci) => {
+  const members = entities
+    .filter((e) => e.cohort === key && e.momentum != null)
+    .sort((a, b) => (a.momentum as number) - (b.momentum as number));
+  const laid = beeswarmLayout(members, { spread: 24, base: 6 });
+  const cx = m.l + colW * ci + colW / 2;
+  const med = median(members.map((e) => e.momentum as number));
+  return { key, ci, cx, med, members, laid };
+});
+
+const yTicks = [0, 25, 50, 75, 100];
+const titleId = `bw-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `bw-d-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="evchart">
+  <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
+    <title id={titleId}>Momentum by cohort</title>
+    <desc id={descId}>
+      Momentum (0 to 100) of each system, grouped into {cohorts.length} cohorts, with the cohort median marked.
+    </desc>
+    {yTicks.map((t) => (
+      <>
+        <line x1={m.l} y1={sy(t)} x2={m.l + iw} y2={sy(t)} stroke="var(--hairline)" stroke-width="0.8" stroke-dasharray="2 3" />
+        <text x={m.l - 6} y={sy(t) + 2.5} text-anchor="end" font-size="7" fill="var(--ink-mute)" class="svgtxt">{t}</text>
+      </>
+    ))}
+    <text transform="rotate(-90)" x={-(m.t)} y={11} text-anchor="end" font-size="8.5" fill="var(--ink-soft)" class="svgtxt">momentum &uarr;</text>
+
+    {groups.map((g) => {
+      const c = cohortColor(g.key);
+      return (
+        <>
+          {/* median line */}
+          {Number.isFinite(g.med) && (
+            <>
+              <line x1={g.cx - colW * 0.32} y1={sy(g.med)} x2={g.cx + colW * 0.32} y2={sy(g.med)} stroke={c} stroke-width="1.6" />
+              <text x={g.cx + colW * 0.34} y={sy(g.med) + 2.5} font-size="7" fill={c} class="svgtxt">med {Math.round(g.med)}</text>
+            </>
+          )}
+          {g.laid.map((b) => (
+            <circle cx={g.cx + b.dx} cy={sy(b.item.momentum as number)} r="5" fill={c} fill-opacity="0.85" stroke="var(--surface)" stroke-width="1">
+              <title>{b.item.name}: momentum {b.item.momentum}</title>
+            </circle>
+          ))}
+          <text x={g.cx} y={m.t + ih + 16} text-anchor="middle" font-size="8" fill="var(--ink-soft)" class="svgtxt">{cohortLabel(g.key)}</text>
+          <text x={g.cx} y={m.t + ih + 27} text-anchor="middle" font-size="7" fill="var(--ink-mute)" class="svgtxt">n={g.members.length}</text>
+        </>
+      );
+    })}
+  </svg>
+
+  <figcaption class="chart-cap">
+    <dl class="chart-dl">
+      {groups.map((g) => (
+        <div><dt class={`c${g.ci + 1}`}>{cohortLabel(g.key)} median</dt>
+          <dd><data value={String(Number.isFinite(g.med) ? Math.round(g.med) : '')}>{Number.isFinite(g.med) ? Math.round(g.med) : 'n/a'}</data></dd></div>
+      ))}
+    </dl>
+  </figcaption>
+
+  <details class="chart-data">
+    <summary>Per-cohort momentum</summary>
+    <table>
+      <thead><tr><th>Cohort</th><th class="num">N</th><th class="num">Median</th><th>Members (momentum)</th></tr></thead>
+      <tbody>
+        {groups.map((g) => (
+          <tr>
+            <td>{cohortLabel(g.key)}</td>
+            <td class="num">{g.members.length}</td>
+            <td class="num">{Number.isFinite(g.med) ? <data value={String(Math.round(g.med))}>{Math.round(g.med)}</data> : 'n/a'}</td>
+            <td>{g.members.map((e) => `${e.name} (${e.momentum})`).join(', ') || 'none'}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </details>
+</figure>

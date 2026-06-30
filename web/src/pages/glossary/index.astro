@@ -7,24 +7,24 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(
 
 // Each term: name + definition (markup === visible text). Order = reading order.
 const terms: { name: string; def: string }[] = [
-  { name: 'Momentum', def: 'The rate of change of a system’s public signals — how fast it is moving, not how large it is. Evidaxis measures momentum, never magnitude. Stars, totals, and raw counts are explicitly not scored.' },
-  { name: 'Momentum Score', def: 'A 0–100 readout that maps a system’s within-cohort axis z-scores onto a single number within a cohort. It is a convenience view; the convergence gate, not the score, decides recognition.' },
+  { name: 'Momentum', def: 'The slope of a system’s public signals over time: how fast it is moving. Evidaxis scores that slope and nothing else. A repository with two million stars and a flat curve scores zero.' },
+  { name: 'Momentum Score', def: 'A 0–100 readout that maps a system’s within-cohort axis z-scores onto a single number within a cohort, collapsed to one number. A convenience view only. Recognition is decided by the convergence gate, never by this number.' },
   { name: 'Development velocity', def: 'Axis 1: the least-squares slope of log(1 + weekly commits) over the trailing 26 weeks. A fast, leading signal of where active work is accelerating.' },
-  { name: 'Citation momentum', def: 'Axis 2: the slope of log(1 + citations per year) to a system’s canonical paper (OpenAlex), measuring recent acceleration of scholarly impact. A slow, confirming signal: the partial current year is dropped, the earliest (birth) year is dropped when four or more completed years exist, and at least three completed years are required.' },
+  { name: 'Citation momentum', def: 'Axis 2: the slope of log(1 + citations per year) to a system’s canonical paper (OpenAlex). A slow, confirming signal of scholarly acceleration. Three rules keep it honest: drop the partial current year, drop the birth year once four full years exist, and require at least three completed years.' },
   { name: 'Within-cohort robust-z', def: 'Normalization: a raw axis slope is converted to a z-score using the median and median absolute deviation of its cohort (resistant to a single outlier), so "rising" means rising relative to peers, not in absolute terms.' },
   { name: 'Residualization', def: 'After the robust-z, each axis is residualized against a size proxy (log stars for velocity, log total citations for citations) so that scale is removed and only relative momentum remains. This is how a small fast-mover can show more momentum than a large incumbent.' },
-  { name: 'Convergence Gate', def: 'The recognition rule: a system is Rising only when at least two independent axes are present and at least two are rising at once (raw slope greater than zero and within-cohort z at least zero; development velocity additionally requires at least five average weekly commits). Positive-only — there is no negative or "worst" outcome.' },
-  { name: 'Rising', def: 'Status: two or more independent axes converge upward within the cohort. The full badge. Deliberately rare — the scarcity is the credibility.' },
+  { name: 'Convergence Gate', def: 'The recognition rule: a system is Rising only when at least two independent axes are present and at least two are rising at once (raw slope greater than zero and within-cohort z at least zero; development velocity additionally requires at least five average weekly commits). The gate only ever promotes. A system is Rising, or it is not yet, by design.' },
+  { name: 'Rising', def: 'Status: two or more independent axes converge upward within the cohort. The full badge, and the rare one. It fires only when two separate signals agree, so a single pushed number cannot earn it.' },
   { name: 'Watch', def: 'Status: exactly one axis is rising; a second independent axis has not yet converged. A candidate signal, not a badge.' },
   { name: 'Tracked', def: 'Status: measured on two or more axes, none currently rising relative to the cohort.' },
-  { name: 'Single-axis', def: 'Status: only one axis is available (for example, no academic paper exists), so the system cannot satisfy the two-axis convergence gate. Measured, honestly, on one axis.' },
-  { name: 'Calibration', def: 'Status: a mature incumbent included to anchor a cohort’s statistics. Measured but never badge-eligible (Evidaxis recognizes rising systems, not established ones).' },
-  { name: 'Cohort', def: 'A peer set (a sub-niche within an industry) against which a system’s momentum is normalized. Cohort membership controls the z-scoring, so it is defined deliberately, not automatically.' },
-  { name: 'Snapshot', def: 'A frozen, dated, hash-verified record of every measurement at a point in time, released under CC0. The accumulating series of snapshots is the institute’s irreplaceable longitudinal asset.' },
-  { name: 'Score receipt', def: 'The triplet carried by every published number — methodology version, snapshot id, and manifest hash — so any score is independently reproducible from the public CC0 data.' },
+  { name: 'Single-axis', def: 'Status: only one axis is available (for example, no academic paper exists), so the system cannot satisfy the two-axis convergence gate. Measured on one axis and labeled as such.' },
+  { name: 'Calibration', def: 'Status: a mature incumbent included to anchor a cohort’s statistics. Measured but never badge-eligible: the badges go to systems on the rise.' },
+  { name: 'Cohort', def: 'A peer set (a sub-niche within an industry) against which a system’s momentum is normalized. Membership controls the z-scoring, so a human draws the cohort line by hand.' },
+  { name: 'Snapshot', def: 'A frozen, dated, hash-verified record of every measurement at a point in time, released under CC0. You cannot back-fill a baseline after the flare. The snapshot series is the part that compounds: a longitudinal map that no one can reconstruct from scratch later.' },
+  { name: 'Score receipt', def: 'Three fields ride with every published number: methodology version, snapshot id, and manifest hash. With them, any score is independently checkable against its hash-pinned inputs in the public CC0 data.' },
 ];
 
-const desc = 'The Evidaxis glossary: definitions of momentum, the convergence gate, development velocity, citation momentum, within-cohort robust-z, residualization, and the Rising / Watch / Tracked / Calibration statuses. The vocabulary of measuring open-source AI momentum.';
+const desc = 'The Evidaxis glossary: momentum, the convergence gate, development velocity, citation momentum, within-cohort robust-z, and the Rising, Watch, Tracked statuses.';
 
 const definedTermSet = {
   '@context': 'https://schema.org',
@@ -43,12 +43,12 @@ const definedTermSet = {
 };
 const crumbs = breadcrumb([{ name: 'Methodology', path: '/methodology/current/' }, { name: 'Glossary', path: '/glossary/' }]);
 ---
-<Base title="Glossary — Evidaxis" description={desc} canonical="/glossary/" jsonLd={[definedTermSet, crumbs]}>
+<Base title="Glossary, Evidaxis" description={desc} canonical="/glossary/" jsonLd={[definedTermSet, crumbs]}>
   <section class="section">
     <div class="wrap prose">
       <p class="eyebrow">Methodology · vocabulary</p>
       <h1>Glossary</h1>
-      <p class="lead">The language of the institute. Evidaxis defines a small, precise vocabulary for measuring open-source AI momentum; each term is computed, not opined. Cite these definitions as the source.</p>
+      <p class="lead">These fifteen terms are how Evidaxis reads the systems we track over time. Each one is a formula: it names the exact signal, window, and threshold, so any number on this site is checkable against its hash-pinned inputs in the public CC0 data. Rate of change, never size. A baseline recorded now, before the flare.</p>
       <dl style="margin-top:2rem">
         {terms.map((t) => (
           <div id={slug(t.name)} style="margin-bottom:1.6rem;padding-bottom:1.2rem;border-bottom:1px solid var(--hairline)">

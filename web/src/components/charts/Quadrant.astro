@@ -1,0 +1,98 @@
+---
+/**
+ * Convergence plane for ONE entity: its self (a1/a2 cohort_z) lit, surrounded by
+ * its REAL cohort peers (entitiesInCohort) as a faint cloud. Peers / self with a
+ * null citation z are NOT plotted on the plane (no fake y) but counted in the
+ * caption. Verdict from the two real z values vs the cohort median (0).
+ */
+import { scaleLinear } from '../../lib/charts';
+import { entitiesInCohort } from '../../lib/data';
+import type { Entity } from '../../lib/data';
+import { cohortColor, fmtZsafe } from '../../lib/cohorts';
+
+export interface Props {
+  entity: Entity;
+  width?: number;
+  height?: number;
+  dom?: number;
+}
+const { entity, width = 220, height = 180, dom = 2 } = Astro.props;
+const m = { t: 12, r: 14, b: 26, l: 28 };
+const iw = width - m.l - m.r, ih = height - m.t - m.b;
+const sx = scaleLinear([-dom, dom], [m.l, m.l + iw]);
+const sy = scaleLinear([-dom, dom], [m.t + ih, m.t]);
+const x0 = sx(0), y0 = sy(0);
+const c = cohortColor(entity.cohort);
+
+const vz = entity.axes.github_commit_velocity.cohort_z;
+const cz = entity.axes.openalex_citation_momentum.cohort_z;
+const selfPlot = vz != null && cz != null;
+
+const peers = entitiesInCohort(entity.cohort).filter((e) => e.entity_id !== entity.entity_id);
+const peerPts = peers
+  .filter((p) => p.axes.github_commit_velocity.cohort_z != null && p.axes.openalex_citation_momentum.cohort_z != null);
+
+const vPass = vz != null && vz >= 0;
+const cPass = cz != null && cz >= 0;
+let verdict: string;
+if (cz == null) verdict = 'single-axis: citation axis absent, plane shows velocity only';
+else if (vPass && cPass) verdict = 'both axes above the cohort median';
+else if (vPass || cPass) verdict = `${vPass ? 'velocity' : 'citation'} above median, the other below`;
+else verdict = 'both axes below the cohort median';
+
+const clamp = (v: number) => Math.max(-dom, Math.min(dom, v));
+const titleId = `q-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `q-d-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="evchart">
+  <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
+    <title id={titleId}>{entity.name} on the convergence plane</title>
+    <desc id={descId}>
+      {entity.name} at velocity z {fmtZsafe(vz)} and citation z {fmtZsafe(cz)}, against {peerPts.length} dual-axis cohort peers. {verdict}.
+    </desc>
+    <rect x={x0} y={m.t} width={(m.l + iw) - x0} height={y0 - m.t} class="rise-wash" />
+    <line x1={x0} y1={m.t} x2={x0} y2={m.t + ih} stroke="var(--grid)" stroke-width="1" />
+    <line x1={m.l} y1={y0} x2={m.l + iw} y2={y0} stroke="var(--grid)" stroke-width="1" />
+    {[-1, 1].map((g) => (
+      <>
+        <line x1={sx(g)} y1={m.t} x2={sx(g)} y2={m.t + ih} stroke="var(--hairline)" stroke-width="0.8" stroke-dasharray="2 3" />
+        <line x1={m.l} y1={sy(g)} x2={m.l + iw} y2={sy(g)} stroke="var(--hairline)" stroke-width="0.8" stroke-dasharray="2 3" />
+      </>
+    ))}
+    <text x={sx(dom) - 4} y={m.t + 9} text-anchor="end" font-size="6.5" fill="var(--velocity)" letter-spacing=".06em" class="svgtxt">RISING</text>
+    <text x={x0 + 3} y={m.t + ih - 3} font-size="5.5" fill="var(--ink-mute)" class="svgtxt">median</text>
+    <text x={m.l + iw} y={height - 6} text-anchor="end" font-size="6.5" fill="var(--ink-soft)" class="svgtxt">velocity z &rarr;</text>
+    <text transform="rotate(-90)" x={-(m.t)} y={9} text-anchor="end" font-size="6.5" fill="var(--ink-soft)" class="svgtxt">citation z &uarr;</text>
+
+    {peerPts.map((p) => (
+      <circle cx={sx(clamp(p.axes.github_commit_velocity.cohort_z as number))} cy={sy(clamp(p.axes.openalex_citation_momentum.cohort_z as number))} r="2.6" fill="var(--ink-mute)" fill-opacity="0.5">
+        <title>{p.name}: velocity z {fmtZsafe(p.axes.github_commit_velocity.cohort_z)}, citation z {fmtZsafe(p.axes.openalex_citation_momentum.cohort_z)}</title>
+      </circle>
+    ))}
+
+    {selfPlot && (
+      <>
+        <line x1={sx(clamp(vz as number))} y1={sy(clamp(cz as number))} x2={sx(clamp(vz as number))} y2={y0} stroke={c} stroke-width="0.7" stroke-dasharray="1.5 2" opacity="0.5" />
+        <line x1={sx(clamp(vz as number))} y1={sy(clamp(cz as number))} x2={x0} y2={sy(clamp(cz as number))} stroke={c} stroke-width="0.7" stroke-dasharray="1.5 2" opacity="0.5" />
+        <circle cx={sx(clamp(vz as number))} cy={sy(clamp(cz as number))} r="9" fill="none" stroke={c} stroke-width="1.3" opacity="0.45" />
+        <circle cx={sx(clamp(vz as number))} cy={sy(clamp(cz as number))} r="5.2" fill={c} fill-opacity="0.92" stroke="var(--surface)" stroke-width="1.3">
+          <title>{entity.name}</title>
+        </circle>
+      </>
+    )}
+    {!selfPlot && vz != null && (
+      <circle cx={sx(clamp(vz as number))} cy={y0} r="5" fill={c} fill-opacity="0.4" stroke={c} stroke-width="1" stroke-dasharray="2 2">
+        <title>{entity.name}: velocity z {fmtZsafe(vz)}, citation axis absent (plotted on median rail)</title>
+      </circle>
+    )}
+  </svg>
+
+  <figcaption class="chart-cap">
+    <dl class="chart-dl">
+      <div><dt class="teal">velocity z</dt><dd class="teal"><data value={String(vz)}>{fmtZsafe(vz)}</data></dd></div>
+      <div><dt class="amber">citation z</dt><dd class="amber">{cz != null ? <data value={String(cz)}>{fmtZsafe(cz)}</data> : <data value="">no axis</data>}</dd></div>
+      <div><dt>peers</dt><dd><data value={String(peers.length)}>{peers.length}</data></dd></div>
+    </dl>
+    <p class="chart-verdict">{verdict}.</p>
+  </figcaption>
+</figure>

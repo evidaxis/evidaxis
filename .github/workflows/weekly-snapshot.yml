@@ -1,0 +1,48 @@
+name: weekly-snapshot
+
+# Evidaxis heartbeat — laptop-independent. Runs on GitHub's servers, not Igor's machine.
+# Interim (pre-spine): re-snapshots the current set with the v2 collector, then re-classes the
+# output PROVISIONAL (PRE_INGEST_CONTRACT §1.2) so it never poisons the real v3 t=0 baseline.
+# Re-point at the v3 survey refresh once the thin spine (S1/PR1) lands.
+
+on:
+  schedule:
+    - cron: "17 6 * * 6"   # Saturdays 06:17 UTC, weekly
+  workflow_dispatch: {}     # allow manual run from the Actions tab
+
+permissions:
+  contents: write           # commit the new snapshot back to the repo
+
+concurrency:
+  group: weekly-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Collect snapshot (v2, stdlib-only)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # higher rate limit; provided natively
+        run: python3 etl/collect.py
+
+      - name: Re-class as PROVISIONAL (pre-spine, idempotent)
+        run: python3 etl/reclass_pre_spine.py
+
+      - name: Commit snapshot if changed
+        run: |
+          git config user.name  "Evidaxis"
+          git config user.email "git@evidaxis.org"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "no snapshot change this week"
+          else
+            git commit -m "snapshot: weekly heartbeat (provisional, automated)"
+            git push
+          fi

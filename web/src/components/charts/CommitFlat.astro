@@ -1,0 +1,57 @@
+---
+/**
+ * Commit bars from the REAL commitSeries with a flat-average reference line (the
+ * watch-twin "axis that does not pass" panel). Trend label derives from a simple
+ * first-half vs second-half mean comparison, not a fabricated slope.
+ */
+import { scaleLinear } from '../../lib/charts';
+
+export interface Props {
+  series: number[];
+  weeks?: number;          // trailing weeks to show (default 26)
+  label?: string;
+  width?: number;
+  height?: number;
+}
+const { series, weeks = 26, label = 'commits', width = 240, height = 52 } = Astro.props;
+const shown = series.slice(-weeks);
+const hasData = shown.length >= 2;
+
+const m = { t: 6, b: 14 };
+const iw = width - 6, ih = height - m.t - m.b;
+const max = Math.max(1, ...shown);
+const bw = shown.length ? iw / shown.length : 0;
+const sy = scaleLinear([0, max], [m.t + ih, m.t]);
+const avg = shown.length ? shown.reduce((a, b) => a + b, 0) / shown.length : 0;
+const ay = sy(avg);
+
+const half = Math.floor(shown.length / 2);
+const meanFirst = half ? shown.slice(0, half).reduce((a, b) => a + b, 0) / half : 0;
+const meanLast = (shown.length - half) ? shown.slice(half).reduce((a, b) => a + b, 0) / (shown.length - half) : 0;
+const trend = meanLast > meanFirst * 1.1 ? 'rising trend' : meanLast < meanFirst * 0.9 ? 'falling trend' : 'flat trend';
+const titleId = `cf-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `cf-d-${Math.random().toString(36).slice(2, 8)}`;
+---
+{hasData ? (
+  <figure class="evchart">
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`} preserveAspectRatio="none">
+      <title id={titleId}>{label}, {shown.length} weeks</title>
+      <desc id={descId}>{shown.length} weeks of commits, average {avg.toFixed(1)} per week, {trend}.</desc>
+      {shown.map((v, i) => {
+        const h = ih * (v / max), x = 3 + i * bw, by = m.t + ih - h;
+        return <rect x={x + 1.5} y={by} width={Math.max(0, bw - 3)} height={h} rx="1.5" fill="var(--ink-mute)" fill-opacity="0.5"><title>week {i + 1}: {v}</title></rect>;
+      })}
+      <line x1="3" y1={ay} x2={width - 3} y2={ay} stroke="var(--ink-mute)" stroke-width="1" stroke-dasharray="3 2" />
+      <text x={width - 3} y={height - 3} text-anchor="end" font-size="6.5" fill="var(--ink-mute)" class="svgtxt">{trend}</text>
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt>avg/wk</dt><dd><data value={String(Number(avg.toFixed(2)))}>{avg.toFixed(1)}</data></dd></div>
+        <div><dt>weeks</dt><dd><data value={String(shown.length)}>{shown.length}</data></dd></div>
+        <div><dt>trend</dt><dd>{trend}</dd></div>
+      </dl>
+    </figcaption>
+  </figure>
+) : (
+  <div class="chart-null" role="img" aria-label="no commit series"><span class="nx">&empty;</span><span>no commit series</span></div>
+)}

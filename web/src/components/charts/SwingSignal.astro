@@ -1,0 +1,102 @@
+---
+/**
+ * SHIP — recency-weighted swing (commit axis). Descriptive ratio of the trailing
+ * 13-week slope vs the prior 39-week slope (declared windows, reproducible, not
+ * predictive). 3-state component:
+ *   SHIP     -> value + MACD-ish recent/prior slope bars + regime label
+ *   RESERVED -> "reserved — <reason>" (never a fabricated number)
+ * Recolours in the dark band via --velocity. Geometry is SSR; values are <text>.
+ */
+import { recencySwing } from '../../lib/derived';
+import { scaleLinear } from '../../lib/charts';
+import SnapshotProvenance from './SnapshotProvenance.astro';
+
+export interface Props {
+  series: number[];            // real commitSeries(id)
+  width?: number;
+  height?: number;
+}
+const { series, width = 240, height = 96 } = Astro.props;
+const sig = recencySwing(series);
+const reserved = 'reserved' in sig;
+const titleId = `sw-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `sw-d-${Math.random().toString(36).slice(2, 8)}`;
+
+// For the SHIP viz we re-derive the two window slopes for the two bars, by the
+// same windows derived.ts declares (13w recent vs 39w prior) so the picture and
+// the number agree. We only need the SIGN+MAGNITUDE of each slope for the bars.
+function slope(y: number[]): number {
+  const n = y.length;
+  if (n < 2) return 0;
+  const xb = (n - 1) / 2, yb = y.reduce((a, b) => a + b, 0) / n;
+  let sxy = 0, sxx = 0;
+  for (let i = 0; i < n; i++) { sxy += (i - xb) * (y[i] - yb); sxx += (i - xb) * (i - xb); }
+  return sxx === 0 ? 0 : sxy / sxx;
+}
+const log1p = (v: number) => Math.log1p(Math.max(0, v));
+let recentSlope = 0, priorSlope = 0;
+if (!reserved) {
+  const recent = series.slice(-13).map(log1p);
+  const prior = series.slice(-(13 + 39), -13).map(log1p);
+  recentSlope = slope(recent);
+  priorSlope = slope(prior);
+}
+// bar geometry: two centred bars (prior, recent) around a zero baseline
+const mid = height / 2;
+const maxAbs = Math.max(0.02, Math.abs(recentSlope), Math.abs(priorSlope));
+const sH = scaleLinear([-maxAbs, maxAbs], [height - 14, 14]);  // slope -> y
+const barW = 46;
+const xs = [width * 0.34, width * 0.66];
+const bars = [
+  { label: 'prior 39w', v: priorSlope, x: xs[0] },
+  { label: 'recent 13w', v: recentSlope, x: xs[1] },
+];
+const fmt = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(3);
+const fmtR = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(2);
+---
+{!reserved ? (
+  <figure class="evchart sigcard">
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
+      <title id={titleId}>recency-weighted swing</title>
+      <desc id={descId}>
+        trailing 13-week vs prior 39-week log-slope ratio {fmtR(sig.value)}, regime {sig.label}.
+        prior slope {fmt(priorSlope)}, recent slope {fmt(recentSlope)} per week.
+      </desc>
+      <line x1="8" y1={sH(0)} x2={width - 8} y2={sH(0)} stroke="var(--grid)" stroke-width="1" />
+      {bars.map((b) => {
+        const y = sH(b.v), top = Math.min(y, sH(0)), h = Math.abs(y - sH(0));
+        const pos = b.v >= 0;
+        return (
+          <>
+            <rect x={b.x - barW / 2} y={top} width={barW} height={Math.max(1, h)} rx="2"
+                  fill={pos ? 'var(--velocity)' : 'var(--ink-mute)'} fill-opacity={pos ? 0.85 : 0.55} />
+            <text x={b.x} y={pos ? top - 3 : top + h + 9} text-anchor="middle" font-size="8"
+                  fill={pos ? 'var(--velocity)' : 'var(--ink-mute)'} class="svgtxt">{fmt(b.v)}</text>
+            <text x={b.x} y={height - 2} text-anchor="middle" font-size="7" fill="var(--ink-mute)" class="svgtxt">{b.label}</text>
+          </>
+        );
+      })}
+      <text x="8" y="12" font-size="13" font-weight="600" fill="var(--velocity)" class="svgtxt">{fmtR(sig.value)}&times;</text>
+      <text x={width - 8} y="12" text-anchor="end" font-size="8.5" fill="var(--ink-soft)" class="svgtxt" letter-spacing=".05em">{sig.label}</text>
+    </svg>
+    <figcaption class="chart-cap">
+      <dl class="chart-dl">
+        <div><dt>swing</dt><dd><data value={String(sig.value)}>{fmtR(sig.value)}&times;</data></dd></div>
+        <div><dt>regime</dt><dd>{sig.label}</dd></div>
+        <div><dt>windows</dt><dd><data value={String(sig.recentWindow)}>{sig.recentWindow}</data>w&nbsp;vs&nbsp;<data value={String(sig.priorWindow)}>{sig.priorWindow}</data>w</dd></div>
+      </dl>
+      <SnapshotProvenance />
+    </figcaption>
+  </figure>
+) : (
+  <div class="chart-null sigreserved" role="note" aria-label={`recency swing reserved: ${sig.reason}`}>
+    <span class="rlabel mono">recency swing</span>
+    <span class="rstate mono">reserved: {sig.reason}</span>
+  </div>
+)}
+<style>
+  .sigcard { color: var(--ink); }
+  .sigreserved { gap: 5px; }
+  .sigreserved .rlabel { font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); }
+  .sigreserved .rstate { font-size: 11px; color: var(--ink-soft); text-align: center; }
+</style>

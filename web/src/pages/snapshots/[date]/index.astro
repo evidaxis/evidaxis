@@ -8,14 +8,14 @@ export function getStaticPaths() {
   return [{ params: { date: SNAP_DATE }, props: {} }];
 }
 const all = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
-const desc = `Evidaxis snapshot ${SNAP_DATE}: momentum measurements for ${snapshot.counts.entities} AI systems, methodology ${snapshot.methodology_version}. Frozen, reproducible, CC0.`;
+const desc = `Evidaxis snapshot ${SNAP_DATE}: momentum measurements for ${snapshot.counts.entities} AI systems we track, methodology ${snapshot.methodology_version}. Frozen, hash-verified, CC0 open data.`;
 ---
-<Base title={`Snapshot ${SNAP_DATE} — Evidaxis`} description={desc} canonical={`/snapshots/${SNAP_DATE}/`} jsonTwin={`/snapshots/${SNAP_DATE}/snapshot.json`} jsonLd={[snapshotDataset(snapshot), breadcrumb([{ name: 'Snapshots', path: `/snapshots/${SNAP_DATE}/` }])]}>
+<Base title={`Snapshot ${SNAP_DATE} | Evidaxis`} description={desc} canonical={`/snapshots/${SNAP_DATE}/`} jsonTwin={`/snapshots/${SNAP_DATE}/snapshot.json`} jsonLd={[snapshotDataset(snapshot), breadcrumb([{ name: 'Snapshots', path: `/snapshots/${SNAP_DATE}/` }])]}>
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Frozen snapshot</p>
       <h1>Snapshot {SNAP_DATE}</h1>
-      <p class="lead" style="max-width:60ch">A frozen, reproducible record of every measurement at period {snapshot.period}. Released to the public domain under CC0 — cite it, rebuild it, audit it.</p>
+      <p class="lead" style="max-width:60ch">A frozen record of the measurements we took for the systems we track at period {snapshot.period}. Every input is hash-pinned and the raw provenance is published, so any score is checkable against its hash-pinned inputs. Released to the public domain under CC0 open data: cite it, audit it, check it.</p>
 
       <div class="meta mono" style="margin:1.2rem 0 1.6rem">
         <span>snapshot_id <b>{snapshot.snapshot_id}</b></span>
@@ -24,6 +24,7 @@ const desc = `Evidaxis snapshot ${SNAP_DATE}: momentum measurements for ${snapsh
         <span>schema <b>{snapshot.schema_version}</b></span>
         <span>manifest_hash <b>{manifest.manifest_hash.slice(0,12)}…</b></span>
         <span>license <b>{snapshot.license}</b></span>
+        <span>cite this deposit <a href="https://doi.org/10.5281/zenodo.21076012"><b>10.5281/zenodo.21076012</b></a></span>
       </div>
 
       <div class="row" style="margin-bottom:2rem">

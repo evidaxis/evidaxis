@@ -1,0 +1,84 @@
+---
+/**
+ * SHIP-WITH-CAVEAT — commit-axis changepoint (CUSUM/PELT-lite, k_max=1).
+ * 3-state-by-result (both are honest, computed outputs, never fabricated):
+ *   CHANGEPOINT -> weekly commit line + a marker at the detected week + its date + Δslope
+ *   NONE        -> the same line + "no significant changepoint detected"
+ * The week index maps to a calendar date: the series is `series.length` weekly
+ * points ending at the snapshot date, so week i is SNAP_DATE - (n-1-i)*7 days.
+ */
+import { commitChangepoint } from '../../lib/derived';
+import { linePath, scaleLinear } from '../../lib/charts';
+import { SNAP_DATE } from '../../lib/data';
+import SnapshotProvenance from './SnapshotProvenance.astro';
+
+export interface Props {
+  series: number[];            // real commitSeries(id)
+  width?: number;
+  height?: number;
+}
+const { series, width = 240, height = 96 } = Astro.props;
+const cp = commitChangepoint(series);
+const none = 'none' in cp;
+const titleId = `cp-t-${Math.random().toString(36).slice(2, 8)}`;
+const descId = `cp-d-${Math.random().toString(36).slice(2, 8)}`;
+
+const n = series.length;
+const m = { t: 10, b: 16, l: 8, r: 8 };
+const iw = width - m.l - m.r, ih = height - m.t - m.b;
+const max = Math.max(1, ...series);
+const sx = scaleLinear([0, Math.max(1, n - 1)], [m.l, m.l + iw]);
+const sy = scaleLinear([0, max], [m.t + ih, m.t]);
+const pts = series.map((v, i) => ({ x: sx(i), y: sy(v) }));
+const path = linePath(pts);
+
+// week index -> ISO date
+function weekDate(idx: number): string {
+  const end = new Date(SNAP_DATE + 'T00:00:00Z');
+  const d = new Date(end.getTime() - (n - 1 - idx) * 7 * 86400000);
+  return d.toISOString().slice(0, 10);
+}
+const cpIdx = none ? -1 : cp.dateIndex;
+const cpDate = none ? '' : weekDate(cpIdx);
+const cpX = none ? 0 : sx(cpIdx);
+const fmt = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(3);
+---
+<figure class="evchart sigcard">
+  <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
+    <title id={titleId}>commit changepoint</title>
+    <desc id={descId}>
+      {n} weekly commit points.
+      {none
+        ? ' No significant changepoint detected (|delta slope| within the noise floor).'
+        : ` Changepoint at week ${cpIdx + 1} (${cpDate}), slope change ${fmt(cp.deltaSlope)} commits per week.`}
+    </desc>
+    <path d={path} fill="none" stroke="var(--ink-mute)" stroke-width="1.4" stroke-linejoin="round" />
+    {!none && (
+      <>
+        <line x1={cpX} y1={m.t} x2={cpX} y2={m.t + ih} stroke="var(--velocity)" stroke-width="1.5" stroke-dasharray="3 2" />
+        <circle cx={cpX} cy={sy(series[cpIdx])} r="3.4" fill="var(--velocity)" stroke="var(--surface)" stroke-width="1.3" />
+        <text x={cpX} y={m.t + ih + 12} text-anchor={cpX > width / 2 ? 'end' : 'start'} font-size="7.5" fill="var(--velocity)" class="svgtxt">{cpDate}</text>
+      </>
+    )}
+    {none && (
+      <text x={width / 2} y={m.t + ih / 2} text-anchor="middle" font-size="8.5" fill="var(--ink-mute)" class="svgtxt">no significant changepoint</text>
+    )}
+  </svg>
+  <figcaption class="chart-cap">
+    <dl class="chart-dl">
+      {none ? (
+        <div><dt>changepoint</dt><dd>none detected</dd></div>
+      ) : (
+        <>
+          <div><dt>date</dt><dd><time datetime={cpDate}>{cpDate}</time></dd></div>
+          <div><dt>week</dt><dd><data value={String(cpIdx + 1)}>{cpIdx + 1}</data> of <data value={String(n)}>{n}</data></dd></div>
+          <div><dt>&Delta;slope</dt><dd><data value={String(cp.deltaSlope)}>{fmt(cp.deltaSlope)}</data>/wk</dd></div>
+        </>
+      )}
+    </dl>
+    <SnapshotProvenance />
+  </figcaption>
+</figure>
+<style>
+  .sigcard { color: var(--ink); }
+</style>

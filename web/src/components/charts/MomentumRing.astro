@@ -1,0 +1,41 @@
+---
+/**
+ * Momentum donut with the center number. Static SSR arc via donutDash().
+ * Null-safe: momentum can be null (calibration entities) -> renders an empty
+ * track with an honest "n/a" center.
+ */
+import { donutDash } from '../../lib/charts';
+
+export interface Props {
+  momentum: number | null;
+  percentile?: number | null;
+  color?: string;
+  size?: number;
+}
+const { momentum, percentile = null, color = 'currentColor', size = 104 } = Astro.props;
+const cx = size / 2, cy = size / 2, r = size / 2 - 9;
+const present = momentum != null && isFinite(momentum);
+const dash = present ? donutDash(momentum as number, r) : donutDash(0, r);
+const titleId = `mr-t-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="evchart" style="margin:0;display:flex;flex-direction:column;align-items:center;gap:6px">
+  <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-labelledby={titleId}>
+    <title id={titleId}>{present ? `momentum ${momentum} of 100` : 'momentum not yet scored'}</title>
+    <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--hairline)" stroke-width="7" />
+    {present && (
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} stroke-width="7" stroke-linecap="round"
+        stroke-dasharray={dash.dashArray} stroke-dashoffset={dash.dashOffset}
+        transform={`rotate(-90 ${cx} ${cy})`} />
+    )}
+    <text x={cx} y={cy + 1} text-anchor="middle" dominant-baseline="middle"
+          font-size={present ? size * 0.31 : size * 0.16} font-weight="600"
+          fill="var(--ink)" style="font-family:var(--font-display)">{present ? momentum : 'n/a'}</text>
+    {present && <text x={cx} y={cy + size * 0.21} text-anchor="middle" font-size={size * 0.085} fill="var(--ink-mute)" class="svgtxt" letter-spacing=".06em">/100</text>}
+  </svg>
+  <figcaption class="chart-cap">
+    <dl class="chart-dl" style="justify-content:center">
+      <div><dt>momentum</dt><dd>{present ? <data value={String(momentum)}>{momentum}/100</data> : <data value="">n/a</data>}</dd></div>
+      {percentile != null && <div><dt>pctile</dt><dd><data value={String(percentile)}>p{percentile}</data></dd></div>}
+    </dl>
+  </figcaption>
+</figure>

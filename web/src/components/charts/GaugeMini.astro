@@ -1,0 +1,35 @@
+---
+/**
+ * Compact dial for table rows: a single arc gauge with the z value, no
+ * figcaption (the row carries the <data> text). Null-safe: renders a small
+ * struck dash when the citation axis is absent.
+ */
+import { polar, arcPath, gaugeNeedle } from '../../lib/charts';
+import { fmtZsafe } from '../../lib/cohorts';
+
+export interface Props {
+  z: number | null;
+  color?: string;
+  axisLabel?: string;
+  size?: number;
+}
+const { z, color = 'currentColor', axisLabel = 'z', size = 44 } = Astro.props;
+const W = size, H = size;
+const cx = W / 2, cy = W / 2, r = size * 0.38;
+const A0 = -135, A1 = 135;
+const present = z != null && isFinite(z);
+const g = present ? gaugeNeedle(z as number, cx, cy, r) : null;
+const neg = present && (z as number) < 0;
+let showArc = false, arcA = 0, arcB = 0;
+if (g) { arcA = Math.min(g.zeroDeg, g.deg); arcB = Math.max(g.zeroDeg, g.deg); showArc = Math.abs(arcB - arcA) > 0.5; }
+---
+{present ? (
+  <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${axisLabel} ${fmtZsafe(z)}`}>
+    <path d={arcPath(cx, cy, r, A0, A1)} fill="none" stroke="var(--hairline)" stroke-width="4" stroke-linecap="round" />
+    {showArc && <path d={arcPath(cx, cy, r, arcA, arcB)} fill="none" stroke={neg ? 'var(--hairline-2)' : color} stroke-width="4" stroke-linecap="round" />}
+    <line x1={g!.base.x} y1={g!.base.y} x2={g!.tip.x} y2={g!.tip.y} stroke={neg ? 'var(--ink-mute)' : color} stroke-width="1.6" stroke-linecap="round" />
+    <text x={cx} y={cy + size * 0.16} text-anchor="middle" font-size={size * 0.2} font-weight="600" fill={neg ? 'var(--ink-soft)' : color} class="svgtxt">{fmtZsafe(z)}</text>
+  </svg>
+) : (
+  <span class="mono muted" style="font-size:.72rem;text-decoration:line-through" aria-label={`${axisLabel} absent`}>n/a</span>
+)}

@@ -14,9 +14,9 @@ export const GET: APIRoute = ({ props }) => {
   const e = (props as any).e;
   const accent = (C as any)[e.status] ?? '#756d5f';
   const label = e.status.toUpperCase().replace('-', ' ');
-  const score = e.momentum != null ? e.momentum.toFixed(1) : '—';
+  const score = e.momentum != null ? e.momentum.toFixed(1) : '-';
   const W = 232, H = 56;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evidaxis ${label} — ${e.name}">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evidaxis ${label}, ${e.name}">
   <style>text{font-family:'IBM Plex Mono',ui-monospace,monospace}</style>
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="5" fill="#fcfbf7" stroke="#cdc2ab"/>
   <rect x="0.5" y="0.5" width="5" height="${H - 1}" rx="2.5" fill="${accent}"/>

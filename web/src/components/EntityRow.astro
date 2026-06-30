@@ -1,0 +1,82 @@
+---
+/**
+ * Compact ranking-row variant of the entity card: a dense, clickable list item
+ * with the mini axis-dials (the "clock" gauges) restored. Server-rendered.
+ * rank | name + cohort | status | momentum + percentile | axis z (vel/cit) |
+ * 26-week commit heatmap | the two mini axis dials (velocity, citation).
+ * Reserved derived signals (lag/alpha) are NOT shown here as numbers; the dials
+ * read straight off the published z-scores. Null citation axis -> dial null state.
+ */
+import type { Entity } from '../lib/data';
+import { commitSeries, STATUS_LABEL } from '../lib/data';
+import { cohortColor, cohortLabel, fmtZsafe } from '../lib/cohorts';
+import CommitHeatmapMini from './charts/CommitHeatmapMini.astro';
+import PercentileStripMini from './charts/PercentileStripMini.astro';
+import GaugeMini from './charts/GaugeMini.astro';
+
+export interface Props { entity: Entity; rank?: number; }
+const { entity: e, rank } = Astro.props;
+const a1 = e.axes.github_commit_velocity;
+const a2 = e.axes.openalex_citation_momentum;
+const color = cohortColor(e.cohort);
+const accent = e.status === 'rising' ? 'rising' : e.status === 'watch' ? 'watch' : 'tracked';
+const zc = (z: number | null, cit = false) => (z == null ? 'zn' : z >= 0 ? (cit ? 'za' : 'zt') : 'zn');
+---
+<a class={`erow ${accent}`} href={`/e/${e.entity_id}/`}>
+  {rank != null && <div class="rkn">#{rank}</div>}
+  <div class="nm">
+    <span class="n">{e.name}</span>
+    <span class="c mono"><span class="cdot" style={`background:${color}`}></span>{cohortLabel(e.cohort)}</span>
+  </div>
+  <div><span class={`erow-badge ${accent}`}><span class="p"></span>{STATUS_LABEL[e.status]}</span></div>
+  <div class="mom">
+    <span class="mn">{e.momentum != null ? Math.round(e.momentum) : '·'}</span>
+    <div class="momcol">
+      <PercentileStripMini percentile={e.percentile} color={color} />
+      <span class="pq mono">{e.percentile != null ? `p${e.percentile}` : 'unranked'}</span>
+    </div>
+  </div>
+  <div class="z mono">
+    <span class={zc(a1.cohort_z)}>vel {fmtZsafe(a1.cohort_z)}</span>
+    <span class={zc(a2.cohort_z, true)}>cit {fmtZsafe(a2.cohort_z)}</span>
+  </div>
+  <div class="heat"><CommitHeatmapMini series={commitSeries(e.entity_id)} /></div>
+  <div class="dials">
+    <span class="dlbl mono">axis dials</span>
+    <div class="dialpair">
+      <GaugeMini z={a1.cohort_z} color="var(--velocity)" axisLabel="velocity z" />
+      <GaugeMini z={a2.cohort_z} color="var(--citation)" axisLabel="citation z" />
+    </div>
+  </div>
+</a>
+
+<style>
+  .erow { display: grid; grid-template-columns: 34px minmax(120px,1.2fr) 92px 120px 96px minmax(90px,1fr) 104px; gap: 14px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--hairline); transition: background .14s; color: inherit; }
+  .erow:last-child { border-bottom: none; }
+  .erow:hover { background: var(--rise-wash); }
+  .erow .rkn { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink-mute); text-align: center; }
+  .erow .nm { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .erow .nm .n { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -.01em; line-height: 1.05; }
+  .erow .nm .c { font-size: 9px; letter-spacing: .03em; color: var(--ink-mute); display: flex; align-items: center; gap: 5px; }
+  .erow .cdot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .erow-badge { font-family: var(--font-mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; padding: 3px 8px; border-radius: 5px; display: inline-flex; align-items: center; gap: 5px; width: max-content; }
+  .erow-badge .p { width: 7px; height: 7px; border-radius: 50%; }
+  .erow-badge.rising { color: var(--velocity); background: var(--rise-wash); } .erow-badge.rising .p { background: var(--velocity); }
+  .erow-badge.watch { color: var(--citation); background: color-mix(in srgb, var(--citation) 10%, transparent); } .erow-badge.watch .p { background: var(--citation); }
+  .erow-badge.tracked { color: var(--ink-mute); background: var(--paper-2); } .erow-badge.tracked .p { background: var(--ink-mute); }
+  .erow .mom { display: flex; align-items: center; gap: 9px; }
+  .erow .mom .mn { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; letter-spacing: -.02em; }
+  .erow.rising .mom .mn { color: var(--velocity); } .erow.watch .mom .mn { color: var(--citation); }
+  .erow .momcol { display: flex; flex-direction: column; gap: 2px; }
+  .erow .momcol .pq { font-size: 8px; color: var(--ink-mute); letter-spacing: .04em; }
+  .erow .z { font-size: 10px; display: flex; flex-direction: column; gap: 3px; }
+  .erow .z span { white-space: nowrap; }
+  .erow .z .zt { color: var(--velocity); } .erow .z .za { color: var(--citation); } .erow .z .zn { color: var(--ink-mute); }
+  .erow .dials { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+  .erow .dials .dlbl { font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
+  .erow .dials .dialpair { display: flex; gap: 6px; }
+  @media (max-width: 860px) {
+    .erow { grid-template-columns: 28px 1fr auto; gap: 10px; }
+    .erow .z, .erow .heat, .erow .dials { display: none; }
+  }
+</style>
