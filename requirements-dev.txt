@@ -1,0 +1,10 @@
+# Evidaxis dev / QA toolchain — NOT a runtime dependency of the collector or spine.
+# The collector (etl/) is stdlib-only; the spine pins its runtime in spine/requirements.txt.
+# These are the tools the audit baseline runs: tests, coverage, mutation, lint, types, deps.
+pytest==9.1.1
+pytest-cov==7.1.0
+coverage==7.14.3
+mutmut==3.6.0
+ruff==0.15.20
+mypy==2.1.0
+pip-audit==2.10.1

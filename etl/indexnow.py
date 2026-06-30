@@ -4,7 +4,7 @@ IndexNow ping — notify Bing / Yandex / Seznam (and, downstream, ChatGPT Search
 of changed URLs on each snapshot. Reads the live sitemap, POSTs the URL list to IndexNow.
 Run after each deploy. Cheapest fast-index path for a new domain.
 """
-import json, re, sys, urllib.request
+import json, re, urllib.request
 
 HOST = "evidaxis.org"
 KEY = "be23b52b58b549cfa47bac03cb09819c"

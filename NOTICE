@@ -1,0 +1,14 @@
+Evidaxis
+Copyright 2026 Evidaxis (hello@evidaxis.org)
+
+This product includes software developed by Evidaxis.
+
+The source code under etl/, web/src/, web/scripts/, spine/*.py, and tests/ is
+licensed under the Apache License, Version 2.0 (see LICENSES/Apache-2.0.txt).
+
+Other components are licensed separately (see LICENSING.md):
+  - measurement data (data/, entities/, taxonomy/) is dedicated to the public
+    domain under CC0-1.0 (see LICENSE-data.md);
+  - the scoring-methodology prose is licensed under CC-BY-4.0;
+  - bundled fonts under web/public/fonts/ are licensed under OFL-1.1
+    (see LICENSES/OFL-1.1.txt and web/public/fonts/OFL.txt).

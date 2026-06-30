@@ -1,0 +1,57 @@
+name: python-ci
+
+# Quality gate for the collector (etl/). Runs the public test suite with a coverage
+# floor on every change to the ETL code, its tests, or the deposited genesis copy.
+#
+# Scope note: spine/ is gitignored (private future-v3 architecture), so it is NOT part
+# of this public CI. The spine's proving-run-gate (spine/ci_gate.py) is a LOCAL
+# discipline run before a mint, not a GitHub workflow. See AUDIT-BASELINE.md §CI.
+
+on:
+  push:
+    paths:
+      - "etl/**"
+      - "tests/**"
+      - "genesis-deposit/code/**"
+      - "pyproject.toml"
+      - "requirements-dev.txt"
+      - ".github/workflows/python-ci.yml"
+  pull_request:
+    paths:
+      - "etl/**"
+      - "tests/**"
+      - "genesis-deposit/code/**"
+      - "pyproject.toml"
+      - "requirements-dev.txt"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dev/QA toolchain
+        run: python -m pip install --upgrade pip && pip install -r requirements-dev.txt
+
+      - name: Unit tests + coverage floor (etl/ — public; spine/ excluded by design)
+        run: >-
+          python -m pytest tests/
+          --cov=collect --cov=archive_pin --cov=indexnow --cov=reclass_pre_spine
+          --cov-report=term-missing --cov-fail-under=90
+
+      - name: Lint (ruff — real-defect ruleset, non-style)
+        run: ruff check etl tests
+
+      - name: Drift guard — deposited genesis code matches live etl/
+        run: python -m pytest tests/test_genesis_deposit_sync.py -q
