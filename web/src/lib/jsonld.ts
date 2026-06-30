@@ -7,6 +7,11 @@ const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
 const ORG_ID = `${SITE}/#org`;
 const CATALOG_ID = `${SITE}/#catalog`;
 const FOUNDED = '2026-06';
+// Genesis dataset DOI (Zenodo). The DOI belongs to the genesis SNAPSHOT dataset, not the org,
+// so it is emitted on that snapshot's Dataset node (identifier + sameAs), not in org sameAs.
+// Future weekly snapshots mint their own version DOIs under the concept DOI.
+const GENESIS_SNAPSHOT = '2026-06-27';
+const GENESIS_DOI = '10.5281/zenodo.21076012';
 // sameAs grows as off-site profiles land. Wikidata QID / Zenodo DOI / X / LinkedIn appended here.
 const SAME_AS = [
   'https://github.com/evidaxis',
@@ -172,6 +177,8 @@ export function itemListDataset(opts: {
 }
 
 export function snapshotDataset(snap: Snapshot) {
+  const isGenesis = snap.snapshot_date === GENESIS_SNAPSHOT;
+  const doiUrl = `https://doi.org/${GENESIS_DOI}`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -183,7 +190,10 @@ export function snapshotDataset(snap: Snapshot) {
         description:
           `Complete Evidaxis measurement snapshot for ${snap.snapshot_date}: momentum scores and per-axis signals for ${snap.counts.entities} tracked AI systems across ${Object.keys(snap.cohorts).length} cohorts, computed on methodology ${snap.methodology_version}. Released to the public domain under CC0.`,
         url: `${SITE}/snapshots/${snap.snapshot_date}/`,
-        identifier: `evidaxis-snapshot-${snap.snapshot_date}`,
+        identifier: isGenesis
+          ? { '@type': 'PropertyValue', propertyID: 'DOI', value: GENESIS_DOI, url: doiUrl }
+          : `evidaxis-snapshot-${snap.snapshot_date}`,
+        ...(isGenesis ? { sameAs: doiUrl } : {}),
         license: CC0,
         isAccessibleForFree: true,
         creator: { '@id': ORG_ID },
