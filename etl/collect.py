@@ -23,11 +23,14 @@ from datetime import date, datetime, timezone
 
 ROOT = Path(__file__).resolve().parent          # etl/
 REPO = ROOT.parent                              # repo root
-METHODOLOGY_VERSION = "m1"
+METHODOLOGY_VERSION = "m2"   # m2 (2026-06-30): D10a fix — rising gate z>=1 (not >=0) + cohort_size>=5 eligibility
 SCHEMA_VER = "1.0"
 FETCHER_VERSION = "collect/2.0"
 CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"   # no I L O U
 ACTIVITY_FLOOR_WK = 5.0     # axis-1 sanity floor: a dormant repo (< this avg weekly commits) is not "rising"
+RISING_Z_FLOOR = 1.0        # D10a fix: an axis is "rising" only at >=1 within-cohort sigma (not merely > median),
+                            # so a thin/cold cohort's near-zero median cannot be beaten by a modest forged slope
+MIN_COHORT_FOR_BADGE = 5    # D10a fix: cohorts with <5 members cannot mint a Rising badge (thin-cohort attack surface)
 AXIS2_MIN_YEARS = 3         # axis-2 needs >=3 completed citation years to vote
 
 # ---------------------------------------------------------------- tokens / http
@@ -239,6 +242,7 @@ def main():
 
     # ---- within-cohort robust-z + residualize + convergence gate
     for vkey, rows in cohorts.items():
+        cohort_n = len(rows)                    # D10a: cohort size gates Rising-badge eligibility
         a1_rows = [r for r in rows if r["axis1_slope"] is not None]
         if len(a1_rows) >= 3:
             z = robust_z([r["axis1_slope"] for r in a1_rows])
@@ -258,19 +262,20 @@ def main():
         for r in rows:
             axes_present, axes_rising = [], []
             if r.get("axis1_slope") is not None:
-                rising1 = ((r["axis1_slope"] > 0) and (r.get("axis1_z") is not None and r["axis1_z"] >= 0)
+                rising1 = ((r["axis1_slope"] > 0) and (r.get("axis1_z") is not None and r["axis1_z"] >= RISING_Z_FLOOR)
                            and (r.get("recent_wk", 0) >= ACTIVITY_FLOOR_WK))   # dormant repo is not "rising"
                 axes_present.append("github_commit_velocity")
                 if rising1:
                     axes_rising.append("github_commit_velocity")
             if r["axis2_status"] == "present" and r.get("axis2_z") is not None:
-                rising2 = (r["axis2_slope"] > 0) and (r["axis2_z"] >= 0)
+                rising2 = (r["axis2_slope"] > 0) and (r["axis2_z"] >= RISING_Z_FLOOR)
                 axes_present.append("openalex_citation_momentum")
                 if rising2:
                     axes_rising.append("openalex_citation_momentum")
             r["axes_present"] = axes_present
             r["convergent_axes"] = axes_rising
-            r["rising"] = (not r["incumbent"]) and len(axes_present) >= 2 and len(axes_rising) >= 2
+            r["rising"] = ((not r["incumbent"]) and cohort_n >= MIN_COHORT_FOR_BADGE
+                           and len(axes_present) >= 2 and len(axes_rising) >= 2)
             # honest display taxonomy
             if r["incumbent"]:
                 r["status"] = "calibration"      # measured to anchor the cohort; not badge-eligible
@@ -365,9 +370,10 @@ def write_artifacts(seeds, cohorts, id_map, provenance, today, period, captured_
             "github_commit_velocity": "log-slope of weekly commit counts (last 26 weeks); within-cohort robust-z (median/MAD), residualized on log stars. Stars are never scored.",
             "openalex_citation_momentum": "log-slope of citations-per-year measuring recent momentum: partial current year dropped, earliest (birth) year dropped when >=4 exist, >=3 completed years required; within-cohort robust-z, residualized on log total citations.",
         },
-        "gate": ("Rising = >=2 axes present AND >=2 axes rising. An axis is rising if raw slope > 0 AND "
-                 "within-cohort z >= 0; commit-velocity additionally requires >= %g avg weekly commits "
-                 "(a dormant repo is not rising). Positive-only; no 'worst' list." % ACTIVITY_FLOOR_WK),
+        "gate": ("Rising = >=2 axes present AND >=2 axes rising, in a cohort of >= %d members. An axis is rising "
+                 "if raw slope > 0 AND within-cohort z >= %g; commit-velocity additionally requires >= %g avg "
+                 "weekly commits (a dormant repo is not rising). Positive-only; no 'worst' list."
+                 % (MIN_COHORT_FOR_BADGE, RISING_Z_FLOOR, ACTIVITY_FLOOR_WK)),
         "cohorts": {vk: {"label": v["label"], "industry": v["industry_slug"],
                          "sub_niche": v["subniche_slug"]} for vk, v in seeds["verticals"].items()},
         # Person-free by construction (I2 systems-not-people + UK-GDPR + immutable-DOI × Art.17):
