@@ -32,10 +32,10 @@ const cohortSlug = (key: string) => {
   return '/coverage/';
 };
 
-const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI systems by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
+const desc = `Evidaxis: the complete weekly record of momentum across ${c.entities} open AI systems, scored by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
 ---
 <Base
-  title="Evidaxis, an observatory of momentum in open AI systems"
+  title="Evidaxis, the longitudinal map of open AI momentum"
   description={desc}
   canonical="/"
   jsonLd={[orgGraph(), snapshotDataset(snapshot)]}
@@ -46,8 +46,8 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow rv">Evidaxis · Pilot 2026</span>
-        <h1 class="rv">An observatory of <span class="em">momentum</span> in open AI systems.</h1>
-        <p class="lead rv">We measure open-source and research-native AI systems by the rate of change of their public signals, not their size. A system is recognized as rising only when two independent axes move together. Every measurement is released to the public domain under CC0.</p>
+        <h1 class="rv">We map every open AI system, then watch which ones <span class="em">accelerate</span>.</h1>
+        <p class="lead rv">We hold the longitudinal record of the open-AI frontier: every system, every week, reproducible to the hash. Size is never scored. We score the rate of change of public signals, and a system rises only when two independent axes climb together. The baseline comes first. The flare gets recorded against it. Open data, CC0.</p>
         <div class="metastrip mono rv">
           <span><b>{c.entities}</b> systems</span><span class="dot">·</span>
           <span><b>{nCohorts}</b> cohorts</span><span class="dot">·</span>
@@ -86,7 +86,7 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
           <div class="statcard sc-2">
             <div class="k">rising this snapshot</div>
             <div class="v">{c.rising}<span style="font-size:14px;color:var(--ink-mute)"> / {c.entities}</span></div>
-            <div class="sub">convergence is the exception</div>
+            <div class="sub">convergence is rare by design</div>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">1.0, The instrument</span></div>
       <h2 class="rv">Two axes. One gate.</h2>
-      <p class="sec-sub rv">Each axis is normalized within its cohort, so &ldquo;rising&rdquo; means rising relative to peers, not simply large. Stars and raw size are never scored. The gate publishes only positive recognition, there is no &ldquo;worst&rdquo; list.</p>
+      <p class="sec-sub rv">Each axis is normalized within its cohort, so &ldquo;rising&rdquo; means rising relative to its peers. Stars and raw size are never scored. The gate publishes recognition only, and recognition only ever points up.</p>
 
       <div class="axes-grid">
         <div>
@@ -137,8 +137,8 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
   <section class="band glow" aria-label="Convergence, the signature view">
     <div class="wrap">
       <span class="sec-num rv">2.0, The signature</span>
-      <div class="band-head rv"><h2>Two independent axes. One rare convergence.</h2></div>
-      <p class="band-sub rv">For one breath, the daylight ledger goes dark and the instrument glows. Where development velocity and citation momentum agree, a system rises, and at this baseline snapshot almost none do.</p>
+      <div class="band-head rv"><h2>The convergence is rare. The record of it is complete.</h2></div>
+      <p class="band-sub rv">Where development velocity and citation momentum agree, a system rises. At this baseline snapshot, none do yet.</p>
 
       <div class="band-charts">
         <div class="rv">
@@ -166,7 +166,7 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">3.0, State of snapshot {snapshot.snapshot_id}</span></div>
       <h2 class="rv">Convergence is rare, and that is the point.</h2>
-      <p class="sec-sub rv">Across {c.entities} systems in period {snapshot.period}, {c.rising === 0 ? 'none yet cross the gate' : `${c.rising} cross the gate`}. A fast-moving codebase is often years ahead of its citations, and a genuinely new system has no citation history yet. The instrument is built to make recognition expensive; the signal sharpens as the weekly series accumulates.</p>
+      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {c.entities} systems across {nCohorts} frontiers in period {snapshot.period}, scored every week, reproducible to the hash. {c.rising === 0 ? 'None cross the gate yet' : `${c.rising} cross the gate`}. A fast codebase runs years ahead of its citations, and a genuinely new system has no citation history yet, so convergence stays rare on purpose. Every weekly snapshot deepens the record the next flare gets measured against.</p>
 
       <div class="stat-row">
         <div class="stat rising rv">
@@ -197,8 +197,8 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
   <section id="coverage">
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">4.0, Coverage</span></div>
-      <h2 class="rv">{nCohorts} frontiers, this pilot.</h2>
-      <p class="sec-sub rv">The pilot is intentionally narrow: {nCohorts} cohorts, every score independently reproducible. Each system is normalized only against its own cohort. This is a coverage map, not a census of the field.</p>
+      <h2 class="rv">{nCohorts} frontiers, every system in each.</h2>
+      <p class="sec-sub rv">Within these frontiers this is the complete longitudinal record: {nCohorts} cohorts, every score independently reproducible. Each system is normalized only against its own cohort.</p>
 
       <div class="cov-grid">
         <div>
@@ -227,7 +227,7 @@ const desc = `Evidaxis: an independent observatory ranking ${c.entities} open AI
             <div class="panel-body"><Beeswarm /></div>
           </div>
 
-          <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, with the gaps we do not yet measure <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+          <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, and the frontier we are still extending <span class="arr" aria-hidden="true">&rarr;</span></a></p>
         </div>
 
         <div class="cov-right">

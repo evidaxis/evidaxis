@@ -2,9 +2,10 @@
 import { snapshot } from '../lib/data';
 ---
 <p class="lead" style="max-width:64ch">
-  Evidaxis measures the <em>rate of change</em> of a system’s public signals, normalized against its
-  peers, and recognizes a system as rising only when independent signals agree. This page is the
-  complete, versioned definition. It is frozen: a published score is never silently recomputed.
+  Evidaxis is a survey telescope pointed at open-source AI. It records every system’s momentum week
+  after week, builds the baseline, and recognizes a system as rising only when two independent axes
+  converge. The longitudinal record is the instrument. The scores are what it finds. This page is the
+  complete, versioned definition, and it is frozen: a published score is never silently recomputed.
 </p>
 
 <h2>Principles</h2>
@@ -12,8 +13,8 @@ import { snapshot } from '../lib/data';
   <li><strong>Slope, not size.</strong> Every axis is the log-slope of a trend: momentum, not magnitude. Stars, totals, and raw counts are never scored.</li>
   <li><strong>Within cohort.</strong> A system is compared only to peers in its sub-niche, so “rising” is relative, and a small fast-mover can show more momentum than a large incumbent.</li>
   <li><strong>Convergence.</strong> One signal can be gamed or noisy. Recognition requires two independent axes rising at once.</li>
-  <li><strong>Positive-only.</strong> Evidaxis publishes who is rising. There is no “worst” list and no negative label.</li>
-  <li><strong>Systems, not people.</strong> The measured unit is always a system. Individuals are never named or scored; there is no <span class="mono">/persons</span> surface anywhere in the data or API.</li>
+  <li><strong>Positive-only.</strong> Evidaxis names what is accelerating. Nobody is ranked last, because last is not a measurement we make.</li>
+  <li><strong>Systems, not people.</strong> The unit of measurement is always a system: a repo, a model, an org. People carry no momentum score, and there is no <span class="mono">/persons</span> route in the data or API to look for one.</li>
 </ul>
 
 <h2>Axis 1: Development velocity</h2>
@@ -40,7 +41,7 @@ import { snapshot } from '../lib/data';
 <pre class="formula">z = clamp( (slope - median) / (1.4826 · MAD), ±3 ) ;  z ← residual on log(size)</pre>
 
 <h2>The convergence gate</h2>
-<p class="prose">A system is <strong>Rising</strong> when at least two axes are present and at least two are rising. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 0. Development velocity additionally requires a minimum of {String(5)} average weekly commits, since a dormant repository is never rising on a sliver of noise.</p>
+<p class="prose">A dormant repository is never rising on a sliver of noise. So a system is <strong>Rising</strong> only when at least two axes are present and at least two are rising at once. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 0. Development velocity carries one more floor: at least 5 average weekly commits, or the axis does not count.</p>
 <pre class="formula">Rising  ⟺  |axes_present| ≥ 2  ∧  |axes_rising| ≥ 2
 axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)</pre>
 <p class="prose">
@@ -50,10 +51,10 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
 </p>
 
 <h2>Momentum score</h2>
-<p class="prose">A 0 to 100 within-cohort momentum readout: the mean of an entity’s present-axis z-scores, mapped linearly. It is a convenience view; the gate, not the score, decides recognition.</p>
+<p class="prose">A 0 to 100 within-cohort momentum readout: the mean of an entity’s present-axis z-scores, mapped linearly. The score is a readout, the gate is the verdict. A system at 58 that clears convergence is Rising; a system at 71 that does not is not.</p>
 <pre class="formula">momentum = clamp( 50 + 12.5 · mean(z_present), 0, 100 )</pre>
 
-<h2>Versioning &amp; honesty</h2>
+<h2>What a published score means</h2>
 <p class="prose">
   Every record carries its <span class="mono">methodology_version</span> and <span class="mono">snapshot_id</span>.
   Methodology is frozen, not recomputed: a correction is a new version on a new row, never an edit to an
@@ -61,10 +62,10 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
   is byte-reproducible from each snapshot’s manifest.
 </p>
 
-<h2>Known limitations (stated, not hidden)</h2>
+<h2>Known limitations</h2>
 <ul class="prose">
-  <li><strong>Citation lag.</strong> OpenAlex citations are annual and trail real activity by years, so a genuinely new (2024 to 25) system cannot yet show citation momentum. The convergence signal sharpens as the weekly time-series accumulates. This is why Evidaxis is a long-running observatory, not a one-shot ranking.</li>
-  <li><strong>Coverage is partial.</strong> See the <a href="/coverage/">coverage atlas</a> for exactly what is and is not measured. Silence means “not yet measured,” never “low quality.”</li>
+  <li><strong>Citation lag.</strong> OpenAlex citations are annual and trail real activity by years, so a genuinely new (2024 to 25) system cannot yet show citation momentum. The convergence signal sharpens as the weekly time-series accumulates, which is the whole point of recording the baseline before the flare.</li>
+  <li><strong>Coverage is expanding.</strong> See the <a href="/coverage/">coverage atlas</a> for exactly what is and is not measured. A system absent from the map has not been measured yet. That is a roadmap line, not a quality judgment.</li>
   <li><strong>Source undercount.</strong> <a href="https://openalex.org/">OpenAlex</a> undercounts some papers versus other indexes; we use only relative slopes, never absolute magnitudes, to stay robust to this.</li>
 </ul>
 
