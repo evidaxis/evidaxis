@@ -21,6 +21,8 @@ export const GET: APIRoute = () => {
 All Evidaxis data is released under CC0 1.0 (public domain). Reuse, redistribute, and cite freely.
 Attribution to Evidaxis is appreciated but not required.
 
+Cite: 10.5281/zenodo.21076012 (https://doi.org/10.5281/zenodo.21076012) is the canonical citation handle for the Evidaxis genesis snapshot bundle.
+
 ## Key resources
 
 - [Methodology (current)](https://evidaxis.org/methodology/current/): how momentum scores and the convergence gate are computed. Versioned. Cite the version you used.
@@ -49,8 +51,9 @@ These URLs are stable and safe to fetch and cache.
 
 ## Integrity
 
-git is the only source of truth; every score is byte-reproducible from a published manifest. Methodology
-is frozen, not recomputed. Positive-only (no "worst" list). Systems are scored, never people.
+git is the only source of truth; every input is hash-pinned and the raw provenance is published, so every
+score is checkable against its hash-pinned inputs. The genesis snapshot bundle is frozen and hash-verified.
+Methodology is versioned. Positive-only (no "worst" list). Systems are scored, never people.
 `;
   return new Response(txt, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

@@ -21,7 +21,7 @@ const terms: { name: string; def: string }[] = [
   { name: 'Calibration', def: 'Status: a mature incumbent included to anchor a cohort’s statistics. Measured but never badge-eligible: the badges go to systems on the rise.' },
   { name: 'Cohort', def: 'A peer set (a sub-niche within an industry) against which a system’s momentum is normalized. Membership controls the z-scoring, so a human draws the cohort line by hand.' },
   { name: 'Snapshot', def: 'A frozen, dated, hash-verified record of every measurement at a point in time, released under CC0. You cannot back-fill a baseline after the flare. The snapshot series is the part that compounds: a longitudinal map that no one can reconstruct from scratch later.' },
-  { name: 'Score receipt', def: 'Three fields ride with every published number: methodology version, snapshot id, and manifest hash. With them, any score is independently reproducible from the public CC0 data.' },
+  { name: 'Score receipt', def: 'Three fields ride with every published number: methodology version, snapshot id, and manifest hash. With them, any score is independently checkable against its hash-pinned inputs in the public CC0 data.' },
 ];
 
 const desc = 'The Evidaxis glossary: momentum, the convergence gate, development velocity, citation momentum, within-cohort robust-z, and the Rising, Watch, Tracked statuses.';
@@ -48,7 +48,7 @@ const crumbs = breadcrumb([{ name: 'Methodology', path: '/methodology/current/' 
     <div class="wrap prose">
       <p class="eyebrow">Methodology · vocabulary</p>
       <h1>Glossary</h1>
-      <p class="lead">These fifteen terms are how Evidaxis reads the open-AI frontier over time. Each one is a formula: it names the exact signal, window, and threshold, so any number on this site recomputes from the public CC0 data. Rate of change, never size. A baseline recorded now, before the flare.</p>
+      <p class="lead">These fifteen terms are how Evidaxis reads the systems we track over time. Each one is a formula: it names the exact signal, window, and threshold, so any number on this site is checkable against its hash-pinned inputs in the public CC0 data. Rate of change, never size. A baseline recorded now, before the flare.</p>
       <dl style="margin-top:2rem">
         {terms.map((t) => (
           <div id={slug(t.name)} style="margin-bottom:1.6rem;padding-bottom:1.2rem;border-bottom:1px solid var(--hairline)">

@@ -2,7 +2,7 @@
 import { snapshot } from '../lib/data';
 ---
 <p class="lead" style="max-width:64ch">
-  Evidaxis is a survey telescope pointed at open-source AI. It records every system’s momentum week
+  Evidaxis is a survey telescope pointed at open-source AI. It records each tracked system’s momentum week
   after week, builds the baseline, and recognizes a system as rising only when two independent axes
   converge. The longitudinal record is the instrument. The scores are what it finds. This page is the
   complete, versioned definition, and it is frozen: a published score is never silently recomputed.
@@ -58,8 +58,9 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
 <p class="prose">
   Every record carries its <span class="mono">methodology_version</span> and <span class="mono">snapshot_id</span>.
   Methodology is frozen, not recomputed: a correction is a new version on a new row, never an edit to an
-  old one, so a citation of “momentum 60.4, {snapshot.period}” stays meaningful forever. The full data
-  is byte-reproducible from each snapshot’s manifest.
+  old one, so a citation of “momentum 60.4, {snapshot.period}” stays meaningful forever. Every input is
+  hash-pinned in each snapshot’s manifest and the raw provenance is published, so a record stays checkable
+  against its hash-pinned inputs.
 </p>
 
 <h2>Known limitations</h2>

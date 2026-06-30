@@ -30,7 +30,7 @@ const zc = (z: number | null, cit = false) => (z == null ? 'zn' : z >= 0 ? (cit 
   </div>
   <div><span class={`erow-badge ${accent}`}><span class="p"></span>{STATUS_LABEL[e.status]}</span></div>
   <div class="mom">
-    <span class="mn">{e.momentum != null ? Math.round(e.momentum) : '—'}</span>
+    <span class="mn">{e.momentum != null ? Math.round(e.momentum) : '·'}</span>
     <div class="momcol">
       <PercentileStripMini percentile={e.percentile} color={color} />
       <span class="pq mono">{e.percentile != null ? `p${e.percentile}` : 'unranked'}</span>

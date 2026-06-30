@@ -32,7 +32,7 @@ const cohortSlug = (key: string) => {
   return '/coverage/';
 };
 
-const desc = `Evidaxis: the complete weekly record of momentum across ${c.entities} open AI systems, scored by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
+const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI systems, scored by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
 ---
 <Base
   title="Evidaxis, the longitudinal map of open AI momentum"
@@ -46,8 +46,8 @@ const desc = `Evidaxis: the complete weekly record of momentum across ${c.entiti
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow rv">Evidaxis · Pilot 2026</span>
-        <h1 class="rv">We map every open AI system, then watch which ones <span class="em">accelerate</span>.</h1>
-        <p class="lead rv">We hold the longitudinal record of the open-AI frontier: every system, every week, reproducible to the hash. Size is never scored. We score the rate of change of public signals, and a system rises only when two independent axes climb together. The baseline comes first. The flare gets recorded against it. Open data, CC0.</p>
+        <h1 class="rv">We track open AI systems by momentum, and watch which ones <span class="em">accelerate</span>.</h1>
+        <p class="lead rv">We hold a longitudinal record of open AI momentum: every system we track, every week, each input hash-pinned with raw provenance published. Size is never scored. We score the rate of change of public signals, and a system rises only when two independent axes climb together. The baseline comes first. The flare gets recorded against it. Open data, CC0.</p>
         <div class="metastrip mono rv">
           <span><b>{c.entities}</b> systems</span><span class="dot">·</span>
           <span><b>{nCohorts}</b> cohorts</span><span class="dot">·</span>
@@ -59,6 +59,7 @@ const desc = `Evidaxis: the complete weekly record of momentum across ${c.entiti
           <a class="ghost" href="/methodology/current/">Read the methodology <span aria-hidden="true">&rarr;</span></a>
           <a class="textlink" href="/coverage/">Coverage atlas <span class="arr" aria-hidden="true">&rarr;</span></a>
           <a class="textlink" href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Download snapshot (JSON) <span aria-hidden="true">&darr;</span></a>
+          <a class="textlink" href="https://doi.org/10.5281/zenodo.21076012">Cite the deposit (DOI) <span class="arr" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
 
@@ -137,7 +138,7 @@ const desc = `Evidaxis: the complete weekly record of momentum across ${c.entiti
   <section class="band glow" aria-label="Convergence, the signature view">
     <div class="wrap">
       <span class="sec-num rv">2.0, The signature</span>
-      <div class="band-head rv"><h2>The convergence is rare. The record of it is complete.</h2></div>
+      <div class="band-head rv"><h2>The convergence is rare. The record of it is exact.</h2></div>
       <p class="band-sub rv">Where development velocity and citation momentum agree, a system rises. At this baseline snapshot, none do yet.</p>
 
       <div class="band-charts">
@@ -166,7 +167,7 @@ const desc = `Evidaxis: the complete weekly record of momentum across ${c.entiti
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">3.0, State of snapshot {snapshot.snapshot_id}</span></div>
       <h2 class="rv">Convergence is rare, and that is the point.</h2>
-      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {c.entities} systems across {nCohorts} frontiers in period {snapshot.period}, scored every week, reproducible to the hash. {c.rising === 0 ? 'None cross the gate yet' : `${c.rising} cross the gate`}. A fast codebase runs years ahead of its citations, and a genuinely new system has no citation history yet, so convergence stays rare on purpose. Every weekly snapshot deepens the record the next flare gets measured against.</p>
+      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {c.entities} systems across {nCohorts} frontiers in period {snapshot.period}, scored every week, each input hash-pinned. {c.rising === 0 ? 'None cross the gate yet' : `${c.rising} cross the gate`}. A fast codebase runs years ahead of its citations, and a genuinely new system has no citation history yet, so convergence stays rare on purpose. Every weekly snapshot deepens the record the next flare gets measured against.</p>
 
       <div class="stat-row">
         <div class="stat rising rv">
@@ -197,8 +198,8 @@ const desc = `Evidaxis: the complete weekly record of momentum across ${c.entiti
   <section id="coverage">
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">4.0, Coverage</span></div>
-      <h2 class="rv">{nCohorts} frontiers, every system in each.</h2>
-      <p class="sec-sub rv">Within these frontiers this is the complete longitudinal record: {nCohorts} cohorts, every score independently reproducible. Each system is normalized only against its own cohort.</p>
+      <h2 class="rv">{nCohorts} frontiers under watch.</h2>
+      <p class="sec-sub rv">Across {nCohorts} cohorts, every score is checkable against its hash-pinned inputs. Each system is normalized only against its own cohort.</p>
 
       <div class="cov-grid">
         <div>

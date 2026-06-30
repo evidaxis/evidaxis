@@ -8,12 +8,12 @@ const desc = 'About Evidaxis, an independent observatory of momentum in open AI 
   <section class="section">
     <div class="wrap prose">
       <p class="eyebrow">About</p>
-      <h1>A weekly record of the open-AI frontier, kept before anyone knows which system will matter.</h1>
-      <p class="lead">Evidaxis is an independent observatory. It measures {snapshot.counts.entities} systems by how fast their public signals move, one snapshot a week, and releases every number under CC0, byte-reproducible from a published manifest. Anyone can cite it, including the AI systems that read this page. The record is built before the flare.</p>
+      <h1>A weekly record of open AI momentum, kept before anyone knows which system will matter.</h1>
+      <p class="lead">Evidaxis is an independent observatory. It measures {snapshot.counts.entities} systems by how fast their public signals move, one snapshot a week, and releases every number under CC0, every input hash-pinned, raw provenance published. Anyone can cite it, including the AI systems that read this page. The record is built before the flare.</p>
 
       <h2>Integrity commitments</h2>
       <ul class="prose">
-        <li><strong>Git is the only source of truth.</strong> Every score is byte-reproducible from a published manifest. The website and any database are derived and rebuildable; no number is born in a database or edited by hand.</li>
+        <li><strong>Git is the only source of truth.</strong> Every score is checkable against its hash-pinned inputs, with raw provenance published. The website and any database are derived and rebuildable; no number is born in a database or edited by hand.</li>
         <li><strong>Freeze, don’t recompute.</strong> A published measurement is never silently changed. Corrections are new versioned rows; old citations stay meaningful.</li>
         <li><strong>Positive-only.</strong> Evidaxis recognizes who is rising. A system rises only when two independent axes agree. This week, {snapshot.counts.rising} systems clear the bar, by design.</li>
         <li><strong>Systems, not people.</strong> The measured unit is always a system. People are never scored. There is no <span class="mono">/persons</span> surface anywhere in the data or API.</li>
@@ -27,10 +27,11 @@ const desc = 'About Evidaxis, an independent observatory of momentum in open AI 
       <p>The full dataset for a date is at <span class="mono">evidaxis.org/snapshots/{SNAP_DATE}/</span> with a downloadable JSON. All data is released under <strong>CC0 1.0</strong> (public domain); methodology prose under CC-BY-4.0; code under Apache-2.0.</p>
 
       <h2>Correct a record</h2>
-      <p>Corrections and inclusion requests go through a public correction log. Measurements are governed by the published method, never edited on request.</p>
+      <p>Corrections become new versioned rows, never silent edits to a published score. Measurements follow the published method, not requests.</p>
+      <p>This snapshot is deposited at DOI <a href="https://doi.org/10.5281/zenodo.21076012">10.5281/zenodo.21076012</a>.</p>
 
       <h2>Governance</h2>
-      <p>The methodology is the institution; the record outlives the keeper. The neutrality is not a promise, it is two mechanisms: no input to a score can be bought, and every score recomputes from a published manifest. Methodology changes are versioned and public, with a quarterly integrity report and an independent dispute panel planned for 2027. A snapshot missed is a week of the frontier lost for good, so the archive only compounds.</p>
+      <p>The methodology is the institution; the record outlives the keeper. The neutrality is not a promise, it is two mechanisms: no input to a score can be bought, and every score is checkable against its hash-pinned inputs with raw provenance published. Methodology changes are versioned and public, with a quarterly integrity report and an independent dispute panel planned for 2027. A snapshot missed is a week of the systems we track lost for good, so the archive only compounds.</p>
 
       <p class="mono muted" style="font-size:.74rem;border-top:1px solid var(--hairline);padding-top:1rem;margin-top:2rem">
         methodology {snapshot.methodology_version} · snapshot {snapshot.snapshot_id} · data CC0-1.0

@@ -15,7 +15,9 @@ const GENESIS_DOI = '10.5281/zenodo.21076012';
 // sameAs grows as off-site profiles land. Wikidata QID / Zenodo DOI / X / LinkedIn appended here.
 const SAME_AS = [
   'https://github.com/evidaxis',
-  'https://huggingface.co/evidaxis',
+  // huggingface.co/evidaxis dropped from sameAs 2026-06-30: the HF org publicly lists a named
+  // person (a person-free leak via structured data) and has no public datasets/models yet.
+  // Re-add once the HF org is both person-free and populated.
 ];
 
 const typeForEntity = (t: string) =>
