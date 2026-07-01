@@ -10,7 +10,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "collectors"))
-from field_policy import scan_person_fields  # noqa: E402
+from field_policy import scan_person_fields
 
 
 def _load_jsonl(path: str):
