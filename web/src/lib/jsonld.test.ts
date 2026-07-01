@@ -34,8 +34,10 @@ describe('entityGraph', () => {
 
 describe('snapshotDataset — the genesis DOI branch', () => {
   it('attaches the Zenodo DOI (identifier + sameAs) only on the genesis snapshot', () => {
-    const g = snapshotDataset(snapshot); // real snapshot is the genesis (2026-06-27)
-    expect(snapshot.snapshot_date).toBe(GENESIS_DATE);
+    // Genesis-dated fixture (robust to `latest` advancing past genesis once weekly snapshots
+    // accrue), matching the sibling non-genesis test below.
+    const genesis = { ...snapshot, snapshot_date: GENESIS_DATE };
+    const g = snapshotDataset(genesis as any);
     const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
     expect(ds.identifier).toEqual({ '@type': 'PropertyValue', propertyID: 'DOI', value: GENESIS_DOI, url: `https://doi.org/${GENESIS_DOI}` });
     expect(ds.sameAs).toBe(`https://doi.org/${GENESIS_DOI}`);
