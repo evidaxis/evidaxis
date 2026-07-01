@@ -733,6 +733,239 @@
           "note": "paper_ref: 2402.03300; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         }
       ]
+    },
+    "diffusion-media-gen": {
+      "label": "Diffusion & Media Generation",
+      "industry_slug": "generative-media",
+      "subniche_slug": "diffusion-media-gen",
+      "entities": [
+        {
+          "github_repo": "black-forest-labs/flux",
+          "entity_type": "model",
+          "name": "FLUX.1",
+          "homepage": "https://blackforestlabs.ai",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2506.15742; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "QwenLM/Qwen-Image",
+          "entity_type": "model",
+          "name": "Qwen-Image",
+          "homepage": "https://huggingface.co/Qwen/Qwen-Image",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Stability-AI/sd3.5",
+          "entity_type": "model",
+          "name": "Stable Diffusion 3.5",
+          "homepage": "https://huggingface.co/stabilityai/stable-diffusion-3.5-large",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2403.03206; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Wan-Video/Wan2.2",
+          "entity_type": "repo",
+          "name": "Wan2.2",
+          "homepage": "https://github.com/Wan-Video",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2503.20314; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Tencent-Hunyuan/HunyuanVideo",
+          "entity_type": "repo",
+          "name": "HunyuanVideo",
+          "homepage": "https://aivideo.hunyuan.tencent.com",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2412.03603; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Lightricks/LTX-Video",
+          "entity_type": "repo",
+          "name": "LTX-Video",
+          "homepage": "https://ltx.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2501.00103; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "SkyworkAI/SkyReels-V2",
+          "entity_type": "repo",
+          "name": "SkyReels-V2",
+          "homepage": "https://skyworkai.github.io/skyreels-v2.github.io/",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2504.13074; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "hpcaitech/Open-Sora",
+          "entity_type": "repo",
+          "name": "Open-Sora",
+          "homepage": "https://github.com/hpcaitech/Open-Sora",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2503.09642; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "ace-step/ACE-Step",
+          "entity_type": "model",
+          "name": "ACE-Step",
+          "homepage": "https://ace-step.github.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2506.00045; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "fishaudio/fish-speech",
+          "entity_type": "repo",
+          "name": "Fish Speech",
+          "homepage": "https://fish.audio",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2411.01156; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "hexgrad/kokoro",
+          "entity_type": "model",
+          "name": "Kokoro-82M",
+          "homepage": "https://huggingface.co/hexgrad/Kokoro-82M",
+          "openalex_work_ids": [],
+          "note": "batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "multimodal-art-projection/YuE",
+          "entity_type": "model",
+          "name": "YuE",
+          "homepage": "https://map-yue.github.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2503.08638; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "comfyanonymous/ComfyUI",
+          "entity_type": "product",
+          "name": "ComfyUI",
+          "homepage": "https://www.comfy.org",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "huggingface/diffusers",
+          "entity_type": "repo",
+          "name": "Diffusers",
+          "homepage": "https://huggingface.co/docs/diffusers",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
+      ]
+    },
+    "multimodal-vlm": {
+      "label": "Multimodal / Vision-Language",
+      "industry_slug": "multimodal-ai",
+      "subniche_slug": "multimodal-vlm",
+      "entities": [
+        {
+          "github_repo": "QwenLM/Qwen3-VL",
+          "entity_type": "model",
+          "name": "Qwen3-VL",
+          "homepage": "https://qwen.ai",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2511.21631; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "OpenGVLab/InternVL",
+          "entity_type": "repo",
+          "name": "InternVL",
+          "homepage": "https://internvl.github.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2508.18265; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "zai-org/GLM-V",
+          "entity_type": "repo",
+          "name": "GLM-V",
+          "homepage": "https://huggingface.co/zai-org/GLM-4.6V",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2507.01006; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "MoonshotAI/Kimi-VL",
+          "entity_type": "model",
+          "name": "Kimi-VL",
+          "homepage": "https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2504.07491; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "OpenBMB/MiniCPM-V",
+          "entity_type": "repo",
+          "name": "MiniCPM-V",
+          "homepage": "https://huggingface.co/openbmb/MiniCPM-V-4_5",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2509.18154; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "deepseek-ai/DeepSeek-OCR",
+          "entity_type": "model",
+          "name": "DeepSeek-OCR",
+          "homepage": "https://huggingface.co/deepseek-ai/DeepSeek-OCR",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2510.18234; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "deepseek-ai/DeepSeek-VL2",
+          "entity_type": "model",
+          "name": "DeepSeek-VL2",
+          "homepage": "https://huggingface.co/deepseek-ai/deepseek-vl2",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2412.10302; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "ATH-MaaS/Ovis",
+          "entity_type": "repo",
+          "name": "Ovis2.5",
+          "homepage": "https://huggingface.co/AIDC-AI/Ovis2.5-9B",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2508.11737; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "NVlabs/Eagle",
+          "entity_type": "repo",
+          "name": "Eagle 2.5",
+          "homepage": "https://huggingface.co/nvidia/Eagle2.5-8B",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2504.15271; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "m87-labs/moondream",
+          "entity_type": "model",
+          "name": "moondream",
+          "homepage": "https://moondream.ai",
+          "openalex_work_ids": [],
+          "note": "batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "huggingface/smollm",
+          "entity_type": "model",
+          "name": "SmolVLM",
+          "homepage": "https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "apple/ml-fastvlm",
+          "entity_type": "repo",
+          "name": "FastVLM",
+          "homepage": "https://machinelearning.apple.com/research/fast-vision-language-models",
+          "openalex_work_ids": [],
+          "note": "paper_ref: arXiv:2412.13303; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "haotian-liu/LLaVA",
+          "entity_type": "repo",
+          "name": "LLaVA",
+          "homepage": "https://llava-vl.github.io",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: arXiv:2310.03744; incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
+      ]
     }
   }
 }

@@ -1,12 +1,12 @@
 {
   "collector_version": "t2_deps_m1",
-  "captured_at": "2026-07-01T18:15:07Z",
+  "captured_at": "2026-07-01T18:30:22Z",
   "date": "2026-07-01",
   "period": "2026-w27",
-  "entity_count": 81,
-  "matched": 66,
-  "unmatched": 15,
-  "observations_sha256": "d53be4e389d654827f1017967cfb6ccbee6a074ea36fa517389a85f9f08132fc",
+  "entity_count": 108,
+  "matched": 81,
+  "unmatched": 27,
+  "observations_sha256": "4242bca538670dee0a751128d1b14f7af8d7bbbf0bda9d2ab078eb41398493d8",
   "signal": "deps_dev_dependents (R0/adoption: how many packages depend on this system)",
   "note": "TYPE-2 point-in-time via live deps.dev REST; additive, NOT scored, person-free."
 }
