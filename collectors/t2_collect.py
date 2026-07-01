@@ -35,6 +35,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+from field_policy import filter_provenance
+
 REPO = Path(__file__).resolve().parent.parent
 COLLECTOR_VERSION = "t2_m0"
 GITHUB_API = "https://api.github.com/repos/{repo}"
@@ -143,7 +145,11 @@ def capture() -> int:
             "retraction": None,
         }
         records.append(record)
-        (prov_dir / f"{entity_id}.json").write_bytes(body)
+        # person-free: store the allowlisted system-level view, NEVER the raw owner/user object.
+        # Integrity is preserved by response_sha256 (of the full upstream body) in the record.
+        (prov_dir / f"{entity_id}.json").write_text(
+            json.dumps(filter_provenance(data), indent=2, ensure_ascii=False)
+        )
         with (hist_dir / f"{entity_id}.t2.jsonl").open("a") as fh:
             fh.write(json.dumps(record, ensure_ascii=False) + "\n")
 
