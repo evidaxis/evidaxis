@@ -1,0 +1,12 @@
+{
+  "collector_version": "t2_deps_m1",
+  "captured_at": "2026-07-01T18:15:07Z",
+  "date": "2026-07-01",
+  "period": "2026-w27",
+  "entity_count": 81,
+  "matched": 66,
+  "unmatched": 15,
+  "observations_sha256": "d53be4e389d654827f1017967cfb6ccbee6a074ea36fa517389a85f9f08132fc",
+  "signal": "deps_dev_dependents (R0/adoption: how many packages depend on this system)",
+  "note": "TYPE-2 point-in-time via live deps.dev REST; additive, NOT scored, person-free."
+}
