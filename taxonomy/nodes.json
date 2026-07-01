@@ -91,6 +91,34 @@
       "slug": "post-training-rl",
       "name": "Post-training & RL",
       "parent": "ml-infrastructure"
+    },
+    {
+      "taxon_id": "t_8cbef27c",
+      "level": "industry",
+      "slug": "generative-media",
+      "name": "Diffusion & Media Generation",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_f34a6706",
+      "level": "sub_niche",
+      "slug": "diffusion-media-gen",
+      "name": "Diffusion & Media Generation",
+      "parent": "generative-media"
+    },
+    {
+      "taxon_id": "t_a5e26095",
+      "level": "industry",
+      "slug": "multimodal-ai",
+      "name": "Multimodal / Vision-Language",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_09fd8504",
+      "level": "sub_niche",
+      "slug": "multimodal-vlm",
+      "name": "Multimodal / Vision-Language",
+      "parent": "multimodal-ai"
     }
   ]
 }

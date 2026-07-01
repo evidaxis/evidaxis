@@ -12,6 +12,8 @@ on:
     paths:
       - "etl/**"
       - "tests/**"
+      - "collectors/**"
+      - "data/observations/**"
       - "genesis-deposit/code/**"
       - "pyproject.toml"
       - "requirements-dev.txt"
@@ -20,6 +22,8 @@ on:
     paths:
       - "etl/**"
       - "tests/**"
+      - "collectors/**"
+      - "data/observations/**"
       - "genesis-deposit/code/**"
       - "pyproject.toml"
       - "requirements-dev.txt"
@@ -51,7 +55,7 @@ jobs:
           --cov-report=term-missing --cov-fail-under=90
 
       - name: Lint (ruff — real-defect ruleset, non-style)
-        run: ruff check etl tests
+        run: ruff check etl tests collectors
 
       - name: Drift guard — deposited genesis code matches live etl/
         run: python -m pytest tests/test_genesis_deposit_sync.py -q

@@ -14,8 +14,8 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 053f31f82bb8
-  captured_at: 2026-07-01T17:44:08+00:00
+  snapshot_id: 8b04a522dda1
+  captured_at: 2026-07-01T18:25:07+00:00
   period: 2026-w27
   momentum: 73.5
   percentile: 100

@@ -14,18 +14,18 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 053f31f82bb8
-  captured_at: 2026-07-01T17:44:08+00:00
+  snapshot_id: 8b04a522dda1
+  captured_at: 2026-07-01T18:25:07+00:00
   period: 2026-w27
-  momentum: 45.3
-  percentile: 42
+  momentum: 48.0
+  percentile: 45
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.013035369784096352, "cohort_z": -0.375, "recent_weekly_commits": 1.1, "stars_not_scored": 28130}
+    github_commit_velocity: {"slope": -0.013035369784096352, "cohort_z": -0.164, "recent_weekly_commits": 1.1, "stars_not_scored": 28130}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
