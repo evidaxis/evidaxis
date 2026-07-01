@@ -28,7 +28,7 @@ const cohortDesc: Record<string, string> = {
 const cohortSlug = (key: string) => {
   for (const ind of industries().values())
     for (const sn of ind.subniches.values())
-      if (sn.cohortKey === key) return `/industries/${ind.slug}/${sn.slug}/`;
+      if (sn.cohortKey === key) return `/ai/cohorts/${sn.slug}/`;
   return '/coverage/';
 };
 

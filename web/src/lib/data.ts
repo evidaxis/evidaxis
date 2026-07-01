@@ -67,7 +67,7 @@ export const industries = () => {
   const map = new Map<string, { slug: string; label: string; subniches: Map<string, { slug: string; label: string; cohortKey: string }> }>();
   for (const [ck, c] of Object.entries(snapshot.cohorts)) {
     if (!map.has(c.industry)) {
-      const node = taxonomy.nodes.find((n: any) => n.level === 'industry' && n.slug === c.industry);
+      const node = taxonomy.nodes.find((n: any) => n.level === 'field' && n.slug === c.industry);
       map.set(c.industry, { slug: c.industry, label: cleanLabel(node?.name ?? c.industry), subniches: new Map() });
     }
     map.get(c.industry)!.subniches.set(c.sub_niche, { slug: c.sub_niche, label: cleanLabel(c.label), cohortKey: ck });
