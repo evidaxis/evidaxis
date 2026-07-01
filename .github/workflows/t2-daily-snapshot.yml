@@ -1,0 +1,42 @@
+name: t2-daily-snapshot
+
+# Type-2 (non-reconstructable) point-in-time capture. Runs DAILY because watchers /
+# open-issues move day-to-day and their historical value is NOT served by GitHub —
+# a weekly cadence permanently loses 6 of every 7 days of irreplaceable resolution.
+# Additive to the frozen genesis etl/ pipeline; captures raw, does NOT score.
+
+on:
+  schedule:
+    - cron: "23 6 * * *"   # daily 06:23 UTC (offset from the weekly m2 snapshot 06:17 Sat)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t2-snapshot
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Capture Type-2 observations
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 collectors/t2_collect.py
+      - name: Commit snapshot if changed
+        run: |
+          git config user.name "evidaxis-bot"
+          git config user.email "bot@evidaxis.org"
+          git add data/observations
+          if git diff --cached --quiet; then
+            echo "no new observations"
+          else
+            git commit -m "t2: daily observation snapshot ($(date -u +%Y-%m-%d))"
+            git push
+          fi
