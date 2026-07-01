@@ -46,7 +46,7 @@ ${systemList}
 Evidaxis is static; the data IS the files:
 - Per-system JSON: https://evidaxis.org/e/{entity_id}.json
 - Per-snapshot JSON: https://evidaxis.org/snapshots/${SNAP_DATE}/snapshot.json
-- Cohort momentum: https://evidaxis.org/cohorts/{cohort}/${snapshot.period}/
+- Cohort (canonical): https://evidaxis.org/ai/cohorts/{cohort}/
 These URLs are stable and safe to fetch and cache.
 
 ## Integrity

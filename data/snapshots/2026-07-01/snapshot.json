@@ -19,43 +19,43 @@
   "cohorts": {
     "robotics-embodied": {
       "label": "Robotics & Embodied AI",
-      "industry": "robotics",
-      "sub_niche": "embodied-ai"
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied"
     },
     "ai-drug-discovery": {
-      "label": "AI for Science \u2014 Molecular & Drug Discovery",
+      "label": "AI Drug Discovery",
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery"
+      "sub_niche": "ai-drug-discovery"
     },
-    "ai-coding-agents": {
-      "label": "AI Agents for Software Engineering",
-      "industry": "developer-tools",
+    "coding-agents": {
+      "label": "Coding Agents",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents"
     },
-    "llm-inference-serving": {
-      "label": "LLM Inference & Serving",
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving"
+    "inference-serving": {
+      "label": "Inference & Serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving"
     },
     "agent-frameworks": {
-      "label": "AI Agent Frameworks",
+      "label": "Agent Frameworks",
       "industry": "ai-agents",
       "sub_niche": "agent-frameworks"
     },
-    "post-training-rl": {
-      "label": "Post-training & RL",
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl"
+    "post-training-alignment": {
+      "label": "Post-training & Alignment",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment"
     },
-    "diffusion-media-gen": {
-      "label": "Diffusion & Media Generation",
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen"
+    "media-generation": {
+      "label": "Media Generation",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation"
     },
-    "multimodal-vlm": {
-      "label": "Multimodal / Vision-Language",
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm"
+    "multimodal-foundation-models": {
+      "label": "Multimodal Foundation Models",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models"
     }
   },
   "entities": [
@@ -67,8 +67,8 @@
       "homepage": "https://github.com/huggingface/lerobot",
       "github_repo": "huggingface/lerobot",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -106,8 +106,8 @@
       "homepage": "https://github.com/Genesis-Embodied-AI/Genesis",
       "github_repo": "Genesis-Embodied-AI/Genesis",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -147,8 +147,8 @@
       "openalex_work_ids": [
         "W4399695759"
       ],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -190,8 +190,8 @@
       "homepage": "https://github.com/dora-rs/dora",
       "github_repo": "dora-rs/dora",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -233,8 +233,8 @@
       "openalex_work_ids": [
         "W4367016688"
       ],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -280,8 +280,8 @@
       "openalex_work_ids": [
         "W2929928372"
       ],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -329,8 +329,8 @@
       "openalex_work_ids": [
         "W2158782408"
       ],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -377,7 +377,7 @@
       "rising": false,
       "status": "calibration",
       "incumbent": true,
-      "note": "Mature incumbent \u2014 included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)."
+      "note": "Mature incumbent — included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)."
     },
     {
       "entity_id": "e_7ZJR0NT1B6H",
@@ -387,8 +387,8 @@
       "homepage": "https://github.com/Physical-Intelligence/openpi",
       "github_repo": "Physical-Intelligence/openpi",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -426,8 +426,8 @@
       "homepage": "https://rdt-robotics.github.io/rdt-robotics/",
       "github_repo": "thu-ml/RoboticsDiffusionTransformer",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -465,8 +465,8 @@
       "homepage": "https://developer.nvidia.com/isaac/gr00t",
       "github_repo": "NVIDIA/Isaac-GR00T",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -504,8 +504,8 @@
       "homepage": "https://www.nvidia.com/en-us/ai/cosmos/",
       "github_repo": "NVIDIA/cosmos",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -543,8 +543,8 @@
       "homepage": "https://maniskill.ai",
       "github_repo": "mani-skill/ManiSkill",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -582,8 +582,8 @@
       "homepage": "https://robocasa.ai",
       "github_repo": "robocasa/robocasa",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -621,8 +621,8 @@
       "homepage": "https://robosuite.ai",
       "github_repo": "ARISE-Initiative/robosuite",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -660,8 +660,8 @@
       "homepage": "https://libero-project.github.io",
       "github_repo": "Lifelong-Robot-Learning/LIBERO",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -699,8 +699,8 @@
       "homepage": "https://gymnasium.farama.org",
       "github_repo": "Farama-Foundation/Gymnasium",
       "openalex_work_ids": [],
-      "industry": "robotics",
-      "sub_niche": "embodied-ai",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
       "cohort": "robotics-embodied",
       "axes": {
         "github_commit_velocity": {
@@ -741,7 +741,7 @@
         "W4404565424"
       ],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -791,7 +791,7 @@
         "W4309643848"
       ],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -839,7 +839,7 @@
         "W2594183968"
       ],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -893,7 +893,7 @@
         "W4226239309"
       ],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -941,7 +941,7 @@
         "W3169622372"
       ],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -992,7 +992,7 @@
         "W4286500588"
       ],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1032,7 +1032,7 @@
       "rising": false,
       "status": "calibration",
       "incumbent": true,
-      "note": "Mature incumbent \u2014 cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
+      "note": "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
     },
     {
       "entity_id": "e_2XFTYTGJT3Z",
@@ -1043,7 +1043,7 @@
       "github_repo": "chaidiscovery/chai-lab",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1082,7 +1082,7 @@
       "github_repo": "bytedance/Protenix",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1121,7 +1121,7 @@
       "github_repo": "RosettaCommons/RFdiffusion",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1160,7 +1160,7 @@
       "github_repo": "dauparas/ProteinMPNN",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1199,7 +1199,7 @@
       "github_repo": "dauparas/LigandMPNN",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1238,7 +1238,7 @@
       "github_repo": "gcorso/DiffDock",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1277,7 +1277,7 @@
       "github_repo": "deepmodeling/Uni-Mol",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1316,7 +1316,7 @@
       "github_repo": "google-deepmind/alphafold3",
       "openalex_work_ids": [],
       "industry": "ai-for-science",
-      "sub_niche": "drug-discovery",
+      "sub_niche": "ai-drug-discovery",
       "cohort": "ai-drug-discovery",
       "axes": {
         "github_commit_velocity": {
@@ -1356,9 +1356,9 @@
       "openalex_work_ids": [
         "W4403885061"
       ],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.013230876873927792,
@@ -1400,9 +1400,9 @@
       "openalex_work_ids": [
         "W4399114781"
       ],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.00019839852519289551,
@@ -1443,9 +1443,9 @@
       "homepage": "https://cline.bot/",
       "github_repo": "cline/cline",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.005725731199488765,
@@ -1484,9 +1484,9 @@
       "homepage": "https://aider.chat/",
       "github_repo": "paul-gauthier/aider",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.05170040309241602,
@@ -1523,9 +1523,9 @@
       "homepage": "https://continue.dev/",
       "github_repo": "continuedev/continue",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.20835373100388863,
@@ -1562,9 +1562,9 @@
       "homepage": "https://opencode.ai",
       "github_repo": "anomalyco/opencode",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.02722150464123964,
@@ -1601,9 +1601,9 @@
       "homepage": "https://geminicli.com",
       "github_repo": "google-gemini/gemini-cli",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.1274510987203359,
@@ -1640,9 +1640,9 @@
       "homepage": "https://developers.openai.com/codex",
       "github_repo": "openai/codex",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.010494197222858374,
@@ -1679,9 +1679,9 @@
       "homepage": "https://tabbyml.com",
       "github_repo": "TabbyML/tabby",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.024265720201217866,
@@ -1718,9 +1718,9 @@
       "homepage": "https://voideditor.com",
       "github_repo": "voideditor/void",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.004610113015332464,
@@ -1757,9 +1757,9 @@
       "homepage": "https://charm.sh",
       "github_repo": "charmbracelet/crush",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.02553406648511489,
@@ -1796,9 +1796,9 @@
       "homepage": "https://qwenlm.github.io/qwen-code-docs",
       "github_repo": "QwenLM/qwen-code",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.010104567102287932,
@@ -1837,9 +1837,9 @@
       "homepage": "https://kilo.ai",
       "github_repo": "Kilo-Org/kilocode",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.01622176418264649,
@@ -1876,9 +1876,9 @@
       "homepage": "https://zed.dev",
       "github_repo": "zed-industries/zed",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.026803577272213216,
@@ -1915,9 +1915,9 @@
       "homepage": "https://www.swebench.com",
       "github_repo": "SWE-bench/SWE-bench",
       "openalex_work_ids": [],
-      "industry": "developer-tools",
+      "industry": "ai-agents",
       "sub_niche": "coding-agents",
-      "cohort": "ai-coding-agents",
+      "cohort": "coding-agents",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.010574715596411101,
@@ -1954,9 +1954,9 @@
       "homepage": "https://vllm.ai",
       "github_repo": "vllm-project/vllm",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.009545637736124052,
@@ -1993,9 +1993,9 @@
       "homepage": "https://sglang.io",
       "github_repo": "sgl-project/sglang",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.015648923292789,
@@ -2032,9 +2032,9 @@
       "homepage": "https://github.com/ggml-org/llama.cpp",
       "github_repo": "ggml-org/llama.cpp",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.008418490732925995,
@@ -2073,9 +2073,9 @@
       "homepage": "https://ollama.com",
       "github_repo": "ollama/ollama",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.035368077153436414,
@@ -2112,9 +2112,9 @@
       "homepage": "https://lmdeploy.readthedocs.io",
       "github_repo": "InternLM/lmdeploy",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.02118092136313575,
@@ -2151,9 +2151,9 @@
       "homepage": "https://kvcache-ai.github.io/ktransformers/",
       "github_repo": "kvcache-ai/ktransformers",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.010812279519148184,
@@ -2190,9 +2190,9 @@
       "homepage": "https://lmcache.ai",
       "github_repo": "LMCache/LMCache",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.03666219509770351,
@@ -2229,9 +2229,9 @@
       "homepage": "https://aibrix.readthedocs.io",
       "github_repo": "vllm-project/aibrix",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.04596412529354592,
@@ -2268,9 +2268,9 @@
       "homepage": "https://github.com/GeeeekExplorer/nano-vllm",
       "github_repo": "GeeeekExplorer/nano-vllm",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "llm-inference-serving",
-      "cohort": "llm-inference-serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0026113401776197455,
@@ -2775,9 +2775,9 @@
       "homepage": "https://verl.readthedocs.io",
       "github_repo": "verl-project/verl",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.00976732916108879,
@@ -2814,9 +2814,9 @@
       "homepage": "https://llamafactory.readthedocs.io",
       "github_repo": "hiyouga/LLaMA-Factory",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.016212949046500863,
@@ -2853,9 +2853,9 @@
       "homepage": "https://unsloth.ai",
       "github_repo": "unslothai/unsloth",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.04265230094336848,
@@ -2894,9 +2894,9 @@
       "homepage": "https://swift.readthedocs.io",
       "github_repo": "modelscope/ms-swift",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0013162652104426072,
@@ -2933,9 +2933,9 @@
       "homepage": "https://docs.axolotl.ai",
       "github_repo": "axolotl-ai-cloud/axolotl",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.006177516083220466,
@@ -2972,9 +2972,9 @@
       "homepage": "https://openrlhf.readthedocs.io",
       "github_repo": "OpenRLHF/OpenRLHF",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.03540035991811173,
@@ -3011,9 +3011,9 @@
       "homepage": "https://areal-ai.io",
       "github_repo": "inclusionAI/AReaL",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.030384354724949804,
@@ -3050,9 +3050,9 @@
       "homepage": "https://github.com/PeterGriffinJin/Search-R1",
       "github_repo": "PeterGriffinJin/Search-R1",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3089,9 +3089,9 @@
       "homepage": "https://allenai.github.io/open-instruct/",
       "github_repo": "allenai/open-instruct",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.07769071090583592,
@@ -3128,9 +3128,9 @@
       "homepage": "https://docs.nvidia.com/nemo/rl/latest/",
       "github_repo": "NVIDIA-NeMo/RL",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.03183200741287109,
@@ -3169,9 +3169,9 @@
       "homepage": "https://huggingface.co/docs/trl",
       "github_repo": "huggingface/trl",
       "openalex_work_ids": [],
-      "industry": "ml-infrastructure",
-      "sub_niche": "post-training-rl",
-      "cohort": "post-training-rl",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.002645629847959373,
@@ -3208,9 +3208,9 @@
       "homepage": "https://blackforestlabs.ai",
       "github_repo": "black-forest-labs/flux",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3247,9 +3247,9 @@
       "homepage": "https://huggingface.co/Qwen/Qwen-Image",
       "github_repo": "QwenLM/Qwen-Image",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.0035546009259484375,
@@ -3286,9 +3286,9 @@
       "homepage": "https://huggingface.co/stabilityai/stable-diffusion-3.5-large",
       "github_repo": "Stability-AI/sd3.5",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3325,9 +3325,9 @@
       "homepage": "https://github.com/Wan-Video",
       "github_repo": "Wan-Video/Wan2.2",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.0040107302797880535,
@@ -3364,9 +3364,9 @@
       "homepage": "https://aivideo.hunyuan.tencent.com",
       "github_repo": "Tencent-Hunyuan/HunyuanVideo",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.009389848621094956,
@@ -3403,9 +3403,9 @@
       "homepage": "https://ltx.io",
       "github_repo": "Lightricks/LTX-Video",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.005924334876580729,
@@ -3442,9 +3442,9 @@
       "homepage": "https://skyworkai.github.io/skyreels-v2.github.io/",
       "github_repo": "SkyworkAI/SkyReels-V2",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.004502494506201354,
@@ -3481,9 +3481,9 @@
       "homepage": "https://github.com/hpcaitech/Open-Sora",
       "github_repo": "hpcaitech/Open-Sora",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.00023697339506322917,
@@ -3520,9 +3520,9 @@
       "homepage": "https://ace-step.github.io",
       "github_repo": "ace-step/ACE-Step",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.009478935802529167,
@@ -3559,9 +3559,9 @@
       "homepage": "https://fish.audio",
       "github_repo": "fishaudio/fish-speech",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.009271475890182141,
@@ -3598,9 +3598,9 @@
       "homepage": "https://huggingface.co/hexgrad/Kokoro-82M",
       "github_repo": "hexgrad/kokoro",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3637,9 +3637,9 @@
       "homepage": "https://map-yue.github.io",
       "github_repo": "multimodal-art-projection/YuE",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3676,9 +3676,9 @@
       "homepage": "https://www.comfy.org",
       "github_repo": "comfyanonymous/ComfyUI",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.010227374862208793,
@@ -3715,9 +3715,9 @@
       "homepage": "https://huggingface.co/docs/diffusers",
       "github_repo": "huggingface/diffusers",
       "openalex_work_ids": [],
-      "industry": "generative-media",
-      "sub_niche": "diffusion-media-gen",
-      "cohort": "diffusion-media-gen",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.011851627615840637,
@@ -3754,9 +3754,9 @@
       "homepage": "https://qwen.ai",
       "github_repo": "QwenLM/Qwen3-VL",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.010900776172908543,
@@ -3793,9 +3793,9 @@
       "homepage": "https://huggingface.co/zai-org/GLM-4.6V",
       "github_repo": "zai-org/GLM-V",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.013622902578433467,
@@ -3832,9 +3832,9 @@
       "homepage": "https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506",
       "github_repo": "MoonshotAI/Kimi-VL",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3871,9 +3871,9 @@
       "homepage": "https://huggingface.co/openbmb/MiniCPM-V-4_5",
       "github_repo": "OpenBMB/MiniCPM-V",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.018002595116375895,
@@ -3910,9 +3910,9 @@
       "homepage": "https://huggingface.co/deepseek-ai/DeepSeek-OCR",
       "github_repo": "deepseek-ai/DeepSeek-OCR",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.004502494506201354,
@@ -3949,9 +3949,9 @@
       "homepage": "https://huggingface.co/deepseek-ai/deepseek-vl2",
       "github_repo": "deepseek-ai/DeepSeek-VL2",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -3988,9 +3988,9 @@
       "homepage": "https://huggingface.co/AIDC-AI/Ovis2.5-9B",
       "github_repo": "ATH-MaaS/Ovis",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -4027,9 +4027,9 @@
       "homepage": "https://huggingface.co/nvidia/Eagle2.5-8B",
       "github_repo": "NVlabs/Eagle",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.024028473439511835,
@@ -4066,9 +4066,9 @@
       "homepage": "https://moondream.ai",
       "github_repo": "m87-labs/moondream",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.001184866975316146,
@@ -4105,9 +4105,9 @@
       "homepage": "https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct",
       "github_repo": "huggingface/smollm",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": -0.0056873614815175,
@@ -4144,9 +4144,9 @@
       "homepage": "https://machinelearning.apple.com/research/fast-vision-language-models",
       "github_repo": "apple/ml-fastvlm",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,
@@ -4183,9 +4183,9 @@
       "homepage": "https://llava-vl.github.io",
       "github_repo": "haotian-liu/LLaVA",
       "openalex_work_ids": [],
-      "industry": "multimodal-ai",
-      "sub_niche": "multimodal-vlm",
-      "cohort": "multimodal-vlm",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
       "axes": {
         "github_commit_velocity": {
           "slope": 0.0,

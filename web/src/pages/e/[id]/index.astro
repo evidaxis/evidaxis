@@ -28,8 +28,8 @@ const indLabel = [...industries().values()].find((i) => i.slug === e.industry)?.
 const related = cohortRanked.filter((x) => x.entity_id !== e.entity_id).slice(0, 6);
 const crumbs = breadcrumb([
   { name: 'Coverage', path: '/coverage/' },
-  { name: indLabel, path: `/industries/${e.industry}/` },
-  { name: cohortLabel(e.cohort), path: `/industries/${e.industry}/${e.sub_niche}/` },
+  { name: indLabel, path: `/ai/fields/${e.industry}/` },
+  { name: cohortLabel(e.cohort), path: `/ai/cohorts/${e.sub_niche}/` },
   { name: e.name, path: `/e/${e.entity_id}/` },
 ]);
 
@@ -59,7 +59,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
     <div class="wrap">
       <nav class="crumb mono" aria-label="Breadcrumb">
         <a href="/coverage/">coverage</a> /
-        <a href={`/industries/${e.industry}/${e.sub_niche}/`}>{cohortLabel(e.cohort)}</a> /
+        <a href={`/ai/cohorts/${e.sub_niche}/`}>{cohortLabel(e.cohort)}</a> /
         <span>{e.name}</span>
       </nav>
 
@@ -127,7 +127,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
           <div class="peer-list">
             {related.map((r) => <EntityRow entity={r} rank={cohortRanked.findIndex((x) => x.entity_id === r.entity_id) + 1} />)}
           </div>
-          <p class="peer-more"><a href={`/industries/${e.industry}/${e.sub_niche}/`}>Full {cohortLabel(e.cohort)} cohort &rarr;</a></p>
+          <p class="peer-more"><a href={`/ai/cohorts/${e.sub_niche}/`}>Full {cohortLabel(e.cohort)} cohort &rarr;</a></p>
         </div>
       )}
 

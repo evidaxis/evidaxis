@@ -1,0 +1,34 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import EntityTable from '../../../../components/EntityTable.astro';
+import { industries, entitiesInCohort, snapshot } from '../../../../lib/data';
+import { itemListDataset, breadcrumb } from '../../../../lib/jsonld';
+
+export function getStaticPaths() {
+  const out: any[] = [];
+  for (const f of industries().values())
+    for (const c of f.subniches.values())
+      out.push({ params: { cohort: c.slug },
+        props: { field: { slug: f.slug, label: f.label }, cohort: c } });
+  return out;
+}
+const { field, cohort } = Astro.props;
+const es = entitiesInCohort(cohort.cohortKey);
+const path = `/ai/cohorts/${cohort.slug}/`;
+const desc = `Evidaxis momentum for ${cohort.label}: ${es.length} open AI systems scored on development velocity and citation momentum.`;
+const listJson = itemListDataset({ path, name: `${cohort.label} by Evidaxis momentum`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
+---
+<Base title={`${cohort.label}, Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: field.label, path: `/ai/fields/${field.slug}/` }, { name: cohort.label, path }])]}>
+  <section class="section">
+    <div class="wrap">
+      <div class="mono muted" style="font-size:.74rem;margin-bottom:.6rem">
+        <a href="/coverage/" style="border:none;color:inherit">coverage</a> /
+        <a href={`/ai/fields/${field.slug}/`} style="border:none;color:inherit">{field.label}</a> / <span>{cohort.label}</span>
+      </div>
+      <p class="eyebrow">Cohort</p>
+      <h1>{cohort.label}</h1>
+      <p class="lead" style="max-width:60ch">{es.length} systems in this cohort, by within-cohort momentum at period {snapshot.period}.</p>
+      <EntityTable entities={es} />
+    </div>
+  </section>
+</Base>

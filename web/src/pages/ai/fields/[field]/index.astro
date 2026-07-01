@@ -1,0 +1,47 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import { industries, entitiesInCohort } from '../../../../lib/data';
+import { breadcrumb } from '../../../../lib/jsonld';
+
+export function getStaticPaths() {
+  return [...industries().values()].map((f) => ({
+    params: { field: f.slug },
+    props: { slug: f.slug, label: f.label, cohorts: [...f.subniches.values()] },
+  }));
+}
+const { slug, label, cohorts } = Astro.props;
+const desc = `Evidaxis coverage of ${label}: ${cohorts.length} cohort(s) of open AI systems, measured by momentum.`;
+const SITE = 'https://evidaxis.org';
+const listJson = {
+  '@context': 'https://schema.org', '@type': 'CollectionPage',
+  '@id': `${SITE}/ai/fields/${slug}/#page`, url: `${SITE}/ai/fields/${slug}/`,
+  name: `${label}, Evidaxis`, isPartOf: { '@id': `${SITE}/#website` },
+  about: { '@type': 'ItemList', name: `${label} cohorts`, numberOfItems: cohorts.length,
+    itemListElement: cohorts.map((c: any, i: number) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/ai/cohorts/${c.slug}/`, name: c.label })) },
+};
+const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: label, path: `/ai/fields/${slug}/` }]);
+---
+<Base title={`${label}, Evidaxis`} description={desc} canonical={`/ai/fields/${slug}/`} jsonLd={[listJson, crumbs]}>
+  <nav class="wrap mono muted" style="font-size:.74rem;padding-top:1rem"><a href="/coverage/" style="border:none;color:inherit">coverage</a> / <span>{label}</span></nav>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Field</p>
+      <h1>{label}</h1>
+      <div class="stack" style="margin-top:1.6rem">
+        {cohorts.map((c) => {
+          const es = entitiesInCohort(c.cohortKey);
+          const top = es.filter((e) => e.status === 'rising' || e.status === 'watch').slice(0, 3);
+          return (
+            <a class="card" href={`/ai/cohorts/${c.slug}/`}>
+              <div class="row" style="justify-content:space-between;align-items:baseline">
+                <h2 style="margin:0;font-size:1.12rem">{c.label}</h2>
+                <span class="mono muted" style="font-size:.74rem">{es.length} systems</span>
+              </div>
+              {top.length>0 && <p class="muted" style="font-size:.86rem;margin:.5rem 0 0">Signals: {top.map((e)=>e.name).join(', ')}</p>}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Base>
