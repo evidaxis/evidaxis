@@ -1,0 +1,35 @@
+---
+schema_ver: 1.0
+entity_id: e_Y3CPRHKVF8H
+entity_type: repo
+name: "Search-R1"
+slug: search-r1
+homepage: "https://github.com/PeterGriffinJin/Search-R1"
+ids:
+  github_repo: "PeterGriffinJin/Search-R1"
+  openalex_work_ids: []
+classification:
+  domain: ai
+  industry: ml-infrastructure
+  sub_niche: post-training-rl
+score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
+  methodology_version: m2
+  snapshot_id: 053f31f82bb8
+  captured_at: 2026-07-01T17:44:08+00:00
+  period: 2026-w27
+  momentum: 53.1
+  percentile: 80
+  confidence: low
+  rising: false
+  status: single-axis
+  axes_present: ["github_commit_velocity"]
+  convergent_axes: []
+  axes:
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.249, "recent_weekly_commits": 0.0, "stars_not_scored": 5042}
+    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+note: "paper_ref: 2503.09516; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+---
+
+# Search-R1
+
+Evidaxis tracks **Search-R1** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).

@@ -13,20 +13,20 @@ classification:
   industry: robotics
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m1
-  snapshot_id: 90e607b982fa
-  captured_at: 2026-06-27T18:40:51+00:00
-  period: 2026-w26
-  momentum: 41.8
-  percentile: 17
+  methodology_version: m2
+  snapshot_id: 053f31f82bb8
+  captured_at: 2026-07-01T17:44:08+00:00
+  period: 2026-w27
+  momentum: 36.9
+  percentile: 15
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.012930551051270719, "cohort_z": -0.486, "recent_weekly_commits": 0.2, "stars_not_scored": 3038}
-    openalex_citation_momentum: {"status": "present", "slope": -0.8435411298625544, "cohort_z": -0.822, "total_citations": 197, "by_year": {"2024": 3, "2023": 5, "2022": 10, "2021": 82, "2020": 72, "2019": 25}, "proxy": null}
+    github_commit_velocity: {"slope": -0.015577526101464149, "cohort_z": -1.268, "recent_weekly_commits": 0.2, "stars_not_scored": 3043}
+    openalex_citation_momentum: {"status": "present", "slope": -0.8435411298625544, "cohort_z": -0.821, "total_citations": 197, "by_year": {"2024": 3, "2023": 5, "2022": 10, "2021": 82, "2020": 72, "2019": 25}, "proxy": null}
 note: "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
 ---
 

@@ -4,20 +4,153 @@
     "note": "Pilot seed: 3 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
     "axis2_research_source": "verified via OpenAlex API, 2026-06-27"
   },
-  "domain": { "slug": "ai", "label": "Artificial Intelligence" },
+  "domain": {
+    "slug": "ai",
+    "label": "Artificial Intelligence"
+  },
   "verticals": {
     "robotics-embodied": {
       "label": "Robotics & Embodied AI",
       "industry_slug": "robotics",
       "subniche_slug": "embodied-ai",
       "entities": [
-        { "github_repo": "huggingface/lerobot", "entity_type": "repo", "name": "LeRobot", "homepage": "https://github.com/huggingface/lerobot", "openalex_work_ids": [], "note": "Paper exists but 0 citations indexed; axis-2 not yet usable." },
-        { "github_repo": "Genesis-Embodied-AI/Genesis", "entity_type": "repo", "name": "Genesis", "homepage": "https://github.com/Genesis-Embodied-AI/Genesis", "openalex_work_ids": [], "note": "No canonical peer paper in OpenAlex; axis-2 absent." },
-        { "github_repo": "openvla/openvla", "entity_type": "repo", "name": "OpenVLA", "homepage": "https://openvla.github.io/", "openalex_work_ids": ["W4399695759"] },
-        { "github_repo": "dora-rs/dora", "entity_type": "repo", "name": "dora-rs", "homepage": "https://github.com/dora-rs/dora", "openalex_work_ids": [], "note": "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent." },
-        { "github_repo": "isaac-sim/IsaacLab", "entity_type": "repo", "name": "Isaac Lab", "homepage": "https://github.com/isaac-sim/IsaacLab", "openalex_work_ids": ["W4367016688"], "axis2_proxy": "Orbit (the predecessor framework that became Isaac Lab)" },
-        { "github_repo": "facebookresearch/habitat-lab", "entity_type": "repo", "name": "Habitat-Lab", "homepage": "https://aihabitat.org/", "openalex_work_ids": ["W2929928372"], "note": "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not." },
-        { "github_repo": "google-deepmind/mujoco", "entity_type": "repo", "name": "MuJoCo", "homepage": "https://mujoco.org/", "openalex_work_ids": ["W2158782408"], "incumbent": true, "note": "Mature incumbent — included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)." }
+        {
+          "github_repo": "huggingface/lerobot",
+          "entity_type": "repo",
+          "name": "LeRobot",
+          "homepage": "https://github.com/huggingface/lerobot",
+          "openalex_work_ids": [],
+          "note": "Paper exists but 0 citations indexed; axis-2 not yet usable."
+        },
+        {
+          "github_repo": "Genesis-Embodied-AI/Genesis",
+          "entity_type": "repo",
+          "name": "Genesis",
+          "homepage": "https://github.com/Genesis-Embodied-AI/Genesis",
+          "openalex_work_ids": [],
+          "note": "No canonical peer paper in OpenAlex; axis-2 absent."
+        },
+        {
+          "github_repo": "openvla/openvla",
+          "entity_type": "repo",
+          "name": "OpenVLA",
+          "homepage": "https://openvla.github.io/",
+          "openalex_work_ids": [
+            "W4399695759"
+          ]
+        },
+        {
+          "github_repo": "dora-rs/dora",
+          "entity_type": "repo",
+          "name": "dora-rs",
+          "homepage": "https://github.com/dora-rs/dora",
+          "openalex_work_ids": [],
+          "note": "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent."
+        },
+        {
+          "github_repo": "isaac-sim/IsaacLab",
+          "entity_type": "repo",
+          "name": "Isaac Lab",
+          "homepage": "https://github.com/isaac-sim/IsaacLab",
+          "openalex_work_ids": [
+            "W4367016688"
+          ],
+          "axis2_proxy": "Orbit (the predecessor framework that became Isaac Lab)"
+        },
+        {
+          "github_repo": "facebookresearch/habitat-lab",
+          "entity_type": "repo",
+          "name": "Habitat-Lab",
+          "homepage": "https://aihabitat.org/",
+          "openalex_work_ids": [
+            "W2929928372"
+          ],
+          "note": "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
+        },
+        {
+          "github_repo": "google-deepmind/mujoco",
+          "entity_type": "repo",
+          "name": "MuJoCo",
+          "homepage": "https://mujoco.org/",
+          "openalex_work_ids": [
+            "W2158782408"
+          ],
+          "incumbent": true,
+          "note": "Mature incumbent — included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)."
+        },
+        {
+          "github_repo": "Physical-Intelligence/openpi",
+          "entity_type": "repo",
+          "name": "openpi",
+          "homepage": "https://github.com/Physical-Intelligence/openpi",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "thu-ml/RoboticsDiffusionTransformer",
+          "entity_type": "repo",
+          "name": "RDT-1B",
+          "homepage": "https://rdt-robotics.github.io/rdt-robotics/",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2410.07864; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "NVIDIA/Isaac-GR00T",
+          "entity_type": "repo",
+          "name": "Isaac-GR00T",
+          "homepage": "https://developer.nvidia.com/isaac/gr00t",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2503.14734; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "NVIDIA/cosmos",
+          "entity_type": "repo",
+          "name": "Cosmos",
+          "homepage": "https://www.nvidia.com/en-us/ai/cosmos/",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "mani-skill/ManiSkill",
+          "entity_type": "repo",
+          "name": "ManiSkill",
+          "homepage": "https://maniskill.ai",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2410.00425; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "robocasa/robocasa",
+          "entity_type": "repo",
+          "name": "RoboCasa",
+          "homepage": "https://robocasa.ai",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "ARISE-Initiative/robosuite",
+          "entity_type": "repo",
+          "name": "robosuite",
+          "homepage": "https://robosuite.ai",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2009.12293; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Lifelong-Robot-Learning/LIBERO",
+          "entity_type": "repo",
+          "name": "LIBERO",
+          "homepage": "https://libero-project.github.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2306.03310; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Farama-Foundation/Gymnasium",
+          "entity_type": "repo",
+          "name": "Gymnasium",
+          "homepage": "https://gymnasium.farama.org",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: 2407.17032; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
       ]
     },
     "ai-drug-discovery": {
@@ -25,12 +158,133 @@
       "industry_slug": "ai-for-science",
       "subniche_slug": "drug-discovery",
       "entities": [
-        { "github_repo": "jwohlwend/boltz", "entity_type": "repo", "name": "Boltz", "homepage": "https://github.com/jwohlwend/boltz", "openalex_work_ids": ["W4404565424"] },
-        { "github_repo": "aqlaboratory/openfold", "entity_type": "repo", "name": "OpenFold", "homepage": "https://github.com/aqlaboratory/openfold", "openalex_work_ids": ["W4396895148", "W4309643848"], "note": "Published + bioRxiv preprint summed by year." },
-        { "github_repo": "deepchem/deepchem", "entity_type": "repo", "name": "DeepChem", "homepage": "https://deepchem.io/", "openalex_work_ids": ["W2594183968"], "axis2_proxy": "MoleculeNet (the standard DeepChem citation)" },
-        { "github_repo": "DeepGraphLearning/torchdrug", "entity_type": "repo", "name": "TorchDrug", "homepage": "https://torchdrug.ai/", "openalex_work_ids": ["W4226239309"], "note": "Low absolute counts; slope noisy." },
-        { "github_repo": "microsoft/Graphormer", "entity_type": "repo", "name": "Graphormer", "homepage": "https://github.com/microsoft/Graphormer", "openalex_work_ids": ["W3169622372"], "note": "OpenAlex undercounts; slope declining post-2022." },
-        { "github_repo": "facebookresearch/esm", "entity_type": "repo", "name": "ESM / ESMFold", "homepage": "https://github.com/facebookresearch/esm", "openalex_work_ids": ["W4327550249", "W4286500588"], "incumbent": true, "note": "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year." }
+        {
+          "github_repo": "jwohlwend/boltz",
+          "entity_type": "repo",
+          "name": "Boltz",
+          "homepage": "https://github.com/jwohlwend/boltz",
+          "openalex_work_ids": [
+            "W4404565424"
+          ]
+        },
+        {
+          "github_repo": "aqlaboratory/openfold",
+          "entity_type": "repo",
+          "name": "OpenFold",
+          "homepage": "https://github.com/aqlaboratory/openfold",
+          "openalex_work_ids": [
+            "W4396895148",
+            "W4309643848"
+          ],
+          "note": "Published + bioRxiv preprint summed by year."
+        },
+        {
+          "github_repo": "deepchem/deepchem",
+          "entity_type": "repo",
+          "name": "DeepChem",
+          "homepage": "https://deepchem.io/",
+          "openalex_work_ids": [
+            "W2594183968"
+          ],
+          "axis2_proxy": "MoleculeNet (the standard DeepChem citation)"
+        },
+        {
+          "github_repo": "DeepGraphLearning/torchdrug",
+          "entity_type": "repo",
+          "name": "TorchDrug",
+          "homepage": "https://torchdrug.ai/",
+          "openalex_work_ids": [
+            "W4226239309"
+          ],
+          "note": "Low absolute counts; slope noisy."
+        },
+        {
+          "github_repo": "microsoft/Graphormer",
+          "entity_type": "repo",
+          "name": "Graphormer",
+          "homepage": "https://github.com/microsoft/Graphormer",
+          "openalex_work_ids": [
+            "W3169622372"
+          ],
+          "note": "OpenAlex undercounts; slope declining post-2022."
+        },
+        {
+          "github_repo": "facebookresearch/esm",
+          "entity_type": "repo",
+          "name": "ESM / ESMFold",
+          "homepage": "https://github.com/facebookresearch/esm",
+          "openalex_work_ids": [
+            "W4327550249",
+            "W4286500588"
+          ],
+          "incumbent": true,
+          "note": "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
+        },
+        {
+          "github_repo": "chaidiscovery/chai-lab",
+          "entity_type": "repo",
+          "name": "Chai-1",
+          "homepage": "https://www.chaidiscovery.com",
+          "openalex_work_ids": [],
+          "note": "paper_ref: biorxiv:10.1101/2024.10.10.615955; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "bytedance/Protenix",
+          "entity_type": "repo",
+          "name": "Protenix",
+          "homepage": "https://protenix-server.com",
+          "openalex_work_ids": [],
+          "note": "paper_ref: biorxiv:2025.01.08.631967; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "RosettaCommons/RFdiffusion",
+          "entity_type": "repo",
+          "name": "RFdiffusion",
+          "homepage": "https://github.com/RosettaCommons/RFdiffusion",
+          "openalex_work_ids": [],
+          "note": "paper_ref: biorxiv:2022.12.09.519842; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "dauparas/ProteinMPNN",
+          "entity_type": "repo",
+          "name": "ProteinMPNN",
+          "homepage": "https://github.com/dauparas/ProteinMPNN",
+          "openalex_work_ids": [],
+          "note": "paper_ref: biorxiv:2022.06.03.494563; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "dauparas/LigandMPNN",
+          "entity_type": "repo",
+          "name": "LigandMPNN",
+          "homepage": "https://github.com/dauparas/LigandMPNN",
+          "openalex_work_ids": [],
+          "note": "paper_ref: biorxiv:2023.12.22.573103; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "gcorso/DiffDock",
+          "entity_type": "repo",
+          "name": "DiffDock",
+          "homepage": "https://github.com/gcorso/DiffDock",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2210.01776; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "deepmodeling/Uni-Mol",
+          "entity_type": "repo",
+          "name": "Uni-Mol",
+          "homepage": "https://github.com/deepmodeling/Uni-Mol",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2303.16982; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "google-deepmind/alphafold3",
+          "entity_type": "repo",
+          "name": "AlphaFold3",
+          "homepage": "https://alphafoldserver.com",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: openalex:10.1038/s41586-024-07487-w; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
       ]
     },
     "ai-coding-agents": {
@@ -38,12 +292,446 @@
       "industry_slug": "developer-tools",
       "subniche_slug": "coding-agents",
       "entities": [
-        { "github_repo": "All-Hands-AI/OpenHands", "entity_type": "repo", "name": "OpenHands", "homepage": "https://github.com/All-Hands-AI/OpenHands", "openalex_work_ids": ["W4403885061"], "note": "Paper young (2024); citation slope insufficient (<2 completed years)." },
-        { "github_repo": "princeton-nlp/SWE-agent", "entity_type": "repo", "name": "SWE-agent", "homepage": "https://swe-agent.com/", "openalex_work_ids": ["W4399114781"], "note": "Paper young (2024); citation slope insufficient." },
-        { "github_repo": "cline/cline", "entity_type": "repo", "name": "Cline", "homepage": "https://cline.bot/", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." },
-        { "github_repo": "paul-gauthier/aider", "entity_type": "repo", "name": "Aider", "homepage": "https://aider.chat/", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." },
-        { "github_repo": "continuedev/continue", "entity_type": "repo", "name": "Continue", "homepage": "https://continue.dev/", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." },
-        { "github_repo": "block/goose", "entity_type": "repo", "name": "Goose", "homepage": "https://github.com/block/goose", "openalex_work_ids": [], "note": "No academic paper; axis-2 absent." }
+        {
+          "github_repo": "All-Hands-AI/OpenHands",
+          "entity_type": "repo",
+          "name": "OpenHands",
+          "homepage": "https://github.com/All-Hands-AI/OpenHands",
+          "openalex_work_ids": [
+            "W4403885061"
+          ],
+          "note": "Paper young (2024); citation slope insufficient (<2 completed years)."
+        },
+        {
+          "github_repo": "princeton-nlp/SWE-agent",
+          "entity_type": "repo",
+          "name": "SWE-agent",
+          "homepage": "https://swe-agent.com/",
+          "openalex_work_ids": [
+            "W4399114781"
+          ],
+          "note": "Paper young (2024); citation slope insufficient."
+        },
+        {
+          "github_repo": "cline/cline",
+          "entity_type": "repo",
+          "name": "Cline",
+          "homepage": "https://cline.bot/",
+          "openalex_work_ids": [],
+          "note": "No academic paper; axis-2 absent."
+        },
+        {
+          "github_repo": "paul-gauthier/aider",
+          "entity_type": "repo",
+          "name": "Aider",
+          "homepage": "https://aider.chat/",
+          "openalex_work_ids": [],
+          "note": "No academic paper; axis-2 absent."
+        },
+        {
+          "github_repo": "continuedev/continue",
+          "entity_type": "repo",
+          "name": "Continue",
+          "homepage": "https://continue.dev/",
+          "openalex_work_ids": [],
+          "note": "No academic paper; axis-2 absent."
+        },
+        {
+          "github_repo": "block/goose",
+          "entity_type": "repo",
+          "name": "Goose",
+          "homepage": "https://github.com/block/goose",
+          "openalex_work_ids": [],
+          "note": "No academic paper; axis-2 absent."
+        },
+        {
+          "github_repo": "anomalyco/opencode",
+          "entity_type": "product",
+          "name": "OpenCode",
+          "homepage": "https://opencode.ai",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "google-gemini/gemini-cli",
+          "entity_type": "product",
+          "name": "Gemini CLI",
+          "homepage": "https://geminicli.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "openai/codex",
+          "entity_type": "product",
+          "name": "Codex CLI",
+          "homepage": "https://developers.openai.com/codex",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "TabbyML/tabby",
+          "entity_type": "product",
+          "name": "Tabby",
+          "homepage": "https://tabbyml.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "voideditor/void",
+          "entity_type": "product",
+          "name": "Void",
+          "homepage": "https://voideditor.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "charmbracelet/crush",
+          "entity_type": "product",
+          "name": "Crush",
+          "homepage": "https://charm.sh",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "QwenLM/qwen-code",
+          "entity_type": "product",
+          "name": "Qwen Code",
+          "homepage": "https://qwenlm.github.io/qwen-code-docs",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "Kilo-Org/kilocode",
+          "entity_type": "product",
+          "name": "Kilo Code",
+          "homepage": "https://kilo.ai",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "zed-industries/zed",
+          "entity_type": "product",
+          "name": "Zed",
+          "homepage": "https://zed.dev",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "SWE-bench/SWE-bench",
+          "entity_type": "repo",
+          "name": "SWE-bench",
+          "homepage": "https://www.swebench.com",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: 2310.06770; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
+      ]
+    },
+    "llm-inference-serving": {
+      "label": "LLM Inference & Serving",
+      "industry_slug": "ml-infrastructure",
+      "subniche_slug": "llm-inference-serving",
+      "entities": [
+        {
+          "github_repo": "vllm-project/vllm",
+          "entity_type": "repo",
+          "name": "vLLM",
+          "homepage": "https://vllm.ai",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: 2309.06180; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "sgl-project/sglang",
+          "entity_type": "repo",
+          "name": "SGLang",
+          "homepage": "https://sglang.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2312.07104; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "ggml-org/llama.cpp",
+          "entity_type": "repo",
+          "name": "llama.cpp",
+          "homepage": "https://github.com/ggml-org/llama.cpp",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "ollama/ollama",
+          "entity_type": "repo",
+          "name": "Ollama",
+          "homepage": "https://ollama.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "InternLM/lmdeploy",
+          "entity_type": "repo",
+          "name": "LMDeploy",
+          "homepage": "https://lmdeploy.readthedocs.io",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "NVIDIA/TensorRT-LLM",
+          "entity_type": "repo",
+          "name": "TensorRT-LLM",
+          "homepage": "https://nvidia.github.io/TensorRT-LLM/",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "kvcache-ai/ktransformers",
+          "entity_type": "repo",
+          "name": "KTransformers",
+          "homepage": "https://kvcache-ai.github.io/ktransformers/",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "LMCache/LMCache",
+          "entity_type": "repo",
+          "name": "LMCache",
+          "homepage": "https://lmcache.ai",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2510.09665; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "llm-d/llm-d",
+          "entity_type": "org",
+          "name": "llm-d",
+          "homepage": "https://llm-d.ai",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "vllm-project/aibrix",
+          "entity_type": "repo",
+          "name": "AIBrix",
+          "homepage": "https://aibrix.readthedocs.io",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "GeeeekExplorer/nano-vllm",
+          "entity_type": "repo",
+          "name": "Nano-vLLM",
+          "homepage": "https://github.com/GeeeekExplorer/nano-vllm",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
+      ]
+    },
+    "agent-frameworks": {
+      "label": "AI Agent Frameworks",
+      "industry_slug": "ai-agents",
+      "subniche_slug": "agent-frameworks",
+      "entities": [
+        {
+          "github_repo": "langchain-ai/langgraph",
+          "entity_type": "repo",
+          "name": "LangGraph",
+          "homepage": "https://docs.langchain.com/oss/python/langgraph",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "crewAIInc/crewAI",
+          "entity_type": "repo",
+          "name": "CrewAI",
+          "homepage": "https://crewai.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "microsoft/autogen",
+          "entity_type": "repo",
+          "name": "AutoGen",
+          "homepage": "https://microsoft.github.io/autogen/",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: 2308.08155; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "openai/openai-agents-python",
+          "entity_type": "repo",
+          "name": "OpenAI Agents SDK",
+          "homepage": "https://openai.github.io/openai-agents-python/",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "agno-agi/agno",
+          "entity_type": "repo",
+          "name": "Agno",
+          "homepage": "https://agno.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "pydantic/pydantic-ai",
+          "entity_type": "repo",
+          "name": "PydanticAI",
+          "homepage": "https://ai.pydantic.dev",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "google/adk-python",
+          "entity_type": "repo",
+          "name": "Google ADK",
+          "homepage": "https://google.github.io/adk-docs/",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "huggingface/smolagents",
+          "entity_type": "repo",
+          "name": "smolagents",
+          "homepage": "https://huggingface.co/docs/smolagents",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "letta-ai/letta",
+          "entity_type": "repo",
+          "name": "Letta",
+          "homepage": "https://docs.letta.com",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2310.08560; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "stanfordnlp/dspy",
+          "entity_type": "repo",
+          "name": "DSPy",
+          "homepage": "https://dspy.ai",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2310.03714; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "agentscope-ai/agentscope",
+          "entity_type": "repo",
+          "name": "AgentScope",
+          "homepage": "https://docs.agentscope.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2402.14034; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "camel-ai/camel",
+          "entity_type": "repo",
+          "name": "CAMEL",
+          "homepage": "https://camel-ai.org",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2303.17760; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "strands-agents/harness-sdk",
+          "entity_type": "repo",
+          "name": "Strands Agents",
+          "homepage": "https://strandsagents.com",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
+      ]
+    },
+    "post-training-rl": {
+      "label": "Post-training & RL",
+      "industry_slug": "ml-infrastructure",
+      "subniche_slug": "post-training-rl",
+      "entities": [
+        {
+          "github_repo": "verl-project/verl",
+          "entity_type": "repo",
+          "name": "verl",
+          "homepage": "https://verl.readthedocs.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2409.19256; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "hiyouga/LLaMA-Factory",
+          "entity_type": "repo",
+          "name": "LLaMA-Factory",
+          "homepage": "https://llamafactory.readthedocs.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2403.13372; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "unslothai/unsloth",
+          "entity_type": "repo",
+          "name": "Unsloth",
+          "homepage": "https://unsloth.ai",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "modelscope/ms-swift",
+          "entity_type": "repo",
+          "name": "ms-swift",
+          "homepage": "https://swift.readthedocs.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2408.05517; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "axolotl-ai-cloud/axolotl",
+          "entity_type": "repo",
+          "name": "Axolotl",
+          "homepage": "https://docs.axolotl.ai",
+          "openalex_work_ids": [],
+          "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "OpenRLHF/OpenRLHF",
+          "entity_type": "repo",
+          "name": "OpenRLHF",
+          "homepage": "https://openrlhf.readthedocs.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2405.11143; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "inclusionAI/AReaL",
+          "entity_type": "repo",
+          "name": "AReaL",
+          "homepage": "https://areal-ai.io",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2505.24298; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "PeterGriffinJin/Search-R1",
+          "entity_type": "repo",
+          "name": "Search-R1",
+          "homepage": "https://github.com/PeterGriffinJin/Search-R1",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2503.09516; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "allenai/open-instruct",
+          "entity_type": "repo",
+          "name": "Open-Instruct",
+          "homepage": "https://allenai.github.io/open-instruct/",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2411.15124; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "NVIDIA-NeMo/RL",
+          "entity_type": "repo",
+          "name": "NeMo-RL",
+          "homepage": "https://docs.nvidia.com/nemo/rl/latest/",
+          "openalex_work_ids": [],
+          "note": "paper_ref: 2503.14476; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "huggingface/trl",
+          "entity_type": "repo",
+          "name": "TRL",
+          "homepage": "https://huggingface.co/docs/trl",
+          "openalex_work_ids": [],
+          "incumbent": true,
+          "note": "paper_ref: 2402.03300; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
       ]
     }
   }
