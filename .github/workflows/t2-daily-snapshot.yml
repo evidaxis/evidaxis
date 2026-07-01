@@ -29,6 +29,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 collectors/t2_collect.py
+      - name: Timestamp snapshot (OpenTimestamps / Bitcoin proof-of-priority)
+        # External, un-forgeable anchor that the snapshot hash existed at time T.
+        # Git timestamps are backdatable and are NOT proof; this is (proof-of-priority.md).
+        run: |
+          pip install --quiet opentimestamps-client || echo "ots install failed; stamp skipped this run"
+          DATE=$(date -u +%Y-%m-%d)
+          FILE="data/observations/$DATE/observations.jsonl"
+          if [ -f "$FILE" ] && command -v ots >/dev/null 2>&1; then
+            ots stamp "$FILE" || echo "ots stamp deferred (calendar unreachable)"
+          fi
       - name: Commit snapshot if changed
         run: |
           git config user.name "evidaxis-bot"
