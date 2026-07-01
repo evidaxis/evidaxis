@@ -46,6 +46,16 @@ urn:evidaxis:claim:EVX:SYS:Y92940K5ESN7:m2:2026-w26
 urn:evidaxis:claim:EVX:SYS:Y92940K5ESN7:m1:2026-06-27
 ```
 
+### Parsing note (why it stays unambiguous)
+
+The accession id itself contains two colons (`EVX:TYPE:BODY`), so a naive split on
+`:` would be ambiguous. It is not, because `methodology_version` (`m<N>`) and
+`epoch` (`YYYY-Www` or `YYYY-MM-DD`) are **colon-free by grammar**. A parser takes
+the last two colon-separated tokens as method and epoch, and rejoins the remainder
+as the accession. Time-of-day epochs (which contain colons) are therefore
+forbidden; the observation epoch is a date or an ISO week. Reference implementation:
+`collectors/claim_urn.py` (`build`, `parse`), gated by `tests/test_claim_urn.py`.
+
 ## The resolver (the only layer allowed to change)
 
 A claim-URN resolves through a single indirection layer, and **that layer is the
