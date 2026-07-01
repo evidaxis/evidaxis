@@ -13,19 +13,19 @@ classification:
   industry: developer-tools
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m1
-  snapshot_id: 90e607b982fa
-  captured_at: 2026-06-27T18:40:51+00:00
-  period: 2026-w26
-  momentum: 36.7
-  percentile: 20
+  methodology_version: m2
+  snapshot_id: 053f31f82bb8
+  captured_at: 2026-07-01T17:44:08+00:00
+  period: 2026-w27
+  momentum: 20.3
+  percentile: 13
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.03595719787470409, "cohort_z": -1.061, "recent_weekly_commits": 2.2, "stars_not_scored": 46764}
+    github_commit_velocity: {"slope": -0.05170040309241602, "cohort_z": -2.379, "recent_weekly_commits": 2.2, "stars_not_scored": 46911}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "No academic paper; axis-2 absent."
 ---

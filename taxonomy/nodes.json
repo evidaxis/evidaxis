@@ -49,6 +49,48 @@
       "slug": "coding-agents",
       "name": "AI Agents for Software Engineering",
       "parent": "developer-tools"
+    },
+    {
+      "taxon_id": "t_d103c6d1",
+      "level": "industry",
+      "slug": "ml-infrastructure",
+      "name": "LLM Inference & Serving",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_5ab3d340",
+      "level": "sub_niche",
+      "slug": "llm-inference-serving",
+      "name": "LLM Inference & Serving",
+      "parent": "ml-infrastructure"
+    },
+    {
+      "taxon_id": "t_305a6aeb",
+      "level": "industry",
+      "slug": "ai-agents",
+      "name": "AI Agent Frameworks",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_c8fdd163",
+      "level": "sub_niche",
+      "slug": "agent-frameworks",
+      "name": "AI Agent Frameworks",
+      "parent": "ai-agents"
+    },
+    {
+      "taxon_id": "t_d103c6d1",
+      "level": "industry",
+      "slug": "ml-infrastructure",
+      "name": "Post-training & RL",
+      "parent": "ai"
+    },
+    {
+      "taxon_id": "t_c33eaa20",
+      "level": "sub_niche",
+      "slug": "post-training-rl",
+      "name": "Post-training & RL",
+      "parent": "ml-infrastructure"
     }
   ]
 }

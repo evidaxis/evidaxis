@@ -13,19 +13,19 @@ classification:
   industry: robotics
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m1
-  snapshot_id: 90e607b982fa
-  captured_at: 2026-06-27T18:40:51+00:00
-  period: 2026-w26
-  momentum: 41.6
-  percentile: 0
+  methodology_version: m2
+  snapshot_id: 053f31f82bb8
+  captured_at: 2026-07-01T17:44:08+00:00
+  period: 2026-w27
+  momentum: 36.5
+  percentile: 8
   confidence: medium
   rising: false
-  status: watch
+  status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
-  convergent_axes: ["openalex_citation_momentum"]
+  convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.07395081374202674, "cohort_z": -2.019, "recent_weekly_commits": 1.5, "stars_not_scored": 7538}
+    github_commit_velocity: {"slope": -0.0634019461315174, "cohort_z": -2.842, "recent_weekly_commits": 1.3, "stars_not_scored": 7576}
     openalex_citation_momentum: {"status": "present", "slope": 1.3931910221860584, "cohort_z": 0.674, "total_citations": 231, "by_year": {"2026": 37, "2025": 145, "2024": 41, "2023": 8}, "proxy": "Orbit (the predecessor framework that became Isaac Lab)"}
 ---
 
