@@ -77,6 +77,13 @@ for (const file of htmlFiles) {
       warns.push(`${r}: claim-URN not found in first JSON-LD block`);
   }
 
+  // 4c. reconstructed (backfill) data must ALWAYS carry the "reconstructed / not
+  // point-in-time capture" honesty label. Presenting it as captured would break the moat.
+  if (/data-backfill=/.test(html)) {
+    if (!/reconstructed/i.test(html) || !/not a point-in-time capture/i.test(html))
+      errors.push(`${r}: backfill/reconstructed data shown without the "reconstructed, not point-in-time" label`);
+  }
+
   // 5. single h1
   const h1 = (html.match(/<h1[\s>]/g) || []).length;
   if (h1 > 1) errors.push(`${r}: ${h1} <h1> elements (expected 1)`);

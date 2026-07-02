@@ -10,11 +10,12 @@ import AlphaSignal from '../../../components/charts/AlphaSignal.astro';
 import GateEtaSignal from '../../../components/charts/GateEtaSignal.astro';
 import SignalQuality from '../../../components/charts/SignalQuality.astro';
 import SnapshotProvenance from '../../../components/charts/SnapshotProvenance.astro';
-import { entities, snapshot, commitSeries, industries, entitiesInCohort, deps, depsSeries } from '../../../lib/data';
+import { entities, snapshot, commitSeries, industries, entitiesInCohort, deps, depsSeries, backfillSeries } from '../../../lib/data';
 import { cohortLabel } from '../../../lib/cohorts';
 import { entityGraph, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
 import DepsSparkline from '../../../components/charts/DepsSparkline.astro';
+import Sparkline from '../../../components/Sparkline.astro';
 
 export function getStaticPaths() {
   return entities.map((e) => ({ params: { id: e.entity_id }, props: { e } }));
@@ -26,6 +27,8 @@ const cs = commitSeries(e.entity_id);
 const urn = claimUrnForEntity(e, snapshot);   // durable canonical citation (CLAIM-URN.md)
 const dep = deps.get(e.entity_id) ?? null;    // R0 adoption ("who builds on it"), point-in-time
 const dSeries = depsSeries(e.entity_id);      // dependents trend; lights up as history accrues
+const bfSeries = backfillSeries(e.entity_id); // RECONSTRUCTED weekly commit history (git), NOT captured
+const bfValues = bfSeries.map((p) => p.value);
 
 const cohortRanked = entitiesInCohort(e.cohort);
 const cohortN = cohortRanked.length;
@@ -94,6 +97,22 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
           <SnapshotProvenance />
         </div>
       </section>
+
+      {bfValues.length >= 2 && (
+        <!-- RECONSTRUCTED history. Never presented as captured: separate namespace, hard label. -->
+        <div class="panel backfill-panel" data-backfill="1">
+          <h2 class="eyebrow sec-h">Reconstructed history</h2>
+          <div class="bf-row">
+            <Sparkline values={bfValues} color="var(--ink-mute)" width={220} height={40}
+                       label={`${e.name} reconstructed weekly commits`} caption={true} unit="commits/wk" />
+            <p class="bf-cap mono">
+              Weekly commits over the past year, <b>reconstructed from git history</b> (GitHub commit_activity).
+              This is <b>reconstructed, not a point-in-time capture</b>. Evidaxis captures the Type-2 signals
+              (watchers, issues, dependents) live and never backfills them; those are the moat.
+            </p>
+          </div>
+        </div>
+      )}
 
       {dep && dSeries.length >= 2 && (
         <!-- ADOPTION trend (R0). Point-in-time dependents over snapshots. Displayed, never scored. -->
@@ -194,6 +213,10 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
   .adoption-panel .ad-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: .5rem; }
   .adoption-panel .ad-cap { font-size: .72rem; color: var(--ink-soft); line-height: 1.5; max-width: 52ch; }
   .adoption-panel .ad-cap b { color: var(--ink-soft); }
+  .backfill-panel { padding: 18px 20px; margin-top: 14px; border-style: dashed; }
+  .backfill-panel .bf-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: .5rem; }
+  .backfill-panel .bf-cap { font-size: .72rem; color: var(--ink-soft); line-height: 1.5; max-width: 52ch; }
+  .backfill-panel .bf-cap b { color: var(--ink-soft); }
   .verdict-text { font-size: 1.05rem; margin: .5rem 0 0; max-width: 66ch; line-height: 1.6; }
   .path-rising { font-size: .82rem; margin: .9rem 0 0; color: var(--ink-soft); border-left: 3px solid var(--citation); padding-left: 12px; line-height: 1.55; }
   .path-rising .pr-label { color: var(--citation); }
