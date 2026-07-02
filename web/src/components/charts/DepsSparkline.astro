@@ -1,0 +1,15 @@
+---
+/**
+ * SSR dependents sparkline. Thin wrapper over the generic Sparkline so the
+ * deps.dev adoption series renders with the same machine-readable contract
+ * (role="img" + <data value> range in <figcaption>) as every other derived
+ * chart. Below two points it falls through to Sparkline's honest "no series"
+ * state (most systems have a single capture today; history fills in weekly).
+ */
+import Sparkline from '../Sparkline.astro';
+export interface Props { series: { period: string; value: number }[]; label?: string; }
+const { series, label = 'dependents over time' } = Astro.props;
+const values = series.map((p) => p.value);
+---
+<Sparkline values={values} color="var(--citation)" width={132} height={34}
+           label={label} caption={true} unit="dependents" />

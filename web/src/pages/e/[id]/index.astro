@@ -10,10 +10,11 @@ import AlphaSignal from '../../../components/charts/AlphaSignal.astro';
 import GateEtaSignal from '../../../components/charts/GateEtaSignal.astro';
 import SignalQuality from '../../../components/charts/SignalQuality.astro';
 import SnapshotProvenance from '../../../components/charts/SnapshotProvenance.astro';
-import { entities, snapshot, commitSeries, industries, entitiesInCohort } from '../../../lib/data';
+import { entities, snapshot, commitSeries, industries, entitiesInCohort, deps, depsSeries } from '../../../lib/data';
 import { cohortLabel } from '../../../lib/cohorts';
 import { entityGraph, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
+import DepsSparkline from '../../../components/charts/DepsSparkline.astro';
 
 export function getStaticPaths() {
   return entities.map((e) => ({ params: { id: e.entity_id }, props: { e } }));
@@ -23,6 +24,8 @@ const a1 = e.axes.github_commit_velocity;
 const a2 = e.axes.openalex_citation_momentum;
 const cs = commitSeries(e.entity_id);
 const urn = claimUrnForEntity(e, snapshot);   // durable canonical citation (CLAIM-URN.md)
+const dep = deps.get(e.entity_id) ?? null;    // R0 adoption ("who builds on it"), point-in-time
+const dSeries = depsSeries(e.entity_id);      // dependents trend; lights up as history accrues
 
 const cohortRanked = entitiesInCohort(e.cohort);
 const cohortN = cohortRanked.length;
@@ -56,7 +59,7 @@ const badgePath = `/badge/${e.entity_id}/${snapshot.period}.svg`;
 const badgeMd = `[![Evidaxis: ${e.name}](https://evidaxis.org${badgePath})](https://evidaxis.org/e/${e.entity_id})`;
 const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'} of 100, status ${e.status}, in the ${e.sub_niche} cohort. Computed on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
 ---
-<Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn), crumbs]}>
+<Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]}>
   <section class="section ent-wrap">
     <div class="wrap">
       <nav class="crumb mono" aria-label="Breadcrumb">
@@ -91,6 +94,20 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
           <SnapshotProvenance />
         </div>
       </section>
+
+      {dep && dSeries.length >= 2 && (
+        <!-- ADOPTION trend (R0). Point-in-time dependents over snapshots. Displayed, never scored. -->
+        <div class="panel adoption-panel">
+          <h2 class="eyebrow sec-h">Adoption trend</h2>
+          <div class="ad-row">
+            <DepsSparkline series={dSeries} label={`${e.name} dependents over time`} />
+            <p class="ad-cap mono">
+              Downstream packages depending on <b>{dep.system}/{dep.package}</b> (deps.dev), captured point-in-time each snapshot.
+              An adoption signal, <b>not part of the momentum score</b>.
+            </p>
+          </div>
+        </div>
+      )}
 
       <!-- VERDICT -->
       <div class="panel verdict-panel">
@@ -173,6 +190,10 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
 
   .panel { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow-card); }
   .verdict-panel { padding: 22px; margin-top: 18px; }
+  .adoption-panel { padding: 18px 20px; margin-top: 14px; }
+  .adoption-panel .ad-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: .5rem; }
+  .adoption-panel .ad-cap { font-size: .72rem; color: var(--ink-soft); line-height: 1.5; max-width: 52ch; }
+  .adoption-panel .ad-cap b { color: var(--ink-soft); }
   .verdict-text { font-size: 1.05rem; margin: .5rem 0 0; max-width: 66ch; line-height: 1.6; }
   .path-rising { font-size: .82rem; margin: .9rem 0 0; color: var(--ink-soft); border-left: 3px solid var(--citation); padding-left: 12px; line-height: 1.55; }
   .path-rising .pr-label { color: var(--citation); }

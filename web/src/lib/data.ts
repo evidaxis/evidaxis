@@ -11,6 +11,23 @@ function readJson(rel: string): any {
   return JSON.parse(readFileSync(ROOT + rel, 'utf8'));
 }
 
+// JSONL reader (one JSON object per non-blank line). Tolerant of a missing file:
+// coverage of side-signals like deps.dev is partial, so absence is normal, not an error.
+function readJsonl(rel: string): any[] {
+  let txt: string;
+  try {
+    txt = readFileSync(ROOT + rel, 'utf8');
+  } catch {
+    return [];
+  }
+  const out: any[] = [];
+  for (const line of txt.split('\n')) {
+    const s = line.trim();
+    if (s) out.push(JSON.parse(s));
+  }
+  return out;
+}
+
 export type AxisGithub = {
   slope: number | null; cohort_z: number | null;
   recent_weekly_commits: number | null; stars_not_scored: number | null;
@@ -90,3 +107,53 @@ export const AXIS_LABEL: Record<string, string> = {
 
 export const fmtZ = (z: number | null) => (z == null ? 'no axis' : (z >= 0 ? '+' : '') + z.toFixed(2));
 export const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
+
+// deps.dev "dependents" — an R0 adoption signal ("who builds on it"), captured
+// point-in-time. It is DISPLAYED, never folded into the momentum score: the
+// scoring methodology is frozen (byte-frozen genesis), and this is a partial-
+// coverage side signal, not a scored axis. Honesty about that is the moat.
+export type DepsSignal = {
+  value: number; direct: number; indirect: number; system: string; package: string;
+};
+
+const toDepsSignal = (s: any): DepsSignal | null =>
+  s && typeof s.value === 'number'
+    ? { value: s.value, direct: s.direct ?? 0, indirect: s.indirect ?? 0, system: s.source_system ?? '', package: s.package ?? '' }
+    : null;
+
+export const deps: Map<string, DepsSignal> = (() => {
+  const m = new Map<string, DepsSignal>();
+  // Primary: the deps capture aligned to this snapshot's date folder.
+  for (const r of readJsonl(`data/observations/${SNAP_DATE}/deps.jsonl`)) {
+    if (r?.coverage !== 'matched') continue;
+    const sig = toDepsSignal(r?.signals?.deps_dev_dependents);
+    if (sig) m.set(r.entity_id, sig);
+  }
+  // Fallback: deps are captured daily into per-day folders, so a future weekly
+  // snapshot date may lack a same-day file. For any entity not covered above,
+  // take its latest capture from the per-entity history so the value never
+  // silently vanishes across snapshots (guards stale-state drift).
+  for (const e of entities) {
+    if (m.has(e.entity_id)) continue;
+    const rows = readJsonl(`data/observations/history/${e.entity_id}.deps.jsonl`)
+      .filter((r) => r?.coverage === 'matched' && r?.period)
+      .sort((a, b) => String(a.period).localeCompare(String(b.period)));
+    const sig = rows.length ? toDepsSignal(rows[rows.length - 1]?.signals?.deps_dev_dependents) : null;
+    if (sig) m.set(e.entity_id, sig);
+  }
+  return m;
+})();
+
+// Point-in-time dependents series for a system (one value per snapshot period).
+// History files accumulate weekly; today most systems have 1 point (flat/absent),
+// which is honest and fills in over time. Missing file -> [].
+export function depsSeries(id: string): { period: string; value: number }[] {
+  const byPeriod = new Map<string, number>();
+  for (const r of readJsonl(`data/observations/history/${id}.deps.jsonl`)) {
+    const v = r?.signals?.deps_dev_dependents?.value;
+    if (typeof v === 'number' && r.period) byPeriod.set(r.period, v); // last capture per period wins
+  }
+  return [...byPeriod.entries()]
+    .map(([period, value]) => ({ period, value }))
+    .sort((a, b) => a.period.localeCompare(b.period));
+}
