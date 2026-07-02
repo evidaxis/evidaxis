@@ -35,6 +35,12 @@ jobs:
       - name: Re-class as PROVISIONAL (pre-spine, idempotent)
         run: python3 etl/reclass_pre_spine.py
 
+      - name: Map snapshot onto taxonomy v2 (frozen collect.py emits tax_1)
+        # collect.py is byte-frozen and emits the v1 taxonomy + tax_1 nodes.json; this
+        # deterministic post-step remaps the fresh snapshot to the locked v2 (field/cohort)
+        # and restores the canonical v2 nodes.json, so the heartbeat stays v2-consistent.
+        run: python3 collectors/taxonomy_v2.py --date "$(date -u +%Y-%m-%d)"
+
       - name: Merkle-anchor the archive (integrity root + OpenTimestamps)
         # Compact, un-forgeable witness that the WHOLE data/ archive existed as-is
         # at time T (proof-of-priority for the corpus, not just one snapshot file).

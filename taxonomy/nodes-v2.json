@@ -1,0 +1,158 @@
+{
+  "taxonomy_version": "tax_2",
+  "provenance": "cons-04 7-voice council; taxonomy-v2-LOCKED.md; Option B (broad robotics/media genesis cohorts, split-later)",
+  "nodes": [
+    {
+      "taxon_id": "t_47ea5f5c",
+      "level": "domain",
+      "slug": "ai",
+      "name": "Artificial Intelligence",
+      "parent": null,
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_46770da6",
+      "level": "field",
+      "slug": "ai-agents",
+      "name": "AI Agents",
+      "parent": "ai",
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_d4134c4b",
+      "level": "field",
+      "slug": "ai-for-science",
+      "name": "AI for Science",
+      "parent": "ai",
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_7839bad0",
+      "level": "field",
+      "slug": "ai-infrastructure",
+      "name": "AI Infrastructure",
+      "parent": "ai",
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_f2cb4ed3",
+      "level": "field",
+      "slug": "foundation-models",
+      "name": "Foundation Models",
+      "parent": "ai",
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_f33bba70",
+      "level": "field",
+      "slug": "multimodal-media",
+      "name": "Multimodal & Media Generation",
+      "parent": "ai",
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_79ba6161",
+      "level": "field",
+      "slug": "robotics-embodied",
+      "name": "Robotics & Embodied AI",
+      "parent": "ai",
+      "lifecycle": "active"
+    },
+    {
+      "taxon_id": "t_4e237806",
+      "level": "cohort",
+      "slug": "robotics-embodied",
+      "name": "Robotics & Embodied AI",
+      "parent": "robotics-embodied",
+      "lifecycle": "active",
+      "aliases": [
+        "embodied-ai"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_6b641d48",
+      "level": "cohort",
+      "slug": "ai-drug-discovery",
+      "name": "AI Drug Discovery",
+      "parent": "ai-for-science",
+      "lifecycle": "active",
+      "aliases": [
+        "drug-discovery"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_d1c96bdd",
+      "level": "cohort",
+      "slug": "coding-agents",
+      "name": "Coding Agents",
+      "parent": "ai-agents",
+      "lifecycle": "active",
+      "aliases": [
+        "coding-agents"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_bae4d02b",
+      "level": "cohort",
+      "slug": "inference-serving",
+      "name": "Inference & Serving",
+      "parent": "ai-infrastructure",
+      "lifecycle": "active",
+      "aliases": [
+        "llm-inference-serving"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_7adbfff3",
+      "level": "cohort",
+      "slug": "agent-frameworks",
+      "name": "Agent Frameworks",
+      "parent": "ai-agents",
+      "lifecycle": "active",
+      "aliases": [
+        "agent-frameworks"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_a01c81b0",
+      "level": "cohort",
+      "slug": "post-training-alignment",
+      "name": "Post-training & Alignment",
+      "parent": "foundation-models",
+      "lifecycle": "active",
+      "aliases": [
+        "post-training-rl"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_6a174584",
+      "level": "cohort",
+      "slug": "media-generation",
+      "name": "Media Generation",
+      "parent": "multimodal-media",
+      "lifecycle": "active",
+      "aliases": [
+        "diffusion-media-gen"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_ea2812e5",
+      "level": "cohort",
+      "slug": "multimodal-foundation-models",
+      "name": "Multimodal Foundation Models",
+      "parent": "foundation-models",
+      "lifecycle": "active",
+      "aliases": [
+        "multimodal-vlm"
+      ],
+      "crosswalk": {}
+    }
+  ]
+}
