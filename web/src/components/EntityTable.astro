@@ -43,7 +43,7 @@ const { entities } = Astro.props;
               ? <Sparkline values={cit} color="var(--citation)" width={104} height={28} label={`${e.name} citation momentum`} />
               : <span class="mono muted" style="font-size:.72rem">{a2.status === 'absent' ? 'no paper' : a2.status === 'insufficient' ? 'too young' : 'n/a'}</span>}
           </td>
-          <td class="num" title={dep ? `${dep.direct} direct${dep.indirect ? `, ${dep.indirect} indirect` : ''} (deps.dev ${dep.system}/${dep.package}); adoption signal, not scored` : 'not measured'}>
+          <td class="num" title={dep ? `${dep.direct} direct${dep.indirect ? `, ${dep.indirect} indirect` : ''} (deps.dev ${dep.system}/${dep.package}); adoption signal, not part of the momentum score` : 'not measured'}>
             {dep ? dep.value.toLocaleString() : <span class="mono muted" style="font-size:.72rem">n/a</span>}
           </td>
         </tr>
@@ -51,4 +51,7 @@ const { entities } = Astro.props;
     })}
   </tbody>
 </table>
+<p class="mono muted" style="font-size:.68rem;margin-top:.5rem">
+  Dependents: downstream packages that build on the system (deps.dev). An adoption signal, not part of the momentum score.
+</p>
 </div>

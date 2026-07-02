@@ -26,11 +26,14 @@ PREFIX = "urn:evidaxis:claim"
 
 # accession alphabet mirrors spine/schemas/_id.json (Crockford base32, no I L O U).
 # Two forms: future opaque EVX:TYPE:BODY, and the legacy colon-free live id e_BODY.
+# \A...\Z (not ^...$): Python's $ also matches just before a trailing newline, which
+# JS's $ does not, so a field like "m2\n" would be accepted here but rejected by the TS
+# mirror. \Z anchors the true end and keeps the two grammars byte-identical in behavior.
 _ACCESSION_RE = re.compile(
-    r"^(?:EVX:[A-Z]{2,4}:[0-9A-HJKMNP-TV-Z]{11,40}|e_[0-9A-HJKMNP-TV-Z]{11,40})$"
+    r"\A(?:EVX:[A-Z]{2,4}:[0-9A-HJKMNP-TV-Z]{11,40}|e_[0-9A-HJKMNP-TV-Z]{11,40})\Z"
 )
-_METHOD_RE = re.compile(r"^m[0-9]+$")
-_EPOCH_RE = re.compile(r"^\d{4}-(?:w\d{2}|\d{2}-\d{2})$")
+_METHOD_RE = re.compile(r"\Am[0-9]+\Z")
+_EPOCH_RE = re.compile(r"\A\d{4}-(?:w\d{2}|\d{2}-\d{2})\Z")
 
 
 class ClaimURNError(ValueError):

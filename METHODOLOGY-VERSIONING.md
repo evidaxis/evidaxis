@@ -1,7 +1,7 @@
 # Methodology versioning — the immutable-score contract
 
 > created: 2026-07-02 · status: contract (binding) · provenance: T1 do-once (do-once-master), cons-02/03 continuity invariant
-> Public registry: [`web/public/methodology-registry.json`](web/public/methodology-registry.json) (served at `/methodology-registry.json`).
+> Public registry source: [`web/src/lib/methodology-registry.json`](web/src/lib/methodology-registry.json), served at `/methodology-registry.json` (route `web/src/pages/methodology-registry.json.ts`) and consumed by the JSON-LD builders and methodology pages.
 > Reference: this generalizes the private spine `MethodologyRegistry` schema; the public registry carries the public fields only.
 
 ## The invariant this locks

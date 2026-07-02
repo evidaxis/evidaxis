@@ -3,7 +3,7 @@
 > Source: ultracode workflow `evidaxis-copy-overhaul` (25 agents, 5 pages, 3 lenses each: ruthless
 > direct-response editor + AI-tell detector + skeptical ML-reader → element-deep pass → synthesis).
 > Every proposed string verified ZERO em-dash (U+2014), facts/numbers/methodology/brand-canon preserved.
-> status: PROPOSED. Not applied. Apply to working tree → build → verify → review render → deploy on Igor go.
+> status: PROPOSED. Not applied. Apply to working tree → build → verify → review render → deploy on the keeper go.
 
 **Through-line across all 5 pages:** the site was written by someone serious about the method but nervous
 about the honest zero, and that nervousness was the loudest signal. Every fix moves one lever: lead with the

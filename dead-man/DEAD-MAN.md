@@ -1,6 +1,6 @@
 # Dead-man trigger — graceful, provable dormancy if the keeper disappears
 
-> created: 2026-07-02 · status: mechanism live (heartbeat), activation pending Igor-actions
+> created: 2026-07-02 · status: mechanism live (heartbeat), activation pending Keeper actions
 > Do-once T1 (do-once-master). Continuity invariant: the archive outlives the keeper.
 
 ## The problem
@@ -32,7 +32,7 @@ Why two repos: the trigger must not depend on the very thing that failed. A watc
 inside the main repo, driven by the keeper's own automation, is not a dead-man
 switch. A separate repo with its own schedule and its own publish credential is.
 
-## Igor-actions (one-time; code + docs are ready, these need a human with the key)
+## Keeper actions (one-time; code + docs are ready, these need a human with the key)
 
 1. **Generate the trust-root key** on a secure machine:
    `python collectors/heartbeat.py keygen --out ~/.evidaxis/heartbeat.pem`
@@ -53,4 +53,4 @@ switch. A separate repo with its own schedule and its own publish credential is.
    tombstone is provably the keeper's, not the watcher operator's.
 
 Until steps 1 to 4 are done the heartbeat mechanism is inert (no key, no ledger);
-nothing about the live site changes. Activation is entirely in Igor's hands.
+nothing about the live site changes. Activation is entirely in the keeper's hands.

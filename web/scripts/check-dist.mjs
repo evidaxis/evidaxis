@@ -59,6 +59,11 @@ for (const file of htmlFiles) {
     }
   }
 
+  // 3b. person-free invariant on the GEO surface: no Person node and no byline/author
+  // person field may appear in any rendered structured data (systems, never people).
+  if (/"@type"\s*:\s*"Person"/.test(html)) errors.push(`${r}: JSON-LD contains a Person node (person-free invariant)`);
+  if (/"(author|founder)"\s*:\s*\{[^}]*"@type"\s*:\s*"Person"/.test(html)) errors.push(`${r}: author/founder Person field (person-free invariant)`);
+
   // 4. head essentials
   if (!/<title>[^<]+<\/title>/.test(html)) errors.push(`${r}: missing non-empty <title>`);
   const descM = html.match(/<meta\s+name="description"\s+content="([^"]*)"/);

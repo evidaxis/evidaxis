@@ -67,3 +67,35 @@ def test_tampered_signature_fails(hb):
 def test_verify_needs_a_key(hb):
     ok, msg = heartbeat.verify()
     assert not ok and "pubkey" in msg
+
+
+def test_forged_top_level_date_is_caught(hb):
+    # adversary edits ONLY the unsigned top-level date to look fresh, keeping the old
+    # valid signature. The message<->date binding must catch it (else STALE->alive).
+    import json
+    key = hb / "priv.pem"
+    heartbeat.keygen(key)
+    heartbeat.sign(key, dt="2020-01-01")
+    ledger = hb / "heartbeat.jsonl"
+    rec = json.loads(ledger.read_text().strip())
+    rec["date"] = "2099-01-01"  # message still encodes 2020-01-01
+    ledger.write_text(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+    ok, msg = heartbeat.verify(max_age_days=120)
+    assert not ok and "forged" in msg
+
+
+def test_history_truncation_is_caught(hb):
+    # deleting the genesis record and relinking the survivor's prev_hash to GENESIS
+    # must fail: the survivor's SIGNED message binds its original prev_hash.
+    import json
+    key = hb / "priv.pem"
+    heartbeat.keygen(key)
+    heartbeat.sign(key, dt="2026-07-01")
+    heartbeat.sign(key, dt="2026-07-02")
+    ledger = hb / "heartbeat.jsonl"
+    lines = ledger.read_text().splitlines()
+    survivor = json.loads(lines[1])
+    survivor["prev_hash"] = heartbeat.GENESIS_PREV  # pretend it was the genesis
+    ledger.write_text(json.dumps(survivor, sort_keys=True, separators=(",", ":")) + "\n")
+    ok, _ = heartbeat.verify()
+    assert not ok
