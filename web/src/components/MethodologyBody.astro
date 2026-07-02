@@ -1,5 +1,13 @@
 ---
 import { snapshot } from '../lib/data';
+// Version-aware ONLY where the methodology actually changed between versions.
+// m1 (genesis): rising at z >= 0, no cohort floor. m2 (D10a): rising at z >= 1,
+// cohort must have >= 5 members. Everything else is identical across versions, so
+// the default keeps the frozen v1 page byte-identical. Old pages are never
+// rewritten (METHODOLOGY-VERSIONING.md rule 5); each version renders its own gate.
+export interface Props { version?: string }
+const { version = 'm1' } = Astro.props;
+const isM2 = version === 'm2';
 ---
 <p class="lead" style="max-width:64ch">
   Evidaxis is a survey telescope pointed at open-source AI. It records each tracked system’s momentum week
@@ -41,9 +49,19 @@ import { snapshot } from '../lib/data';
 <pre class="formula">z = clamp( (slope - median) / (1.4826 · MAD), ±3 ) ;  z ← residual on log(size)</pre>
 
 <h2>The convergence gate</h2>
-<p class="prose">A dormant repository is never rising on a sliver of noise. So a system is <strong>Rising</strong> only when at least two axes are present and at least two are rising at once. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 0. Development velocity carries one more floor: at least 5 average weekly commits, or the axis does not count.</p>
-<pre class="formula">Rising  ⟺  |axes_present| ≥ 2  ∧  |axes_rising| ≥ 2
+{isM2 ? (
+  <>
+    <p class="prose">A dormant repository is never rising on a sliver of noise, and a handful of systems is not a distribution. So a system is <strong>Rising</strong> only when its cohort has at least 5 members, at least two axes are present, and at least two are rising at once. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 1. Development velocity carries one more floor: at least 5 average weekly commits, or the axis does not count.</p>
+    <pre class="formula">Rising  ⟺  |cohort| ≥ 5  ∧  |axes_present| ≥ 2  ∧  |axes_rising| ≥ 2
+axis rising  ⟺  slope &gt; 0  ∧  z ≥ 1   (velocity also: commits/wk ≥ 5)</pre>
+  </>
+) : (
+  <>
+    <p class="prose">A dormant repository is never rising on a sliver of noise. So a system is <strong>Rising</strong> only when at least two axes are present and at least two are rising at once. An axis is “rising” when its raw slope is positive and its within-cohort z ≥ 0. Development velocity carries one more floor: at least 5 average weekly commits, or the axis does not count.</p>
+    <pre class="formula">Rising  ⟺  |axes_present| ≥ 2  ∧  |axes_rising| ≥ 2
 axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)</pre>
+  </>
+)}
 <p class="prose">
   <strong>Watch</strong> = exactly one axis rising. <strong>Tracked</strong> = measured on two axes, none
   rising. <strong>Single-axis</strong> = only one axis available (e.g. no paper exists). <strong>Calibration</strong>

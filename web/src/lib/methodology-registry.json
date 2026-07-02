@@ -1,0 +1,28 @@
+{
+  "$comment": "Public methodology registry. Each version is content-addressed by a formula_fingerprint (sha256 of the canonical axes+gate definition) and a code_commit, so any published score rebuilds from CC0 inputs against the exact methodology it was computed under. APPEND-ONLY and IMMUTABLE: a correction is a NEW version on a new row, never an edit to an existing one. A reader MUST be able to resolve any historical version here. Mirrors the private spine MethodologyRegistry (public fields only). Contract: METHODOLOGY-VERSIONING.md.",
+  "schema_version": 1,
+  "current": "m2",
+  "versions": [
+    {
+      "version": "m1",
+      "status": "superseded",
+      "formula_fingerprint": "sha256:3e58514440a5491d9e90dc15b56230d382a797c10abe22cffb52eecdba3f3365",
+      "code_commit": "b5791be45a045ef5dc6ed637882c95d3a14fac02",
+      "effective_at": "2026-06-27",
+      "superseded_at": "2026-06-30",
+      "page": "/methodology/v1/",
+      "genesis_doi": "10.5281/zenodo.21076012",
+      "changelog": "Genesis methodology. Two axes (development velocity, citation momentum), within-cohort robust-z with size residualization, convergence gate requiring two axes rising where an axis is rising when raw slope > 0 and within-cohort z >= 0 (velocity also needs >= 5 avg weekly commits). Frozen by the genesis Zenodo deposit."
+    },
+    {
+      "version": "m2",
+      "status": "current",
+      "formula_fingerprint": "sha256:3f16530802afcbffde1110ca82b9600f57b596c294065a3d2b1003033208439f",
+      "code_commit": "24e0fd45428fd000e84ccb911614f6d72cb5f0f7",
+      "effective_at": "2026-06-30",
+      "parent_version": "m1",
+      "page": "/methodology/m2/",
+      "changelog": "D10a gate hardening. An axis now counts as rising only when its within-cohort z >= 1 (was >= 0), and the convergence gate additionally requires a cohort of >= 5 members before any system is eligible to be Rising. Raises the bar against small-cohort and marginal-z false positives. Axis definitions, normalization, and the momentum readout are unchanged from m1; only the rising/gate thresholds moved. m1 scores are NOT recomputed; they remain valid under m1."
+    }
+  ]
+}

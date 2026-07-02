@@ -1,0 +1,23 @@
+---
+import Base from '../../../layouts/Base.astro';
+import MethodologyBody from '../../../components/MethodologyBody.astro';
+import { methodologyGraph } from '../../../lib/jsonld';
+// Immutable permalink for methodology m2 (the current active version). Never
+// rewritten: a future change is m3 on its own page (METHODOLOGY-VERSIONING.md).
+const desc = 'Evidaxis Methodology m2: two momentum axes, within-cohort robust-z, and a convergence gate requiring z at least 1 in a cohort of 5 or more. Frozen, versioned.';
+---
+<Base title="Methodology m2 | Evidaxis" description={desc} canonical="/methodology/m2/" jsonLd={methodologyGraph('m2', '/methodology/m2/')}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Methodology · m2 (current)</p>
+      <h1>How Evidaxis measures momentum</h1>
+      <MethodologyBody version="m2" />
+      <p class="mono muted" style="font-size:.74rem;margin-top:2rem;border-top:1px solid var(--hairline);padding-top:1rem">
+        This is the frozen m2 definition (D10a gate hardening: rising requires within-cohort z at least 1,
+        in a cohort of at least 5 members). It supersedes <a href="/methodology/v1/">m1</a> going forward;
+        m1 scores are not recomputed. See the <a href="/methodology-registry.json">version registry</a>.
+        Methodology prose is licensed CC-BY-4.0.
+      </p>
+    </div>
+  </section>
+</Base>
