@@ -1,0 +1,57 @@
+name: archive-integrity
+
+# Standing reproducibility check over the COMMITTED archive (renewal CP-6).
+# The unit tests exercise freshly-generated tmp artifacts; this job asserts the
+# published tree itself: every snapshot's SHA256SUMS matches its actual bytes,
+# the taxonomy-v2 remap is idempotent on the committed snapshot, and the genesis
+# snapshot remains byte-identical to the immutable Zenodo deposit copy.
+#
+# Deliberately NOT here: `merkle_root.py --verify` as a standing check. data/
+# moves daily (t2 observations) while archive roots are recorded weekly, so a
+# recompute-vs-latest-recorded comparison is only meaningful at record time —
+# the weekly-snapshot workflow re-records the root as its final integrity step.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "collectors/**"
+      - "etl/**"
+      - "genesis-deposit/**"
+      - ".github/workflows/archive-integrity.yml"
+  schedule:
+    - cron: "47 3 * * *"   # nightly 03:47 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Every snapshot's SHA256SUMS matches its actual bytes
+        run: python3 collectors/refresh_sums.py --verify
+
+      - name: Taxonomy v2 remap is idempotent on the committed snapshot
+        run: python3 collectors/taxonomy_v2.py --verify
+
+      - name: Genesis snapshot is byte-identical to the immutable deposit
+        run: |
+          rc=0
+          for f in SHA256SUMS snapshot.json manifest.json provenance.json archive-pointers.json; do
+            if cmp -s "genesis-deposit/data/$f" "data/snapshots/2026-06-27/$f"; then
+              echo "  $f: identical"
+            else
+              echo "  $f: BYTE-DIFF vs genesis deposit (I5 escalation trigger)"
+              rc=1
+            fi
+          done
+          exit $rc

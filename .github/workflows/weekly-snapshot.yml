@@ -41,6 +41,15 @@ jobs:
         # and restores the canonical v2 nodes.json, so the heartbeat stays v2-consistent.
         run: python3 collectors/taxonomy_v2.py --date "$(date -u +%Y-%m-%d)"
 
+      - name: Refresh snapshot checksums (mandatory FINAL content step)
+        # collect.py writes SHA256SUMS, but reclass_pre_spine.py and taxonomy_v2.py
+        # mutate snapshot.json/manifest.json AFTER the sums are written. Re-hash the
+        # bundle so published sums match published bytes (see 2026-07-01 ERRATA.md).
+        # Nothing may mutate snapshot files after this step.
+        run: |
+          python3 collectors/refresh_sums.py --date "$(date -u +%Y-%m-%d)"
+          python3 collectors/refresh_sums.py --verify
+
       - name: Merkle-anchor the archive (integrity root + OpenTimestamps)
         # Compact, un-forgeable witness that the WHOLE data/ archive existed as-is
         # at time T (proof-of-priority for the corpus, not just one snapshot file).

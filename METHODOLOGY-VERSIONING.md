@@ -1,6 +1,6 @@
 # Methodology versioning — the immutable-score contract
 
-> created: 2026-07-02 · status: contract (binding) · provenance: T1 do-once (do-once-master), cons-02/03 continuity invariant
+> created: 2026-07-02 · status: contract (binding) · provenance: build-once integrity contract; continuity-invariant deliberations (internal records)
 > Public registry source: [`web/src/lib/methodology-registry.json`](web/src/lib/methodology-registry.json), served at `/methodology-registry.json` (route `web/src/pages/methodology-registry.json.ts`) and consumed by the JSON-LD builders and methodology pages.
 > Reference: this generalizes the private spine `MethodologyRegistry` schema; the public registry carries the public fields only.
 
@@ -73,3 +73,16 @@ supports as-of queries: which methodology was current at epoch T.
 
 `m1` scores (genesis snapshot, 2026-06-27) stay valid under `m1`; they are not
 recomputed under `m2`. New snapshots are computed under `m2`.
+
+## Errata (documentation-only; frozen files are never edited)
+
+- **2026-07-02 — `etl/collect.py` header docstring lags m2.** The module
+  docstring (lines 10-11) still describes the gate in m1 language ("raw slope > 0
+  AND cohort-z >= 0"). The *executable* code enforces m2: `RISING_Z_FLOOR = 1.0`
+  and `MIN_COHORT_FOR_BADGE = 5` (both marked "D10a fix" inline, and
+  `METHODOLOGY_VERSION = "m2"`). The file is byte-frozen post-genesis (its m1
+  ancestor is certified by the genesis DOI; the live copy is pinned by the `m2`
+  registry row's `code_commit`), so the stale prose is corrected here in words,
+  not in the file. An auditor reading the docstring literally should trust the
+  constants and the registry, which agree with each other and with the
+  published snapshots.

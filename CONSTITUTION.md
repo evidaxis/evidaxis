@@ -6,7 +6,7 @@
 > (Ed25519 block-zero key, OpenTimestamps). It supersedes nothing frozen in the
 > genesis deposit; it makes explicit the rules that genesis already implied.
 >
-> created: 2026-07-01 · status: v1 · provenance: 7-model council (cons-05 do-once), synthesis locked
+> created: 2026-07-01 · status: v1 · provenance: seven-model council deliberation (internal record, 2026-07-01), synthesis locked
 
 ## What Evidaxis is
 
@@ -64,6 +64,12 @@ The most important roadmap is the list of things this project will never become.
 - Rank, score, or profile natural persons.
 - Publish negative, accusatory, or "worst of" signals.
 - Sell pay-to-improve placement, sponsored placement, or any paid inclusion.
+- Sell privileged access to data the public archive lacks. Any future paid
+  product sells only convenience over the same public CC0 data (latency,
+  delivery, alerts, tooling, history queries, SLA): every paid byte must remain
+  derivable from the public git, and any paid pipeline runs only after the
+  public commit. The public archive keeps full captured granularity; there is
+  no privately hoarded finer-grained series.
 - Apply undisclosed manual overrides to inclusion or scores.
 - Change the scoring methodology without a logged, versioned, public changelog.
 - Delete or rewrite history retroactively for convenience (only legal or privacy
@@ -78,7 +84,10 @@ The most important roadmap is the list of things this project will never become.
 An invariant or anti-roadmap item changes only by: (1) a public written proposal
 stating the reason and which invariants it touches, (2) a 30-day freeze period,
 (3) a signed decision (block-zero key), (4) a public changelog entry. No silent
-change is valid. A change that violates Invariant 3 or 6 is not an amendment, it
+change is valid. An addition that only further restricts this project (a
+strengthening covenant) requires only a public changelog entry; any change that
+loosens, removes, or carves an exception into an existing commitment is an
+amendment and follows the full process above. A change that violates Invariant 3 or 6 is not an amendment, it
 is a fork, and the fork is non-canonical.
 
 ## Canonical reference
@@ -87,3 +96,14 @@ Claims and records are addressed by a stable identifier that is independent of a
 single delivery format or URL scheme (see `CLAIM-URN.md`). This is what lets
 citations survive a change in how machines retrieve the archive over a 10 to 15
 year horizon.
+
+## Changelog
+
+- **2026-07-02 — additive covenant (anti-roadmap).** Added the open/paid boundary
+  covenant: paid products sell only convenience over the same public CC0 data,
+  every paid byte derivable from the public git, no privately hoarded
+  finer-grained series. This is a pure self-restriction (a strengthening), not an
+  amendment of any existing invariant or anti-roadmap item; it makes explicit in
+  the constitution the architecture rule the project was already built under, and
+  matches what the pipelines already do (daily Type-2 captures are committed to
+  the public CC0 repository).

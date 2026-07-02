@@ -48,3 +48,6 @@ evidaxis-genesis-deposit.zip
 # clean. The LIVE method stays public (etl/collect.py + the site /methodology + the
 # CC0 deposit recipe); genesis reproducibility does not depend on spine. (leak-audit 2026-06-28)
 spine/
+
+# quarantine shadow-runs (never published; promotion only via A/B + human gate)
+shadow-runs/
