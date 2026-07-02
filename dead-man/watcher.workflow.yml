@@ -1,0 +1,71 @@
+# TEMPLATE — copy this into a SEPARATE PRIVATE repo `evidaxis-watcher` as
+# .github/workflows/watch.yml. Do NOT run it from the public evidaxis repo: a
+# dead-man switch must not depend on the machine/automation that might be the thing
+# that failed. This runs on GitHub's servers on its own schedule.
+#
+# What it does daily: fetch the public heartbeat + pubkey + verifier, check freshness,
+# and if the newest heartbeat is older than MAX_AGE_DAYS, push the pre-drafted
+# TOMBSTONE into the public repo and flip the archive to dormant.
+#
+# Setup:
+#   - Secret PUBLISH_TOKEN: a fine-scoped token/deploy-key that can push ONLY
+#     TOMBSTONE.md + data/latest.json to the public repo.
+#   - Adjust PUBLIC_RAW / PUBLIC_REPO below.
+
+name: evidaxis-watcher
+on:
+  schedule:
+    - cron: "37 5 * * *"    # daily 05:37 UTC
+  workflow_dispatch: {}
+
+env:
+  PUBLIC_RAW: https://raw.githubusercontent.com/evidaxis/evidaxis/main
+  PUBLIC_REPO: evidaxis/evidaxis
+  MAX_AGE_DAYS: "120"
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install verifier deps
+        run: pip install --quiet cryptography
+
+      - name: Fetch public heartbeat + verifier
+        run: |
+          mkdir -p data/integrity collectors
+          curl -fsSL "$PUBLIC_RAW/collectors/heartbeat.py" -o collectors/heartbeat.py
+          curl -fsSL "$PUBLIC_RAW/data/integrity/heartbeat.jsonl" -o data/integrity/heartbeat.jsonl
+          curl -fsSL "$PUBLIC_RAW/data/integrity/heartbeat-pubkey.txt" -o data/integrity/heartbeat-pubkey.txt
+
+      - name: Check liveness
+        id: check
+        run: |
+          if python collectors/heartbeat.py verify --max-age-days "$MAX_AGE_DAYS"; then
+            echo "alive=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "alive=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish tombstone if dead-man tripped
+        if: steps.check.outputs.alive == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: |
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${PUBLIC_REPO}.git" pub
+          cd pub
+          # TOMBSTONE.md is pre-drafted in dead-man/ of the public repo.
+          cp dead-man/TOMBSTONE.md TOMBSTONE.md
+          python - <<'PY'
+          import json, pathlib
+          p = pathlib.Path("data/latest.json"); d = json.loads(p.read_text())
+          d["status"] = "dormant"
+          p.write_text(json.dumps(d, indent=2) + "\n")
+          PY
+          git config user.name "evidaxis-watcher"
+          git config user.email "watcher@evidaxis.org"
+          git add TOMBSTONE.md data/latest.json
+          git commit -m "dead-man: heartbeat lapsed > ${MAX_AGE_DAYS}d — archive marked dormant" || echo "already dormant"
+          git push
