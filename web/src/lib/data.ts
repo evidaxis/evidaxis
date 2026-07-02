@@ -159,6 +159,17 @@ export function latestArchiveRoot(): { date: string; root: string; n_files: numb
   }
 }
 
+// RECONSTRUCTED (not point-in-time captured) weekly commit-velocity history for a
+// system, from data/observations/backfill/. Labeled reconstructed everywhere it is
+// shown (collectors/shadow_backfill.py writes reconstructable:true). Never mixed with
+// the captured Type-2 signals. Missing file -> [].
+export function backfillSeries(id: string): { period: string; value: number }[] {
+  return readJsonl(`data/observations/backfill/${id}.backfill.jsonl`)
+    .filter((r) => r?.reconstructable === true && r?.signal === 'github_commit_velocity_weekly' && r?.period)
+    .map((r) => ({ period: r.period, value: Number(r.value) || 0 }))
+    .sort((a, b) => a.period.localeCompare(b.period));
+}
+
 // Point-in-time dependents series for a system (one value per snapshot period).
 // History files accumulate weekly; today most systems have 1 point (flat/absent),
 // which is honest and fills in over time. Missing file -> [].

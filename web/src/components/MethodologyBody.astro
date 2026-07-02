@@ -88,6 +88,18 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
   <li><strong>Source undercount.</strong> <a href="https://openalex.org/">OpenAlex</a> undercounts some papers versus other indexes; we use only relative slopes, never absolute magnitudes, to stay robust to this.</li>
 </ul>
 
+<h2>Captured vs reconstructed history</h2>
+<p class="prose">
+  Two kinds of history appear on this site and they are never conflated. <strong>Captured</strong>
+  signals are the Type-2 point-in-time measurements Evidaxis records live each week (watchers, open
+  issues, dependents); their history is exactly what was captured and cannot be recreated after the
+  fact, which is why the weekly record is the instrument and the moat. <strong>Reconstructed</strong>
+  history is the part of a system's past that is recoverable later from public sources: yearly citation
+  counts (OpenAlex) and weekly commit counts (git). A reconstructed series is always labeled
+  <em>reconstructed, not a point-in-time capture</em> and is never presented as if Evidaxis had captured
+  it live. The two are kept in separate data namespaces so the distinction cannot blur.
+</p>
+
 <h2>References &amp; primary sources</h2>
 <p class="prose">Every score traces to a public source. The axes and transforms above are computed from:</p>
 <ul class="prose">
