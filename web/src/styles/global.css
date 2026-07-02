@@ -336,7 +336,7 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
 .chart-dl { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0;
   font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); }
 .chart-dl > div { display: inline-flex; align-items: baseline; gap: 5px; }
-.chart-dl dt { letter-spacing: .06em; text-transform: uppercase; font-size: 9.5px; }
+.chart-dl dt { letter-spacing: .06em; text-transform: uppercase; font-size: 10px; }
 .chart-dl dd { margin: 0; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 500; }
 .chart-dl dd data { font-variant-numeric: tabular-nums; }
 .chart-dl .teal { color: var(--velocity); }
@@ -365,3 +365,28 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
     color-mix(in srgb, var(--ink-mute) 5%, transparent) 7px, color-mix(in srgb, var(--ink-mute) 5%, transparent) 8px);
   font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); text-align: center; padding: 14px; }
 .chart-null .nx { font-size: 15px; opacity: .55; }
+
+/* ============================================================================
+   mobile polish (2026-07-02 FE audit): touch targets + scrollable-table hint
+   ========================================================================== */
+
+/* WCAG 2.5.8: comfortable hit areas on touch without shifting layout */
+@media (pointer: coarse) {
+  .masthead nav a, .crumb a, footer a, td a, .textlink {
+    display: inline-block; padding: 6px 4px; margin: -6px -4px;
+  }
+}
+
+/* horizontally scrollable tables: momentum scrolling + a fading right edge
+   so the cut-off column reads as "there is more", not as a defect */
+.rank-scroll, .table-scroll {
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+@media (max-width: 760px) {
+  .rank-scroll::after, .table-scroll::after {
+    content: ""; position: sticky; left: 100%; top: 0; display: block;
+    width: 28px; height: 100%; margin-top: -100%; pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--surface));
+  }
+}

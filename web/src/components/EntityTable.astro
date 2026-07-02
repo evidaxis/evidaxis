@@ -6,7 +6,7 @@ import StatusBadge from './StatusBadge.astro';
 export interface Props { entities: Entity[]; }
 const { entities } = Astro.props;
 ---
-<div style="overflow-x:auto">
+<div class="table-scroll" style="overflow-x:auto">
 <table class="table">
   <thead>
     <tr>
