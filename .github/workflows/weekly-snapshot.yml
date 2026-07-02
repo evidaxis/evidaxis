@@ -35,6 +35,18 @@ jobs:
       - name: Re-class as PROVISIONAL (pre-spine, idempotent)
         run: python3 etl/reclass_pre_spine.py
 
+      - name: Merkle-anchor the archive (integrity root + OpenTimestamps)
+        # Compact, un-forgeable witness that the WHOLE data/ archive existed as-is
+        # at time T (proof-of-priority for the corpus, not just one snapshot file).
+        run: |
+          python3 collectors/merkle_root.py
+          pip install --quiet opentimestamps-client || echo "ots install failed; stamp skipped this run"
+          DATE=$(date -u +%Y-%m-%d)
+          FILE="data/integrity/archive-root-$DATE.json"
+          if [ -f "$FILE" ] && command -v ots >/dev/null 2>&1; then
+            ots stamp "$FILE" || echo "ots stamp deferred (calendar unreachable)"
+          fi
+
       - name: Commit snapshot if changed
         run: |
           git config user.name  "Evidaxis"
