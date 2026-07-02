@@ -1,0 +1,14 @@
+# Evidaxis forward-hypotheses commit-reveal root (PUBLIC-SAFE: digest only, no content).
+#
+# Evidaxis privately pre-registers falsifiable forward hypotheses (HYBRID posture: the
+# archive is public; forward predictions are held privately and revealed only on their
+# own terms). This file publishes ONLY a cryptographic digest of the private, append-only
+# hypothesis ledger as of the date below. It proves the priority and integrity of that
+# hypothesis set (they existed, unchanged, at this time) WITHOUT revealing any prediction.
+# The digest is anchored to the public archive Merkle root of the same period.
+date=2026-07-02
+period=2026-w27
+claims_sha256=sha256:e53bcbd71998139d35606ed4c951b6e834b3d2fb02a538c65e56919066679e92
+n_claims=3
+archive_root=sha256:26b108be2db35ff40fdd18fb29d1987ef61eb88a72020a5911ec275fb29b1e36
+ots=pending (stamped on a warm run with opentimestamps-client)
