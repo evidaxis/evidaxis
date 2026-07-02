@@ -2,7 +2,7 @@
  * Build-time data layer. Reads the canonical snapshot the collector wrote (git = truth);
  * the site is a pure derived view of these files. No DB, no runtime fetch.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url)); // repo root (Evidaxis/)
@@ -143,6 +143,21 @@ export const deps: Map<string, DepsSignal> = (() => {
   }
   return m;
 })();
+
+// Latest archive-wide Merkle integrity root (collectors/merkle_root.py). A compact
+// witness that the whole data/ archive existed as-is at that date. null before the
+// first anchor. See METHODOLOGY-VERSIONING.md sibling contract on integrity.
+export function latestArchiveRoot(): { date: string; root: string; n_files: number } | null {
+  try {
+    const files = readdirSync(ROOT + 'data/integrity/')
+      .filter((f) => /^archive-root-.*\.json$/.test(f)).sort();
+    if (!files.length) return null;
+    const j = readJson('data/integrity/' + files[files.length - 1]);
+    return { date: j.date, root: j.root, n_files: j.n_files };
+  } catch {
+    return null;
+  }
+}
 
 // Point-in-time dependents series for a system (one value per snapshot period).
 // History files accumulate weekly; today most systems have 1 point (flat/absent),
