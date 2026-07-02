@@ -34,7 +34,7 @@
 - STAGE 2 — **permanent opaque accession-ID** (hash-based) minted only after entity-type + base-not-derivative + dedup clear; later merge/split = signed identity_correction_event with tombstone.
 - **JOIN-KEY precedence (strong→weak)**: (1) weights content-hash (HF blob-sha ↔ ModelScope safetensor.sha256) — best cross-HUB key, catches native dual-publish; (2) Gitee mirrorUrl/mirrorNamespace (free provenance pointer: non-null⇒rehost, null⇒native); (3) arXiv ID (best cross-CATALOG anchor); (4) DOI (academic bridge); (5) PURL→normalized host/owner/repo (package layer).
 
-## Judgment points flagged for the diverse council (Igor's hour)
+## Judgment points flagged for the diverse council (the keeper's hour)
 - The geography bucket boundaries + what "CN-native" means (freezes into DOI strata).
 - "What counts as a System" edge cases (agent-framework vs product; closed-model evidence path).
 - The per-stratum activity-floor protocol (before it freezes in the DOI).

@@ -39,7 +39,7 @@ metrology. These enrich; they do NOT block scaling.
 ## Method fixes
 - FACTS (existence / cost / rate-limit / schema) -> autopilot fan-out. JUDGMENTS (gameability / independence /
   leading-vs-lagging / China) -> DIVERSE council (>=2 model families). No single-model "adversarial self-verify."
-- Igor's hour: spent at the council judgments (one bundled ChatGPT 5.5 + Grok Heavy paste set). Zero before that.
+- the keeper's hour: spent at the council judgments (one bundled ChatGPT 5.5 + Grok Heavy paste set). Zero before that.
 
 ## Open verification (before committing v2 execution)
 spar-24 claim (б) "spine not signal-agnostic" -> VERIFY against the actual COLLECT-V3-SPEC. Note: one partner

@@ -1,6 +1,6 @@
-"""heartbeat - founder liveness signal for the dead-man trigger (do-once T1, cons continuity).
+"""heartbeat - keeper liveness signal for the dead-man trigger (do-once T1, cons continuity).
 
-The founder periodically signs a short, dated, hash-chained heartbeat with an
+The keeper periodically signs a short, dated, hash-chained heartbeat with an
 Ed25519 trust-root key. The signed heartbeats are public (data/integrity/heartbeat.jsonl)
 and prove the keeper is still present. A laptop-independent watcher (separate private
 repo, see dead-man/) reads this file; if the newest heartbeat is older than a set
@@ -8,14 +8,14 @@ window, it publishes the pre-signed TOMBSTONE and marks the archive dormant. Tha
 the observatory degrades gracefully and provably instead of rotting silently if the
 keeper disappears. The archive itself stays readable forever (CC0 + Merkle root).
 
-The PRIVATE key never lives in this repo (Igor secures it; Shamir-split for recovery).
+The PRIVATE key never lives in this repo (the keeper secures it; Shamir-split for recovery).
 The PUBLIC key is committed (data/integrity/heartbeat-pubkey.txt) so anyone can verify.
 
 cryptography is imported lazily so the module loads without it; signing/verifying
 needs `pip install cryptography`. New code, outside frozen etl/.
 
 Usage:
-  python collectors/heartbeat.py keygen --out ~/.evidaxis/heartbeat.pem   # ONE-TIME (Igor)
+  python collectors/heartbeat.py keygen --out ~/.evidaxis/heartbeat.pem   # ONE-TIME (the keeper)
   python collectors/heartbeat.py sign   --key ~/.evidaxis/heartbeat.pem    # periodic (weekly)
   python collectors/heartbeat.py verify [--max-age-days 120]               # watcher / anyone
 """
@@ -33,7 +33,7 @@ INTEGRITY = REPO / "data" / "integrity"
 LEDGER = INTEGRITY / "heartbeat.jsonl"
 PUBKEY = INTEGRITY / "heartbeat-pubkey.txt"
 
-_STATEMENT = "Evidaxis founder heartbeat; archive active and maintained."
+_STATEMENT = "Evidaxis keeper heartbeat; archive active and maintained."
 GENESIS_PREV = "0" * 64
 
 
@@ -130,6 +130,11 @@ def verify(max_age_days: int | None = None) -> tuple:
     latest = None
     for i, line in enumerate(lines):
         rec = json.loads(line)
+        # The signature only covers rec["message"]; bind it to the fields that drive
+        # the dead-man decision, else a ledger holder could forge the top-level date
+        # (freshness) or prev_hash (chain) while keeping an old valid signature.
+        if rec.get("message") != message_for(rec.get("date", ""), rec.get("prev_hash", "")):
+            return False, f"line {i}: signed message does not match its date/prev_hash (forged)"
         if rec.get("prev_hash") != prev:
             return False, f"line {i}: chain broken"
         if rec.get("pubkey") != fp:
@@ -150,7 +155,7 @@ def verify(max_age_days: int | None = None) -> tuple:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Evidaxis founder heartbeat (dead-man trigger).")
+    ap = argparse.ArgumentParser(description="Evidaxis keeper heartbeat (dead-man trigger).")
     sub = ap.add_subparsers(dest="cmd", required=True)
     g = sub.add_parser("keygen"); g.add_argument("--out", required=True)
     s = sub.add_parser("sign"); s.add_argument("--key", required=True); s.add_argument("--date", default=None)

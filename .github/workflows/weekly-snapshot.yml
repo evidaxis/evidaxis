@@ -1,6 +1,6 @@
 name: weekly-snapshot
 
-# Evidaxis heartbeat — laptop-independent. Runs on GitHub's servers, not Igor's machine.
+# Evidaxis heartbeat — laptop-independent. Runs on GitHub's servers, not the keeper's machine.
 # Interim (pre-spine): re-snapshots the current set with the v2 collector, then re-classes the
 # output PROVISIONAL (PRE_INGEST_CONTRACT §1.2) so it never poisons the real v3 t=0 baseline.
 # Re-point at the v3 survey refresh once the thin spine (S1/PR1) lands.

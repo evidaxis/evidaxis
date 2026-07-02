@@ -69,33 +69,31 @@ def backfill_record(entity_id: str, period: str, value: int, computed_at: str) -
     }
 
 
-def fetch_commit_activity(repo: str, token: str | None, retries: int = 6) -> list | None:
+def fetch_commit_activity(repo: str, token: str | None, retries: int = 3) -> list | None:
     """Return [{'week': unix, 'total': n}, ...] (up to 52 weeks) or None.
 
-    GitHub returns 202 while it computes stats for a cold repo; the first request
-    triggers the computation and later ones get 200. So we retry patiently on 202
-    (up to ~retries * a few seconds) before giving up.
+    GitHub returns 202 (no body) while it computes stats for a cold repo; the first
+    request triggers the computation, a warm one returns 200. We retry BRIEFLY on 202
+    only, then give up (a cold repo is logged as skipped, not silently dropped, and a
+    later warm run picks it up). A 200 with [] means the repo genuinely has no activity
+    -> not retryable. This keeps the pass fast: warm repos return instantly.
     """
     url = f"https://api.github.com/repos/{repo}/stats/commit_activity"
     headers = {"User-Agent": UA, "Accept": "application/vnd.github+json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    for attempt in range(retries):
+    for _ in range(retries):
         req = urllib.request.Request(url, headers=headers)
         try:
             with urllib.request.urlopen(req, timeout=30) as r:
-                if r.status == 202:  # stats being generated; back off and retry
-                    time.sleep(min(3 + attempt * 2, 10))
+                if r.status == 202:  # stats being generated; brief back off and retry
+                    time.sleep(2)
                     continue
                 data = json.loads(r.read().decode() or "[]")
-                # an empty [] can also mean "still computing"; treat as retryable
-                if isinstance(data, list) and data:
-                    return data
-                time.sleep(min(3 + attempt * 2, 10))
-                continue
+                return data if isinstance(data, list) and data else None
         except urllib.error.HTTPError as e:
             if e.code == 202:
-                time.sleep(min(3 + attempt * 2, 10))
+                time.sleep(2)
                 continue
             return None
         except Exception:

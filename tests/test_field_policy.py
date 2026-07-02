@@ -30,8 +30,9 @@ def test_no_person_fields_in_provenance():
 
 def test_no_person_fields_in_observations_and_history():
     violations = {}
-    paths = glob.glob(str(REPO / "data/observations/**/observations.jsonl"), recursive=True)
-    paths += glob.glob(str(REPO / "data/observations/history/*.jsonl"))
+    # every JSONL under observations/: observations.jsonl, per-date deps.jsonl,
+    # history/*.jsonl, and the reconstructed backfill/*.backfill.jsonl namespace.
+    paths = glob.glob(str(REPO / "data/observations/**/*.jsonl"), recursive=True)
     for f in paths:
         for rec in _load_jsonl(f):
             hits = scan_person_fields(rec)

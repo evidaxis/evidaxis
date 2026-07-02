@@ -2,8 +2,8 @@
 
 > created: 2026-06-30 · v1 built via deep-reasoning · **v2 = hardened by spar-23** (MiniMax M3 + Kimi K2.6,
 > blind dyad, $0.057). Synthesis: `AI Second Brain/lab/consilium-log/work/2026-06-30-spar-23-evidaxis-scale-plan/`.
-> status: proposed, awaiting Igor go to execute.
-> Igor strategic input: a 19-system site looks trivial; coverage pace must exceed the market birth-rate.
+> status: proposed, awaiting the keeper go to execute.
+> Keeper strategic input: a 19-system site looks trivial; coverage pace must exceed the market birth-rate.
 
 ## What the spar changed (v1 → v2)
 
@@ -21,7 +21,7 @@ The spar **broke v1's frame** on five convergent points (both models, blind, agr
 5. **No raw public 40k survey.** Two-class public system + vanity ("re-indexed someone's catalog, found
    nothing") + spam incentive ("digital ghetto"). [v1 order killed]
 
-**Igor's instinct survives, refined:** you DO need WIDE observation to catch pre-fame risers, but it lives in
+**the keeper's instinct survives, refined:** you DO need WIDE observation to catch pre-fame risers, but it lives in
 the PRIVATE discovery-frontier (watch many cheaply), and the PUBLIC surface shows only fully-cycled systems.
 "Pace > birth-rate" applies to OBSERVATION, not to the public count. The site stops looking trivial via
 "N fully-observed systems across M cohorts, as of DATE, growing weekly", not via a raw dump.
@@ -36,14 +36,14 @@ the PRIVATE discovery-frontier (watch many cheaply), and the PUBLIC surface show
 | **S — Full spine v3** | The WHOLE COLLECT-V3-SPEC (not split). New mechanisms from the spar: **prospect-id (TTL ~30d) + cross-catalog fuzzy dedup BEFORE minting a permanent opaque-ID** (this is what lets us observe widely without poisoning the ID space); **coverage stores the minimal set only** (id, observed_at, source, type, custody_hash) with mutable metadata as scoring adapters (explicit re-sync cadence + upstream-schema version); **reserved `valence_stub` + `instrument_ref` (nullable) on identity-correction-events** for forward-compat. | Claude (TDD) |
 | **PR — Proving-run on pilot n=200** | Full cycle on a 200-system pilot cohort (not 10/19): accession → instrument → observation → edge → outcome → manifest, green repro-CI, frozen baseline. PLUS mandatory **COST/QUALITY + anti-gaming report** (% derivative, % dupes, % noise, annual $ + FTE, fork-explosion collision test on synthetic 1k forks). Fail → stop, S-scaling does not start. (10-system smoke-test stays as the cheap dev gate during build.) | Claude, gated |
 | **SC — Pipeline scaling** | Scale system-by-system / batch through the full cycle. PUBLIC surface shows only systems that passed ≥1 full cycle (incl. honest "no signal"), killing the vanity ghetto + spam incentive. WIDE observation lives in the private discovery-frontier (where "pace > birth-rate" applies). | Claude, auto |
-| **V — Signals (ongoing)** | Signal-inventory depressearch runs PARALLEL as research → queue to add axes through the convergence gate. "Replenish models" lives here. | Claude dispatches, Igor nods |
+| **V — Signals (ongoing)** | Signal-inventory depressearch runs PARALLEL as research → queue to add axes through the convergence gate. "Replenish models" lives here. | Claude dispatches, the keeper nods |
 
 ## Heartbeat (parallel, non-blocking)
 `.github/workflows/weekly-snapshot.yml` written. Cloud GitHub Action, laptop-independent. Interim: weekly
 provisional re-snapshot (reclass_pre_spine.py). Activates on push to GitHub. Re-pointed at the full-cycle
 refresh once S/PR land.
 
-## Open for Igor
+## Open for the keeper
 - Go to execute (start at Phase C). I run it; research-heavy phases (U, V) use ultracode fan-out.
 - Optional: a third independent break (manual ChatGPT 5.5 + Grok Heavy on the v1 position) before locking v2.
   Recommendation: skip; the dyad's kills were convergent and append-only-git-grounded, not opinion.

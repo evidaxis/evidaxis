@@ -21,6 +21,11 @@ const SAME_AS = [
   // Re-add once the HF org is both person-free and populated.
 ];
 
+// Durable, VERSIONED methodology permalink for a given methodology_version. Records
+// cite the version they were computed under, never the moving /methodology/current/
+// alias, so a frozen citation never drifts when "current" advances (METHODOLOGY-VERSIONING.md).
+const methodologyPath = (version: string) => `${SITE}/methodology/${version === 'm1' ? 'v1' : version}/`;
+
 const typeForEntity = (t: string) =>
   t === 'org' || t === 'company' || t === 'lab' ? 'Organization'
   : t === 'model' || t === 'product' || t === 'app' ? 'SoftwareApplication'
@@ -80,7 +85,7 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
   const a2 = e.axes.openalex_citation_momentum;
   const vars: any[] = [];
   if (e.momentum != null)
-    vars.push({ '@type': 'PropertyValue', name: 'Evidaxis Momentum Score', value: e.momentum, minValue: 0, maxValue: 100, unitText: 'points', measurementTechnique: `${SITE}/methodology/${snap.methodology_version === 'm1' ? 'v1' : snap.methodology_version}/` });
+    vars.push({ '@type': 'PropertyValue', name: 'Evidaxis Momentum Score', value: e.momentum, minValue: 0, maxValue: 100, unitText: 'points', measurementTechnique: methodologyPath(snap.methodology_version) });
   if (a1.cohort_z != null)
     vars.push({ '@type': 'PropertyValue', name: 'Development-velocity z-score (within cohort)', value: a1.cohort_z });
   if (a2.cohort_z != null)
@@ -133,8 +138,8 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
       dateModified: snap.snapshot_date,
       temporalCoverage: snap.snapshot_date,
       isBasedOn: `${SITE}/snapshots/${snap.snapshot_date}/`,
-      citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
-      measurementTechnique: `${SITE}/methodology/current/`,
+      citation: `Evidaxis Methodology ${snap.methodology_version}, ${methodologyPath(snap.methodology_version)}`,
+      measurementTechnique: methodologyPath(snap.methodology_version),
       keywords: ['AI', e.industry, e.sub_niche, 'momentum', 'open source'],
       sameAs: `https://github.com/${e.github_repo}`,
       mainEntity: { '@id': `${SITE}/e/${e.entity_id}/#entity` },
@@ -173,7 +178,7 @@ export function itemListDataset(opts: {
         dateModified: snap.snapshot_date,
         ...(period ? { temporalCoverage: period } : {}),
         isBasedOn: `${SITE}/snapshots/${snap.snapshot_date}/`,
-        citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
+        citation: `Evidaxis Methodology ${snap.methodology_version}, ${methodologyPath(snap.methodology_version)}`,
         mainEntity: { '@id': `${SITE}${path}#list` },
       },
       {
@@ -215,8 +220,8 @@ export function snapshotDataset(snap: Snapshot) {
         datePublished: snap.snapshot_date,
         dateModified: snap.snapshot_date,
         temporalCoverage: snap.snapshot_date,
-        measurementTechnique: `${SITE}/methodology/current/`,
-        citation: `Evidaxis Methodology ${snap.methodology_version}, ${SITE}/methodology/current/`,
+        measurementTechnique: methodologyPath(snap.methodology_version),
+        citation: `Evidaxis Methodology ${snap.methodology_version}, ${methodologyPath(snap.methodology_version)}`,
         keywords: ['AI systems', 'momentum', 'open data', 'software ecosystems'],
         // Canonical machine surface: the variables this dataset measures. Only the
         // primary, universally-present quantities are declared here; per-entity
@@ -228,19 +233,19 @@ export function snapshotDataset(snap: Snapshot) {
             name: 'Evidaxis Momentum Score',
             description: 'Within-pilot percentile of the combined two-axis signal.',
             minValue: 0, maxValue: 100, unitText: 'points',
-            measurementTechnique: `${SITE}/methodology/current/`,
+            measurementTechnique: methodologyPath(snap.methodology_version),
           },
           {
             '@type': 'PropertyValue',
             name: 'Development-velocity z-score (within cohort)',
             description: 'Log-slope of weekly commit activity, robust-z normalized within the cohort.',
-            measurementTechnique: `${SITE}/methodology/current/#velocity`,
+            measurementTechnique: `${methodologyPath(snap.methodology_version)}#velocity`,
           },
           {
             '@type': 'PropertyValue',
             name: 'Citation-momentum z-score (within cohort)',
             description: 'Log-slope of yearly citations to the system paper, robust-z normalized within the cohort. Absent for systems with no measurable citation axis.',
-            measurementTechnique: `${SITE}/methodology/current/#citation`,
+            measurementTechnique: `${methodologyPath(snap.methodology_version)}#citation`,
           },
         ],
         distribution: [
@@ -261,13 +266,15 @@ export function breadcrumb(items: { name: string; path: string }[]) {
   };
 }
 
-const METHODOLOGY_FROZEN = '2026-06-27';   // fallback only; per-version date comes from the registry
-
-// Resolve a methodology version to its immutable publish date. Each version is
-// frozen the day it went effective; the registry is the single source of truth
-// (METHODOLOGY-VERSIONING.md), so dates never churn per snapshot.
-const methodologyDate = (version: string): string =>
-  (registry.versions.find((v) => v.version === version) as any)?.effective_at ?? METHODOLOGY_FROZEN;
+// Resolve a methodology version to its immutable publish date. Each version is frozen
+// the day it went effective; the registry is the single source of truth
+// (METHODOLOGY-VERSIONING.md). Unknown version -> throw (fail the build LOUDLY), never
+// silently stamp a wrong date: a reader MUST be able to resolve every published version.
+const methodologyDate = (version: string): string => {
+  const entry = registry.versions.find((v) => v.version === version) as any;
+  if (!entry) throw new Error(`methodology ${version} not in registry; add it before publishing its page`);
+  return entry.effective_at;
+};
 
 export function methodologyGraph(version: string, canonicalVersionPath: string) {
   const frozen = methodologyDate(version);

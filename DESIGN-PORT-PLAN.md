@@ -1,6 +1,6 @@
 # Evidaxis — Design Port Plan (approved redesign → production Astro site)
 
-> Status: PLAN ONLY. Build + preview locally. **Do NOT deploy to production until Igor approves the preview URL.**
+> Status: PLAN ONLY. Build + preview locally. **Do NOT deploy to production until the keeper approves the preview URL.**
 > Source of truth for design: `projects/bonsai/evidaxis/proto/{v-final.html, charts.js, data.js, cards/final-card.html}` (in the AI-Second-Brain repo).
 > Source of truth for data: `Evidaxis/web/src/lib/data.ts` reading `Evidaxis/data/snapshots/<date>/snapshot.json` + `provenance.json` + `manifest.json`.
 > Branch: `redesign/v-final`. Production (evidaxis.org) stays on the current deploy throughout.
@@ -105,7 +105,7 @@ Preserve the mature layer (jsonld.ts `@graph`, robots allowlist, sitemap lastmod
 10. **robots/sitemap/canonical coherence** preserved; JSON twins + llms.txt not blocked; `<link rel=alternate type=application/json>` on entity AND snapshot pages.
 11. **llms.txt completeness** (GAP 6): add enumerated entity list (name → `/e/{id}/` + `.json`) and live snapshot URL; optionally an `llms-full.txt` (methodology + glossary + snapshot summary).
 12. **Core Web Vitals**: latin-subset fonts (~6 woff2, < 120 KB; drop Spectral CDN, self-host Familjen Grotesk via @fontsource), `font-display:swap` + size-adjust fallback + preload exactly 2 LCP faces; explicit width/height/viewBox on every SVG (no CLS); immutable cache on hashed assets via vercel.json.
-13. **Person-free invariant**: no Person node, no `author`/founder/byline/team; all creator/publisher = Organization `@id`. CI greps `dist/` for Person schema / founder strings / "Ivitskiy" → must be 0.
+13. **Person-free invariant**: no Person node, no `author`/founder/byline/team; all creator/publisher = Organization `@id`. CI greps `dist/` for Person schema / founder strings / the keeper's name → must be 0.
 
 ---
 
@@ -155,7 +155,7 @@ Root cause: `data.ts` resolves `ROOT` to the repo root and reads `data/`, `taxon
 5. On the preview: View Source confirms static charts + data; disable JS, page still complete.
 6. On the preview: person-free grep clean; confirm `DECISIONS.md`/`ROADMAP.md`/`MINT-STEPS.md`/`BRAND-KIT.md`/`spine/` are gitignored and absent from the built tree.
 7. Design-fidelity + responsive + a11y + reduced-motion manual passes.
-8. **GET EXPLICIT APPROVAL from Igor on the preview URL.** (Non-negotiable gate.)
+8. **GET EXPLICIT APPROVAL from the keeper on the preview URL.** (Non-negotiable gate.)
 9. Cutover: merge to `main` (protection requires both gates green) → Vercel deploys prod. Or `vercel promote <validated-preview-url>` for the exact build with no rebuild.
 10. Post-cutover verify on evidaxis.org: redesign live, redirects fire, sitemap lastmod = snapshot_date, no `_astro` 404s.
 11. Trigger IndexNow / resubmit sitemap.
@@ -172,7 +172,7 @@ Root cause: `data.ts` resolves `ROOT` to the repo root and reads `data/`, `taxon
 - **M4 — Entity card + compact row.** `EntityCard.astro` + `EntityRow.astro` wired into `/e/[id]/` and cohort/industry pages; derived-signals band (5 computed + reserved gate-ETA); JSON twin + variableMeasured extended. *Exit: spot-checked entities match snapshot; every chart has backing table; derived signals reproducible; person-free gate clean; JSON-LD validates with frozen v1 names.*
 - **M5 — GEO/SEO + a11y hardening.** Captions, glossary links, units, `<time>`/`<data>`, llms.txt entity list, meta uniqueness, FAQPage on methodology/about, reduced-motion guards. *Exit: full automated suite green (Lighthouse SEO=100, a11y≥95, perf≥90; link-check clean; JSON-LD valid; unique meta).*
 - **M6 — CI + Vercel config + preview.** Add `web-ci.yml`, root `vercel.json`, Node pin; push branch; produce preview URL. *Exit: CI green on PR; Vercel preview builds from repo root and serves the redesign; manual View-Source + JS-off + person-free checks pass on preview.*
-- **M7 — Approval + cutover.** Present preview to Igor. *Exit: explicit approval, then merge/promote; post-cutover verification green; rollback path confirmed.*
+- **M7 — Approval + cutover.** Present preview to the keeper. *Exit: explicit approval, then merge/promote; post-cutover verification green; rollback path confirmed.*
 
 ---
 
