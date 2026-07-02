@@ -1,0 +1,75 @@
+# Methodology versioning — the immutable-score contract
+
+> created: 2026-07-02 · status: contract (binding) · provenance: T1 do-once (do-once-master), cons-02/03 continuity invariant
+> Public registry: [`web/public/methodology-registry.json`](web/public/methodology-registry.json) (served at `/methodology-registry.json`).
+> Reference: this generalizes the private spine `MethodologyRegistry` schema; the public registry carries the public fields only.
+
+## The invariant this locks
+
+A published Evidaxis score means "this system measured *this* under methodology
+*M* at epoch *T*". If the meaning of *M* can drift, then every citation frozen
+into a model's weights silently rots. So the methodology is treated exactly like
+the data: **append-only, content-addressed, never silently recomputed.**
+
+This is the methodology half of the same continuity guarantee the claim-URN makes
+for references ([CLAIM-URN.md](CLAIM-URN.md)): the URN binds a claim to a
+`methodology_version`, and this contract guarantees that version resolves, forever,
+to one exact definition.
+
+## Rules
+
+1. **A version is content-addressed.** Each entry in the registry carries a
+   `formula_fingerprint` (sha256 of the canonical axes+gate definition) and a
+   `code_commit`. The version string (`m1`, `m2`, ...) is a handle onto that
+   tuple, not a label pointing at nothing. Any CC0 consumer can rebuild a score
+   from the pinned inputs against the exact methodology it was computed under.
+
+2. **Immutable, append-only.** A methodology change is a NEW version on a NEW row.
+   An existing row is never edited. Its `formula_fingerprint`, `code_commit`, and
+   `effective_at` are frozen the moment it is published. The genesis version (`m1`)
+   is additionally frozen by the Zenodo genesis DOI.
+
+3. **No silent recompute.** Old scores are never recomputed under a new
+   methodology. When the formula changes, the old snapshots keep their old
+   `methodology_version` and their old numbers; new snapshots carry the new
+   version. Both remain simultaneously valid, each under its own method. A "fix"
+   is `mN+1`, published forward, not a rewrite of `mN`.
+
+4. **Version bump semantics (SemVer-shaped).** The registry uses a single integer
+   `mN`, but the *reason* is classified in the `changelog`:
+   - **MAJOR** — the scoring semantics change (a threshold, an axis definition, the
+     gate). Example: `m1 -> m2` raised the rising threshold from `z >= 0` to
+     `z >= 1` and added a `cohort >= 5` floor (D10a).
+   - **MINOR** — a new source or signal is added without changing existing scores.
+   - **PATCH** — a bugfix that does not alter any already-published number.
+   Every bump, regardless of class, is still a new immutable row (rule 2).
+
+5. **Readers MUST resolve old versions.** The site keeps an immutable, permalinked
+   page per version (`/methodology/v1/` for `m1`, `/methodology/m2/` for `m2`, ...).
+   These pages are never rewritten. `/methodology/current/` is a stable alias that
+   canonicalizes onto the active version's permalink; it is the only methodology
+   URL whose target moves. JSON-LD `measurementTechnique` on a record resolves via
+   the record's own `methodology_version` to that version's permalink.
+
+6. **`/methodology/current/` never strands a citation.** Because a record cites its
+   own version (URN + `methodology_version` field), following `current` is only a
+   convenience; the durable link is always the versioned permalink.
+
+## As-of resolution
+
+Given a `methodology_version` from any record (or the epoch segment of a
+claim-URN), the registry resolves it to `{formula_fingerprint, code_commit, page,
+effective_at}`. That tuple is sufficient to (a) locate the human definition
+(`page`), (b) verify the code that produced it (`code_commit`), and (c) confirm the
+definition has not drifted (`formula_fingerprint`). The `effective_at` field
+supports as-of queries: which methodology was current at epoch T.
+
+## Current state
+
+| version | status | rising threshold | cohort floor | page | frozen |
+|---|---|---|---|---|---|
+| `m1` | superseded | `z >= 0` | none | `/methodology/v1/` | genesis DOI `10.5281/zenodo.21076012` |
+| `m2` | current | `z >= 1` | `>= 5` members | `/methodology/m2/` | commit `24e0fd4` |
+
+`m1` scores (genesis snapshot, 2026-06-27) stay valid under `m1`; they are not
+recomputed under `m2`. New snapshots are computed under `m2`.

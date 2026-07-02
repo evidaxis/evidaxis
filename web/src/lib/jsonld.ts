@@ -1,6 +1,7 @@
 /** JSON-LD builders. v1 frozen external contract — property names are load-bearing
  *  (Google indexes them, LLMs train on them). Do not rename. */
 import type { DepsSignal, Entity, Snapshot } from './data';
+import registry from './methodology-registry.json';
 
 const SITE = 'https://evidaxis.org';
 const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
@@ -260,9 +261,16 @@ export function breadcrumb(items: { name: string; path: string }[]) {
   };
 }
 
-const METHODOLOGY_FROZEN = '2026-06-27';   // stable — must NOT churn per snapshot
+const METHODOLOGY_FROZEN = '2026-06-27';   // fallback only; per-version date comes from the registry
+
+// Resolve a methodology version to its immutable publish date. Each version is
+// frozen the day it went effective; the registry is the single source of truth
+// (METHODOLOGY-VERSIONING.md), so dates never churn per snapshot.
+const methodologyDate = (version: string): string =>
+  (registry.versions.find((v) => v.version === version) as any)?.effective_at ?? METHODOLOGY_FROZEN;
 
 export function methodologyGraph(version: string, canonicalVersionPath: string) {
+  const frozen = methodologyDate(version);
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -275,8 +283,8 @@ export function methodologyGraph(version: string, canonicalVersionPath: string) 
         description: 'The complete, versioned definition of how Evidaxis collects signals, normalizes them within cohorts, and decides which systems are rising.',
         url: SITE + canonicalVersionPath,
         version: version.replace(/^m/, ''),
-        datePublished: METHODOLOGY_FROZEN,
-        dateModified: METHODOLOGY_FROZEN,
+        datePublished: frozen,
+        dateModified: frozen,
         license: 'https://creativecommons.org/licenses/by/4.0/',
         creator: { '@id': ORG_ID },
         publisher: { '@id': ORG_ID },
