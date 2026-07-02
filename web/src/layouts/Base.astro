@@ -25,8 +25,9 @@ export interface Props {
   ogType?: string;
   ogImage?: string;             // path; defaults to the brand card
   jsonTwin?: string;            // path to the machine-readable JSON twin (entity/snapshot)
+  citeAs?: string;              // durable claim-URN for signposting (RFC 8574 cite-as)
 }
-const { title, description, canonical, jsonLd, ogType = 'website', ogImage = '/og.png', jsonTwin } = Astro.props;
+const { title, description, canonical, jsonLd, ogType = 'website', ogImage = '/og.png', jsonTwin, citeAs } = Astro.props;
 const site = 'https://evidaxis.org';
 const url = site + canonical;
 const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
@@ -60,6 +61,7 @@ const nav = [
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="sitemap" href="/sitemap-index.xml" />
   {jsonTwin && <link rel="alternate" type="application/json" href={jsonTwin} />}
+  {citeAs && <link rel="cite-as" href={citeAs} />}
   {blocks.map((b) => (
     <script type="application/ld+json" set:html={JSON.stringify(b)} />
   ))}

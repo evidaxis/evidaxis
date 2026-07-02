@@ -69,6 +69,14 @@ for (const file of htmlFiles) {
   }
   if (!/<link\s+rel="canonical"/.test(html)) errors.push(`${r}: missing canonical link`);
 
+  // 4b. every entity page must carry a durable claim-URN (cite-as signpost + JSON-LD)
+  if (/^e\/e_[^/]+\/index\.html$/.test(r)) {
+    if (!/<link\s+rel="cite-as"\s+href="urn:evidaxis:claim:/.test(html))
+      errors.push(`${r}: entity page missing rel="cite-as" claim-URN link`);
+    if (!/urn:evidaxis:claim:/.test(html.match(/type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)?.[1] ?? ''))
+      warns.push(`${r}: claim-URN not found in first JSON-LD block`);
+  }
+
   // 5. single h1
   const h1 = (html.match(/<h1[\s>]/g) || []).length;
   if (h1 > 1) errors.push(`${r}: ${h1} <h1> elements (expected 1)`);
