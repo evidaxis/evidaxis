@@ -8,3 +8,4 @@ mutmut==3.6.0
 ruff==0.15.20
 mypy==2.1.0
 pip-audit==2.10.1
+cryptography==49.0.0   # Ed25519 for the dead-man heartbeat (collectors/heartbeat.py) + its test
