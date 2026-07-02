@@ -9,6 +9,20 @@ sys.path.insert(0, str(REPO / "collectors"))
 from claim_urn import ClaimURNError, build, parse
 
 ACC = "EVX:SYS:Y92940K5ESN7"
+LEGACY = "e_H6PPP8CA9RR"  # the form live snapshots actually carry
+
+
+def test_legacy_entity_id_roundtrip():
+    # live entity ids are colon-free `e_...`; the URN must build and parse for them
+    urn = build(LEGACY, "m2", "2026-w27")
+    assert urn == "urn:evidaxis:claim:e_H6PPP8CA9RR:m2:2026-w27"
+    assert parse(urn) == {"accession_id": LEGACY, "methodology_version": "m2", "epoch": "2026-w27"}
+
+
+def test_legacy_rejects_bad_body_alphabet():
+    # I/L/O/U are not in Crockford base32 -> reject (guards against garbage accessions)
+    with pytest.raises(ClaimURNError):
+        build("e_ILLEGALOCHAR", "m2", "2026-w27")
 
 
 def test_build_roundtrip_week_epoch():

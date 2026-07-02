@@ -74,7 +74,7 @@ export function orgGraph() {
   };
 }
 
-export function entityGraph(e: Entity, snap: Snapshot) {
+export function entityGraph(e: Entity, snap: Snapshot, urn?: string) {
   const a1 = e.axes.github_commit_velocity;
   const a2 = e.axes.openalex_citation_momentum;
   const vars: any[] = [];
@@ -103,6 +103,10 @@ export function entityGraph(e: Entity, snap: Snapshot) {
     subjectOf: { '@id': `${SITE}/e/${e.entity_id}/#dataset` },
   };
   if (paperId) entityNode.citation = { '@type': 'ScholarlyArticle', '@id': `https://openalex.org/${paperId}`, sameAs: `https://openalex.org/${paperId}` };
+  // Durable canonical reference (CLAIM-URN.md). Goes in `identifier`, never in `@id`:
+  // schema.org @id must remain an HTTP-resolvable IRI for graph linking; the URN is
+  // the format-independent citation target that survives changes in how LLMs cite.
+  if (urn) entityNode.identifier = urn;
 
   const graph: any[] = [
     orgRef(),
@@ -112,7 +116,9 @@ export function entityGraph(e: Entity, snap: Snapshot) {
       name: `Evidaxis measurement: ${e.name}`,
       description: desc,
       url: `${SITE}/e/${e.entity_id}/`,
-      identifier: e.entity_id,
+      identifier: urn
+        ? [e.entity_id, { '@type': 'PropertyValue', propertyID: 'claim-urn', value: urn }]
+        : e.entity_id,
       license: CC0,
       isAccessibleForFree: true,
       creator: { '@id': ORG_ID },

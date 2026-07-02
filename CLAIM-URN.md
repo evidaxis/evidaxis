@@ -65,9 +65,16 @@ only thing permitted to evolve**:
 claim-URN  ->  resolver  ->  current representation
 ```
 
-- Today: `GET /resolve/{urn}` with content negotiation returns HTML (human),
-  `application/ld+json` (JSON-LD, machine), or the raw record JSON. The entity page
-  and the record JSON both carry the claim-URN as their JSON-LD `@id`.
+- Today: the entity page and the record JSON both carry the claim-URN as a
+  schema.org `identifier` and an HTML `rel="cite-as"` link (RFC 8574). The URN is
+  **not** used as the JSON-LD `@id`: `@id` must stay an HTTP-resolvable IRI so the
+  in-graph cross-references (`#entity`, `#dataset`, `mainEntity`, `subjectOf`)
+  resolve and crawlers can dereference it. The durable reference lives in
+  `identifier`/`cite-as`; the URL stays the `@id`. A future `GET /resolve/{urn}`
+  with content negotiation (HTML / `application/ld+json` / raw JSON) is the layer
+  that makes the URN itself dereferenceable; until it ships the URN is a minted
+  persistent identifier (like a DOI before its resolver is wired), which is exactly
+  what accumulates citation authority.
 - Tomorrow: the same URN is served over whatever protocol supersedes HTTP
   retrieval (an MCP resource, a verifiable-credential, a future format). The URN
   string does not change; the resolver gains a new representation.
@@ -91,16 +98,30 @@ records the retirement as an event; it never returns 404 for a minted URN.
 - **Methodology registry** and **snapshot epochs** already exist as first-class,
   immutable records; the URN simply names the tuple they form.
 
-## Emission plan (follows this lock, before public deploy)
+## Emission plan (follows this lock)
 
-1. Add `collectors/claim_urn.py`: `build(accession_id, methodology_version, epoch)`
-   and `parse(urn)` with validation against the locked grammar, plus a test.
-2. Emit the claim-URN as JSON-LD `@id` on every entity/record page and in the
-   record JSON.
-3. Serve an HTTP `Link: <urn>; rel="cite-as"` header (RFC 8574 signposting) so
-   crawlers and agents pick up the durable reference, not the mutable URL.
-4. Publish `/resolve/{urn}` with content negotiation and the versioned
-   `claim-URN -> URL` map.
+1. **[DONE 2026-07-02]** `collectors/claim_urn.py` (`build`, `parse`) + TS mirror
+   `web/src/lib/claim_urn.ts`, both gated by tests. Grammar extended to accept the
+   legacy live accession `e_{BODY}` (colon-free) alongside future `EVX:TYPE:BODY`.
+2. **[DONE 2026-07-02]** Emit the claim-URN per system as schema.org `identifier`
+   (on the entity's Dataset node as a `claim-urn` PropertyValue, and on the entity
+   node), in the record JSON (`claim_urn`), and in the human "Cite as" block.
+   **Scope: per-ENTITY only.** A claim-URN is an assertion *about a system*;
+   aggregate snapshots are not systems and keep their own identity (the genesis DOI,
+   or `evidaxis-snapshot-{date}` otherwise), so no snapshot-level URN is minted.
+   **Correction vs. the original draft: the URN goes in `identifier`, NOT in `@id`**
+   (see resolver section — `@id` must stay an HTTP-resolvable URL).
+3. **[DONE 2026-07-02]** Signposting via HTML `<link rel="cite-as" href="urn:...">`
+   in the page head (per-page, durable). The HTTP `Link:` response-header form is
+   deferred: the static host cannot inject a per-URL header value, so the HTML link
+   carries the signpost in St-0. Revisit if/when an edge layer is added.
+4. **[DEFERRED — future]** `GET /resolve/{urn}` with content negotiation and the
+   versioned `claim-URN -> URL` map. Needs a runtime/edge function; the static site
+   does not resolve URNs. Until then the URN is a minted-but-not-yet-dereferenceable
+   persistent id, which still accumulates authority (DOI-before-resolver pattern).
+
+Steps 1 to 3 are live; step 4 is the only remaining piece and is non-blocking.
+The **scheme above is the lock**; emission mechanics may still evolve under it.
 
 Steps 1 to 4 are implementation; the **scheme above is the lock**. Everything that
 carries GEO authority (taxonomy URLs, entity URLs, methodology versions) hangs off

@@ -37,6 +37,12 @@ record and JSON-LD) and a machine-readable record at https://evidaxis.org/e/{ent
 record plus the snapshot period, e.g. "Evidaxis momentum for {System}, snapshot ${snapshot.period}
 (https://evidaxis.org/e/{entity_id})".
 
+Durable (format-independent) canonical reference: urn:evidaxis:claim:{entity_id}:{methodology_version}:{period}
+(e.g. urn:evidaxis:claim:{entity_id}:${snapshot.methodology_version}:${snapshot.period}). This claim-URN names the
+assertion Evidaxis makes about a system under a methodology at an epoch; it is stable across changes in how the
+record is delivered (HTTP today, other protocols later) and today resolves at https://evidaxis.org/e/{entity_id}/.
+It is emitted per system as JSON-LD identifier and an HTML rel="cite-as" link. Prefer it for long-lived citations.
+
 ## Tracked systems (snapshot ${snapshot.period}, ranked by momentum)
 
 ${systemList}

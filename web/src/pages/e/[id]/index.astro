@@ -13,6 +13,7 @@ import SnapshotProvenance from '../../../components/charts/SnapshotProvenance.as
 import { entities, snapshot, commitSeries, industries, entitiesInCohort } from '../../../lib/data';
 import { cohortLabel } from '../../../lib/cohorts';
 import { entityGraph, breadcrumb } from '../../../lib/jsonld';
+import { claimUrnForEntity } from '../../../lib/claim_urn';
 
 export function getStaticPaths() {
   return entities.map((e) => ({ params: { id: e.entity_id }, props: { e } }));
@@ -21,6 +22,7 @@ const { e } = Astro.props;
 const a1 = e.axes.github_commit_velocity;
 const a2 = e.axes.openalex_citation_momentum;
 const cs = commitSeries(e.entity_id);
+const urn = claimUrnForEntity(e, snapshot);   // durable canonical citation (CLAIM-URN.md)
 
 const cohortRanked = entitiesInCohort(e.cohort);
 const cohortN = cohortRanked.length;
@@ -54,7 +56,7 @@ const badgePath = `/badge/${e.entity_id}/${snapshot.period}.svg`;
 const badgeMd = `[![Evidaxis: ${e.name}](https://evidaxis.org${badgePath})](https://evidaxis.org/e/${e.entity_id})`;
 const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'} of 100, status ${e.status}, in the ${e.sub_niche} cohort. Computed on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
 ---
-<Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} jsonLd={[entityGraph(e, snapshot), crumbs]}>
+<Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn), crumbs]}>
   <section class="section ent-wrap">
     <div class="wrap">
       <nav class="crumb mono" aria-label="Breadcrumb">
@@ -144,6 +146,9 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
         Score derived from public data on Evidaxis methodology {snapshot.methodology_version}, never edited by hand. Cite as:
         &ldquo;Evidaxis, {e.name}, entity {e.entity_id}, snapshot {snapshot.period}.&rdquo;
       </p>
+      <p class="cite-urn mono muted">
+        Durable reference (format-independent): <b>{urn}</b>
+      </p>
     </div>
   </section>
 </Base>
@@ -187,4 +192,6 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
   .receipt { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 1.8rem; padding-top: 1rem; border-top: 1px solid var(--hairline); font-size: .74rem; color: var(--ink-mute); }
   .receipt b { color: var(--ink-soft); } .receipt a { color: var(--velocity); }
   .cite { font-size: .72rem; margin-top: .8rem; line-height: 1.5; }
+  .cite-urn { font-size: .72rem; margin-top: .35rem; line-height: 1.5; word-break: break-all; }
+  .cite-urn b { color: var(--ink-soft); }
 </style>
