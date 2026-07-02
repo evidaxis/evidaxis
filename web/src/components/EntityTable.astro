@@ -32,7 +32,7 @@ const { entities } = Astro.props;
             <div class="mono muted" style="font-size:.68rem">{e.entity_id}</div>
           </td>
           <td><StatusBadge status={e.status} /></td>
-          <td class="num">{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</td>
+          <td class="num">{e.momentum != null ? <data value={e.momentum}>{e.momentum.toFixed(1)}</data> : 'n/a'}</td>
           <td>
             {cs.length >= 2
               ? <Sparkline values={cs} color="var(--velocity)" width={104} height={28} label={`${e.name} commit velocity`} />

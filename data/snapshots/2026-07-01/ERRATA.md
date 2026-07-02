@@ -35,3 +35,20 @@ history.
 CP-6: reproducibility & honest base-rates). The genesis snapshot (2026-06-27)
 was verified unaffected: it passes its own checksums and remains byte-identical
 to the Zenodo genesis deposit.
+
+---
+
+# ERRATUM 2 — five seeded systems silently missing (added 2026-07-02)
+
+This snapshot contains 103 entities while the seeded universe at capture time
+was 108. Five systems produced no record because the collector's GitHub
+statistics call remained HTTP 202 (cache cold) through all retries, and the
+frozen collector drops such entities silently: NVIDIA/TensorRT-LLM,
+google/adk-python, block/goose (tracked since genesis), llm-d/llm-d,
+OpenGVLab/InternVL. Their series have a one-period gap; no published number is
+affected. The machine-readable list is in `dropped.json` alongside this file.
+
+**Fix forward.** `collectors/completeness_gate.py` now runs in the weekly
+pipeline right after the collector: every gap is written to `dropped.json`,
+and a missing previously-tracked entity fails the pipeline instead of
+publishing silently.

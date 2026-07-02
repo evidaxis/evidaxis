@@ -12,7 +12,7 @@ so each component is mapped explicitly below and in `REUSE.toml`.
 
 | Component | Paths | SPDX | Text |
 |---|---|---|---|
-| **Code** | `etl/`, `web/src/`, `web/scripts/`, `spine/*.py`, `tests/` | `Apache-2.0` | [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) + [`NOTICE`](NOTICE) |
+| **Code** | `etl/`, `web/src/`, `web/scripts/`, `spine/*.py`, `tests/`, `collectors/` (incl. `claim_urn.py`, the claim-URN reference implementation), `dead-man/`, `.github/` workflows, deploy scripts | `Apache-2.0` | [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) + [`NOTICE`](NOTICE) |
 | **Data** | `data/`, `entities/`, `taxonomy/`, `relationships.tsv`, `redirects.yaml` | `CC0-1.0` | [`LICENSE-data.md`](LICENSE-data.md) |
 | **Methodology prose** | the `/methodology` site pages (`web/src/pages/methodology/`), methodology write-ups | `CC-BY-4.0` | https://creativecommons.org/licenses/by/4.0/ |
 | **Fonts** | `web/public/fonts/*.woff,*.woff2` | `OFL-1.1` | [`LICENSES/OFL-1.1.txt`](LICENSES/OFL-1.1.txt) + [`web/public/fonts/OFL.txt`](web/public/fonts/OFL.txt) |

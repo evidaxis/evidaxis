@@ -1,0 +1,19 @@
+# Evidaxis forward-hypotheses commit-reveal anchor (PUBLIC-SAFE: digest only, no content).
+#
+# RE-ANCHOR (supersedes the archive_root REFERENCE in hypotheses-merkle-root.txt,
+# which stays frozen as the historical first anchor). Why: the root it referenced
+# (sha256:26b108be...) was recorded in a file that was later refreshed in place
+# during the 2026-07-02 checksum corrections; that root value remains provable
+# from git history, but is no longer present in the working tree. Integrity
+# witnesses are now APPEND-ONLY (timestamped archive-root-*.json, chained via
+# prev_root; CI rejects in-place modification of data/integrity/), so this
+# situation cannot recur. The private hypothesis ledger itself is UNCHANGED:
+# claims_sha256 below is byte-identical to the original anchor.
+date=2026-07-02
+period=2026-w27
+claims_sha256=sha256:e53bcbd71998139d35606ed4c951b6e834b3d2fb02a538c65e56919066679e92
+n_claims=3
+archive_root=sha256:88277f7e329bd0c06e0ff26cc9c4e28d5f48e9876bce61b3e08130af59600f01
+archive_root_file=archive-root-2026-07-02T145547Z.json
+supersedes_reference=hypotheses-merkle-root.txt (archive_root field only; claims digest identical)
+ots=pending (stamped on a warm run with opentimestamps-client)

@@ -21,6 +21,10 @@ export const GET: APIRoute = ({ props }) => {
     },
     license: 'CC0-1.0',
     canonical: `https://evidaxis.org/e/${e.entity_id}/`,
+    sameAs: [
+      `https://github.com/${e.github_repo}`,
+      ...(e.openalex_work_ids?.length ? [`https://openalex.org/${e.openalex_work_ids[0]}`] : []),
+    ],
   };
   return new Response(JSON.stringify(body, null, 2), {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },

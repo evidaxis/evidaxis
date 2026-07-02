@@ -1,6 +1,7 @@
 /** JSON-LD builders. v1 frozen external contract — property names are load-bearing
  *  (Google indexes them, LLMs train on them). Do not rename. */
 import type { DepsSignal, Entity, Snapshot } from './data';
+import { SNAP_DATE } from './data';
 import registry from './methodology-registry.json';
 
 const SITE = 'https://evidaxis.org';
@@ -75,6 +76,14 @@ export function orgGraph() {
         isAccessibleForFree: true,
         publisher: { '@id': ORG_ID },
         creator: { '@id': ORG_ID },
+        dataset: [
+          {
+            '@type': 'Dataset',
+            '@id': `${SITE}/snapshots/${SNAP_DATE}/#dataset`,
+            name: `Evidaxis snapshot ${SNAP_DATE}`,
+            url: `${SITE}/snapshots/${SNAP_DATE}/`,
+          },
+        ],
       },
     ],
   };
@@ -138,7 +147,13 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
       dateModified: snap.snapshot_date,
       temporalCoverage: snap.snapshot_date,
       isBasedOn: `${SITE}/snapshots/${snap.snapshot_date}/`,
-      citation: `Evidaxis Methodology ${snap.methodology_version}, ${methodologyPath(snap.methodology_version)}`,
+      citation: {
+        '@type': 'CreativeWork',
+        '@id': `${methodologyPath(snap.methodology_version)}#doc`,
+        name: `Evidaxis Methodology ${snap.methodology_version}`,
+        url: methodologyPath(snap.methodology_version),
+        version: snap.methodology_version,
+      },
       measurementTechnique: methodologyPath(snap.methodology_version),
       keywords: ['AI', e.industry, e.sub_niche, 'momentum', 'open source'],
       sameAs: `https://github.com/${e.github_repo}`,
@@ -178,7 +193,13 @@ export function itemListDataset(opts: {
         dateModified: snap.snapshot_date,
         ...(period ? { temporalCoverage: period } : {}),
         isBasedOn: `${SITE}/snapshots/${snap.snapshot_date}/`,
-        citation: `Evidaxis Methodology ${snap.methodology_version}, ${methodologyPath(snap.methodology_version)}`,
+        citation: {
+        '@type': 'CreativeWork',
+        '@id': `${methodologyPath(snap.methodology_version)}#doc`,
+        name: `Evidaxis Methodology ${snap.methodology_version}`,
+        url: methodologyPath(snap.methodology_version),
+        version: snap.methodology_version,
+      },
         mainEntity: { '@id': `${SITE}${path}#list` },
       },
       {
@@ -221,7 +242,13 @@ export function snapshotDataset(snap: Snapshot) {
         dateModified: snap.snapshot_date,
         temporalCoverage: snap.snapshot_date,
         measurementTechnique: methodologyPath(snap.methodology_version),
-        citation: `Evidaxis Methodology ${snap.methodology_version}, ${methodologyPath(snap.methodology_version)}`,
+        citation: {
+        '@type': 'CreativeWork',
+        '@id': `${methodologyPath(snap.methodology_version)}#doc`,
+        name: `Evidaxis Methodology ${snap.methodology_version}`,
+        url: methodologyPath(snap.methodology_version),
+        version: snap.methodology_version,
+      },
         keywords: ['AI systems', 'momentum', 'open data', 'software ecosystems'],
         // Canonical machine surface: the variables this dataset measures. Only the
         // primary, universally-present quantities are declared here; per-entity

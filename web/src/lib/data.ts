@@ -121,11 +121,34 @@ const toDepsSignal = (s: any): DepsSignal | null =>
     ? { value: s.value, direct: s.direct ?? 0, indirect: s.indirect ?? 0, system: s.source_system ?? '', package: s.package ?? '' }
     : null;
 
+// Verified package-identity pins (data/deps_id_map.json): a captured deps row is
+// surfaced ONLY when its (system, package) matches the linkage-verified pin for
+// that entity's repo. Day-1/2 captures matched by NAME alone and 21/81 were
+// squats/strangers (see data/observations/ERRATA.md); unverified rows stay in
+// the raw files as history but never reach the site.
+const depsPins: Record<string, { system: string; package: string }> = (() => {
+  try {
+    return readJson('data/deps_id_map.json').pins ?? {};
+  } catch {
+    return {};
+  }
+})();
+const pinByEntity = new Map<string, { system: string; package: string }>();
+for (const e of entities) {
+  const pin = depsPins[e.github_repo];
+  if (pin) pinByEntity.set(e.entity_id, pin);
+}
+const matchesPin = (r: any): boolean => {
+  const pin = pinByEntity.get(r?.entity_id);
+  const s = r?.signals?.deps_dev_dependents;
+  return !!pin && !!s && s.source_system === pin.system && s.package === pin.package;
+};
+
 export const deps: Map<string, DepsSignal> = (() => {
   const m = new Map<string, DepsSignal>();
   // Primary: the deps capture aligned to this snapshot's date folder.
   for (const r of readJsonl(`data/observations/${SNAP_DATE}/deps.jsonl`)) {
-    if (r?.coverage !== 'matched') continue;
+    if (r?.coverage !== 'matched' || r?.status === 'retracted' || !matchesPin(r)) continue;
     const sig = toDepsSignal(r?.signals?.deps_dev_dependents);
     if (sig) m.set(r.entity_id, sig);
   }
@@ -136,7 +159,7 @@ export const deps: Map<string, DepsSignal> = (() => {
   for (const e of entities) {
     if (m.has(e.entity_id)) continue;
     const rows = readJsonl(`data/observations/history/${e.entity_id}.deps.jsonl`)
-      .filter((r) => r?.coverage === 'matched' && r?.period)
+      .filter((r) => r?.coverage === 'matched' && r?.status !== 'retracted' && r?.period && matchesPin(r))
       .sort((a, b) => String(a.period).localeCompare(String(b.period)));
     const sig = rows.length ? toDepsSignal(rows[rows.length - 1]?.signals?.deps_dev_dependents) : null;
     if (sig) m.set(e.entity_id, sig);
@@ -176,6 +199,7 @@ export function backfillSeries(id: string): { period: string; value: number }[] 
 export function depsSeries(id: string): { period: string; value: number }[] {
   const byPeriod = new Map<string, number>();
   for (const r of readJsonl(`data/observations/history/${id}.deps.jsonl`)) {
+    if (r?.status === 'retracted' || !matchesPin(r)) continue; // identity-verified rows only
     const v = r?.signals?.deps_dev_dependents?.value;
     if (typeof v === 'number' && r.period) byPeriod.set(r.period, v); // last capture per period wins
   }

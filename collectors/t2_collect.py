@@ -40,6 +40,7 @@ from field_policy import filter_provenance
 REPO = Path(__file__).resolve().parent.parent
 COLLECTOR_VERSION = "t2_m0"
 GITHUB_API = "https://api.github.com/repos/{repo}"
+MAX_ERROR_RATE = 0.20  # above this the capture is DEGRADED and the run fails loudly
 
 # (record_name, github_field, reconstructable, method) — the [K] adversarial verdict,
 # baked into the data so the archive self-documents what is genuinely Type-2.
@@ -66,6 +67,10 @@ def _fetch(url: str, token: str | None, tries: int = 5, timeout: int = 40) -> tu
                 return resp.getcode(), resp.read()
         except urllib.error.HTTPError as exc:
             last = exc
+            if exc.code == 401:
+                # Dead/revoked token: every subsequent call would fail identically.
+                # Fail the whole run loudly instead of capturing a blind snapshot.
+                raise RuntimeError("GitHub API 401 (token dead/revoked) - aborting capture") from exc
             if exc.code in (403, 429) and attempt < tries - 1:
                 time.sleep(2 ** attempt * 2)
                 continue
@@ -158,6 +163,8 @@ def capture() -> int:
     obs_path.write_text(obs_text)
     obs_sha = hashlib.sha256(obs_text.encode()).hexdigest()
 
+    error_rate = len(errors) / len(entities) if entities else 1.0
+    degraded = len(records) == 0 or error_rate > MAX_ERROR_RATE
     manifest = {
         "collector_version": COLLECTOR_VERSION,
         "captured_at": captured_at,
@@ -165,6 +172,9 @@ def capture() -> int:
         "period": period,
         "entity_count": len(records),
         "error_count": len(errors),
+        "error_rate": round(error_rate, 4),
+        "max_error_rate": MAX_ERROR_RATE,
+        "degraded": degraded,
         "errors": errors,
         "observations_sha256": obs_sha,
         "signal_spec": [
@@ -178,6 +188,12 @@ def capture() -> int:
     if errors:
         print(f"[t2_m0] errors ({len(errors)}): {json.dumps(errors, ensure_ascii=False)}")
     print(f"[t2_m0] observations.jsonl sha256={obs_sha[:12]} -> {obs_path}")
+    if degraded:
+        # A total/near-total failure must NOT be committed as a green heartbeat:
+        # an empty day would read as "the world had no signals", which is false.
+        print(f"[t2_m0] DEGRADED capture (records={len(records)}, error_rate={error_rate:.0%} "
+              f"> {MAX_ERROR_RATE:.0%}) - failing the run")
+        return 1
     return 0
 
 

@@ -26,3 +26,18 @@
 - **Canonical-fork rule (binds successor intent without a legal entity):** to be considered the canonical Evidaxis, any successor must keep the record **CC0 + positive-only by construction**. A key that signs a policy-violating event is, by this published rule, non-canonical — citers and downstream consumers should reject its seals.
 
 *Basis: an internal trust-root/succession review. The mechanism (KeyRegistry, ArchiveManifest.external_anchor, byte-reproducible rebuild, SourceRegistry retention) already exists in the spine schema; this document is the genesis POLICY layered on it.*
+
+## Live copy map (updated 2026-07-02)
+
+Where the archive actually exists, so continuity is a fact, not a hope:
+
+| copy | what it holds | freshness |
+|---|---|---|
+| GitHub `evidaxis/evidaxis` (origin) | full git history, all data/ | live; `main` is protected (force-push and deletion disabled, admins included) |
+| Software Heritage | full git history | save request accepted 2026-07-02 (id 2380889); the weekly pipeline re-requests archival every run |
+| Zenodo genesis deposit (DOI 10.5281/zenodo.21076012) | frozen m1 genesis snapshot + code | immutable, 2026-06-27 |
+| Keeper's working clone | full git history | live but not a guarantee (single machine) |
+
+Planned next layers (by rotation, when acted on): a mirror remote on an
+independent forge (deploy-key push from the weekly pipeline) and a quarterly
+`git bundle` deposit to Zenodo as a versioned record.

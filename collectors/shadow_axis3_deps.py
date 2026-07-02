@@ -40,8 +40,13 @@ Z_CLAMP = 3.0
 
 
 def _load_series():
-    """entity_id -> sorted [(date, dependents)] from every daily deps.jsonl."""
-    series = {}
+    """entity_id -> sorted [(date, dependents)] from every daily deps.jsonl.
+
+    Identity guard: points are kept only for the entity's MODAL (system, package)
+    identity. A resolver flip (live case: harness-sdk pypi->npm on day 2) would
+    otherwise splice two different packages into one series and contaminate the
+    pre-registered A/B. Dropped points are counted and reported."""
+    raw = {}
     for day_dir in sorted(OBS.iterdir()) if OBS.is_dir() else []:
         f = day_dir / "deps.jsonl"
         if not day_dir.is_dir() or not f.exists():
@@ -55,8 +60,35 @@ def _load_series():
             sig = row.get("signals", {}).get("deps_dev_dependents", {})
             if "value" not in sig:
                 continue
-            series.setdefault(row["entity_id"], []).append((day_dir.name, sig["value"]))
-    return {k: sorted(v) for k, v in series.items()}
+            ident = (sig.get("source_system"), sig.get("package"))
+            raw.setdefault(row["entity_id"], []).append((day_dir.name, sig["value"], ident))
+
+    # verified pins are the identity ground truth (data/deps_id_map.json);
+    # an entity with no verified pin contributes NO points (strict - the A/B
+    # must not run on unverifiable series). See data/observations/ERRATA.md.
+    pins = {}
+    pin_file = REPO / "data" / "deps_id_map.json"
+    if pin_file.exists():
+        pin_map = json.loads(pin_file.read_text()).get("pins", {})
+        id_map = json.loads((REPO / "etl" / "id_map.json").read_text())
+        for repo, pin in pin_map.items():
+            eid = id_map.get(repo)
+            if eid:
+                pins[eid] = (pin["system"], pin["package"])
+
+    series, dropped = {}, 0
+    for eid, pts in raw.items():
+        pin = pins.get(eid)
+        if pin is None:
+            dropped += len(pts)
+            continue
+        kept = [(d, v) for d, v, ident in pts if ident == pin]
+        dropped += len(pts) - len(kept)
+        if kept:
+            series[eid] = sorted(kept)
+    if dropped:
+        print(f"  identity guard: dropped {dropped} point(s) without a verified pin identity")
+    return series
 
 
 def _latest_snapshot():

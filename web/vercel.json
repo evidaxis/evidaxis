@@ -3,10 +3,50 @@
   "trailingSlash": true,
   "cleanUrls": false,
   "redirects": [
-    { "source": "/e/:entity_id/:slug", "destination": "/e/:entity_id/", "permanent": true },
-    { "source": "/methodology", "destination": "/methodology/current/", "permanent": true },
-    { "source": "/methodology/", "destination": "/methodology/current/", "permanent": true },
-    { "source": "/rankings/:taxon/:period", "destination": "/cohorts/:taxon/:period/", "permanent": true },
-    { "source": "/rankings/:taxon/:period/", "destination": "/cohorts/:taxon/:period/", "permanent": true }
+    {
+      "source": "/e/:entity_id/:slug",
+      "destination": "/e/:entity_id/",
+      "permanent": true
+    },
+    {
+      "source": "/methodology",
+      "destination": "/methodology/current/",
+      "permanent": true
+    },
+    {
+      "source": "/methodology/",
+      "destination": "/methodology/current/",
+      "permanent": true
+    },
+    {
+      "source": "/rankings/ai-coding-agents/:period",
+      "destination": "/ai/cohorts/coding-agents/",
+      "permanent": true
+    },
+    {
+      "source": "/rankings/ai-coding-agents/:period/",
+      "destination": "/ai/cohorts/coding-agents/",
+      "permanent": true
+    },
+    {
+      "source": "/rankings/:taxon/:period",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
+      "source": "/rankings/:taxon/:period/",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
+      "source": "/rankings/:taxon",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
+      "source": "/rankings/:taxon/",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    }
   ]
 }

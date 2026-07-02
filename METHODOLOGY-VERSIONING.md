@@ -74,6 +74,25 @@ supports as-of queries: which methodology was current at epoch T.
 `m1` scores (genesis snapshot, 2026-06-27) stay valid under `m1`; they are not
 recomputed under `m2`. New snapshots are computed under `m2`.
 
+## Seam rule — provisional snapshots and the Type-2 layer (dated 2026-07-02)
+
+Two clarifications that close open seams in the pre-spine interim, forward-only:
+
+1. **`provisional: true` is an immutable historical fact.** Published snapshots
+   carrying the pre-spine provisional flag are never retro-edited to "close"
+   the seam (that would break byte-reproducibility, rule 3). Spine-completeness
+   is asserted only FORWARD: by later snapshots and/or a signed event. A reader
+   evaluating an old snapshot reads the flag as "provisional at publication
+   time", not as a live status.
+
+2. **`data/observations/` is a forward Type-2 layer, not a pre-spine prelude.**
+   Daily point-in-time captures (watchers, open issues, dependents) are
+   first-class, un-backfillable observations; each row's custody claim is valid
+   from that row's own `captured_at`. Any future scored axis built on this
+   layer (e.g. the deps.dev dependents candidate) versions forward like every
+   methodology change; the captured history itself carries no provisional
+   discount.
+
 ## Errata (documentation-only; frozen files are never edited)
 
 - **2026-07-02 — `etl/collect.py` header docstring lags m2.** The module

@@ -115,7 +115,16 @@ def main() -> int:
     result["computed_at"] = now.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     INTEGRITY.mkdir(parents=True, exist_ok=True)
-    out = INTEGRITY / f"archive-root-{date}.json"
+    # APPEND-ONLY: every recording gets its own timestamped file and chains to
+    # the previous root. An integrity witness must never be rewritten in place
+    # (2026-07-02 lesson: an in-place refresh of archive-root-<date>.json
+    # orphaned the hypotheses anchor that referenced the earlier root).
+    prev = _latest_recorded()
+    result["prev_root"] = json.loads(prev.read_text())["root"] if prev else None
+    out = INTEGRITY / f"archive-root-{now.strftime('%Y-%m-%dT%H%M%SZ')}.json"
+    if out.exists():
+        print(f"merkle: refusing to overwrite existing {out.name} (append-only)")
+        return 1
     out.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
     print(f"merkle: {result['root']} over {result['n_files']} files -> {out.relative_to(REPO)}")
     return 0

@@ -1,6 +1,7 @@
 Evidaxis is multi-licensed by component. There is no single repo-wide license.
 
-  Code (etl/, web/src/, web/scripts/, spine/*.py, tests/) ... Apache-2.0  -> LICENSES/Apache-2.0.txt
+  Code (etl/, web/src/, web/scripts/, spine/*.py, tests/,
+        collectors/, dead-man/, .github/, deploy scripts) .... Apache-2.0  -> LICENSES/Apache-2.0.txt
   Data (data/, entities/, taxonomy/) ....................... CC0-1.0     -> LICENSE-data.md
   Methodology prose (/methodology) ........................ CC-BY-4.0   -> https://creativecommons.org/licenses/by/4.0/
   Fonts (web/public/fonts/) ............................... OFL-1.1     -> LICENSES/OFL-1.1.txt

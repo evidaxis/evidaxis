@@ -1,0 +1,40 @@
+{
+  "v": "dropped_1",
+  "snapshot_date": "2026-07-01",
+  "checked_at": "2026-07-02T13:39:45Z",
+  "seeded": 108,
+  "in_snapshot": 103,
+  "dropped": [
+    {
+      "entity_id": "e_26C836YXKF2",
+      "github_repo": "OpenGVLab/InternVL",
+      "previously_tracked": false,
+      "reason": "collector produced no record for this seeded entity (the frozen collector's only silent drop path is GitHub stats 202-exhaustion)"
+    },
+    {
+      "entity_id": "e_9SWWW2SWASG",
+      "github_repo": "NVIDIA/TensorRT-LLM",
+      "previously_tracked": true,
+      "reason": "collector produced no record for this seeded entity (the frozen collector's only silent drop path is GitHub stats 202-exhaustion)"
+    },
+    {
+      "entity_id": "e_ADT3TJHK8W8",
+      "github_repo": "google/adk-python",
+      "previously_tracked": true,
+      "reason": "collector produced no record for this seeded entity (the frozen collector's only silent drop path is GitHub stats 202-exhaustion)"
+    },
+    {
+      "entity_id": "e_FTD4XD7DVG3",
+      "github_repo": "block/goose",
+      "previously_tracked": true,
+      "reason": "collector produced no record for this seeded entity (the frozen collector's only silent drop path is GitHub stats 202-exhaustion)"
+    },
+    {
+      "entity_id": "e_KR3M8ESKAEW",
+      "github_repo": "llm-d/llm-d",
+      "previously_tracked": true,
+      "reason": "collector produced no record for this seeded entity (the frozen collector's only silent drop path is GitHub stats 202-exhaustion)"
+    }
+  ],
+  "note": "Written by collectors/completeness_gate.py; a previously-tracked drop fails the pipeline (series gaps are decisions, not drift)."
+}

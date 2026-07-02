@@ -43,6 +43,8 @@ const nav = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- reveal-on-scroll opt-in: content stays fully visible without JS (GEO/no-JS safety) -->
+  <script is:inline>document.documentElement.classList.add('js');</script>
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={url} />

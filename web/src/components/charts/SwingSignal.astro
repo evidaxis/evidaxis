@@ -66,12 +66,16 @@ const fmtR = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(2);
       {bars.map((b) => {
         const y = sH(b.v), top = Math.min(y, sH(0)), h = Math.abs(y - sH(0));
         const pos = b.v >= 0;
+        // a tall bar's value label would collide with the header strip (y=12);
+        // when cramped, knock the label out INSIDE the bar instead of above it
+        const inside = pos && top < 24 && h > 16;
+        const labelY = inside ? top + 11 : pos ? Math.max(top - 3, 22) : top + h + 9;
         return (
           <>
             <rect x={b.x - barW / 2} y={top} width={barW} height={Math.max(1, h)} rx="2"
                   fill={pos ? 'var(--velocity)' : 'var(--ink-mute)'} fill-opacity={pos ? 0.85 : 0.55} />
-            <text x={b.x} y={pos ? top - 3 : top + h + 9} text-anchor="middle" font-size="8"
-                  fill={pos ? 'var(--velocity)' : 'var(--ink-mute)'} class="svgtxt">{fmt(b.v)}</text>
+            <text x={b.x} y={labelY} text-anchor="middle" font-size="8"
+                  fill={inside ? 'var(--surface)' : pos ? 'var(--velocity)' : 'var(--ink-mute)'} class="svgtxt">{fmt(b.v)}</text>
             <text x={b.x} y={height - 2} text-anchor="middle" font-size="7" fill="var(--ink-mute)" class="svgtxt">{b.label}</text>
           </>
         );

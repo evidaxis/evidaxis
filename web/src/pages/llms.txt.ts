@@ -1,11 +1,16 @@
 import type { APIRoute } from 'astro';
 import { snapshot, SNAP_DATE, entities } from '../lib/data';
 import { cohortLabel } from '../lib/cohorts';
+import { claimUrn } from '../lib/claim_urn';
 
 export const GET: APIRoute = () => {
   const ranked = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+  const cohortList = Object.keys(snapshot.cohorts)
+    .sort()
+    .map((c) => `  - https://evidaxis.org/ai/cohorts/${c}/`)
+    .join('\n');
   const systemList = ranked
-    .map((e) => `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}, status ${e.status}, cohort ${cohortLabel(e.cohort)}. JSON: https://evidaxis.org/e/${e.entity_id}.json`)
+    .map((e) => `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}, status ${e.status}, cohort ${cohortLabel(e.cohort)}. JSON: https://evidaxis.org/e/${e.entity_id}.json Cite-as: ${claimUrn(e.entity_id, snapshot.methodology_version, snapshot.period)}`)
     .join('\n');
   const txt = `# Evidaxis
 
@@ -52,7 +57,9 @@ ${systemList}
 Evidaxis is static; the data IS the files:
 - Per-system JSON: https://evidaxis.org/e/{entity_id}.json
 - Per-snapshot JSON: https://evidaxis.org/snapshots/${SNAP_DATE}/snapshot.json
-- Cohort (canonical): https://evidaxis.org/ai/cohorts/{cohort}/
+- Methodology version registry (JSON): https://evidaxis.org/methodology-registry.json
+- Cohorts (canonical):
+${cohortList}
 These URLs are stable and safe to fetch and cache.
 
 ## Integrity

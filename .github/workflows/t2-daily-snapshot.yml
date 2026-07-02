@@ -4,6 +4,11 @@ name: t2-daily-snapshot
 # open-issues move day-to-day and their historical value is NOT served by GitHub —
 # a weekly cadence permanently loses 6 of every 7 days of irreplaceable resolution.
 # Additive to the frozen genesis etl/ pipeline; captures raw, does NOT score.
+#
+# Hardening (2026-07-02): shared `data-commits` concurrency group + rebase-retry push
+# (Saturday race vs weekly-snapshot), collectors now fail loudly on degraded capture
+# (401 / empty / outage), deps step is non-blocking so a deps.dev outage cannot cost
+# the un-backfillable GitHub capture day, pinned actions, failure alert issue.
 
 on:
   schedule:
@@ -12,47 +17,81 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
-  group: t2-snapshot
+  group: data-commits       # shared with weekly-snapshot: serializes data/ pushes
   cancel-in-progress: false
 
 jobs:
   capture:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
+
       - name: Capture Type-2 observations
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 collectors/t2_collect.py
+
       - name: Capture deps.dev dependents (R0 adoption signal)
         # deps.dev live REST is point-in-time; capturing daily builds the dependents
         # history that the site surfaces (adoption trend). Additive, does NOT score.
+        # Identity is PINNED (data/deps_id_map.json); an outage is recorded as
+        # fetch_error, never as absence. Non-blocking: a deps.dev outage must not
+        # cost the GitHub capture day — but it does raise the alert below.
+        id: deps
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 collectors/t2_deps_collect.py
+
       - name: Timestamp snapshot (OpenTimestamps / Bitcoin proof-of-priority)
         # External, un-forgeable anchor that the snapshot hash existed at time T.
         # Git timestamps are backdatable and are NOT proof; this is (proof-of-priority.md).
         run: |
-          pip install --quiet opentimestamps-client || echo "ots install failed; stamp skipped this run"
+          pip install --quiet "opentimestamps-client==0.7.2" || echo "ots install failed; stamp skipped this run"
           DATE=$(date -u +%Y-%m-%d)
           FILE="data/observations/$DATE/observations.jsonl"
           if [ -f "$FILE" ] && command -v ots >/dev/null 2>&1; then
             ots stamp "$FILE" || echo "ots stamp deferred (calendar unreachable)"
           fi
-      - name: Commit snapshot if changed
+
+      - name: Commit snapshot if changed (rebase-retry against concurrent data pushes)
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "evidaxis-bot"
           git config user.email "bot@evidaxis.org"
-          git add data/observations
+          git add data/
           if git diff --cached --quiet; then
             echo "no new observations"
-          else
-            git commit -m "t2: daily observation snapshot ($(date -u +%Y-%m-%d))"
-            git push
+            exit 0
           fi
+          git commit -m "t2: daily observation snapshot ($(date -u +%Y-%m-%d))"
+          for i in 1 2 3; do
+            if git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main; then
+              exit 0
+            fi
+            echo "push rejected (concurrent data commit?) - rebase and retry ($i/3)"
+            git pull --rebase "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" main
+          done
+          echo "push failed after 3 rebase attempts"
+          exit 1
+
+      - name: Alert on failure or degraded deps capture
+        if: failure() || steps.deps.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "t2-daily-snapshot DEGRADED/FAILED $(date -u +%Y-%m-%d)" \
+            --body "Daily T2 capture problem (deps step outcome: ${{ steps.deps.outcome }}): ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} — a lost day is an un-backfillable gap; investigate and re-run today." \
+            || true

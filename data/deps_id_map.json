@@ -1,0 +1,192 @@
+{
+  "v": "deps_pin_2",
+  "note": "package identity pins: (name match AND source-repo linkage) verified against deps.dev version links; a pin is never silently rewritten. Rebuilt 2026-07-02 after 21/81 day-1 name-only matches proved to be squats/unrelated packages; unverifiable packages are NOT pinned.",
+  "pins": {
+    "ARISE-Initiative/robosuite": {
+      "system": "pypi",
+      "package": "robosuite",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "Farama-Foundation/Gymnasium": {
+      "system": "pypi",
+      "package": "gymnasium",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "LMCache/LMCache": {
+      "system": "pypi",
+      "package": "lmcache",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "NVIDIA/TensorRT-LLM": {
+      "system": "pypi",
+      "package": "tensorrt-llm",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "QwenLM/qwen-code": {
+      "system": "npm",
+      "package": "qwen-code",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "SWE-bench/SWE-bench": {
+      "system": "pypi",
+      "package": "swebench",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "agentscope-ai/agentscope": {
+      "system": "pypi",
+      "package": "agentscope",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "aqlaboratory/openfold": {
+      "system": "pypi",
+      "package": "openfold",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "axolotl-ai-cloud/axolotl": {
+      "system": "pypi",
+      "package": "axolotl",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "bytedance/Protenix": {
+      "system": "pypi",
+      "package": "protenix",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "crewAIInc/crewAI": {
+      "system": "pypi",
+      "package": "crewai",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "dauparas/LigandMPNN": {
+      "system": "pypi",
+      "package": "ligandmpnn",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "deepchem/deepchem": {
+      "system": "pypi",
+      "package": "deepchem",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "facebookresearch/habitat-lab": {
+      "system": "pypi",
+      "package": "habitat-lab",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "google-deepmind/mujoco": {
+      "system": "pypi",
+      "package": "mujoco",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "hexgrad/kokoro": {
+      "system": "pypi",
+      "package": "kokoro",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "hiyouga/LLaMA-Factory": {
+      "system": "pypi",
+      "package": "llamafactory",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "huggingface/diffusers": {
+      "system": "pypi",
+      "package": "diffusers",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "huggingface/lerobot": {
+      "system": "pypi",
+      "package": "lerobot",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "huggingface/trl": {
+      "system": "pypi",
+      "package": "trl",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "kvcache-ai/ktransformers": {
+      "system": "pypi",
+      "package": "ktransformers",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "langchain-ai/langgraph": {
+      "system": "pypi",
+      "package": "langgraph",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "m87-labs/moondream": {
+      "system": "npm",
+      "package": "moondream",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "modelscope/ms-swift": {
+      "system": "pypi",
+      "package": "ms-swift",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "ollama/ollama": {
+      "system": "pypi",
+      "package": "ollama",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "princeton-nlp/SWE-agent": {
+      "system": "pypi",
+      "package": "sweagent",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "stanfordnlp/dspy": {
+      "system": "pypi",
+      "package": "dspy",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "unslothai/unsloth": {
+      "system": "pypi",
+      "package": "unsloth",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "verl-project/verl": {
+      "system": "pypi",
+      "package": "verl",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "vllm-project/aibrix": {
+      "system": "pypi",
+      "package": "aibrix",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    },
+    "vllm-project/vllm": {
+      "system": "pypi",
+      "package": "vllm",
+      "pinned_at": "2026-07-02T16:30:00Z",
+      "linkage": "verified"
+    }
+  }
+}

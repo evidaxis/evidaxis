@@ -348,9 +348,11 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
   .donut-card .cap { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); margin-top: 10px; line-height: 1.45; }
 
   /* ---- reveal ---- */
-  .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
-  .rv.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+  /* hidden-before-reveal ONLY when JS is present (html.js set inline in <head>):
+     crawlers and no-JS readers always get fully visible content */
+  :global(html.js) .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+  :global(html.js) .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { :global(html.js) .rv { opacity: 1; transform: none; transition: none; } }
 
   /* ---- responsive ---- */
   @media (max-width: 980px) { .band-charts { grid-template-columns: 1fr; gap: 42px; } }

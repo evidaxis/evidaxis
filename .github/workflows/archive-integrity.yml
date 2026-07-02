@@ -31,9 +31,11 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0   # append-only guards diff the pushed range
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
 
@@ -42,6 +44,38 @@ jobs:
 
       - name: Taxonomy v2 remap is idempotent on the committed snapshot
         run: python3 collectors/taxonomy_v2.py --verify
+
+      - name: History ledger resolves (no phantom snapshot ids)
+        run: python3 collectors/history_ledger_check.py
+
+      - name: Integrity witnesses are append-only (no in-place modification)
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        run: |
+          MODIFIED=$(git diff --name-status "${{ github.event.before }}" "${{ github.sha }}" -- data/integrity/ | grep -E '^(M|D|R)' || true)
+          if [ -n "$MODIFIED" ]; then
+            echo "data/integrity/ files were modified/deleted/renamed (append-only violation):"
+            echo "$MODIFIED"
+            exit 1
+          fi
+          echo "integrity witnesses untouched or append-only in this push"
+
+      - name: Universe expansion requires a discovery-frontier manifest
+        # The candidate-pool denominator is un-backfillable: a seeds.json change
+        # without a paired dated frontier manifest repeats the 19->103 loss.
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        run: |
+          SEEDS_CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- etl/seeds.json || true)
+          if [ -n "$SEEDS_CHANGED" ]; then
+            FRONTIER=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/discovery-frontier*' || true)
+            if [ -z "$FRONTIER" ]; then
+              echo "etl/seeds.json changed WITHOUT a paired discovery-frontier manifest — the"
+              echo "candidate-pool denominator would be lost forever. Run collectors/frontier_manifest.py first."
+              exit 1
+            fi
+            echo "seeds change is paired with a frontier manifest: $FRONTIER"
+          else
+            echo "no seeds change in this push"
+          fi
 
       - name: Genesis snapshot is byte-identical to the immutable deposit
         run: |
