@@ -3,7 +3,7 @@
  * published map lies about what the site does (2026-07-02 finding: yaml had
  * 2 of 5 rules and a live 301->404). Also: every static destination must
  * resolve to a real page directory in src/pages. */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -43,16 +43,27 @@ describe('redirects.yaml <-> vercel.json equivalence', () => {
     }
   });
 
-  it('static destination prefixes resolve to real page routes', () => {
+  it('destination prefixes resolve to real page routes (literal or dynamic segments)', () => {
+    const routeExists = (prefix: string): boolean => {
+      let dir = resolve(here, '../pages');
+      for (const seg of prefix.split('/').filter(Boolean)) {
+        const literal = resolve(dir, seg);
+        if (existsSync(literal)) {
+          dir = literal;
+          continue;
+        }
+        const dynamic = readdirSync(dir).find((d) => d.startsWith('['));
+        if (dynamic) {
+          dir = resolve(dir, dynamic);
+          continue;
+        }
+        return false;
+      }
+      return true;
+    };
     for (const r of vercel.redirects) {
-      // take the static prefix before the first :param
       const prefix = r.destination.split(':')[0];
-      // '/ai/cohorts/' -> src/pages/ai/cohorts must exist (as dir or [param] route)
-      const pagesDir = resolve(here, '../pages', ...prefix.split('/').filter(Boolean));
-      expect(
-        existsSync(pagesDir),
-        `destination prefix ${prefix} has no route dir at ${pagesDir}`,
-      ).toBe(true);
+      expect(routeExists(prefix), `destination prefix ${prefix} resolves to no route`).toBe(true);
     }
   });
 });
