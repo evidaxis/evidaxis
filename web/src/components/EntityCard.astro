@@ -10,7 +10,7 @@
  * own honest null state; nothing is fabricated.
  */
 import type { Entity } from '../lib/data';
-import { snapshot, commitSeries, entitiesInCohort, STATUS_LABEL } from '../lib/data';
+import { snapshot, commitSeries, entitiesInCohort, STATUS_LABEL, deps } from '../lib/data';
 import { cohortColor, cohortLabel, fmtZsafe } from '../lib/cohorts';
 import MomentumRing from './charts/MomentumRing.astro';
 import GateGlyph from './charts/GateGlyph.astro';
@@ -38,6 +38,7 @@ const gateVerdict = velRising && citRising ? 'both axes pass'
 const isRising = e.status === 'rising';
 const accentClass = isRising ? 'rising' : e.status === 'watch' ? 'watch' : 'tracked';
 const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
+const dep = deps.get(e.entity_id) ?? null;   // R0 adoption signal, displayed only when measured
 ---
 <article class={`ecard ${accentClass}`}>
   <header class="bezel">
@@ -115,6 +116,15 @@ const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') 
         <CitBars entity={e} />
       </div>
     </div>
+
+    {dep && (
+      <!-- ADOPTION (R0): who builds on it. Displayed, never scored. -->
+      <div class="adoption">
+        <span class="ad-lab mono">adoption</span>
+        <span class="ad-val"><data value={String(dep.value)}>{dep.value.toLocaleString()}</data> dependents</span>
+        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {dep.system}/{dep.package} · deps.dev · adoption signal, not part of the momentum score</span>
+      </div>
+    )}
   </div>
 </article>
 
@@ -172,6 +182,11 @@ const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') 
   .sblock .sh { font-family: var(--font-mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px; display: flex; justify-content: space-between; }
   .sblock .sh .tot { font-weight: 600; }
   .sblock .sh .tot.amber { color: var(--citation); } .sblock .sh .tot.teal { color: var(--velocity); }
+
+  .adoption { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 10px 13px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); }
+  .adoption .ad-lab { font-size: 9px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-mute); }
+  .adoption .ad-val { font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; color: var(--citation); letter-spacing: -.01em; }
+  .adoption .ad-note { font-size: 9.5px; color: var(--ink-mute); }
 
   @media (max-width: 720px) {
     .hero { grid-template-columns: 1fr; gap: 14px; }

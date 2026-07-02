@@ -1,6 +1,6 @@
 /** JSON-LD builders. v1 frozen external contract — property names are load-bearing
  *  (Google indexes them, LLMs train on them). Do not rename. */
-import type { Entity, Snapshot } from './data';
+import type { DepsSignal, Entity, Snapshot } from './data';
 
 const SITE = 'https://evidaxis.org';
 const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
@@ -74,7 +74,7 @@ export function orgGraph() {
   };
 }
 
-export function entityGraph(e: Entity, snap: Snapshot, urn?: string) {
+export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: DepsSignal | null) {
   const a1 = e.axes.github_commit_velocity;
   const a2 = e.axes.openalex_citation_momentum;
   const vars: any[] = [];
@@ -84,6 +84,10 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string) {
     vars.push({ '@type': 'PropertyValue', name: 'Development-velocity z-score (within cohort)', value: a1.cohort_z });
   if (a2.cohort_z != null)
     vars.push({ '@type': 'PropertyValue', name: 'Citation-momentum z-score (within cohort)', value: a2.cohort_z });
+  // deps.dev dependents: an adoption (R0) signal, DISPLAYED and declared, never
+  // folded into the momentum score (scoring methodology is frozen). Point-in-time.
+  if (depsSig)
+    vars.push({ '@type': 'PropertyValue', name: 'deps.dev dependents (adoption, R0)', value: depsSig.value, description: 'Count of downstream packages depending on this system (deps.dev), point-in-time. Adoption signal, not part of the momentum score.' });
 
   const desc =
     `Independent Evidaxis measurement of ${e.name}, an open ${e.entity_type} in the ${e.sub_niche} cohort. ` +

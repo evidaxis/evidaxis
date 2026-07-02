@@ -29,6 +29,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 collectors/t2_collect.py
+      - name: Capture deps.dev dependents (R0 adoption signal)
+        # deps.dev live REST is point-in-time; capturing daily builds the dependents
+        # history that the site surfaces (adoption trend). Additive, does NOT score.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 collectors/t2_deps_collect.py
       - name: Timestamp snapshot (OpenTimestamps / Bitcoin proof-of-priority)
         # External, un-forgeable anchor that the snapshot hash existed at time T.
         # Git timestamps are backdatable and are NOT proof; this is (proof-of-priority.md).
