@@ -16,12 +16,11 @@ What this wrapper does (fetch layer ONLY; scoring semantics untouched):
     plus a loud warning; the 409 hard-fail above still applies keyless too;
   * delegates every non-OpenAlex URL to the frozen collector's own fetcher.
 
-STATUS: STAGED, not wired. The weekly workflow still calls etl/collect.py
-directly. Wiring this as the pipeline entrypoint (`python3
-collectors/openalex_keyed_fetch.py`) happens together with (a) OPENALEX_API_KEY
-in repo secrets and (b) a methodology-registry decision on how a fetch-layer
-PATCH is recorded (METHODOLOGY-VERSIONING.md rule 4; scoring semantics do not
-change, so no threshold or axis definition moves).
+STATUS: WIRED (2026-07-02). The weekly workflow's collect step runs this
+wrapper; OPENALEX_API_KEY lives in repo secrets and the keeper's gitignored
+etl/.env. The m-version is NOT bumped: transport is not methodology - the
+frozen collector, the formula fingerprint, and every published number are
+untouched (recorded in METHODOLOGY-VERSIONING.md operational notes).
 
 Pure standard library. etl/collect.py is never edited (byte-frozen).
 """

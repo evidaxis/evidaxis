@@ -93,6 +93,17 @@ Two clarifications that close open seams in the pre-spine interim, forward-only:
    methodology change; the captured history itself carries no provisional
    discount.
 
+## Operational notes (transport, not methodology)
+
+- **2026-07-02 — OpenAlex fetch layer keyed.** OpenAlex retired the mailto
+  polite pool (2026-02-13) in favor of API keys. The weekly pipeline entrypoint
+  is now `collectors/openalex_keyed_fetch.py`: a wrapper that runs the frozen
+  `etl/collect.py` unmodified while rewriting api.openalex.org URLs to key
+  auth, and hard-failing on HTTP 409 credit exhaustion instead of letting
+  axis-2 degrade to a silent 'absent'. No threshold, axis definition, formula
+  fingerprint, or published number changes - transport is not methodology, so
+  `m2` is not bumped; this note is the audit trail.
+
 ## Errata (documentation-only; frozen files are never edited)
 
 - **2026-07-02 — `etl/collect.py` header docstring lags m2.** The module

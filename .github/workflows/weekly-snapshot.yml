@@ -34,10 +34,16 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Collect snapshot (v2, stdlib-only)
+      - name: Collect snapshot (v2, stdlib-only; keyed OpenAlex fetch layer)
+        # Entrypoint is the fetch-layer wrapper (collectors/openalex_keyed_fetch.py):
+        # the frozen etl/collect.py runs unmodified inside it, with the dead mailto
+        # param replaced by api_key auth and HTTP 409 credit exhaustion failing LOUDLY
+        # instead of degrading axis-2 to silent 'absent'. Scoring semantics and the
+        # m2 formula fingerprint are untouched (see METHODOLOGY-VERSIONING.md notes).
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # higher rate limit; provided natively
-        run: python3 etl/collect.py
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+        run: python3 collectors/openalex_keyed_fetch.py
 
       - name: Completeness gate (no silent drops from the universe)
         # The frozen collector drops an entity silently when GitHub stats stay 202
