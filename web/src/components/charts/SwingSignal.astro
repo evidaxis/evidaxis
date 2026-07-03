@@ -53,6 +53,10 @@ const bars = [
 ];
 const fmt = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(3);
 const fmtR = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(2);
+// a 'flat base' ratio (prior slope ~ 0) is mathematically degenerate (e.g. +250212x);
+// show a token and let the regime words carry the meaning, not an absurd number.
+const flatBase = !reserved && sig.label.includes('flat base');
+const swingText = flatBase ? 'n/a' : fmtR(sig.value) + '\u00d7';
 ---
 {!reserved ? (
   <figure class="evchart sigcard">
@@ -80,12 +84,11 @@ const fmtR = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(2);
           </>
         );
       })}
-      <text x="8" y="12" font-size="13" font-weight="600" fill="var(--velocity)" class="svgtxt">{fmtR(sig.value)}&times;</text>
-      <text x={width - 8} y="12" text-anchor="end" font-size="8.5" fill="var(--ink-soft)" class="svgtxt" letter-spacing=".05em">{sig.label}</text>
+      <text x="8" y="12" font-size="13" font-weight="600" fill="var(--velocity)" class="svgtxt">{swingText}</text>
     </svg>
     <figcaption class="chart-cap">
       <dl class="chart-dl">
-        <div><dt>swing</dt><dd><data value={String(sig.value)}>{fmtR(sig.value)}&times;</data></dd></div>
+        <div><dt>swing</dt><dd><data value={String(sig.value)}>{swingText}</data></dd></div>
         <div><dt>regime</dt><dd>{sig.label}</dd></div>
         <div><dt>windows</dt><dd><data value={String(sig.recentWindow)}>{sig.recentWindow}</data>w&nbsp;vs&nbsp;<data value={String(sig.priorWindow)}>{sig.priorWindow}</data>w</dd></div>
       </dl>

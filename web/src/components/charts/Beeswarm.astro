@@ -7,7 +7,7 @@
 import { scaleLinear, beeswarmLayout } from '../../lib/charts';
 import { entities as allEntities } from '../../lib/data';
 import type { Entity } from '../../lib/data';
-import { cohortColor, cohortLabel, COHORT_ORDER } from '../../lib/cohorts';
+import { cohortColor, cohortLabel, cohortShort, COHORT_ORDER } from '../../lib/cohorts';
 
 export interface Props {
   entities?: Entity[];
@@ -66,7 +66,7 @@ const descId = `bw-d-${Math.random().toString(36).slice(2, 8)}`;
           {Number.isFinite(g.med) && (
             <>
               <line x1={g.cx - colW * 0.32} y1={sy(g.med)} x2={g.cx + colW * 0.32} y2={sy(g.med)} stroke={c} stroke-width="1.6" />
-              <text x={g.cx + colW * 0.34} y={sy(g.med) + 2.5} font-size="7" fill={c} class="svgtxt">med {Math.round(g.med)}</text>
+              <text x={g.cx} y={sy(g.med) - 3} text-anchor="middle" font-size="7" fill={c} class="svgtxt">med {Math.round(g.med)}</text>
             </>
           )}
           {g.laid.map((b) => (
@@ -74,7 +74,7 @@ const descId = `bw-d-${Math.random().toString(36).slice(2, 8)}`;
               <title>{b.item.name}: momentum {b.item.momentum}</title>
             </circle>
           ))}
-          <text x={g.cx} y={m.t + ih + 16} text-anchor="middle" font-size="8" fill="var(--ink-soft)" class="svgtxt">{cohortLabel(g.key)}</text>
+          <text x={g.cx} y={m.t + ih + 16} text-anchor="middle" font-size="8" fill="var(--ink-soft)" class="svgtxt"><title>{cohortLabel(g.key)}</title>{cohortShort(g.key)}</text>
           <text x={g.cx} y={m.t + ih + 27} text-anchor="middle" font-size="7" fill="var(--ink-mute)" class="svgtxt">n={g.members.length}</text>
         </>
       );

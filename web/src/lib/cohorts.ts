@@ -25,6 +25,23 @@ export function cohortLabel(cohortKey: string): string {
   return raw.replace(/\s*—\s*/g, ', ');
 }
 
+/** Short label for dense axes (beeswarm columns) where the full name collides.
+ *  Falls back to the first word of the full label for any unmapped cohort. */
+const SHORT: Record<string, string> = {
+  'robotics-embodied': 'Robotics',
+  'ai-drug-discovery': 'Drug Disc.',
+  'coding-agents': 'Coding',
+  'inference-serving': 'Inference',
+  'agent-frameworks': 'Agents',
+  'post-training-alignment': 'Post-train',
+  'media-generation': 'Media',
+  'multimodal-foundation-models': 'Multimodal',
+  'gui-agents': 'GUI',
+};
+export function cohortShort(cohortKey: string): string {
+  return SHORT[cohortKey] ?? cohortLabel(cohortKey).split(/[ ,]/)[0];
+}
+
 export const COHORT_ORDER = ORDER;
 
 /**
