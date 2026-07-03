@@ -1,0 +1,34 @@
+---
+schema_ver: 1.0
+entity_id: e_Y8674BRJCH9
+entity_type: repo
+name: "OmniParser"
+slug: omniparser
+homepage: "https://github.com/microsoft/OmniParser"
+ids:
+  github_repo: "microsoft/OmniParser"
+  openalex_work_ids: ["W4401307085"]
+classification:
+  domain: ai
+  industry: ai-agents
+  sub_niche: gui-agents
+score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
+  methodology_version: m2
+  snapshot_id: f1f2495d518d
+  captured_at: 2026-07-03T08:48:34+00:00
+  period: 2026-w27
+  momentum: 61.9
+  percentile: 100
+  confidence: low
+  rising: false
+  status: single-axis
+  axes_present: ["github_commit_velocity"]
+  convergent_axes: []
+  axes:
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.95, "recent_weekly_commits": 0.0, "stars_not_scored": 24996}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 1, "by_year": {"2026": 1}, "proxy": null}
+---
+
+# OmniParser
+
+Evidaxis tracks **OmniParser**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.

@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 8b04a522dda1
-  captured_at: 2026-07-01T18:25:07+00:00
+  snapshot_id: f1f2495d518d
+  captured_at: 2026-07-03T08:48:34+00:00
   period: 2026-w27
-  momentum: 51.0
-  percentile: 62
+  momentum: 51.8
+  percentile: 61
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.288, "recent_weekly_commits": 0.0, "stars_not_scored": 3392}
-    openalex_citation_momentum: {"status": "present", "slope": 0.242340171830834, "cohort_z": -0.122, "total_citations": 458, "by_year": {"2026": 71, "2025": 150, "2024": 140, "2023": 92, "2022": 5}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.425, "recent_weekly_commits": 0.0, "stars_not_scored": 3392}
+    openalex_citation_momentum: {"status": "present", "slope": 0.242340171830834, "cohort_z": -0.144, "total_citations": 458, "by_year": {"2026": 71, "2025": 150, "2024": 140, "2023": 92, "2022": 5}, "proxy": null}
 note: "Published + bioRxiv preprint summed by year."
 ---
 
