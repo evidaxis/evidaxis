@@ -60,21 +60,24 @@ jobs:
           echo "integrity witnesses untouched or append-only in this push"
 
       - name: Universe expansion requires a discovery-frontier manifest
-        # The candidate-pool denominator is un-backfillable: a seeds.json change
-        # without a paired dated frontier manifest repeats the 19->103 loss.
+        # The candidate-pool denominator is un-backfillable: adding/removing a tracked
+        # system without a paired dated frontier manifest repeats the 19->103 loss.
+        # Trigger ONLY on an actual universe change (added/removed "github_repo" lines),
+        # NOT on cosmetic seeds.json edits (a meta note, a label) — those need no manifest.
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
         run: |
-          SEEDS_CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- etl/seeds.json || true)
-          if [ -n "$SEEDS_CHANGED" ]; then
+          UNIVERSE_CHANGED=$(git diff "${{ github.event.before }}" "${{ github.sha }}" -- etl/seeds.json | grep -E '^[+-][[:space:]]*"github_repo"' || true)
+          if [ -n "$UNIVERSE_CHANGED" ]; then
             FRONTIER=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/discovery-frontier*' || true)
             if [ -z "$FRONTIER" ]; then
-              echo "etl/seeds.json changed WITHOUT a paired discovery-frontier manifest — the"
-              echo "candidate-pool denominator would be lost forever. Run collectors/frontier_manifest.py first."
+              echo "etl/seeds.json tracked-system set changed WITHOUT a paired discovery-frontier"
+              echo "manifest — the candidate-pool denominator would be lost forever. Run"
+              echo "collectors/frontier_manifest.py in the same push."
               exit 1
             fi
-            echo "seeds change is paired with a frontier manifest: $FRONTIER"
+            echo "universe change is paired with a frontier manifest: $FRONTIER"
           else
-            echo "no seeds change in this push"
+            echo "no tracked-system change in this push (cosmetic seeds edits need no manifest)"
           fi
 
       - name: Genesis snapshot is byte-identical to the immutable deposit
