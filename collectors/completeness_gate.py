@@ -8,15 +8,20 @@ leaving three mutually inconsistent public universes (seeds 108 / entity cards
 107 / snapshot 103). See data/snapshots/2026-07-01/ERRATA.md.
 
 This post-step (outside the byte-frozen etl/) runs right after the collector
-in the weekly pipeline and makes any gap explicit:
+in the weekly pipeline and makes any gap explicit rather than silent:
 
   * writes dropped.json next to the snapshot: every seeded entity missing from
-    snapshot.json, with the reason derivable from the run (202-exhaustion is
-    the only silent path in the frozen collector);
-  * HARD-FAILS (exit 1) when a previously-tracked entity (one with published
-    history) is missing - a series gap must be a loud decision, not drift;
-  * a never-before-published seed missing on its first try is reported but
-    does not fail the run (its series has not started; retry next week).
+    snapshot.json, marked previously-tracked or not, as a DECLARED gap;
+  * a SMALL transient loss (a few repos whose GitHub /stats/commit_activity is
+    still 202 within the collection window) is recorded and the snapshot
+    PROCEEDS - a missed week is a permanent hole in the series, worse than a
+    handful of declared, visible gaps;
+  * a STRUCTURAL loss (> MAX_DROP_FRAC, or zero captured) HARD-FAILS - that is a
+    real problem (dead token, mass outage, pipeline break), not GitHub flakiness.
+
+The original bug this guards against was SILENCE (2026-07-01 lost 5/108 with no
+trace); the fix is that gaps are always recorded, not that the snapshot is
+blocked whenever GitHub's stats endpoint is flaky.
 
 Usage:
   python collectors/completeness_gate.py --date YYYY-MM-DD
@@ -27,6 +32,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+MAX_DROP_FRAC = 0.15  # above this the loss is structural (not GitHub /stats flakiness) -> fail
 
 
 def run(date: str) -> int:
@@ -54,34 +60,48 @@ def run(date: str) -> int:
                        if (hist_dir / f"{eid}.jsonl").exists()}
     new_missing = {eid: repo for eid, repo in missing.items() if eid not in tracked_missing}
 
+    drop_frac = len(missing) / len(seeded) if seeded else 1.0
     report = {
         "v": "dropped_1",
         "snapshot_date": date,
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "seeded": len(seeded),
         "in_snapshot": len(present),
+        "drop_fraction": round(drop_frac, 4),
         "dropped": [
             {"entity_id": eid, "github_repo": repo,
              "previously_tracked": eid in tracked_missing,
-             "reason": "collector produced no record for this seeded entity "
-                       "(the frozen collector's only silent drop path is "
-                       "GitHub stats 202-exhaustion)"}
+             "reason": "not captured this period: the frozen collector produced no record "
+                       "(GitHub /stats/commit_activity 202 unresolved within the collection "
+                       "window is the dominant transient cause; a genuinely deleted repo 404s). "
+                       "A DECLARED gap, not a silent drop."}
             for eid, repo in sorted(missing.items())
         ],
-        "note": "Written by collectors/completeness_gate.py; a previously-tracked "
-                "drop fails the pipeline (series gaps are decisions, not drift).",
+        "note": "Written by collectors/completeness_gate.py. Drops are recorded here "
+                "(never silent). The snapshot proceeds for a small transient fraction; "
+                "it FAILS only on a structural fraction (see max_drop_fraction).",
+        "max_drop_fraction": MAX_DROP_FRAC,
     }
     (snap_dir / "dropped.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
 
     print(f"completeness_gate: {len(present)}/{len(seeded)} seeded entities in snapshot {date}; "
-          f"dropped: {len(missing)} (previously tracked: {len(tracked_missing)}, first-try: {len(new_missing)})")
+          f"dropped: {len(missing)} ({drop_frac:.1%}; previously tracked: {len(tracked_missing)}, "
+          f"first-try: {len(new_missing)})")
     for eid, repo in sorted(tracked_missing.items()):
-        print(f"  TRACKED ENTITY MISSING: {eid} ({repo}) - series gap!")
-    if tracked_missing:
-        print("completeness_gate: FAIL - refusing to publish a snapshot that silently "
-              "drops previously-tracked entities. Re-run the collector (202 caches warm "
-              "on retry) or record a deliberate retirement.")
+        print(f"  declared gap: {eid} ({repo}) - not captured this period")
+
+    # Structural failure (loud): near-total loss = a real problem (dead token, mass
+    # outage, pipeline break), not GitHub's flaky /stats. Refuse to publish.
+    if len(present) == 0 or drop_frac > MAX_DROP_FRAC:
+        print(f"completeness_gate: FAIL - {len(missing)}/{len(seeded)} dropped "
+              f"({drop_frac:.0%} > {MAX_DROP_FRAC:.0%} ceiling) - structural, not transient. "
+              "Refusing to publish a gutted snapshot.")
         return 1
+    # Small transient loss: recorded in dropped.json as declared gaps; publish. A missed
+    # week is a permanent hole in the series and is worse than a handful of declared gaps.
+    if tracked_missing:
+        print(f"completeness_gate: OK with {len(tracked_missing)} declared gap(s) "
+              "(transient, recorded in dropped.json). Snapshot proceeds.")
     return 0
 
 

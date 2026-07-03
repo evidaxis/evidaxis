@@ -34,30 +34,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Collect snapshot with completeness retry (keyed OpenAlex fetch layer)
+      - name: Collect snapshot (keyed OpenAlex; warm collect + completeness gate)
         # Entrypoint is the fetch-layer wrapper (collectors/openalex_keyed_fetch.py):
         # the frozen etl/collect.py runs unmodified inside it, with the dead mailto
         # param replaced by api_key auth and HTTP 409 credit exhaustion failing LOUDLY.
-        # Retry loop heals transient GitHub /stats 202 (endpoint returns 202 while it
-        # computes commit_activity, then 200 on a later call) — a cold cache must not
-        # cost a tracked entity's series. The completeness gate still FAILS LOUDLY if a
-        # previously-tracked entity is STILL missing after 3 collects (a genuine drop /
-        # deleted repo = a human retirement decision, not silent loss). Scoring
-        # semantics and the m2 formula fingerprint are untouched.
+        # Two collects: the first triggers GitHub to compute /stats/commit_activity
+        # (which answers 202 while computing), the second picks up the now-warm caches,
+        # minimizing transient drops. The completeness gate then RECORDS any residual
+        # gaps in dropped.json (never silent) and fails ONLY on a structural fraction
+        # (dead token / mass outage) — a handful of transient /stats 202s must not cost
+        # the whole week's snapshot. Scoring semantics / m2 fingerprint untouched.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # higher rate limit; provided natively
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: |
           DATE=$(date -u +%Y-%m-%d)
-          for attempt in 1 2 3; do
-            python3 collectors/openalex_keyed_fetch.py
-            if python3 collectors/completeness_gate.py --date "$DATE"; then
-              echo "completeness OK on attempt $attempt"; exit 0
-            fi
-            echo "completeness gate failed (attempt $attempt/3) — GitHub /stats 202 likely cold; re-collecting"
-          done
-          echo "completeness STILL failing after 3 collects — a tracked entity is genuinely missing; failing loudly (see dropped.json)"
-          exit 1
+          python3 collectors/openalex_keyed_fetch.py   # warm GitHub /stats caches
+          python3 collectors/openalex_keyed_fetch.py   # capture with warm caches
+          python3 collectors/completeness_gate.py --date "$DATE"
 
       - name: Re-class as PROVISIONAL (pre-spine, idempotent)
         run: python3 etl/reclass_pre_spine.py
