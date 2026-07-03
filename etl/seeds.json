@@ -3,7 +3,7 @@
     "version": "0.3",
     "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
     "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
-    "batch1": "2026-07-03: +29 verified seeds (75% paper-backed at sweep; 0-citation papers blanked per convention); new cohort gui-agents (computer-use); speech-audio deferred to batch-2 (sub-5 members). See projects/bonsai/expansion-batch1-staging.md."
+    "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor)."
   },
   "domain": {
     "slug": "ai",

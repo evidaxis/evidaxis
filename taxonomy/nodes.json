@@ -1,6 +1,6 @@
 {
   "taxonomy_version": "tax_2",
-  "provenance": "cons-04 7-voice council; taxonomy-v2-LOCKED.md; Option B (broad robotics/media genesis cohorts, split-later)",
+  "provenance": "seven-voice council taxonomy decision (internal record); Option B (broad robotics/media genesis cohorts, split-later)",
   "nodes": [
     {
       "taxon_id": "t_47ea5f5c",
@@ -151,6 +151,18 @@
       "lifecycle": "active",
       "aliases": [
         "multimodal-vlm"
+      ],
+      "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_797a133c",
+      "level": "cohort",
+      "slug": "gui-agents",
+      "name": "GUI & Computer-Use Agents",
+      "parent": "ai-agents",
+      "lifecycle": "active",
+      "aliases": [
+        "computer-use-agents"
       ],
       "crosswalk": {}
     }
