@@ -93,7 +93,12 @@ jobs:
         run: |
           git config user.name  "Evidaxis"
           git config user.email "git@evidaxis.org"
-          git add data/
+          # Stage ALL pipeline outputs, not just data/: the frozen collector also writes
+          # etl/id_map.json, taxonomy/nodes.json, entities/, relationships.tsv. Staging
+          # only data/ left those unstaged — harmless while the universe was constant
+          # (byte-identical), but on an expansion id_map.json changes, and an unstaged
+          # file makes the rebase-retry fail ("cannot pull with rebase: unstaged changes").
+          git add -A
           if git diff --cached --quiet; then
             echo "no snapshot change this week"
             exit 0
