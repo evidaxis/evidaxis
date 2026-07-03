@@ -10,6 +10,7 @@ on:
       - "web/**"
       - "data/**"
       - "taxonomy/**"
+      - "redirects.yaml"
       - ".github/workflows/web-ci.yml"
   pull_request:
     paths:
