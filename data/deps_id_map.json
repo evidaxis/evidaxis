@@ -26,6 +26,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "QwenLM/Qwen-Agent": {
+      "system": "pypi",
+      "package": "qwen-agent",
+      "pinned_at": "2026-07-03T09:39:45Z"
+    },
     "QwenLM/qwen-code": {
       "system": "npm",
       "package": "qwen-code",
@@ -37,6 +42,11 @@
       "package": "swebench",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "agentscope-ai/Trinity-RFT": {
+      "system": "pypi",
+      "package": "trinity-rft",
+      "pinned_at": "2026-07-03T09:39:45Z"
     },
     "agentscope-ai/agentscope": {
       "system": "pypi",
@@ -56,11 +66,21 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "browser-use/browser-use": {
+      "system": "pypi",
+      "package": "browser-use",
+      "pinned_at": "2026-07-03T09:39:45Z"
+    },
     "bytedance/Protenix": {
       "system": "pypi",
       "package": "protenix",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "cline/cline": {
+      "system": "npm",
+      "package": "cline",
+      "pinned_at": "2026-07-03T09:39:45Z"
     },
     "crewAIInc/crewAI": {
       "system": "pypi",
@@ -139,6 +159,11 @@
       "package": "moondream",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "microsoft/agent-framework": {
+      "system": "pypi",
+      "package": "agent-framework",
+      "pinned_at": "2026-07-03T09:39:45Z"
     },
     "modelscope/ms-swift": {
       "system": "pypi",
