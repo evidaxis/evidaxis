@@ -1,0 +1,241 @@
+{
+  "v": "frontier_1",
+  "date": "2026-07-03",
+  "recorded_at": "2026-07-03T07:47:07Z",
+  "method": "Batch-1 seed sweep (8 cohort groups) via live GitHub API + OpenAlex work-ID resolution, each candidate adversarially spot-checked (repo health, dedup vs seeds.json, paper-title match). Citation counts re-verified 2026-07-03 with OpenAlex key; 0-citation papers blanked. Full sweep notes + rejected catalog in the internal staging doc.",
+  "sources": [
+    "github-api",
+    "openalex-api",
+    "web-search"
+  ],
+  "examined_estimate": null,
+  "candidates_returned": 32,
+  "candidates": [
+    {
+      "repo": "browser-use/browser-use",
+      "cohort": "gui-agents",
+      "stars": 102292,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "bytedance/UI-TARS-desktop",
+      "cohort": "gui-agents",
+      "stars": 37536,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "microsoft/OmniParser",
+      "cohort": "gui-agents",
+      "stars": 24994,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "simular-ai/Agent-S",
+      "cohort": "gui-agents",
+      "stars": 11965,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "openinterpreter/openinterpreter",
+      "cohort": "gui-agents",
+      "stars": 64248,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "xlang-ai/OSWorld",
+      "cohort": "gui-agents",
+      "stars": 2988,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "showlab/ShowUI",
+      "cohort": "gui-agents",
+      "stars": 1877,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "EmergenceAI/Agent-E",
+      "cohort": "gui-agents",
+      "stars": 1243,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "SWivid/F5-TTS",
+      "cohort": "speech-audio",
+      "stars": 14868,
+      "axes_observed": "github+paper",
+      "disposition": "deferred-batch2 (speech-audio cohort sub-5 members)"
+    },
+    {
+      "repo": "kyutai-labs/moshi",
+      "cohort": "speech-audio",
+      "stars": 10502,
+      "axes_observed": "github+paper",
+      "disposition": "deferred-batch2 (speech-audio cohort sub-5 members)"
+    },
+    {
+      "repo": "index-tts/index-tts",
+      "cohort": "speech-audio",
+      "stars": 21601,
+      "axes_observed": "github+paper",
+      "disposition": "deferred-batch2 (speech-audio cohort sub-5 members)"
+    },
+    {
+      "repo": "QwenLM/Qwen-Agent",
+      "cohort": "agent-frameworks",
+      "stars": 16651,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "FoundationAgents/MetaGPT",
+      "cohort": "agent-frameworks",
+      "stars": 69150,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "microsoft/agent-framework",
+      "cohort": "agent-frameworks",
+      "stars": 11827,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "mastra-ai/mastra",
+      "cohort": "agent-frameworks",
+      "stars": 25718,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "alibaba/ROLL",
+      "cohort": "post-training-rl",
+      "stars": 3277,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "PrimeIntellect-ai/prime-rl",
+      "cohort": "post-training-rl",
+      "stars": 1575,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "OpenPipe/ART",
+      "cohort": "post-training-rl",
+      "stars": 10223,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "huggingface/open-r1",
+      "cohort": "post-training-rl",
+      "stars": 26355,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "agentscope-ai/Trinity-RFT",
+      "cohort": "post-training-rl",
+      "stars": 662,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "NVlabs/Sana",
+      "cohort": "diffusion-media-gen",
+      "stars": 8421,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "microsoft/bioemu",
+      "cohort": "ai-drug-discovery",
+      "stars": 839,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "westlake-repl/SaProt",
+      "cohort": "ai-drug-discovery",
+      "stars": 609,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "arneschneuing/DiffSBDD",
+      "cohort": "ai-drug-discovery",
+      "stars": 516,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "steineggerlab/foldseek",
+      "cohort": "ai-drug-discovery",
+      "stars": 1255,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "gnina/gnina",
+      "cohort": "ai-drug-discovery",
+      "stars": 947,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "flashinfer-ai/flashinfer",
+      "cohort": "llm-inference-serving",
+      "stars": 5900,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "kvcache-ai/Mooncake",
+      "cohort": "llm-inference-serving",
+      "stars": 5720,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "xorbitsai/inference",
+      "cohort": "llm-inference-serving",
+      "stars": 9405,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "SWE-agent/mini-swe-agent",
+      "cohort": "ai-coding-agents",
+      "stars": 5549,
+      "axes_observed": "github",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "OpenAutoCoder/Agentless",
+      "cohort": "ai-coding-agents",
+      "stars": 2075,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    },
+    {
+      "repo": "OpenBMB/ChatDev",
+      "cohort": "ai-coding-agents",
+      "stars": 33643,
+      "axes_observed": "github+paper",
+      "disposition": "admitted-batch1"
+    }
+  ],
+  "retro_note": "Batch-1 admits 29 verified seeds into 7 existing/1 new cohort (gui-agents, computer-use; >=5 members, badge-capable). speech-audio DEFERRED to batch-2 (only 3 solid members < 5-member badge floor; a sub-floor public cohort cannot mint a badge and reads as half-empty). 21 candidates rejected (stale/no-paper/dup), catalogued in staging. This manifest is the discovery-frontier denominator for the 108->137 expansion (the 19->103 and 103->108 denominators were not captured; see prior note).",
+  "note": "Discovery-frontier denominator (un-backfillable). Candidates are systems CONSIDERED at scan time, not judgments; admission happens via a paired seeds.json change (CI enforces the pairing). Positive-only: no per-system negatives are recorded."
+}

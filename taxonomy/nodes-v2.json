@@ -153,6 +153,18 @@
         "multimodal-vlm"
       ],
       "crosswalk": {}
+    },
+    {
+      "taxon_id": "t_797a133c",
+      "level": "cohort",
+      "slug": "gui-agents",
+      "name": "GUI & Computer-Use Agents",
+      "parent": "ai-agents",
+      "lifecycle": "active",
+      "aliases": [
+        "computer-use-agents"
+      ],
+      "crosswalk": {}
     }
   ]
 }

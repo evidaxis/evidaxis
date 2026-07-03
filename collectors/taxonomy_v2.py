@@ -43,6 +43,7 @@ VKEY_TO_V2 = {
     "post-training-rl":      ("foundation-models", "post-training-alignment"),
     "diffusion-media-gen":   ("multimodal-media", "media-generation"),
     "multimodal-vlm":        ("foundation-models", "multimodal-foundation-models"),
+    "gui-agents":            ("ai-agents", "gui-agents"),
 }
 # v2 cohort slug -> its field, so an already-migrated snapshot resolves to itself (idempotent).
 V2_COHORT_TO_FIELD = {cohort: field for field, cohort in VKEY_TO_V2.values()}

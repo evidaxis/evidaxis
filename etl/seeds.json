@@ -1,8 +1,9 @@
 {
   "meta": {
-    "version": "0.2",
-    "note": "Pilot seed: 3 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
-    "axis2_research_source": "verified via OpenAlex API, 2026-06-27"
+    "version": "0.3",
+    "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
+    "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
+    "batch1": "2026-07-03: +29 verified seeds (75% paper-backed at sweep; 0-citation papers blanked per convention); new cohort gui-agents (computer-use); speech-audio deferred to batch-2 (sub-5 members). See projects/bonsai/expansion-batch1-staging.md."
   },
   "domain": {
     "slug": "ai",
@@ -284,6 +285,51 @@
           "openalex_work_ids": [],
           "incumbent": true,
           "note": "paper_ref: openalex:10.1038/s41586-024-07487-w; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "microsoft/bioemu",
+          "entity_type": "repo",
+          "name": "BioEmu",
+          "homepage": "https://github.com/microsoft/bioemu",
+          "openalex_work_ids": [
+            "W4412165572"
+          ]
+        },
+        {
+          "github_repo": "westlake-repl/SaProt",
+          "entity_type": "repo",
+          "name": "SaProt",
+          "homepage": "https://github.com/westlake-repl/SaProt",
+          "openalex_work_ids": [
+            "W4387303685"
+          ]
+        },
+        {
+          "github_repo": "arneschneuing/DiffSBDD",
+          "entity_type": "repo",
+          "name": "DiffSBDD",
+          "homepage": "https://github.com/arneschneuing/DiffSBDD",
+          "openalex_work_ids": [
+            "W4405194591"
+          ]
+        },
+        {
+          "github_repo": "steineggerlab/foldseek",
+          "entity_type": "repo",
+          "name": "Foldseek",
+          "homepage": "https://github.com/steineggerlab/foldseek",
+          "openalex_work_ids": [
+            "W4375858802"
+          ]
+        },
+        {
+          "github_repo": "gnina/gnina",
+          "entity_type": "repo",
+          "name": "gnina",
+          "homepage": "https://github.com/gnina/gnina",
+          "openalex_work_ids": [
+            "W3168430821"
+          ]
         }
       ]
     },
@@ -425,6 +471,40 @@
           "openalex_work_ids": [],
           "incumbent": true,
           "note": "paper_ref: 2310.06770; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "SWE-agent/mini-swe-agent",
+          "entity_type": "repo",
+          "name": "mini-swe-agent",
+          "homepage": "https://github.com/SWE-agent/mini-swe-agent",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "OpenAutoCoder/Agentless",
+          "entity_type": "repo",
+          "name": "Agentless",
+          "homepage": "https://github.com/OpenAutoCoder/Agentless",
+          "openalex_work_ids": [
+            "W4400337928"
+          ]
+        },
+        {
+          "github_repo": "OpenBMB/ChatDev",
+          "entity_type": "repo",
+          "name": "ChatDev",
+          "homepage": "https://github.com/OpenBMB/ChatDev",
+          "openalex_work_ids": [
+            "W4402684050"
+          ]
+        },
+        {
+          "github_repo": "openinterpreter/openinterpreter",
+          "entity_type": "repo",
+          "name": "Open Interpreter",
+          "homepage": "https://github.com/openinterpreter/openinterpreter",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         }
       ]
     },
@@ -522,6 +602,32 @@
           "homepage": "https://github.com/GeeeekExplorer/nano-vllm",
           "openalex_work_ids": [],
           "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "flashinfer-ai/flashinfer",
+          "entity_type": "repo",
+          "name": "FlashInfer",
+          "homepage": "https://github.com/flashinfer-ai/flashinfer",
+          "openalex_work_ids": [
+            "W4406032994"
+          ]
+        },
+        {
+          "github_repo": "kvcache-ai/Mooncake",
+          "entity_type": "repo",
+          "name": "Mooncake",
+          "homepage": "https://github.com/kvcache-ai/Mooncake",
+          "openalex_work_ids": [
+            "W4400377444"
+          ]
+        },
+        {
+          "github_repo": "xorbitsai/inference",
+          "entity_type": "repo",
+          "name": "Xinference",
+          "homepage": "https://github.com/xorbitsai/inference",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         }
       ]
     },
@@ -635,6 +741,39 @@
           "homepage": "https://strandsagents.com",
           "openalex_work_ids": [],
           "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "QwenLM/Qwen-Agent",
+          "entity_type": "repo",
+          "name": "Qwen-Agent",
+          "homepage": "https://github.com/QwenLM/Qwen-Agent",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "FoundationAgents/MetaGPT",
+          "entity_type": "repo",
+          "name": "MetaGPT",
+          "homepage": "https://github.com/FoundationAgents/MetaGPT",
+          "openalex_work_ids": [
+            "W4385963839"
+          ]
+        },
+        {
+          "github_repo": "microsoft/agent-framework",
+          "entity_type": "repo",
+          "name": "Microsoft Agent Framework",
+          "homepage": "https://github.com/microsoft/agent-framework",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "mastra-ai/mastra",
+          "entity_type": "repo",
+          "name": "Mastra",
+          "homepage": "https://github.com/mastra-ai/mastra",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         }
       ]
     },
@@ -731,6 +870,47 @@
           "openalex_work_ids": [],
           "incumbent": true,
           "note": "paper_ref: 2402.03300; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "alibaba/ROLL",
+          "entity_type": "repo",
+          "name": "ROLL",
+          "homepage": "https://github.com/alibaba/ROLL",
+          "openalex_work_ids": [
+            "W4417097658"
+          ]
+        },
+        {
+          "github_repo": "PrimeIntellect-ai/prime-rl",
+          "entity_type": "repo",
+          "name": "prime-rl",
+          "homepage": "https://github.com/PrimeIntellect-ai/prime-rl",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "OpenPipe/ART",
+          "entity_type": "repo",
+          "name": "ART",
+          "homepage": "https://github.com/OpenPipe/ART",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "huggingface/open-r1",
+          "entity_type": "repo",
+          "name": "Open R1",
+          "homepage": "https://github.com/huggingface/open-r1",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "agentscope-ai/Trinity-RFT",
+          "entity_type": "repo",
+          "name": "Trinity-RFT",
+          "homepage": "https://github.com/agentscope-ai/Trinity-RFT",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         }
       ]
     },
@@ -852,6 +1032,15 @@
           "openalex_work_ids": [],
           "incumbent": true,
           "note": "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        },
+        {
+          "github_repo": "NVlabs/Sana",
+          "entity_type": "repo",
+          "name": "Sana",
+          "homepage": "https://github.com/NVlabs/Sana",
+          "openalex_work_ids": [
+            "W4403572833"
+          ]
         }
       ]
     },
@@ -964,6 +1153,75 @@
           "openalex_work_ids": [],
           "incumbent": true,
           "note": "paper_ref: arXiv:2310.03744; incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+        }
+      ]
+    },
+    "gui-agents": {
+      "label": "GUI & Computer-Use Agents",
+      "industry_slug": "ai-agents",
+      "subniche_slug": "gui-agents",
+      "entities": [
+        {
+          "github_repo": "browser-use/browser-use",
+          "entity_type": "repo",
+          "name": "Browser Use",
+          "homepage": "https://github.com/browser-use/browser-use",
+          "openalex_work_ids": [],
+          "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+        },
+        {
+          "github_repo": "bytedance/UI-TARS-desktop",
+          "entity_type": "repo",
+          "name": "UI-TARS Desktop",
+          "homepage": "https://github.com/bytedance/UI-TARS-desktop",
+          "openalex_work_ids": [
+            "W4406755521"
+          ]
+        },
+        {
+          "github_repo": "microsoft/OmniParser",
+          "entity_type": "repo",
+          "name": "OmniParser",
+          "homepage": "https://github.com/microsoft/OmniParser",
+          "openalex_work_ids": [
+            "W4401307085"
+          ]
+        },
+        {
+          "github_repo": "simular-ai/Agent-S",
+          "entity_type": "repo",
+          "name": "Agent S",
+          "homepage": "https://github.com/simular-ai/Agent-S",
+          "openalex_work_ids": [
+            "W4403365379"
+          ]
+        },
+        {
+          "github_repo": "xlang-ai/OSWorld",
+          "entity_type": "repo",
+          "name": "OSWorld",
+          "homepage": "https://github.com/xlang-ai/OSWorld",
+          "openalex_work_ids": [
+            "W4415797693"
+          ]
+        },
+        {
+          "github_repo": "showlab/ShowUI",
+          "entity_type": "repo",
+          "name": "ShowUI",
+          "homepage": "https://github.com/showlab/ShowUI",
+          "openalex_work_ids": [
+            "W4413147863"
+          ]
+        },
+        {
+          "github_repo": "EmergenceAI/Agent-E",
+          "entity_type": "repo",
+          "name": "Agent-E",
+          "homepage": "https://github.com/EmergenceAI/Agent-E",
+          "openalex_work_ids": [
+            "W4402346179"
+          ]
         }
       ]
     }
