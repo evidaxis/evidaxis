@@ -7,7 +7,8 @@ name: weekly-snapshot
 #
 # Hardening (2026-07-02): shared `data-commits` concurrency group + rebase-retry push
 # (Saturday race vs t2-daily), completeness gate (no entity leaves the universe silently),
-# history-ledger check, pinned actions, no persisted credentials, failure alert issue.
+# history-ledger check, pinned actions, no persisted credentials. A failed run
+# is surfaced by GitHub's native workflow-failure email (no extra alert issue).
 
 on:
   schedule:
@@ -16,7 +17,6 @@ on:
 
 permissions:
   contents: write           # commit the new snapshot back to the repo
-  issues: write             # failure alert
 
 concurrency:
   group: data-commits       # shared with t2-daily-snapshot: serializes data/ pushes
@@ -61,6 +61,12 @@ jobs:
         # deterministic post-step remaps the fresh snapshot to the locked v2 (field/cohort)
         # and restores the canonical v2 nodes.json, so the heartbeat stays v2-consistent.
         run: python3 collectors/taxonomy_v2.py --date "$(date -u +%Y-%m-%d)"
+
+      - name: Restore public redirects mirror (frozen collector writes a stale one)
+        # etl/collect.py is byte-frozen and re-emits the genesis redirects.yaml every
+        # run; regenerate it from web/vercel.json (the config that actually executes)
+        # so `git add -A` does not revert the maintained mirror. web-ci enforces 1:1.
+        run: python3 collectors/gen_redirects.py
 
       - name: Refresh snapshot checksums (mandatory FINAL content step)
         # collect.py writes SHA256SUMS, but reclass_pre_spine.py and taxonomy_v2.py
@@ -119,14 +125,3 @@ jobs:
         run: |
           curl -fsS -X POST "https://archive.softwareheritage.org/api/1/origin/save/git/url/https://github.com/${GITHUB_REPOSITORY}/" \
             || echo "SWH save request deferred"
-
-      - name: Alert on failure (issue in this repo)
-        if: failure()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh issue create \
-            --repo "${GITHUB_REPOSITORY}" \
-            --title "weekly-snapshot FAILED $(date -u +%Y-%m-%d)" \
-            --body "The weekly heartbeat run failed: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} — a missed week is a permanent gap in the series; investigate and re-run." \
-            || true

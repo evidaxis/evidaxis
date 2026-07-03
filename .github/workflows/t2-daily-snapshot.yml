@@ -17,7 +17,6 @@ on:
 
 permissions:
   contents: write
-  issues: write
 
 concurrency:
   group: data-commits       # shared with weekly-snapshot: serializes data/ pushes
@@ -84,14 +83,3 @@ jobs:
           done
           echo "push failed after 3 rebase attempts"
           exit 1
-
-      - name: Alert on failure or degraded deps capture
-        if: failure() || steps.deps.outcome == 'failure'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh issue create \
-            --repo "${GITHUB_REPOSITORY}" \
-            --title "t2-daily-snapshot DEGRADED/FAILED $(date -u +%Y-%m-%d)" \
-            --body "Daily T2 capture problem (deps step outcome: ${{ steps.deps.outcome }}): ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} — a lost day is an un-backfillable gap; investigate and re-run today." \
-            || true
