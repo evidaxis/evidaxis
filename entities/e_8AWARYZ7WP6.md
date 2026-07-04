@@ -15,7 +15,7 @@ classification:
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
   snapshot_id: f1f2495d518d
-  captured_at: 2026-07-03T08:48:34+00:00
+  captured_at: 2026-07-04T09:09:53+00:00
   period: 2026-w27
   momentum: 51.0
   percentile: 67

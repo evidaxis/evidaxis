@@ -15,7 +15,7 @@ classification:
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
   snapshot_id: f1f2495d518d
-  captured_at: 2026-07-03T08:48:34+00:00
+  captured_at: 2026-07-04T09:09:53+00:00
   period: 2026-w27
   momentum: 57.3
   percentile: 72
@@ -26,7 +26,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   convergent_axes: []
   axes:
     github_commit_velocity: {"slope": 0.0, "cohort_z": 0.562, "recent_weekly_commits": 0.0, "stars_not_scored": 4150}
-    openalex_citation_momentum: {"status": "present", "slope": 1.6011345750264618, "cohort_z": 0.613, "total_citations": 5480, "by_year": {"2026": 1094, "2025": 2081, "2024": 1511, "2023": 736, "2022": 52, "2020": 2, "2013": 1, "2012": 3}, "proxy": null}
+    openalex_citation_momentum: {"status": "present", "slope": 1.6011345750264618, "cohort_z": 0.612, "total_citations": 5490, "by_year": {"2026": 1104, "2025": 2081, "2024": 1511, "2023": 736, "2022": 52, "2020": 2, "2013": 1, "2012": 3}, "proxy": null}
 note: "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
 ---
 

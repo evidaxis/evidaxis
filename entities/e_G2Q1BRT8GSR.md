@@ -15,7 +15,7 @@ classification:
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
   snapshot_id: f1f2495d518d
-  captured_at: 2026-07-03T08:48:34+00:00
+  captured_at: 2026-07-04T09:09:53+00:00
   period: 2026-w27
   momentum: 51.8
   percentile: 61
@@ -26,7 +26,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   convergent_axes: []
   axes:
     github_commit_velocity: {"slope": 0.0, "cohort_z": 0.425, "recent_weekly_commits": 0.0, "stars_not_scored": 3392}
-    openalex_citation_momentum: {"status": "present", "slope": 0.242340171830834, "cohort_z": -0.144, "total_citations": 458, "by_year": {"2026": 71, "2025": 150, "2024": 140, "2023": 92, "2022": 5}, "proxy": null}
+    openalex_citation_momentum: {"status": "present", "slope": 0.242340171830834, "cohort_z": -0.145, "total_citations": 460, "by_year": {"2026": 73, "2025": 150, "2024": 140, "2023": 92, "2022": 5}, "proxy": null}
 note: "Published + bioRxiv preprint summed by year."
 ---
 

@@ -15,17 +15,17 @@ classification:
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
   snapshot_id: f1f2495d518d
-  captured_at: 2026-07-03T08:48:34+00:00
+  captured_at: 2026-07-04T09:09:53+00:00
   period: 2026-w27
-  momentum: 80.6
-  percentile: 93
+  momentum: 87.9
+  percentile: 100
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.009389848621094952, "cohort_z": 2.449, "recent_weekly_commits": 0.2, "stars_not_scored": 12277}
+    github_commit_velocity: {"slope": 0.009389848621094952, "cohort_z": 3.032, "recent_weekly_commits": 0.2, "stars_not_scored": 12282}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "paper_ref: arXiv:2412.03603; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

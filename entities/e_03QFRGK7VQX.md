@@ -15,9 +15,9 @@ classification:
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
   snapshot_id: f1f2495d518d
-  captured_at: 2026-07-03T08:48:34+00:00
+  captured_at: 2026-07-04T09:09:53+00:00
   period: 2026-w27
-  momentum: 59.1
+  momentum: 59.9
   percentile: 80
   confidence: medium
   rising: false
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["github_commit_velocity"]
   axes:
-    github_commit_velocity: {"slope": 0.005955207668098196, "cohort_z": 1.456, "recent_weekly_commits": 44.1, "stars_not_scored": 14072}
-    openalex_citation_momentum: {"status": "present", "slope": 0.3847161881418711, "cohort_z": 0.0, "total_citations": 4444, "by_year": {"2026": 159, "2025": 661, "2024": 610, "2023": 532, "2022": 400, "2021": 669, "2020": 623, "2019": 392, "2018": 227, "2017": 94, "2016": 34, "2015": 21, "2014": 12, "2013": 8, "2012": 2}, "proxy": null}
+    github_commit_velocity: {"slope": 0.007761268297732442, "cohort_z": 1.58, "recent_weekly_commits": 44.8, "stars_not_scored": 14078}
+    openalex_citation_momentum: {"status": "present", "slope": 0.38476594971051464, "cohort_z": 0.0, "total_citations": 4448, "by_year": {"2026": 162, "2025": 662, "2024": 610, "2023": 532, "2022": 400, "2021": 669, "2020": 623, "2019": 392, "2018": 227, "2017": 94, "2016": 34, "2015": 21, "2014": 12, "2013": 8, "2012": 2}, "proxy": null}
 note: "Mature incumbent — included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)."
 ---
 

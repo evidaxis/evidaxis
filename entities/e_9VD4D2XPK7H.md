@@ -15,7 +15,7 @@ classification:
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
   snapshot_id: f1f2495d518d
-  captured_at: 2026-07-03T08:48:34+00:00
+  captured_at: 2026-07-04T09:09:53+00:00
   period: 2026-w27
   momentum: 70.5
   percentile: 94
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["openalex_citation_momentum"]
   axes:
-    github_commit_velocity: {"slope": 0.0016588137654426043, "cohort_z": 1.227, "recent_weekly_commits": 0.1, "stars_not_scored": 4091}
-    openalex_citation_momentum: {"status": "present", "slope": 2.3789456365028774, "cohort_z": 2.056, "total_citations": 412, "by_year": {"2026": 163, "2025": 232, "2024": 16, "2023": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0016588137654426043, "cohort_z": 1.227, "recent_weekly_commits": 0.1, "stars_not_scored": 4090}
+    openalex_citation_momentum: {"status": "present", "slope": 2.3789456365028774, "cohort_z": 2.055, "total_citations": 414, "by_year": {"2026": 165, "2025": 232, "2024": 16, "2023": 1}, "proxy": null}
 ---
 
 # Boltz
