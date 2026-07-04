@@ -1,7 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import sentry from '@sentry/astro';
+import { loadEnv } from 'vite';
 import { readFileSync } from 'node:fs';
+
+// Sentry DSN читаем на сборке (loadEnv видит .env файлы + реальный process.env).
+// Сайт статический → Sentry ловит только клиентские (браузерные) ошибки; DSN публичный.
+const { SENTRY_DSN, SENTRY_AUTH_TOKEN } = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
 
 // Freshness: stamp sitemap lastmod from the real data-change date (snapshot_date)
 // for data-driven pages; a frozen date for methodology/about. Only bumps when the
@@ -24,5 +30,14 @@ export default defineConfig({
         return item;
       },
     }),
+    // Sentry — только браузерные ошибки (сайт статический). Без DSN не подключаем (no-op).
+    ...(SENTRY_DSN
+      ? [sentry({
+          dsn: SENTRY_DSN,
+          ...(SENTRY_AUTH_TOKEN
+            ? { sourceMapsUploadOptions: { org: 'doctor-ads', project: 'evidaxis', authToken: SENTRY_AUTH_TOKEN } }
+            : {}),
+        })]
+      : []),
   ],
 });
