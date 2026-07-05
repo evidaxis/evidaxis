@@ -1,0 +1,17 @@
+# Dependency scanning — открывает PR на обновления с уязвимостями/апдейтами.
+# Часть observability-стандарта (hardening-kit/observability-stack.md, тир small+).
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/web"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      # шумные minor/patch — одним PR, чтобы не заваливать
+      minor-patch:
+        update-types: ["minor", "patch"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
