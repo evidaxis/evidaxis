@@ -36,7 +36,7 @@ shows main-thread cost (sensors first, optimize on data).
 **GA4** (analytics.google.com → property Evidaxis):
 1. Admin → Data Streams → Web stream → **Enhanced measurement: ON** (default; keep — free scroll/outbound/file/video events).
 2. Admin → Data Settings → **Data Retention → 14 months** (default 2; bump to max).
-3. Admin → Product Links → **BigQuery** → link (free export; **not retroactive**, so enable day one to own raw events forever).
+3. Admin → Product Links → **BigQuery** → link. GCP project **`evidaxis-analytics`** already created + BigQuery API enabled + billing linked (2026-07-05, via gcloud). In the wizard: Choose project `evidaxis-analytics` → Data location **US** (Igor's call — targets/sells into Silicon Valley; region is locked after creation) → Export type **Daily** for BOTH Event data and User data (free at this volume, fuller ownership) → Submit. Streaming off, advertising identifiers off. (**Not retroactive** — that's why it is set up before traffic.)
 4. Admin → Product Links → **Search Console** → link (join queries + behaviour).
 5. Admin → Product Links → **Google Ads** → link (for future paid traffic / conversion import).
 6. Optional later: **Google Signals** OFF until EU consent story is settled (avoids extra consent obligation).

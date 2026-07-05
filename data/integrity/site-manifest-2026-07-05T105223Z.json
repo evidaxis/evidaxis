@@ -1,0 +1,8 @@
+{
+  "v": "site_manifest_1",
+  "deployed_at": "2026-07-05T10:52:23Z",
+  "git_commit": "102bb35e510f697f9107874f12d68c509e871cdf",
+  "working_tree_dirty_files": 1,
+  "dist_sha256": "c7f46f2880a41a7796c6934ddf1f159ae0e5a5986eef3afddb34a9b829eaed17",
+  "note": "sha256 over the sorted per-file sha256 list of web/dist; laptop-built (see deploy.sh); binds the shipped HTML to the source tree"
+}
