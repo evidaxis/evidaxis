@@ -16,6 +16,7 @@ import '@fontsource/spectral/latin-400-italic.css';
 import '@fontsource/spectral/latin-400.css';
 import '../styles/global.css';
 import { SNAP_DATE, snapshot } from '../lib/data';
+import Analytics from '../components/Analytics.astro';
 
 export interface Props {
   title: string;
@@ -125,5 +126,6 @@ const nav = [
       </p>
     </div>
   </footer>
+  <Analytics />
 </body>
 </html>
