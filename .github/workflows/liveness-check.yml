@@ -1,0 +1,30 @@
+name: Prod liveness check
+# External uptime+integrity sensor (reference pattern from ai-checker, 2026-07-06).
+# Evidaxis is a static site deployed deliberately (vercel --prod from the committed
+# tree, no git auto-deploy), so the watched fact is "is evidaxis.org up and serving
+# its real content" — not freshness vs main. Runs OFF Vercel; pings Telegram + reds
+# the run when the archive is down or serving broken content.
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check prod liveness
+        env:
+          SITE_URL: https://evidaxis.org
+          MARKER: 'Evidaxis, the longitudinal map of open AI momentum'
+          SITE_LABEL: evidaxis
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+        run: node scripts/liveness-check.mjs
