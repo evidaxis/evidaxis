@@ -37,6 +37,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "SWE-agent/mini-swe-agent": {
+      "system": "pypi",
+      "package": "mini-swe-agent",
+      "pinned_at": "2026-07-06T11:09:29Z"
+    },
     "SWE-bench/SWE-bench": {
       "system": "pypi",
       "package": "swebench",
@@ -53,6 +58,11 @@
       "package": "agentscope",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "agno-agi/agno": {
+      "system": "pypi",
+      "package": "agno",
+      "pinned_at": "2026-07-06T11:09:29Z"
     },
     "aqlaboratory/openfold": {
       "system": "pypi",
@@ -160,6 +170,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "mastra-ai/mastra": {
+      "system": "npm",
+      "package": "mastra",
+      "pinned_at": "2026-07-06T11:09:29Z"
+    },
     "microsoft/agent-framework": {
       "system": "pypi",
       "package": "agent-framework",
@@ -182,6 +197,11 @@
       "package": "sweagent",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "pydantic/pydantic-ai": {
+      "system": "pypi",
+      "package": "pydantic-ai",
+      "pinned_at": "2026-07-06T11:09:29Z"
     },
     "stanfordnlp/dspy": {
       "system": "pypi",
