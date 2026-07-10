@@ -1,7 +1,8 @@
 /** JSON-LD builders. v1 frozen external contract — property names are load-bearing
  *  (Google indexes them, LLMs train on them). Do not rename. */
 import type { DepsSignal, Entity, Snapshot } from './data';
-import { SNAP_DATE, publicHomepage, publicOwnerType, publicRepoUrl } from './data';
+import { publicHomepage, publicOwnerType, publicRepoUrl, snapshots } from './data';
+
 import registry from './methodology-registry.json';
 
 const SITE = 'https://evidaxis.org';
@@ -9,17 +10,27 @@ const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
 const ORG_ID = `${SITE}/#org`;
 const CATALOG_ID = `${SITE}/#catalog`;
 const FOUNDED = '2026-06';
-// Genesis dataset DOI (Zenodo). The DOI belongs to the genesis SNAPSHOT dataset, not the org,
-// so it is emitted on that snapshot's Dataset node (identifier + sameAs), not in org sameAs.
-// Future weekly snapshots mint their own version DOIs under the concept DOI.
+// Genesis dataset DOI (Zenodo): the m1 / 19-system seed deposit of 2026-06-27.
+// Cited as-is only on that snapshot page; elsewhere labeled "genesis seed deposit".
+// Organization + DataCatalog carry it as an identifier + zenodo.org record sameAs;
+// future weekly snapshots mint their own version DOIs under the concept DOI.
 const GENESIS_SNAPSHOT = '2026-06-27';
 const GENESIS_DOI = '10.5281/zenodo.21076012';
-// sameAs grows as off-site profiles land. Wikidata QID / Zenodo DOI / X / LinkedIn appended here.
+const GENESIS_DOI_URL = `https://doi.org/${GENESIS_DOI}`;
+const GENESIS_ZENODO_RECORD = 'https://zenodo.org/records/21076012';
+const DOI_IDENTIFIER = {
+  '@type': 'PropertyValue',
+  propertyID: 'DOI',
+  value: GENESIS_DOI,
+  url: GENESIS_DOI_URL,
+};
+// sameAs: institutional profiles only. No people links (person-free policy).
+// Wikidata QID lands later (WP-I) once notability is anchored by this DOI.
 const SAME_AS = [
   'https://github.com/evidaxis',
-  // huggingface.co/evidaxis dropped from sameAs 2026-06-30: the HF org publicly lists a named
-  // person (a person-free leak via structured data) and has no public datasets/models yet.
-  // Re-add once the HF org is both person-free and populated.
+  'https://x.com/evidaxis',
+  'https://huggingface.co/evidaxis',
+  GENESIS_ZENODO_RECORD,
 ];
 
 // Durable, VERSIONED methodology permalink for a given methodology_version. Records
@@ -35,6 +46,16 @@ const typeForEntity = (t: string) =>
 // Self-consistent Organization stub spread into every @graph so deep pages resolve
 // their creator/publisher @id locally; the full node on home/about accretes by @id.
 const orgRef = () => ({ '@type': 'Organization', '@id': ORG_ID, name: 'Evidaxis', url: SITE + '/' });
+
+/** Snapshot Dataset stubs for DataCatalog enumeration (every frozen archive date). */
+function catalogSnapshotEntries() {
+  return snapshots.map((snap) => ({
+    '@type': 'Dataset',
+    '@id': `${SITE}/snapshots/${snap.snapshot_date}/#dataset`,
+    name: `Evidaxis snapshot ${snap.snapshot_date}`,
+    url: `${SITE}/snapshots/${snap.snapshot_date}/`,
+  }));
+}
 
 export function orgGraph() {
   return {
@@ -55,6 +76,7 @@ export function orgGraph() {
         logo: { '@type': 'ImageObject', url: SITE + '/logo.png', width: 600, height: 600 },
         image: SITE + '/logo.png',
         knowsAbout: ['momentum measurement', 'open-source AI', 'software ecosystems', 'open data', 'scientometrics'],
+        identifier: DOI_IDENTIFIER,
         sameAs: SAME_AS,
       },
       {
@@ -74,16 +96,11 @@ export function orgGraph() {
         url: SITE + '/',
         license: CC0,
         isAccessibleForFree: true,
+        identifier: DOI_IDENTIFIER,
         publisher: { '@id': ORG_ID },
         creator: { '@id': ORG_ID },
-        dataset: [
-          {
-            '@type': 'Dataset',
-            '@id': `${SITE}/snapshots/${SNAP_DATE}/#dataset`,
-            name: `Evidaxis snapshot ${SNAP_DATE}`,
-            url: `${SITE}/snapshots/${SNAP_DATE}/`,
-          },
-        ],
+        // Every frozen snapshot Dataset in the archive (WP-C enumeration via archive.ts).
+        dataset: catalogSnapshotEntries(),
       },
     ],
   };
@@ -115,30 +132,39 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
   const repoUrl = publicRepoUrl(e);
   const homepage = publicHomepage(e);
   const publicUrls = [...new Set([repoUrl, homepage].filter((url): url is string => !!url))];
+  const recordUrl = `${SITE}/e/${e.entity_id}/`;
+  const entityId = `${SITE}/e/${e.entity_id}/#entity`;
+  // Per-measurement Dataset @id = claim-URN when present (date-epoched primary graph key).
+  // HTTPS record stays on url + mainEntityOfPage so crawlers still resolve a page.
+  const datasetId = urn ?? `${recordUrl}#dataset`;
+  const sourceId = `${SITE}/e/${e.entity_id}/#source`;
+
   const entityNode: any = {
     '@type': typeForEntity(e.entity_type),
-    '@id': `${SITE}/e/${e.entity_id}/#entity`,
+    '@id': entityId,
     name: e.name,
     description: `${e.name}, an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
-    subjectOf: { '@id': `${SITE}/e/${e.entity_id}/#dataset` },
+    subjectOf: { '@id': datasetId },
   };
-  if (ownerType === 'Organization' && repoUrl) entityNode.codeRepository = repoUrl;
   if (homepage ?? repoUrl) entityNode.url = homepage ?? repoUrl;
   if (publicUrls.length) entityNode.sameAs = publicUrls;
   if (paperId) entityNode.citation = { '@type': 'ScholarlyArticle', '@id': `https://openalex.org/${paperId}`, sameAs: `https://openalex.org/${paperId}` };
-  // Durable canonical reference (CLAIM-URN.md). Goes in `identifier`, never in `@id`:
-  // schema.org @id must remain an HTTP-resolvable IRI for graph linking; the URN is
-  // the format-independent citation target that survives changes in how LLMs cite.
-  if (urn) entityNode.identifier = urn;
+  // codeRepository belongs on SoftwareSourceCode (schema.org), not on Organization /
+  // SoftwareApplication. When the measured repo is publishable (org-owned; person_free
+  // withholds github URLs for user-owned repos), emit a linked SoftwareSourceCode node.
+  if (ownerType === 'Organization' && repoUrl) {
+    entityNode.isBasedOn = { '@id': sourceId };
+  }
 
   const graph: any[] = [
     orgRef(),
     {
       '@type': 'Dataset',
-      '@id': `${SITE}/e/${e.entity_id}/#dataset`,
+      '@id': datasetId,
       name: `Evidaxis measurement: ${e.name}`,
       description: desc,
-      url: `${SITE}/e/${e.entity_id}/`,
+      url: recordUrl,
+      mainEntityOfPage: recordUrl,
       identifier: urn
         ? [e.entity_id, { '@type': 'PropertyValue', propertyID: 'claim-urn', value: urn }]
         : e.entity_id,
@@ -161,7 +187,7 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
       measurementTechnique: methodologyPath(snap.methodology_version),
       keywords: ['AI', e.industry, e.sub_niche, 'momentum', 'open source'],
       ...(publicUrls.length ? { sameAs: publicUrls.length === 1 ? publicUrls[0] : publicUrls } : {}),
-      mainEntity: { '@id': `${SITE}/e/${e.entity_id}/#entity` },
+      mainEntity: { '@id': entityId },
       variableMeasured: vars,
       distribution: {
         '@type': 'DataDownload',
@@ -171,6 +197,17 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
     },
     entityNode,
   ];
+
+  if (ownerType === 'Organization' && repoUrl) {
+    graph.push({
+      '@type': 'SoftwareSourceCode',
+      '@id': sourceId,
+      name: `${e.name} source repository`,
+      codeRepository: repoUrl,
+      url: repoUrl,
+      about: { '@id': entityId },
+    });
+  }
 
   return { '@context': 'https://schema.org', '@graph': graph };
 }
@@ -221,7 +258,6 @@ export function itemListDataset(opts: {
 
 export function snapshotDataset(snap: Snapshot) {
   const isGenesis = snap.snapshot_date === GENESIS_SNAPSHOT;
-  const doiUrl = `https://doi.org/${GENESIS_DOI}`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -233,10 +269,12 @@ export function snapshotDataset(snap: Snapshot) {
         description:
           `Complete Evidaxis measurement snapshot for ${snap.snapshot_date}: momentum scores and per-axis signals for ${snap.counts.entities} tracked AI systems across ${Object.keys(snap.cohorts).length} cohorts, computed on methodology ${snap.methodology_version}. Released to the public domain under CC0.`,
         url: `${SITE}/snapshots/${snap.snapshot_date}/`,
+        // Non-genesis: snapshot_id is the durable identity until a per-version DOI is minted.
+        // Future per-version DOI slot: replace/extend with PropertyValue DOI once Zenodo mints it.
         identifier: isGenesis
-          ? { '@type': 'PropertyValue', propertyID: 'DOI', value: GENESIS_DOI, url: doiUrl }
-          : `evidaxis-snapshot-${snap.snapshot_date}`,
-        ...(isGenesis ? { sameAs: doiUrl } : {}),
+          ? DOI_IDENTIFIER
+          : snap.snapshot_id || `evidaxis-snapshot-${snap.snapshot_date}`,
+        ...(isGenesis ? { sameAs: GENESIS_DOI_URL } : {}),
         license: CC0,
         isAccessibleForFree: true,
         creator: { '@id': ORG_ID },
@@ -309,6 +347,7 @@ const methodologyDate = (version: string): string => {
 
 export function methodologyGraph(version: string, canonicalVersionPath: string) {
   const frozen = methodologyDate(version);
+  const termsId = `${SITE}${canonicalVersionPath}#terms`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -327,15 +366,17 @@ export function methodologyGraph(version: string, canonicalVersionPath: string) 
         creator: { '@id': ORG_ID },
         publisher: { '@id': ORG_ID },
         inLanguage: 'en',
-        hasDefinedTerm: { '@id': `${SITE}${canonicalVersionPath}#terms` },
+        // hasDefinedTerm belongs on DefinedTermSet, not TechArticle — link via about/mentions.
+        about: { '@id': termsId },
+        mentions: { '@id': termsId },
       },
       {
         '@type': 'DefinedTermSet',
-        '@id': `${SITE}${canonicalVersionPath}#terms`,
+        '@id': termsId,
         name: 'Evidaxis scoring terms',
         hasDefinedTerm: [
-          { '@type': 'DefinedTerm', name: 'Momentum Score', description: 'A 0–100 composite of an entity’s within-cohort axis z-scores, measuring rate-of-change relative to peers.', inDefinedTermSet: `${SITE}${canonicalVersionPath}#terms` },
-          { '@type': 'DefinedTerm', name: 'Convergence Gate', description: 'A system is "Rising" only when at least two independent axes are simultaneously rising. Positive-only.', inDefinedTermSet: `${SITE}${canonicalVersionPath}#terms` },
+          { '@type': 'DefinedTerm', name: 'Momentum Score', description: 'A 0–100 composite of an entity’s within-cohort axis z-scores, measuring rate-of-change relative to peers.', inDefinedTermSet: termsId },
+          { '@type': 'DefinedTerm', name: 'Convergence Gate', description: 'A system is "Rising" only when at least two independent axes are simultaneously rising. Positive-only.', inDefinedTermSet: termsId },
         ],
       },
     ],

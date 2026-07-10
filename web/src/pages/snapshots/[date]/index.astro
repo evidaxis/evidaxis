@@ -41,6 +41,24 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
       </div>
 
       <div class="panel" style="padding:18px 20px;margin-bottom:2rem">
+        <div class="eyebrow">Cite</div>
+        {date === '2026-06-27' ? (
+          <p style="font-size:.9rem;margin:.5rem 0 0;color:var(--ink-soft);max-width:70ch">
+            Cite this deposit: DOI <a href="https://doi.org/10.5281/zenodo.21076012">10.5281/zenodo.21076012</a>
+            (genesis seed, methodology m1, 19 systems). snapshot_id <span class="mono">{snapshot.snapshot_id}</span>.
+          </p>
+        ) : (
+          <p style="font-size:.9rem;margin:.5rem 0 0;color:var(--ink-soft);max-width:70ch">
+            Genesis seed deposit (m1, 19 systems, 2026-06-27): DOI <a href="https://doi.org/10.5281/zenodo.21076012">10.5281/zenodo.21076012</a>.
+            Cite <em>this</em> snapshot by its own identity: snapshot_id <span class="mono">{snapshot.snapshot_id}</span>,
+            date <span class="mono">{date}</span>, methodology <span class="mono">{snapshot.methodology_version}</span>;
+            each system row carries its claim-URN.
+            <!-- future per-version DOI slot: mint a Zenodo version DOI for this snapshot and list it here. -->
+          </p>
+        )}
+      </div>
+
+      <div class="panel" style="padding:18px 20px;margin-bottom:2rem">
         <div class="eyebrow">Gate</div>
         <p class="mono" style="font-size:.82rem;margin:.5rem 0 0;color:var(--ink-soft)">{snapshot.gate}</p>
       </div>

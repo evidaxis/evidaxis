@@ -15,15 +15,16 @@ export function getStaticPaths() {
 const { field, cohort } = Astro.props;
 const es = entitiesInCohort(cohort.cohortKey);
 const path = `/ai/cohorts/${cohort.slug}/`;
+const pageName = `${cohort.label} - cohort momentum`;
 const desc = `Evidaxis momentum for ${cohort.label}: ${es.length} open AI systems scored on development velocity and citation momentum.`;
-const listJson = itemListDataset({ path, name: `${cohort.label} by Evidaxis momentum`, description: desc, period: snapshot.period, snap: snapshot, entities: es });
+const listJson = itemListDataset({ path, name: pageName, description: desc, period: snapshot.period, snap: snapshot, entities: es });
 ---
-<Base title={`${cohort.label}, Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: field.label, path: `/ai/fields/${field.slug}/` }, { name: cohort.label, path }])]}>
+<Base title={`${pageName} | Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Field: ${field.label}`, path: `/ai/fields/${field.slug}/` }, { name: `Cohort: ${cohort.label}`, path }])]}>
   <section class="section">
     <div class="wrap">
       <div class="mono muted" style="font-size:.74rem;margin-bottom:.6rem">
         <a href="/coverage/" style="border:none;color:inherit">coverage</a> /
-        <a href={`/ai/fields/${field.slug}/`} style="border:none;color:inherit">{field.label}</a> / <span>{cohort.label}</span>
+        <a href={`/ai/fields/${field.slug}/`} style="border:none;color:inherit">Field: {field.label}</a> / <span>Cohort: {cohort.label}</span>
       </div>
       <p class="eyebrow">Cohort</p>
       <h1>{cohort.label}</h1>

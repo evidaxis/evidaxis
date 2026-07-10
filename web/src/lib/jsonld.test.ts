@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { snapshot, entities } from './data';
+import { snapshot, entities, snapshots } from './data';
+import { claimUrnForEntity } from './claim_urn';
 import {
   orgGraph, entityGraph, itemListDataset, snapshotDataset, breadcrumb, methodologyGraph,
 } from './jsonld';
@@ -8,14 +9,41 @@ const GENESIS_DATE = '2026-06-27';
 const GENESIS_DOI = '10.5281/zenodo.21076012';
 
 describe('orgGraph', () => {
-  it('emits a schema.org @graph with the Organization @id and sameAs', () => {
+  it('emits a schema.org @graph with the Organization @id and expanded sameAs', () => {
     const g = orgGraph();
     expect(g['@context']).toBe('https://schema.org');
     const org = g['@graph'].find((n: any) => n['@type'] === 'Organization');
     expect(org['@id']).toBe('https://evidaxis.org/#org');
     expect(Array.isArray(org.sameAs)).toBe(true);
-    // org sameAs must NOT carry the dataset DOI (DOI lives on the snapshot Dataset node)
-    expect(JSON.stringify(org.sameAs)).not.toContain('doi.org');
+    expect(org.sameAs).toEqual(expect.arrayContaining([
+      'https://github.com/evidaxis',
+      'https://x.com/evidaxis',
+      'https://huggingface.co/evidaxis',
+      'https://zenodo.org/records/21076012',
+    ]));
+    // DOI lives on identifier (PropertyValue), not as a bare doi.org sameAs entry
+    expect(org.sameAs.some((s: string) => s.includes('doi.org'))).toBe(false);
+    expect(org.identifier).toEqual({
+      '@type': 'PropertyValue',
+      propertyID: 'DOI',
+      value: GENESIS_DOI,
+      url: `https://doi.org/${GENESIS_DOI}`,
+    });
+    // No people links in institutional sameAs
+    expect(JSON.stringify(org.sameAs)).not.toMatch(/github\.com\/[^/]+\/[^/"']+/);
+  });
+
+  it('DataCatalog lists every archived snapshot Dataset and carries the DOI identifier', () => {
+    const g = orgGraph();
+    const catalog = g['@graph'].find((n: any) => n['@type'] === 'DataCatalog');
+    expect(catalog.identifier.value).toBe(GENESIS_DOI);
+    expect(Array.isArray(catalog.dataset)).toBe(true);
+    expect(catalog.dataset).toHaveLength(snapshots.length);
+    for (const snap of snapshots) {
+      const entry = catalog.dataset.find((d: any) => d.url === `https://evidaxis.org/snapshots/${snap.snapshot_date}/`);
+      expect(entry).toBeTruthy();
+      expect(entry['@id']).toBe(`https://evidaxis.org/snapshots/${snap.snapshot_date}/#dataset`);
+    }
   });
 });
 
@@ -24,6 +52,7 @@ describe('entityGraph', () => {
     const e = entities.find((x) => x.momentum != null)!;
     const g = entityGraph(e, snapshot);
     const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
+    // Without a claim-URN, Dataset falls back to the HTTPS fragment @id
     expect(ds['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#dataset`);
     expect(ds.mainEntity['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#entity`);
     expect(ds.license).toBe('https://creativecommons.org/publicdomain/zero/1.0/');
@@ -31,11 +60,33 @@ describe('entityGraph', () => {
     expect(mv.value).toBe(e.momentum);
   });
 
-  it('keeps the canonical GitHub repository for Organization ownership', () => {
+  it('uses claim-URN as Dataset @id with HTTPS url + mainEntityOfPage', () => {
+    const e = entities.find((x) => x.momentum != null)!;
+    const urn = claimUrnForEntity(e, snapshot);
+    const g = entityGraph(e, snapshot, urn);
+    const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
+    const entity = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
+    expect(ds['@id']).toBe(urn);
+    expect(ds.url).toBe(`https://evidaxis.org/e/${e.entity_id}/`);
+    expect(ds.mainEntityOfPage).toBe(`https://evidaxis.org/e/${e.entity_id}/`);
+    expect(entity['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#entity`);
+    expect(entity.subjectOf['@id']).toBe(urn);
+    expect(ds.mainEntity['@id']).toBe(entity['@id']);
+  });
+
+  it('models the measured repo as a SoftwareSourceCode node for Organization ownership', () => {
     const e = entities.find((x) => x.github_repo === 'paul-gauthier/aider')!;
     const g = entityGraph(e, snapshot);
     const node = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
-    expect(node.codeRepository).toBe('https://github.com/Aider-AI/aider');
+    // Entity type may also be SoftwareSourceCode; select the repo node by #source id.
+    const source = g['@graph'].find((n: any) => n['@id']?.endsWith('#source'));
+    // codeRepository belongs on the #source SoftwareSourceCode node, not on the entity
+    expect(node.codeRepository).toBeUndefined();
+    expect(source).toBeTruthy();
+    expect(source['@type']).toBe('SoftwareSourceCode');
+    expect(source.codeRepository).toBe('https://github.com/Aider-AI/aider');
+    expect(source['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#source`);
+    expect(node.isBasedOn['@id']).toBe(source['@id']);
     expect(JSON.stringify(g)).not.toContain('paul-gauthier');
   });
 
@@ -44,7 +95,10 @@ describe('entityGraph', () => {
     const g = entityGraph(e, snapshot);
     const node = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
     const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
+    const source = g['@graph'].find((n: any) => n['@id']?.endsWith('#source'));
     expect(node.codeRepository).toBeUndefined();
+    expect(source).toBeUndefined();
+    expect(node.isBasedOn).toBeUndefined();
     expect(node.url).toBeUndefined();
     expect(node.sameAs).toBeUndefined();
     expect(ds.sameAs).toBeUndefined();
@@ -62,10 +116,10 @@ describe('snapshotDataset — the genesis DOI branch', () => {
     expect(ds.identifier).toEqual({ '@type': 'PropertyValue', propertyID: 'DOI', value: GENESIS_DOI, url: `https://doi.org/${GENESIS_DOI}` });
     expect(ds.sameAs).toBe(`https://doi.org/${GENESIS_DOI}`);
   });
-  it('a non-genesis snapshot gets a plain string identifier and no DOI sameAs', () => {
-    const future = { ...snapshot, snapshot_date: '2026-07-04' };
+  it('a non-genesis snapshot gets snapshot_id identity and no DOI sameAs', () => {
+    const future = { ...snapshot, snapshot_date: '2026-07-04', snapshot_id: 'deadbeefcafe' };
     const ds = snapshotDataset(future as any)['@graph'].find((n: any) => n['@type'] === 'Dataset');
-    expect(ds.identifier).toBe('evidaxis-snapshot-2026-07-04');
+    expect(ds.identifier).toBe('deadbeefcafe');
     expect(ds.sameAs).toBeUndefined();
   });
 });
@@ -94,5 +148,15 @@ describe('methodologyGraph', () => {
     const g = methodologyGraph('m1', '/methodology/v1/');
     const doc = g['@graph'].find((n: any) => Array.isArray(n['@type']));
     expect(doc.version).toBe('1');
+  });
+
+  it('links DefinedTermSet via about/mentions, not hasDefinedTerm on TechArticle', () => {
+    const g = methodologyGraph('m1', '/methodology/v1/');
+    const doc = g['@graph'].find((n: any) => Array.isArray(n['@type']));
+    const terms = g['@graph'].find((n: any) => n['@type'] === 'DefinedTermSet');
+    expect(doc.hasDefinedTerm).toBeUndefined();
+    expect(doc.about['@id']).toBe(terms['@id']);
+    expect(doc.mentions['@id']).toBe(terms['@id']);
+    expect(terms.hasDefinedTerm.length).toBeGreaterThan(0);
   });
 });

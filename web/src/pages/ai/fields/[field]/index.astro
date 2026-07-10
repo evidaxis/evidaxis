@@ -10,19 +10,20 @@ export function getStaticPaths() {
   }));
 }
 const { slug, label, cohorts } = Astro.props;
+const pageName = `${label} - field coverage`;
 const desc = `Evidaxis coverage of ${label}: ${cohorts.length} cohort(s) of open AI systems, measured by momentum.`;
 const SITE = 'https://evidaxis.org';
 const listJson = {
   '@context': 'https://schema.org', '@type': 'CollectionPage',
   '@id': `${SITE}/ai/fields/${slug}/#page`, url: `${SITE}/ai/fields/${slug}/`,
-  name: `${label}, Evidaxis`, isPartOf: { '@id': `${SITE}/#website` },
+  name: pageName, isPartOf: { '@id': `${SITE}/#website` },
   about: { '@type': 'ItemList', name: `${label} cohorts`, numberOfItems: cohorts.length,
     itemListElement: cohorts.map((c: any, i: number) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/ai/cohorts/${c.slug}/`, name: c.label })) },
 };
-const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: label, path: `/ai/fields/${slug}/` }]);
+const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Field: ${label}`, path: `/ai/fields/${slug}/` }]);
 ---
-<Base title={`${label}, Evidaxis`} description={desc} canonical={`/ai/fields/${slug}/`} jsonLd={[listJson, crumbs]}>
-  <nav class="wrap mono muted" style="font-size:.74rem;padding-top:1rem"><a href="/coverage/" style="border:none;color:inherit">coverage</a> / <span>{label}</span></nav>
+<Base title={`${pageName} | Evidaxis`} description={desc} canonical={`/ai/fields/${slug}/`} jsonLd={[listJson, crumbs]}>
+  <nav class="wrap mono muted" style="font-size:.74rem;padding-top:1rem"><a href="/coverage/" style="border:none;color:inherit">coverage</a> / <span>Field: {label}</span></nav>
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Field</p>

@@ -32,13 +32,13 @@ const desc = 'About Evidaxis, an independent observatory of momentum in open AI 
       )}
 
       <h2 id="cite">How to cite</h2>
-      <p>Each system has a canonical record at <span class="mono">evidaxis.org/e/&#123;entity_id&#125;</span> and a machine-readable record at <span class="mono">evidaxis.org/e/&#123;entity_id&#125;.json</span>. Cite the record plus the snapshot period, e.g.:</p>
-      <pre class="formula">Evidaxis, “&#123;System&#125;,” entity e_…, snapshot {snapshot.period}. https://evidaxis.org/e/e_…</pre>
+      <p>Each system has a canonical record at <span class="mono">evidaxis.org/e/&#123;entity_id&#125;</span> and a machine-readable record at <span class="mono">evidaxis.org/e/&#123;entity_id&#125;.json</span>. Cite the record with its claim-URN (entity + methodology + snapshot date) plus the snapshot identity, e.g.:</p>
+      <pre class="formula">Evidaxis, “&#123;System&#125;,” claim-URN urn:evidaxis:claim:e_…:m2:{SNAP_DATE}, snapshot_id {snapshot.snapshot_id}. https://evidaxis.org/e/e_…</pre>
       <p>The full dataset for a date is at <span class="mono">evidaxis.org/snapshots/{SNAP_DATE}/</span> with a downloadable JSON. All data is released under <strong>CC0 1.0</strong> (public domain); methodology prose under CC-BY-4.0; code under Apache-2.0.</p>
+      <p>The <strong>genesis seed deposit</strong> (m1, 19 systems, 2026-06-27) is at DOI <a href="https://doi.org/10.5281/zenodo.21076012">10.5281/zenodo.21076012</a>. The live archive is larger and methodology-versioned; cite the <em>current</em> snapshot by its own identity (<span class="mono">snapshot_id {snapshot.snapshot_id}</span>, period {snapshot.period}, date {SNAP_DATE}) and each measurement by its claim-URN. <!-- future per-version DOI slot: mint a Zenodo version DOI for this snapshot and list it here. --></p>
 
       <h2>Correct a record</h2>
       <p>Corrections become new versioned rows, never silent edits to a published score. Measurements follow the published method, not requests.</p>
-      <p>This snapshot is deposited at DOI <a href="https://doi.org/10.5281/zenodo.21076012">10.5281/zenodo.21076012</a>.</p>
 
       <h2>Governance</h2>
       <p>The methodology is the institution; the record outlives the keeper. The neutrality is not a promise, it is two mechanisms: no input to a score can be bought, and every score is checkable against its hash-pinned inputs with raw provenance published. Methodology changes are versioned and public, with a quarterly integrity report and an independent dispute panel planned for 2027. A snapshot missed is a week of the systems we track lost for good, so the archive only compounds.</p>
