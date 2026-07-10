@@ -14,7 +14,7 @@
  *   5. more than one <h1> on a page
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = new URL('../dist/', import.meta.url).pathname;
@@ -109,6 +109,41 @@ for (const file of htmlFiles) {
   const svgImg = (html.match(/role="img"/g) || []).length;
   const dataVals = (html.match(/<data value=/g) || []).length;
   if (svgImg > 0 && dataVals === 0) warns.push(`${r}: ${svgImg} role=img charts but 0 <data value> nodes`);
+}
+
+// 6. Archive permanence: every published snapshot and every entity ever present
+// must retain both its human and machine-readable static routes.
+const SNAPSHOTS = new URL('../../data/snapshots/', import.meta.url).pathname;
+const archiveSnapshots = readdirSync(SNAPSHOTS, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(entry.name))
+  .map((entry) => ({
+    date: entry.name,
+    snapshot: JSON.parse(readFileSync(join(SNAPSHOTS, entry.name, 'snapshot.json'), 'utf8')),
+  }))
+  .sort((a, b) => a.date.localeCompare(b.date));
+const latestDate = JSON.parse(readFileSync(new URL('../../data/latest.json', import.meta.url), 'utf8')).snapshot_date;
+const latestSnapshot = archiveSnapshots.find((entry) => entry.date === latestDate)?.snapshot;
+if (!latestSnapshot) errors.push(`data/latest.json points to missing snapshot ${latestDate}`);
+
+for (const { date } of archiveSnapshots) {
+  if (!existsSync(join(DIST, 'snapshots', date, 'index.html'))) errors.push(`snapshots/${date}/index.html: missing frozen snapshot route`);
+  if (!existsSync(join(DIST, 'snapshots', date, 'snapshot.json'))) errors.push(`snapshots/${date}/snapshot.json: missing frozen snapshot JSON twin`);
+}
+if (!existsSync(join(DIST, 'snapshots', 'index.html'))) errors.push('snapshots/index.html: missing snapshot archive index');
+if (!existsSync(join(DIST, 'snapshots', '2026-06-27', 'index.html'))) errors.push('snapshots/2026-06-27/index.html: missing genesis route');
+
+const lastSeen = new Map();
+for (const { date, snapshot } of archiveSnapshots) {
+  for (const entity of snapshot.entities) lastSeen.set(entity.entity_id, date);
+}
+for (const [id, date] of lastSeen) {
+  const htmlPath = join(DIST, 'e', id, 'index.html');
+  const jsonPath = join(DIST, 'e', `${id}.json`);
+  if (!existsSync(htmlPath)) errors.push(`e/${id}/index.html: missing permanent entity route`);
+  if (!existsSync(jsonPath)) errors.push(`e/${id}.json: missing permanent entity JSON twin`);
+  if (date !== latestDate && existsSync(htmlPath) && !/superseded/i.test(readFileSync(htmlPath, 'utf8'))) {
+    errors.push(`e/${id}/index.html: superseded entity page lacks superseded status`);
+  }
 }
 
 console.log(`checked ${htmlFiles.length} HTML pages`);

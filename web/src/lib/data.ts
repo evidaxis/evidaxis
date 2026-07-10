@@ -4,6 +4,12 @@
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import {
+  archiveEntityById, entityUniverse, latest, manifestForSnapshot,
+  snapshotByDate, snapshots,
+} from './archive';
+
+export { archiveEntityById, entityUniverse, latest, manifestForSnapshot, snapshotByDate, snapshots };
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url)); // repo root (Evidaxis/)
 
@@ -57,9 +63,8 @@ export type Snapshot = {
   counts: { entities: number; rising: number; watch: number; tracked: number; calibration: number; axis2_present: number };
 };
 
-const latest = readJson('data/latest.json');
 export const SNAP_DATE: string = latest.snapshot_date;
-export const snapshot: Snapshot = readJson(`data/snapshots/${SNAP_DATE}/snapshot.json`);
+export const snapshot: Snapshot = latest;
 export const provenance = readJson(`data/snapshots/${SNAP_DATE}/provenance.json`);
 export const manifest = readJson(`data/snapshots/${SNAP_DATE}/manifest.json`);
 export const taxonomy = readJson('taxonomy/nodes.json');

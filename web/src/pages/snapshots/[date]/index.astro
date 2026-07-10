@@ -1,34 +1,42 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import EntityTable from '../../../components/EntityTable.astro';
-import { snapshot, SNAP_DATE, entities, manifest } from '../../../lib/data';
+import { manifestForSnapshot, snapshots } from '../../../lib/data';
+import type { Snapshot } from '../../../lib/data';
 import { snapshotDataset, breadcrumb } from '../../../lib/jsonld';
+import { claimUrnForEntity } from '../../../lib/claim_urn';
 
 export function getStaticPaths() {
-  return [{ params: { date: SNAP_DATE }, props: {} }];
+  return snapshots.map((snapshot) => ({
+    params: { date: snapshot.snapshot_date },
+    props: { snapshot, manifest: manifestForSnapshot(snapshot.snapshot_date) },
+  }));
 }
-const all = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
-const desc = `Evidaxis snapshot ${SNAP_DATE}: momentum measurements for ${snapshot.counts.entities} AI systems we track, methodology ${snapshot.methodology_version}. Frozen, hash-verified, CC0 open data.`;
+const { snapshot, manifest } = Astro.props as { snapshot: Snapshot; manifest: any | null };
+const date = snapshot.snapshot_date;
+const all = [...snapshot.entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+const desc = `Evidaxis snapshot ${date}: momentum measurements for ${snapshot.counts.entities} AI systems, methodology ${snapshot.methodology_version}. Frozen, hash-verified, CC0 open data.`;
+const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.toFixed(digits);
 ---
-<Base title={`Snapshot ${SNAP_DATE} | Evidaxis`} description={desc} canonical={`/snapshots/${SNAP_DATE}/`} jsonTwin={`/snapshots/${SNAP_DATE}/snapshot.json`} jsonLd={[snapshotDataset(snapshot), breadcrumb([{ name: 'Snapshots', path: `/snapshots/${SNAP_DATE}/` }])]}>
+<Base title={`Snapshot ${date} | Evidaxis`} description={desc} canonical={`/snapshots/${date}/`} jsonTwin={`/snapshots/${date}/snapshot.json`} jsonLd={[snapshotDataset(snapshot), breadcrumb([{ name: 'Snapshot archive', path: '/snapshots/' }, { name: date, path: `/snapshots/${date}/` }])]}>
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Frozen snapshot</p>
-      <h1>Snapshot {SNAP_DATE}</h1>
-      <p class="lead" style="max-width:60ch">A frozen record of the measurements we took for the systems we track at period {snapshot.period}. Every input is hash-pinned and the raw provenance is published, so any score is checkable against its hash-pinned inputs. Released to the public domain under CC0 open data: cite it, audit it, check it.</p>
+      <p class="eyebrow">Frozen snapshot, dated record</p>
+      <h1>Snapshot {date}</h1>
+      <p class="lead" style="max-width:60ch">A frozen record of measurements taken for period {snapshot.period}. Every score, count, and claim reference below belongs to this dated snapshot.</p>
 
       <div class="meta mono" style="margin:1.2rem 0 1.6rem">
         <span>snapshot_id <b>{snapshot.snapshot_id}</b></span>
         <span>period <b>{snapshot.period}</b></span>
         <span>methodology <b>{snapshot.methodology_version}</b></span>
         <span>schema <b>{snapshot.schema_version}</b></span>
-        <span>manifest_hash <b>{manifest.manifest_hash.slice(0,12)}…</b></span>
+        {manifest?.manifest_hash && <span>manifest_hash <b>{manifest.manifest_hash.slice(0,12)}…</b></span>}
+        <span>entities <b>{snapshot.entities.length}</b></span>
         <span>license <b>{snapshot.license}</b></span>
-        <span>cite this deposit <a href="https://doi.org/10.5281/zenodo.21076012"><b>10.5281/zenodo.21076012</b></a></span>
       </div>
 
       <div class="row" style="margin-bottom:2rem">
-        <a class="badge" href={`/snapshots/${SNAP_DATE}/snapshot.json`} style="text-transform:none;font-size:.82rem;padding:8px 14px">Download snapshot.json ↓</a>
+        <a class="badge" href={`/snapshots/${date}/snapshot.json`} style="text-transform:none;font-size:.82rem;padding:8px 14px">Download snapshot.json ↓</a>
+        <a class="badge" href="/snapshots/" style="text-transform:none;font-size:.82rem;padding:8px 14px">Snapshot archive →</a>
         <a class="badge" href="/methodology/current/" style="text-transform:none;font-size:.82rem;padding:8px 14px">Methodology →</a>
       </div>
 
@@ -38,7 +46,29 @@ const desc = `Evidaxis snapshot ${SNAP_DATE}: momentum measurements for ${snapsh
       </div>
 
       <h2 style="font-size:1.4rem">All measured systems</h2>
-      <EntityTable entities={all} />
+      <div class="archive-table-wrap">
+        <table class="archive-table">
+          <thead><tr><th>System</th><th>Status</th><th>Momentum</th><th>Velocity z</th><th>Citation z</th></tr></thead>
+          <tbody>{all.map((e) => <tr>
+            <td><a href={`/e/${e.entity_id}/`}><strong>{e.name}</strong></a><small class="mono">{e.entity_id}</small><small class="mono urn">{claimUrnForEntity(e, snapshot)}</small></td>
+            <td>{e.status}</td>
+            <td>{fmt(e.momentum, 1)}</td>
+            <td>{fmt(e.axes?.github_commit_velocity?.cohort_z)}</td>
+            <td>{fmt(e.axes?.openalex_citation_momentum?.cohort_z)}</td>
+          </tr>)}</tbody>
+        </table>
+      </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .panel { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; }
+  .archive-table-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: 12px; background: var(--surface); }
+  .archive-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  th { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; color: var(--ink-mute); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td small { display: block; color: var(--ink-mute); margin-top: 3px; }
+  td .urn { font-size: .62rem; word-break: break-all; }
+</style>

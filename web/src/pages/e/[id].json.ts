@@ -1,15 +1,20 @@
 import type { APIRoute } from 'astro';
-import { entities, snapshot } from '../../lib/data';
+import { entityUniverse } from '../../lib/data';
+import type { ArchivedEntity } from '../../lib/archive';
 import { claimUrnForEntity } from '../../lib/claim_urn';
 
 export function getStaticPaths() {
-  return entities.map((e) => ({ params: { id: e.entity_id }, props: { e } }));
+  return entityUniverse.map((record) => ({ params: { id: record.entity.entity_id }, props: { record } }));
 }
 
 export const GET: APIRoute = ({ props }) => {
-  const e = (props as any).e;
+  const record = (props as any).record as ArchivedEntity;
+  const e = record.entity;
+  const snapshot = record.snapshot;
   const body = {
     entity: e,
+    record_status: record.recordStatus,
+    last_seen_snapshot: record.lastSeenSnapshot,
     // Format-independent canonical reference (CLAIM-URN.md); cite this, not the URL.
     claim_urn: claimUrnForEntity(e, snapshot),
     score_receipt: {
