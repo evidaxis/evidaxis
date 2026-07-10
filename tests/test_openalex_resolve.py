@@ -5,7 +5,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "collectors"))
-import openalex_resolve as oar  # noqa: E402
+import openalex_resolve as oar
 
 
 def _work(wid, title, year=2023, cites=100):
@@ -29,7 +29,7 @@ def test_scoring_picks_canonical_paper():
     cands = oar.get_candidates(entity, fake_fetch, "", "")
     assert cands[0]["work_id"] == "W4387321091"
     assert cands[0]["score"] > 0.3
-    assert [c for c in cands if c["work_id"] == "W222"][0]["score"] == 0.0
+    assert next(c for c in cands if c["work_id"] == "W222")["score"] == 0.0
 
 
 def test_empty_results_path():

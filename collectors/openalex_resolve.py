@@ -74,7 +74,7 @@ def fetch_json(url: str) -> dict[str, Any]:
                 time.sleep(2 ** attempt)
                 continue
             return {}
-        except Exception:  # noqa: BLE001 - network layer: degrade to "no results"
+        except Exception:  # network layer: degrade to "no results"
             time.sleep(2 ** attempt)
             continue
     return {}

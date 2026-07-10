@@ -8,7 +8,7 @@ import pytest
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "collectors"))
-import snapshot_identity as si  # noqa: E402
+import snapshot_identity as si
 
 
 def _minimal_snap(entities, snapshot_id="deadbeef0000", date="2026-07-10", period="2026-w28"):

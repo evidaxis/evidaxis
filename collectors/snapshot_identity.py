@@ -154,7 +154,6 @@ def check_collisions() -> int:
         if len(by_hash) < 2:
             continue
         # Distinct payloads under one snapshot_id — collision unless allowlisted.
-        dates_hashes = [(date, ph) for date, ph, _n in rows]
         # Check every pair of distinct hashes.
         items = list(by_hash.items())  # (hash, [dates...])
         for i in range(len(items)):
