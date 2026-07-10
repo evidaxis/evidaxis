@@ -26,7 +26,7 @@ const e = record.entity;
 const snapshot = record.snapshot;
 const isSuperseded = record.recordStatus === 'superseded';
 // Null-guard: thin/older-schema historical records may lack axes entirely
-// (review 2026-07-10) — a preserved record must render, never crash the build.
+// (review 2026-07-10)  -  a preserved record must render, never crash the build.
 const a1 = e.axes?.github_commit_velocity;
 const a2 = e.axes?.openalex_citation_momentum;
 const cs = isSuperseded ? [] : commitSeries(e.entity_id);
@@ -122,7 +122,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
         <p class="db-note mono">
           Three signals ship when the commit series is statistically sufficient; the rest are held in a reserved state
           until the data supports them. A reserved signal shows its reason, never a fabricated number.
-          <a href="/methodology/current/#derived">How these are computed.</a>
+          <a href={`/methodology/${snapshot.methodology_version === 'm1' ? 'v1' : snapshot.methodology_version}/#derived`}>How these are computed.</a>
         </p>
         <div class="db-grid">
           <SwingSignal series={cs} />
@@ -260,7 +260,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
   .backfill-panel .bf-cap b { color: var(--ink-soft); }
   .verdict-text { font-size: 1.05rem; margin: .5rem 0 0; max-width: 66ch; line-height: 1.6; }
   .path-rising { font-size: .82rem; margin: .9rem 0 0; color: var(--ink-soft); border-left: 3px solid var(--citation); padding-left: 12px; line-height: 1.55; }
-  .path-rising .pr-label { color: var(--citation); }
+  .path-rising .pr-label { color: var(--citation-ink); }
 
   .ent-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
   @media (max-width: 720px) { .ent-cols { grid-template-columns: 1fr; } }
@@ -281,7 +281,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
   .cite-urn b { color: var(--ink-soft); }
   .preserved-record { padding: 22px; }
   .preserved-record h1 { margin: .2rem 0; font-family: var(--font-display); }
-  .preserved-banner { margin: -22px -22px 22px; padding: 13px 22px; border-bottom: 1px solid var(--hairline); background: var(--paper); color: var(--citation); font-family: var(--font-mono); font-size: .78rem; font-weight: 600; }
+  .preserved-banner { margin: -22px -22px 22px; padding: 13px 22px; border-bottom: 1px solid var(--hairline); background: var(--paper); color: var(--citation-ink); font-family: var(--font-mono); font-size: .78rem; font-weight: 600; }
   .preserved-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 1.4rem; border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; background: var(--hairline); }
   .preserved-grid > div { display: flex; flex-direction: column; gap: 4px; padding: 14px; background: var(--surface); }
   .preserved-grid span, .preserved-grid small { font-family: var(--font-mono); font-size: .68rem; color: var(--ink-mute); }

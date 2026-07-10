@@ -125,7 +125,7 @@ const washH = Math.max(0, yGate - m.t);
       );
     })}
 
-    {/* null-citation rail — honest placement, not the median of the plane */}
+    {/* null-citation rail  -  honest placement, not the median of the plane */}
     <line x1={m.l} y1={m.t + planeH + railH - 1} x2={m.l + iw} y2={m.t + planeH + railH - 1} stroke="var(--hairline-2)" stroke-width="0.8" stroke-dasharray="1 3" />
     <text x={m.l} y={m.t + planeH + railH + 9} font-size="7" fill="var(--ink-mute)" class="svgtxt">no citation axis ({noCit.length})</text>
     {noCit.map((e) => {
@@ -154,24 +154,5 @@ const washH = Math.max(0, yGate - m.t);
     </dl>
   </figcaption>
 
-  <details class="chart-data">
-    <summary>Full data, {entities.length} systems</summary>
-    <table>
-      <thead><tr><th>System</th><th>Cohort</th><th class="num">Velocity z</th><th class="num">Citation z</th><th class="num">Momentum</th><th>Status</th></tr></thead>
-      <tbody>
-        {entities.map((e) => (
-          <tr>
-            <td>{e.name}</td>
-            <td>{cohortLabel(e.cohort)}</td>
-            <td class="num"><data value={String(e.axes.github_commit_velocity.cohort_z)}>{fmtZsafe(e.axes.github_commit_velocity.cohort_z)}</data></td>
-            <td class="num">{e.axes.openalex_citation_momentum.cohort_z != null
-              ? <data value={String(e.axes.openalex_citation_momentum.cohort_z)}>{fmtZsafe(e.axes.openalex_citation_momentum.cohort_z)}</data>
-              : <span class="muted">no axis</span>}</td>
-            <td class="num">{e.momentum != null ? <data value={String(e.momentum)}>{e.momentum}</data> : <span class="muted">n/a</span>}</td>
-            <td>{e.status}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </details>
+  {/* Full per-entity rows live on the snapshot JSON twin + RankTable; no duplicate table here (V4). */}
 </figure>

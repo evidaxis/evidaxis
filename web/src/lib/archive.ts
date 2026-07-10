@@ -1,10 +1,19 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Entity, Snapshot } from './data';
 
 const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Frozen verification-bundle artifact names under data/snapshots/{date}/. */
+export const SNAPSHOT_VERIFICATION_ARTIFACTS = [
+  'manifest.json',
+  'provenance.json',
+  'SHA256SUMS',
+  'dropped.json',
+] as const;
+export type SnapshotVerificationArtifact = (typeof SNAPSHOT_VERIFICATION_ARTIFACTS)[number];
 
 export type ArchivedEntity = {
   entity: Entity;
@@ -16,6 +25,30 @@ export type ArchivedEntity = {
 
 function readJson(path: string): any {
   return JSON.parse(readFileSync(path, 'utf8'));
+}
+
+/** Absolute path to a frozen snapshot artifact (read-only archive layer). */
+export function snapshotArtifactPath(date: string, name: string, repoRoot = REPO_ROOT): string {
+  return join(repoRoot, 'data', 'snapshots', date, name);
+}
+
+/** True when the frozen artifact exists on disk for that snapshot date. */
+export function hasSnapshotArtifact(date: string, name: string, repoRoot = REPO_ROOT): boolean {
+  return existsSync(snapshotArtifactPath(date, name, repoRoot));
+}
+
+/**
+ * Raw frozen bytes for a snapshot verification artifact. Pass-through only  - 
+ * no rewrite, no re-serialize. Returns null when the file is absent (e.g.
+ * dropped.json is optional on genesis).
+ */
+export function readSnapshotArtifactRaw(date: string, name: string, repoRoot = REPO_ROOT): Buffer | null {
+  const path = snapshotArtifactPath(date, name, repoRoot);
+  try {
+    return readFileSync(path);
+  } catch {
+    return null;
+  }
 }
 
 /** Enumerate immutable snapshot payloads. Exported with a root argument for tests. */
@@ -67,8 +100,30 @@ export const archiveEntityById = new Map(entityUniverse.map((record) => [record.
 
 export function manifestForSnapshot(date: string): any | null {
   try {
-    return readJson(join(REPO_ROOT, 'data', 'snapshots', date, 'manifest.json'));
+    return readJson(snapshotArtifactPath(date, 'manifest.json'));
   } catch {
     return null;
   }
+}
+
+export function provenanceForSnapshot(date: string): any | null {
+  try {
+    return readJson(snapshotArtifactPath(date, 'provenance.json'));
+  } catch {
+    return null;
+  }
+}
+
+/** Required verification files every snapshot ships (dropped.json optional). */
+export function verificationBundleForSnapshot(date: string, repoRoot = REPO_ROOT): {
+  required: { name: SnapshotVerificationArtifact; present: boolean }[];
+  optional: { name: 'dropped.json'; present: boolean };
+} {
+  return {
+    required: (['manifest.json', 'provenance.json', 'SHA256SUMS'] as const).map((name) => ({
+      name,
+      present: hasSnapshotArtifact(date, name, repoRoot),
+    })),
+    optional: { name: 'dropped.json', present: hasSnapshotArtifact(date, 'dropped.json', repoRoot) },
+  };
 }

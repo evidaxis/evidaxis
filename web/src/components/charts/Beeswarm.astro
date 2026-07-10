@@ -90,20 +90,5 @@ const descId = `bw-d-${Math.random().toString(36).slice(2, 8)}`;
     </dl>
   </figcaption>
 
-  <details class="chart-data">
-    <summary>Per-cohort momentum</summary>
-    <table>
-      <thead><tr><th>Cohort</th><th class="num">N</th><th class="num">Median</th><th>Members (momentum)</th></tr></thead>
-      <tbody>
-        {groups.map((g) => (
-          <tr>
-            <td>{cohortLabel(g.key)}</td>
-            <td class="num">{g.members.length}</td>
-            <td class="num">{Number.isFinite(g.med) ? <data value={String(Math.round(g.med))}>{Math.round(g.med)}</data> : 'n/a'}</td>
-            <td>{g.members.map((e) => `${e.name} (${e.momentum})`).join(', ') || 'none'}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </details>
+  {/* Cohort members + medians are in the figcaption dl and snapshot JSON twin (V4). */}
 </figure>

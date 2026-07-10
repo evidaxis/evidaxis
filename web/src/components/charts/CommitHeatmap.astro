@@ -45,17 +45,7 @@ const descId = `ch-d-${Math.random().toString(36).slice(2, 8)}`;
         <div><dt>total</dt><dd><data value={String(total)}>{total}</data></dd></div>
       </dl>
     </figcaption>
-    <details class="chart-data">
-      <summary>Weekly commits, {cells.length} weeks</summary>
-      <table>
-        <thead><tr><th class="num">Week</th><th class="num">Commits</th></tr></thead>
-        <tbody>
-          {cells.map((c) => (
-            <tr><td class="num">{c.index + 1}</td><td class="num"><data value={String(c.value)}>{c.value}</data></td></tr>
-          ))}
-        </tbody>
-      </table>
-    </details>
+    {/* Weekly commit series ships on the entity JSON twin / provenance (V4). */}
   </figure>
 ) : (
   <div class="chart-null" role="img" aria-label="no commit series">

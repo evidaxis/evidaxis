@@ -135,7 +135,7 @@ export function citationSeries(e: Entity): { year: number; n: number }[] {
 
 // Em-dash (U+2014) is the brand's #1 "AI-written" tell; strip it from any label
 // surfaced from the raw data (the published dataset keeps its value untouched).
-export const cleanLabel = (s: string) => s.replace(/\s*—\s*/g, ', ');
+export const cleanLabel = (s: string) => s.replace(/\s*\u2014\s*/g, ', ');
 
 export const industries = () => {
   const map = new Map<string, { slug: string; label: string; subniches: Map<string, { slug: string; label: string; cohortKey: string }> }>();
@@ -149,7 +149,7 @@ export const industries = () => {
   return map;
 };
 
-// D1 de-ranking (2026-07-10): cohort listings are alphabetical — the reader sorts.
+// D1 de-ranking (2026-07-10): cohort listings are alphabetical  -  the reader sorts.
 export const entitiesInCohort = (cohortKey: string) =>
   entities.filter((e) => e.cohort === cohortKey)
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -166,7 +166,7 @@ export const AXIS_LABEL: Record<string, string> = {
 export const fmtZ = (z: number | null) => (z == null ? 'no axis' : (z >= 0 ? '+' : '') + z.toFixed(2));
 export const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
 
-// deps.dev "dependents" — an R0 adoption signal ("who builds on it"), captured
+// deps.dev "dependents"  -  an R0 adoption signal ("who builds on it"), captured
 // point-in-time. It is DISPLAYED, never folded into the momentum score: the
 // scoring methodology is frozen (byte-frozen genesis), and this is a partial-
 // coverage side signal, not a scored axis. Honesty about that is the moat.

@@ -1,10 +1,10 @@
 ---
 /**
- * SHIP — recency-weighted swing (commit axis). Descriptive ratio of the trailing
+ * SHIP  -  recency-weighted swing (commit axis). Descriptive ratio of the trailing
  * 13-week slope vs the prior 39-week slope (declared windows, reproducible, not
  * predictive). 3-state component:
  *   SHIP     -> value + MACD-ish recent/prior slope bars + regime label
- *   RESERVED -> "reserved — <reason>" (never a fabricated number)
+ *   RESERVED -> "reserved  -  <reason>" (never a fabricated number)
  * Recolours in the dark band via --velocity. Geometry is SSR; values are <text>.
  */
 import { recencySwing } from '../../lib/derived';

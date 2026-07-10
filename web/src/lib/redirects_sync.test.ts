@@ -1,5 +1,5 @@
 /** The machine-auditable redirect map (redirects.yaml, CC0) must mirror the
- * actually-executing config (web/vercel.json) 1:1 — a divergence means the
+ * actually-executing config (web/vercel.json) 1:1  -  a divergence means the
  * published map lies about what the site does (2026-07-02 finding: yaml had
  * 2 of 5 rules and a live 301->404). Also: every static destination must
  * resolve to a real page directory in src/pages. */

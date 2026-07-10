@@ -14,9 +14,16 @@ const desc = `Every frozen Evidaxis measurement snapshot, from genesis through $
       <p class="lead" style="max-width:60ch">Every published measurement remains addressable here as a frozen dated record.</p>
       <div class="archive-table-wrap">
         <table>
-          <thead><tr><th>Date</th><th>Snapshot ID</th><th>Methodology</th><th>Entities</th><th>Record</th></tr></thead>
+          <caption>Every published Evidaxis snapshot, newest first</caption>
+          <thead><tr>
+            <th scope="col">Date</th>
+            <th scope="col">Snapshot ID</th>
+            <th scope="col">Methodology</th>
+            <th scope="col">Entities</th>
+            <th scope="col">Record</th>
+          </tr></thead>
           <tbody>{rows.map((snap) => <tr>
-            <td><time datetime={snap.snapshot_date}>{snap.snapshot_date}</time></td>
+            <th scope="row"><time datetime={snap.snapshot_date}>{snap.snapshot_date}</time></th>
             <td class="mono">{snap.snapshot_id}</td>
             <td class="mono">{snap.methodology_version}</td>
             <td>{snap.entities.length}</td>
@@ -31,7 +38,9 @@ const desc = `Every frozen Evidaxis measurement snapshot, from genesis through $
 <style>
   .archive-table-wrap { margin-top: 1.5rem; overflow-x: auto; border: 1px solid var(--hairline); border-radius: 12px; background: var(--surface); }
   table { width: 100%; border-collapse: collapse; }
+  caption { caption-side: top; text-align: left; padding: 12px 15px 4px; font-family: var(--font-mono); font-size: .72rem; color: var(--ink-mute); }
   th, td { padding: 13px 15px; text-align: left; border-bottom: 1px solid var(--hairline); }
-  th { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; color: var(--ink-mute); }
-  tbody tr:last-child td { border-bottom: 0; }
+  thead th { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+  tbody th { font-weight: 500; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
 </style>

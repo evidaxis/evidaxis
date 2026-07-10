@@ -16,8 +16,10 @@ export interface Props {
   entities?: Entity[];
   title?: string;
   limit?: number;
+  /** When false, omit per-row commit sparklines (homepage size budget). Default true. */
+  showSparks?: boolean;
 }
-const { entities = allEntities, title = 'Catalog', limit } = Astro.props;
+const { entities = allEntities, title = 'Catalog', limit, showSparks = true } = Astro.props;
 
 const cohortIdx = (key: string) => {
   const i = COHORT_ORDER.indexOf(key);
@@ -51,15 +53,16 @@ const sparkColor = (e: Entity) => {
   </div>
   <div class="rank-scroll">
     <table class="tbl" data-entitytable>
+      <caption>{title}: systems in this snapshot (cohort then alphabetical; optional client-side momentum sort)</caption>
       <thead>
         <tr>
-          <th>System</th>
-          <th>Cohort</th>
-          <th class="num">Velocity z</th>
-          <th class="num">Citation z</th>
-          <th class="num">Momentum</th>
-          <th>Status</th>
-          <th class="sp">Commits</th>
+          <th scope="col">System</th>
+          <th scope="col">Cohort</th>
+          <th scope="col" class="num">Velocity z</th>
+          <th scope="col" class="num">Citation z</th>
+          <th scope="col" class="num">Momentum</th>
+          <th scope="col">Status</th>
+          {showSparks && <th scope="col" class="sp">Commits</th>}
         </tr>
       </thead>
       <tbody>
@@ -72,13 +75,13 @@ const sparkColor = (e: Entity) => {
               data-sys={e.name.toLowerCase()}
               data-mo={e.momentum ?? -1}
             >
-              <td class="sys"><a href={`/e/${e.entity_id}/`}>{e.name}</a></td>
+              <th scope="row" class="sys"><a href={`/e/${e.entity_id}/`}>{e.name}</a></th>
               <td class="coh"><span class="cdot" style={`background:${cohortColor(e.cohort)}`}></span>{cohortLabel(e.cohort)}</td>
               <td class={`z num ${zClass(vz)}`}><data value={String(vz ?? '')}>{fmtZsafe(vz)}</data></td>
               <td class={`z num ${zClass(cz, true)}`}><data value={String(cz ?? '')}>{fmtZsafe(cz)}</data></td>
               <td class="mo num">{e.momentum != null ? <data value={String(e.momentum)}>{e.momentum}</data> : <span class="muted">n/a</span>}</td>
               <td><span class={`badge ${e.status}`}>{e.status}</span></td>
-              <td class="sp"><Sparkline values={commitSeries(e.entity_id)} color={sparkColor(e)} width={120} height={26} /></td>
+              {showSparks && <td class="sp"><Sparkline values={commitSeries(e.entity_id)} color={sparkColor(e)} width={120} height={26} /></td>}
             </tr>
           );
         })}
@@ -120,12 +123,14 @@ const sparkColor = (e: Entity) => {
   .mom-toggle input { accent-color: var(--velocity); }
   .rank-scroll { overflow-x: auto; }
   .tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .tbl caption { caption-side: top; text-align: left; padding: 10px 16px 0; font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); }
   .tbl thead th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
   .tbl thead th.num, .tbl td.num { text-align: right; font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
   .tbl tbody tr { border-bottom: 1px solid var(--hairline); transition: background .14s; }
   .tbl tbody tr:last-child { border-bottom: none; }
   .tbl tbody tr:hover { background: var(--rise-wash); }
-  .tbl td { padding: 13px 16px; vertical-align: middle; }
+  .tbl td, .tbl tbody th { padding: 13px 16px; vertical-align: middle; }
+  .tbl tbody th { font-weight: inherit; text-align: left; }
   .tbl .sys { font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
   .tbl .sys a { transition: color .15s; }
   .tbl .sys a:hover { color: var(--velocity); }
@@ -133,7 +138,7 @@ const sparkColor = (e: Entity) => {
   .tbl .coh .cdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 7px; vertical-align: baseline; }
   .tbl .z { font-size: 13px; }
   .tbl .z.zp { color: var(--velocity); }
-  .tbl .z.zp.cit { color: var(--citation); }
+  .tbl .z.zp.cit { color: var(--citation-ink); }
   .tbl .z.zn { color: var(--ink-mute); }
   .tbl .mo { font-weight: 600; font-size: 14px; }
   .tbl .sp { width: 132px; }

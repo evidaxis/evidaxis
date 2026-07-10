@@ -1,7 +1,8 @@
-/** JSON-LD builders. v1 frozen external contract — property names are load-bearing
+/** JSON-LD builders. v1 frozen external contract  -  property names are load-bearing
  *  (Google indexes them, LLMs train on them). Do not rename. */
 import type { DepsSignal, Entity, Snapshot } from './data';
 import { publicHomepage, publicOwnerType, publicRepoUrl, snapshots } from './data';
+import { hasSnapshotArtifact } from './archive';
 
 import registry from './methodology-registry.json';
 
@@ -317,9 +318,25 @@ export function snapshotDataset(snap: Snapshot) {
             measurementTechnique: `${methodologyPath(snap.methodology_version)}#citation`,
           },
         ],
-        distribution: [
-          { '@type': 'DataDownload', name: 'Full snapshot (JSON)', contentUrl: `${SITE}/snapshots/${snap.snapshot_date}/snapshot.json`, encodingFormat: 'application/json' },
-        ],
+        // Verification bundle: frozen hash-pinned artifacts (F8 / WP-H).
+        distribution: (() => {
+          const base = `${SITE}/snapshots/${snap.snapshot_date}`;
+          const downloads: { '@type': string; name: string; contentUrl: string; encodingFormat: string }[] = [
+            { '@type': 'DataDownload', name: 'Full snapshot (JSON)', contentUrl: `${base}/snapshot.json`, encodingFormat: 'application/json' },
+            { '@type': 'DataDownload', name: 'Input manifest (JSON)', contentUrl: `${base}/manifest.json`, encodingFormat: 'application/json' },
+            { '@type': 'DataDownload', name: 'Provenance (JSON)', contentUrl: `${base}/provenance.json`, encodingFormat: 'application/json' },
+            { '@type': 'DataDownload', name: 'SHA256 checksums', contentUrl: `${base}/SHA256SUMS`, encodingFormat: 'text/plain' },
+          ];
+          if (hasSnapshotArtifact(snap.snapshot_date, 'dropped.json')) {
+            downloads.push({
+              '@type': 'DataDownload',
+              name: 'Dropped entities (JSON)',
+              contentUrl: `${base}/dropped.json`,
+              encodingFormat: 'application/json',
+            });
+          }
+          return downloads;
+        })(),
       },
     ],
   };
@@ -366,7 +383,7 @@ export function methodologyGraph(version: string, canonicalVersionPath: string) 
         creator: { '@id': ORG_ID },
         publisher: { '@id': ORG_ID },
         inLanguage: 'en',
-        // hasDefinedTerm belongs on DefinedTermSet, not TechArticle — link via about/mentions.
+        // hasDefinedTerm belongs on DefinedTermSet, not TechArticle  -  link via about/mentions.
         about: { '@id': termsId },
         mentions: { '@id': termsId },
       },

@@ -1,10 +1,12 @@
 ---
-import { snapshot } from '../lib/data';
 // Version-aware ONLY where the methodology actually changed between versions.
 // m1 (genesis): rising at z >= 0, no cohort floor. m2 (D10a): rising at z >= 1,
 // cohort must have >= 5 members. Everything else is identical across versions, so
 // the default keeps the frozen v1 page byte-identical. Old pages are never
 // rewritten (METHODOLOGY-VERSIONING.md rule 5); each version renders its own gate.
+//
+// C5: frozen methodology pages must NOT import the live snapshot (no period
+// interpolation that drifts when "current" advances).
 export interface Props { version?: string }
 const { version = 'm1' } = Astro.props;
 const isM2 = version === 'm2';
@@ -76,10 +78,25 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
 <p class="prose">
   Every record carries its <span class="mono">methodology_version</span> and <span class="mono">snapshot_id</span>.
   Methodology is frozen, not recomputed: a correction is a new version on a new row, never an edit to an
-  old one, so a citation of “momentum 60.4, {snapshot.period}” stays meaningful forever. Every input is
+  old one, so a citation of “momentum 60.4, period 2026-w26” stays meaningful forever. Every input is
   hash-pinned in each snapshot’s manifest and the raw provenance is published, so a record stays checkable
   against its hash-pinned inputs.
 </p>
+
+<h2 id="derived">Derived signals</h2>
+<p class="prose" id="derived-overview">
+  Entity pages may show second-order reads computed from the published series. A signal ships only when
+  the series is statistically sufficient; otherwise it is held in a reserved state with an explicit reason,
+  never a fabricated number. These anchors are stable per methodology version.
+</p>
+<ul class="prose">
+  <li id="derived-swing"><strong>Recency swing</strong>  -  recent-window slope vs prior-window slope on the commit series.</li>
+  <li id="derived-sharpe"><strong>Signal-to-noise (Sharpe-like)</strong>  -  mean weekly commits over residual volatility; requires a long enough series.</li>
+  <li id="derived-changepoint"><strong>Changepoint</strong>  -  largest slope break in the commit series when enough weeks exist.</li>
+  <li id="derived-lag"><strong>Citation lag</strong>  -  reserved until dual-axis history is long enough to estimate lag structure.</li>
+  <li id="derived-alpha"><strong>Alpha</strong>  -  reserved residual momentum vs cohort peers.</li>
+  <li id="derived-gate-eta"><strong>Gate ETA</strong>  -  reserved estimate of time-to-convergence under current slopes.</li>
+</ul>
 
 <h2>Known limitations</h2>
 <ul class="prose">

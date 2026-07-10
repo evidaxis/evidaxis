@@ -98,9 +98,23 @@ def _latest_snapshot():
 
 
 def _slope(points):
-    """Least-squares slope of log(1+value) over day index."""
+    """Least-squares slope of log(1+value) over real ISO-day deltas (C2).
+
+    points: sequence of (iso_date_str, value). x is days since the first point,
+    not range(n), so capture gaps do not artificially steepen the slope.
+    """
     n = len(points)
-    xs = list(range(n))
+    if n < 2:
+        return 0.0
+
+    def _iso_day(s: str) -> int:
+        # Accept YYYY-MM-DD or full ISO timestamps; date part only.
+        d = s[:10]
+        y, m, day = (int(p) for p in d.split("-"))
+        return date(y, m, day).toordinal()
+
+    t0 = _iso_day(points[0][0])
+    xs = [_iso_day(t) - t0 for t, _ in points]
     ys = [math.log1p(v) for _, v in points]
     mx, my = sum(xs) / n, sum(ys) / n
     den = sum((x - mx) ** 2 for x in xs)

@@ -2,6 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import { manifestForSnapshot, snapshots } from '../../../lib/data';
 import type { Snapshot } from '../../../lib/data';
+import { hasSnapshotArtifact } from '../../../lib/archive';
 import { snapshotDataset, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
 
@@ -14,6 +15,7 @@ export function getStaticPaths() {
 const { snapshot, manifest } = Astro.props as { snapshot: Snapshot; manifest: any | null };
 const date = snapshot.snapshot_date;
 const all = [...snapshot.entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+const hasDropped = hasSnapshotArtifact(date, 'dropped.json');
 const desc = `Evidaxis snapshot ${date}: momentum measurements for ${snapshot.counts.entities} AI systems, methodology ${snapshot.methodology_version}. Frozen, hash-verified, CC0 open data.`;
 const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.toFixed(digits);
 ---
@@ -38,6 +40,23 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
         <a class="badge" href={`/snapshots/${date}/snapshot.json`} style="text-transform:none;font-size:.82rem;padding:8px 14px">Download snapshot.json ↓</a>
         <a class="badge" href="/snapshots/" style="text-transform:none;font-size:.82rem;padding:8px 14px">Snapshot archive →</a>
         <a class="badge" href="/methodology/current/" style="text-transform:none;font-size:.82rem;padding:8px 14px">Methodology →</a>
+      </div>
+
+      <div class="panel verify-bundle" style="padding:18px 20px;margin-bottom:2rem">
+        <div class="eyebrow">Verification bundle</div>
+        <p style="font-size:.9rem;margin:.5rem 0 .9rem;color:var(--ink-soft);max-width:70ch">
+          Frozen, hash-pinned inputs for this snapshot. Download the checksums file, then each
+          listed artifact, and verify with <span class="mono">sha256sum -c SHA256SUMS</span>.
+        </p>
+        <ul class="verify-list mono">
+          <li><a href={`/snapshots/${date}/manifest.json`}>manifest.json</a> <span class="muted">input pin list</span></li>
+          <li><a href={`/snapshots/${date}/provenance.json`}>provenance.json</a> <span class="muted">raw source provenance</span></li>
+          <li><a href={`/snapshots/${date}/SHA256SUMS`}>SHA256SUMS</a> <span class="muted">text/plain checksums</span></li>
+          {hasDropped && (
+            <li><a href={`/snapshots/${date}/dropped.json`}>dropped.json</a> <span class="muted">entities dropped this run</span></li>
+          )}
+          <li><a href={`/snapshots/${date}/snapshot.json`}>snapshot.json</a> <span class="muted">scored measurements</span></li>
+        </ul>
       </div>
 
       <div class="panel" style="padding:18px 20px;margin-bottom:2rem">
@@ -66,9 +85,16 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
       <h2 style="font-size:1.4rem">All measured systems</h2>
       <div class="archive-table-wrap">
         <table class="archive-table">
-          <thead><tr><th>System</th><th>Status</th><th>Momentum</th><th>Velocity z</th><th>Citation z</th></tr></thead>
+          <caption>All systems measured in snapshot {date}, with claim-URN per row</caption>
+          <thead><tr>
+            <th scope="col">System</th>
+            <th scope="col">Status</th>
+            <th scope="col">Momentum</th>
+            <th scope="col">Velocity z</th>
+            <th scope="col">Citation z</th>
+          </tr></thead>
           <tbody>{all.map((e) => <tr>
-            <td><a href={`/e/${e.entity_id}/`}><strong>{e.name}</strong></a><small class="mono">{e.entity_id}</small><small class="mono urn">{claimUrnForEntity(e, snapshot)}</small></td>
+            <th scope="row"><a href={`/e/${e.entity_id}/`}><strong>{e.name}</strong></a><small class="mono">{e.entity_id}</small><small class="mono urn">{claimUrnForEntity(e, snapshot)}</small></th>
             <td>{e.status}</td>
             <td>{fmt(e.momentum, 1)}</td>
             <td>{fmt(e.axes?.github_commit_velocity?.cohort_z)}</td>
@@ -82,11 +108,16 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
 
 <style>
   .panel { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; }
+  .verify-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: .82rem; }
+  .verify-list a { font-weight: 500; }
+  .verify-list .muted { color: var(--ink-mute); margin-left: .4rem; font-size: .74rem; }
   .archive-table-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: 12px; background: var(--surface); }
   .archive-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+  .archive-table caption { caption-side: top; text-align: left; padding: 12px 14px 4px; font-family: var(--font-mono); font-size: .72rem; color: var(--ink-mute); }
   th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--hairline); vertical-align: top; }
-  th { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; color: var(--ink-mute); }
-  tbody tr:last-child td { border-bottom: 0; }
-  td small { display: block; color: var(--ink-mute); margin-top: 3px; }
-  td .urn { font-size: .62rem; word-break: break-all; }
+  thead th { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+  tbody th { font-weight: 400; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+  th small, td small { display: block; color: var(--ink-mute); margin-top: 3px; }
+  th .urn, td .urn { font-size: .62rem; word-break: break-all; }
 </style>

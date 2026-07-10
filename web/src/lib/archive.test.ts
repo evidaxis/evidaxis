@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildEntityUniverse, enumerateSnapshots, snapshots } from './archive';
+import {
+  buildEntityUniverse, enumerateSnapshots, hasSnapshotArtifact, readSnapshotArtifactRaw, snapshots,
+} from './archive';
 
 const entity = (entity_id: string, name: string): any => ({ entity_id, name });
 const snap = (snapshot_date: string, entities: any[]): any => ({ snapshot_date, entities });
@@ -12,6 +14,24 @@ describe('archive enumeration', () => {
       [...snapshots.map((s) => s.snapshot_date)].sort(),
     );
     expect(snapshots.every((s) => /^\d{4}-\d{2}-\d{2}$/.test(s.snapshot_date))).toBe(true);
+  });
+});
+
+describe('verification artifacts (WP-H)', () => {
+  it('every snapshot has the required frozen verification files', () => {
+    for (const s of snapshots) {
+      for (const name of ['manifest.json', 'provenance.json', 'SHA256SUMS'] as const) {
+        expect(hasSnapshotArtifact(s.snapshot_date, name)).toBe(true);
+        const raw = readSnapshotArtifactRaw(s.snapshot_date, name);
+        expect(raw).not.toBeNull();
+        expect(raw!.byteLength).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('dropped.json is optional (absent on genesis, present later)', () => {
+    expect(hasSnapshotArtifact('2026-06-27', 'dropped.json')).toBe(false);
+    expect(hasSnapshotArtifact('2026-07-10', 'dropped.json')).toBe(true);
   });
 });
 

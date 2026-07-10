@@ -81,17 +81,25 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   }
 
   for (const file of distFiles) {
+    const r = rel(file);
+    // WP-H: verification-bundle artifacts are frozen raw pass-through of the
+    // archive (hash-pinned provenance / dropped lists). They intentionally
+    // retain historical github_repo strings for auditability. Person-free is
+    // enforced on derived HTML/JSON-LD surfaces, not on the integrity files.
+    if (/(^|\/)(provenance\.json|dropped\.json|SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
+      continue;
+    }
     const raw = readFileSync(file, 'utf8');
     // Review 2026-07-10: scan decoded variants too (percent / \uXXXX / HTML-entity)
-    // and the file's own relative path — an encoded handle is still a handle.
+    // and the file's own relative path - an encoded handle is still a handle.
     const variants = [raw.toLowerCase(), relative(DIST, file).toLowerCase()];
     try { variants.push(decodeURIComponent(raw).toLowerCase()); } catch {}
     variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
-    variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d))).toLowerCase());
+    variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)).toLowerCase()));
     const body = variants.join('\n');
     for (const [owner, mode] of bannedOwners) {
       const needle = mode === 'slug' ? `${owner}/` : owner;
-      if (body.includes(needle)) errors.push(`${rel(file)}: contains private or stale repository owner ${owner}`);
+      if (body.includes(needle)) errors.push(`${r}: contains private or stale repository owner ${owner}`);
     }
   }
 }
@@ -192,9 +200,44 @@ if (!latestSnapshot) errors.push(`data/latest.json points to missing snapshot ${
 for (const { date } of archiveSnapshots) {
   if (!existsSync(join(DIST, 'snapshots', date, 'index.html'))) errors.push(`snapshots/${date}/index.html: missing frozen snapshot route`);
   if (!existsSync(join(DIST, 'snapshots', date, 'snapshot.json'))) errors.push(`snapshots/${date}/snapshot.json: missing frozen snapshot JSON twin`);
+  // WP-H / F8: verification bundle must ship with every built snapshot.
+  for (const artifact of ['manifest.json', 'provenance.json', 'SHA256SUMS']) {
+    if (!existsSync(join(DIST, 'snapshots', date, artifact))) {
+      errors.push(`snapshots/${date}/${artifact}: missing verification-bundle artifact`);
+    }
+  }
+  // dropped.json is optional (genesis has none); if present on disk it must be built.
+  const srcDropped = join(SNAPSHOTS, date, 'dropped.json');
+  if (existsSync(srcDropped) && !existsSync(join(DIST, 'snapshots', date, 'dropped.json'))) {
+    errors.push(`snapshots/${date}/dropped.json: source present but dist missing`);
+  }
 }
 if (!existsSync(join(DIST, 'snapshots', 'index.html'))) errors.push('snapshots/index.html: missing snapshot archive index');
 if (!existsSync(join(DIST, 'snapshots', '2026-06-27', 'index.html'))) errors.push('snapshots/2026-06-27/index.html: missing genesis route');
+
+// WP-J / V1: homepage HTML size budget (dist, not gzip). Hard assert.
+const HOME_BUDGET = 250 * 1024; // 250 KB
+const homePath = join(DIST, 'index.html');
+if (existsSync(homePath)) {
+  const homeBytes = statSync(homePath).size;
+  if (homeBytes > HOME_BUDGET) {
+    errors.push(`index.html: homepage dist HTML ${homeBytes} bytes exceeds ${HOME_BUDGET} byte budget (250KB)`);
+  }
+} else {
+  errors.push('index.html: missing homepage');
+}
+
+// WP-K: _charttest must never ship in dist or the sitemap (build-only / private).
+for (const bad of ['_charttest', 'charttest']) {
+  if (existsSync(join(DIST, bad)) || existsSync(join(DIST, bad, 'index.html'))) {
+    errors.push(`${bad}/: charttest route must not appear in dist`);
+  }
+}
+const sitemapPath = join(DIST, 'sitemap-0.xml');
+if (existsSync(sitemapPath)) {
+  const sm = readFileSync(sitemapPath, 'utf8');
+  if (/charttest/i.test(sm)) errors.push('sitemap-0.xml: charttest must not be listed');
+}
 
 const lastSeen = new Map();
 for (const { date, snapshot } of archiveSnapshots) {

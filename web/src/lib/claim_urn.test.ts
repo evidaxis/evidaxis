@@ -4,7 +4,7 @@ import { ClaimUrnError, claimUrn, claimUrnForEntity, parseClaimUrn } from './cla
 const ACC = 'EVX:SYS:Y92940K5ESN7';
 const LEGACY = 'e_H6PPP8CA9RR'; // the form live snapshots actually carry
 
-// 20 shared vectors mirrored in tests/test_claim_urn.py — both implementations must agree.
+// 20 shared vectors mirrored in tests/test_claim_urn.py  -  both implementations must agree.
 const SHARED_VECTORS: Array<[string, string, string, string]> = [
   [LEGACY, 'm2', '2026-w27', 'urn:evidaxis:claim:e_H6PPP8CA9RR:m2:2026-w27'],
   [LEGACY, 'm2', '2026-07-03', 'urn:evidaxis:claim:e_H6PPP8CA9RR:m2:2026-07-03'],
@@ -60,7 +60,7 @@ describe('claim_urn (TS mirror of collectors/claim_urn.py)', () => {
       snapshot_date: '2026-07-04',
     };
     expect(claimUrnForEntity(e, snap)).toBe('urn:evidaxis:claim:e_H6PPP8CA9RR:m2:2026-07-04');
-    // period must NOT be used — two dates in the same week must mint different URNs
+    // period must NOT be used  -  two dates in the same week must mint different URNs
     const snapEarlier = { ...snap, snapshot_date: '2026-07-03' };
     expect(claimUrnForEntity(e, snapEarlier)).toBe('urn:evidaxis:claim:e_H6PPP8CA9RR:m2:2026-07-03');
     expect(claimUrnForEntity(e, snap)).not.toBe(claimUrnForEntity(e, snapEarlier));

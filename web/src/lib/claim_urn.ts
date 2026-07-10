@@ -1,8 +1,8 @@
-/** claim-URN — the format-independent canonical reference (see CLAIM-URN.md).
+/** claim-URN  -  the format-independent canonical reference (see CLAIM-URN.md).
  *  TS mirror of collectors/claim_urn.py: the grammar is a LOCKED external
  *  contract, so keep it byte-identical to the Python reference implementation.
  *  A claim-URN names "what Evidaxis asserts about system X, under methodology M,
- *  at epoch T" — it is per-ENTITY (a claim is an assertion about a system), never
+ *  at epoch T"  -  it is per-ENTITY (a claim is an assertion about a system), never
  *  minted for aggregate snapshots (those keep their DOI / snapshot-id identity). */
 import type { Entity, Snapshot } from './data';
 

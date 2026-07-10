@@ -1,12 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import Scatter from '../components/charts/Scatter.astro';
-import Beeswarm from '../components/charts/Beeswarm.astro';
-import Donut from '../components/charts/Donut.astro';
 import CitBars from '../components/charts/CitBars.astro';
-import Sparkline from '../components/Sparkline.astro';
 import RankTable from '../components/RankTable.astro';
-import { snapshot, entities, industries, entitiesInCohort, SNAP_DATE, commitSeries } from '../lib/data';
+import { snapshot, entities, industries, entitiesInCohort, SNAP_DATE } from '../lib/data';
 import { cohortColor, cohortLabel, COHORT_ORDER } from '../lib/cohorts';
 import { orgGraph, snapshotDataset } from '../lib/jsonld';
 
@@ -14,11 +10,6 @@ const c = snapshot.counts;
 const nCohorts = Object.keys(snapshot.cohorts).length;
 const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
 const hero = byMom.find((e) => e.axes.openalex_citation_momentum.status === 'present') ?? byMom[0];
-const topWatch = byMom.find((e) => e.status === 'watch');
-const topTracked = byMom.find((e) => e.status === 'tracked');
-const heroVz = hero.axes.github_commit_velocity.cohort_z;
-const heroCz = hero.axes.openalex_citation_momentum.cohort_z;
-const fz = (z: number | null) => (z == null ? 'no axis' : (z >= 0 ? '+' : '') + z.toFixed(2));
 
 const cohortDesc: Record<string, string> = {
   'robotics-embodied': 'Policies, simulators and embodied agents.',
@@ -94,78 +85,35 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
     </div>
   </section>
 
-  <!-- ================= 1.0 THE INSTRUMENT ================= -->
+  <!-- ================= 1.0 THE INSTRUMENT (text summary; charts on /coverage) ================= -->
   <section id="methodology">
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">1.0, The instrument</span></div>
       <h2 class="rv">Two axes. One gate.</h2>
       <p class="sec-sub rv">Each axis is normalized within its cohort, so &ldquo;rising&rdquo; means rising relative to its peers. Stars and raw size are never scored. The gate publishes recognition only, and recognition only ever points up.</p>
 
-      <div class="axes-grid">
-        <div>
-          <div class="axis-list">
-            <div class="axis-item rv">
-              <span class="axis-chip vel">velocity</span>
-              <div><h3>Development velocity</h3><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
-            </div>
-            <div class="axis-item rv">
-              <span class="axis-chip cit">citation</span>
-              <div><h3>Citation momentum</h3><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
-            </div>
-            <div class="axis-item rv">
-              <span class="axis-chip gate">gate</span>
-              <div><h3>The convergence gate</h3><p>A system earns the Rising badge only when both axes rise at once. Watch is one axis rising with the other still present; single-axis systems lack a second axis to converge; tracked dual-axis systems are measured for context; calibration anchors are measured, not badged.</p></div>
-            </div>
-          </div>
-          <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up.</div>
+      <div class="axis-list">
+        <div class="axis-item rv">
+          <span class="axis-chip vel">velocity</span>
+          <div><h3>Development velocity</h3><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
         </div>
-
-        <div class="rv">
-          <div class="panel">
-            <div class="panel-bar">
-              <div class="tl"><i></i><i></i><i></i></div>
-              <span class="addr">VELOCITY &times; CITATION · cohort-z</span>
-              <span class="tag">{c.rising} RISING</span>
-            </div>
-            <div class="panel-body"><Scatter /></div>
-          </div>
+        <div class="axis-item rv">
+          <span class="axis-chip cit">citation</span>
+          <div><h3>Citation momentum</h3><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
+        </div>
+        <div class="axis-item rv">
+          <span class="axis-chip gate">gate</span>
+          <div><h3>The convergence gate</h3><p>A system earns the Rising badge only when both axes rise at once. Watch is one axis rising with the other still present; single-axis systems lack a second axis to converge; tracked dual-axis systems are measured for context; calibration anchors are measured, not badged.</p></div>
         </div>
       </div>
+      <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. <a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
     </div>
   </section>
 
-  <!-- ================= 2.0 THE SIGNATURE (dark band) ================= -->
-  <section class="band glow" aria-label="Convergence, the signature view">
-    <div class="wrap">
-      <span class="sec-num rv">2.0, The signature</span>
-      <div class="band-head rv"><h2>The convergence is rare. The record of it is exact.</h2></div>
-      <p class="band-sub rv">Where development velocity and citation momentum agree, a system rises. At this baseline snapshot, none do yet.</p>
-
-      <div class="band-charts">
-        <div class="rv">
-          <div class="band-chart-ttl">Convergence scatter · {snapshot.snapshot_id}</div>
-          <Scatter />
-          <p class="howto"><b>How to read:</b> up-and-right is convergence. A ringed dot is a system where both axes rose this period; {c.rising === 0 ? 'none do at this snapshot.' : `${c.rising} do.`}</p>
-        </div>
-        <div class="rv">
-          <div class="band-chart-ttl">Momentum by cohort · beeswarm</div>
-          <Beeswarm />
-          <p class="howto"><b>How to read:</b> each dot is a system placed by momentum; the bar is the cohort median.</p>
-        </div>
-      </div>
-
-      <div class="band-legend rv">
-        {COHORT_ORDER.map((k) => (
-          <span class="key" style={`color:${cohortColor(k)}`}><i></i>{cohortLabel(k)}</span>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 3.0 STATE OF SNAPSHOT ================= -->
+  <!-- ================= 2.0 STATE OF SNAPSHOT + ONE COMPACT TABLE ================= -->
   <section id="snapshot">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num rv">3.0, State of snapshot {snapshot.snapshot_id}</span></div>
+      <div class="sec-head"><span class="sec-num rv">2.0, State of snapshot {snapshot.snapshot_id}</span></div>
       <h2 class="rv">Convergence is rare, and that is the point.</h2>
       <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {c.entities} systems across {nCohorts} frontiers in period {snapshot.period}, scored every week, each input hash-pinned. {c.rising === 0 ? 'None cross the gate yet' : `${c.rising} cross the gate`}. A fast codebase runs years ahead of its citations, and a genuinely new system has no citation history yet, so convergence stays rare on purpose. Every weekly snapshot deepens the record the next flare gets measured against.</p>
 
@@ -174,85 +122,48 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
           <div class="top"><span class="label">Rising</span><span class="badge rising">both axes</span></div>
           <div class="num">{c.rising}</div>
           <div class="delta">{c.rising === 0 ? 'no convergence this snapshot, by design' : 'the full badge, velocity + citations'}</div>
-          <div class="spark-wrap empty">{c.rising === 0 ? 'awaiting the first convergence' : ''}</div>
         </div>
         <div class="stat watch rv">
           <div class="top"><span class="label">Watch</span><span class="badge watch">one rising</span></div>
           <div class="num">{c.watch}</div>
           <div class="delta">one axis rising, dual-axis present (not single-axis)</div>
-          <div class="spark-wrap">{topWatch && <Sparkline values={commitSeries(topWatch.entity_id)} color="var(--citation)" height={32} />}</div>
         </div>
         <div class="stat tracked rv">
           <div class="top"><span class="label">Tracked</span><span class="badge tracked">context</span></div>
           <div class="num">{c.tracked + c.calibration}</div>
           <div class="delta">tracked + single-axis + calibration, measured for context</div>
-          <div class="spark-wrap">{topTracked && <Sparkline values={commitSeries(topTracked.entity_id)} color="var(--ink-mute)" height={32} />}</div>
         </div>
       </div>
 
-      <RankTable title="Catalog" />
+      <!-- Single compact catalog table (no per-row sparklines  -  see /coverage for the chart wall). -->
+      <RankTable title="Catalog" showSparks={false} />
     </div>
   </section>
 
-  <!-- ================= 4.0 COVERAGE ================= -->
-  <section id="coverage">
+  <!-- ================= 3.0 COVERAGE (compact; full charts on /coverage) ================= -->
+  <section id="coverage" class="below-fold">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num rv">4.0, Coverage</span></div>
+      <div class="sec-head"><span class="sec-num rv">3.0, Coverage</span></div>
       <h2 class="rv">{nCohorts} frontiers under watch.</h2>
       <p class="sec-sub rv">Across {nCohorts} cohorts, every score is checkable against its hash-pinned inputs. Each system is normalized only against its own cohort.</p>
 
-      <div class="cov-grid">
-        <div>
-          <div class="cohort-cards">
-            {COHORT_ORDER.map((k) => {
-              const es = entitiesInCohort(k);
-              return (
-                <a class="cohort rv" href={cohortSlug(k)}>
-                  <span class="swatch" style={`background:${cohortColor(k)}`}></span>
-                  <div class="meta">
-                    <div class="name">{cohortLabel(k)}</div>
-                    <div class="desc">{cohortDesc[k] ?? ''}</div>
-                  </div>
-                  <div class="count">{es.length}<span>SYSTEMS</span></div>
-                </a>
-              );
-            })}
-          </div>
-
-          <div class="panel swarm-card rv">
-            <div class="panel-bar">
-              <div class="tl"><i></i><i></i><i></i></div>
-              <span class="addr">momentum by cohort · all {c.entities} systems</span>
-              <span class="tag">{c.entities} SYSTEMS</span>
-            </div>
-            <div class="panel-body"><Beeswarm /></div>
-          </div>
-
-          <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, and the frontier we are still extending <span class="arr" aria-hidden="true">&rarr;</span></a></p>
-        </div>
-
-        <div class="cov-right">
-          <div class="donut-pair rv">
-            <div class="donut-card">
-              <Donut numerator={c.rising} denominator={c.entities} label="convergence" />
-              <div class="cap">cross the gate<br>(both axes rising)</div>
-            </div>
-            <div class="donut-card">
-              <Donut numerator={c.axis2_present} denominator={c.entities} label="axis coverage" color="var(--citation)" />
-              <div class="cap">have a measurable<br>citation axis</div>
-            </div>
-          </div>
-
-          <div class="panel rv">
-            <div class="panel-bar">
-              <div class="tl"><i></i><i></i><i></i></div>
-              <span class="addr">{hero.name} · citations by year</span>
-              <span class="tag" style="color:var(--citation)">CITATION AXIS</span>
-            </div>
-            <div class="panel-body"><CitBars entity={hero} /></div>
-          </div>
-        </div>
+      <div class="cohort-cards">
+        {COHORT_ORDER.map((k) => {
+          const es = entitiesInCohort(k);
+          return (
+            <a class="cohort rv" href={cohortSlug(k)}>
+              <span class="swatch" style={`background:${cohortColor(k)}`}></span>
+              <div class="meta">
+                <div class="name">{cohortLabel(k)}</div>
+                <div class="desc">{cohortDesc[k] ?? ''}</div>
+              </div>
+              <div class="count">{es.length}<span>SYSTEMS</span></div>
+            </a>
+          );
+        })}
       </div>
+
+      <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, chart wall, and the frontier we are still extending <span class="arr" aria-hidden="true">&rarr;</span></a></p>
     </div>
   </section>
 </Base>
@@ -290,32 +201,17 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
   @media (prefers-reduced-motion: reduce) { .sc-1, .sc-2 { animation: none; } }
 
   /* ---- instrument ---- */
-  .axes-grid { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 48px; align-items: start; margin-top: 34px; }
-  .axis-list { display: flex; flex-direction: column; margin-top: 6px; }
+  .axis-list { display: flex; flex-direction: column; margin-top: 34px; }
   .axis-item { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; padding: 20px 0; border-top: 1px solid var(--hairline); }
   .axis-item:first-child { border-top: 0; padding-top: 0; }
   .axis-chip { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: 6px 11px; border-radius: 7px; white-space: nowrap; font-weight: 500; align-self: start; }
   .axis-chip.vel { color: var(--velocity); background: var(--rise-wash); border: 1px solid rgba(12,110,99,.25); }
-  .axis-chip.cit { color: var(--citation); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
+  .axis-chip.cit { color: var(--citation-ink); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
   .axis-chip.gate { color: var(--ink-mute); background: var(--paper-2); border: 1px solid var(--hairline); }
   .axis-item h3 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -.01em; }
   .axis-item p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
   .gate-note { margin-top: 26px; font-size: .95rem; color: var(--ink-soft); background: var(--paper-2); border: 1px solid var(--hairline); border-left: 2px solid var(--velocity); border-radius: 0 10px 10px 0; padding: 16px 18px; }
   .gate-note b { color: var(--ink); }
-
-  /* ---- dark band layout (skin + retheme live in global.css .band) ---- */
-  .band-head { text-align: center; max-width: 32ch; margin: 0 auto 14px; }
-  .band-head h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em; font-size: clamp(2.1rem,4vw,3.4rem); line-height: 1.08; }
-  .band-sub { text-align: center; max-width: 58ch; margin: 0 auto 50px; font-size: 1.05rem; line-height: 1.62; }
-  .band-charts { display: grid; grid-template-columns: 1.32fr 1fr; gap: 46px; align-items: center; }
-  .band-chart-ttl { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; color: var(--ink-mute); }
-  .band-chart-ttl::before { content: ""; width: 18px; height: 1px; background: currentColor; opacity: .5; }
-  .band-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 36px; justify-content: center; }
-  .band-legend .key { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .02em; }
-  .band-legend .key i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: currentColor; box-shadow: 0 0 8px currentColor; }
-  .howto { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; color: var(--ink-mute); }
-  .howto b { color: var(--ink-soft); font-weight: 500; }
-  .howto::before { content: "\22B3"; flex: none; color: var(--velocity); }
 
   /* ---- stat cards ---- */
   .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 36px; }
@@ -324,15 +220,13 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
   .stat .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
   .stat .num { font-family: var(--font-display); font-weight: 600; font-size: 3.1rem; line-height: 1; letter-spacing: -.04em; margin: 14px 0 0; }
   .stat .delta { font-family: var(--font-mono); font-size: 12px; margin-top: 8px; color: var(--ink-soft); }
-  .stat .spark-wrap { margin-top: 14px; min-height: 32px; }
-  .stat .spark-wrap.empty { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); display: flex; align-items: center; }
   .stat.rising .num { color: var(--velocity); }
-  .stat.watch .num { color: var(--citation); }
+  .stat.watch .num { color: var(--citation-ink); }
   .stat.tracked .num { color: var(--ink-soft); }
 
   /* ---- coverage ---- */
-  .cov-grid { display: grid; grid-template-columns: 1.18fr .82fr; gap: 44px; align-items: start; margin-top: 40px; }
-  .cohort-cards { display: flex; flex-direction: column; gap: 16px; }
+  .below-fold { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+  .cohort-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
   .cohort { display: flex; align-items: center; gap: 18px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 22px; box-shadow: var(--shadow-card); transition: transform .2s, box-shadow .2s; }
   .cohort:hover { transform: translateY(-2px); box-shadow: var(--shadow-float); }
   .cohort .swatch { width: 13px; height: 13px; border-radius: 50%; flex: none; }
@@ -341,31 +235,20 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
   .cohort .desc { font-size: .9rem; color: var(--ink-soft); margin-top: 2px; }
   .cohort .count { font-family: var(--font-display); font-weight: 600; font-size: 1.7rem; color: var(--ink); line-height: 1; letter-spacing: -.02em; text-align: right; }
   .cohort .count span { font-family: var(--font-mono); font-size: .62rem; font-weight: 400; color: var(--ink-mute); letter-spacing: .08em; display: block; margin-top: 3px; }
-  .swarm-card { margin-top: 16px; }
-  .cov-right { display: flex; flex-direction: column; gap: 16px; }
-  .donut-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .donut-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px 16px; text-align: center; box-shadow: var(--shadow-card); }
-  .donut-card .cap { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); margin-top: 10px; line-height: 1.45; }
 
   /* ---- reveal ---- */
-  /* hidden-before-reveal ONLY when JS is present (html.js set inline in <head>):
-     crawlers and no-JS readers always get fully visible content */
   :global(html.js) .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
   :global(html.js) .rv.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { :global(html.js) .rv { opacity: 1; transform: none; transition: none; } }
 
   /* ---- responsive ---- */
-  @media (max-width: 980px) { .band-charts { grid-template-columns: 1fr; gap: 42px; } }
   @media (max-width: 760px) {
     .hero { padding: 40px 0 30px; }
     .hero-grid { grid-template-columns: 1fr; gap: 46px; }
-    .axes-grid { grid-template-columns: 1fr; gap: 30px; }
     .stat-row { grid-template-columns: 1fr; }
-    .cov-grid { grid-template-columns: 1fr; gap: 28px; }
     .statcard { position: static; margin: 12px 0 0; display: inline-block; animation: none; }
     .mock-main { transform: none; }
   }
-  @media (max-width: 420px) { .donut-pair { grid-template-columns: 1fr; } }
 </style>
 
 <script>

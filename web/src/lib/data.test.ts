@@ -25,14 +25,13 @@ describe('entityById', () => {
 });
 
 describe('entitiesInCohort', () => {
-  it('returns members of the cohort sorted by momentum descending', () => {
+  it('returns members of the cohort sorted alphabetically by name (no momentum ladder)', () => {
     const ck = Object.keys(snapshot.cohorts)[0];
     const got = entitiesInCohort(ck);
     expect(got.length).toBeGreaterThan(0);
     expect(got.every((e) => e.cohort === ck)).toBe(true);
-    for (let i = 1; i < got.length; i++) {
-      expect((got[i - 1].momentum ?? -1) >= (got[i].momentum ?? -1)).toBe(true);
-    }
+    const names = got.map((e) => e.name);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
   });
 });
 
@@ -41,7 +40,7 @@ describe('industries() taxonomy join', () => {
     const map = industries();
     expect(map.size).toBeGreaterThan(0);
     for (const ind of map.values()) {
-      expect(ind.label).not.toContain('—');
+      expect(ind.label).not.toContain('\u2014');
       expect(ind.subniches.size).toBeGreaterThan(0);
     }
   });
@@ -49,7 +48,7 @@ describe('industries() taxonomy join', () => {
 
 describe('cleanLabel', () => {
   it('replaces the em-dash with a comma and leaves clean text alone', () => {
-    expect(cleanLabel('Robotics — Embodied AI')).toBe('Robotics, Embodied AI');
+    expect(cleanLabel('Robotics \u2014 Embodied AI')).toBe('Robotics, Embodied AI');
     expect(cleanLabel('Already clean')).toBe('Already clean');
   });
 });

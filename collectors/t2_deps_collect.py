@@ -45,6 +45,9 @@ COLLECTOR_VERSION = "t2_deps_m2"
 DEPSDEV = "https://api.deps.dev"
 SYSTEMS = ("pypi", "npm", "cargo")  # ecosystems deps.dev exposes dependent counts for
 PIN_PATH = REPO / "data" / "deps_id_map.json"
+# Total-failure sensor (map#4): if >50% of repos hit fetch_error in one run,
+# treat as outage and exit 1. One-bad-repo does not trip (capture-first).
+MAX_ERROR_RATE = 0.50
 
 
 def _fetch_json(url: str, tries: int = 3, timeout: int = 25):
@@ -311,9 +314,15 @@ def main() -> int:
         print(f"[{COLLECTOR_VERSION}] THREAT: {counts['pin_broken']} pinned package identities no longer "
               "resolve - an identity change is a decision, not drift. Investigate before re-running.")
         return 1
+    n = len(records)
+    error_rate = counts["fetch_error"] / n if n else 1.0
     if counts["matched"] == 0 and counts["fetch_error"] > 0:
         print(f"[{COLLECTOR_VERSION}] DEGRADED: zero matches with {counts['fetch_error']} fetch errors "
               "(deps.dev outage?) - failing the run so the day is not recorded as absence.")
+        return 1
+    if error_rate > MAX_ERROR_RATE:
+        print(f"[{COLLECTOR_VERSION}] DEGRADED: fetch_error rate {error_rate:.0%} "
+              f"> {MAX_ERROR_RATE:.0%} ({counts['fetch_error']}/{n}) - failing the run")
         return 1
     return 0
 

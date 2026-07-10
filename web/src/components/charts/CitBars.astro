@@ -58,17 +58,7 @@ const descId = `cb-d-${Math.random().toString(36).slice(2, 8)}`;
         <div><dt>latest yr</dt><dd><data value={String(series[series.length - 1].n)}>{series[series.length - 1].n}</data></dd></div>
       </dl>
     </figcaption>
-    <details class="chart-data">
-      <summary>Citations by year</summary>
-      <table>
-        <thead><tr><th>Year</th><th class="num">Citations</th></tr></thead>
-        <tbody>
-          {series.map((s) => (
-            <tr><td><time datetime={String(s.year)}>{s.year}</time></td><td class="num"><data value={String(s.n)}>{s.n}</data></td></tr>
-          ))}
-        </tbody>
-      </table>
-    </details>
+    {/* Yearly citation counts ship on the entity JSON twin (V4). */}
   </figure>
 ) : (
   <div class="chart-null" role="img" aria-label="no citation axis for this system">

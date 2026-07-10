@@ -22,7 +22,7 @@ export function cohortColor(cohortKey: string): string {
 /** Human label for a cohort key. Em-dash (U+2014, brand-banned) -> comma. */
 export function cohortLabel(cohortKey: string): string {
   const raw = snapshot.cohorts[cohortKey]?.label ?? cohortKey;
-  return raw.replace(/\s*—\s*/g, ', ');
+  return raw.replace(/\s*\u2014\s*/g, ', ');
 }
 
 /** Short label for dense axes (beeswarm columns) where the full name collides.

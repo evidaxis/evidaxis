@@ -49,13 +49,7 @@ const descId = `ca-d-${Math.random().toString(36).slice(2, 8)}`;
         <div><dt>years</dt><dd><data value={String(cum.length)}>{cum.length}</data></dd></div>
       </dl>
     </figcaption>
-    <details class="chart-data">
-      <summary>Cumulative citations by year</summary>
-      <table>
-        <thead><tr><th>Year</th><th class="num">Cumulative</th></tr></thead>
-        <tbody>{cum.map((s) => (<tr><td><time datetime={String(s.year)}>{s.year}</time></td><td class="num"><data value={String(s.n)}>{s.n}</data></td></tr>))}</tbody>
-      </table>
-    </details>
+    {/* Cumulative series is derived from the entity JSON twin (V4). */}
   </figure>
 ) : (
   <div class="chart-null" role="img" aria-label="no citation axis"><span class="nx">&empty;</span><span>no citation axis</span></div>

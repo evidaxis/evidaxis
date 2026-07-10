@@ -144,3 +144,43 @@ def test_linkage_confirmed_name_match_is_identity(monkeypatch):
                           ("/v3/systems/pypi/", (200, PKG_OK)), ("/v3/systems/", (404, None))])
     out = deps.resolve_unpinned("a/one")
     assert out["coverage"] == "matched" and out["newly_pinned"] is True
+
+
+def test_fetch_error_rate_above_half_fails(tmp_path, monkeypatch):
+    """map#4 / map#26: >50% fetch_error in one run must exit 1 (outage sensor)."""
+    repos = ["a/one", "b/two", "c/three", "d/four"]
+    pins = {r: {"system": "pypi", "package": r.split("/")[1]} for r in repos}
+    _seed(tmp_path, repos, pins=pins)
+    monkeypatch.setattr(deps, "REPO", tmp_path)
+    monkeypatch.setattr(deps, "PIN_PATH", tmp_path / "data" / "deps_id_map.json")
+    fail_pkgs = {"one", "two", "three"}  # 3/4 = 75% > 50%
+
+    def majority_outage(url, tries=3, timeout=25):
+        for pkg in fail_pkgs:
+            if f"/packages/{pkg}" in url:
+                return None, None
+        if ":dependents" in url:
+            return 200, json.dumps(DEP_OK).encode()
+        return 200, json.dumps(PKG_OK).encode()
+
+    monkeypatch.setattr(deps, "_fetch_json", majority_outage)
+    assert deps.main() == 1
+
+
+def test_one_bad_repo_fetch_error_does_not_trip_sensor(tmp_path, monkeypatch):
+    """map#26: a single fetch_error among healthy pins must exit 0."""
+    repos = ["a/one", "b/two", "c/three", "d/four"]
+    pins = {r: {"system": "pypi", "package": r.split("/")[1]} for r in repos}
+    _seed(tmp_path, repos, pins=pins)
+    monkeypatch.setattr(deps, "REPO", tmp_path)
+    monkeypatch.setattr(deps, "PIN_PATH", tmp_path / "data" / "deps_id_map.json")
+
+    def one_bad(url, tries=3, timeout=25):
+        if "/packages/one" in url:
+            return None, None  # outage for a/one only (1/4 = 25% ≤ 50%)
+        if ":dependents" in url:
+            return 200, json.dumps(DEP_OK).encode()
+        return 200, json.dumps(PKG_OK).encode()
+
+    monkeypatch.setattr(deps, "_fetch_json", one_bad)
+    assert deps.main() == 0

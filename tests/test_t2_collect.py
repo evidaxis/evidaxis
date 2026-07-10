@@ -58,16 +58,33 @@ def test_total_failure_exits_nonzero_not_green(tmp_path, monkeypatch):
 
 
 def test_error_rate_above_floor_fails(tmp_path, monkeypatch):
+    """map#4 / map#26: error rate above MAX_ERROR_RATE (0.20) must exit 1 (outage sensor)."""
     _seed_repo(tmp_path, ["a/one", "b/two", "c/three", "d/four"])
     calls = {"n": 0}
 
-    def flaky(url, token, **kw):
+    def majority_fail(url, token, **kw):
+        calls["n"] += 1
+        # 3 of 4 fail → 75% > 50%
+        return (500, b"") if calls["n"] <= 3 else (200, _gh_body())
+
+    monkeypatch.setattr(t2_collect, "REPO", tmp_path)
+    monkeypatch.setattr(t2_collect, "_fetch", majority_fail)
+    assert t2_collect.capture() == 1
+
+
+def test_one_bad_repo_does_not_trip_sensor(tmp_path, monkeypatch):
+    """map#26: capture-first — a single bad repo must not fail the whole run."""
+    # 1 of 10 = 10% < MAX_ERROR_RATE 0.20 — capture-first holds without loosening prod.
+    _seed_repo(tmp_path, [f"o{i}/r{i}" for i in range(10)])
+    calls = {"n": 0}
+
+    def one_bad(url, token, **kw):
         calls["n"] += 1
         return (500, b"") if calls["n"] == 1 else (200, _gh_body())
 
     monkeypatch.setattr(t2_collect, "REPO", tmp_path)
-    monkeypatch.setattr(t2_collect, "_fetch", flaky)
-    assert t2_collect.capture() == 1  # 1/4 = 25% > 20% floor
+    monkeypatch.setattr(t2_collect, "_fetch", one_bad)
+    assert t2_collect.capture() == 0
 
 
 def test_healthy_capture_exits_zero_and_appends_history(tmp_path, monkeypatch):

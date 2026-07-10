@@ -30,7 +30,7 @@ describe('cohortColor', () => {
 describe('cohortLabel', () => {
   it('strips the brand-banned em-dash (U+2014) to a comma', () => {
     // at least one real cohort label carries an em-dash; none must survive in the output
-    for (const ck of COHORT_ORDER) expect(cohortLabel(ck)).not.toContain('—');
+    for (const ck of COHORT_ORDER) expect(cohortLabel(ck)).not.toContain('\u2014');
   });
   it('falls back to the key for an unknown cohort', () => {
     expect(cohortLabel('nope')).toBe('nope');

@@ -29,7 +29,7 @@ const c = cohortColor(entity.cohort);
 
 const vz = entity.axes.github_commit_velocity.cohort_z;
 const cz = entity.axes.openalex_citation_momentum.cohort_z;
-// Both axes required to plot self on the plane — null z never coerced to 0.
+// Both axes required to plot self on the plane  -  null z never coerced to 0.
 const selfPlot = vz != null && cz != null;
 
 const peers = entitiesInCohort(entity.cohort).filter((e) => e.entity_id !== entity.entity_id);

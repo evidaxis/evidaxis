@@ -31,7 +31,8 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/charttest') && !page.includes('/methodology/current/'),
+      // _charttest is an underscore private route (not built); filter is belt-and-suspenders.
+      filter: (page) => !page.includes('/charttest') && !page.includes('/_charttest') && !page.includes('/methodology/current/'),
       serialize(item) {
         const path = new URL(item.url).pathname;
         item.lastmod = (path.includes('/methodology/') || path.includes('/about/'))
@@ -42,10 +43,16 @@ export default defineConfig({
         return item;
       },
     }),
-    // Sentry — только браузерные ошибки (сайт статический). Без DSN не подключаем (no-op).
+    // Sentry — browser error-capture ONLY (WP-J / V1). Tracing + session replay off:
+    // biggest client-bundle win; observability stack otherwise stays intact.
     ...(SENTRY_DSN
       ? [sentry({
           dsn: SENTRY_DSN,
+          tracesSampleRate: 0,
+          replaysSessionSampleRate: 0,
+          replaysOnErrorSampleRate: 0,
+          // Drop browserTracingIntegration from the generated client snippet.
+          bundleSizeOptimizations: { excludeTracing: true },
           ...(SENTRY_AUTH_TOKEN
             ? { sourceMapsUploadOptions: { org: 'doctor-ads', project: 'evidaxis', authToken: SENTRY_AUTH_TOKEN } }
             : {}),

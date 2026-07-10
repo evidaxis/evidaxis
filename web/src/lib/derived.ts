@@ -119,7 +119,7 @@ function logSeries(weekly: number[]): number[] {
 const countNonZero = (weekly: number[]): number => weekly.reduce((c, v) => (v > 0 ? c + 1 : c), 0);
 
 // ---------------------------------------------------------------------------
-//  SHIP — recency-weighted swing (commit axis)
+//  SHIP  -  recency-weighted swing (commit axis)
 // ---------------------------------------------------------------------------
 
 /**
@@ -162,7 +162,7 @@ export function recencySwing(weekly: number[]): RecencySwing | Reserved {
 }
 
 // ---------------------------------------------------------------------------
-//  SHIP-WITH-CAVEAT — commit-axis Sharpe
+//  SHIP-WITH-CAVEAT  -  commit-axis Sharpe
 // ---------------------------------------------------------------------------
 
 /**
@@ -207,7 +207,7 @@ export function commitSharpe(weekly: number[]): CommitSharpe | Reserved {
 }
 
 // ---------------------------------------------------------------------------
-//  SHIP-WITH-CAVEAT — commit-axis changepoint (k_max = 1)
+//  SHIP-WITH-CAVEAT  -  commit-axis changepoint (k_max = 1)
 // ---------------------------------------------------------------------------
 
 /**
@@ -219,7 +219,7 @@ export function commitSharpe(weekly: number[]): CommitSharpe | Reserved {
  * than the whole-series residual std avoids the trap where a genuine kink
  * inflates the single-line residual and masks itself.
  *
- * Undersampled series (< 8 points) RESERVE — insufficient, never "no changepoint".
+ * Undersampled series (< 8 points) RESERVE  -  insufficient, never "no changepoint".
  */
 export function commitChangepoint(weekly: number[]): CommitChangepoint | NoChangepoint | Reserved {
   // Runs on the raw weekly cadence (commits/week), not log-space: a regime

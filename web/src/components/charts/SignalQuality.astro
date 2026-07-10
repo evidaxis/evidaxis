@@ -37,16 +37,7 @@ const q = signalQuality(entity, series);
       <ul>{q.derived_reserved.map((s) => <li class="mono reserved"><span class="dot" aria-hidden="true"></span>{s}</li>)}</ul>
     </div>
   </div>
-  <details class="chart-data">
-    <summary>Full signal ledger</summary>
-    <table>
-      <thead><tr><th>Signal</th><th>State</th></tr></thead>
-      <tbody>
-        {q.derived_shipped.map((s) => <tr><td>{s}</td><td>shipped</td></tr>)}
-        {q.derived_reserved.map((s) => <tr><td>{s}</td><td>reserved</td></tr>)}
-      </tbody>
-    </table>
-  </details>
+  {/* Shipped/reserved lists are already visible above; no twin table (V4). */}
 </figure>
 <style>
   .sigquality { color: var(--ink); border: 1px solid var(--hairline); border-radius: 10px; padding: 12px 14px;

@@ -21,14 +21,15 @@ const entities = [...raw].sort((a, b) => {
 ---
 <div class="table-scroll" style="overflow-x:auto">
 <table class="table">
+  <caption>Entity catalog: momentum, axis sparklines, and deps.dev dependents</caption>
   <thead>
     <tr>
-      <th>System</th>
-      <th>Status</th>
-      <th class="num">Momentum</th>
-      <th>Dev velocity</th>
-      <th>Citation momentum</th>
-      <th class="num">Dependents</th>
+      <th scope="col">System</th>
+      <th scope="col">Status</th>
+      <th scope="col" class="num">Momentum</th>
+      <th scope="col">Dev velocity</th>
+      <th scope="col">Citation momentum</th>
+      <th scope="col" class="num">Dependents</th>
     </tr>
   </thead>
   <tbody>
@@ -40,10 +41,10 @@ const entities = [...raw].sort((a, b) => {
       const dep = deps.get(e.entity_id) ?? null;
       return (
         <tr>
-          <td>
+          <th scope="row">
             <a href={`/e/${e.entity_id}/`} style="font-weight:500;border:none">{e.name}</a>
             <div class="mono muted" style="font-size:.68rem">{e.entity_id}</div>
-          </td>
+          </th>
           <td><StatusBadge status={e.status} /></td>
           <td class="num">{e.momentum != null ? <data value={e.momentum}>{e.momentum.toFixed(1)}</data> : 'n/a'}</td>
           <td>

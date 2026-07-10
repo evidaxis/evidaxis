@@ -106,7 +106,7 @@ describe('entityGraph', () => {
   });
 });
 
-describe('snapshotDataset — the genesis DOI branch', () => {
+describe('snapshotDataset  -  the genesis DOI branch', () => {
   it('attaches the Zenodo DOI (identifier + sameAs) only on the genesis snapshot', () => {
     // Genesis-dated fixture (robust to `latest` advancing past genesis once weekly snapshots
     // accrue), matching the sibling non-genesis test below.
@@ -121,6 +121,21 @@ describe('snapshotDataset — the genesis DOI branch', () => {
     const ds = snapshotDataset(future as any)['@graph'].find((n: any) => n['@type'] === 'Dataset');
     expect(ds.identifier).toBe('deadbeefcafe');
     expect(ds.sameAs).toBeUndefined();
+  });
+
+  it('lists verification-bundle DataDownloads (manifest, provenance, SHA256SUMS)', () => {
+    const ds = snapshotDataset(snapshot)['@graph'].find((n: any) => n['@type'] === 'Dataset');
+    expect(Array.isArray(ds.distribution)).toBe(true);
+    const names = ds.distribution.map((d: any) => d.name);
+    expect(names).toEqual(expect.arrayContaining([
+      'Full snapshot (JSON)',
+      'Input manifest (JSON)',
+      'Provenance (JSON)',
+      'SHA256 checksums',
+    ]));
+    const sums = ds.distribution.find((d: any) => d.name === 'SHA256 checksums');
+    expect(sums.encodingFormat).toBe('text/plain');
+    expect(sums.contentUrl).toContain(`/snapshots/${snapshot.snapshot_date}/SHA256SUMS`);
   });
 });
 

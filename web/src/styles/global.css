@@ -264,7 +264,8 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
   text-transform: uppercase; padding: 6px 11px; border-radius: 7px; white-space: nowrap;
   font-weight: 500; align-self: start; }
 .axis-chip.vel { color: var(--velocity); background: var(--rise-wash); border: 1px solid rgba(12,110,99,.25); }
-.axis-chip.cit { color: var(--citation); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
+/* V3: --citation-ink for small text labels (WCAG AA); --citation for lines/fills/large */
+.axis-chip.cit { color: var(--citation-ink); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
 .axis-chip.gate { color: var(--ink-mute); background: var(--paper-2); border: 1px solid var(--hairline); }
 .gate-note { margin-top: 26px; font-size: .95rem; color: var(--ink-soft); background: var(--paper-2);
   border: 1px solid var(--hairline); border-left: 2px solid var(--velocity); border-radius: 0 10px 10px 0;
@@ -292,6 +293,7 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
   --c3:         #8ea0e6;
   --velocity:   #27c2ad;
   --citation:   #f0982f;
+  --citation-ink: #f0b05a; /* readable small text on dark band */
   --slate:      #8ea0e6;
   --rise-wash:  rgba(39,194,173,.16);
 }
@@ -340,7 +342,7 @@ ul.prose li, ol.prose li { margin-bottom: .5rem; }
 .chart-dl dd { margin: 0; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 500; }
 .chart-dl dd data { font-variant-numeric: tabular-nums; }
 .chart-dl .teal { color: var(--velocity); }
-.chart-dl .amber { color: var(--citation); }
+.chart-dl .amber { color: var(--citation-ink); }
 .chart-dl .slate { color: var(--slate); }
 .chart-verdict { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft);
   margin-top: 6px; line-height: 1.5; }

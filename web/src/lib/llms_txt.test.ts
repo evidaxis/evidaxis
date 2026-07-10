@@ -1,6 +1,6 @@
 /**
  * Structural contract for /llms.txt (WP-E): status-first, non-ranked catalog.
- * Shape test — not a full text snapshot (counts move with the live snapshot).
+ * Shape test  -  not a full text snapshot (counts move with the live snapshot).
  */
 import { describe, it, expect } from 'vitest';
 import { GET } from '../pages/llms.txt';
@@ -62,6 +62,15 @@ describe('llms.txt structure (WP-E status-first, no-rank)', () => {
     const txt = await body();
     const keyBlock = txt.slice(txt.indexOf('## Key resources'));
     expect(keyBlock).toContain('https://evidaxis.org/methodology-registry.json');
+  });
+
+  it('includes How to verify with the verification bundle URLs', async () => {
+    const txt = await body();
+    expect(txt).toContain('## How to verify');
+    expect(txt).toContain('/manifest.json');
+    expect(txt).toContain('/provenance.json');
+    expect(txt).toContain('/SHA256SUMS');
+    expect(txt).toMatch(/sha256sum -c SHA256SUMS/);
   });
 
   it('emits per-entity claim-URN and JSON twin in the catalog', async () => {
