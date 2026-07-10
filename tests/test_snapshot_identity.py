@@ -192,3 +192,31 @@ def test_check_rejects_swapped_allowlist_hashes(tmp_path, monkeypatch):
     monkeypatch.setattr(si, "SNAPSHOTS", root)
     monkeypatch.setattr(si, "ERRATA", errata)
     assert si.check_collisions() == 1
+
+
+def test_rewrite_capture_refs_date_guarded(tmp_path, monkeypatch):
+    """Same-capture ts_1 rows + entity cards follow the id; published rows stay put."""
+    hist = tmp_path / "data" / "history"
+    hist.mkdir(parents=True)
+    today_row = json.dumps({"v": "ts_1", "snapshot_id": "oldoldoldold",
+                            "captured_at": "2026-07-10T19:35:00Z", "momentum": 1.0})
+    published_row = json.dumps({"v": "ts_1", "snapshot_id": "oldoldoldold",
+                                "captured_at": "2026-07-09T10:00:00Z", "momentum": 2.0})
+    (hist / "e_X.jsonl").write_text(today_row + "\n" + published_row + "\n")
+
+    ents = tmp_path / "entities"
+    ents.mkdir()
+    (ents / "e_X.md").write_text(
+        "---\n  snapshot_id: oldoldoldold\n  snapshot_date: 2026-07-10\n---\n")
+    (ents / "e_Y.md").write_text(
+        "---\n  snapshot_id: oldoldoldold\n  snapshot_date: 2026-07-09\n---\n")
+
+    monkeypatch.setattr(si, "HISTORY", hist)
+    monkeypatch.setattr(si, "ENTITIES", ents)
+    n = si.rewrite_capture_refs("oldoldoldold", "newnewnewnew", "2026-07-10")
+    assert n == 2  # 1 history row + 1 card
+    lines = (hist / "e_X.jsonl").read_text().splitlines()
+    assert json.loads(lines[0])["snapshot_id"] == "newnewnewnew"   # today: rewritten
+    assert json.loads(lines[1])["snapshot_id"] == "oldoldoldold"   # published: untouched
+    assert "newnewnewnew" in (ents / "e_X.md").read_text()
+    assert "oldoldoldold" in (ents / "e_Y.md").read_text()

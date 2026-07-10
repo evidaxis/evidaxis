@@ -33,6 +33,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 SNAPSHOTS = REPO / "data" / "snapshots"
 ERRATA = REPO / "data" / "observations" / "errata_snapshot_id.json"
+HISTORY = REPO / "data" / "history"
+ENTITIES = REPO / "entities"
 
 
 def canonical_payload(snap: dict) -> dict:
@@ -82,6 +84,47 @@ def rewrite_snapshot(path: Path) -> tuple[str, str, bool]:
         doc["snapshot_id"] = new
         mirror.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return old, new, True
+
+
+def rewrite_capture_refs(old: str, new: str, snapshot_date: str) -> int:
+    """The frozen collector stamps TODAY's history rows (data/history/*.jsonl, ts_1)
+    and entity cards (entities/*.md) with the pre-rewrite snapshot_id DURING capture,
+    before this post-step runs. Bring those same-capture references in lockstep or
+    history_ledger_check sees a phantom id (CI failure 2026-07-10, run 29118368474).
+    Guard: only rows whose captured_at falls on `snapshot_date` are touched —
+    published rows from earlier captures stay byte-identical (append-only)."""
+    n = 0
+    if HISTORY.is_dir():
+        for f in HISTORY.glob("*.jsonl"):
+            text = f.read_text(encoding="utf-8")
+            if old not in text:
+                continue
+            out, changed = [], False
+            for ln in text.splitlines():
+                if old in ln:
+                    try:
+                        row = json.loads(ln)
+                    except ValueError:
+                        row = None
+                    if (row and row.get("snapshot_id") == old
+                            and str(row.get("captured_at", "")).startswith(snapshot_date)):
+                        # Quoted-token replace keeps the row's original formatting.
+                        ln = ln.replace(f'"{old}"', f'"{new}"')
+                        changed = True
+                        n += 1
+                out.append(ln)
+            if changed:
+                f.write_text("\n".join(out) + "\n", encoding="utf-8")
+    if ENTITIES.is_dir():
+        for f in ENTITIES.glob("*.md"):
+            text = f.read_text(encoding="utf-8")
+            # Cards are regenerated per capture; only cards stamped with TODAY's date
+            # and the old id belong to this capture.
+            if f"snapshot_id: {old}" in text and snapshot_date in text:
+                f.write_text(text.replace(f"snapshot_id: {old}", f"snapshot_id: {new}"),
+                             encoding="utf-8")
+                n += 1
+    return n
 
 
 def _load_errata() -> list[dict]:
@@ -224,6 +267,10 @@ def main() -> int:
     old, new, changed = rewrite_snapshot(path)
     if changed:
         print(f"snapshot_identity: {date} snapshot_id {old} -> {new}")
+        refs = rewrite_capture_refs(old, new, date)
+        if refs:
+            print(f"snapshot_identity: {refs} same-capture reference(s) brought in lockstep "
+                  f"(data/history + entities cards)")
     else:
         print(f"snapshot_identity: {date} snapshot_id already content-addressed ({new}) (no-op)")
     return 0
