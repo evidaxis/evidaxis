@@ -134,3 +134,61 @@ def test_recompute_on_copy_differs_from_stored_collision(tmp_path):
     assert id03 != id04
     assert id03 == "38287b561ff9"
     assert id04 == "900232c1b32c"
+
+
+def test_rewrite_updates_bundle_mirrors(tmp_path, monkeypatch):
+    """manifest.json + provenance.json reference the id — must move in lockstep."""
+    snap_dir = tmp_path / "data" / "snapshots" / "2026-07-11"
+    snap_dir.mkdir(parents=True)
+    path = snap_dir / "snapshot.json"
+    snap = _minimal_snap([{"entity_id": "e_A", "momentum": 5.0}], date="2026-07-11")
+    path.write_text(json.dumps(snap, indent=2) + "\n")
+    for name in ("manifest.json", "provenance.json"):
+        (snap_dir / name).write_text(
+            json.dumps({"snapshot_id": "deadbeef0000", "other": 1}, indent=2) + "\n"
+        )
+
+    monkeypatch.setattr(si, "SNAPSHOTS", tmp_path / "data" / "snapshots")
+    _old, new, changed = si.rewrite_snapshot(path)
+    assert changed
+    for name in ("manifest.json", "provenance.json"):
+        doc = json.loads((snap_dir / name).read_text())
+        assert doc["snapshot_id"] == new, name
+        assert doc["other"] == 1  # untouched fields preserved
+
+
+def test_check_fails_on_bundle_divergence(tmp_path, monkeypatch):
+    """snapshot.json and manifest.json disagree on the id → --check fails."""
+    d = tmp_path / "data" / "snapshots" / "2026-08-03"
+    d.mkdir(parents=True)
+    snap = _minimal_snap([{"entity_id": "e_Y", "momentum": 2.0}],
+                         snapshot_id="cccccccccccc", date="2026-08-03")
+    (d / "snapshot.json").write_text(json.dumps(snap, indent=2) + "\n")
+    (d / "manifest.json").write_text(json.dumps({"snapshot_id": "dddddddddddd"}) + "\n")
+
+    monkeypatch.setattr(si, "SNAPSHOTS", tmp_path / "data" / "snapshots")
+    monkeypatch.setattr(si, "ERRATA", tmp_path / "missing_errata.json")
+    assert si.check_collisions() == 1
+
+
+def test_check_rejects_swapped_allowlist_hashes(tmp_path, monkeypatch):
+    """An erratum with per-date hashes swapped is a WRONG erratum — no pass."""
+    root = tmp_path / "data" / "snapshots"
+    hashes = {}
+    for date, mom in [("2026-08-01", 1.0), ("2026-08-02", 9.0)]:
+        d = root / date
+        d.mkdir(parents=True)
+        snap = _minimal_snap([{"entity_id": "e_X", "momentum": mom}],
+                             snapshot_id="eeeeeeeeeeee", date=date)
+        (d / "snapshot.json").write_text(json.dumps(snap, indent=2) + "\n")
+        hashes[date] = si.payload_hash(snap)
+
+    swapped = {"2026-08-01": hashes["2026-08-02"], "2026-08-02": hashes["2026-08-01"]}
+    errata = tmp_path / "errata_snapshot_id.json"
+    errata.write_text(json.dumps({"version": 1, "allowlist": [
+        {"snapshot_id": "eeeeeeeeeeee", "dates": list(swapped), "payload_hashes": swapped}
+    ]}))
+
+    monkeypatch.setattr(si, "SNAPSHOTS", root)
+    monkeypatch.setattr(si, "ERRATA", errata)
+    assert si.check_collisions() == 1

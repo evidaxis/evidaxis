@@ -55,8 +55,15 @@ def content_snapshot_id(snap: dict) -> str:
     return payload_hash(snap)[:12]
 
 
+# Bundle files that REFERENCE the snapshot_id (they do not define it). They must
+# be kept in lockstep with snapshot.json or an auditor sees three identities in
+# one sealed bundle (gemini cross-review finding, 2026-07-10).
+ID_MIRROR_FILES = ("manifest.json", "provenance.json")
+
+
 def rewrite_snapshot(path: Path) -> tuple[str, str, bool]:
-    """Recompute and write snapshot_id. Returns (old_id, new_id, changed)."""
+    """Recompute and write snapshot_id (snapshot.json + bundle mirrors).
+    Returns (old_id, new_id, changed)."""
     snap = json.loads(path.read_text(encoding="utf-8"))
     old = snap.get("snapshot_id", "")
     new = content_snapshot_id(snap)
@@ -65,6 +72,15 @@ def rewrite_snapshot(path: Path) -> tuple[str, str, bool]:
     snap["snapshot_id"] = new
     # Preserve load order / 2-space indent used by the collector.
     path.write_text(json.dumps(snap, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    for name in ID_MIRROR_FILES:
+        mirror = path.parent / name
+        if not mirror.is_file():
+            continue
+        doc = json.loads(mirror.read_text(encoding="utf-8"))
+        if doc.get("snapshot_id") == new:
+            continue
+        doc["snapshot_id"] = new
+        mirror.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return old, new, True
 
 
@@ -82,11 +98,11 @@ def _allowlisted_pair(sid: str, date_a: str, hash_a: str, date_b: str, hash_b: s
         if entry.get("snapshot_id") != sid:
             continue
         hashes = entry.get("payload_hashes") or {}
-        if set(hashes.keys()) < {date_a, date_b}:
+        # Entry must cover both dates with the EXACT on-disk hash per date; a
+        # swapped-hash erratum is a wrong erratum, not a pass (review 2026-07-10).
+        if not {date_a, date_b} <= set(hashes.keys()):
             continue
         if hashes.get(date_a) == hash_a and hashes.get(date_b) == hash_b:
-            return True
-        if hashes.get(date_a) == hash_b and hashes.get(date_b) == hash_a:
             return True
     return False
 
@@ -108,6 +124,18 @@ def check_collisions() -> int:
         if not sid:
             print(f"snapshot_identity --check: {d.name} missing snapshot_id")
             return 1
+        # Intra-bundle consistency: manifest/provenance must reference the same id.
+        for name in ID_MIRROR_FILES:
+            mirror = d / name
+            if not mirror.is_file():
+                continue
+            mid = json.loads(mirror.read_text(encoding="utf-8")).get("snapshot_id")
+            if mid is not None and mid != sid:
+                print(
+                    f"snapshot_identity --check: FAILED — {d.name}/{name} snapshot_id "
+                    f"{mid} != snapshot.json {sid} (bundle identity divergence)"
+                )
+                return 1
         ph = payload_hash(snap)
         n = len(snap.get("entities") or [])
         by_id.setdefault(sid, []).append((d.name, ph, n))
