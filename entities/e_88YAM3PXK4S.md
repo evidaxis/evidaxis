@@ -7,29 +7,29 @@ slug: alphafold3
 homepage: "https://alphafoldserver.com"
 ids:
   github_repo: "google-deepmind/alphafold3"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4396721167"]
 classification:
   domain: ai
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 25.4
-  percentile: 6
-  confidence: low
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 34.8
+  percentile: 11
+  confidence: medium
   rising: false
   status: calibration
-  axes_present: ["github_commit_velocity"]
+  axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.01928622908069886, "cohort_z": -1.967, "recent_weekly_commits": 2.3, "stars_not_scored": 8292}
-    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    github_commit_velocity: {"slope": -0.008637471396142592, "cohort_z": -2.865, "recent_weekly_commits": 2.8, "stars_not_scored": 8301}
+    openalex_citation_momentum: {"status": "present", "slope": 1.8063192689777317, "cohort_z": 0.429, "total_citations": 14183, "by_year": {"2026": 4543, "2025": 7687, "2024": 1928, "2023": 18, "2022": 4, "2021": 1, "2020": 1, "2014": 1}, "proxy": null}
 note: "paper_ref: openalex:10.1038/s41586-024-07487-w; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # AlphaFold3
 
-Evidaxis tracks **AlphaFold3** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **AlphaFold3** in the drug-discovery cohort.

@@ -7,25 +7,25 @@ slug: dora-rs
 homepage: "https://github.com/dora-rs/dora"
 ids:
   github_repo: "dora-rs/dora"
-  openalex_work_ids: []
+  openalex_work_ids: ["W7129446322"]
 classification:
   domain: ai
   industry: robotics
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 76.5
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 60.4
   percentile: 93
   confidence: low
   rising: false
-  status: watch
+  status: single-axis
   axes_present: ["github_commit_velocity"]
-  convergent_axes: ["github_commit_velocity"]
+  convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.018813070708871296, "cohort_z": 2.121, "recent_weekly_commits": 36.8, "stars_not_scored": 3820}
+    github_commit_velocity: {"slope": 0.008259409481963931, "cohort_z": 0.831, "recent_weekly_commits": 33.8, "stars_not_scored": 3836}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent."
 ---

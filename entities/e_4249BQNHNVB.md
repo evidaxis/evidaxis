@@ -7,25 +7,25 @@ slug: aibrix
 homepage: "https://aibrix.readthedocs.io"
 ids:
   github_repo: "vllm-project/aibrix"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4416123688"]
 classification:
   domain: ai
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 55.6
-  percentile: 67
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 58.1
+  percentile: 85
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.048206554904379174, "cohort_z": 0.45, "recent_weekly_commits": 17.3, "stars_not_scored": 4925}
+    github_commit_velocity: {"slope": 0.05136029664644935, "cohort_z": 0.649, "recent_weekly_commits": 17.7, "stars_not_scored": 4951}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

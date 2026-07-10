@@ -7,29 +7,29 @@ slug: lmcache
 homepage: "https://lmcache.ai"
 ids:
   github_repo: "LMCache/LMCache"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4417150458"]
 classification:
   domain: ai
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 56.6
-  percentile: 75
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 57.5
+  percentile: 77
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.04025068950420148, "cohort_z": 0.529, "recent_weekly_commits": 42.0, "stars_not_scored": 10048}
-    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    github_commit_velocity: {"slope": 0.04026234391380522, "cohort_z": 0.599, "recent_weekly_commits": 41.9, "stars_not_scored": 10384}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 1, "by_year": {"2026": 1}, "proxy": null}
 note: "paper_ref: 2510.09665; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # LMCache
 
-Evidaxis tracks **LMCache** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis tracks **LMCache**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.

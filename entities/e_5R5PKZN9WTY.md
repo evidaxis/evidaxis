@@ -7,25 +7,25 @@ slug: qwen-image
 homepage: "https://huggingface.co/Qwen/Qwen-Image"
 ids:
   github_repo: "QwenLM/Qwen-Image"
-  openalex_work_ids: []
+  openalex_work_ids: ["W6966874861"]
 classification:
   domain: ai
   industry: generative-media
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 43.1
-  percentile: 38
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 35.8
+  percentile: 15
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.0035546009259484375, "cohort_z": -0.554, "recent_weekly_commits": 0.0, "stars_not_scored": 8083}
+    github_commit_velocity: {"slope": -0.004028547716074896, "cohort_z": -1.137, "recent_weekly_commits": 0.0, "stars_not_scored": 8099}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

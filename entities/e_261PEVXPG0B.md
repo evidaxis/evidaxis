@@ -7,17 +7,17 @@ slug: smolvlm
 homepage: "https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct"
 ids:
   github_repo: "huggingface/smollm"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4416119086"]
 classification:
   domain: ai
   industry: multimodal-ai
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 8.6
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 8.4
   percentile: 8
   confidence: low
   rising: false
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.0056873614815175, "cohort_z": -3.31, "recent_weekly_commits": 0.0, "stars_not_scored": 3830}
-    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    github_commit_velocity: {"slope": -0.0066352550617704165, "cohort_z": -3.329, "recent_weekly_commits": 0.0, "stars_not_scored": 3844}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 4, "by_year": {"2026": 4}, "proxy": null}
 note: "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # SmolVLM
 
-Evidaxis tracks **SmolVLM** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis tracks **SmolVLM**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.

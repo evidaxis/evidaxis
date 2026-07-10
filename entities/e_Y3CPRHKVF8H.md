@@ -7,29 +7,29 @@ slug: search-r1
 homepage: "https://github.com/PeterGriffinJin/Search-R1"
 ids:
   github_repo: "PeterGriffinJin/Search-R1"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4417422257"]
 classification:
   domain: ai
   industry: ml-infrastructure
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 52.6
-  percentile: 60
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 51.9
+  percentile: 73
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.205, "recent_weekly_commits": 0.0, "stars_not_scored": 5051}
-    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.148, "recent_weekly_commits": 0.0, "stars_not_scored": 5080}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 5, "by_year": {"2026": 4, "2025": 1}, "proxy": null}
 note: "paper_ref: 2503.09516; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Search-R1
 
-Evidaxis tracks **Search-R1** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis tracks **Search-R1**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.

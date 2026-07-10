@@ -14,10 +14,10 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 59.0
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 60.9
   percentile: 89
   confidence: low
   rising: false
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.00019839852519289755, "cohort_z": 0.718, "recent_weekly_commits": 1.5, "stars_not_scored": 19705}
+    github_commit_velocity: {"slope": 0.001999434558164224, "cohort_z": 0.869, "recent_weekly_commits": 1.8, "stars_not_scored": 19762}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 28, "by_year": {"2026": 4, "2025": 22, "2024": 2}, "proxy": null}
 note: "Paper young (2024); citation slope insufficient."
 ---

@@ -7,17 +7,17 @@ slug: protenix
 homepage: "https://protenix-server.com"
 ids:
   github_repo: "bytedance/Protenix"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4406274436"]
 classification:
   domain: ai
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 13.2
+  snapshot_id: 7e6b5bcfba2a
+  captured_at: 2026-07-10T19:53:41+00:00
+  period: 2026-w28
+  momentum: 12.6
   percentile: 0
   confidence: low
   rising: false
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.04556658041690534, "cohort_z": -2.942, "recent_weekly_commits": 0.4, "stars_not_scored": 1977}
-    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    github_commit_velocity: {"slope": -0.05889608973478471, "cohort_z": -2.992, "recent_weekly_commits": 0.3, "stars_not_scored": 1988}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 112, "by_year": {"2026": 55, "2025": 56, "2024": 1}, "proxy": null}
 note: "paper_ref: biorxiv:2025.01.08.631967; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Protenix
 
-Evidaxis tracks **Protenix** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis tracks **Protenix**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
