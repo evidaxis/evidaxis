@@ -1,7 +1,7 @@
 /** JSON-LD builders. v1 frozen external contract — property names are load-bearing
  *  (Google indexes them, LLMs train on them). Do not rename. */
 import type { DepsSignal, Entity, Snapshot } from './data';
-import { SNAP_DATE } from './data';
+import { SNAP_DATE, publicHomepage, publicOwnerType, publicRepoUrl } from './data';
 import registry from './methodology-registry.json';
 
 const SITE = 'https://evidaxis.org';
@@ -111,16 +111,20 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
     `Computed on Evidaxis methodology ${snap.methodology_version} from public signals (snapshot ${snap.snapshot_date}).`;
 
   const paperId = e.openalex_work_ids?.[0];
+  const ownerType = publicOwnerType(e);
+  const repoUrl = publicRepoUrl(e);
+  const homepage = publicHomepage(e);
+  const publicUrls = [...new Set([repoUrl, homepage].filter((url): url is string => !!url))];
   const entityNode: any = {
     '@type': typeForEntity(e.entity_type),
     '@id': `${SITE}/e/${e.entity_id}/#entity`,
     name: e.name,
     description: `${e.name}, an open AI system in the ${e.sub_niche} cohort, measured by Evidaxis.`,
-    codeRepository: `https://github.com/${e.github_repo}`,
-    url: e.homepage ?? `https://github.com/${e.github_repo}`,
-    sameAs: [`https://github.com/${e.github_repo}`, ...(e.homepage ? [e.homepage] : [])],
     subjectOf: { '@id': `${SITE}/e/${e.entity_id}/#dataset` },
   };
+  if (ownerType === 'Organization' && repoUrl) entityNode.codeRepository = repoUrl;
+  if (homepage ?? repoUrl) entityNode.url = homepage ?? repoUrl;
+  if (publicUrls.length) entityNode.sameAs = publicUrls;
   if (paperId) entityNode.citation = { '@type': 'ScholarlyArticle', '@id': `https://openalex.org/${paperId}`, sameAs: `https://openalex.org/${paperId}` };
   // Durable canonical reference (CLAIM-URN.md). Goes in `identifier`, never in `@id`:
   // schema.org @id must remain an HTTP-resolvable IRI for graph linking; the URN is
@@ -156,7 +160,7 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
       },
       measurementTechnique: methodologyPath(snap.methodology_version),
       keywords: ['AI', e.industry, e.sub_niche, 'momentum', 'open source'],
-      sameAs: `https://github.com/${e.github_repo}`,
+      ...(publicUrls.length ? { sameAs: publicUrls.length === 1 ? publicUrls[0] : publicUrls } : {}),
       mainEntity: { '@id': `${SITE}/e/${e.entity_id}/#entity` },
       variableMeasured: vars,
       distribution: {

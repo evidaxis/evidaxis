@@ -8,6 +8,15 @@ import {
   archiveEntityById, entityUniverse, latest, manifestForSnapshot,
   snapshotByDate, snapshots,
 } from './archive';
+import {
+  publicEntity as projectPublicEntity,
+  publicHomepage as projectPublicHomepage,
+  publicOwnerType as projectPublicOwnerType,
+  publicRepoLabel as projectPublicRepoLabel,
+  publicRepoUrl as projectPublicRepoUrl,
+  publicSnapshot as projectPublicSnapshot,
+  type OwnerTypes,
+} from './person_free';
 
 export { archiveEntityById, entityUniverse, latest, manifestForSnapshot, snapshotByDate, snapshots };
 
@@ -68,6 +77,13 @@ export const snapshot: Snapshot = latest;
 export const provenance = readJson(`data/snapshots/${SNAP_DATE}/provenance.json`);
 export const manifest = readJson(`data/snapshots/${SNAP_DATE}/manifest.json`);
 export const taxonomy = readJson('taxonomy/nodes.json');
+export const ownerTypes = readJson('etl/owner_types.json') as OwnerTypes;
+export const publicRepoLabel = (e: Entity) => projectPublicRepoLabel(e, ownerTypes);
+export const publicOwnerType = (e: Entity) => projectPublicOwnerType(e, ownerTypes);
+export const publicRepoUrl = (e: Entity) => projectPublicRepoUrl(e, ownerTypes);
+export const publicHomepage = (e: Entity) => projectPublicHomepage(e, ownerTypes);
+export const publicEntity = (e: Entity) => projectPublicEntity(e, ownerTypes);
+export const publicSnapshot = (s: Snapshot) => projectPublicSnapshot(s, ownerTypes);
 
 export const entities = snapshot.entities;
 export const entityById = (id: string) => entities.find((e) => e.entity_id === id);

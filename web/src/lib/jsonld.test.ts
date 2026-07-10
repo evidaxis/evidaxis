@@ -30,6 +30,26 @@ describe('entityGraph', () => {
     const mv = ds.variableMeasured.find((v: any) => v.name === 'Evidaxis Momentum Score');
     expect(mv.value).toBe(e.momentum);
   });
+
+  it('keeps the canonical GitHub repository for Organization ownership', () => {
+    const e = entities.find((x) => x.github_repo === 'paul-gauthier/aider')!;
+    const g = entityGraph(e, snapshot);
+    const node = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
+    expect(node.codeRepository).toBe('https://github.com/Aider-AI/aider');
+    expect(JSON.stringify(g)).not.toContain('paul-gauthier');
+  });
+
+  it('publishes only an eligible external homepage for User ownership', () => {
+    const e = entities.find((x) => x.github_repo === 'jwohlwend/boltz')!;
+    const g = entityGraph(e, snapshot);
+    const node = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
+    const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
+    expect(node.codeRepository).toBeUndefined();
+    expect(node.url).toBeUndefined();
+    expect(node.sameAs).toBeUndefined();
+    expect(ds.sameAs).toBeUndefined();
+    expect(JSON.stringify(g)).not.toContain('jwohlwend');
+  });
 });
 
 describe('snapshotDataset — the genesis DOI branch', () => {

@@ -10,7 +10,7 @@ import AlphaSignal from '../../../components/charts/AlphaSignal.astro';
 import GateEtaSignal from '../../../components/charts/GateEtaSignal.astro';
 import SignalQuality from '../../../components/charts/SignalQuality.astro';
 import SnapshotProvenance from '../../../components/charts/SnapshotProvenance.astro';
-import { entityUniverse, commitSeries, industries, entitiesInCohort, deps, depsSeries, backfillSeries, cleanLabel, fmtZ, fmtSlope } from '../../../lib/data';
+import { entityUniverse, commitSeries, industries, entitiesInCohort, deps, depsSeries, backfillSeries, cleanLabel, fmtZ, fmtSlope, publicRepoLabel, publicRepoUrl, publicHomepage } from '../../../lib/data';
 import type { ArchivedEntity } from '../../../lib/archive';
 import { cohortLabel } from '../../../lib/cohorts';
 import { entityGraph, breadcrumb } from '../../../lib/jsonld';
@@ -51,6 +51,10 @@ const crumbs = breadcrumb([
 ]);
 
 const paperUrl = e.openalex_work_ids?.length ? `https://openalex.org/${e.openalex_work_ids[0]}` : null;
+const repoLabel = publicRepoLabel(e);
+const repoUrl = publicRepoUrl(e);
+const homepageUrl = publicHomepage(e);
+const distinctHomepageUrl = homepageUrl && homepageUrl !== repoUrl ? homepageUrl : null;
 
 const velRising = e.convergent_axes?.includes('github_commit_velocity') ?? false;
 const citRising = e.convergent_axes?.includes('openalex_citation_momentum') ?? false;
@@ -99,7 +103,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
             <h2>Historical context</h2>
             <p>This record preserves the values published in snapshot {record.lastSeenSnapshot}, with its growth history intact. It is not ranked against a later cohort.</p>
             <p class="mono">History series: n/a in this frozen record.</p>
-            <p><a href={`https://github.com/${e.github_repo}`}>github.com/{e.github_repo}</a>{e.homepage && <> · <a href={e.homepage}>project homepage</a></>}</p>
+            <p>{repoUrl ? <a href={repoUrl}>{repoLabel}</a> : <span>{repoLabel}</span>}{distinctHomepageUrl && <> · <a href={distinctHomepageUrl}>project homepage</a></>}</p>
           </div>
           {related.length > 0 && <div class="preserved-context">
             <h2>Peers in the last-seen snapshot</h2>
@@ -183,9 +187,9 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
         <div class="panel src-panel">
           <h2 class="eyebrow sec-h">Sources</h2>
           <div class="src-list">
-            <div><a href={`https://github.com/${e.github_repo}`}>github.com/{e.github_repo}</a> <span class="mono muted src-note">development-velocity axis</span></div>
+            <div>{repoUrl ? <a href={repoUrl}>{repoLabel}</a> : <span>{repoLabel}</span>} <span class="mono muted src-note">development-velocity axis</span></div>
             {paperUrl && <div><a href={paperUrl}>OpenAlex paper</a> <span class="mono muted src-note">citation-momentum axis{a2.proxy ? ` (proxy: ${a2.proxy})` : ''}</span></div>}
-            {e.homepage && <div><a href={e.homepage}>{e.homepage.replace(/^https?:\/\//,'').replace(/\/$/,'')}</a> <span class="mono muted src-note">homepage</span></div>}
+            {distinctHomepageUrl && <div><a href={distinctHomepageUrl}>{distinctHomepageUrl.replace(/^https?:\/\//,'').replace(/\/$/,'')}</a> <span class="mono muted src-note">homepage</span></div>}
           </div>
         </div>
         <div class="panel badge-panel">

@@ -15,22 +15,86 @@
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { relative } from 'node:path';
 import { join } from 'node:path';
 
 const DIST = new URL('../dist/', import.meta.url).pathname;
 const htmlFiles = [];
+const distFiles = [];
 (function walk(dir) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
     const st = statSync(p);
     if (st.isDirectory()) walk(p);
-    else if (name.endsWith('.html')) htmlFiles.push(p);
+    else if (st.isFile()) {
+      distFiles.push(p);
+      if (name.endsWith('.html')) htmlFiles.push(p);
+    }
   }
 })(DIST);
 
 const errors = [];
 const warns = [];
 const rel = (p) => p.replace(DIST, '');
+
+// 0. Person-free repository publication is fail-closed. The internal id-map key
+// remains stable, while public output uses the canonical repository identity.
+const ID_MAP = JSON.parse(readFileSync(new URL('../../etl/id_map.json', import.meta.url), 'utf8'));
+const OWNER_TYPES = JSON.parse(readFileSync(new URL('../../etl/owner_types.json', import.meta.url), 'utf8'));
+const registry = OWNER_TYPES?.repos;
+if (OWNER_TYPES?.schema_version !== 'owner_types_1'
+  || JSON.stringify(Object.keys(OWNER_TYPES).sort()) !== JSON.stringify(['repos', 'schema_version'])
+  || !registry || Array.isArray(registry) || typeof registry !== 'object') {
+  errors.push('etl/owner_types.json: expected owner_types_1 repository registry');
+} else {
+  const internalRepos = Object.keys(ID_MAP).sort();
+  const classifiedRepos = Object.keys(registry).sort();
+  if (JSON.stringify(internalRepos) !== JSON.stringify(classifiedRepos)) {
+    errors.push('etl/owner_types.json: repository coverage must exactly match etl/id_map.json');
+  }
+
+  const bannedOwners = new Map();
+  // Cache-flip defense floor (review 2026-07-10): these handles are User-owned as of
+  // 2026-07-10 and stay banned even if a (possibly poisoned) cache says otherwise.
+  // Remove an entry ONLY via a deliberate, reviewed commit.
+  for (const h of ['paul-gauthier', 'gcorso', 'jwohlwend', 'petergriffinjin', 'haotian-liu',
+                   'hexgrad', 'dauparas', 'comfyanonymous', 'geeeekexplorer', 'arneschneuing'])
+    bannedOwners.set(h, 'substring');
+  for (const storedRepo of internalRepos) {
+    const entry = registry[storedRepo];
+    if (!entry || !['Organization', 'User'].includes(entry.owner_type)
+      || !Number.isInteger(entry.repo_id) || entry.repo_id <= 0
+      || typeof entry.full_name !== 'string' || !/^[^/]+\/[^/]+$/.test(entry.full_name)
+      || JSON.stringify(Object.keys(entry).sort()) !== JSON.stringify(['full_name', 'owner_type', 'repo_id'])) {
+      errors.push(`etl/owner_types.json: invalid classification for ${storedRepo}`);
+      continue;
+    }
+    const storedOwner = storedRepo.split('/')[0];
+    const canonicalOwner = entry.full_name.split('/')[0];
+    if (entry.owner_type === 'User') bannedOwners.set(canonicalOwner.toLowerCase(), 'substring');
+    // Moved Organization repositories use slug-context matching. This avoids
+    // ordinary-word collisions such as the former owner "block" while still
+    // rejecting stale repository paths and serialized slugs.
+    if (storedOwner.toLowerCase() !== canonicalOwner.toLowerCase()) {
+      bannedOwners.set(storedOwner.toLowerCase(), 'slug');
+    }
+  }
+
+  for (const file of distFiles) {
+    const raw = readFileSync(file, 'utf8');
+    // Review 2026-07-10: scan decoded variants too (percent / \uXXXX / HTML-entity)
+    // and the file's own relative path — an encoded handle is still a handle.
+    const variants = [raw.toLowerCase(), relative(DIST, file).toLowerCase()];
+    try { variants.push(decodeURIComponent(raw).toLowerCase()); } catch {}
+    variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
+    variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d))).toLowerCase());
+    const body = variants.join('\n');
+    for (const [owner, mode] of bannedOwners) {
+      const needle = mode === 'slug' ? `${owner}/` : owner;
+      if (body.includes(needle)) errors.push(`${rel(file)}: contains private or stale repository owner ${owner}`);
+    }
+  }
+}
 
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');

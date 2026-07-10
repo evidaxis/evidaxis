@@ -39,3 +39,15 @@ def test_no_person_fields_in_observations_and_history():
             if hits:
                 violations.setdefault(f, []).extend(hits)
     assert not violations, f"person data in observations/history: {violations}"
+
+
+def test_owner_classification_is_complete_and_minimal():
+    id_map = json.loads((REPO / "etl/id_map.json").read_text())
+    cache = json.loads((REPO / "etl/owner_types.json").read_text())
+    assert cache.get("schema_version") == "owner_types_1"
+    assert set(cache.get("repos", {})) == set(id_map)
+    for entry in cache["repos"].values():
+        assert set(entry) == {"owner_type", "repo_id", "full_name"}
+        assert entry["owner_type"] in {"Organization", "User"}
+        assert isinstance(entry["repo_id"], int) and not isinstance(entry["repo_id"], bool) and entry["repo_id"] > 0
+        assert isinstance(entry["full_name"], str) and len(entry["full_name"].split("/")) == 2

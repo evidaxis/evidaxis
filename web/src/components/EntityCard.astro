@@ -10,7 +10,7 @@
  * own honest null state; nothing is fabricated.
  */
 import type { Entity } from '../lib/data';
-import { snapshot, commitSeries, entitiesInCohort, STATUS_LABEL, deps } from '../lib/data';
+import { snapshot, commitSeries, entitiesInCohort, STATUS_LABEL, deps, publicRepoLabel, publicRepoUrl } from '../lib/data';
 import { cohortColor, cohortLabel, fmtZsafe } from '../lib/cohorts';
 import MomentumRing from './charts/MomentumRing.astro';
 import GateGlyph from './charts/GateGlyph.astro';
@@ -39,6 +39,8 @@ const isRising = e.status === 'rising';
 const accentClass = isRising ? 'rising' : e.status === 'watch' ? 'watch' : 'tracked';
 const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
 const dep = deps.get(e.entity_id) ?? null;   // R0 adoption signal, displayed only when measured
+const repoLabel = publicRepoLabel(e);
+const repoUrl = publicRepoUrl(e);
 ---
 <article class={`ecard ${accentClass}`}>
   <header class="bezel">
@@ -51,7 +53,7 @@ const dep = deps.get(e.entity_id) ?? null;   // R0 adoption signal, displayed on
       <div class="sub mono">
         <span class="cohort-dot" style={`background:${color}`}></span>{cohortLabel(e.cohort)}
         <span class="dot">·</span> n = {cohortN}
-        <span class="dot">·</span> <a href={`https://github.com/${e.github_repo}`}>github.com/{e.github_repo}</a>
+        <span class="dot">·</span> {repoUrl ? <a href={repoUrl}>{repoLabel}</a> : <span>{repoLabel}</span>}
       </div>
     </div>
     <span class={`lamp ${accentClass}`}><span class="led"></span>{STATUS_LABEL[e.status]} · conf {e.confidence}</span>

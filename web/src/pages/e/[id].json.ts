@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { entityUniverse } from '../../lib/data';
+import { entityUniverse, publicEntity, publicHomepage, publicRepoUrl } from '../../lib/data';
 import type { ArchivedEntity } from '../../lib/archive';
 import { claimUrnForEntity } from '../../lib/claim_urn';
 
@@ -11,8 +11,10 @@ export const GET: APIRoute = ({ props }) => {
   const record = (props as any).record as ArchivedEntity;
   const e = record.entity;
   const snapshot = record.snapshot;
+  const repoUrl = publicRepoUrl(e);
+  const homepage = publicHomepage(e);
   const body = {
-    entity: e,
+    entity: publicEntity(e),
     record_status: record.recordStatus,
     last_seen_snapshot: record.lastSeenSnapshot,
     // Format-independent canonical reference (CLAIM-URN.md); cite this, not the URL.
@@ -27,7 +29,7 @@ export const GET: APIRoute = ({ props }) => {
     license: 'CC0-1.0',
     canonical: `https://evidaxis.org/e/${e.entity_id}/`,
     sameAs: [
-      `https://github.com/${e.github_repo}`,
+      ...new Set([repoUrl, homepage].filter((url): url is string => !!url)),
       ...(e.openalex_work_ids?.length ? [`https://openalex.org/${e.openalex_work_ids[0]}`] : []),
     ],
   };
