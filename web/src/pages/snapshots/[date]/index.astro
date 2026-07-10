@@ -44,6 +44,7 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
 
       <div class="panel verify-bundle" style="padding:18px 20px;margin-bottom:2rem">
         <div class="eyebrow">Verification bundle</div>
+        <p class="mono" style="font-size:12px;max-width:72ch;color:var(--ink-mute)">SHA256SUMS pins the canonical archive bytes (the public git repository files). The site's snapshot.json applies the person-free publication projection and intentionally differs; to hash-verify, fetch the raw files from the git archive.</p>
         <p style="font-size:.9rem;margin:.5rem 0 .9rem;color:var(--ink-soft);max-width:70ch">
           Frozen, hash-pinned inputs for this snapshot. Download the checksums file, then each
           listed artifact, and verify with <span class="mono">sha256sum -c SHA256SUMS</span>.
