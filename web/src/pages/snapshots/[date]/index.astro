@@ -14,7 +14,7 @@ export function getStaticPaths() {
 }
 const { snapshot, manifest } = Astro.props as { snapshot: Snapshot; manifest: any | null };
 const date = snapshot.snapshot_date;
-const all = [...snapshot.entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+const all = [...snapshot.entities].sort((a, b) => a.name.localeCompare(b.name));  // D1: reader sorts
 const hasDropped = hasSnapshotArtifact(date, 'dropped.json');
 const desc = `Evidaxis snapshot ${date}: momentum measurements for ${snapshot.counts.entities} AI systems, methodology ${snapshot.methodology_version}. Frozen, hash-verified, CC0 open data.`;
 const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.toFixed(digits);

@@ -27,12 +27,18 @@ SNAPSHOTS = REPO / "data" / "snapshots"
 
 # The canonical bundle files, in the exact order frozen into etl/collect.py.
 BUNDLE = ("snapshot.json", "manifest.json", "provenance.json")
+# dropped.json joins the pinned set FORWARD-ONLY from the cutover date (live-sweep
+# 2026-07-10: advertised but unpinned). Published SHA256SUMS are append-only frozen —
+# never rewritten retroactively.
+FORWARD_EXTRAS = (("dropped.json", "2026-07-11"),)
 
 
 def _sums_text(snap_dir: Path) -> str:
     """SHA256SUMS content for a snapshot dir, byte-identical to collect.py's format."""
     lines = []
-    for fn in BUNDLE:
+    names = list(BUNDLE) + [fn for fn, since in FORWARD_EXTRAS
+                            if snap_dir.name >= since and (snap_dir / fn).is_file()]
+    for fn in names:
         h = hashlib.sha256((snap_dir / fn).read_bytes()).hexdigest()
         lines.append(f"{h}  {fn}")
     return "\n".join(lines) + "\n"

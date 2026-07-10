@@ -137,7 +137,9 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
   const entityId = `${SITE}/e/${e.entity_id}/#entity`;
   // Per-measurement Dataset @id = claim-URN when present (date-epoched primary graph key).
   // HTTPS record stays on url + mainEntityOfPage so crawlers still resolve a page.
-  const datasetId = urn ?? `${recordUrl}#dataset`;
+  // CLAIM-URN.md lock (re-read 2026-07-10 night): @id stays an HTTP-resolvable IRI;
+  // the URN lives in identifier + rel=cite-as until a /resolve/{urn} layer ships.
+  const datasetId = `${recordUrl}#dataset`;
   const sourceId = `${SITE}/e/${e.entity_id}/#source`;
 
   const entityNode: any = {

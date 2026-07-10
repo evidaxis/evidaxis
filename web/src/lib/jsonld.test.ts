@@ -60,17 +60,20 @@ describe('entityGraph', () => {
     expect(mv.value).toBe(e.momentum);
   });
 
-  it('uses claim-URN as Dataset @id with HTTPS url + mainEntityOfPage', () => {
+  it('keeps Dataset @id an HTTP IRI (CLAIM-URN.md lock) with the URN in identifier', () => {
+    // CLAIM-URN.md: the URN lives in identifier + rel=cite-as; @id must stay an
+    // HTTP-resolvable IRI so in-graph cross-references dereference (night fix 2026-07-10).
     const e = entities.find((x) => x.momentum != null)!;
     const urn = claimUrnForEntity(e, snapshot);
     const g = entityGraph(e, snapshot, urn);
     const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
     const entity = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
-    expect(ds['@id']).toBe(urn);
+    expect(ds['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#dataset`);
     expect(ds.url).toBe(`https://evidaxis.org/e/${e.entity_id}/`);
     expect(ds.mainEntityOfPage).toBe(`https://evidaxis.org/e/${e.entity_id}/`);
+    expect(JSON.stringify(ds.identifier)).toContain(urn);
     expect(entity['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#entity`);
-    expect(entity.subjectOf['@id']).toBe(urn);
+    expect(entity.subjectOf['@id']).toBe(`https://evidaxis.org/e/${e.entity_id}/#dataset`);
     expect(ds.mainEntity['@id']).toBe(entity['@id']);
   });
 

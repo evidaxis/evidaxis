@@ -1,8 +1,14 @@
 import type { APIRoute } from 'astro';
-import { entities, snapshot } from '../../../lib/data';
+import { snapshot } from '../../../lib/data';
+import { entityUniverse } from '../../../lib/archive';
 
 export function getStaticPaths() {
-  return entities.map((e) => ({ params: { id: e.entity_id, period: snapshot.period }, props: { e } }));
+  // Universe, not latest-only: preserved (superseded) pages link their badges too
+  // (re-audit fix 2026-07-10). Each badge renders at its record's own period.
+  return entityUniverse.map((r) => ({
+    params: { id: r.entity.entity_id, period: r.snapshot.period ?? snapshot.period },
+    props: { e: r.entity },
+  }));
 }
 
 const C = {

@@ -70,6 +70,10 @@ def test_genesis_snapshot_byte_identical_to_deposit():
 
 
 def test_bundle_order_matches_frozen_collector():
-    """refresh_sums must keep collect.py's exact file order, or rewritten
-    SHA256SUMS would differ byte-wise from collector-written ones."""
+    """refresh_sums keeps collect.py's exact trio order as a PREFIX; dropped.json
+    was consciously appended 2026-07-10 (live-sweep: advertised but unpinned) and
+    is optional (skipped when absent), so older sums stay byte-identical."""
     assert BUNDLE == ("snapshot.json", "manifest.json", "provenance.json")
+    # dropped.json pins forward-only (cutover), never retro (append-only sums).
+    from refresh_sums import FORWARD_EXTRAS
+    assert FORWARD_EXTRAS == (("dropped.json", "2026-07-11"),)
