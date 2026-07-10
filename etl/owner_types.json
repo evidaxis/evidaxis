@@ -1,0 +1,690 @@
+{
+  "repos": {
+    "ARISE-Initiative/robosuite": {
+      "full_name": "ARISE-Initiative/robosuite",
+      "owner_type": "Organization",
+      "repo_id": 154626012
+    },
+    "ATH-MaaS/Ovis": {
+      "full_name": "ATH-MaaS/Ovis",
+      "owner_type": "Organization",
+      "repo_id": 814502811
+    },
+    "All-Hands-AI/OpenHands": {
+      "full_name": "OpenHands/OpenHands",
+      "owner_type": "Organization",
+      "repo_id": 771302083
+    },
+    "DeepGraphLearning/torchdrug": {
+      "full_name": "DeepGraphLearning/torchdrug",
+      "owner_type": "Organization",
+      "repo_id": 394517440
+    },
+    "EmergenceAI/Agent-E": {
+      "full_name": "EmergenceAI/Agent-E",
+      "owner_type": "Organization",
+      "repo_id": 779019589
+    },
+    "Farama-Foundation/Gymnasium": {
+      "full_name": "Farama-Foundation/Gymnasium",
+      "owner_type": "Organization",
+      "repo_id": 534011733
+    },
+    "FoundationAgents/MetaGPT": {
+      "full_name": "FoundationAgents/MetaGPT",
+      "owner_type": "Organization",
+      "repo_id": 660551251
+    },
+    "GeeeekExplorer/nano-vllm": {
+      "full_name": "GeeeekExplorer/nano-vllm",
+      "owner_type": "User",
+      "repo_id": 999030842
+    },
+    "Genesis-Embodied-AI/Genesis": {
+      "full_name": "Genesis-Embodied-AI/genesis-world",
+      "owner_type": "Organization",
+      "repo_id": 712225112
+    },
+    "InternLM/lmdeploy": {
+      "full_name": "InternLM/lmdeploy",
+      "owner_type": "Organization",
+      "repo_id": 654122609
+    },
+    "Kilo-Org/kilocode": {
+      "full_name": "Kilo-Org/kilocode",
+      "owner_type": "Organization",
+      "repo_id": 946087422
+    },
+    "LMCache/LMCache": {
+      "full_name": "LMCache/LMCache",
+      "owner_type": "Organization",
+      "repo_id": 807305060
+    },
+    "Lifelong-Robot-Learning/LIBERO": {
+      "full_name": "Lifelong-Robot-Learning/LIBERO",
+      "owner_type": "Organization",
+      "repo_id": 625323941
+    },
+    "Lightricks/LTX-Video": {
+      "full_name": "Lightricks/LTX-Video",
+      "owner_type": "Organization",
+      "repo_id": 891705470
+    },
+    "MoonshotAI/Kimi-VL": {
+      "full_name": "MoonshotAI/Kimi-VL",
+      "owner_type": "Organization",
+      "repo_id": 963152510
+    },
+    "NVIDIA-NeMo/RL": {
+      "full_name": "NVIDIA-NeMo/RL",
+      "owner_type": "Organization",
+      "repo_id": 949546994
+    },
+    "NVIDIA/Isaac-GR00T": {
+      "full_name": "NVIDIA/Isaac-GR00T",
+      "owner_type": "Organization",
+      "repo_id": 946829547
+    },
+    "NVIDIA/TensorRT-LLM": {
+      "full_name": "NVIDIA/TensorRT-LLM",
+      "owner_type": "Organization",
+      "repo_id": 679366051
+    },
+    "NVIDIA/cosmos": {
+      "full_name": "NVIDIA/cosmos",
+      "owner_type": "Organization",
+      "repo_id": 910176789
+    },
+    "NVlabs/Eagle": {
+      "full_name": "NVlabs/Eagle",
+      "owner_type": "Organization",
+      "repo_id": 820789280
+    },
+    "NVlabs/Sana": {
+      "full_name": "NVlabs/Sana",
+      "owner_type": "Organization",
+      "repo_id": 871368615
+    },
+    "OpenAutoCoder/Agentless": {
+      "full_name": "OpenAutoCoder/Agentless",
+      "owner_type": "Organization",
+      "repo_id": 822329559
+    },
+    "OpenBMB/ChatDev": {
+      "full_name": "OpenBMB/ChatDev",
+      "owner_type": "Organization",
+      "repo_id": 683892956
+    },
+    "OpenBMB/MiniCPM-V": {
+      "full_name": "OpenBMB/MiniCPM-V",
+      "owner_type": "Organization",
+      "repo_id": 749647889
+    },
+    "OpenGVLab/InternVL": {
+      "full_name": "OpenGVLab/InternVL",
+      "owner_type": "Organization",
+      "repo_id": 721995615
+    },
+    "OpenPipe/ART": {
+      "full_name": "OpenPipe/ART",
+      "owner_type": "Organization",
+      "repo_id": 946178371
+    },
+    "OpenRLHF/OpenRLHF": {
+      "full_name": "OpenRLHF/OpenRLHF",
+      "owner_type": "Organization",
+      "repo_id": 672415139
+    },
+    "PeterGriffinJin/Search-R1": {
+      "full_name": "PeterGriffinJin/Search-R1",
+      "owner_type": "User",
+      "repo_id": 940662305
+    },
+    "Physical-Intelligence/openpi": {
+      "full_name": "Physical-Intelligence/openpi",
+      "owner_type": "Organization",
+      "repo_id": 876210014
+    },
+    "PrimeIntellect-ai/prime-rl": {
+      "full_name": "PrimeIntellect-ai/prime-rl",
+      "owner_type": "Organization",
+      "repo_id": 934553284
+    },
+    "QwenLM/Qwen-Agent": {
+      "full_name": "QwenLM/Qwen-Agent",
+      "owner_type": "Organization",
+      "repo_id": 694939378
+    },
+    "QwenLM/Qwen-Image": {
+      "full_name": "QwenLM/Qwen-Image",
+      "owner_type": "Organization",
+      "repo_id": 1031256025
+    },
+    "QwenLM/Qwen3-VL": {
+      "full_name": "QwenLM/Qwen3-VL",
+      "owner_type": "Organization",
+      "repo_id": 849239437
+    },
+    "QwenLM/qwen-code": {
+      "full_name": "QwenLM/qwen-code",
+      "owner_type": "Organization",
+      "repo_id": 1008713177
+    },
+    "RosettaCommons/RFdiffusion": {
+      "full_name": "RosettaCommons/RFdiffusion",
+      "owner_type": "Organization",
+      "repo_id": 620471484
+    },
+    "SWE-agent/mini-swe-agent": {
+      "full_name": "SWE-agent/mini-swe-agent",
+      "owner_type": "Organization",
+      "repo_id": 1010318950
+    },
+    "SWE-bench/SWE-bench": {
+      "full_name": "SWE-bench/SWE-bench",
+      "owner_type": "Organization",
+      "repo_id": 700117650
+    },
+    "SkyworkAI/SkyReels-V2": {
+      "full_name": "SkyworkAI/SkyReels-V2",
+      "owner_type": "Organization",
+      "repo_id": 966698850
+    },
+    "Stability-AI/sd3.5": {
+      "full_name": "Stability-AI/sd3.5",
+      "owner_type": "Organization",
+      "repo_id": 869842392
+    },
+    "TabbyML/tabby": {
+      "full_name": "TabbyML/tabby",
+      "owner_type": "Organization",
+      "repo_id": 614764248
+    },
+    "Tencent-Hunyuan/HunyuanVideo": {
+      "full_name": "Tencent-Hunyuan/HunyuanVideo",
+      "owner_type": "Organization",
+      "repo_id": 895453957
+    },
+    "Wan-Video/Wan2.2": {
+      "full_name": "Wan-Video/Wan2.2",
+      "owner_type": "Organization",
+      "repo_id": 1027579552
+    },
+    "ace-step/ACE-Step": {
+      "full_name": "ace-step/ACE-Step",
+      "owner_type": "Organization",
+      "repo_id": 974040574
+    },
+    "agentscope-ai/Trinity-RFT": {
+      "full_name": "agentscope-ai/Trinity-RFT",
+      "owner_type": "Organization",
+      "repo_id": 963030058
+    },
+    "agentscope-ai/agentscope": {
+      "full_name": "agentscope-ai/agentscope",
+      "owner_type": "Organization",
+      "repo_id": 742244656
+    },
+    "agno-agi/agno": {
+      "full_name": "agno-agi/agno",
+      "owner_type": "Organization",
+      "repo_id": 488641606
+    },
+    "alibaba/ROLL": {
+      "full_name": "alibaba/ROLL",
+      "owner_type": "Organization",
+      "repo_id": 991939049
+    },
+    "allenai/open-instruct": {
+      "full_name": "allenai/open-instruct",
+      "owner_type": "Organization",
+      "repo_id": 651622038
+    },
+    "anomalyco/opencode": {
+      "full_name": "anomalyco/opencode",
+      "owner_type": "Organization",
+      "repo_id": 975734319
+    },
+    "apple/ml-fastvlm": {
+      "full_name": "apple/ml-fastvlm",
+      "owner_type": "Organization",
+      "repo_id": 976325482
+    },
+    "aqlaboratory/openfold": {
+      "full_name": "aqlaboratory/openfold",
+      "owner_type": "Organization",
+      "repo_id": 406555580
+    },
+    "arneschneuing/DiffSBDD": {
+      "full_name": "arneschneuing/DiffSBDD",
+      "owner_type": "User",
+      "repo_id": 543080472
+    },
+    "axolotl-ai-cloud/axolotl": {
+      "full_name": "axolotl-ai-cloud/axolotl",
+      "owner_type": "Organization",
+      "repo_id": 627727693
+    },
+    "black-forest-labs/flux": {
+      "full_name": "black-forest-labs/flux",
+      "owner_type": "Organization",
+      "repo_id": 836642963
+    },
+    "block/goose": {
+      "full_name": "aaif-goose/goose",
+      "owner_type": "Organization",
+      "repo_id": 846698999
+    },
+    "browser-use/browser-use": {
+      "full_name": "browser-use/browser-use",
+      "owner_type": "Organization",
+      "repo_id": 881458615
+    },
+    "bytedance/Protenix": {
+      "full_name": "bytedance/Protenix",
+      "owner_type": "Organization",
+      "repo_id": 885346783
+    },
+    "bytedance/UI-TARS-desktop": {
+      "full_name": "bytedance/UI-TARS-desktop",
+      "owner_type": "Organization",
+      "repo_id": 918932603
+    },
+    "camel-ai/camel": {
+      "full_name": "camel-ai/camel",
+      "owner_type": "Organization",
+      "repo_id": 615510678
+    },
+    "chaidiscovery/chai-lab": {
+      "full_name": "chaidiscovery/chai-lab",
+      "owner_type": "Organization",
+      "repo_id": 854372212
+    },
+    "charmbracelet/crush": {
+      "full_name": "charmbracelet/crush",
+      "owner_type": "Organization",
+      "repo_id": 987670088
+    },
+    "cline/cline": {
+      "full_name": "cline/cline",
+      "owner_type": "Organization",
+      "repo_id": 824874689
+    },
+    "comfyanonymous/ComfyUI": {
+      "full_name": "Comfy-Org/ComfyUI",
+      "owner_type": "Organization",
+      "repo_id": 589831718
+    },
+    "continuedev/continue": {
+      "full_name": "continuedev/continue",
+      "owner_type": "Organization",
+      "repo_id": 644686905
+    },
+    "crewAIInc/crewAI": {
+      "full_name": "crewAIInc/crewAI",
+      "owner_type": "Organization",
+      "repo_id": 710601088
+    },
+    "dauparas/LigandMPNN": {
+      "full_name": "dauparas/LigandMPNN",
+      "owner_type": "User",
+      "repo_id": 724711360
+    },
+    "dauparas/ProteinMPNN": {
+      "full_name": "dauparas/ProteinMPNN",
+      "owner_type": "User",
+      "repo_id": 496457253
+    },
+    "deepchem/deepchem": {
+      "full_name": "deepchem/deepchem",
+      "owner_type": "Organization",
+      "repo_id": 43098215
+    },
+    "deepmodeling/Uni-Mol": {
+      "full_name": "deepmodeling/Uni-Mol",
+      "owner_type": "Organization",
+      "repo_id": 495067397
+    },
+    "deepseek-ai/DeepSeek-OCR": {
+      "full_name": "deepseek-ai/DeepSeek-OCR",
+      "owner_type": "Organization",
+      "repo_id": 1078049937
+    },
+    "deepseek-ai/DeepSeek-VL2": {
+      "full_name": "deepseek-ai/DeepSeek-VL2",
+      "owner_type": "Organization",
+      "repo_id": 902697574
+    },
+    "dora-rs/dora": {
+      "full_name": "dora-rs/dora",
+      "owner_type": "Organization",
+      "repo_id": 460615268
+    },
+    "facebookresearch/esm": {
+      "full_name": "facebookresearch/esm",
+      "owner_type": "Organization",
+      "repo_id": 291783502
+    },
+    "facebookresearch/habitat-lab": {
+      "full_name": "facebookresearch/habitat-lab",
+      "owner_type": "Organization",
+      "repo_id": 169164391
+    },
+    "fishaudio/fish-speech": {
+      "full_name": "fishaudio/fish-speech",
+      "owner_type": "Organization",
+      "repo_id": 702796244
+    },
+    "flashinfer-ai/flashinfer": {
+      "full_name": "flashinfer-ai/flashinfer",
+      "owner_type": "Organization",
+      "repo_id": 669331976
+    },
+    "gcorso/DiffDock": {
+      "full_name": "gcorso/DiffDock",
+      "owner_type": "User",
+      "repo_id": 545595027
+    },
+    "ggml-org/llama.cpp": {
+      "full_name": "ggml-org/llama.cpp",
+      "owner_type": "Organization",
+      "repo_id": 612354784
+    },
+    "gnina/gnina": {
+      "full_name": "gnina/gnina",
+      "owner_type": "Organization",
+      "repo_id": 45548146
+    },
+    "google-deepmind/alphafold3": {
+      "full_name": "google-deepmind/alphafold3",
+      "owner_type": "Organization",
+      "repo_id": 886637886
+    },
+    "google-deepmind/mujoco": {
+      "full_name": "google-deepmind/mujoco",
+      "owner_type": "Organization",
+      "repo_id": 400501136
+    },
+    "google-gemini/gemini-cli": {
+      "full_name": "google-gemini/gemini-cli",
+      "owner_type": "Organization",
+      "repo_id": 968197216
+    },
+    "google/adk-python": {
+      "full_name": "google/adk-python",
+      "owner_type": "Organization",
+      "repo_id": 958830659
+    },
+    "haotian-liu/LLaVA": {
+      "full_name": "haotian-liu/LLaVA",
+      "owner_type": "User",
+      "repo_id": 629102662
+    },
+    "hexgrad/kokoro": {
+      "full_name": "hexgrad/kokoro",
+      "owner_type": "User",
+      "repo_id": 915054134
+    },
+    "hiyouga/LLaMA-Factory": {
+      "full_name": "hiyouga/LlamaFactory",
+      "owner_type": "User",
+      "repo_id": 646410686
+    },
+    "hpcaitech/Open-Sora": {
+      "full_name": "hpcaitech/Open-Sora",
+      "owner_type": "Organization",
+      "repo_id": 760231710
+    },
+    "huggingface/diffusers": {
+      "full_name": "huggingface/diffusers",
+      "owner_type": "Organization",
+      "repo_id": 498011141
+    },
+    "huggingface/lerobot": {
+      "full_name": "huggingface/lerobot",
+      "owner_type": "Organization",
+      "repo_id": 748713144
+    },
+    "huggingface/open-r1": {
+      "full_name": "huggingface/open-r1",
+      "owner_type": "Organization",
+      "repo_id": 921777121
+    },
+    "huggingface/smolagents": {
+      "full_name": "huggingface/smolagents",
+      "owner_type": "Organization",
+      "repo_id": 898968194
+    },
+    "huggingface/smollm": {
+      "full_name": "huggingface/smollm",
+      "owner_type": "Organization",
+      "repo_id": 883143171
+    },
+    "huggingface/trl": {
+      "full_name": "huggingface/trl",
+      "owner_type": "Organization",
+      "repo_id": 250510075
+    },
+    "inclusionAI/AReaL": {
+      "full_name": "areal-project/AReaL",
+      "owner_type": "Organization",
+      "repo_id": 937952934
+    },
+    "isaac-sim/IsaacLab": {
+      "full_name": "isaac-sim/IsaacLab",
+      "owner_type": "Organization",
+      "repo_id": 567038244
+    },
+    "jwohlwend/boltz": {
+      "full_name": "jwohlwend/boltz",
+      "owner_type": "User",
+      "repo_id": 889915078
+    },
+    "kvcache-ai/Mooncake": {
+      "full_name": "kvcache-ai/Mooncake",
+      "owner_type": "Organization",
+      "repo_id": 819733173
+    },
+    "kvcache-ai/ktransformers": {
+      "full_name": "kvcache-ai/ktransformers",
+      "owner_type": "Organization",
+      "repo_id": 833984877
+    },
+    "langchain-ai/langgraph": {
+      "full_name": "langchain-ai/langgraph",
+      "owner_type": "Organization",
+      "repo_id": 676672661
+    },
+    "letta-ai/letta": {
+      "full_name": "letta-ai/letta",
+      "owner_type": "Organization",
+      "repo_id": 703411624
+    },
+    "llm-d/llm-d": {
+      "full_name": "llm-d/llm-d",
+      "owner_type": "Organization",
+      "repo_id": 975070903
+    },
+    "m87-labs/moondream": {
+      "full_name": "m87-labs/moondream",
+      "owner_type": "Organization",
+      "repo_id": 736812439
+    },
+    "mani-skill/ManiSkill": {
+      "full_name": "mani-skill/ManiSkill",
+      "owner_type": "Organization",
+      "repo_id": 520357130
+    },
+    "mastra-ai/mastra": {
+      "full_name": "mastra-ai/mastra",
+      "owner_type": "Organization",
+      "repo_id": 839037098
+    },
+    "microsoft/Graphormer": {
+      "full_name": "microsoft/Graphormer",
+      "owner_type": "Organization",
+      "repo_id": 371257414
+    },
+    "microsoft/OmniParser": {
+      "full_name": "microsoft/OmniParser",
+      "owner_type": "Organization",
+      "repo_id": 860252770
+    },
+    "microsoft/agent-framework": {
+      "full_name": "microsoft/agent-framework",
+      "owner_type": "Organization",
+      "repo_id": 974445592
+    },
+    "microsoft/autogen": {
+      "full_name": "microsoft/autogen",
+      "owner_type": "Organization",
+      "repo_id": 680120071
+    },
+    "microsoft/bioemu": {
+      "full_name": "microsoft/bioemu",
+      "owner_type": "Organization",
+      "repo_id": 904831157
+    },
+    "modelscope/ms-swift": {
+      "full_name": "modelscope/ms-swift",
+      "owner_type": "Organization",
+      "repo_id": 673412924
+    },
+    "multimodal-art-projection/YuE": {
+      "full_name": "multimodal-art-projection/YuE",
+      "owner_type": "Organization",
+      "repo_id": 920995232
+    },
+    "ollama/ollama": {
+      "full_name": "ollama/ollama",
+      "owner_type": "Organization",
+      "repo_id": 658928958
+    },
+    "openai/codex": {
+      "full_name": "openai/codex",
+      "owner_type": "Organization",
+      "repo_id": 965415649
+    },
+    "openai/openai-agents-python": {
+      "full_name": "openai/openai-agents-python",
+      "owner_type": "Organization",
+      "repo_id": 946380199
+    },
+    "openinterpreter/openinterpreter": {
+      "full_name": "openinterpreter/openinterpreter",
+      "owner_type": "Organization",
+      "repo_id": 666299222
+    },
+    "openvla/openvla": {
+      "full_name": "openvla/openvla",
+      "owner_type": "Organization",
+      "repo_id": 814864073
+    },
+    "paul-gauthier/aider": {
+      "full_name": "Aider-AI/aider",
+      "owner_type": "Organization",
+      "repo_id": 638629097
+    },
+    "princeton-nlp/SWE-agent": {
+      "full_name": "SWE-agent/SWE-agent",
+      "owner_type": "Organization",
+      "repo_id": 780737106
+    },
+    "pydantic/pydantic-ai": {
+      "full_name": "pydantic/pydantic-ai",
+      "owner_type": "Organization",
+      "repo_id": 818331198
+    },
+    "robocasa/robocasa": {
+      "full_name": "robocasa/robocasa",
+      "owner_type": "Organization",
+      "repo_id": 799171422
+    },
+    "sgl-project/sglang": {
+      "full_name": "sgl-project/sglang",
+      "owner_type": "Organization",
+      "repo_id": 740303686
+    },
+    "showlab/ShowUI": {
+      "full_name": "showlab/ShowUI",
+      "owner_type": "Organization",
+      "repo_id": 881201918
+    },
+    "simular-ai/Agent-S": {
+      "full_name": "simular-ai/Agent-S",
+      "owner_type": "Organization",
+      "repo_id": 870189331
+    },
+    "stanfordnlp/dspy": {
+      "full_name": "stanfordnlp/dspy",
+      "owner_type": "Organization",
+      "repo_id": 587050620
+    },
+    "steineggerlab/foldseek": {
+      "full_name": "steineggerlab/foldseek",
+      "owner_type": "Organization",
+      "repo_id": 166769317
+    },
+    "strands-agents/harness-sdk": {
+      "full_name": "strands-agents/harness-sdk",
+      "owner_type": "Organization",
+      "repo_id": 983715534
+    },
+    "thu-ml/RoboticsDiffusionTransformer": {
+      "full_name": "thu-ml/RoboticsDiffusionTransformer",
+      "owner_type": "Organization",
+      "repo_id": 868861536
+    },
+    "unslothai/unsloth": {
+      "full_name": "unslothai/unsloth",
+      "owner_type": "Organization",
+      "repo_id": 725205304
+    },
+    "verl-project/verl": {
+      "full_name": "verl-project/verl",
+      "owner_type": "Organization",
+      "repo_id": 881221486
+    },
+    "vllm-project/aibrix": {
+      "full_name": "vllm-project/aibrix",
+      "owner_type": "Organization",
+      "repo_id": 813348592
+    },
+    "vllm-project/vllm": {
+      "full_name": "vllm-project/vllm",
+      "owner_type": "Organization",
+      "repo_id": 599547518
+    },
+    "voideditor/void": {
+      "full_name": "voideditor/void",
+      "owner_type": "Organization",
+      "repo_id": 855528273
+    },
+    "westlake-repl/SaProt": {
+      "full_name": "westlake-repl/SaProt",
+      "owner_type": "Organization",
+      "repo_id": 699149724
+    },
+    "xlang-ai/OSWorld": {
+      "full_name": "xlang-ai/OSWorld",
+      "owner_type": "Organization",
+      "repo_id": 705433049
+    },
+    "xorbitsai/inference": {
+      "full_name": "xorbitsai/inference",
+      "owner_type": "Organization",
+      "repo_id": 653496050
+    },
+    "zai-org/GLM-V": {
+      "full_name": "zai-org/GLM-V",
+      "owner_type": "Organization",
+      "repo_id": 1010055053
+    },
+    "zed-industries/zed": {
+      "full_name": "zed-industries/zed",
+      "owner_type": "Organization",
+      "repo_id": 340547520
+    }
+  },
+  "schema_version": "owner_types_1"
+}
