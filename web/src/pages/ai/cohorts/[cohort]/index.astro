@@ -28,7 +28,7 @@ const listJson = itemListDataset({ path, name: pageName, description: desc, peri
       </div>
       <p class="eyebrow">Cohort</p>
       <h1>{cohort.label}</h1>
-      <p class="lead" style="max-width:60ch">{es.length} systems in this cohort, by within-cohort momentum at period {snapshot.period}.</p>
+      <p class="lead" style="max-width:60ch">{es.length} systems measured in this cohort at period {snapshot.period}; each carries its momentum value. Sort as you wish - the archive does not rank.</p>
       <EntityTable entities={es} />
     </div>
   </section>

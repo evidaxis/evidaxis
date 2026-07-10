@@ -1,15 +1,15 @@
 ---
 /**
- * Ranking table over the snapshot. Every row is SERVER-RENDERED (real <table>,
- * crawlable by Google + LLMs with no JS) and sorted by momentum desc at build.
- * Column sort is progressive enhancement: an inline script reorders the EXISTING
- * <tr> nodes by reading their data-* keys, it never injects rows. Null citation
- * axis renders an honest "no axis" cell, never a fake z. Cohort labels route
- * through cohortLabel so the em-dash in the raw label never ships.
+ * Entity catalog table over the snapshot. Every row is SERVER-RENDERED (real <table>,
+ * crawlable by Google + LLMs with no JS). Default HTML source order is cohort, then
+ * alphabetical (no ordinal ranking; constitution: reader sorts for themselves).
+ * Momentum VALUE is displayed as a measurement. An optional JS-only "sort by momentum"
+ * toggle (default OFF) reorders existing <tr> nodes without changing source order
+ * for non-JS consumers. Null citation axis renders "no axis", never a fake z.
  */
 import { entities as allEntities, commitSeries } from '../lib/data';
 import type { Entity } from '../lib/data';
-import { cohortColor, cohortLabel, fmtZsafe } from '../lib/cohorts';
+import { cohortColor, cohortLabel, COHORT_ORDER, fmtZsafe } from '../lib/cohorts';
 import Sparkline from './Sparkline.astro';
 
 export interface Props {
@@ -17,11 +17,20 @@ export interface Props {
   title?: string;
   limit?: number;
 }
-const { entities = allEntities, title = 'Ranking', limit } = Astro.props;
+const { entities = allEntities, title = 'Catalog', limit } = Astro.props;
 
-const STATUS_ORDER: Record<string, number> = { rising: 0, watch: 1, tracked: 2, 'single-axis': 3, calibration: 4 };
-const ranked = [...entities]
-  .sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1))
+const cohortIdx = (key: string) => {
+  const i = COHORT_ORDER.indexOf(key);
+  return i < 0 ? 999 : i;
+};
+
+// Default order: cohort (canonical order), then alphabetical by name. No ordinals.
+const catalog = [...entities]
+  .sort((a, b) => {
+    const c = cohortIdx(a.cohort) - cohortIdx(b.cohort);
+    if (c !== 0) return c;
+    return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+  })
   .slice(0, limit ?? entities.length);
 
 const zClass = (z: number | null, cit = false) =>
@@ -35,37 +44,34 @@ const sparkColor = (e: Entity) => {
 <div class="rank-wrap">
   <div class="rank-top">
     <span class="t">{title} · snapshot</span>
-    <span class="hint">click a column to sort &#8597;</span>
+    <label class="mom-toggle">
+      <input type="checkbox" data-mom-toggle />
+      <span>Sort by momentum</span>
+    </label>
   </div>
   <div class="rank-scroll">
-    <table class="tbl" data-ranktable>
+    <table class="tbl" data-entitytable>
       <thead>
         <tr>
-          <th data-key="rank" data-type="num" class="num" aria-sort="ascending">#<span class="caret">&#9650;</span></th>
-          <th data-key="sys" data-type="str">System<span class="caret">&#8597;</span></th>
-          <th data-key="coh" data-type="str">Cohort<span class="caret">&#8597;</span></th>
-          <th data-key="vz" data-type="num" class="num">Velocity z<span class="caret">&#8597;</span></th>
-          <th data-key="cz" data-type="num" class="num">Citation z<span class="caret">&#8597;</span></th>
-          <th data-key="mo" data-type="num" class="num">Momentum<span class="caret">&#8597;</span></th>
-          <th data-key="st" data-type="str">Status<span class="caret">&#8597;</span></th>
+          <th>System</th>
+          <th>Cohort</th>
+          <th class="num">Velocity z</th>
+          <th class="num">Citation z</th>
+          <th class="num">Momentum</th>
+          <th>Status</th>
           <th class="sp">Commits</th>
         </tr>
       </thead>
       <tbody>
-        {ranked.map((e, i) => {
+        {catalog.map((e) => {
           const vz = e.axes.github_commit_velocity.cohort_z;
           const cz = e.axes.openalex_citation_momentum.cohort_z;
           return (
             <tr
-              data-rank={i + 1}
+              data-coh-idx={cohortIdx(e.cohort)}
               data-sys={e.name.toLowerCase()}
-              data-coh={cohortLabel(e.cohort).toLowerCase()}
-              data-vz={vz ?? -99}
-              data-cz={cz ?? -99}
               data-mo={e.momentum ?? -1}
-              data-st={STATUS_ORDER[e.status] ?? 9}
             >
-              <td class="rk num">{i + 1}</td>
               <td class="sys"><a href={`/e/${e.entity_id}/`}>{e.name}</a></td>
               <td class="coh"><span class="cdot" style={`background:${cohortColor(e.cohort)}`}></span>{cohortLabel(e.cohort)}</td>
               <td class={`z num ${zClass(vz)}`}><data value={String(vz ?? '')}>{fmtZsafe(vz)}</data></td>
@@ -79,56 +85,47 @@ const sparkColor = (e: Entity) => {
       </tbody>
     </table>
   </div>
-  <div class="rank-foot">Cohort-normalized z-scores · momentum is a within-pilot percentile of the combined signal · status follows the two-axis gate · "no axis" = no measurable citation series yet.</div>
+  <div class="rank-foot">Default order: cohort, then alphabetical. Momentum is a within-pilot percentile of the combined signal (a measurement, not a placement). Cohort-normalized z-scores · status follows the two-axis gate · "no axis" = no measurable citation series yet. Sort-by-momentum is optional client-side only.</div>
 </div>
 
 <script>
-  // Progressive enhancement: reorder EXISTING server-rendered rows on header click.
-  document.querySelectorAll('table[data-ranktable]').forEach((table) => {
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-    const ths = Array.from(table.querySelectorAll('thead th[data-key]')) as HTMLElement[];
-    ths.forEach((th) => {
-      th.tabIndex = 0;
-      const run = () => {
-        const key = th.dataset.key!;
-        const type = th.dataset.type;
-        const cur = th.getAttribute('aria-sort');
-        const dir = cur === 'ascending' ? 'descending' : 'ascending';
-        ths.forEach((o) => { o.removeAttribute('aria-sort'); const c = o.querySelector('.caret'); if (c) c.textContent = '↕'; });
-        th.setAttribute('aria-sort', dir);
-        const caret = th.querySelector('.caret'); if (caret) caret.textContent = dir === 'ascending' ? '▲' : '▼';
-        const rows = Array.from(tbody.querySelectorAll('tr')) as HTMLElement[];
-        rows.sort((a, b) => {
-          const va = a.dataset[key]!, vb = b.dataset[key]!;
-          let c = type === 'num' ? parseFloat(va) - parseFloat(vb) : va < vb ? -1 : va > vb ? 1 : 0;
-          return dir === 'ascending' ? c : -c;
-        });
+  // Progressive enhancement: optional momentum sort. Default OFF keeps HTML source
+  // order (cohort then alphabetical) for crawlers and no-JS readers.
+  document.querySelectorAll('.rank-wrap').forEach((wrap) => {
+    const table = wrap.querySelector('table[data-entitytable]') as HTMLTableElement | null;
+    const toggle = wrap.querySelector('input[data-mom-toggle]') as HTMLInputElement | null;
+    const tbody = table?.querySelector('tbody');
+    if (!table || !toggle || !tbody) return;
+
+    const sourceOrder = Array.from(tbody.querySelectorAll('tr')) as HTMLElement[];
+
+    const apply = () => {
+      const rows = Array.from(tbody.querySelectorAll('tr')) as HTMLElement[];
+      if (toggle.checked) {
+        rows.sort((a, b) => parseFloat(b.dataset.mo ?? '-1') - parseFloat(a.dataset.mo ?? '-1'));
         rows.forEach((r) => tbody.appendChild(r));
-      };
-      th.addEventListener('click', run);
-      th.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); run(); } });
-    });
+      } else {
+        sourceOrder.forEach((r) => tbody.appendChild(r));
+      }
+    };
+    toggle.addEventListener('change', apply);
   });
 </script>
 
 <style>
   .rank-wrap { margin-top: 40px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow-card); overflow: hidden; }
-  .rank-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--hairline); background: linear-gradient(var(--surface), var(--paper)); }
+  .rank-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--hairline); background: linear-gradient(var(--surface), var(--paper)); gap: 12px; flex-wrap: wrap; }
   .rank-top .t { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
-  .rank-top .hint { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); }
+  .mom-toggle { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; }
+  .mom-toggle input { accent-color: var(--velocity); }
   .rank-scroll { overflow-x: auto; }
   .tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .tbl thead th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--hairline); cursor: pointer; user-select: none; white-space: nowrap; transition: color .15s; }
-  .tbl thead th:hover { color: var(--ink); }
+  .tbl thead th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
   .tbl thead th.num, .tbl td.num { text-align: right; font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
-  .tbl thead th .caret { opacity: .32; margin-left: 4px; font-size: 10px; }
-  .tbl thead th[aria-sort] .caret { opacity: 1; color: var(--velocity); }
   .tbl tbody tr { border-bottom: 1px solid var(--hairline); transition: background .14s; }
   .tbl tbody tr:last-child { border-bottom: none; }
   .tbl tbody tr:hover { background: var(--rise-wash); }
   .tbl td { padding: 13px 16px; vertical-align: middle; }
-  .tbl .rk { font-family: var(--font-mono); color: var(--ink-mute); width: 34px; }
   .tbl .sys { font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
   .tbl .sys a { transition: color .15s; }
   .tbl .sys a:hover { color: var(--velocity); }
@@ -142,5 +139,5 @@ const sparkColor = (e: Entity) => {
   .tbl .sp { width: 132px; }
   .tbl .badge { font-size: 10px; }
   .rank-foot { padding: 13px 20px; border-top: 1px solid var(--hairline); font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-mute); background: var(--paper); line-height: 1.5; }
-  @media (max-width: 760px) { .tbl { min-width: 680px; } }
+  @media (max-width: 760px) { .tbl { min-width: 640px; } }
 </style>

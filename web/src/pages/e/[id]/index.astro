@@ -203,7 +203,7 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
         <div class="peers">
           <h2 class="eyebrow sec-h">Others in {cohortLabel(e.cohort)}</h2>
           <div class="peer-list">
-            {related.map((r) => <EntityRow entity={r} rank={cohortRanked.findIndex((x) => x.entity_id === r.entity_id) + 1} />)}
+            {[...related].sort((a, b) => a.name.localeCompare(b.name)).map((r) => <EntityRow entity={r} />)}
           </div>
           <p class="peer-more"><a href={`/ai/cohorts/${e.sub_niche}/`}>Full {cohortLabel(e.cohort)} cohort &rarr;</a></p>
         </div>

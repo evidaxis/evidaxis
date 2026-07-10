@@ -149,9 +149,10 @@ export const industries = () => {
   return map;
 };
 
+// D1 de-ranking (2026-07-10): cohort listings are alphabetical — the reader sorts.
 export const entitiesInCohort = (cohortKey: string) =>
   entities.filter((e) => e.cohort === cohortKey)
-    .sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
+    .sort((a, b) => a.name.localeCompare(b.name));
 
 export const STATUS_LABEL: Record<Entity['status'], string> = {
   rising: 'Rising', watch: 'Watch', tracked: 'Tracked',

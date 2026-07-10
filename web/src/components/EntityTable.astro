@@ -1,10 +1,23 @@
 ---
 import type { Entity } from '../lib/data';
 import { commitSeries, citationSeries, deps } from '../lib/data';
+import { COHORT_ORDER } from '../lib/cohorts';
 import Sparkline from './Sparkline.astro';
 import StatusBadge from './StatusBadge.astro';
 export interface Props { entities: Entity[]; }
-const { entities } = Astro.props;
+const { entities: raw } = Astro.props;
+
+const cohortIdx = (key: string) => {
+  const i = COHORT_ORDER.indexOf(key);
+  return i < 0 ? 999 : i;
+};
+
+// Default public-list order: cohort, then alphabetical (no momentum ladder).
+const entities = [...raw].sort((a, b) => {
+  const c = cohortIdx(a.cohort) - cohortIdx(b.cohort);
+  if (c !== 0) return c;
+  return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+});
 ---
 <div class="table-scroll" style="overflow-x:auto">
 <table class="table">
@@ -19,7 +32,7 @@ const { entities } = Astro.props;
     </tr>
   </thead>
   <tbody>
-    {entities.map((e, i) => {
+    {entities.map((e) => {
       const a1 = e.axes.github_commit_velocity;
       const a2 = e.axes.openalex_citation_momentum;
       const cs = commitSeries(e.entity_id);
@@ -52,6 +65,6 @@ const { entities } = Astro.props;
   </tbody>
 </table>
 <p class="mono muted" style="font-size:.68rem;margin-top:.5rem">
-  Dependents: downstream packages that build on the system (deps.dev). An adoption signal, not part of the momentum score.
+  Order: cohort, then alphabetical. Momentum is a measurement, not a placement. Dependents: downstream packages that build on the system (deps.dev); an adoption signal, not part of the momentum score.
 </p>
 </div>

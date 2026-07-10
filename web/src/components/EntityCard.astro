@@ -74,7 +74,7 @@ const repoUrl = publicRepoUrl(e);
       <div class="pcol">
         <div class="row1">
           <span class="lbl">position in cohort distribution</span>
-          <span class="rk">rank <b>#{rank}</b> of {cohortN}</span>
+          <span class="rk">one of {cohortN} in cohort</span>
         </div>
         <PercentileStrip percentile={e.percentile} color={color} />
         <span class="lbl" style="margin-top:2px">momentum is the combined velocity and citation signal, percentile within cohort</span>
@@ -101,10 +101,10 @@ const repoUrl = publicRepoUrl(e);
 
     <!-- 4-cell readout -->
     <div class="readout">
-      <div class="ro"><div class="k">rank in cohort</div><div class={`v ${isRising ? 'teal' : 'amber'}`}>#{rank}</div><div class="s">of {cohortN} systems</div></div>
+      <div class="ro"><div class="k">cohort</div><div class={`v ${isRising ? 'teal' : 'amber'}`}>{cohortN}</div><div class="s">systems measured</div></div>
       <div class="ro"><div class="k">weekly commits</div><div class="v teal">{a1.recent_weekly_commits ?? 'n/a'}</div><div class="s">{velRising ? 'rising trend' : 'not rising'}</div></div>
       <div class="ro"><div class="k">total citations</div><div class="v amber">{a2.status === 'present' ? a2.total_citations.toLocaleString() : 'n/a'}</div><div class="s">{a2.status === 'present' ? 'present' : 'no axis'}</div></div>
-      <div class="ro"><div class="k">momentum</div><div class="v">{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</div><div class="s">{e.percentile != null ? `percentile p${e.percentile}` : 'unranked'}</div></div>
+      <div class="ro"><div class="k">momentum</div><div class="v">{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</div><div class="s">{e.percentile != null ? `percentile p${e.percentile}` : 'n/a'}</div></div>
     </div>
 
     <!-- SERIES row -->
