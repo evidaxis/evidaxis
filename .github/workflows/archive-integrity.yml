@@ -48,6 +48,12 @@ jobs:
       - name: History ledger resolves (no phantom snapshot ids)
         run: python3 collectors/history_ledger_check.py
 
+      - name: snapshot_id collisions are content-distinct or allowlisted
+        # Fail if two snapshot dirs share snapshot_id with different payload hashes,
+        # unless the pair is listed in data/observations/errata_snapshot_id.json
+        # (known pre-fix collision f1f2495d518d on 2026-07-03 / 2026-07-04).
+        run: python3 collectors/snapshot_identity.py --check
+
       - name: Integrity witnesses are append-only (no in-place modification)
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
         run: |

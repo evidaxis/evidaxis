@@ -127,3 +127,15 @@ Steps 1 to 4 are implementation; the **scheme above is the lock**. Everything th
 carries GEO authority (taxonomy URLs, entity URLs, methodology versions) hangs off
 this indirection, which is why it is locked first, before the first public citation
 can land on a bare URL.
+
+## Changelog
+
+- **2026-07-10 — URN epoch minting = `snapshot_date`.** `claimUrnForEntity` (and
+  equivalent site minting call sites) now bind the epoch segment to
+  `snap.snapshot_date` (`YYYY-MM-DD`), not ISO-week `snap.period`. Two
+  measurements in the same ISO week can differ in payload; a week-epoch URN
+  would be ambiguous (documented collision: `m2:2026-w27` across
+  `2026-07-03` / `2026-07-04`, see `data/observations/ERRATA.md`). The locked
+  grammar is unchanged: both `YYYY-Www` and `YYYY-MM-DD` remain valid, so
+  historically minted week-epoch URNs stay parseable and resolvable. No change
+  to `collectors/claim_urn.py` / grammar mirrors beyond minting call sites.

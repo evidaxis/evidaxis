@@ -68,11 +68,19 @@ jobs:
         # so `git add -A` does not revert the maintained mirror. web-ci enforces 1:1.
         run: python3 collectors/gen_redirects.py
 
+      - name: Content-addressed snapshot_id (post-step; frozen collect.py seeds-only mint)
+        # collect.py mints snapshot_id from methodology + seed-manifest only, so two
+        # days with the same seeds can share an id while payloads differ (ERRATA
+        # 2026-07-10, f1f2495d518d). Rewrite to sha256(canonical payload)[:12] BEFORE
+        # refresh_sums seals the bundle. Must run after taxonomy_v2 (mutates entities)
+        # and before refresh_sums (mandatory FINAL content step).
+        run: python3 collectors/snapshot_identity.py --date "$(date -u +%Y-%m-%d)"
+
       - name: Refresh snapshot checksums (mandatory FINAL content step)
-        # collect.py writes SHA256SUMS, but reclass_pre_spine.py and taxonomy_v2.py
-        # mutate snapshot.json/manifest.json AFTER the sums are written. Re-hash the
-        # bundle so published sums match published bytes (see 2026-07-01 ERRATA.md).
-        # Nothing may mutate snapshot files after this step.
+        # collect.py writes SHA256SUMS, but reclass_pre_spine.py, taxonomy_v2.py, and
+        # snapshot_identity.py mutate snapshot.json/manifest.json AFTER the sums are
+        # written. Re-hash the bundle so published sums match published bytes
+        # (see 2026-07-01 ERRATA.md). Nothing may mutate snapshot files after this step.
         run: |
           python3 collectors/refresh_sums.py --date "$(date -u +%Y-%m-%d)"
           python3 collectors/refresh_sums.py --verify

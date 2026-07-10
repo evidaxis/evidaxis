@@ -10,7 +10,7 @@ export const GET: APIRoute = () => {
     .map((c) => `  - https://evidaxis.org/ai/cohorts/${c}/`)
     .join('\n');
   const systemList = ranked
-    .map((e) => `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}, status ${e.status}, cohort ${cohortLabel(e.cohort)}. JSON: https://evidaxis.org/e/${e.entity_id}.json Cite-as: ${claimUrn(e.entity_id, snapshot.methodology_version, snapshot.period)}`)
+    .map((e) => `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}, status ${e.status}, cohort ${cohortLabel(e.cohort)}. JSON: https://evidaxis.org/e/${e.entity_id}.json Cite-as: ${claimUrn(e.entity_id, snapshot.methodology_version, snapshot.snapshot_date)}`)
     .join('\n');
   const txt = `# Evidaxis
 
@@ -42,8 +42,8 @@ record and JSON-LD) and a machine-readable record at https://evidaxis.org/e/{ent
 record plus the snapshot period, e.g. "Evidaxis momentum for {System}, snapshot ${snapshot.period}
 (https://evidaxis.org/e/{entity_id})".
 
-Durable (format-independent) canonical reference: urn:evidaxis:claim:{entity_id}:{methodology_version}:{period}
-(e.g. urn:evidaxis:claim:{entity_id}:${snapshot.methodology_version}:${snapshot.period}). This claim-URN names the
+Durable (format-independent) canonical reference: urn:evidaxis:claim:{entity_id}:{methodology_version}:{snapshot_date}
+(e.g. urn:evidaxis:claim:{entity_id}:${snapshot.methodology_version}:${snapshot.snapshot_date}). This claim-URN names the
 assertion Evidaxis makes about a system under a methodology at an epoch; it is stable across changes in how the
 record is delivered (HTTP today, other protocols later) and today resolves at https://evidaxis.org/e/{entity_id}/.
 It is emitted per system as JSON-LD identifier and an HTML rel="cite-as" link. Prefer it for long-lived citations.

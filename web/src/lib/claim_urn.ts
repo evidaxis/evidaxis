@@ -40,6 +40,10 @@ export function parseClaimUrn(urn: string): { accession_id: string; methodology_
   return { accession_id: accession, methodology_version: method, epoch };
 }
 
-/** The durable citation for a single system's measurement at this snapshot. */
+/** The durable citation for a single system's measurement at this snapshot.
+ *  Epoch is snapshot_date (YYYY-MM-DD), not ISO-week period: two snapshots in the
+ *  same week can hold different payloads, and a week-epoch URN would be ambiguous
+ *  (see data/observations/ERRATA.md, 2026-07-10). Grammar still accepts YYYY-Www
+ *  so historically minted URNs remain parseable. */
 export const claimUrnForEntity = (e: Entity, snap: Snapshot): string =>
-  claimUrn(e.entity_id, snap.methodology_version, snap.period);
+  claimUrn(e.entity_id, snap.methodology_version, snap.snapshot_date);

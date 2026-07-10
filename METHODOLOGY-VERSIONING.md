@@ -116,3 +116,15 @@ Two clarifications that close open seams in the pre-spine interim, forward-only:
   not in the file. An auditor reading the docstring literally should trust the
   constants and the registry, which agree with each other and with the
   published snapshots.
+
+- **2026-07-10 — content-addressed `snapshot_id` + claim-URN epoch = date.**
+  The frozen mint `sha1(methodology + seed-manifest_hash)[:12]` in
+  `etl/collect.py` collides when seeds are unchanged but entity payloads differ
+  (pair `2026-07-03` / `2026-07-04`, both `f1f2495d518d`; see
+  `data/observations/ERRATA.md`). Forward fix (no rewrite of published bytes):
+  post-step `collectors/snapshot_identity.py` sets
+  `snapshot_id = sha256(canonical_json(snapshot minus snapshot_id))[:12]` on
+  the current snapshot before `refresh_sums`; claim-URN minting uses
+  `snapshot_date` as epoch. Old week-epoch URNs remain parseable. Not a
+  methodology bump (`m2` formula unchanged) — identity of the measurement
+  bundle, not the score formula.

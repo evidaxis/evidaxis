@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "description": "Known snapshot_id collisions under the pre-content-addressed mint (sha1(methodology + seed-manifest_hash)[:12]). Published snapshots are never rewritten; this allowlist lets collectors/snapshot_identity.py --check pass the documented historical pair. Append-only.",
+  "allowlist": [
+    {
+      "snapshot_id": "f1f2495d518d",
+      "reason": "Pre-fix collision (WP-B / 2026-07-10 ERRATA): same seed-manifest hash for two different entity payloads under ISO week 2026-w27 (methodology m2). 2026-07-03 has 133 entities; 2026-07-04 has 135. Claim-URNs minted with epoch 2026-w27 under m2 are ambiguous across these two snapshots.",
+      "dates": ["2026-07-03", "2026-07-04"],
+      "entity_counts": {
+        "2026-07-03": 133,
+        "2026-07-04": 135
+      },
+      "payload_hashes": {
+        "2026-07-03": "38287b561ff9ab07b5ed850b7280472a63eb59014e3b65dae15ef4cd4a1bb4a7",
+        "2026-07-04": "900232c1b32c8c9029d934ca3ffffc377d1a9954116b5bc9718ea86146b61188"
+      }
+    }
+  ]
+}
