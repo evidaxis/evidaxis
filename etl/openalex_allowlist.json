@@ -1,0 +1,525 @@
+{
+  "e_13NVVKJA2MM": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "LangChain product; third-party uses only | https://github.com/langchain-ai/langgraph"
+  },
+  "e_15264R968MN": {
+    "work_ids": [
+      "W4387636003"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "Letta was MemGPT; arXiv 2310.08560 | https://openalex.org/works/W4387636003"
+  },
+  "e_20N3FEGPDR2": {
+    "work_ids": [
+      "W4417091789"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "SkyReels-V2 arXiv 2504.13074 match | https://openalex.org/works/W4417091789"
+  },
+  "e_261PEVXPG0B": {
+    "work_ids": [
+      "W4416119086"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "SmolVLM primary paper arXiv 2504.05299 | https://openalex.org/works/W4416119086"
+  },
+  "e_26C836YXKF2": {
+    "work_ids": [
+      "W4390214291"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Original InternVL; not Mini-InternVL | https://openalex.org/works/W4390214291"
+  },
+  "e_2WFB2V4PNQV": {
+    "work_ids": [
+      "W4408934460"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Nat Methods LigandMPNN journal version | https://openalex.org/works/W4408934460"
+  },
+  "e_2XFTYTGJT3Z": {
+    "work_ids": [
+      "W4403324307"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Chai-1 bioRxiv primary; 367 cites | https://openalex.org/works/W4403324307"
+  },
+  "e_3HZS2JPM2CR": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "OpenAI SDK product; no primary paper | https://github.com/openai/openai-agents-python"
+  },
+  "e_3JZ11S1QS33": {
+    "work_ids": [
+      "W4406489046"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "MiniCPM-V primary technical paper | https://openalex.org/works/W4406489046"
+  },
+  "e_41T3C34FQFA": {
+    "work_ids": [
+      "W4366330503"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "Visual Instruction Tuning = LLaVA | https://openalex.org/works/W4366330503"
+  },
+  "e_4249BQNHNVB": {
+    "work_ids": [
+      "W4416123688"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "AIBrix infrastructure paper arXiv 2504.03648 | https://openalex.org/works/W4416123688"
+  },
+  "e_4A9TG2M8403": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Google CLI product; no academic paper | https://github.com/google-gemini/gemini-cli"
+  },
+  "e_5R5PKZN9WTY": {
+    "work_ids": [
+      "W6966874861"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "Qwen-Image Technical Report 2508.02324 | https://openalex.org/works/W6966874861"
+  },
+  "e_77AC6K7XEWB": {
+    "work_ids": [
+      "W4415797413"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "SGLang execution paper; better of two | https://openalex.org/works/W4415797413"
+  },
+  "e_88YAM3PXK4S": {
+    "work_ids": [
+      "W4396721167"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "Nature AF3 paper; ~14k cites | https://openalex.org/works/W4396721167"
+  },
+  "e_8A2A58V55P6": {
+    "work_ids": [
+      "W4404783349"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "EMNLP demo Xinference paper | https://openalex.org/works/W4404783349"
+  },
+  "e_8V2DZWR8HPM": {
+    "work_ids": [
+      "W4402667093"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "LlamaFactory ACL demo; 299 cites | https://openalex.org/works/W4402667093"
+  },
+  "e_92WR5N03859": {
+    "work_ids": [
+      "W3197265836"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Original ManiSkill benchmark paper | https://openalex.org/works/W3197265836"
+  },
+  "e_97SYW64PA3G": {
+    "work_ids": [
+      "W4392126161"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "AgentScope multi-agent platform paper | https://openalex.org/works/W4392126161"
+  },
+  "e_ADT3TJHK8W8": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Google ADK product; tutorial candidates | https://github.com/google/adk-python"
+  },
+  "e_B10ZF25BFZT": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Fine-tuning tool; biology axolotl noise | https://github.com/axolotl-ai-cloud/axolotl"
+  },
+  "e_B1Q69HZTTMA": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "HF software citation only; no paper | https://github.com/huggingface/trl"
+  },
+  "e_D81ZQF8BMQS": {
+    "work_ids": [
+      "W4405434026"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "DeepSeek-VL2 MoE VLM paper | https://openalex.org/works/W4405434026"
+  },
+  "e_DAFJYGYBDKF": {
+    "work_ids": [
+      "W7103754783"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "README cites SWE-agent NeurIPS paper | https://openalex.org/works/W7103754783"
+  },
+  "e_DQT3XHMXA2C": {
+    "work_ids": [
+      "W4415330145"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Trinity-RFT arXiv 2505.17826 match | https://openalex.org/works/W4415330145"
+  },
+  "e_EDX1R1KVT3X": {
+    "work_ids": [],
+    "status": "absent",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Candidates wrong; OpenAlex DOI corrupted | https://arxiv.org/abs/2308.08155"
+  },
+  "e_EF7QKB37YJK": {
+    "work_ids": [],
+    "status": "absent",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Candidates wrong; OpenAlex DOI corrupted | https://arxiv.org/abs/2310.06770"
+  },
+  "e_EY620A0EAK9": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Agent framework; AgNO3 chemistry noise | https://github.com/agno-agi/agno"
+  },
+  "e_F19ZE68DAS4": {
+    "work_ids": [
+      "W4409092337"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "Wan series technical report arXiv | https://openalex.org/works/W4409092337"
+  },
+  "e_FTD4XD7DVG3": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Block AI agent product, not a paper | https://github.com/block/goose"
+  },
+  "e_GFGYNAKFRW2": {
+    "work_ids": [
+      "W4296032638"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Science ProteinMPNN; ~1890 cites | https://openalex.org/works/W4296032638"
+  },
+  "e_H6EVSN8Q85T": {
+    "work_ids": [],
+    "status": "absent",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Candidates robotics PRIME-RL mismatch | https://github.com/PrimeIntellect-ai/prime-rl"
+  },
+  "e_H6PPP8CA9RR": {
+    "work_ids": [
+      "W7131910578"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "LeRobot library paper; arXiv 2602.22818 | https://openalex.org/works/W7131910578"
+  },
+  "e_HTQD84GES1K": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Agent toolkit; AgentWorld is different | https://github.com/QwenLM/Qwen-Agent"
+  },
+  "e_JN83HWXP85Z": {
+    "work_ids": [
+      "W4413144805"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "FastVLM CVPR; higher-cite version | https://openalex.org/works/W4413144805"
+  },
+  "e_KFRVE2CAS8W": {
+    "work_ids": [
+      "W4323304388"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Uni-Mol primary; higher-cite record | https://openalex.org/works/W4323304388"
+  },
+  "e_KR3M8ESKAEW": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "k8s LLM serving project; no paper | https://github.com/llm-d/llm-d"
+  },
+  "e_KRDEF79H7GD": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Code editor; candidates are unrelated | https://github.com/zed-industries/zed"
+  },
+  "e_M5SCCQPBZ89": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Microsoft product framework; no paper | https://github.com/microsoft/agent-framework"
+  },
+  "e_MB6DQ5PDDKH": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "TTS model card; no academic paper | https://github.com/hexgrad/kokoro"
+  },
+  "e_MDD4QDWH205": {
+    "work_ids": [
+      "W4416037343"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "OpenRLHF EMNLP demo; better record | https://openalex.org/works/W4416037343"
+  },
+  "e_MMGH765AVAA": {
+    "work_ids": [
+      "W4414736068"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "KTransformers MoE inference paper | https://openalex.org/works/W4414736068"
+  },
+  "e_P6TVM7W57M8": {
+    "work_ids": [
+      "W4402354126"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "RoboCasa household-tasks paper, 29 cites | https://openalex.org/works/W4402354126"
+  },
+  "e_QFECGB8X9W5": {
+    "work_ids": [
+      "W4406052102"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "LTX-Video realtime latent diffusion | https://openalex.org/works/W4406052102"
+  },
+  "e_QV8QGGHJCSS": {
+    "work_ids": [
+      "W4383957026"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Nature RFdiffusion; ~2010 cites | https://openalex.org/works/W4383957026"
+  },
+  "e_R372CCSVG44": {
+    "work_ids": [
+      "W4387321091"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "PagedAttention/vLLM SOSP; ~1095 cites | https://openalex.org/works/W4387321091"
+  },
+  "e_S7DQ1QJCCMT": {
+    "work_ids": [
+      "W4403364995"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "RDT-1B arXiv 2410.07864 match | https://openalex.org/works/W4403364995"
+  },
+  "e_SNWV2DC244A": {
+    "work_ids": [
+      "W4302307901"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "DiffDock docking paper; 343 cites | https://openalex.org/works/W4302307901"
+  },
+  "e_SV60T2QMXGE": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Multi-agent product; no author paper | https://github.com/crewAIInc/crewAI"
+  },
+  "e_TRJN6D7V12H": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Local LLM runner product; wrong book chapter | https://github.com/ollama/ollama"
+  },
+  "e_TV0JWZEFEAQ": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "JS agent framework product; no paper | https://github.com/mastra-ai/mastra"
+  },
+  "e_V05C8HCBBV2": {
+    "work_ids": [
+      "W4417150458"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "LMCache KV-cache layer paper | https://openalex.org/works/W4417150458"
+  },
+  "e_V5N4GT09S49": {
+    "work_ids": [
+      "W4416055645"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "DeepSeek-OCR primary technical report | https://openalex.org/works/W4416055645"
+  },
+  "e_VBBNJDDB0DA": {
+    "work_ids": [
+      "W4362508448"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "CAMEL LLM agents arXiv 2303.17760 | https://openalex.org/works/W4362508448"
+  },
+  "e_W2REDH3NZ0S": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "OpenAI CLI product; blog-like records | https://github.com/openai/codex"
+  },
+  "e_W4SFE6Q23VK": {
+    "work_ids": [
+      "W4405096483"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "HunyuanVideo systematic framework paper | https://openalex.org/works/W4405096483"
+  },
+  "e_X3P6ZMFQBQQ": {
+    "work_ids": [],
+    "status": "no-paper",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Model release; candidates are blogs | https://github.com/Stability-AI/sd3.5"
+  },
+  "e_X9JA7ZTD6TF": {
+    "work_ids": [
+      "W4387430850"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "DSPy compiling pipelines paper | https://openalex.org/works/W4387430850"
+  },
+  "e_XTYDTXK7PNY": {
+    "work_ids": [
+      "W4405956131"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Open-Sora democratizing video paper | https://openalex.org/works/W4405956131"
+  },
+  "e_Y31RBTP1VWD": {
+    "work_ids": [
+      "W7129446322"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live+claude-spotcheck",
+    "date": "2026-07-10",
+    "note": "Canonical DORA arXiv 2602.13252 | https://openalex.org/works/W7129446322"
+  },
+  "e_Y3CPRHKVF8H": {
+    "work_ids": [
+      "W4417422257"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Search-R1 arXiv 2503.09516 match | https://openalex.org/works/W4417422257"
+  },
+  "e_Y3HMWAG1BQZ": {
+    "work_ids": [],
+    "status": "absent",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "True paper arXiv 2009.12293; no clean W-id | https://arxiv.org/abs/2009.12293"
+  },
+  "e_ZTAQY2693CR": {
+    "work_ids": [
+      "W4406274436"
+    ],
+    "status": "linked",
+    "verified_by": "grok-live",
+    "date": "2026-07-10",
+    "note": "Protenix AF3 reproduction; 112 cites | https://openalex.org/works/W4406274436"
+  }
+}

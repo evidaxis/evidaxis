@@ -20,7 +20,9 @@
           "entity_type": "repo",
           "name": "LeRobot",
           "homepage": "https://github.com/huggingface/lerobot",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W7131910578"
+          ],
           "note": "Paper exists but 0 citations indexed; axis-2 not yet usable."
         },
         {
@@ -45,7 +47,9 @@
           "entity_type": "repo",
           "name": "dora-rs",
           "homepage": "https://github.com/dora-rs/dora",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W7129446322"
+          ],
           "note": "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent."
         },
         {
@@ -92,7 +96,9 @@
           "entity_type": "repo",
           "name": "RDT-1B",
           "homepage": "https://rdt-robotics.github.io/rdt-robotics/",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4403364995"
+          ],
           "note": "paper_ref: 2410.07864; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -116,7 +122,9 @@
           "entity_type": "repo",
           "name": "ManiSkill",
           "homepage": "https://maniskill.ai",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W3197265836"
+          ],
           "note": "paper_ref: 2410.00425; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -124,7 +132,9 @@
           "entity_type": "repo",
           "name": "RoboCasa",
           "homepage": "https://robocasa.ai",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4402354126"
+          ],
           "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -226,7 +236,9 @@
           "entity_type": "repo",
           "name": "Chai-1",
           "homepage": "https://www.chaidiscovery.com",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4403324307"
+          ],
           "note": "paper_ref: biorxiv:10.1101/2024.10.10.615955; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -234,7 +246,9 @@
           "entity_type": "repo",
           "name": "Protenix",
           "homepage": "https://protenix-server.com",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4406274436"
+          ],
           "note": "paper_ref: biorxiv:2025.01.08.631967; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -242,7 +256,9 @@
           "entity_type": "repo",
           "name": "RFdiffusion",
           "homepage": "https://github.com/RosettaCommons/RFdiffusion",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4383957026"
+          ],
           "note": "paper_ref: biorxiv:2022.12.09.519842; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -250,7 +266,9 @@
           "entity_type": "repo",
           "name": "ProteinMPNN",
           "homepage": "https://github.com/dauparas/ProteinMPNN",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4296032638"
+          ],
           "note": "paper_ref: biorxiv:2022.06.03.494563; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -258,7 +276,9 @@
           "entity_type": "repo",
           "name": "LigandMPNN",
           "homepage": "https://github.com/dauparas/LigandMPNN",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4408934460"
+          ],
           "note": "paper_ref: biorxiv:2023.12.22.573103; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -266,7 +286,9 @@
           "entity_type": "repo",
           "name": "DiffDock",
           "homepage": "https://github.com/gcorso/DiffDock",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4302307901"
+          ],
           "note": "paper_ref: 2210.01776; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -274,7 +296,9 @@
           "entity_type": "repo",
           "name": "Uni-Mol",
           "homepage": "https://github.com/deepmodeling/Uni-Mol",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4323304388"
+          ],
           "note": "paper_ref: 2303.16982; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -282,7 +306,9 @@
           "entity_type": "repo",
           "name": "AlphaFold3",
           "homepage": "https://alphafoldserver.com",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4396721167"
+          ],
           "incumbent": true,
           "note": "paper_ref: openalex:10.1038/s41586-024-07487-w; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
@@ -477,7 +503,9 @@
           "entity_type": "repo",
           "name": "mini-swe-agent",
           "homepage": "https://github.com/SWE-agent/mini-swe-agent",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W7103754783"
+          ],
           "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         },
         {
@@ -518,7 +546,9 @@
           "entity_type": "repo",
           "name": "vLLM",
           "homepage": "https://vllm.ai",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4387321091"
+          ],
           "incumbent": true,
           "note": "paper_ref: 2309.06180; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
@@ -527,7 +557,9 @@
           "entity_type": "repo",
           "name": "SGLang",
           "homepage": "https://sglang.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4415797413"
+          ],
           "note": "paper_ref: 2312.07104; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -568,7 +600,9 @@
           "entity_type": "repo",
           "name": "KTransformers",
           "homepage": "https://kvcache-ai.github.io/ktransformers/",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4414736068"
+          ],
           "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -576,7 +610,9 @@
           "entity_type": "repo",
           "name": "LMCache",
           "homepage": "https://lmcache.ai",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4417150458"
+          ],
           "note": "paper_ref: 2510.09665; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -592,7 +628,9 @@
           "entity_type": "repo",
           "name": "AIBrix",
           "homepage": "https://aibrix.readthedocs.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4416123688"
+          ],
           "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -626,7 +664,9 @@
           "entity_type": "repo",
           "name": "Xinference",
           "homepage": "https://github.com/xorbitsai/inference",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4404783349"
+          ],
           "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         }
       ]
@@ -707,7 +747,9 @@
           "entity_type": "repo",
           "name": "Letta",
           "homepage": "https://docs.letta.com",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4387636003"
+          ],
           "note": "paper_ref: 2310.08560; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -715,7 +757,9 @@
           "entity_type": "repo",
           "name": "DSPy",
           "homepage": "https://dspy.ai",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4387430850"
+          ],
           "note": "paper_ref: 2310.03714; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -723,7 +767,9 @@
           "entity_type": "repo",
           "name": "AgentScope",
           "homepage": "https://docs.agentscope.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4392126161"
+          ],
           "note": "paper_ref: 2402.14034; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -731,7 +777,9 @@
           "entity_type": "repo",
           "name": "CAMEL",
           "homepage": "https://camel-ai.org",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4362508448"
+          ],
           "note": "paper_ref: 2303.17760; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -795,7 +843,9 @@
           "entity_type": "repo",
           "name": "LLaMA-Factory",
           "homepage": "https://llamafactory.readthedocs.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4402667093"
+          ],
           "note": "paper_ref: 2403.13372; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -827,7 +877,9 @@
           "entity_type": "repo",
           "name": "OpenRLHF",
           "homepage": "https://openrlhf.readthedocs.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4416037343"
+          ],
           "note": "paper_ref: 2405.11143; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -843,7 +895,9 @@
           "entity_type": "repo",
           "name": "Search-R1",
           "homepage": "https://github.com/PeterGriffinJin/Search-R1",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4417422257"
+          ],
           "note": "paper_ref: 2503.09516; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -909,7 +963,9 @@
           "entity_type": "repo",
           "name": "Trinity-RFT",
           "homepage": "https://github.com/agentscope-ai/Trinity-RFT",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4415330145"
+          ],
           "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
         }
       ]
@@ -932,7 +988,9 @@
           "entity_type": "model",
           "name": "Qwen-Image",
           "homepage": "https://huggingface.co/Qwen/Qwen-Image",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W6966874861"
+          ],
           "note": "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -948,7 +1006,9 @@
           "entity_type": "repo",
           "name": "Wan2.2",
           "homepage": "https://github.com/Wan-Video",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4409092337"
+          ],
           "note": "paper_ref: arXiv:2503.20314; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -956,7 +1016,9 @@
           "entity_type": "repo",
           "name": "HunyuanVideo",
           "homepage": "https://aivideo.hunyuan.tencent.com",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4405096483"
+          ],
           "note": "paper_ref: arXiv:2412.03603; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -964,7 +1026,9 @@
           "entity_type": "repo",
           "name": "LTX-Video",
           "homepage": "https://ltx.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4406052102"
+          ],
           "note": "paper_ref: arXiv:2501.00103; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -972,7 +1036,9 @@
           "entity_type": "repo",
           "name": "SkyReels-V2",
           "homepage": "https://skyworkai.github.io/skyreels-v2.github.io/",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4417091789"
+          ],
           "note": "paper_ref: arXiv:2504.13074; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -980,7 +1046,9 @@
           "entity_type": "repo",
           "name": "Open-Sora",
           "homepage": "https://github.com/hpcaitech/Open-Sora",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4405956131"
+          ],
           "note": "paper_ref: arXiv:2503.09642; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1062,7 +1130,9 @@
           "entity_type": "repo",
           "name": "InternVL",
           "homepage": "https://internvl.github.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4390214291"
+          ],
           "note": "paper_ref: arXiv:2508.18265; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1086,7 +1156,9 @@
           "entity_type": "repo",
           "name": "MiniCPM-V",
           "homepage": "https://huggingface.co/openbmb/MiniCPM-V-4_5",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4406489046"
+          ],
           "note": "paper_ref: arXiv:2509.18154; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1094,7 +1166,9 @@
           "entity_type": "model",
           "name": "DeepSeek-OCR",
           "homepage": "https://huggingface.co/deepseek-ai/DeepSeek-OCR",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4416055645"
+          ],
           "note": "paper_ref: arXiv:2510.18234; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1102,7 +1176,9 @@
           "entity_type": "model",
           "name": "DeepSeek-VL2",
           "homepage": "https://huggingface.co/deepseek-ai/deepseek-vl2",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4405434026"
+          ],
           "note": "paper_ref: arXiv:2412.10302; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1134,7 +1210,9 @@
           "entity_type": "model",
           "name": "SmolVLM",
           "homepage": "https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4416119086"
+          ],
           "note": "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1142,7 +1220,9 @@
           "entity_type": "repo",
           "name": "FastVLM",
           "homepage": "https://machinelearning.apple.com/research/fast-vision-language-models",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4413144805"
+          ],
           "note": "paper_ref: arXiv:2412.13303; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         },
         {
@@ -1150,7 +1230,9 @@
           "entity_type": "repo",
           "name": "LLaVA",
           "homepage": "https://llava-vl.github.io",
-          "openalex_work_ids": [],
+          "openalex_work_ids": [
+            "W4366330503"
+          ],
           "incumbent": true,
           "note": "paper_ref: arXiv:2310.03744; incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
         }
