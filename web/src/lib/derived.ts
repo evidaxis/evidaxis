@@ -35,10 +35,11 @@ export interface Reserved {
 }
 
 export interface RecencySwing {
-  /** ratio of trailing-13w slope to prior-39w slope (descriptive, not predictive). */
+  /** ratio of trailing-13w slope to prior-window slope (descriptive, not predictive). */
   value: number;
   recentWindow: 13;
-  priorWindow: 39;
+  /** Honest length of the prior window actually used (≤ 39; shorter on undersampled series). */
+  priorWindow: number;
   /** human label for the regime the ratio implies. */
   label: string;
   meta: ShipMeta;
@@ -122,23 +123,24 @@ const countNonZero = (weekly: number[]): number => weekly.reduce((c, v) => (v > 
 // ---------------------------------------------------------------------------
 
 /**
- * Descriptive ratio of the trailing-13-week slope vs the prior-39-week slope.
- * Reproducible and falsifiable, not predictive. Windows are declared in the
- * return value. Reserves only when the series is too short to form both windows
- * (needs >= 52 points to have a clean 13 + 39 split; we require >= 26 so a
- * partial-but-honest split is possible, otherwise reserve).
+ * Descriptive ratio of the trailing-13-week slope vs the prior-window slope
+ * (up to 39 weeks when the series allows). Reproducible and falsifiable, not
+ * predictive. Windows are declared honestly in the return value: `priorWindow`
+ * is the actual length used, never a hardcoded 39 when fewer points exist.
+ * Reserves when the series is too short to form both windows.
  */
 export function recencySwing(weekly: number[]): RecencySwing | Reserved {
   const recentWindow = 13 as const;
-  const priorWindow = 39 as const;
+  const priorWindowMax = 39;
   if (weekly.length < recentWindow + 1) {
     return { reserved: true, reason: `<${recentWindow + 1} commit weeks for a recency window` };
   }
   const recent = weekly.slice(-recentWindow);
-  const prior = weekly.slice(-(recentWindow + priorWindow), -recentWindow);
+  const prior = weekly.slice(-(recentWindow + priorWindowMax), -recentWindow);
   if (prior.length < 2) {
     return { reserved: true, reason: 'prior window too short for a baseline slope' };
   }
+  const priorWindow = prior.length; // honest actual window (C1)
   const recentSlope = linFit(logSeries(recent)).slope;
   const priorSlope = linFit(logSeries(prior)).slope;
   // ratio of slopes; when prior slope ~ 0 the ratio is undefined -> describe via sign
@@ -216,14 +218,16 @@ export function commitSharpe(weekly: number[]): CommitSharpe | Reserved {
  * report "no significant changepoint". Using the per-segment slope SE rather
  * than the whole-series residual std avoids the trap where a genuine kink
  * inflates the single-line residual and masks itself.
+ *
+ * Undersampled series (< 8 points) RESERVE — insufficient, never "no changepoint".
  */
-export function commitChangepoint(weekly: number[]): CommitChangepoint | NoChangepoint {
+export function commitChangepoint(weekly: number[]): CommitChangepoint | NoChangepoint | Reserved {
   // Runs on the raw weekly cadence (commits/week), not log-space: a regime
   // change in commit cadence is a shift in the raw-count slope.
   const y = weekly;
   const n = y.length;
   if (n < 8) {
-    return { none: true, label: 'no significant changepoint detected' };
+    return { reserved: true, reason: `<8 commit weeks for changepoint detection (got ${n})` };
   }
   // sum of (i - mean)^2 over m consecutive indices (denominator of slope SE)
   const sxxOf = (len: number): number => {
@@ -307,12 +311,11 @@ export function signalQuality(e: Entity, weekly: number[]): SignalQuality {
 
   tag('recency-swing', recencySwing(weekly));
   tag('commit-sharpe', commitSharpe(weekly));
-  // changepoint ships when significant; "none" is a non-reserved descriptive state
+  // changepoint: undersampled → reserved (insufficient); significant hit or
+  // "none detected" on a sufficient series → shipped (honest computed result)
   const cp = commitChangepoint(weekly);
-  if ('none' in cp) {
-    // not reserved (it's a real, computed negative result) — but not a shipped value either
-    // we record it as shipped: the computed "no changepoint" IS the output
-    shipped.push('commit-changepoint');
+  if (isReserved(cp)) {
+    reserved.push('commit-changepoint');
   } else {
     shipped.push('commit-changepoint');
   }

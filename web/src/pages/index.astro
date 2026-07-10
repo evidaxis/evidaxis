@@ -114,7 +114,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
             </div>
             <div class="axis-item rv">
               <span class="axis-chip gate">gate</span>
-              <div><h3>The convergence gate</h3><p>A system earns the Rising badge only when both axes rise at once. One axis alone is Watch, awaiting a second.</p></div>
+              <div><h3>The convergence gate</h3><p>A system earns the Rising badge only when both axes rise at once. Watch is one axis rising with the other still present; single-axis systems lack a second axis to converge; tracked dual-axis systems are measured for context; calibration anchors are measured, not badged.</p></div>
             </div>
           </div>
           <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up.</div>
@@ -177,15 +177,15 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
           <div class="spark-wrap empty">{c.rising === 0 ? 'awaiting the first convergence' : ''}</div>
         </div>
         <div class="stat watch rv">
-          <div class="top"><span class="label">Watch</span><span class="badge watch">one axis</span></div>
+          <div class="top"><span class="label">Watch</span><span class="badge watch">one rising</span></div>
           <div class="num">{c.watch}</div>
-          <div class="delta">one axis rising, awaiting a second</div>
+          <div class="delta">one axis rising, dual-axis present (not single-axis)</div>
           <div class="spark-wrap">{topWatch && <Sparkline values={commitSeries(topWatch.entity_id)} color="var(--citation)" height={32} />}</div>
         </div>
         <div class="stat tracked rv">
           <div class="top"><span class="label">Tracked</span><span class="badge tracked">context</span></div>
           <div class="num">{c.tracked + c.calibration}</div>
-          <div class="delta">measured for cohort context</div>
+          <div class="delta">tracked + single-axis + calibration, measured for context</div>
           <div class="spark-wrap">{topTracked && <Sparkline values={commitSeries(topTracked.entity_id)} color="var(--ink-mute)" height={32} />}</div>
         </div>
       </div>

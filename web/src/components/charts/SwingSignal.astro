@@ -19,6 +19,7 @@ export interface Props {
 const { series, width = 240, height = 96 } = Astro.props;
 const sig = recencySwing(series);
 const reserved = 'reserved' in sig;
+const sigData = 'reserved' in sig ? null : sig;   // union narrowing (review 2026-07-10)
 const titleId = `sw-t-${Math.random().toString(36).slice(2, 8)}`;
 const descId = `sw-d-${Math.random().toString(36).slice(2, 8)}`;
 
@@ -36,8 +37,9 @@ function slope(y: number[]): number {
 const log1p = (v: number) => Math.log1p(Math.max(0, v));
 let recentSlope = 0, priorSlope = 0;
 if (!reserved) {
+  const priorW = sigData!.priorWindow;
   const recent = series.slice(-13).map(log1p);
-  const prior = series.slice(-(13 + 39), -13).map(log1p);
+  const prior = series.slice(-(13 + priorW), -13).map(log1p);
   recentSlope = slope(recent);
   priorSlope = slope(prior);
 }
@@ -47,8 +49,9 @@ const maxAbs = Math.max(0.02, Math.abs(recentSlope), Math.abs(priorSlope));
 const sH = scaleLinear([-maxAbs, maxAbs], [height - 14, 14]);  // slope -> y
 const barW = 46;
 const xs = [width * 0.34, width * 0.66];
+const priorLabel = reserved ? 'prior' : `prior ${sigData!.priorWindow}w`;
 const bars = [
-  { label: 'prior 39w', v: priorSlope, x: xs[0] },
+  { label: priorLabel, v: priorSlope, x: xs[0] },
   { label: 'recent 13w', v: recentSlope, x: xs[1] },
 ];
 const fmt = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(3);
@@ -63,7 +66,7 @@ const swingText = flatBase ? 'n/a' : fmtR(sig.value) + '\u00d7';
     <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
       <title id={titleId}>recency-weighted swing</title>
       <desc id={descId}>
-        trailing 13-week vs prior 39-week log-slope ratio {fmtR(sig.value)}, regime {sig.label}.
+        trailing 13-week vs prior {sigData!.priorWindow}-week log-slope ratio {fmtR(sig.value)}, regime {sig.label}.
         prior slope {fmt(priorSlope)}, recent slope {fmt(recentSlope)} per week.
       </desc>
       <line x1="8" y1={sH(0)} x2={width - 8} y2={sH(0)} stroke="var(--grid)" stroke-width="1" />

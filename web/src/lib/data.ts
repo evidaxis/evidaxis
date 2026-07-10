@@ -69,8 +69,44 @@ export type Snapshot = {
   axes: Record<string, string>; gate: string;
   cohorts: Record<string, { label: string; industry: string; sub_niche: string }>;
   entities: Entity[];
-  counts: { entities: number; rising: number; watch: number; tracked: number; calibration: number; axis2_present: number };
+  // D4 status enum. Legacy frozen snapshots fold single-axis into `tracked`
+  // (see collectors/counts_check.py); pure Counter(status) is the post-step contract.
+  counts: {
+    entities: number; rising: number; watch: number; tracked: number;
+    calibration: number; axis2_present: number; 'single-axis'?: number;
+  };
 };
+
+/**
+ * Normalize ISO-8601 timestamps for lexicographic comparison.
+ * Accepts both `...Z` and `...+00:00` forms used across the archive.
+ */
+export function normalizeTs(ts: string): string {
+  return String(ts).replace(/\+00:00$/, 'Z');
+}
+
+/**
+ * Point-in-time honesty (F9): an observation is visible on a snapshot only when
+ * its capture timestamp is at or before that snapshot's `captured_at`.
+ * Missing `captured_at` is treated as unusable (never leaks into a render).
+ */
+export function isCapturedAsOf(capturedAt: unknown, cutoff: string): boolean {
+  if (typeof capturedAt !== 'string' || !capturedAt) return false;
+  // Numeric epoch compare (review 2026-07-10): lexicographic ISO compare breaks when
+  // one side carries milliseconds ('.123Z' < 'Z' lexicographically). Unparseable -> never leaks.
+  const a = Date.parse(normalizeTs(capturedAt));
+  const b = Date.parse(normalizeTs(cutoff));
+  if (Number.isNaN(a) || Number.isNaN(b)) return false;
+  return a <= b;
+}
+
+/**
+ * Rising-axis z floor from methodology version (m1: z>=0; m2+: z>=1).
+ * Chart washes/labels must use this, not a hard-coded median (z=0).
+ */
+export function risingZFloor(methodologyVersion: string): number {
+  return methodologyVersion === 'm1' ? 0 : 1;
+}
 
 export const SNAP_DATE: string = latest.snapshot_date;
 export const snapshot: Snapshot = latest;
@@ -165,28 +201,59 @@ const matchesPin = (r: any): boolean => {
   return !!pin && !!s && s.source_system === pin.system && s.package === pin.package;
 };
 
-export const deps: Map<string, DepsSignal> = (() => {
+/**
+ * Build the adoption (deps.dev) map for a given snapshot, never leaking
+ * observations captured after that snapshot's point-in-time (`captured_at`).
+ * Pure over rows when provided (tests); otherwise reads the archive files.
+ */
+export function buildDepsMap(
+  snap: Snapshot,
+  entityList: Entity[] = snap.entities,
+  opts?: {
+    dayRows?: any[];
+    historyByEntity?: Map<string, any[]>;
+    /** Override pin check (tests); default is identity-verified pin match. */
+    pinOk?: (r: any) => boolean;
+  },
+): Map<string, DepsSignal> {
+  const cutoff = snap.captured_at;
+  const pinOk = opts?.pinOk ?? matchesPin;
   const m = new Map<string, DepsSignal>();
+  const dayRows = opts?.dayRows
+    ?? readJsonl(`data/observations/${snap.snapshot_date}/deps.jsonl`);
   // Primary: the deps capture aligned to this snapshot's date folder.
-  for (const r of readJsonl(`data/observations/${SNAP_DATE}/deps.jsonl`)) {
-    if (r?.coverage !== 'matched' || r?.status === 'retracted' || !matchesPin(r)) continue;
+  for (const r of dayRows) {
+    if (r?.coverage !== 'matched' || r?.status === 'retracted' || !pinOk(r)) continue;
+    if (!isCapturedAsOf(r?.captured_at, cutoff)) continue;
     const sig = toDepsSignal(r?.signals?.deps_dev_dependents);
     if (sig) m.set(r.entity_id, sig);
   }
   // Fallback: deps are captured daily into per-day folders, so a future weekly
   // snapshot date may lack a same-day file. For any entity not covered above,
-  // take its latest capture from the per-entity history so the value never
-  // silently vanishes across snapshots (guards stale-state drift).
-  for (const e of entities) {
+  // take its latest capture from the per-entity history that is still
+  // point-in-time for this snapshot (never a later observation).
+  for (const e of entityList) {
     if (m.has(e.entity_id)) continue;
-    const rows = readJsonl(`data/observations/history/${e.entity_id}.deps.jsonl`)
-      .filter((r) => r?.coverage === 'matched' && r?.status !== 'retracted' && r?.period && matchesPin(r))
-      .sort((a, b) => String(a.period).localeCompare(String(b.period)));
+    const rows = (opts?.historyByEntity?.get(e.entity_id)
+      ?? readJsonl(`data/observations/history/${e.entity_id}.deps.jsonl`))
+      .filter((r: any) =>
+        r?.coverage === 'matched'
+        && r?.status !== 'retracted'
+        && r?.period
+        && pinOk(r)
+        && isCapturedAsOf(r?.captured_at, cutoff))
+      .sort((a: any, b: any) => {
+        const pc = String(a.period).localeCompare(String(b.period));
+        if (pc !== 0) return pc;
+        return normalizeTs(String(a.captured_at ?? '')).localeCompare(normalizeTs(String(b.captured_at ?? '')));
+      });
     const sig = rows.length ? toDepsSignal(rows[rows.length - 1]?.signals?.deps_dev_dependents) : null;
     if (sig) m.set(e.entity_id, sig);
   }
   return m;
-})();
+}
+
+export const deps: Map<string, DepsSignal> = buildDepsMap(snapshot, entities);
 
 // Latest archive-wide Merkle integrity root (collectors/merkle_root.py). A compact
 // witness that the whole data/ archive existed as-is at that date. null before the
@@ -214,17 +281,38 @@ export function backfillSeries(id: string): { period: string; value: number }[] 
     .sort((a, b) => a.period.localeCompare(b.period));
 }
 
-// Point-in-time dependents series for a system (one value per snapshot period).
-// History files accumulate weekly; today most systems have 1 point (flat/absent),
-// which is honest and fills in over time. Missing file -> [].
-export function depsSeries(id: string): { period: string; value: number }[] {
-  const byPeriod = new Map<string, number>();
-  for (const r of readJsonl(`data/observations/history/${id}.deps.jsonl`)) {
-    if (r?.status === 'retracted' || !matchesPin(r)) continue; // identity-verified rows only
+/**
+ * Point-in-time dependents series for a system (one value per period).
+ * History files accumulate; each row is gated by `captured_at <= snap.captured_at`
+ * so a historical snapshot page never plots later observations (F9).
+ * Defaults to the site's latest snapshot when `snap` is omitted.
+ * Missing file / all future rows -> [].
+ */
+export function depsSeriesFromRows(
+  rows: any[],
+  cutoff: string,
+  pinOk: (r: any) => boolean = () => true,
+): { period: string; value: number }[] {
+  const byPeriod = new Map<string, { value: number; captured_at: string }>();
+  for (const r of rows) {
+    if (r?.status === 'retracted' || !pinOk(r)) continue;
+    if (!isCapturedAsOf(r?.captured_at, cutoff)) continue;
     const v = r?.signals?.deps_dev_dependents?.value;
-    if (typeof v === 'number' && r.period) byPeriod.set(r.period, v); // last capture per period wins
+    if (typeof v !== 'number' || !r.period) continue;
+    const ca = normalizeTs(String(r.captured_at));
+    const prev = byPeriod.get(r.period);
+    // last capture per period (still as-of cutoff) wins
+    if (!prev || ca >= prev.captured_at) byPeriod.set(r.period, { value: v, captured_at: ca });
   }
   return [...byPeriod.entries()]
-    .map(([period, value]) => ({ period, value }))
+    .map(([period, { value }]) => ({ period, value }))
     .sort((a, b) => a.period.localeCompare(b.period));
+}
+
+export function depsSeries(id: string, snap: Snapshot = snapshot): { period: string; value: number }[] {
+  return depsSeriesFromRows(
+    readJsonl(`data/observations/history/${id}.deps.jsonl`),
+    snap.captured_at,
+    matchesPin,
+  );
 }

@@ -89,7 +89,7 @@ const repoUrl = publicRepoUrl(e);
         <span class="dval">log-slope {fmtSlope(a1.slope)}/wk</span>
       </div>
       <div class="quad-cell">
-        <div class="quad-cap"><span>convergence plane</span><span>upper-right = rising</span></div>
+        <div class="quad-cap"><span>convergence plane</span><span>full gate = rising</span></div>
         <Quadrant entity={e} />
       </div>
       <div class="dialwrap">
@@ -102,7 +102,7 @@ const repoUrl = publicRepoUrl(e);
     <!-- 4-cell readout -->
     <div class="readout">
       <div class="ro"><div class="k">rank in cohort</div><div class={`v ${isRising ? 'teal' : 'amber'}`}>#{rank}</div><div class="s">of {cohortN} systems</div></div>
-      <div class="ro"><div class="k">weekly commits</div><div class="v teal">{a1.recent_weekly_commits ?? 'n/a'}</div><div class="s">{(a1.cohort_z ?? 0) >= 0 ? 'rising trend' : 'flat trend'}</div></div>
+      <div class="ro"><div class="k">weekly commits</div><div class="v teal">{a1.recent_weekly_commits ?? 'n/a'}</div><div class="s">{velRising ? 'rising trend' : 'not rising'}</div></div>
       <div class="ro"><div class="k">total citations</div><div class="v amber">{a2.status === 'present' ? a2.total_citations.toLocaleString() : 'n/a'}</div><div class="s">{a2.status === 'present' ? 'present' : 'no axis'}</div></div>
       <div class="ro"><div class="k">momentum</div><div class="v">{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</div><div class="s">{e.percentile != null ? `percentile p${e.percentile}` : 'unranked'}</div></div>
     </div>
