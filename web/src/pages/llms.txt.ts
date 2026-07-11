@@ -110,6 +110,7 @@ All Evidaxis data is released under CC0 1.0 (public domain). Reuse, redistribute
 Attribution to Evidaxis is appreciated but not required.
 
 Cite: 10.5281/zenodo.21076012 (https://doi.org/10.5281/zenodo.21076012) is the genesis seed deposit (m1, 19 systems) citation handle for the Evidaxis genesis snapshot bundle.
+Latest deposited snapshot version: 10.5281/zenodo.21307528 (2026-07-10, m2, 134 systems).
 
 ## How to cite a system
 
