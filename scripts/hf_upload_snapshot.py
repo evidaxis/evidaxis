@@ -53,8 +53,14 @@ def project_person_free(snap: dict) -> dict:
             e["repository"] = {"repo_name": canonical.split("/")[1],
                                "owner_type": "user", "repo_ref": f"gh:{entry['repo_id']}"}
             e.pop("github_repo", None)
-            hp = str(e.get("homepage") or "")
-            if "github.com" in hp.lower():
+            # Strip any homepage that is a code-forge URL OR carries the owner handle
+            # (github.com, huggingface.co/<user>, personal .io, etc.) — matches the web
+            # person_free.ts safeUserHomepage policy. Owner handle from BOTH stored slug
+            # and canonical full_name (transfers).
+            hp = str(e.get("homepage") or "").lower()
+            owners = {repo.split("/")[0].lower(), canonical.split("/")[0].lower()}
+            forge = any(h in hp for h in ("github.com", "gitlab.com", "huggingface.co"))
+            if hp and (forge or any(o in hp for o in owners)):
                 e.pop("homepage", None)
         elif canonical != repo:
             e["github_repo"] = canonical
@@ -80,6 +86,28 @@ def entities_csv(snap: dict, path: Path) -> None:
         w.writerows(rows)
 
 
+def _assert_person_free(folder: Path) -> None:
+    """Fail-closed: no User-owned handle (stored OR canonical owner segment) may
+    appear anywhere in the staged upload. Would have caught the 2026-07-11 homepage
+    and provenance leaks."""
+    types = json.loads((REPO / "etl" / "owner_types.json").read_text(encoding="utf-8"))["repos"]
+    handles = set()
+    for repo, v in types.items():
+        if v.get("owner_type") == "User":
+            handles.add(repo.split("/")[0].lower())
+            handles.add(v.get("full_name", repo).split("/")[0].lower())
+    hits = []
+    for f in folder.rglob("*"):
+        if not f.is_file():
+            continue
+        blob = f.read_text(encoding="utf-8", errors="replace").lower()
+        for h in handles:
+            if h in blob:
+                hits.append(f"{f.name}:{h}")
+    if hits:
+        raise SystemExit(f"PERSON-FREE ABORT — handle leak in staged upload: {hits}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None)
@@ -101,10 +129,12 @@ def main() -> int:
         (stage / "snapshot.json").write_text(json.dumps(snap, indent=1, ensure_ascii=False),
                                              encoding="utf-8")
         entities_csv(snap, stage / "entities.csv")
-        for fn in ("manifest.json", "provenance.json"):
-            if (src / fn).is_file():
-                shutil.copy(src / fn, stage / fn)
+        # NOTE: manifest.json / provenance.json are NOT mirrored — they carry the RAW
+        # capture layer (github_repos list with personal slugs). The verification chain
+        # lives in the canonical git/Zenodo archive (see README). HF = publication
+        # projection only: projected snapshot.json + entities.csv.
         shutil.copy(CARD, Path(td) / "README.md")
+        _assert_person_free(stage.parent)
         env = dict(os.environ, HF_TOKEN=tok)
         for args_ in ([str(stage), date], [str(Path(td) / "README.md"), "README.md"]):
             r = subprocess.run(["huggingface-cli", "upload", DATASET, *args_,
