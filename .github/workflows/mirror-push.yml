@@ -1,10 +1,8 @@
 name: mirror-push
 
-# Continuity layer 2 (TRUST-ROOT "planned next layers"): push every main commit to an
-# independent-forge mirror. DORMANT until the MIRROR_URL + MIRROR_TOKEN secrets exist
-# (keeper action, KEEPER-ACTIONS-2026-07-11.md item 5) — the job then activates on the
-# next push with no further changes. Deliberately a separate workflow: a mirror outage
-# must never fail the snapshot pipelines.
+# Continuity layer 2 (TRUST-ROOT): push every main commit to an independent-forge
+# mirror over SSH (deploy key). ACTIVE once the GitLab project accepts the public key
+# (KEEPER-ACTIONS item 5). A mirror outage never fails the snapshot pipelines.
 
 on:
   push:
@@ -13,6 +11,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: mirror-push
+  cancel-in-progress: false
+
 jobs:
   mirror:
     runs-on: ubuntu-latest
@@ -20,11 +22,11 @@ jobs:
       - name: Check mirror configured
         id: cfg
         env:
-          MIRROR_URL: ${{ secrets.MIRROR_URL }}
+          MIRROR_SSH_KEY: ${{ secrets.MIRROR_SSH_KEY }}
         run: |
-          if [ -z "$MIRROR_URL" ]; then
+          if [ -z "$MIRROR_SSH_KEY" ]; then
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "mirror not configured (MIRROR_URL secret absent) — skipping"
+            echo "mirror SSH key absent — skipping"
           else
             echo "configured=true" >> "$GITHUB_OUTPUT"
           fi
@@ -32,14 +34,16 @@ jobs:
         if: steps.cfg.outputs.configured == 'true'
         with:
           fetch-depth: 0
-      - name: Push to mirror
+      - name: Push to GitLab mirror over SSH
         if: steps.cfg.outputs.configured == 'true'
         env:
-          MIRROR_URL: ${{ secrets.MIRROR_URL }}
-          MIRROR_USER: ${{ secrets.MIRROR_USER }}
-          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+          MIRROR_SSH_KEY: ${{ secrets.MIRROR_SSH_KEY }}
+          MIRROR_SSH_URL: ${{ secrets.MIRROR_SSH_URL }}
         run: |
-          # GitLab deploy tokens authenticate with their own username (not oauth2).
-          url_with_auth=$(echo "$MIRROR_URL" | sed "s#https://#https://${MIRROR_USER}:${MIRROR_TOKEN}@#")
-          git push --force-with-lease "$url_with_auth" main:main || {
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$MIRROR_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t ed25519 gitlab.com >> ~/.ssh/known_hosts 2>/dev/null
+          URL="${MIRROR_SSH_URL:-git@gitlab.com:evidaxis/evidaxis.git}"
+          git push --force-with-lease "$URL" main:main || {
             echo "::warning::mirror push failed — origin unaffected"; exit 0; }
