@@ -1,0 +1,43 @@
+name: mirror-push
+
+# Continuity layer 2 (TRUST-ROOT "planned next layers"): push every main commit to an
+# independent-forge mirror. DORMANT until the MIRROR_URL + MIRROR_TOKEN secrets exist
+# (keeper action, KEEPER-ACTIONS-2026-07-11.md item 5) — the job then activates on the
+# next push with no further changes. Deliberately a separate workflow: a mirror outage
+# must never fail the snapshot pipelines.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check mirror configured
+        id: cfg
+        env:
+          MIRROR_URL: ${{ secrets.MIRROR_URL }}
+        run: |
+          if [ -z "$MIRROR_URL" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "mirror not configured (MIRROR_URL secret absent) — skipping"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        if: steps.cfg.outputs.configured == 'true'
+        with:
+          fetch-depth: 0
+      - name: Push to mirror
+        if: steps.cfg.outputs.configured == 'true'
+        env:
+          MIRROR_URL: ${{ secrets.MIRROR_URL }}
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          url_with_auth=$(echo "$MIRROR_URL" | sed "s#https://#https://oauth2:${MIRROR_TOKEN}@#")
+          git push --force-with-lease "$url_with_auth" main:main || {
+            echo "::warning::mirror push failed — origin unaffected"; exit 0; }
