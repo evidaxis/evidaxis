@@ -128,6 +128,16 @@ jobs:
           echo "push failed after 3 rebase attempts"
           exit 1
 
+      - name: Mirror latest snapshot to the HF dataset (best-effort)
+        # Publication projection only (person-free fail-closed guard inside the script).
+        # Never fails the pipeline: the canonical archive is git + Zenodo.
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -z "$HF_TOKEN" ]; then echo "HF_TOKEN absent - skip"; exit 0; fi
+          python -m pip install --quiet "huggingface_hub[cli]" || { echo "hf lib install failed"; exit 0; }
+          python3 scripts/hf_upload_snapshot.py || echo "::warning::HF upload deferred (guard or network)"
+
       - name: Ask Software Heritage to re-archive the repository
         # Keeps an independent off-GitHub copy of the full git history current.
         run: |
