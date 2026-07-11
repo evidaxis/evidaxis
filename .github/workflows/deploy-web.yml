@@ -8,8 +8,13 @@ name: deploy-web
 # VERCEL_ORG_ID / VERCEL_PROJECT_ID secrets. Until then this workflow is
 # manual-only and fails fast with a clear message instead of deploying.
 
+# ACTIVATED 2026-07-11: VERCEL_* secrets set; prod HTML is now a pure function of
+# the committed tree (map#16 closed). deploy.sh remains the manual fallback.
 on:
   workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths: ['web/**', 'data/snapshots/**', 'data/latest.json']
 
 permissions:
   contents: read
