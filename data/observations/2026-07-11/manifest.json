@@ -1,6 +1,6 @@
 {
   "collector_version": "t2_m0",
-  "captured_at": "2026-07-11T06:34:52Z",
+  "captured_at": "2026-07-11T08:26:43Z",
   "date": "2026-07-11",
   "period": "2026-w28",
   "entity_count": 137,
@@ -9,7 +9,7 @@
   "max_error_rate": 0.2,
   "degraded": false,
   "errors": [],
-  "observations_sha256": "ee548d10b24c1938cc0d74bdf0dfaf760e22e0a1010563587e0d4e76b40938c0",
+  "observations_sha256": "686a9253cbeecb00c6abc52861eb254c82f8905ab3865d8cc505216f20774cf5",
   "signal_spec": [
     {
       "name": "watchers",
