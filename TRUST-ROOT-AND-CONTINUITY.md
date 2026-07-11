@@ -38,6 +38,7 @@ Where the archive actually exists, so continuity is a fact, not a hope:
 | Zenodo genesis deposit (DOI 10.5281/zenodo.21076012) | frozen m1 genesis snapshot + code | immutable, 2026-06-27 |
 | Keeper's working clone | full git history | live but not a guarantee (single machine) |
 
-Planned next layers (by rotation, when acted on): a mirror remote on an
-independent forge (deploy-key push from the weekly pipeline) and a quarterly
-`git bundle` deposit to Zenodo as a versioned record.
+| GitLab `evidaxis/evidaxis` (mirror) | full git history | live since 2026-07-11; auto-push on every main commit (mirror-push.yml) |
+
+Planned next layer (by rotation, when acted on): a quarterly `git bundle`
+deposit to Zenodo as a versioned record.

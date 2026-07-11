@@ -36,8 +36,10 @@ jobs:
         if: steps.cfg.outputs.configured == 'true'
         env:
           MIRROR_URL: ${{ secrets.MIRROR_URL }}
+          MIRROR_USER: ${{ secrets.MIRROR_USER }}
           MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
-          url_with_auth=$(echo "$MIRROR_URL" | sed "s#https://#https://oauth2:${MIRROR_TOKEN}@#")
+          # GitLab deploy tokens authenticate with their own username (not oauth2).
+          url_with_auth=$(echo "$MIRROR_URL" | sed "s#https://#https://${MIRROR_USER}:${MIRROR_TOKEN}@#")
           git push --force-with-lease "$url_with_auth" main:main || {
             echo "::warning::mirror push failed — origin unaffected"; exit 0; }
