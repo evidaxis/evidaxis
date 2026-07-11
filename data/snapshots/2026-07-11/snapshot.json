@@ -1,0 +1,5850 @@
+{
+  "schema_version": "1.0",
+  "snapshot_date": "2026-07-11",
+  "period": "2026-w28",
+  "captured_at": "2026-07-11T08:23:23+00:00",
+  "methodology_version": "m2",
+  "snapshot_id": "df540ea0d40d",
+  "fetcher_version": "collect/2.0",
+  "license": "CC0-1.0",
+  "domain": {
+    "slug": "ai",
+    "label": "Artificial Intelligence"
+  },
+  "axes": {
+    "github_commit_velocity": "log-slope of weekly commit counts (last 26 weeks); within-cohort robust-z (median/MAD), residualized on log stars. Stars are never scored.",
+    "openalex_citation_momentum": "log-slope of citations-per-year measuring recent momentum: partial current year dropped, earliest (birth) year dropped when >=4 exist, >=3 completed years required; within-cohort robust-z, residualized on log total citations."
+  },
+  "gate": "Rising = >=2 axes present AND >=2 axes rising, in a cohort of >= 5 members. An axis is rising if raw slope > 0 AND within-cohort z >= 1; commit-velocity additionally requires >= 5 avg weekly commits (a dormant repo is not rising). Positive-only; no 'worst' list.",
+  "cohorts": {
+    "robotics-embodied": {
+      "label": "Robotics & Embodied AI",
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied"
+    },
+    "ai-drug-discovery": {
+      "label": "AI Drug Discovery",
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery"
+    },
+    "coding-agents": {
+      "label": "Coding Agents",
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents"
+    },
+    "inference-serving": {
+      "label": "Inference & Serving",
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving"
+    },
+    "agent-frameworks": {
+      "label": "Agent Frameworks",
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks"
+    },
+    "post-training-alignment": {
+      "label": "Post-training & Alignment",
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment"
+    },
+    "media-generation": {
+      "label": "Media Generation",
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation"
+    },
+    "multimodal-foundation-models": {
+      "label": "Multimodal Foundation Models",
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models"
+    },
+    "gui-agents": {
+      "label": "GUI & Computer-Use Agents",
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents"
+    }
+  },
+  "entities": [
+    {
+      "entity_id": "e_H6PPP8CA9RR",
+      "name": "LeRobot",
+      "slug": "lerobot",
+      "entity_type": "repo",
+      "homepage": "https://github.com/huggingface/lerobot",
+      "github_repo": "huggingface/lerobot",
+      "openalex_work_ids": [
+        "W7131910578"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.00950389225675434,
+          "cohort_z": -0.027,
+          "recent_weekly_commits": 12.4,
+          "stars_not_scored": 25697
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 49.7,
+      "percentile": 60,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "Paper exists but 0 citations indexed; axis-2 not yet usable."
+    },
+    {
+      "entity_id": "e_J4DR3YCQCAN",
+      "name": "Genesis",
+      "slug": "genesis",
+      "entity_type": "repo",
+      "homepage": "https://github.com/Genesis-Embodied-AI/Genesis",
+      "github_repo": "Genesis-Embodied-AI/Genesis",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0306504177099846,
+          "cohort_z": -1.951,
+          "recent_weekly_commits": 14.2,
+          "stars_not_scored": 29535
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 25.6,
+      "percentile": 7,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical peer paper in OpenAlex; axis-2 absent."
+    },
+    {
+      "entity_id": "e_J32HBKYVHAT",
+      "name": "OpenVLA",
+      "slug": "openvla",
+      "entity_type": "repo",
+      "homepage": "https://openvla.github.io/",
+      "github_repo": "openvla/openvla",
+      "openalex_work_ids": [
+        "W4399695759"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.289,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 6592
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 40,
+          "by_year": {
+            "2026": 6,
+            "2025": 31,
+            "2024": 3
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 53.6,
+      "percentile": 67,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_Y31RBTP1VWD",
+      "name": "dora-rs",
+      "slug": "dora-rs",
+      "entity_type": "repo",
+      "homepage": "https://github.com/dora-rs/dora",
+      "github_repo": "dora-rs/dora",
+      "openalex_work_ids": [
+        "W7129446322"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.008259409481963931,
+          "cohort_z": 0.835,
+          "recent_weekly_commits": 33.8,
+          "stars_not_scored": 3837
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 60.4,
+      "percentile": 93,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent."
+    },
+    {
+      "entity_id": "e_N0ZEZQYXT6K",
+      "name": "Isaac Lab",
+      "slug": "isaac-lab",
+      "entity_type": "repo",
+      "homepage": "https://github.com/isaac-sim/IsaacLab",
+      "github_repo": "isaac-sim/IsaacLab",
+      "openalex_work_ids": [
+        "W4367016688"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.056688382100578465,
+          "cohort_z": -2.902,
+          "recent_weekly_commits": 1.3,
+          "stars_not_scored": 7654
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.3966040047212582,
+          "cohort_z": 1.806,
+          "total_citations": 232,
+          "by_year": {
+            "2026": 37,
+            "2025": 146,
+            "2024": 41,
+            "2023": 8
+          },
+          "proxy": "Orbit (the predecessor framework that became Isaac Lab)"
+        }
+      },
+      "momentum": 43.1,
+      "percentile": 40,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [
+        "openalex_citation_momentum"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_N73RT0QZ0X4",
+      "name": "Habitat-Lab",
+      "slug": "habitat-lab",
+      "entity_type": "repo",
+      "homepage": "https://aihabitat.org/",
+      "github_repo": "facebookresearch/habitat-lab",
+      "openalex_work_ids": [
+        "W2929928372"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.005427937818243205,
+          "cohort_z": -0.546,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 3053
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": -0.8435411298625544,
+          "cohort_z": -0.614,
+          "total_citations": 197,
+          "by_year": {
+            "2024": 3,
+            "2023": 5,
+            "2022": 10,
+            "2021": 82,
+            "2020": 72,
+            "2019": 25
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 42.8,
+      "percentile": 33,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
+    },
+    {
+      "entity_id": "e_03QFRGK7VQX",
+      "name": "MuJoCo",
+      "slug": "mujoco",
+      "entity_type": "repo",
+      "homepage": "https://mujoco.org/",
+      "github_repo": "google-deepmind/mujoco",
+      "openalex_work_ids": [
+        "W2158782408"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0048800443413785565,
+          "cohort_z": 1.07,
+          "recent_weekly_commits": 44.3,
+          "stars_not_scored": 14161
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.38476594971051464,
+          "cohort_z": -0.036,
+          "total_citations": 4456,
+          "by_year": {
+            "2026": 170,
+            "2025": 662,
+            "2024": 610,
+            "2023": 532,
+            "2022": 400,
+            "2021": 669,
+            "2020": 623,
+            "2019": 392,
+            "2018": 227,
+            "2017": 94,
+            "2016": 34,
+            "2015": 21,
+            "2014": 12,
+            "2013": 8,
+            "2012": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 56.5,
+      "percentile": 80,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [
+        "github_commit_velocity"
+      ],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "Mature incumbent — included as cohort calibration; measured but not badge-eligible (P5 inclusion rule)."
+    },
+    {
+      "entity_id": "e_7ZJR0NT1B6H",
+      "name": "openpi",
+      "slug": "openpi",
+      "entity_type": "repo",
+      "homepage": "https://github.com/Physical-Intelligence/openpi",
+      "github_repo": "Physical-Intelligence/openpi",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.017124802417261477,
+          "cohort_z": -1.038,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 12737
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 37.0,
+      "percentile": 13,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_S7DQ1QJCCMT",
+      "name": "RDT-1B",
+      "slug": "rdt-1b",
+      "entity_type": "repo",
+      "homepage": "https://rdt-robotics.github.io/rdt-robotics/",
+      "github_repo": "thu-ml/RoboticsDiffusionTransformer",
+      "openalex_work_ids": [
+        "W4403364995"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.273,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1746
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 5,
+          "by_year": {
+            "2025": 5
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 46.6,
+      "percentile": 47,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2410.07864; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_75QG3RMAHC9",
+      "name": "Isaac-GR00T",
+      "slug": "isaac-gr00t",
+      "entity_type": "repo",
+      "homepage": "https://developer.nvidia.com/isaac/gr00t",
+      "github_repo": "NVIDIA/Isaac-GR00T",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.028932349846430318,
+          "cohort_z": -2.367,
+          "recent_weekly_commits": 1.0,
+          "stars_not_scored": 7553
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 20.4,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2503.14734; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_Y92940K5ESN",
+      "name": "Cosmos",
+      "slug": "cosmos",
+      "entity_type": "repo",
+      "homepage": "https://www.nvidia.com/en-us/ai/cosmos/",
+      "github_repo": "NVIDIA/cosmos",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.08519479823309126,
+          "cohort_z": 3.25,
+          "recent_weekly_commits": 4.3,
+          "stars_not_scored": 10981
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 90.6,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_92WR5N03859",
+      "name": "ManiSkill",
+      "slug": "maniskill",
+      "entity_type": "repo",
+      "homepage": "https://maniskill.ai",
+      "github_repo": "mani-skill/ManiSkill",
+      "openalex_work_ids": [
+        "W3197265836"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.011941613310954528,
+          "cohort_z": 1.089,
+          "recent_weekly_commits": 1.2,
+          "stars_not_scored": 3091
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": -0.8047189562170501,
+          "cohort_z": -0.087,
+          "total_citations": 27,
+          "by_year": {
+            "2025": 3,
+            "2024": 3,
+            "2023": 19,
+            "2022": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 56.3,
+      "percentile": 73,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: 2410.00425; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_P6TVM7W57M8",
+      "name": "RoboCasa",
+      "slug": "robocasa",
+      "entity_type": "repo",
+      "homepage": "https://robocasa.ai",
+      "github_repo": "robocasa/robocasa",
+      "openalex_work_ids": [
+        "W4402354126"
+      ],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.006426750149700383,
+          "cohort_z": -0.932,
+          "recent_weekly_commits": 0.6,
+          "stars_not_scored": 1530
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 29,
+          "by_year": {
+            "2026": 7,
+            "2025": 22
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 38.4,
+      "percentile": 20,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_Y3HMWAG1BQZ",
+      "name": "robosuite",
+      "slug": "robosuite",
+      "entity_type": "repo",
+      "homepage": "https://robosuite.ai",
+      "github_repo": "ARISE-Initiative/robosuite",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.006027320553787613,
+          "cohort_z": -0.685,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 2510
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 41.4,
+      "percentile": 27,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2009.12293; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_0E3Q2DQH0BA",
+      "name": "LIBERO",
+      "slug": "libero",
+      "entity_type": "repo",
+      "homepage": "https://libero-project.github.io",
+      "github_repo": "Lifelong-Robot-Learning/LIBERO",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.207,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 2042
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 47.4,
+      "percentile": 53,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2306.03310; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_8N97348DQ66",
+      "name": "Gymnasium",
+      "slug": "gymnasium",
+      "entity_type": "repo",
+      "homepage": "https://gymnasium.farama.org",
+      "github_repo": "Farama-Foundation/Gymnasium",
+      "openalex_work_ids": [],
+      "industry": "robotics-embodied",
+      "sub_niche": "robotics-embodied",
+      "cohort": "robotics-embodied",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.002049310509127886,
+          "cohort_z": 0.74,
+          "recent_weekly_commits": 3.0,
+          "stars_not_scored": 12146
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 59.2,
+      "percentile": 87,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: 2407.17032; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_9VD4D2XPK7H",
+      "name": "Boltz",
+      "slug": "boltz",
+      "entity_type": "repo",
+      "homepage": "https://github.com/jwohlwend/boltz",
+      "github_repo": "jwohlwend/boltz",
+      "openalex_work_ids": [
+        "W4404565424"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0002369733950632293,
+          "cohort_z": 0.194,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 4105
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 2.3789456365028774,
+          "cohort_z": 2.084,
+          "total_citations": 416,
+          "by_year": {
+            "2026": 167,
+            "2025": 232,
+            "2024": 16,
+            "2023": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 64.2,
+      "percentile": 89,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [
+        "openalex_citation_momentum"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_G2Q1BRT8GSR",
+      "name": "OpenFold",
+      "slug": "openfold",
+      "entity_type": "repo",
+      "homepage": "https://github.com/aqlaboratory/openfold",
+      "github_repo": "aqlaboratory/openfold",
+      "openalex_work_ids": [
+        "W4396895148",
+        "W4309643848"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.055,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 3393
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.242340171830834,
+          "cohort_z": -0.411,
+          "total_citations": 462,
+          "by_year": {
+            "2026": 75,
+            "2025": 150,
+            "2024": 140,
+            "2023": 92,
+            "2022": 5
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 47.8,
+      "percentile": 33,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "Published + bioRxiv preprint summed by year."
+    },
+    {
+      "entity_id": "e_YTYXW2BB5AP",
+      "name": "DeepChem",
+      "slug": "deepchem",
+      "entity_type": "repo",
+      "homepage": "https://deepchem.io/",
+      "github_repo": "deepchem/deepchem",
+      "openalex_work_ids": [
+        "W2594183968"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0013142218612482682,
+          "cohort_z": 0.792,
+          "recent_weekly_commits": 0.8,
+          "stars_not_scored": 6841
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.4211004085286721,
+          "cohort_z": -0.729,
+          "total_citations": 2973,
+          "by_year": {
+            "2026": 249,
+            "2025": 534,
+            "2024": 510,
+            "2023": 422,
+            "2022": 374,
+            "2021": 351,
+            "2020": 292,
+            "2019": 158,
+            "2018": 75,
+            "2017": 6,
+            "2012": 2
+          },
+          "proxy": "MoleculeNet (the standard DeepChem citation)"
+        }
+      },
+      "momentum": 50.4,
+      "percentile": 61,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_DHESXAYAQHW",
+      "name": "TorchDrug",
+      "slug": "torchdrug",
+      "entity_type": "repo",
+      "homepage": "https://torchdrug.ai/",
+      "github_repo": "DeepGraphLearning/torchdrug",
+      "openalex_work_ids": [
+        "W4226239309"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.012,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1584
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": -0.22599256187152872,
+          "cohort_z": -0.207,
+          "total_citations": 32,
+          "by_year": {
+            "2026": 2,
+            "2025": 6,
+            "2024": 11,
+            "2023": 10,
+            "2022": 3
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 48.6,
+      "percentile": 39,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "Low absolute counts; slope noisy."
+    },
+    {
+      "entity_id": "e_8HVZ2FE02WG",
+      "name": "Graphormer",
+      "slug": "graphormer",
+      "entity_type": "repo",
+      "homepage": "https://github.com/microsoft/Graphormer",
+      "github_repo": "microsoft/Graphormer",
+      "openalex_work_ids": [
+        "W3169622372"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.004028547716074896,
+          "cohort_z": 2.094,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 2459
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.06849889928584818,
+          "cohort_z": -0.253,
+          "total_citations": 129,
+          "by_year": {
+            "2026": 5,
+            "2025": 22,
+            "2024": 26,
+            "2023": 30,
+            "2022": 31,
+            "2021": 14,
+            "2020": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 61.5,
+      "percentile": 83,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "OpenAlex undercounts; slope declining post-2022."
+    },
+    {
+      "entity_id": "e_W8KZKY27BTN",
+      "name": "ESM / ESMFold",
+      "slug": "esm-esmfold",
+      "entity_type": "repo",
+      "homepage": "https://github.com/facebookresearch/esm",
+      "github_repo": "facebookresearch/esm",
+      "openalex_work_ids": [
+        "W4327550249",
+        "W4286500588"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.073,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 4155
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.6011345750264618,
+          "cohort_z": 0.457,
+          "total_citations": 5555,
+          "by_year": {
+            "2026": 1169,
+            "2025": 2081,
+            "2024": 1511,
+            "2023": 736,
+            "2022": 52,
+            "2020": 2,
+            "2013": 1,
+            "2012": 3
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 53.3,
+      "percentile": 72,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
+    },
+    {
+      "entity_id": "e_2XFTYTGJT3Z",
+      "name": "Chai-1",
+      "slug": "chai-1",
+      "entity_type": "repo",
+      "homepage": "https://www.chaidiscovery.com",
+      "github_repo": "chaidiscovery/chai-lab",
+      "openalex_work_ids": [
+        "W4403324307"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.003335444967172051,
+          "cohort_z": 1.718,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 1962
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 367,
+          "by_year": {
+            "2026": 132,
+            "2025": 220,
+            "2024": 15
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 71.5,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: biorxiv:10.1101/2024.10.10.615955; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_ZTAQY2693CR",
+      "name": "Protenix",
+      "slug": "protenix",
+      "entity_type": "repo",
+      "homepage": "https://protenix-server.com",
+      "github_repo": "bytedance/Protenix",
+      "openalex_work_ids": [
+        "W4406274436"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.05889608973478471,
+          "cohort_z": -2.992,
+          "recent_weekly_commits": 0.3,
+          "stars_not_scored": 1988
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 112,
+          "by_year": {
+            "2026": 55,
+            "2025": 56,
+            "2024": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 12.6,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: biorxiv:2025.01.08.631967; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_QV8QGGHJCSS",
+      "name": "RFdiffusion",
+      "slug": "rfdiffusion",
+      "entity_type": "repo",
+      "homepage": "https://github.com/RosettaCommons/RFdiffusion",
+      "github_repo": "RosettaCommons/RFdiffusion",
+      "openalex_work_ids": [
+        "W4383957026"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.001837702019721082,
+          "cohort_z": 0.986,
+          "recent_weekly_commits": 0.4,
+          "stars_not_scored": 2959
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.0450494180769123,
+          "cohort_z": 0.101,
+          "total_citations": 2010,
+          "by_year": {
+            "2026": 549,
+            "2025": 848,
+            "2024": 508,
+            "2023": 104,
+            "2022": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 56.8,
+      "percentile": 78,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: biorxiv:2022.12.09.519842; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_GFGYNAKFRW2",
+      "name": "ProteinMPNN",
+      "slug": "proteinmpnn",
+      "entity_type": "repo",
+      "homepage": "https://github.com/dauparas/ProteinMPNN",
+      "github_repo": "dauparas/ProteinMPNN",
+      "openalex_work_ids": [
+        "W4296032638"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.002,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1790
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.5139483819348563,
+          "cohort_z": -0.494,
+          "total_citations": 1890,
+          "by_year": {
+            "2026": 458,
+            "2025": 695,
+            "2024": 457,
+            "2023": 248,
+            "2022": 32
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 46.9,
+      "percentile": 22,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: biorxiv:2022.06.03.494563; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_2WFB2V4PNQV",
+      "name": "LigandMPNN",
+      "slug": "ligandmpnn",
+      "entity_type": "repo",
+      "homepage": "https://github.com/dauparas/LigandMPNN",
+      "github_repo": "dauparas/LigandMPNN",
+      "openalex_work_ids": [
+        "W4408934460"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.098,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 603
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 188,
+          "by_year": {
+            "2026": 98,
+            "2025": 88,
+            "2024": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 48.8,
+      "percentile": 50,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: biorxiv:2023.12.22.573103; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_SNWV2DC244A",
+      "name": "DiffDock",
+      "slug": "diffdock",
+      "entity_type": "repo",
+      "homepage": "https://github.com/gcorso/DiffDock",
+      "github_repo": "gcorso/DiffDock",
+      "openalex_work_ids": [
+        "W4302307901"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.015,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1542
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.21805103878502718,
+          "cohort_z": -0.355,
+          "total_citations": 343,
+          "by_year": {
+            "2026": 38,
+            "2025": 115,
+            "2024": 110,
+            "2023": 74,
+            "2022": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 47.7,
+      "percentile": 28,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: 2210.01776; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_KFRVE2CAS8W",
+      "name": "Uni-Mol",
+      "slug": "uni-mol",
+      "entity_type": "repo",
+      "homepage": "https://github.com/deepmodeling/Uni-Mol",
+      "github_repo": "deepmodeling/Uni-Mol",
+      "openalex_work_ids": [
+        "W4323304388"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.043,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1126
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.9419373790679306,
+          "cohort_z": 0.535,
+          "total_citations": 282,
+          "by_year": {
+            "2026": 71,
+            "2025": 124,
+            "2024": 69,
+            "2023": 18
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 53.1,
+      "percentile": 67,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: 2303.16982; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_88YAM3PXK4S",
+      "name": "AlphaFold3",
+      "slug": "alphafold3",
+      "entity_type": "repo",
+      "homepage": "https://alphafoldserver.com",
+      "github_repo": "google-deepmind/alphafold3",
+      "openalex_work_ids": [
+        "W4396721167"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.008637471396142592,
+          "cohort_z": -2.865,
+          "recent_weekly_commits": 2.8,
+          "stars_not_scored": 8304
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.8063192689777317,
+          "cohort_z": 0.429,
+          "total_citations": 14183,
+          "by_year": {
+            "2026": 4543,
+            "2025": 7687,
+            "2024": 1928,
+            "2023": 18,
+            "2022": 4,
+            "2021": 1,
+            "2020": 1,
+            "2014": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 34.8,
+      "percentile": 11,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: openalex:10.1038/s41586-024-07487-w; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_JPV9HP2D5X4",
+      "name": "BioEmu",
+      "slug": "bioemu",
+      "entity_type": "repo",
+      "homepage": "https://github.com/microsoft/bioemu",
+      "github_repo": "microsoft/bioemu",
+      "openalex_work_ids": [
+        "W4412165572"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0031162890083956643,
+          "cohort_z": -1.668,
+          "recent_weekly_commits": 0.5,
+          "stars_not_scored": 845
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 233,
+          "by_year": {
+            "2026": 162,
+            "2025": 71
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 29.2,
+      "percentile": 6,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_9XES4XNNQCV",
+      "name": "SaProt",
+      "slug": "saprot",
+      "entity_type": "repo",
+      "homepage": "https://github.com/westlake-repl/SaProt",
+      "github_repo": "westlake-repl/SaProt",
+      "openalex_work_ids": [
+        "W4387303685"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0021327605555690626,
+          "cohort_z": -1.192,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 612
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.4038400210255255,
+          "cohort_z": 1.111,
+          "total_citations": 242,
+          "by_year": {
+            "2026": 59,
+            "2025": 115,
+            "2024": 62,
+            "2023": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 49.5,
+      "percentile": 56,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [
+        "openalex_citation_momentum"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_BQ6HA5A661Z",
+      "name": "DiffSBDD",
+      "slug": "diffsbdd",
+      "entity_type": "repo",
+      "homepage": "https://github.com/arneschneuing/DiffSBDD",
+      "github_repo": "arneschneuing/DiffSBDD",
+      "openalex_work_ids": [
+        "W4405194591"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.112,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 516
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 172,
+          "by_year": {
+            "2026": 73,
+            "2025": 93,
+            "2024": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 48.6,
+      "percentile": 44,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_R2TJDSZX29K",
+      "name": "Foldseek",
+      "slug": "foldseek",
+      "entity_type": "repo",
+      "homepage": "https://github.com/steineggerlab/foldseek",
+      "github_repo": "steineggerlab/foldseek",
+      "openalex_work_ids": [
+        "W4375858802"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.03828428321527728,
+          "cohort_z": -3.033,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 1261
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.577272201668611,
+          "cohort_z": 0.664,
+          "total_citations": 2414,
+          "by_year": {
+            "2026": 493,
+            "2025": 1013,
+            "2024": 660,
+            "2023": 223,
+            "2022": 23,
+            "2021": 1,
+            "2012": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 35.2,
+      "percentile": 17,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_XTW34V97F7V",
+      "name": "gnina",
+      "slug": "gnina",
+      "entity_type": "repo",
+      "homepage": "https://github.com/gnina/gnina",
+      "github_repo": "gnina/gnina",
+      "openalex_work_ids": [
+        "W3168430821"
+      ],
+      "industry": "ai-for-science",
+      "sub_niche": "ai-drug-discovery",
+      "cohort": "ai-drug-discovery",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.014759701298553404,
+          "cohort_z": 2.943,
+          "recent_weekly_commits": 0.3,
+          "stars_not_scored": 956
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.4370049147599917,
+          "cohort_z": -0.35,
+          "total_citations": 827,
+          "by_year": {
+            "2026": 140,
+            "2025": 253,
+            "2024": 175,
+            "2023": 186,
+            "2022": 57,
+            "2021": 16
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 66.2,
+      "percentile": 94,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_ADRWZ5YBESZ",
+      "name": "OpenHands",
+      "slug": "openhands",
+      "entity_type": "repo",
+      "homepage": "https://github.com/All-Hands-AI/OpenHands",
+      "github_repo": "All-Hands-AI/OpenHands",
+      "openalex_work_ids": [
+        "W4403885061"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.006025887270638701,
+          "cohort_z": 0.665,
+          "recent_weekly_commits": 43.2,
+          "stars_not_scored": 80423
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 11,
+          "by_year": {
+            "2026": 5,
+            "2025": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 58.3,
+      "percentile": 84,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "Paper young (2024); citation slope insufficient (<2 completed years)."
+    },
+    {
+      "entity_id": "e_D029GAZTH3Z",
+      "name": "SWE-agent",
+      "slug": "swe-agent",
+      "entity_type": "repo",
+      "homepage": "https://swe-agent.com/",
+      "github_repo": "princeton-nlp/SWE-agent",
+      "openalex_work_ids": [
+        "W4399114781"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.001999434558164224,
+          "cohort_z": 0.873,
+          "recent_weekly_commits": 1.8,
+          "stars_not_scored": 19770
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 28,
+          "by_year": {
+            "2026": 4,
+            "2025": 22,
+            "2024": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 60.9,
+      "percentile": 89,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "Paper young (2024); citation slope insufficient."
+    },
+    {
+      "entity_id": "e_P4YGBAFMV94",
+      "name": "Cline",
+      "slug": "cline",
+      "entity_type": "repo",
+      "homepage": "https://cline.bot/",
+      "github_repo": "cline/cline",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0040128697199963235,
+          "cohort_z": 1.088,
+          "recent_weekly_commits": 79.2,
+          "stars_not_scored": 64541
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 63.6,
+      "percentile": 95,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [
+        "github_commit_velocity"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": "No academic paper; axis-2 absent."
+    },
+    {
+      "entity_id": "e_TBARBJKAD2G",
+      "name": "Aider",
+      "slug": "aider",
+      "entity_type": "repo",
+      "homepage": "https://aider.chat/",
+      "github_repo": "paul-gauthier/aider",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0573025717993454,
+          "cohort_z": -1.672,
+          "recent_weekly_commits": 2.1,
+          "stars_not_scored": 47268
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 29.1,
+      "percentile": 21,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No academic paper; axis-2 absent."
+    },
+    {
+      "entity_id": "e_5WYRYN5H1XY",
+      "name": "Continue",
+      "slug": "continue",
+      "entity_type": "repo",
+      "homepage": "https://continue.dev/",
+      "github_repo": "continuedev/continue",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.21104898848304565,
+          "cohort_z": -2.997,
+          "recent_weekly_commits": 2.8,
+          "stars_not_scored": 34810
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 12.5,
+      "percentile": 5,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No academic paper; axis-2 absent."
+    },
+    {
+      "entity_id": "e_FTD4XD7DVG3",
+      "name": "Goose",
+      "slug": "goose",
+      "entity_type": "repo",
+      "homepage": "https://github.com/block/goose",
+      "github_repo": "block/goose",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.016625639181876255,
+          "cohort_z": 0.145,
+          "recent_weekly_commits": 67.8,
+          "stars_not_scored": 51058
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 51.8,
+      "percentile": 58,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No academic paper; axis-2 absent."
+    },
+    {
+      "entity_id": "e_BTT9Q5KW4YN",
+      "name": "OpenCode",
+      "slug": "opencode",
+      "entity_type": "product",
+      "homepage": "https://opencode.ai",
+      "github_repo": "anomalyco/opencode",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.02761377169791438,
+          "cohort_z": -0.207,
+          "recent_weekly_commits": 277.2,
+          "stars_not_scored": 184639
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 47.4,
+      "percentile": 37,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_4A9TG2M8403",
+      "name": "Gemini CLI",
+      "slug": "gemini-cli",
+      "entity_type": "product",
+      "homepage": "https://geminicli.com",
+      "github_repo": "google-gemini/gemini-cli",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.1293734577219208,
+          "cohort_z": -2.879,
+          "recent_weekly_commits": 34.6,
+          "stars_not_scored": 105908
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 14.0,
+      "percentile": 16,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_W2REDH3NZ0S",
+      "name": "Codex CLI",
+      "slug": "codex-cli",
+      "entity_type": "product",
+      "homepage": "https://developers.openai.com/codex",
+      "github_repo": "openai/codex",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.00683099885337146,
+          "cohort_z": 0.649,
+          "recent_weekly_commits": 215.8,
+          "stars_not_scored": 97085
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 58.1,
+      "percentile": 79,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_GQ2E6K86NWF",
+      "name": "Tabby",
+      "slug": "tabby",
+      "entity_type": "product",
+      "homepage": "https://tabbyml.com",
+      "github_repo": "TabbyML/tabby",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.028137829931225346,
+          "cohort_z": -0.411,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 33688
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 44.9,
+      "percentile": 26,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_MX90J81EYDE",
+      "name": "Void",
+      "slug": "void",
+      "entity_type": "product",
+      "homepage": "https://voideditor.com",
+      "github_repo": "voideditor/void",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.005835247695146517,
+          "cohort_z": 0.564,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 28830
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 57.0,
+      "percentile": 63,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_1TMQEKAN7S6",
+      "name": "Crush",
+      "slug": "crush",
+      "entity_type": "product",
+      "homepage": "https://charm.sh",
+      "github_repo": "charmbracelet/crush",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.026070921035484397,
+          "cohort_z": -0.345,
+          "recent_weekly_commits": 42.1,
+          "stars_not_scored": 26451
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 45.7,
+      "percentile": 32,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_X33782S1M13",
+      "name": "Qwen Code",
+      "slug": "qwen-code",
+      "entity_type": "product",
+      "homepage": "https://qwenlm.github.io/qwen-code-docs",
+      "github_repo": "QwenLM/qwen-code",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.021234417024730556,
+          "cohort_z": 1.757,
+          "recent_weekly_commits": 139.2,
+          "stars_not_scored": 25932
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 72.0,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [
+        "github_commit_velocity"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_JA1TAYFFAHR",
+      "name": "Kilo Code",
+      "slug": "kilo-code",
+      "entity_type": "product",
+      "homepage": "https://kilo.ai",
+      "github_repo": "Kilo-Org/kilocode",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.01867125269444183,
+          "cohort_z": -0.017,
+          "recent_weekly_commits": 563.5,
+          "stars_not_scored": 25999
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 49.8,
+      "percentile": 42,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_KRDEF79H7GD",
+      "name": "Zed",
+      "slug": "zed",
+      "entity_type": "product",
+      "homepage": "https://zed.dev",
+      "github_repo": "zed-industries/zed",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.020665703111498082,
+          "cohort_z": 0.022,
+          "recent_weekly_commits": 194.7,
+          "stars_not_scored": 86783
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.3,
+      "percentile": 47,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_EF7QKB37YJK",
+      "name": "SWE-bench",
+      "slug": "swe-bench",
+      "entity_type": "repo",
+      "homepage": "https://www.swebench.com",
+      "github_repo": "SWE-bench/SWE-bench",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0016588137654426041,
+          "cohort_z": 0.572,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 5390
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 57.1,
+      "percentile": 74,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: 2310.06770; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_DAFJYGYBDKF",
+      "name": "mini-swe-agent",
+      "slug": "mini-swe-agent",
+      "entity_type": "repo",
+      "homepage": "https://github.com/SWE-agent/mini-swe-agent",
+      "github_repo": "SWE-agent/mini-swe-agent",
+      "openalex_work_ids": [
+        "W7103754783"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.08566417317909983,
+          "cohort_z": -3.158,
+          "recent_weekly_commits": 3.5,
+          "stars_not_scored": 5703
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 46,
+          "by_year": {
+            "2026": 32,
+            "2025": 14
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 10.5,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_KZ3W52ZYP6H",
+      "name": "Agentless",
+      "slug": "agentless",
+      "entity_type": "repo",
+      "homepage": "https://github.com/OpenAutoCoder/Agentless",
+      "github_repo": "OpenAutoCoder/Agentless",
+      "openalex_work_ids": [
+        "W4400337928"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.563,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 2080
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 16,
+          "by_year": {
+            "2026": 4,
+            "2025": 12
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 57.0,
+      "percentile": 68,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_E1019DQAZKS",
+      "name": "ChatDev",
+      "slug": "chatdev",
+      "entity_type": "repo",
+      "homepage": "https://github.com/OpenBMB/ChatDev",
+      "github_repo": "OpenBMB/ChatDev",
+      "openalex_work_ids": [
+        "W4402684050"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.09157535166188928,
+          "cohort_z": -3.001,
+          "recent_weekly_commits": 0.8,
+          "stars_not_scored": 33703
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 248,
+          "by_year": {
+            "2026": 86,
+            "2025": 137,
+            "2024": 25
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 12.5,
+      "percentile": 11,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_JBM5J6NVTF7",
+      "name": "Open Interpreter",
+      "slug": "open-interpreter",
+      "entity_type": "repo",
+      "homepage": "https://github.com/openinterpreter/openinterpreter",
+      "github_repo": "openinterpreter/openinterpreter",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "coding-agents",
+      "cohort": "coding-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.01915830820674914,
+          "cohort_z": 0.057,
+          "recent_weekly_commits": 210.2,
+          "stars_not_scored": 64335
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.7,
+      "percentile": 53,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_R372CCSVG44",
+      "name": "vLLM",
+      "slug": "vllm",
+      "entity_type": "repo",
+      "homepage": "https://vllm.ai",
+      "github_repo": "vllm-project/vllm",
+      "openalex_work_ids": [
+        "W4387321091"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.015628999666745746,
+          "cohort_z": 0.739,
+          "recent_weekly_commits": 339.7,
+          "stars_not_scored": 85948
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 2.0387687219528594,
+          "cohort_z": null,
+          "total_citations": 1095,
+          "by_year": {
+            "2026": 334,
+            "2025": 589,
+            "2024": 163,
+            "2023": 9
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 59.2,
+      "percentile": 92,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: 2309.06180; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_77AC6K7XEWB",
+      "name": "SGLang",
+      "slug": "sglang",
+      "entity_type": "repo",
+      "homepage": "https://sglang.io",
+      "github_repo": "sgl-project/sglang",
+      "openalex_work_ids": [
+        "W4415797413"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.023758374442523263,
+          "cohort_z": 0.492,
+          "recent_weekly_commits": 370.2,
+          "stars_not_scored": 30173
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 24,
+          "by_year": {
+            "2026": 17,
+            "2025": 7
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 56.1,
+      "percentile": 69,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2312.07104; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_Z7YDNC4F139",
+      "name": "llama.cpp",
+      "slug": "llama-cpp",
+      "entity_type": "repo",
+      "homepage": "https://github.com/ggml-org/llama.cpp",
+      "github_repo": "ggml-org/llama.cpp",
+      "openalex_work_ids": [],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.011659736232712634,
+          "cohort_z": 0.76,
+          "recent_weekly_commits": 94.0,
+          "stars_not_scored": 119991
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 59.5,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_TRJN6D7V12H",
+      "name": "Ollama",
+      "slug": "ollama",
+      "entity_type": "repo",
+      "homepage": "https://ollama.com",
+      "github_repo": "ollama/ollama",
+      "openalex_work_ids": [],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.036374263012298645,
+          "cohort_z": -1.026,
+          "recent_weekly_commits": 15.7,
+          "stars_not_scored": 175902
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 37.2,
+      "percentile": 8,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_1ER3NPA3Y77",
+      "name": "LMDeploy",
+      "slug": "lmdeploy",
+      "entity_type": "repo",
+      "homepage": "https://lmdeploy.readthedocs.io",
+      "github_repo": "InternLM/lmdeploy",
+      "openalex_work_ids": [],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.025170800746532204,
+          "cohort_z": -0.195,
+          "recent_weekly_commits": 11.9,
+          "stars_not_scored": 7952
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 47.6,
+      "percentile": 38,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_9SWWW2SWASG",
+      "name": "TensorRT-LLM",
+      "slug": "tensorrt-llm",
+      "entity_type": "repo",
+      "homepage": "https://nvidia.github.io/TensorRT-LLM/",
+      "github_repo": "NVIDIA/TensorRT-LLM",
+      "openalex_work_ids": [],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.013987342291154902,
+          "cohort_z": -0.341,
+          "recent_weekly_commits": 142.4,
+          "stars_not_scored": 14090
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 45.7,
+      "percentile": 31,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_MMGH765AVAA",
+      "name": "KTransformers",
+      "slug": "ktransformers",
+      "entity_type": "repo",
+      "homepage": "https://kvcache-ai.github.io/ktransformers/",
+      "github_repo": "kvcache-ai/ktransformers",
+      "openalex_work_ids": [
+        "W4414736068"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.015422583724470572,
+          "cohort_z": -1.448,
+          "recent_weekly_commits": 4.6,
+          "stars_not_scored": 17398
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 3,
+          "by_year": {
+            "2026": 3
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 31.9,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_V05C8HCBBV2",
+      "name": "LMCache",
+      "slug": "lmcache",
+      "entity_type": "repo",
+      "homepage": "https://lmcache.ai",
+      "github_repo": "LMCache/LMCache",
+      "openalex_work_ids": [
+        "W4417150458"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.041212990367738754,
+          "cohort_z": 0.624,
+          "recent_weekly_commits": 42.2,
+          "stars_not_scored": 10421
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 1,
+          "by_year": {
+            "2026": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 57.8,
+      "percentile": 77,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2510.09665; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_KR3M8ESKAEW",
+      "name": "llm-d",
+      "slug": "llm-d",
+      "entity_type": "org",
+      "homepage": "https://llm-d.ai",
+      "github_repo": "llm-d/llm-d",
+      "openalex_work_ids": [],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.03989865071902974,
+          "cohort_z": 0.001,
+          "recent_weekly_commits": 39.3,
+          "stars_not_scored": 3771
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.0,
+      "percentile": 46,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_4249BQNHNVB",
+      "name": "AIBrix",
+      "slug": "aibrix",
+      "entity_type": "repo",
+      "homepage": "https://aibrix.readthedocs.io",
+      "github_repo": "vllm-project/aibrix",
+      "openalex_work_ids": [
+        "W4416123688"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.05258338078013032,
+          "cohort_z": 0.681,
+          "recent_weekly_commits": 17.8,
+          "stars_not_scored": 4951
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 58.5,
+      "percentile": 85,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_D5HEA3Z5ZYZ",
+      "name": "Nano-vLLM",
+      "slug": "nano-vllm",
+      "entity_type": "repo",
+      "homepage": "https://github.com/GeeeekExplorer/nano-vllm",
+      "github_repo": "GeeeekExplorer/nano-vllm",
+      "openalex_work_ids": [],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0007868227622612814,
+          "cohort_z": -0.943,
+          "recent_weekly_commits": 0.3,
+          "stars_not_scored": 14442
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 38.2,
+      "percentile": 15,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_VMQ8QRRDWVS",
+      "name": "FlashInfer",
+      "slug": "flashinfer",
+      "entity_type": "repo",
+      "homepage": "https://github.com/flashinfer-ai/flashinfer",
+      "github_repo": "flashinfer-ai/flashinfer",
+      "openalex_work_ids": [
+        "W4406032994"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.01660049003558433,
+          "cohort_z": -0.715,
+          "recent_weekly_commits": 29.2,
+          "stars_not_scored": 5942
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 3,
+          "by_year": {
+            "2026": 2,
+            "2025": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 41.1,
+      "percentile": 23,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_N2RFM19TP1D",
+      "name": "Mooncake",
+      "slug": "mooncake",
+      "entity_type": "repo",
+      "homepage": "https://github.com/kvcache-ai/Mooncake",
+      "github_repo": "kvcache-ai/Mooncake",
+      "openalex_work_ids": [
+        "W4400377444"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.04175599152833956,
+          "cohort_z": 0.319,
+          "recent_weekly_commits": 38.0,
+          "stars_not_scored": 5802
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 13,
+          "by_year": {
+            "2026": 1,
+            "2025": 12
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 54.0,
+      "percentile": 62,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_8A2A58V55P6",
+      "name": "Xinference",
+      "slug": "xinference",
+      "entity_type": "repo",
+      "homepage": "https://github.com/xorbitsai/inference",
+      "github_repo": "xorbitsai/inference",
+      "openalex_work_ids": [
+        "W4404783349"
+      ],
+      "industry": "ai-infrastructure",
+      "sub_niche": "inference-serving",
+      "cohort": "inference-serving",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.03284385499249456,
+          "cohort_z": 0.219,
+          "recent_weekly_commits": 18.8,
+          "stars_not_scored": 9421
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 52.7,
+      "percentile": 54,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_13NVVKJA2MM",
+      "name": "LangGraph",
+      "slug": "langgraph",
+      "entity_type": "repo",
+      "homepage": "https://docs.langchain.com/oss/python/langgraph",
+      "github_repo": "langchain-ai/langgraph",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.013276649249592713,
+          "cohort_z": 0.384,
+          "recent_weekly_commits": 19.9,
+          "stars_not_scored": 37014
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 54.8,
+      "percentile": 62,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_SV60T2QMXGE",
+      "name": "CrewAI",
+      "slug": "crewai",
+      "entity_type": "repo",
+      "homepage": "https://crewai.com",
+      "github_repo": "crewAIInc/crewAI",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.024215090025952582,
+          "cohort_z": 0.696,
+          "recent_weekly_commits": 28.6,
+          "stars_not_scored": 55334
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 58.7,
+      "percentile": 81,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_EDX1R1KVT3X",
+      "name": "AutoGen",
+      "slug": "autogen",
+      "entity_type": "repo",
+      "homepage": "https://microsoft.github.io/autogen/",
+      "github_repo": "microsoft/autogen",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0035546009259484375,
+          "cohort_z": -0.139,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 59648
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 48.3,
+      "percentile": 44,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: 2308.08155; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_3HZS2JPM2CR",
+      "name": "OpenAI Agents SDK",
+      "slug": "openai-agents-sdk",
+      "entity_type": "repo",
+      "homepage": "https://openai.github.io/openai-agents-python/",
+      "github_repo": "openai/openai-agents-python",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.022504581678871458,
+          "cohort_z": -0.677,
+          "recent_weekly_commits": 30.7,
+          "stars_not_scored": 27807
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 41.5,
+      "percentile": 25,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_EY620A0EAK9",
+      "name": "Agno",
+      "slug": "agno",
+      "entity_type": "repo",
+      "homepage": "https://agno.com",
+      "github_repo": "agno-agi/agno",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.01010100308357831,
+          "cohort_z": -0.32,
+          "recent_weekly_commits": 32.6,
+          "stars_not_scored": 41091
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 46.0,
+      "percentile": 38,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_2CS7SM2993J",
+      "name": "PydanticAI",
+      "slug": "pydanticai",
+      "entity_type": "repo",
+      "homepage": "https://ai.pydantic.dev",
+      "github_repo": "pydantic/pydantic-ai",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.03168671351030891,
+          "cohort_z": 0.964,
+          "recent_weekly_commits": 36.4,
+          "stars_not_scored": 18387
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 62.0,
+      "percentile": 94,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_ADT3TJHK8W8",
+      "name": "Google ADK",
+      "slug": "google-adk",
+      "entity_type": "repo",
+      "homepage": "https://google.github.io/adk-docs/",
+      "github_repo": "google/adk-python",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.026236794942435346,
+          "cohort_z": 0.796,
+          "recent_weekly_commits": 62.4,
+          "stars_not_scored": 20560
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 60.0,
+      "percentile": 88,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_4P7EDPAWCY2",
+      "name": "smolagents",
+      "slug": "smolagents",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/docs/smolagents",
+      "github_repo": "huggingface/smolagents",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.012731144148750286,
+          "cohort_z": -0.384,
+          "recent_weekly_commits": 1.2,
+          "stars_not_scored": 28291
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 45.2,
+      "percentile": 31,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_15264R968MN",
+      "name": "Letta",
+      "slug": "letta",
+      "entity_type": "repo",
+      "homepage": "https://docs.letta.com",
+      "github_repo": "letta-ai/letta",
+      "openalex_work_ids": [
+        "W4387636003"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.2157233311077702,
+          "cohort_z": -2.996,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 23737
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.7234594914681628,
+          "cohort_z": -0.674,
+          "total_citations": 46,
+          "by_year": {
+            "2026": 15,
+            "2025": 16,
+            "2024": 12,
+            "2023": 3
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 27.1,
+      "percentile": 0,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: 2310.08560; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_X9JA7ZTD6TF",
+      "name": "DSPy",
+      "slug": "dspy",
+      "entity_type": "repo",
+      "homepage": "https://dspy.ai",
+      "github_repo": "stanfordnlp/dspy",
+      "openalex_work_ids": [
+        "W4387430850"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.029797232327356465,
+          "cohort_z": -0.906,
+          "recent_weekly_commits": 8.9,
+          "stars_not_scored": 36033
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 51,
+          "by_year": {
+            "2026": 5,
+            "2025": 31,
+            "2024": 15
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 38.7,
+      "percentile": 12,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2310.03714; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_97SYW64PA3G",
+      "name": "AgentScope",
+      "slug": "agentscope",
+      "entity_type": "repo",
+      "homepage": "https://docs.agentscope.io",
+      "github_repo": "agentscope-ai/agentscope",
+      "openalex_work_ids": [
+        "W4392126161"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.033893109162106784,
+          "cohort_z": 1.014,
+          "recent_weekly_commits": 12.1,
+          "stars_not_scored": 27749
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 9,
+          "by_year": {
+            "2026": 3,
+            "2025": 4,
+            "2024": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 62.7,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [
+        "github_commit_velocity"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": "paper_ref: 2402.14034; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_VBBNJDDB0DA",
+      "name": "CAMEL",
+      "slug": "camel",
+      "entity_type": "repo",
+      "homepage": "https://camel-ai.org",
+      "github_repo": "camel-ai/camel",
+      "openalex_work_ids": [
+        "W4362508448"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.056085351445596586,
+          "cohort_z": -1.664,
+          "recent_weekly_commits": 7.2,
+          "stars_not_scored": 17361
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.7766742228915284,
+          "cohort_z": 0.0,
+          "total_citations": 99,
+          "by_year": {
+            "2026": 11,
+            "2025": 51,
+            "2024": 27,
+            "2023": 10
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 39.6,
+      "percentile": 19,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "tracked",
+      "incumbent": false,
+      "note": "paper_ref: 2303.17760; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_3K17NV4B0JF",
+      "name": "Strands Agents",
+      "slug": "strands-agents",
+      "entity_type": "repo",
+      "homepage": "https://strandsagents.com",
+      "github_repo": "strands-agents/harness-sdk",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.01740994137569005,
+          "cohort_z": 0.578,
+          "recent_weekly_commits": 53.8,
+          "stars_not_scored": 6519
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 57.2,
+      "percentile": 69,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_HTQD84GES1K",
+      "name": "Qwen-Agent",
+      "slug": "qwen-agent",
+      "entity_type": "repo",
+      "homepage": "https://github.com/QwenLM/Qwen-Agent",
+      "github_repo": "QwenLM/Qwen-Agent",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.031151847153824182,
+          "cohort_z": -0.915,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 16704
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 38.6,
+      "percentile": 6,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_QTVWFV6FJ2V",
+      "name": "MetaGPT",
+      "slug": "metagpt",
+      "entity_type": "repo",
+      "homepage": "https://github.com/FoundationAgents/MetaGPT",
+      "github_repo": "FoundationAgents/MetaGPT",
+      "openalex_work_ids": [
+        "W4385963839"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.039,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 69302
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 0.8888866136266576,
+          "cohort_z": 1.422,
+          "total_citations": 145,
+          "by_year": {
+            "2026": 18,
+            "2025": 70,
+            "2024": 46,
+            "2023": 11
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 58.6,
+      "percentile": 75,
+      "confidence": "medium",
+      "axes_present": [
+        "github_commit_velocity",
+        "openalex_citation_momentum"
+      ],
+      "convergent_axes": [
+        "openalex_citation_momentum"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_M5SCCQPBZ89",
+      "name": "Microsoft Agent Framework",
+      "slug": "microsoft-agent-framework",
+      "entity_type": "repo",
+      "homepage": "https://github.com/microsoft/agent-framework",
+      "github_repo": "microsoft/agent-framework",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.004697865452776584,
+          "cohort_z": 0.172,
+          "recent_weekly_commits": 53.0,
+          "stars_not_scored": 12024
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 52.1,
+      "percentile": 56,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_TV0JWZEFEAQ",
+      "name": "Mastra",
+      "slug": "mastra",
+      "entity_type": "repo",
+      "homepage": "https://github.com/mastra-ai/mastra",
+      "github_repo": "mastra-ai/mastra",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "agent-frameworks",
+      "cohort": "agent-frameworks",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0035867174992956145,
+          "cohort_z": 0.108,
+          "recent_weekly_commits": 253.8,
+          "stars_not_scored": 26036
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 51.4,
+      "percentile": 50,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_607VJ9XWYRJ",
+      "name": "verl",
+      "slug": "verl",
+      "entity_type": "repo",
+      "homepage": "https://verl.readthedocs.io",
+      "github_repo": "verl-project/verl",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0019840993201016258,
+          "cohort_z": -0.357,
+          "recent_weekly_commits": 31.2,
+          "stars_not_scored": 22424
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 45.5,
+      "percentile": 36,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2409.19256; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_8V2DZWR8HPM",
+      "name": "LLaMA-Factory",
+      "slug": "llama-factory",
+      "entity_type": "repo",
+      "homepage": "https://llamafactory.readthedocs.io",
+      "github_repo": "hiyouga/LLaMA-Factory",
+      "openalex_work_ids": [
+        "W4402667093"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0024159327589105446,
+          "cohort_z": -0.504,
+          "recent_weekly_commits": 5.8,
+          "stars_not_scored": 73158
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 299,
+          "by_year": {
+            "2026": 78,
+            "2025": 186,
+            "2024": 35
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 43.7,
+      "percentile": 29,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2403.13372; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_J16JY8N155H",
+      "name": "Unsloth",
+      "slug": "unsloth",
+      "entity_type": "repo",
+      "homepage": "https://unsloth.ai",
+      "github_repo": "unslothai/unsloth",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.04913671032088417,
+          "cohort_z": 1.452,
+          "recent_weekly_commits": 87.0,
+          "stars_not_scored": 68012
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 68.2,
+      "percentile": 93,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [
+        "github_commit_velocity"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_FJPV9XH9GPR",
+      "name": "ms-swift",
+      "slug": "ms-swift",
+      "entity_type": "repo",
+      "homepage": "https://swift.readthedocs.io",
+      "github_repo": "modelscope/ms-swift",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0051481882735271685,
+          "cohort_z": 0.054,
+          "recent_weekly_commits": 23.3,
+          "stars_not_scored": 14778
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.7,
+      "percentile": 57,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2408.05517; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_B10ZF25BFZT",
+      "name": "Axolotl",
+      "slug": "axolotl",
+      "entity_type": "repo",
+      "homepage": "https://docs.axolotl.ai",
+      "github_repo": "axolotl-ai-cloud/axolotl",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.017450686340316744,
+          "cohort_z": 0.618,
+          "recent_weekly_commits": 11.1,
+          "stars_not_scored": 12181
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 57.7,
+      "percentile": 79,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_MDD4QDWH205",
+      "name": "OpenRLHF",
+      "slug": "openrlhf",
+      "entity_type": "repo",
+      "homepage": "https://openrlhf.readthedocs.io",
+      "github_repo": "OpenRLHF/OpenRLHF",
+      "openalex_work_ids": [
+        "W4416037343"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.02103632545495142,
+          "cohort_z": -0.915,
+          "recent_weekly_commits": 1.4,
+          "stars_not_scored": 9776
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 7,
+          "by_year": {
+            "2026": 5,
+            "2025": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 38.6,
+      "percentile": 21,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2405.11143; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_PCV8H6P7B04",
+      "name": "AReaL",
+      "slug": "areal",
+      "entity_type": "repo",
+      "homepage": "https://areal-ai.io",
+      "github_repo": "inclusionAI/AReaL",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0328672749930718,
+          "cohort_z": -1.247,
+          "recent_weekly_commits": 11.2,
+          "stars_not_scored": 5526
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 34.4,
+      "percentile": 14,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2505.24298; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_Y3CPRHKVF8H",
+      "name": "Search-R1",
+      "slug": "search-r1",
+      "entity_type": "repo",
+      "homepage": "https://github.com/PeterGriffinJin/Search-R1",
+      "github_repo": "PeterGriffinJin/Search-R1",
+      "openalex_work_ids": [
+        "W4417422257"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.138,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 5080
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 5,
+          "by_year": {
+            "2026": 4,
+            "2025": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 51.7,
+      "percentile": 64,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2503.09516; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_QF7Y4CJ00Q4",
+      "name": "Open-Instruct",
+      "slug": "open-instruct",
+      "entity_type": "repo",
+      "homepage": "https://allenai.github.io/open-instruct/",
+      "github_repo": "allenai/open-instruct",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.09634183579661777,
+          "cohort_z": -2.781,
+          "recent_weekly_commits": 5.1,
+          "stars_not_scored": 3789
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 15.2,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: 2411.15124; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_QHYA574DXDQ",
+      "name": "NeMo-RL",
+      "slug": "nemo-rl",
+      "entity_type": "repo",
+      "homepage": "https://docs.nvidia.com/nemo/rl/latest/",
+      "github_repo": "NVIDIA-NeMo/RL",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.04452566764282623,
+          "cohort_z": 2.272,
+          "recent_weekly_commits": 25.6,
+          "stars_not_scored": 1792
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 78.4,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [
+        "github_commit_velocity"
+      ],
+      "rising": false,
+      "status": "watch",
+      "incumbent": false,
+      "note": "paper_ref: 2503.14476; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_B1Q69HZTTMA",
+      "name": "TRL",
+      "slug": "trl",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/docs/trl",
+      "github_repo": "huggingface/trl",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.009275866814367997,
+          "cohort_z": 0.158,
+          "recent_weekly_commits": 37.9,
+          "stars_not_scored": 18818
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 52.0,
+      "percentile": 71,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: 2402.03300; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_357KR6Z8TFG",
+      "name": "ROLL",
+      "slug": "roll",
+      "entity_type": "repo",
+      "homepage": "https://github.com/alibaba/ROLL",
+      "github_repo": "alibaba/ROLL",
+      "openalex_work_ids": [
+        "W4417097658"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.03679316561051399,
+          "cohort_z": -1.266,
+          "recent_weekly_commits": 2.2,
+          "stars_not_scored": 3292
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 1,
+          "by_year": {
+            "2026": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 34.2,
+      "percentile": 7,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_H6EVSN8Q85T",
+      "name": "prime-rl",
+      "slug": "prime-rl",
+      "entity_type": "repo",
+      "homepage": "https://github.com/PrimeIntellect-ai/prime-rl",
+      "github_repo": "PrimeIntellect-ai/prime-rl",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.016282577746322573,
+          "cohort_z": -0.219,
+          "recent_weekly_commits": 25.2,
+          "stars_not_scored": 1619
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 47.3,
+      "percentile": 50,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_Y0KW8KTAF72",
+      "name": "Open R1",
+      "slug": "open-r1",
+      "entity_type": "repo",
+      "homepage": "https://github.com/huggingface/open-r1",
+      "github_repo": "huggingface/open-r1",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0007109201851896875,
+          "cohort_z": -0.35,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 26401
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 45.6,
+      "percentile": 43,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_DQT3XHMXA2C",
+      "name": "Trinity-RFT",
+      "slug": "trinity-rft",
+      "entity_type": "repo",
+      "homepage": "https://github.com/agentscope-ai/Trinity-RFT",
+      "github_repo": "agentscope-ai/Trinity-RFT",
+      "openalex_work_ids": [
+        "W4415330145"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "post-training-alignment",
+      "cohort": "post-training-alignment",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.003337727319853621,
+          "cohort_z": 0.841,
+          "recent_weekly_commits": 4.8,
+          "stars_not_scored": 665
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 60.5,
+      "percentile": 86,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_R2KZCZM6TGV",
+      "name": "FLUX.1",
+      "slug": "flux-1",
+      "entity_type": "model",
+      "homepage": "https://blackforestlabs.ai",
+      "github_repo": "black-forest-labs/flux",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.023,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 25708
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 49.7,
+      "percentile": 50,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2506.15742; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_5R5PKZN9WTY",
+      "name": "Qwen-Image",
+      "slug": "qwen-image",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/Qwen/Qwen-Image",
+      "github_repo": "QwenLM/Qwen-Image",
+      "openalex_work_ids": [
+        "W6966874861"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.004028547716074896,
+          "cohort_z": -1.303,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 8101
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 33.7,
+      "percentile": 29,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_X3P6ZMFQBQQ",
+      "name": "Stable Diffusion 3.5",
+      "slug": "stable-diffusion-3-5",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/stabilityai/stable-diffusion-3.5-large",
+      "github_repo": "Stability-AI/sd3.5",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.067,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1517
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.8,
+      "percentile": 79,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2403.03206; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_F19ZE68DAS4",
+      "name": "Wan2.2",
+      "slug": "wan2-2",
+      "entity_type": "repo",
+      "homepage": "https://github.com/Wan-Video",
+      "github_repo": "Wan-Video/Wan2.2",
+      "openalex_work_ids": [
+        "W4409092337"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.005235864959602108,
+          "cohort_z": -1.72,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 16600
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 7,
+          "by_year": {
+            "2026": 1,
+            "2025": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 28.5,
+      "percentile": 7,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2503.20314; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_W4SFE6Q23VK",
+      "name": "HunyuanVideo",
+      "slug": "hunyuanvideo",
+      "entity_type": "repo",
+      "homepage": "https://aivideo.hunyuan.tencent.com",
+      "github_repo": "Tencent-Hunyuan/HunyuanVideo",
+      "openalex_work_ids": [
+        "W4405096483"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.008638660731407356,
+          "cohort_z": 2.825,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 12328
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 6,
+          "by_year": {
+            "2026": 1,
+            "2025": 5
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 85.3,
+      "percentile": 93,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2412.03603; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_QFECGB8X9W5",
+      "name": "LTX-Video",
+      "slug": "ltx-video",
+      "entity_type": "repo",
+      "homepage": "https://ltx.io",
+      "github_repo": "Lightricks/LTX-Video",
+      "openalex_work_ids": [
+        "W4406052102"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.005,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 10662
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 2,
+          "by_year": {
+            "2025": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 50.1,
+      "percentile": 57,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2501.00103; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_20N3FEGPDR2",
+      "name": "SkyReels-V2",
+      "slug": "skyreels-v2",
+      "entity_type": "repo",
+      "homepage": "https://skyworkai.github.io/skyreels-v2.github.io/",
+      "github_repo": "SkyworkAI/SkyReels-V2",
+      "openalex_work_ids": [
+        "W4417091789"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.004976441296327813,
+          "cohort_z": -1.609,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 7178
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 29.9,
+      "percentile": 14,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2504.13074; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_XTYDTXK7PNY",
+      "name": "Open-Sora",
+      "slug": "open-sora",
+      "entity_type": "repo",
+      "homepage": "https://github.com/hpcaitech/Open-Sora",
+      "github_repo": "hpcaitech/Open-Sora",
+      "openalex_work_ids": [
+        "W4405956131"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.00023697339506322917,
+          "cohort_z": -0.104,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 29174
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 10,
+          "by_year": {
+            "2025": 9,
+            "2024": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 48.7,
+      "percentile": 43,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2503.09642; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_ZQ2MJNFAEZS",
+      "name": "ACE-Step",
+      "slug": "ace-step",
+      "entity_type": "model",
+      "homepage": "https://ace-step.github.io",
+      "github_repo": "ace-step/ACE-Step",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.010426829382782084,
+          "cohort_z": -2.968,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 4639
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 12.9,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2506.00045; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_V9ERGE3E0B4",
+      "name": "Fish Speech",
+      "slug": "fish-speech",
+      "entity_type": "repo",
+      "homepage": "https://fish.audio",
+      "github_repo": "fishaudio/fish-speech",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.004247044491668379,
+          "cohort_z": -1.417,
+          "recent_weekly_commits": 0.3,
+          "stars_not_scored": 31220
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 32.3,
+      "percentile": 21,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2411.01156; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_MB6DQ5PDDKH",
+      "name": "Kokoro-82M",
+      "slug": "kokoro-82m",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/hexgrad/Kokoro-82M",
+      "github_repo": "hexgrad/kokoro",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.015,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 7935
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.2,
+      "percentile": 64,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_R2623KSCANW",
+      "name": "YuE",
+      "slug": "yue",
+      "entity_type": "model",
+      "homepage": "https://map-yue.github.io",
+      "github_repo": "multimodal-art-projection/YuE",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.022,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 6320
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 50.3,
+      "percentile": 71,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2503.08638; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_126THNX952P",
+      "name": "ComfyUI",
+      "slug": "comfyui",
+      "entity_type": "product",
+      "homepage": "https://www.comfy.org",
+      "github_repo": "comfyanonymous/ComfyUI",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.002063274948157178,
+          "cohort_z": -0.743,
+          "recent_weekly_commits": 44.0,
+          "stars_not_scored": 120288
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 40.7,
+      "percentile": 36,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_9VRK70WNP96",
+      "name": "Diffusers",
+      "slug": "diffusers",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/docs/diffusers",
+      "github_repo": "huggingface/diffusers",
+      "openalex_work_ids": [],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0014450006373663516,
+          "cohort_z": 0.441,
+          "recent_weekly_commits": 19.8,
+          "stars_not_scored": 34039
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 55.5,
+      "percentile": 86,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_R2VJDA1P0WH",
+      "name": "Sana",
+      "slug": "sana",
+      "entity_type": "repo",
+      "homepage": "https://github.com/NVlabs/Sana",
+      "github_repo": "NVlabs/Sana",
+      "openalex_work_ids": [
+        "W4403572833"
+      ],
+      "industry": "multimodal-media",
+      "sub_niche": "media-generation",
+      "cohort": "media-generation",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.025767710164052954,
+          "cohort_z": 3.013,
+          "recent_weekly_commits": 1.8,
+          "stars_not_scored": 8466
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 4,
+          "by_year": {
+            "2026": 1,
+            "2025": 3
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 87.7,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_VVAJB7D0NQX",
+      "name": "Qwen3-VL",
+      "slug": "qwen3-vl",
+      "entity_type": "model",
+      "homepage": "https://qwen.ai",
+      "github_repo": "QwenLM/Qwen3-VL",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.00545038808645427,
+          "cohort_z": -2.372,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 19568
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 20.4,
+      "percentile": 17,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2511.21631; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_26C836YXKF2",
+      "name": "InternVL",
+      "slug": "internvl",
+      "entity_type": "repo",
+      "homepage": "https://internvl.github.io",
+      "github_repo": "OpenGVLab/InternVL",
+      "openalex_work_ids": [
+        "W4390214291"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.238,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 10088
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 17,
+          "by_year": {
+            "2026": 1,
+            "2025": 9,
+            "2024": 7
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 53.0,
+      "percentile": 75,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2508.18265; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_C6EM2RQNX2S",
+      "name": "GLM-V",
+      "slug": "glm-v",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/zai-org/GLM-4.6V",
+      "github_repo": "zai-org/GLM-V",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.019299495952622325,
+          "cohort_z": -3.619,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 2350
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 4.8,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2507.01006; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_AZ9YNR6FPQZ",
+      "name": "Kimi-VL",
+      "slug": "kimi-vl",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506",
+      "github_repo": "MoonshotAI/Kimi-VL",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -1.011,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1205
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 37.4,
+      "percentile": 42,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2504.07491; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_3JZ11S1QS33",
+      "name": "MiniCPM-V",
+      "slug": "minicpm-v",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/openbmb/MiniCPM-V-4_5",
+      "github_repo": "OpenBMB/MiniCPM-V",
+      "openalex_work_ids": [
+        "W4406489046"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.03175255558985472,
+          "cohort_z": -2.208,
+          "recent_weekly_commits": 1.8,
+          "stars_not_scored": 25841
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 23,
+          "by_year": {
+            "2026": 2,
+            "2025": 20,
+            "2024": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 22.4,
+      "percentile": 33,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2509.18154; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_V5N4GT09S49",
+      "name": "DeepSeek-OCR",
+      "slug": "deepseek-ocr",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/deepseek-ai/DeepSeek-OCR",
+      "github_repo": "deepseek-ai/DeepSeek-OCR",
+      "openalex_work_ids": [
+        "W4416055645"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.004976441296327813,
+          "cohort_z": -2.263,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 23552
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 1,
+          "by_year": {
+            "2026": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 21.7,
+      "percentile": 25,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2510.18234; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_D81ZQF8BMQS",
+      "name": "DeepSeek-VL2",
+      "slug": "deepseek-vl2",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/deepseek-ai/deepseek-vl2",
+      "github_repo": "deepseek-ai/DeepSeek-VL2",
+      "openalex_work_ids": [
+        "W4405434026"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.139,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 5312
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 22,
+          "by_year": {
+            "2026": 2,
+            "2025": 20
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 48.3,
+      "percentile": 58,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2412.10302; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_TPZFR15XYF6",
+      "name": "Ovis2.5",
+      "slug": "ovis2-5",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/AIDC-AI/Ovis2.5-9B",
+      "github_repo": "ATH-MaaS/Ovis",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.9,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1456
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 38.8,
+      "percentile": 50,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2508.11737; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_M6GFCMQK7DQ",
+      "name": "Eagle 2.5",
+      "slug": "eagle-2-5",
+      "entity_type": "repo",
+      "homepage": "https://huggingface.co/nvidia/Eagle2.5-8B",
+      "github_repo": "NVlabs/Eagle",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.021425627292660333,
+          "cohort_z": 2.555,
+          "recent_weekly_commits": 0.7,
+          "stars_not_scored": 3159
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 81.9,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2504.15271; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_7X1NF3PMZZM",
+      "name": "moondream",
+      "slug": "moondream",
+      "entity_type": "model",
+      "homepage": "https://moondream.ai",
+      "github_repo": "m87-labs/moondream",
+      "openalex_work_ids": [],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0007109201851896875,
+          "cohort_z": 0.898,
+          "recent_weekly_commits": 0.1,
+          "stars_not_scored": 9844
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 61.2,
+      "percentile": 92,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_261PEVXPG0B",
+      "name": "SmolVLM",
+      "slug": "smolvlm",
+      "entity_type": "model",
+      "homepage": "https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct",
+      "github_repo": "huggingface/smollm",
+      "openalex_work_ids": [
+        "W4416119086"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.0066352550617704165,
+          "cohort_z": -3.329,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 3844
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 4,
+          "by_year": {
+            "2026": 4
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 8.4,
+      "percentile": 8,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_JN83HWXP85Z",
+      "name": "FastVLM",
+      "slug": "fastvlm",
+      "entity_type": "repo",
+      "homepage": "https://machinelearning.apple.com/research/fast-vision-language-models",
+      "github_repo": "apple/ml-fastvlm",
+      "openalex_work_ids": [
+        "W4413144805"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.054,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 7379
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 18,
+          "by_year": {
+            "2026": 12,
+            "2025": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 50.7,
+      "percentile": 67,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "paper_ref: arXiv:2412.13303; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_41T3C34FQFA",
+      "name": "LLaVA",
+      "slug": "llava",
+      "entity_type": "repo",
+      "homepage": "https://llava-vl.github.io",
+      "github_repo": "haotian-liu/LLaVA",
+      "openalex_work_ids": [
+        "W4366330503"
+      ],
+      "industry": "foundation-models",
+      "sub_niche": "multimodal-foundation-models",
+      "cohort": "multimodal-foundation-models",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.77,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 24927
+        },
+        "openalex_citation_momentum": {
+          "status": "present",
+          "slope": 1.6209095753571088,
+          "cohort_z": null,
+          "total_citations": 684,
+          "by_year": {
+            "2026": 18,
+            "2025": 259,
+            "2024": 338,
+            "2023": 67,
+            "2022": 1,
+            "2021": 1
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 59.6,
+      "percentile": 83,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "calibration",
+      "incumbent": true,
+      "note": "paper_ref: arXiv:2310.03744; incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
+    },
+    {
+      "entity_id": "e_1GSH6ZQHW7B",
+      "name": "Browser Use",
+      "slug": "browser-use",
+      "entity_type": "repo",
+      "homepage": "https://github.com/browser-use/browser-use",
+      "github_repo": "browser-use/browser-use",
+      "openalex_work_ids": [],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.04161192521726429,
+          "cohort_z": -2.197,
+          "recent_weekly_commits": 45.9,
+          "stars_not_scored": 104179
+        },
+        "openalex_citation_momentum": {
+          "status": "absent",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 0,
+          "by_year": null,
+          "proxy": null
+        }
+      },
+      "momentum": 22.5,
+      "percentile": 17,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
+    },
+    {
+      "entity_id": "e_A4CCB1NFPZB",
+      "name": "UI-TARS Desktop",
+      "slug": "ui-tars-desktop",
+      "entity_type": "repo",
+      "homepage": "https://github.com/bytedance/UI-TARS-desktop",
+      "github_repo": "bytedance/UI-TARS-desktop",
+      "openalex_work_ids": [
+        "W4406755521"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.003909021650092365,
+          "cohort_z": 0.784,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 37911
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 5,
+          "by_year": {
+            "2026": 1,
+            "2025": 4
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 59.8,
+      "percentile": 83,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_Y8674BRJCH9",
+      "name": "OmniParser",
+      "slug": "omniparser",
+      "entity_type": "repo",
+      "homepage": "https://github.com/microsoft/OmniParser",
+      "github_repo": "microsoft/OmniParser",
+      "openalex_work_ids": [
+        "W4401307085"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": 0.994,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 25035
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 2,
+          "by_year": {
+            "2026": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 62.4,
+      "percentile": 100,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_Z5PD7ZHKYWB",
+      "name": "Agent S",
+      "slug": "agent-s",
+      "entity_type": "repo",
+      "homepage": "https://github.com/simular-ai/Agent-S",
+      "github_repo": "simular-ai/Agent-S",
+      "openalex_work_ids": [
+        "W4403365379"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.031540683570726764,
+          "cohort_z": -2.087,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 12002
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 2,
+          "by_year": {
+            "2025": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 23.9,
+      "percentile": 33,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_NA2QKMK6XZM",
+      "name": "OSWorld",
+      "slug": "osworld",
+      "entity_type": "repo",
+      "homepage": "https://github.com/xlang-ai/OSWorld",
+      "github_repo": "xlang-ai/OSWorld",
+      "openalex_work_ids": [
+        "W4415797693"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.028385907490441353,
+          "cohort_z": -2.273,
+          "recent_weekly_commits": 2.0,
+          "stars_not_scored": 3002
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 9,
+          "by_year": {
+            "2026": 3,
+            "2025": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 21.6,
+      "percentile": 0,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_JPHG3Z9N56M",
+      "name": "ShowUI",
+      "slug": "showui",
+      "entity_type": "repo",
+      "homepage": "https://github.com/showlab/ShowUI",
+      "github_repo": "showlab/ShowUI",
+      "openalex_work_ids": [
+        "W4413147863"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": -0.007511878896875962,
+          "cohort_z": -0.557,
+          "recent_weekly_commits": 0.2,
+          "stars_not_scored": 1881
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 10,
+          "by_year": {
+            "2026": 4,
+            "2025": 6
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 43.0,
+      "percentile": 50,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    },
+    {
+      "entity_id": "e_8AWARYZ7WP6",
+      "name": "Agent-E",
+      "slug": "agent-e",
+      "entity_type": "repo",
+      "homepage": "https://github.com/EmergenceAI/Agent-E",
+      "github_repo": "EmergenceAI/Agent-E",
+      "openalex_work_ids": [
+        "W4402346179"
+      ],
+      "industry": "ai-agents",
+      "sub_niche": "gui-agents",
+      "cohort": "gui-agents",
+      "axes": {
+        "github_commit_velocity": {
+          "slope": 0.0,
+          "cohort_z": -0.023,
+          "recent_weekly_commits": 0.0,
+          "stars_not_scored": 1244
+        },
+        "openalex_citation_momentum": {
+          "status": "insufficient",
+          "slope": null,
+          "cohort_z": null,
+          "total_citations": 2,
+          "by_year": {
+            "2025": 2
+          },
+          "proxy": null
+        }
+      },
+      "momentum": 49.7,
+      "percentile": 67,
+      "confidence": "low",
+      "axes_present": [
+        "github_commit_velocity"
+      ],
+      "convergent_axes": [],
+      "rising": false,
+      "status": "single-axis",
+      "incumbent": false,
+      "note": null
+    }
+  ],
+  "counts": {
+    "entities": 136,
+    "rising": 0,
+    "watch": 9,
+    "tracked": 113,
+    "calibration": 14,
+    "axis2_present": 23
+  },
+  "provisional": true,
+  "spine_complete": false
+}

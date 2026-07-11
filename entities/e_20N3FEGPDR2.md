@@ -7,25 +7,25 @@ slug: skyreels-v2
 homepage: "https://skyworkai.github.io/skyreels-v2.github.io/"
 ids:
   github_repo: "SkyworkAI/SkyReels-V2"
-  openalex_work_ids: []
+  openalex_work_ids: ["W4417091789"]
 classification:
   domain: ai
   industry: generative-media
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: f1f2495d518d
-  captured_at: 2026-07-04T09:09:53+00:00
-  period: 2026-w27
-  momentum: 39.5
-  percentile: 31
+  snapshot_id: df540ea0d40d
+  captured_at: 2026-07-11T08:23:23+00:00
+  period: 2026-w28
+  momentum: 29.9
+  percentile: 14
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.004502494506201354, "cohort_z": -0.843, "recent_weekly_commits": 0.0, "stars_not_scored": 7140}
+    github_commit_velocity: {"slope": -0.004976441296327813, "cohort_z": -1.609, "recent_weekly_commits": 0.0, "stars_not_scored": 7178}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "paper_ref: arXiv:2504.13074; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
