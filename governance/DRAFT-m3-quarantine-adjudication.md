@@ -1,6 +1,6 @@
 # DRAFT — Adjudication: m3 (deps.dev axis) quarantine vs the COLLECT-V3-SPEC §4 sequence lock
 
-> status: DRAFT for keeper adjudication · due before the m3 human gate (~2026-07-15)
+> status: PARTIALLY RESOLVED 2026-07-11: sequencing authority re-delegated to the funnel (artifact 1, ADJUDICATION §1); m3 promotion itself = KEEPER human gate ~2026-07-15 (artifact 2, pending)
 > created: 2026-07-10 · author: orchestrator session (Fable window, task 5)
 > Grounds: COLLECT-V3-SPEC.md §4 + §7 · QUARANTINE-m3-deps-axis.md stages 5–7 ·
 > SPINE-VERIFY-PUNCHLIST-v2 (spine = NO-GO pending re-spar/lock) · shadow run

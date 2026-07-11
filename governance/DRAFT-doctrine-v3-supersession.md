@@ -1,6 +1,6 @@
 # DRAFT — Dated supersession of the v3 HALT doctrine (decision-by-drift made explicit)
 
-> status: DRAFT for keeper signature · created: 2026-07-10 · author: orchestrator session
+> status: ADOPTED 2026-07-11 with amendments (drift-never-amends + full-charter sweep) — see ADJUDICATION-2026-07-11.md §2
 > Grounds: spine/PRE_INGEST_CONTRACT.md §1.1, §1.3, §10 · weekly-snapshot.yml +
 > t2-daily-snapshot.yml crons · archive-integrity.yml genesis byte-identity check ·
 > full-analysis map 2026-07-02, item 1 (grounded, refute-passed).

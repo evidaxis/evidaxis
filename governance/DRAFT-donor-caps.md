@@ -1,6 +1,6 @@
 # DRAFT — Donor caps (funding without capture)
 
-> status: DRAFT for keeper adjudication · created: 2026-07-10 · author: orchestrator session
+> status: ADOPTED 2026-07-11 with amendments (beneficial-control aggregation, in-kind, cure period) — see ADJUDICATION-2026-07-11.md §4
 > Grounds: CONSTITUTION anti-roadmap (no paid inclusion, no pay-to-rank, no privileged
 > access) + BRAND-KIT positioning decision ("independent", not non-profit).
 

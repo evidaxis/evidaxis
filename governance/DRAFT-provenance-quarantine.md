@@ -1,6 +1,6 @@
 # DRAFT — Provenance quarantine (generalized admission funnel for new sources/axes)
 
-> status: DRAFT for keeper adjudication · created: 2026-07-10 · author: orchestrator session
+> status: ADOPTED 2026-07-11 with amendments (licence/db-rights gate, 28-day floor, promo re-verify, one-at-a-time) — see ADJUDICATION-2026-07-11.md §6
 > Grounds: QUARANTINE-m3-deps-axis.md (the working instance) · deps.dev identity
 > erratum 2026-07-02 (the incident that proved the need) · RENEWAL delegation ·
 > DRAFT-m3-quarantine-adjudication.md (which proposes making this funnel the §4 rule).

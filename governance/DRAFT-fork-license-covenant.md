@@ -1,6 +1,6 @@
 # DRAFT — Fork-license covenant (making the canonical-fork rule bite without a legal entity)
 
-> status: DRAFT for keeper adjudication · created: 2026-07-10 · author: orchestrator session
+> status: ADOPTED 2026-07-11, renamed Canonicity Policy (+equivocation-freeze, citation-surface rule) — see ADJUDICATION-2026-07-11.md §5
 > Grounds: TRUST-ROOT canonical-fork rule · LICENSING.md dual-track (repo Apache-2.0,
 > data CC0) · CONSTITUTION Invariant 6 (continuity) + amendment rule (fork clause).
 

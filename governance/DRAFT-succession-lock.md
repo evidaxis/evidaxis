@@ -1,6 +1,6 @@
 # DRAFT — Succession lock (who may continue the canon, and how)
 
-> status: DRAFT for keeper adjudication · created: 2026-07-10 · author: orchestrator session
+> status: ADOPTED 2026-07-11 with amendments (escrow-continuation path + M-of-N deadline 2026-10-01) — see ADJUDICATION-2026-07-11.md §3
 > Builds on TRUST-ROOT-AND-CONTINUITY.md (canonical-fork rule, forward rotation,
 > dead-man tombstone) — this draft turns the existing POLICY sketch into a lockable
 > procedure. It claims no machinery that does not exist (no theater).
