@@ -119,8 +119,12 @@ def main() -> int:
     tok = _load_token()
     if not tok:
         print("HF_TOKEN missing (env or etl/.env) — cannot upload"); return 1
-    if not shutil.which("huggingface-cli"):
-        print("huggingface-cli not found: pip install -U huggingface_hub"); return 1
+    # huggingface_hub >=1.0 ships the `hf` CLI; `huggingface-cli upload` is deprecated
+    # and fails on recent versions. Prefer `hf`, fall back to the legacy name.
+    cli = shutil.which("hf") or shutil.which("huggingface-cli")
+    if not cli:
+        print("hf CLI not found: pip install -U huggingface_hub"); return 1
+    cli_name = Path(cli).name
 
     snap = project_person_free(json.loads((src / "snapshot.json").read_text(encoding="utf-8")))
     with tempfile.TemporaryDirectory() as td:
@@ -137,7 +141,7 @@ def main() -> int:
         _assert_person_free(stage.parent)
         env = dict(os.environ, HF_TOKEN=tok)
         for args_ in ([str(stage), date], [str(Path(td) / "README.md"), "README.md"]):
-            r = subprocess.run(["huggingface-cli", "upload", DATASET, *args_,
+            r = subprocess.run([cli_name, "upload", DATASET, *args_,
                                 "--repo-type", "dataset"], env=env)
             if r.returncode != 0:
                 print("upload failed"); return 1
