@@ -47,14 +47,27 @@ const typeForEntity = (t: string) =>
 // Self-consistent Organization stub spread into every @graph so deep pages resolve
 // their creator/publisher @id locally; the full node on home/about accretes by @id.
 const orgRef = () => ({ '@type': 'Organization', '@id': ORG_ID, name: 'Evidaxis', url: SITE + '/' });
+// Self-consistent DataCatalog reference. Google's Dataset validator warns when an
+// includedInDataCatalog node carries only @id ("Either name or url should be
+// specified"), so every reference ships name + url (GSC 2026-07-14).
+const catalogRef = () => ({ '@type': 'DataCatalog', '@id': CATALOG_ID, name: 'Evidaxis Open Measurements', url: SITE + '/' });
 
-/** Snapshot Dataset stubs for DataCatalog enumeration (every frozen archive date). */
+/** Snapshot Dataset entries for DataCatalog enumeration (every frozen archive date).
+ *  Each must be a VALID standalone Dataset: Google's rich-result validator flags a
+ *  missing `description` as a critical error (invalid, not rich-result eligible) and
+ *  missing creator/license as warnings (GSC 2026-07-14). So every enumerated snapshot
+ *  carries description + creator + license, not just @id/name/url. */
 function catalogSnapshotEntries() {
   return snapshots.map((snap) => ({
     '@type': 'Dataset',
     '@id': `${SITE}/snapshots/${snap.snapshot_date}/#dataset`,
     name: `Evidaxis snapshot ${snap.snapshot_date}`,
     url: `${SITE}/snapshots/${snap.snapshot_date}/`,
+    description: `Evidaxis measurement snapshot for ${snap.snapshot_date}: momentum scores and per-axis signals for ${snap.counts.entities} open AI systems, computed on methodology ${snap.methodology_version}. Released to the public domain under CC0.`,
+    license: CC0,
+    isAccessibleForFree: true,
+    creator: { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID },
   }));
 }
 
@@ -175,7 +188,7 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
       isAccessibleForFree: true,
       creator: { '@id': ORG_ID },
       publisher: { '@id': ORG_ID },
-      includedInDataCatalog: { '@id': CATALOG_ID },
+      includedInDataCatalog: catalogRef(),
       datePublished: snap.snapshot_date,
       dateModified: snap.snapshot_date,
       temporalCoverage: snap.snapshot_date,
@@ -232,7 +245,7 @@ export function itemListDataset(opts: {
         isAccessibleForFree: true,
         creator: { '@id': ORG_ID },
         publisher: { '@id': ORG_ID },
-        includedInDataCatalog: { '@id': CATALOG_ID },
+        includedInDataCatalog: catalogRef(),
         datePublished: snap.snapshot_date,
         dateModified: snap.snapshot_date,
         ...(period ? { temporalCoverage: period } : {}),
@@ -282,7 +295,7 @@ export function snapshotDataset(snap: Snapshot) {
         isAccessibleForFree: true,
         creator: { '@id': ORG_ID },
         publisher: { '@id': ORG_ID },
-        includedInDataCatalog: { '@id': CATALOG_ID },
+        includedInDataCatalog: catalogRef(),
         datePublished: snap.snapshot_date,
         dateModified: snap.snapshot_date,
         temporalCoverage: snap.snapshot_date,
