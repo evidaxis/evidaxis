@@ -6,7 +6,7 @@ import { breadcrumb } from '../../lib/jsonld';
 const rows = [...snapshots].reverse();
 const desc = `Every frozen Evidaxis measurement snapshot, from genesis through ${latest.snapshot_date}.`;
 ---
-<Base title="Snapshot archive" description={desc} canonical="/snapshots/" jsonLd={breadcrumb([{ name: 'Snapshot archive', path: '/snapshots/' }])}>
+<Base title="Snapshot archive | Evidaxis" description={desc} canonical="/snapshots/" jsonLd={breadcrumb([{ name: 'Snapshot archive', path: '/snapshots/' }])}>
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Append-only record</p>

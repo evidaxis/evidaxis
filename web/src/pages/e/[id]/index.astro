@@ -74,6 +74,20 @@ if (!e.incumbent && e.status !== 'rising') {
 const badgePath = `/badge/${e.entity_id}/${snapshot.period}.svg`;
 const badgeMd = `[![Evidaxis: ${e.name}](https://evidaxis.org${badgePath})](https://evidaxis.org/e/${e.entity_id})`;
 const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'} of 100, status ${e.status}, in the ${e.sub_niche} cohort. Computed on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
+
+// Answer-first measurement BLUF (quotability lever, SEO/GEO audit 2026-07-14). One
+// self-contained factual sentence carrying the score plus methodology tokens plus
+// gate-state, so a reader or LLM can quote it verbatim. It measures THIS system only;
+// it never ranks it against others (no-rank invariant). "watch" etc. are the site's
+// own gate vocabulary describing one system's convergence state, not a placement.
+const momStr = e.momentum != null ? `${e.momentum.toFixed(1)} of 100` : 'not yet scored';
+const risingAxes = e.convergent_axes.map((ax) => ax === 'github_commit_velocity' ? 'development-velocity' : 'citation-momentum');
+let blufGate: string;
+if (e.status === 'rising') blufGate = 'Both independent axes are rising within the cohort, so it clears the two-axis convergence gate.';
+else if (e.status === 'watch') blufGate = `Its ${risingAxes.join(' and ')} axis is rising within the cohort while a second independent axis has not converged, so it sits below the two-axis gate.`;
+else if (e.status === 'calibration') blufGate = 'It is a mature incumbent included to calibrate the cohort, measured but not gate-eligible.';
+else blufGate = `No axis is currently rising within the cohort${a2.status !== 'present' ? ', and no second (citation) axis is available' : ''}, so it sits below the two-axis gate.`;
+const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}, measured within the ${cohortName} cohort (n = ${cohortN}). ${blufGate}`;
 ---
 <Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]}>
   <section class="section ent-wrap">
@@ -112,6 +126,9 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
         </article>
       ) : (<>
       <EntityCard entity={e} />
+
+      <!-- ANSWER-FIRST measurement BLUF: one quotable factual sentence (audit 2026-07-14) -->
+      <p class="measure-bluf">{bluf}</p>
 
       <!-- DERIVED SIGNALS band -->
       <section class="derived-band" aria-label="Derived signals">
@@ -234,6 +251,8 @@ const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ?
   .ent-wrap { padding-top: 2.4rem; }
   .crumb { font-size: .74rem; color: var(--ink-mute); margin-bottom: 1.1rem; }
   .crumb a { color: inherit; } .crumb a:hover { color: var(--velocity); }
+
+  .measure-bluf { margin: 18px 0 0; padding: 14px 18px; background: var(--surface); border: 1px solid var(--hairline); border-left: 3px solid var(--velocity); border-radius: 0 10px 10px 0; box-shadow: var(--shadow-card); font-size: 1.02rem; line-height: 1.6; color: var(--ink); max-width: 78ch; }
 
   .derived-band { margin-top: 22px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-card); overflow: hidden; }
   .db-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 16px 20px 0; }
