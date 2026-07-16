@@ -4,7 +4,6 @@ HARD: no network, no BigQuery — the evaluator is pure over observation files.
 Fixtures build a tiny deps_v2 world under tmp_path.
 """
 import json
-import math
 import sys
 from pathlib import Path
 
@@ -66,7 +65,7 @@ def test_vote_requires_min_points_and_deps_floor(tmp_path, monkeypatch):
              {"github_repo": "a/three", "cohort": "c"}]
     _mk_world(tmp_path, monkeypatch, rows, seeds)
     series = ev.load_series("2026-12-31 23:59:59")
-    eligible, rising, per = ev.votes_at_cutoff(series, {"e_000": "c", "e_001": "c", "e_002": "c"},
+    eligible, _rising, _per = ev.votes_at_cutoff(series, {"e_000": "c", "e_001": "c", "e_002": "c"},
                                                "2026-12-31 23:59:59")
     assert "e_001" not in eligible, "below MIN_POINTS must not vote"
     assert "e_002" not in eligible, "below DEPS_FLOOR must not vote"
