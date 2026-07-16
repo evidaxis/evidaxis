@@ -1,0 +1,929 @@
+{
+  "v": "axis3_deps_v2_frozen_sample_1",
+  "frozen_at": "2026-07-16",
+  "governance": "AXIS3-DEPS-V2-HYBRID-SUPERSESSION-2026-07-16.md",
+  "universe": {
+    "systems": 137,
+    "sha256_seeds_json": "55ddc0a5bbb5d1cedd64a32170619688939dd16d1d6141bcc52c285fd4390637",
+    "sha256_id_map_json": "0b0739f18865e74deecca2f2088295bcb79d556c828ecb16dd9d6b50680ba060"
+  },
+  "pin_map": {
+    "pins": 41,
+    "all_linkage_verified": true,
+    "sha256_deps_id_map_json": "c95856e81172f19a642d234835a5f79505a4b74cb96bb8c894df4e5676b71a7e"
+  },
+  "query_template_sha256": "49585de3f45fba14833b4c401c381d465e8feb0504eb79d4bf9fa2bd720ef481",
+  "collector_sha256": "6aebad63701a0fee7815cc3653594dbca08afb48f37a57009225f5a80d0c1530",
+  "entities": [
+    {
+      "entity_id": "e_Y3HMWAG1BQZ",
+      "github_repo": "ARISE-Initiative/robosuite",
+      "pin": {
+        "system": "pypi",
+        "package": "robosuite",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_TPZFR15XYF6",
+      "github_repo": "ATH-MaaS/Ovis",
+      "pin": null
+    },
+    {
+      "entity_id": "e_ADRWZ5YBESZ",
+      "github_repo": "All-Hands-AI/OpenHands",
+      "pin": null
+    },
+    {
+      "entity_id": "e_DHESXAYAQHW",
+      "github_repo": "DeepGraphLearning/torchdrug",
+      "pin": null
+    },
+    {
+      "entity_id": "e_8AWARYZ7WP6",
+      "github_repo": "EmergenceAI/Agent-E",
+      "pin": null
+    },
+    {
+      "entity_id": "e_8N97348DQ66",
+      "github_repo": "Farama-Foundation/Gymnasium",
+      "pin": {
+        "system": "pypi",
+        "package": "gymnasium",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_QTVWFV6FJ2V",
+      "github_repo": "FoundationAgents/MetaGPT",
+      "pin": null
+    },
+    {
+      "entity_id": "e_D5HEA3Z5ZYZ",
+      "github_repo": "GeeeekExplorer/nano-vllm",
+      "pin": null
+    },
+    {
+      "entity_id": "e_J4DR3YCQCAN",
+      "github_repo": "Genesis-Embodied-AI/Genesis",
+      "pin": null
+    },
+    {
+      "entity_id": "e_1ER3NPA3Y77",
+      "github_repo": "InternLM/lmdeploy",
+      "pin": null
+    },
+    {
+      "entity_id": "e_JA1TAYFFAHR",
+      "github_repo": "Kilo-Org/kilocode",
+      "pin": null
+    },
+    {
+      "entity_id": "e_V05C8HCBBV2",
+      "github_repo": "LMCache/LMCache",
+      "pin": {
+        "system": "pypi",
+        "package": "lmcache",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_0E3Q2DQH0BA",
+      "github_repo": "Lifelong-Robot-Learning/LIBERO",
+      "pin": null
+    },
+    {
+      "entity_id": "e_QFECGB8X9W5",
+      "github_repo": "Lightricks/LTX-Video",
+      "pin": null
+    },
+    {
+      "entity_id": "e_AZ9YNR6FPQZ",
+      "github_repo": "MoonshotAI/Kimi-VL",
+      "pin": null
+    },
+    {
+      "entity_id": "e_QHYA574DXDQ",
+      "github_repo": "NVIDIA-NeMo/RL",
+      "pin": null
+    },
+    {
+      "entity_id": "e_75QG3RMAHC9",
+      "github_repo": "NVIDIA/Isaac-GR00T",
+      "pin": null
+    },
+    {
+      "entity_id": "e_9SWWW2SWASG",
+      "github_repo": "NVIDIA/TensorRT-LLM",
+      "pin": {
+        "system": "pypi",
+        "package": "tensorrt-llm",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_Y92940K5ESN",
+      "github_repo": "NVIDIA/cosmos",
+      "pin": null
+    },
+    {
+      "entity_id": "e_M6GFCMQK7DQ",
+      "github_repo": "NVlabs/Eagle",
+      "pin": null
+    },
+    {
+      "entity_id": "e_R2VJDA1P0WH",
+      "github_repo": "NVlabs/Sana",
+      "pin": null
+    },
+    {
+      "entity_id": "e_KZ3W52ZYP6H",
+      "github_repo": "OpenAutoCoder/Agentless",
+      "pin": null
+    },
+    {
+      "entity_id": "e_E1019DQAZKS",
+      "github_repo": "OpenBMB/ChatDev",
+      "pin": null
+    },
+    {
+      "entity_id": "e_3JZ11S1QS33",
+      "github_repo": "OpenBMB/MiniCPM-V",
+      "pin": null
+    },
+    {
+      "entity_id": "e_26C836YXKF2",
+      "github_repo": "OpenGVLab/InternVL",
+      "pin": null
+    },
+    {
+      "entity_id": "e_2S60RGNZHBS",
+      "github_repo": "OpenPipe/ART",
+      "pin": null
+    },
+    {
+      "entity_id": "e_MDD4QDWH205",
+      "github_repo": "OpenRLHF/OpenRLHF",
+      "pin": null
+    },
+    {
+      "entity_id": "e_Y3CPRHKVF8H",
+      "github_repo": "PeterGriffinJin/Search-R1",
+      "pin": null
+    },
+    {
+      "entity_id": "e_7ZJR0NT1B6H",
+      "github_repo": "Physical-Intelligence/openpi",
+      "pin": null
+    },
+    {
+      "entity_id": "e_H6EVSN8Q85T",
+      "github_repo": "PrimeIntellect-ai/prime-rl",
+      "pin": null
+    },
+    {
+      "entity_id": "e_HTQD84GES1K",
+      "github_repo": "QwenLM/Qwen-Agent",
+      "pin": {
+        "system": "pypi",
+        "package": "qwen-agent",
+        "pinned_at": "2026-07-03T09:39:45Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_5R5PKZN9WTY",
+      "github_repo": "QwenLM/Qwen-Image",
+      "pin": null
+    },
+    {
+      "entity_id": "e_VVAJB7D0NQX",
+      "github_repo": "QwenLM/Qwen3-VL",
+      "pin": null
+    },
+    {
+      "entity_id": "e_X33782S1M13",
+      "github_repo": "QwenLM/qwen-code",
+      "pin": {
+        "system": "npm",
+        "package": "qwen-code",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_QV8QGGHJCSS",
+      "github_repo": "RosettaCommons/RFdiffusion",
+      "pin": null
+    },
+    {
+      "entity_id": "e_DAFJYGYBDKF",
+      "github_repo": "SWE-agent/mini-swe-agent",
+      "pin": {
+        "system": "pypi",
+        "package": "mini-swe-agent",
+        "pinned_at": "2026-07-06T11:09:29Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_EF7QKB37YJK",
+      "github_repo": "SWE-bench/SWE-bench",
+      "pin": {
+        "system": "pypi",
+        "package": "swebench",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_20N3FEGPDR2",
+      "github_repo": "SkyworkAI/SkyReels-V2",
+      "pin": null
+    },
+    {
+      "entity_id": "e_X3P6ZMFQBQQ",
+      "github_repo": "Stability-AI/sd3.5",
+      "pin": null
+    },
+    {
+      "entity_id": "e_GQ2E6K86NWF",
+      "github_repo": "TabbyML/tabby",
+      "pin": null
+    },
+    {
+      "entity_id": "e_W4SFE6Q23VK",
+      "github_repo": "Tencent-Hunyuan/HunyuanVideo",
+      "pin": null
+    },
+    {
+      "entity_id": "e_F19ZE68DAS4",
+      "github_repo": "Wan-Video/Wan2.2",
+      "pin": null
+    },
+    {
+      "entity_id": "e_ZQ2MJNFAEZS",
+      "github_repo": "ace-step/ACE-Step",
+      "pin": null
+    },
+    {
+      "entity_id": "e_DQT3XHMXA2C",
+      "github_repo": "agentscope-ai/Trinity-RFT",
+      "pin": {
+        "system": "pypi",
+        "package": "trinity-rft",
+        "pinned_at": "2026-07-03T09:39:45Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_97SYW64PA3G",
+      "github_repo": "agentscope-ai/agentscope",
+      "pin": {
+        "system": "pypi",
+        "package": "agentscope",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_EY620A0EAK9",
+      "github_repo": "agno-agi/agno",
+      "pin": {
+        "system": "pypi",
+        "package": "agno",
+        "pinned_at": "2026-07-06T11:09:29Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_357KR6Z8TFG",
+      "github_repo": "alibaba/ROLL",
+      "pin": null
+    },
+    {
+      "entity_id": "e_QF7Y4CJ00Q4",
+      "github_repo": "allenai/open-instruct",
+      "pin": null
+    },
+    {
+      "entity_id": "e_BTT9Q5KW4YN",
+      "github_repo": "anomalyco/opencode",
+      "pin": null
+    },
+    {
+      "entity_id": "e_JN83HWXP85Z",
+      "github_repo": "apple/ml-fastvlm",
+      "pin": null
+    },
+    {
+      "entity_id": "e_G2Q1BRT8GSR",
+      "github_repo": "aqlaboratory/openfold",
+      "pin": {
+        "system": "pypi",
+        "package": "openfold",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_BQ6HA5A661Z",
+      "github_repo": "arneschneuing/DiffSBDD",
+      "pin": null
+    },
+    {
+      "entity_id": "e_B10ZF25BFZT",
+      "github_repo": "axolotl-ai-cloud/axolotl",
+      "pin": {
+        "system": "pypi",
+        "package": "axolotl",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_R2KZCZM6TGV",
+      "github_repo": "black-forest-labs/flux",
+      "pin": null
+    },
+    {
+      "entity_id": "e_FTD4XD7DVG3",
+      "github_repo": "block/goose",
+      "pin": null
+    },
+    {
+      "entity_id": "e_1GSH6ZQHW7B",
+      "github_repo": "browser-use/browser-use",
+      "pin": {
+        "system": "pypi",
+        "package": "browser-use",
+        "pinned_at": "2026-07-03T09:39:45Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_ZTAQY2693CR",
+      "github_repo": "bytedance/Protenix",
+      "pin": {
+        "system": "pypi",
+        "package": "protenix",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_A4CCB1NFPZB",
+      "github_repo": "bytedance/UI-TARS-desktop",
+      "pin": null
+    },
+    {
+      "entity_id": "e_VBBNJDDB0DA",
+      "github_repo": "camel-ai/camel",
+      "pin": null
+    },
+    {
+      "entity_id": "e_2XFTYTGJT3Z",
+      "github_repo": "chaidiscovery/chai-lab",
+      "pin": null
+    },
+    {
+      "entity_id": "e_1TMQEKAN7S6",
+      "github_repo": "charmbracelet/crush",
+      "pin": null
+    },
+    {
+      "entity_id": "e_P4YGBAFMV94",
+      "github_repo": "cline/cline",
+      "pin": {
+        "system": "npm",
+        "package": "cline",
+        "pinned_at": "2026-07-03T09:39:45Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_126THNX952P",
+      "github_repo": "comfyanonymous/ComfyUI",
+      "pin": null
+    },
+    {
+      "entity_id": "e_5WYRYN5H1XY",
+      "github_repo": "continuedev/continue",
+      "pin": null
+    },
+    {
+      "entity_id": "e_SV60T2QMXGE",
+      "github_repo": "crewAIInc/crewAI",
+      "pin": {
+        "system": "pypi",
+        "package": "crewai",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_2WFB2V4PNQV",
+      "github_repo": "dauparas/LigandMPNN",
+      "pin": {
+        "system": "pypi",
+        "package": "ligandmpnn",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_GFGYNAKFRW2",
+      "github_repo": "dauparas/ProteinMPNN",
+      "pin": null
+    },
+    {
+      "entity_id": "e_YTYXW2BB5AP",
+      "github_repo": "deepchem/deepchem",
+      "pin": {
+        "system": "pypi",
+        "package": "deepchem",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_KFRVE2CAS8W",
+      "github_repo": "deepmodeling/Uni-Mol",
+      "pin": null
+    },
+    {
+      "entity_id": "e_V5N4GT09S49",
+      "github_repo": "deepseek-ai/DeepSeek-OCR",
+      "pin": null
+    },
+    {
+      "entity_id": "e_D81ZQF8BMQS",
+      "github_repo": "deepseek-ai/DeepSeek-VL2",
+      "pin": null
+    },
+    {
+      "entity_id": "e_Y31RBTP1VWD",
+      "github_repo": "dora-rs/dora",
+      "pin": null
+    },
+    {
+      "entity_id": "e_W8KZKY27BTN",
+      "github_repo": "facebookresearch/esm",
+      "pin": null
+    },
+    {
+      "entity_id": "e_N73RT0QZ0X4",
+      "github_repo": "facebookresearch/habitat-lab",
+      "pin": {
+        "system": "pypi",
+        "package": "habitat-lab",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_V9ERGE3E0B4",
+      "github_repo": "fishaudio/fish-speech",
+      "pin": null
+    },
+    {
+      "entity_id": "e_VMQ8QRRDWVS",
+      "github_repo": "flashinfer-ai/flashinfer",
+      "pin": null
+    },
+    {
+      "entity_id": "e_SNWV2DC244A",
+      "github_repo": "gcorso/DiffDock",
+      "pin": null
+    },
+    {
+      "entity_id": "e_Z7YDNC4F139",
+      "github_repo": "ggml-org/llama.cpp",
+      "pin": null
+    },
+    {
+      "entity_id": "e_XTW34V97F7V",
+      "github_repo": "gnina/gnina",
+      "pin": null
+    },
+    {
+      "entity_id": "e_88YAM3PXK4S",
+      "github_repo": "google-deepmind/alphafold3",
+      "pin": null
+    },
+    {
+      "entity_id": "e_03QFRGK7VQX",
+      "github_repo": "google-deepmind/mujoco",
+      "pin": {
+        "system": "pypi",
+        "package": "mujoco",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_4A9TG2M8403",
+      "github_repo": "google-gemini/gemini-cli",
+      "pin": null
+    },
+    {
+      "entity_id": "e_ADT3TJHK8W8",
+      "github_repo": "google/adk-python",
+      "pin": null
+    },
+    {
+      "entity_id": "e_41T3C34FQFA",
+      "github_repo": "haotian-liu/LLaVA",
+      "pin": null
+    },
+    {
+      "entity_id": "e_MB6DQ5PDDKH",
+      "github_repo": "hexgrad/kokoro",
+      "pin": {
+        "system": "pypi",
+        "package": "kokoro",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_8V2DZWR8HPM",
+      "github_repo": "hiyouga/LLaMA-Factory",
+      "pin": {
+        "system": "pypi",
+        "package": "llamafactory",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_XTYDTXK7PNY",
+      "github_repo": "hpcaitech/Open-Sora",
+      "pin": null
+    },
+    {
+      "entity_id": "e_9VRK70WNP96",
+      "github_repo": "huggingface/diffusers",
+      "pin": {
+        "system": "pypi",
+        "package": "diffusers",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_H6PPP8CA9RR",
+      "github_repo": "huggingface/lerobot",
+      "pin": {
+        "system": "pypi",
+        "package": "lerobot",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_Y0KW8KTAF72",
+      "github_repo": "huggingface/open-r1",
+      "pin": null
+    },
+    {
+      "entity_id": "e_4P7EDPAWCY2",
+      "github_repo": "huggingface/smolagents",
+      "pin": null
+    },
+    {
+      "entity_id": "e_261PEVXPG0B",
+      "github_repo": "huggingface/smollm",
+      "pin": null
+    },
+    {
+      "entity_id": "e_B1Q69HZTTMA",
+      "github_repo": "huggingface/trl",
+      "pin": {
+        "system": "pypi",
+        "package": "trl",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_PCV8H6P7B04",
+      "github_repo": "inclusionAI/AReaL",
+      "pin": null
+    },
+    {
+      "entity_id": "e_N0ZEZQYXT6K",
+      "github_repo": "isaac-sim/IsaacLab",
+      "pin": null
+    },
+    {
+      "entity_id": "e_9VD4D2XPK7H",
+      "github_repo": "jwohlwend/boltz",
+      "pin": null
+    },
+    {
+      "entity_id": "e_N2RFM19TP1D",
+      "github_repo": "kvcache-ai/Mooncake",
+      "pin": null
+    },
+    {
+      "entity_id": "e_MMGH765AVAA",
+      "github_repo": "kvcache-ai/ktransformers",
+      "pin": {
+        "system": "pypi",
+        "package": "ktransformers",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_13NVVKJA2MM",
+      "github_repo": "langchain-ai/langgraph",
+      "pin": {
+        "system": "pypi",
+        "package": "langgraph",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_15264R968MN",
+      "github_repo": "letta-ai/letta",
+      "pin": null
+    },
+    {
+      "entity_id": "e_KR3M8ESKAEW",
+      "github_repo": "llm-d/llm-d",
+      "pin": null
+    },
+    {
+      "entity_id": "e_7X1NF3PMZZM",
+      "github_repo": "m87-labs/moondream",
+      "pin": {
+        "system": "npm",
+        "package": "moondream",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_92WR5N03859",
+      "github_repo": "mani-skill/ManiSkill",
+      "pin": null
+    },
+    {
+      "entity_id": "e_TV0JWZEFEAQ",
+      "github_repo": "mastra-ai/mastra",
+      "pin": {
+        "system": "npm",
+        "package": "mastra",
+        "pinned_at": "2026-07-06T11:09:29Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_8HVZ2FE02WG",
+      "github_repo": "microsoft/Graphormer",
+      "pin": null
+    },
+    {
+      "entity_id": "e_Y8674BRJCH9",
+      "github_repo": "microsoft/OmniParser",
+      "pin": null
+    },
+    {
+      "entity_id": "e_M5SCCQPBZ89",
+      "github_repo": "microsoft/agent-framework",
+      "pin": {
+        "system": "pypi",
+        "package": "agent-framework",
+        "pinned_at": "2026-07-03T09:39:45Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_EDX1R1KVT3X",
+      "github_repo": "microsoft/autogen",
+      "pin": null
+    },
+    {
+      "entity_id": "e_JPV9HP2D5X4",
+      "github_repo": "microsoft/bioemu",
+      "pin": null
+    },
+    {
+      "entity_id": "e_FJPV9XH9GPR",
+      "github_repo": "modelscope/ms-swift",
+      "pin": {
+        "system": "pypi",
+        "package": "ms-swift",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_R2623KSCANW",
+      "github_repo": "multimodal-art-projection/YuE",
+      "pin": null
+    },
+    {
+      "entity_id": "e_TRJN6D7V12H",
+      "github_repo": "ollama/ollama",
+      "pin": {
+        "system": "pypi",
+        "package": "ollama",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_W2REDH3NZ0S",
+      "github_repo": "openai/codex",
+      "pin": null
+    },
+    {
+      "entity_id": "e_3HZS2JPM2CR",
+      "github_repo": "openai/openai-agents-python",
+      "pin": null
+    },
+    {
+      "entity_id": "e_JBM5J6NVTF7",
+      "github_repo": "openinterpreter/openinterpreter",
+      "pin": null
+    },
+    {
+      "entity_id": "e_J32HBKYVHAT",
+      "github_repo": "openvla/openvla",
+      "pin": null
+    },
+    {
+      "entity_id": "e_TBARBJKAD2G",
+      "github_repo": "paul-gauthier/aider",
+      "pin": null
+    },
+    {
+      "entity_id": "e_D029GAZTH3Z",
+      "github_repo": "princeton-nlp/SWE-agent",
+      "pin": {
+        "system": "pypi",
+        "package": "sweagent",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_2CS7SM2993J",
+      "github_repo": "pydantic/pydantic-ai",
+      "pin": {
+        "system": "pypi",
+        "package": "pydantic-ai",
+        "pinned_at": "2026-07-06T11:09:29Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_P6TVM7W57M8",
+      "github_repo": "robocasa/robocasa",
+      "pin": null
+    },
+    {
+      "entity_id": "e_77AC6K7XEWB",
+      "github_repo": "sgl-project/sglang",
+      "pin": {
+        "system": "pypi",
+        "package": "sglang",
+        "pinned_at": "2026-07-09T10:05:16Z",
+        "linkage": "verified",
+        "linkage_verified_at": "2026-07-16T17:30:00Z",
+        "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
+      }
+    },
+    {
+      "entity_id": "e_JPHG3Z9N56M",
+      "github_repo": "showlab/ShowUI",
+      "pin": null
+    },
+    {
+      "entity_id": "e_Z5PD7ZHKYWB",
+      "github_repo": "simular-ai/Agent-S",
+      "pin": null
+    },
+    {
+      "entity_id": "e_X9JA7ZTD6TF",
+      "github_repo": "stanfordnlp/dspy",
+      "pin": {
+        "system": "pypi",
+        "package": "dspy",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_R2TJDSZX29K",
+      "github_repo": "steineggerlab/foldseek",
+      "pin": null
+    },
+    {
+      "entity_id": "e_3K17NV4B0JF",
+      "github_repo": "strands-agents/harness-sdk",
+      "pin": null
+    },
+    {
+      "entity_id": "e_S7DQ1QJCCMT",
+      "github_repo": "thu-ml/RoboticsDiffusionTransformer",
+      "pin": null
+    },
+    {
+      "entity_id": "e_J16JY8N155H",
+      "github_repo": "unslothai/unsloth",
+      "pin": {
+        "system": "pypi",
+        "package": "unsloth",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_607VJ9XWYRJ",
+      "github_repo": "verl-project/verl",
+      "pin": {
+        "system": "pypi",
+        "package": "verl",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_4249BQNHNVB",
+      "github_repo": "vllm-project/aibrix",
+      "pin": {
+        "system": "pypi",
+        "package": "aibrix",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_R372CCSVG44",
+      "github_repo": "vllm-project/vllm",
+      "pin": {
+        "system": "pypi",
+        "package": "vllm",
+        "pinned_at": "2026-07-02T16:30:00Z",
+        "linkage": "verified"
+      }
+    },
+    {
+      "entity_id": "e_MX90J81EYDE",
+      "github_repo": "voideditor/void",
+      "pin": null
+    },
+    {
+      "entity_id": "e_9XES4XNNQCV",
+      "github_repo": "westlake-repl/SaProt",
+      "pin": null
+    },
+    {
+      "entity_id": "e_NA2QKMK6XZM",
+      "github_repo": "xlang-ai/OSWorld",
+      "pin": null
+    },
+    {
+      "entity_id": "e_8A2A58V55P6",
+      "github_repo": "xorbitsai/inference",
+      "pin": null
+    },
+    {
+      "entity_id": "e_C6EM2RQNX2S",
+      "github_repo": "zai-org/GLM-V",
+      "pin": null
+    },
+    {
+      "entity_id": "e_KRDEF79H7GD",
+      "github_repo": "zed-industries/zed",
+      "pin": null
+    }
+  ]
+}

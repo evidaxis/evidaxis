@@ -29,7 +29,10 @@
     "QwenLM/Qwen-Agent": {
       "system": "pypi",
       "package": "qwen-agent",
-      "pinned_at": "2026-07-03T09:39:45Z"
+      "pinned_at": "2026-07-03T09:39:45Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "QwenLM/qwen-code": {
       "system": "npm",
@@ -40,7 +43,10 @@
     "SWE-agent/mini-swe-agent": {
       "system": "pypi",
       "package": "mini-swe-agent",
-      "pinned_at": "2026-07-06T11:09:29Z"
+      "pinned_at": "2026-07-06T11:09:29Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "SWE-bench/SWE-bench": {
       "system": "pypi",
@@ -51,7 +57,10 @@
     "agentscope-ai/Trinity-RFT": {
       "system": "pypi",
       "package": "trinity-rft",
-      "pinned_at": "2026-07-03T09:39:45Z"
+      "pinned_at": "2026-07-03T09:39:45Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "agentscope-ai/agentscope": {
       "system": "pypi",
@@ -62,7 +71,10 @@
     "agno-agi/agno": {
       "system": "pypi",
       "package": "agno",
-      "pinned_at": "2026-07-06T11:09:29Z"
+      "pinned_at": "2026-07-06T11:09:29Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "aqlaboratory/openfold": {
       "system": "pypi",
@@ -79,7 +91,10 @@
     "browser-use/browser-use": {
       "system": "pypi",
       "package": "browser-use",
-      "pinned_at": "2026-07-03T09:39:45Z"
+      "pinned_at": "2026-07-03T09:39:45Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "bytedance/Protenix": {
       "system": "pypi",
@@ -90,7 +105,10 @@
     "cline/cline": {
       "system": "npm",
       "package": "cline",
-      "pinned_at": "2026-07-03T09:39:45Z"
+      "pinned_at": "2026-07-03T09:39:45Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "crewAIInc/crewAI": {
       "system": "pypi",
@@ -173,12 +191,18 @@
     "mastra-ai/mastra": {
       "system": "npm",
       "package": "mastra",
-      "pinned_at": "2026-07-06T11:09:29Z"
+      "pinned_at": "2026-07-06T11:09:29Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "microsoft/agent-framework": {
       "system": "pypi",
       "package": "agent-framework",
-      "pinned_at": "2026-07-03T09:39:45Z"
+      "pinned_at": "2026-07-03T09:39:45Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "modelscope/ms-swift": {
       "system": "pypi",
@@ -201,12 +225,18 @@
     "pydantic/pydantic-ai": {
       "system": "pypi",
       "package": "pydantic-ai",
-      "pinned_at": "2026-07-06T11:09:29Z"
+      "pinned_at": "2026-07-06T11:09:29Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "sgl-project/sglang": {
       "system": "pypi",
       "package": "sglang",
-      "pinned_at": "2026-07-09T10:05:16Z"
+      "pinned_at": "2026-07-09T10:05:16Z",
+      "linkage": "verified",
+      "linkage_verified_at": "2026-07-16T17:30:00Z",
+      "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
     "stanfordnlp/dspy": {
       "system": "pypi",
