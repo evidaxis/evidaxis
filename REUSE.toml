@@ -37,3 +37,12 @@ path = ["genesis-deposit/**"]
 precedence = "override"
 SPDX-FileCopyrightText = "NONE"
 SPDX-License-Identifier = "CC0-1.0"
+
+# Weekly snapshot Zenodo deposit bundles (version-DOIs): CC0 dedication of the frozen
+# snapshot data, same dual-track as the genesis deposit (published on Zenodo as CC0
+# Datasets; e.g. 2026-07-10 -> 10.5281/zenodo.21307528).
+[[annotations]]
+path = ["evidaxis-snapshot-*-deposit.zip"]
+precedence = "override"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
