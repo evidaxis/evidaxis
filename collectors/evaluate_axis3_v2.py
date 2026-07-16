@@ -73,18 +73,20 @@ def load_series(as_of: str) -> dict:
     return {eid: sorted(pts.items()) for eid, pts in series.items()}
 
 
-def cohort_map() -> dict:
-    """entity_id -> cohort, derived from the frozen universe (seeds.json is
-    hash-pinned by the frozen-sample manifest, so this is deterministic)."""
-    seeds = json.loads((REPO / "etl" / "seeds.json").read_text())
-    id_map = json.loads((REPO / "etl" / "id_map.json").read_text())
-    out = {}
-    for vert in seeds["verticals"].values():
-        for e in vert["entities"]:
-            eid = id_map.get(e["github_repo"])
-            if eid:
-                out[eid] = e.get("cohort") or e.get("vertical") or "unknown"
-    return out
+def cohort_map(as_of: str) -> dict:
+    """entity_id -> cohort, from the newest project snapshot <= as_of (the live
+    taxonomy authority; seeds.json does not carry entity-level cohorts — the
+    2026-07-16 evaluator bug fixed by the dated note in the eval directory)."""
+    best = None
+    for d in sorted((REPO / "data" / "snapshots").iterdir()):
+        if d.name <= as_of[:10] and (d / "snapshot.json").exists():
+            best = d
+    if best is None:
+        return {}
+    snap = json.loads((best / "snapshot.json").read_text())
+    ents = snap.get("entities")
+    items = ents.items() if isinstance(ents, dict) else [(e.get("entity_id"), e) for e in ents]
+    return {eid: (e.get("cohort") or "unknown") for eid, e in items}
 
 
 # ---------- scoring (mirrors m2 semantics) ----------
@@ -184,7 +186,7 @@ def axes_snapshot(as_of: str) -> dict:
 
 def evaluate(as_of: str, label: str) -> dict:
     series = load_series(as_of)
-    cohorts = cohort_map()
+    cohorts = cohort_map(as_of)
     snapshots = sorted({s for pts in series.values() for s, _ in pts})
     if not snapshots:
         return {"error": "no deps_v2 observations at or before --as-of"}

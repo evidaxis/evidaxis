@@ -1,0 +1,107 @@
+{
+  "collector_version": "t2_deps_v2",
+  "series": "baseline",
+  "before_ts": "2026-07-16 17:33:29",
+  "snapshots": [
+    {
+      "partition_day": "2026-03-30",
+      "snapshot_at": "2026-03-30 21:01:01",
+      "bigquery_job_id": "bqjob_r428b68ad422ffcdd_0000019f6bd4645b_1",
+      "query_sha256": "19f2738fec17c44b4df75bbc24860bc94c332d390305b9c35ffd0a6f1f2bfb87",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-04-06",
+      "snapshot_at": "2026-04-06 21:00:48",
+      "bigquery_job_id": "bqjob_r7aad56c5219728c1_0000019f6bd47fe9_1",
+      "query_sha256": "97cd91a653646945336f312b1dcd887b40535f83929190a2e09fb8a8c4f86b51",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-04-14",
+      "snapshot_at": "2026-04-14 05:32:47",
+      "bigquery_job_id": "bqjob_r3c1a1c24d415d139_0000019f6bd49f9f_1",
+      "query_sha256": "44c83a032acec2b4cd45175f5a2cec401c0d3efc3fa5703cf95a39c071ac7d33",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-04-20",
+      "snapshot_at": "2026-04-20 21:00:53",
+      "bigquery_job_id": "bqjob_r3467e83c99d2baff_0000019f6bd4bb42_1",
+      "query_sha256": "886d06efaee4082866fde11c799b9a9cbc067407c4741c8bd6ee9ab459481d92",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-04-28",
+      "snapshot_at": "2026-04-28 01:42:12",
+      "bigquery_job_id": "bqjob_r372f6a5753a876be_0000019f6bd4daad_1",
+      "query_sha256": "a0e00c12933a075c4b1fc87f5515b37615c798e0c39b9e766718a101a1dff961",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-05-05",
+      "snapshot_at": "2026-05-05 01:20:05",
+      "bigquery_job_id": "bqjob_r852d7edb8cc9d39_0000019f6bd4fbf4_1",
+      "query_sha256": "757bb97b2f16a450046cadae469e71b014730afd1d170a1bf6bd33380556c1fc",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-05-11",
+      "snapshot_at": "2026-05-11 21:00:51",
+      "bigquery_job_id": "bqjob_r796a4bd3db3433ce_0000019f6bd51a97_1",
+      "query_sha256": "3bd1a86c4fd86ff5fd92b723d91738aaa9fb371dc863fe130edd43acbdbcca5a",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-05-18",
+      "snapshot_at": "2026-05-18 21:00:52",
+      "bigquery_job_id": "bqjob_r70d6a38bf5ec58af_0000019f6bd53bdf_1",
+      "query_sha256": "006eb72a0127f66c059065be9c21fc9611d7cd0aa482998090ad0c593d46839d",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-06-01",
+      "snapshot_at": "2026-06-01 21:00:47",
+      "bigquery_job_id": "bqjob_r2c9a301a24c81804_0000019f6bd55b09_1",
+      "query_sha256": "283dca9b32f3c70f97aff20fcf699eeffc634c2b3537677f598a02099df02a77",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-06-11",
+      "snapshot_at": "2026-06-11 22:24:59",
+      "bigquery_job_id": "bqjob_r6ae7d94ae41947e2_0000019f6bd577c9_1",
+      "query_sha256": "57ce49b6181d807d3456583c2c576a78a9c0796d61839b512a85a654a6ef13ae",
+      "matched": 22
+    },
+    {
+      "partition_day": "2026-06-15",
+      "snapshot_at": "2026-06-15 21:00:56",
+      "bigquery_job_id": "bqjob_r23f65943c49774b4_0000019f6bd59731_1",
+      "query_sha256": "825f9b9a9a0f578aacd13b5ce93a622ec4e13c13c3a00f8f2427042d61c04704",
+      "matched": 25
+    },
+    {
+      "partition_day": "2026-06-23",
+      "snapshot_at": "2026-06-23 13:18:31",
+      "bigquery_job_id": "bqjob_r478d5d31dcb7ad94_0000019f6bd5b256_1",
+      "query_sha256": "2cf2958ab3e1ff36066e4f9842f13bfc80e43f0cabcc7a7c199db63515e548ec",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-06-29",
+      "snapshot_at": "2026-06-29 21:01:04",
+      "bigquery_job_id": "bqjob_rfa235f49e781674_0000019f6bd5cd70_1",
+      "query_sha256": "719aa5d05439a4a3555dfee02fd1567719d330fb669df8ff4c4905bdea8ecb45",
+      "matched": 31
+    },
+    {
+      "partition_day": "2026-07-06",
+      "snapshot_at": "2026-07-06 21:01:02",
+      "bigquery_job_id": "bqjob_r39df81117834c22b_0000019f6bd5ea07_1",
+      "query_sha256": "2e32443ca268357841d95ceef667c7aac186e203073226f5c65539819d852491",
+      "matched": 31
+    }
+  ],
+  "observations_sha256": "2c55578454d6dae7a084b13a3a80dfcbc02af20dd406d095c7e7235e8412aa1e",
+  "note": "m3-v2h frozen-panel baseline; reconstructable:true; non-gating for promotion"
+}

@@ -1,0 +1,281 @@
+{
+  "as_of": "2026-07-16 17:33:29",
+  "axes_snapshot_used": "2026-07-11",
+  "criteria": {
+    "c1_coverage": {
+      "pass": false,
+      "threshold": 30,
+      "value": 20
+    },
+    "c2_independence": {
+      "pairs": 20,
+      "pass": true,
+      "threshold": 0.5,
+      "unevaluable": false,
+      "value": 0.3729
+    },
+    "c3_flip": {
+      "pass": true,
+      "transitions": [
+        {
+          "denom": 0,
+          "from": "2026-03-30 21:01:01",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-06 21:00:48"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-06 21:00:48",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-14 05:32:47"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-14 05:32:47",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-20 21:00:53"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-20 21:00:53",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-28 01:42:12"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-28 01:42:12",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-05 01:20:05"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-05 01:20:05",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-11 21:00:51"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-11 21:00:51",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-18 21:00:52"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-18 21:00:52",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-01 21:00:47"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-01 21:00:47",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-11 22:24:59"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-11 22:24:59",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-15 21:00:56"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-15 21:00:56",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-23 13:18:31"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-23 13:18:31",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-29 21:01:04"
+        },
+        {
+          "churn": 1.0,
+          "denom": 20,
+          "flip": 0.0,
+          "from": "2026-06-29 21:01:04",
+          "pass": true,
+          "to": "2026-07-06 21:01:02"
+        }
+      ]
+    },
+    "c4_nondegeneracy": {
+      "pass": false,
+      "shares": {
+        "unknown": 0.0
+      }
+    },
+    "c5_floors": {
+      "note": "floors enforced in code: >=14 points, >=5 deps",
+      "pass": true
+    },
+    "c6_no_lookahead": {
+      "note": "as-of filter structural; series from committed observations only",
+      "pass": true
+    }
+  },
+  "entities_with_series": 31,
+  "frozen_sample_sha256": "1ee18e6e142ded02bc18cd048b39bc47e3beacd0c74c46c543fe257086de4efa",
+  "label": "baseline",
+  "per_entity": {
+    "e_03QFRGK7VQX": {
+      "cohort": "unknown",
+      "latest": 175,
+      "rising": false,
+      "slope": -0.09096,
+      "z": -0.296
+    },
+    "e_13NVVKJA2MM": {
+      "cohort": "unknown",
+      "latest": 1453,
+      "rising": false,
+      "slope": -0.091329,
+      "z": 1.869
+    },
+    "e_1GSH6ZQHW7B": {
+      "cohort": "unknown",
+      "latest": 84,
+      "rising": false,
+      "slope": -0.098826,
+      "z": -1.622
+    },
+    "e_2CS7SM2993J": {
+      "cohort": "unknown",
+      "latest": 412,
+      "rising": false,
+      "slope": -0.094967,
+      "z": 0.299
+    },
+    "e_77AC6K7XEWB": {
+      "cohort": "unknown",
+      "latest": 7,
+      "rising": false,
+      "slope": -0.045433,
+      "z": -0.203
+    },
+    "e_8N97348DQ66": {
+      "cohort": "unknown",
+      "latest": 849,
+      "rising": false,
+      "slope": -0.10942,
+      "z": 0.0
+    },
+    "e_97SYW64PA3G": {
+      "cohort": "unknown",
+      "latest": 25,
+      "rising": false,
+      "slope": -0.013704,
+      "z": 3.0
+    },
+    "e_9VRK70WNP96": {
+      "cohort": "unknown",
+      "latest": 365,
+      "rising": false,
+      "slope": -0.100383,
+      "z": -0.219
+    },
+    "e_B1Q69HZTTMA": {
+      "cohort": "unknown",
+      "latest": 151,
+      "rising": false,
+      "slope": -0.097674,
+      "z": -0.935
+    },
+    "e_EF7QKB37YJK": {
+      "cohort": "unknown",
+      "latest": 5,
+      "rising": false,
+      "slope": -0.029223,
+      "z": 0.674
+    },
+    "e_EY620A0EAK9": {
+      "cohort": "unknown",
+      "latest": 102,
+      "rising": false,
+      "slope": -0.099025,
+      "z": -1.437
+    },
+    "e_H6PPP8CA9RR": {
+      "cohort": "unknown",
+      "latest": 71,
+      "rising": false,
+      "slope": -0.076458,
+      "z": -0.172
+    },
+    "e_HTQD84GES1K": {
+      "cohort": "unknown",
+      "latest": 8,
+      "rising": false,
+      "slope": -0.034561,
+      "z": 0.708
+    },
+    "e_J16JY8N155H": {
+      "cohort": "unknown",
+      "latest": 27,
+      "rising": false,
+      "slope": -0.049369,
+      "z": 0.812
+    },
+    "e_MB6DQ5PDDKH": {
+      "cohort": "unknown",
+      "latest": 49,
+      "rising": false,
+      "slope": -0.066277,
+      "z": 0.188
+    },
+    "e_P4YGBAFMV94": {
+      "cohort": "unknown",
+      "latest": 16,
+      "rising": false,
+      "slope": -0.068327,
+      "z": -1.081
+    },
+    "e_R372CCSVG44": {
+      "cohort": "unknown",
+      "latest": 154,
+      "rising": false,
+      "slope": -0.089546,
+      "z": -0.325
+    },
+    "e_SV60T2QMXGE": {
+      "cohort": "unknown",
+      "latest": 281,
+      "rising": false,
+      "slope": -0.076861,
+      "z": 1.216
+    },
+    "e_TRJN6D7V12H": {
+      "cohort": "unknown",
+      "latest": 1025,
+      "rising": false,
+      "slope": -0.10691,
+      "z": 0.377
+    },
+    "e_X9JA7ZTD6TF": {
+      "cohort": "unknown",
+      "latest": 165,
+      "rising": false,
+      "slope": -0.089095,
+      "z": -0.221
+    }
+  },
+  "rising": [],
+  "snapshots_in_series": [
+    "2026-03-30 21:01:01",
+    "2026-04-06 21:00:48",
+    "2026-04-14 05:32:47",
+    "2026-04-20 21:00:53",
+    "2026-04-28 01:42:12",
+    "2026-05-05 01:20:05",
+    "2026-05-11 21:00:51",
+    "2026-05-18 21:00:52",
+    "2026-06-01 21:00:47",
+    "2026-06-11 22:24:59",
+    "2026-06-15 21:00:56",
+    "2026-06-23 13:18:31",
+    "2026-06-29 21:01:04",
+    "2026-07-06 21:01:02"
+  ],
+  "v": "axis3_v2_eval_1",
+  "voting": 20
+}
