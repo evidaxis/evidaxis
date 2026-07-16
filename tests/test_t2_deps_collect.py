@@ -82,6 +82,36 @@ def test_pinned_outage_is_fetch_error(monkeypatch):
     assert deps.fetch_pinned({"system": "pypi", "package": "mypkg"})["coverage"] == "fetch_error"
 
 
+def test_fresh_default_without_dependents_is_version_pending_not_pin_broken(monkeypatch):
+    # Package resolves (200) but its current default version has no computed
+    # :dependents yet (deps.dev batch lag right after a release) -> the pin is
+    # NOT broken; the day's point is honestly absent as version_pending, and
+    # NO substitute version's figure is recorded (measurand stays untouched).
+    _routes(monkeypatch, [(":dependents", (404, None)),
+                          ("/v3/systems/pypi/", (200, PKG_OK))])
+    out = deps.fetch_pinned({"system": "pypi", "package": "mypkg"})
+    assert out["coverage"] == "version_pending"
+    assert out.get("version") == "1.0.0"
+    assert "dependent_count" not in out
+
+
+def test_version_pending_day_is_not_a_threat_and_stays_out_of_history(tmp_path, monkeypatch):
+    _seed(tmp_path, ["a/one"], pins={"a/one": {"system": "pypi", "package": "one"}})
+    monkeypatch.setattr(deps, "REPO", tmp_path)
+    monkeypatch.setattr(deps, "PIN_PATH", tmp_path / "data" / "deps_id_map.json")
+    _routes(monkeypatch, [(":dependents", (404, None)),
+                          ("/v3/systems/pypi/", (200, PKG_OK))])
+    rc = deps.main()
+    assert rc == 0, "a post-release :dependents lag is expected, not a THREAT exit"
+    hist = list((tmp_path / "data" / "observations" / "history").glob("*.deps.jsonl"))
+    assert hist == [], "a pending version must not enter the long-term series"
+    day = next((tmp_path / "data" / "observations").glob("*/deps.jsonl"))
+    row = json.loads(day.read_text().splitlines()[0])
+    assert row["coverage"] == "version_pending"
+    assert row["pending_version"] == "1.0.0"
+    assert row["signals"]["deps_dev_dependents"] is None
+
+
 def test_outage_day_not_written_to_history_and_run_fails(tmp_path, monkeypatch):
     _seed(tmp_path, ["a/one"], pins={"a/one": {"system": "pypi", "package": "one"}})
     monkeypatch.setattr(deps, "REPO", tmp_path)

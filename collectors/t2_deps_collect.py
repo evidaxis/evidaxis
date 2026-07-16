@@ -145,7 +145,16 @@ def _linked_repo_ok(system: str, pkg: str, version: str, github_repo: str) -> tu
 
 
 def fetch_pinned(pin: dict) -> dict:
-    """Capture dependents for a PINNED (system, package). Never falls through."""
+    """Capture dependents for a PINNED (system, package). Never falls through.
+
+    Classification fix (2026-07-16, AXIS3-DEPS-V1-TERMINATION governance act):
+    a live package whose CURRENT default version has no computed :dependents yet
+    (deps.dev batch lag right after a release) is NOT a broken pin — the package
+    resolves fine; only the version-level figure is pending. That state is
+    "version_pending": the day's point is honestly absent (never substituted
+    with another version's figure — that would silently redefine the measurand),
+    and it is not a THREAT-level identity event. "pin_broken" now means exactly
+    what it says: the PACKAGE itself no longer resolves (404 on GetPackage)."""
     system, pkg = pin["system"], pin["package"]
     st, version = _default_version(system, pkg)
     if st is None:
@@ -156,10 +165,10 @@ def fetch_pinned(pin: dict) -> dict:
     if st2 is None:
         return {"coverage": "fetch_error"}
     if st2 != 200:
-        return {"coverage": "pin_broken"}
+        return {"coverage": "version_pending", "version": version}
     dep, sha = res
     if dep.get("dependentCount") is None:
-        return {"coverage": "pin_broken"}
+        return {"coverage": "version_pending", "version": version}
     return {
         "coverage": "matched",
         "system": system, "package": pkg, "version": version,
@@ -226,7 +235,8 @@ def main() -> int:
     hist_dir.mkdir(parents=True, exist_ok=True)
 
     records = []
-    counts = {"matched": 0, "no_package_match": 0, "fetch_error": 0, "pin_broken": 0}
+    counts = {"matched": 0, "no_package_match": 0, "fetch_error": 0, "pin_broken": 0,
+              "version_pending": 0}
     new_pins = 0
     for repo in repos:
         entity_id = id_map.get(repo)
@@ -268,6 +278,7 @@ def main() -> int:
             "response_sha256": dep.get("response_sha256"),
             "signals": {"deps_dev_dependents": signal},
             "coverage": coverage,
+            **({"pending_version": dep["version"]} if coverage == "version_pending" and dep.get("version") else {}),
             "status": "active",
             "retraction": None,
         }
@@ -294,6 +305,7 @@ def main() -> int:
         "unmatched": counts["no_package_match"],
         "fetch_errors": counts["fetch_error"],
         "pins_broken": counts["pin_broken"],
+        "versions_pending": counts["version_pending"],
         "new_pins": new_pins,
         "observations_sha256": hashlib.sha256(obs_text.encode()).hexdigest(),
         "signal": "deps_dev_dependents (R0/adoption: how many packages depend on this system)",
@@ -303,7 +315,8 @@ def main() -> int:
 
     print(f"[{COLLECTOR_VERSION}] {counts['matched']}/{len(records)} matched, "
           f"{counts['no_package_match']} no-package, {counts['fetch_error']} fetch-errors, "
-          f"{counts['pin_broken']} broken pins, {new_pins} new pins @ {captured_at} ({period})")
+          f"{counts['pin_broken']} broken pins, {counts['version_pending']} versions pending "
+          f"(post-release :dependents lag, expected), {new_pins} new pins @ {captured_at} ({period})")
     top = sorted((r for r in records if r["signals"]["deps_dev_dependents"]),
                  key=lambda r: r["signals"]["deps_dev_dependents"]["value"], reverse=True)[:8]
     for r in top:
