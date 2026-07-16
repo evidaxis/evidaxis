@@ -31,6 +31,7 @@ import json
 import math
 import sys
 from collections import defaultdict
+from itertools import pairwise
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -225,7 +226,7 @@ def evaluate(as_of: str, label: str) -> dict:
 
     # 3 flip-rate on consecutive distinct snapshots (Codex formula)
     transitions = []
-    for a, b in zip(snapshots, snapshots[1:], strict=False):
+    for a, b in pairwise(snapshots):
         Ea, Ra, _ = cuts[a]
         Eb, Rb, _ = cuts[b]
         denom = len(Ea | Eb)
