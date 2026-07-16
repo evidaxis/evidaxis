@@ -16,6 +16,7 @@ on:
       - "data/observations/**"
       - "genesis-deposit/code/**"
       - "pyproject.toml"
+      - "REUSE.toml"  # the license-coverage test reads it; changes must re-run the gate
       - "requirements-dev.txt"
       - ".github/workflows/python-ci.yml"
   pull_request:
