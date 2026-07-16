@@ -9,7 +9,7 @@ Implements governance/AXIS3-DEPS-V2-HYBRID-SUPERSESSION-2026-07-16.md:
   * vote(entity, cutoff) = slope(log1p(unique_direct)) > 0 AND within-cohort
     robust-z >= 1 (residualized on log1p(latest)) AND latest >= DEPS_FLOOR
     AND >= MIN_POINTS distinct-snapshot points at the cutoff.
-  * flip_j = |R_j Δ R_{j-1}| / |E_j ∪ E_{j-1}|; churn reported; a failed
+  * flip_j = |R_j Δ R_{j-1}| / |E_j U E_{j-1}|; churn reported; a failed
     endpoint INVALIDATES the transition; small denominator -> UNEVALUABLE.
   * Zero vs absent: `not_in_snapshot` is never a zero; an entity has no point
     before its package's first confirmed existence.
@@ -110,7 +110,7 @@ def _robust_z(values: dict) -> dict:
     ys = [y for _, y in values.values()]
     xbar, ybar = sum(xs) / len(xs), sum(ys) / len(ys)
     den = sum((x - xbar) ** 2 for x in xs)
-    beta = (sum((x - xbar) * (y - ybar) for x, y in zip(xs, ys)) / den) if den else 0.0
+    beta = (sum((x - xbar) * (y - ybar) for x, y in zip(xs, ys, strict=True)) / den) if den else 0.0
     resid = {k: y - (ybar + beta * (x - xbar)) for k, (x, y) in values.items()}
     med = sorted(resid.values())[len(resid) // 2]
     mad = sorted(abs(v - med) for v in resid.values())[len(resid) // 2]
@@ -138,7 +138,7 @@ def votes_at_cutoff(series: dict, cohorts: dict, cutoff: str) -> tuple:
     eligible, rising, per_entity = set(), set(), {}
     for coh, vals in per_cohort.items():
         zs = _robust_z(vals)
-        for eid, (size, slope) in vals.items():
+        for eid, (_size, slope) in vals.items():
             eligible.add(eid)
             vote = slope > 0 and zs[eid] >= Z_FLOOR
             per_entity[eid] = {"cohort": coh, "slope": round(slope, 6),
@@ -225,7 +225,7 @@ def evaluate(as_of: str, label: str) -> dict:
 
     # 3 flip-rate on consecutive distinct snapshots (Codex formula)
     transitions = []
-    for a, b in zip(snapshots, snapshots[1:]):
+    for a, b in zip(snapshots, snapshots[1:], strict=False):
         Ea, Ra, _ = cuts[a]
         Eb, Rb, _ = cuts[b]
         denom = len(Ea | Eb)

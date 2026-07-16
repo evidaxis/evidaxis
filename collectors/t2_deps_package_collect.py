@@ -67,31 +67,38 @@ PARTITIONS_QUERY = (
 )
 
 
-MAX_BYTES_BILLED = 20 * 10**9  # 20 GB circuit-breaker per query: with cluster
-# pruning a pin-filtered partition read is far below this; without it the query
-# FAILS instead of burning the daily quota (lesson of 2026-07-16).
+# Circuit-breaker per query. Measured 2026-07-16 on partition 2026-07-06:
+# totalBytesBilled = 552.7 GB (~$3.45) — cluster pruning does NOT reduce the
+# billed bytes for our 41 scattered package names, and maximum_bytes_billed is
+# checked against the conservative pre-run estimate anyway. 600 GB admits one
+# partition read and still fails anything runaway (e.g. an accidental
+# multi-partition or full-table scan — the 2026-07-16 quota burn).
+MAX_BYTES_BILLED = 600 * 10**9
+BQ_PROJECT = "evidaxis-analytics"  # neutral project: person-free job ids in provenance
 
 
 def _bq(sql: str, dry_run: bool = False) -> tuple:
     """Run a query via the bq CLI. Returns (rows, job_id). Raises on failure."""
-    cmd = ["bq", "query", "--nouse_legacy_sql", "--format=json", "--quiet"]
+    cmd = ["bq", f"--project_id={BQ_PROJECT}", "query",
+           "--nouse_legacy_sql", "--format=json", "--quiet"]
     if dry_run:
         cmd.append("--dry_run")
     else:
         cmd.append(f"--maximum_bytes_billed={MAX_BYTES_BILLED}")
-    proc = subprocess.run(cmd + [sql], capture_output=True, text=True, timeout=300)
+    proc = subprocess.run([*cmd, sql], capture_output=True, text=True, timeout=300)
     if proc.returncode != 0:
         raise RuntimeError(f"bq failed: {proc.stderr.strip()[:400]}")
     if dry_run:
         return [], None
     rows = json.loads(proc.stdout or "[]")
     # job id: bq --format=json does not emit it; fetch the most recent job
-    job = subprocess.run(["bq", "ls", "-j", "-n", "1", "--format=json"],
+    job = subprocess.run(["bq", f"--project_id={BQ_PROJECT}", "ls", "-j", "-n", "1",
+                          "--format=json"],
                          capture_output=True, text=True, timeout=60)
     job_id = None
     try:
         job_id = json.loads(job.stdout)[0]["jobReference"]["jobId"]
-    except Exception:  # noqa: BLE001 — provenance best-effort, never blocks capture
+    except Exception:  # provenance best-effort, never blocks capture
         pass
     return rows, job_id
 
