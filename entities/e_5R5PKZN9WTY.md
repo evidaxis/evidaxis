@@ -14,10 +14,10 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: df540ea0d40d
-  captured_at: 2026-07-11T08:23:23+00:00
-  period: 2026-w28
-  momentum: 33.7
+  snapshot_id: 064bcdd1c2d3
+  captured_at: 2026-07-18T08:17:42+00:00
+  period: 2026-w29
+  momentum: 41.2
   percentile: 29
   confidence: low
   rising: false
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.004028547716074896, "cohort_z": -1.303, "recent_weekly_commits": 0.0, "stars_not_scored": 8101}
-    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    github_commit_velocity: {"slope": -0.004502494506201354, "cohort_z": -0.701, "recent_weekly_commits": 0.0, "stars_not_scored": 8125}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 1, "by_year": {"2026": 1}, "proxy": null}
 note: "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Qwen-Image
 
-Evidaxis tracks **Qwen-Image** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis tracks **Qwen-Image**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.

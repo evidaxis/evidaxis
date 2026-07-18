@@ -14,10 +14,10 @@ classification:
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: df540ea0d40d
-  captured_at: 2026-07-11T08:23:23+00:00
-  period: 2026-w28
-  momentum: 21.6
+  snapshot_id: 064bcdd1c2d3
+  captured_at: 2026-07-18T08:17:42+00:00
+  period: 2026-w29
+  momentum: 20.1
   percentile: 0
   confidence: low
   rising: false
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.028385907490441353, "cohort_z": -2.273, "recent_weekly_commits": 2.0, "stars_not_scored": 3002}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 9, "by_year": {"2026": 3, "2025": 6}, "proxy": null}
+    github_commit_velocity: {"slope": -0.03591760673300416, "cohort_z": -2.395, "recent_weekly_commits": 2.2, "stars_not_scored": 3021}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 10, "by_year": {"2026": 4, "2025": 6}, "proxy": null}
 ---
 
 # OSWorld

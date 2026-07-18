@@ -1,0 +1,24 @@
+{
+  "v": "dropped_1",
+  "snapshot_date": "2026-07-18",
+  "checked_at": "2026-07-18T08:20:04Z",
+  "seeded": 137,
+  "in_snapshot": 135,
+  "drop_fraction": 0.0146,
+  "dropped": [
+    {
+      "entity_id": "e_FTD4XD7DVG3",
+      "github_repo": "block/goose",
+      "previously_tracked": true,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_J4DR3YCQCAN",
+      "github_repo": "Genesis-Embodied-AI/Genesis",
+      "previously_tracked": true,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    }
+  ],
+  "note": "Written by collectors/completeness_gate.py. Drops are recorded here (never silent). The snapshot proceeds for a small transient fraction; it FAILS only on a structural fraction (see max_drop_fraction).",
+  "max_drop_fraction": 0.15
+}
