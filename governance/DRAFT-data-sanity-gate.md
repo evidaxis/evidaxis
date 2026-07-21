@@ -167,6 +167,23 @@ Language discipline (Pro, matching the CLI voice): the gate detects
 **source-health anomalies** — never claim "physically impossible" or "proven
 corruption."
 
+## Expansion manifest — BUILT and frozen as DRAFT (2026-07-21)
+
+`collectors/expansion_manifest.py` executed over all 137 tracked repos
+(0 errors): 1264 packages declared in the systems' own repo trees, **614
+deps.dev-eligible new candidates** (npm 329 · cargo 142 · pypi 135 · go 8),
+raising panel coverage from 41 pinned repos to **80 systems with >= 1 pin**.
+Manifest: `data/quarantine/axis3-deps-v2/expansion-manifest-DRAFT.json`,
+sha256 `026eaa45377a5b39…`. No dependents value was read during selection.
+
+**Dominance rule (per PREREG v2 semantics, restated):** the measured unit is
+the SYSTEM, not the package — unique direct dependents are counted over the
+UNION of all the system's eligible packages, dedup by (Dependent.System,
+Dependent.Name), excluding intra-system dependents. A monorepo with 148
+packages (mastra) is therefore ONE panel row, same as a single-package system;
+package-count dominance cannot skew cohort statistics. Per-partition read cost
+is unchanged (whole-partition scan regardless of predicate count).
+
 ## Open questions for the superseding record
 
 - Sentinel control panel (non-ranked packages watched only for source health):
