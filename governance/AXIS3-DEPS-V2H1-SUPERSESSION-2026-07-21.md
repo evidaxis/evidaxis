@@ -123,3 +123,38 @@ cross-series calibration — different sources, different anomaly
 distributions (Pro voice; implemented as negative controls instead).
 Positive-only note: internal methodology governance; no negative signal about
 any measured system.*
+
+## Dated addendum — capture enrichment (2026-07-21, later; recall-right exercised BEFORE first capture)
+
+No v2h.1 value-bearing capture had been committed when this addendum was fixed
+(the first baseline run was stopped before its first partition completed; $0
+billed). A second 8-voice council (consilium-03 + manual Pro voice) reviewed
+"use the paid scan fully" and this addendum adopts its portfolio. The AXIS
+semantics (measurand, panel, criteria, gate, floors) are UNCHANGED; this
+addendum only enriches captured outputs and adds near-free companions:
+
+1. **Enriched Dependents scan (same 551 GB, $0 marginal):** per system AND per
+   package (GROUPING SETS, one scan): xor_fp_direct (order-independent
+   fingerprint of the direct-dependent identity set — tamper evidence against
+   count-stable content substitution), sketch64 (deterministic bottom-64
+   fingerprint sketch — approximate retention/Jaccard forever without storing
+   identity sets), eco_top (dependent-ecosystem composition). Package-level
+   breakdowns are INTERNAL diagnostics, never published.
+2. **Weekly sidecar (~$0.08/week ceiling-governed):** PackageVersionToProject
+   slice for the panel (linkage corroboration + drift alarm; SECOND factor —
+   repo-tree evidence remains the root of trust; never auto-modifies the
+   panel; ceiling 16 GB) + Projects narrow slice for panel repos (unscored
+   canary/diagnostics; cross-source discriminator for corrupt partitions;
+   ceiling 2 GB) + retention tripwire (partition metadata, $0 — alarms if
+   upstream starts pruning/replacing history).
+3. **One-time purchases:** Projects full-history hoard for panel repos
+   (pruning insurance; ceiling 100 GB = $0.625). PV2P history explicitly NOT
+   purchased (~$14) — historical linkage state did not determine the frozen
+   panel; backfill only if the current audit shows material disagreement.
+4. **Declared non-captures:** Advisories standing series (ad-hoc incident
+   queries only), PackageVersions weekly (backfillable; on-demand at a future
+   release-cadence-v2 pre-registration), Dependencies/DependencyGraphEdges/
+   Requirements/PackageVersionHashes (event-triggered forensic class:
+   Dependencies at partition-quarantine events, ~$2.92/event).
+5. **Ceilings-as-fail:** every sub-query carries maximum_bytes_billed; exceeding
+   a ceiling stops the collector, never silently expands the commitment.
