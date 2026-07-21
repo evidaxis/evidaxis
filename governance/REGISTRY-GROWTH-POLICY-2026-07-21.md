@@ -54,9 +54,9 @@
 - 2026-07-31: hash-anchored census of the full existing stock ≥500★.
 - The pending manifest of every mechanically eligible system is published
   IMMEDIATELY (completeness of membership precedes card maturity).
-- Activation in deterministic order (repository ID ascending — no prominence
-  ordering), complete within ≤12 months; forward crossings take priority from
-  2026-08-01 so new coverage debt never accumulates.
+- Activation deterministic, publication-value ordered (stars desc, tie
+  repo-ID — see above), complete within ≤12 months; forward crossings take
+  priority from 2026-08-01 so new coverage debt never accumulates.
 - **Crawl-budget discipline — geometric weekly activation (founder, 2026-07-21):**
   the wave publishes the MANIFEST at once (a machine-readable membership file,
   not pages); CARDS go live WEEKLY at **+6% of the current live-card count**
@@ -68,7 +68,14 @@
   flow). A sudden burst of thousands of templated URLs on a fresh domain is a
   programmatic-SEO spam pattern; geometric activation with history-rich cards
   is healthy catalog growth. Completeness is carried by the manifest, not by
-  page count. Activation order stays deterministic (repository ID ascending).
+  page count.
+- **Activation order (founder, 2026-07-21): publication-value first, mechanical.**
+  Weekly tranches take the pending queue sorted by CURRENT GitHub stars
+  descending (tie-break: repository ID ascending) — the highest-demand names
+  earn citations/GEO value immediately. The key is a published deterministic
+  formula, not curator taste. Stated disclaimer: the ORDER OF PUBLICATION is a
+  marketing schedule, never a measurement verdict — membership is complete and
+  auditable from day one via the manifest, and cards carry no rank.
 - Backlog cards enter with their FULL history from repo creation (commit +
   citation series) — the registry's GEO anchor, not its burden.
 
