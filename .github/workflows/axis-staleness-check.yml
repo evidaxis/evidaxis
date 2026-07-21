@@ -26,9 +26,9 @@ jobs:
           THRESHOLD_DAYS: '8'
         run: |
           set -euo pipefail
-          newest_file=$(ls data/observations/backfill/axis3-deps-v2h1/deps_v2h1-*-manifest.json \
-                          data/observations/*/deps_v2h1-*-manifest.json 2>/dev/null | while read -r p; do
-                            echo "$(git log -1 --format=%ct -- "$p") $p"; done | sort -n | tail -1)
+          newest_file=$(find data/observations -name 'deps_v2h1-*-manifest.json' -print0 2>/dev/null \
+                          | xargs -0 -I{} sh -c 'echo "$(git log -1 --format=%ct -- "{}") {}"' \
+                          | sort -n | tail -1 || true)
           if [ -z "$newest_file" ]; then echo "no captures found"; exit 1; fi
           ts=${newest_file%% *}
           days=$(( ( $(date +%s) - ts ) / 86400 ))
