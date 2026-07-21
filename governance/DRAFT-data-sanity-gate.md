@@ -127,6 +127,46 @@ recent CONFIRMED-CLEAN partitions before the record (reaching deeper than 14
 calendar-weekly partitions if corrupt ones fall in the window) — the old
 "14 most recent" wording breaks when corrupt partitions land inside it.
 
+## Addendum — 8th council voice (ChatGPT Pro, manual; 2026-07-21 later)
+
+The manually-run Pro voice (same Prompt A, clean A/B vs the CLI voice) added
+seven mechanisms adopted into this draft:
+
+1. **Influence/fragility veto (one-way).** Alongside the registered primary
+   estimator, compute leave-one-partition-out and a robust-slope comparator.
+   If a single partition or the estimator choice materially flips a cohort
+   conclusion → verdict `INDETERMINATE`. Strictly one-way: the comparator can
+   never turn a failure into a promotion. Do NOT replace OLS itself now —
+   post-incident estimator replacement would look outcome-restorative.
+2. **Same-source calibration + negative controls.** Thresholds calibrate ONLY
+   on deps_v2's own clean transitions (different sources have different anomaly
+   distributions — pooling is illegitimate). The other institute series (t2
+   watchers/issues, v1) are NEGATIVE-CONTROL falsification: the derived rule
+   must fire zero times on them. *(Implemented 2026-07-21: same-source
+   calibration over 11 clean transitions → move bound 2.0x floor, panel
+   threshold 0.10 floor; negative control PASS — zero firings across 3 control
+   series; kill-bar re-verified PASS.)*
+3. **Coverage corroboration.** A coverage undershoot alone does not
+   auto-quarantine: without independent evidence the source itself was unwell
+   (identity-set diff vs neighbors, fingerprints, reversal signals nearby), a
+   coverage failure is a SUBSTANTIVE miss — auto-excluding it would censor
+   genuine metric unavailability. (For the incident partitions the
+   corroboration exists: neighbors are 31/31 and the reversal rule fires.)
+4. **Duplicate/stale-partition detection** (identical content under different
+   SnapshotAt) in the deterministic layer.
+5. **Mutation testing of the detector** (CI): inject synthetic dips, spikes,
+   partial cohort loss, stale copies, gradual scaling, identity remaps,
+   full-coverage unit shifts. The likely next failure is plausible partial
+   corruption with full coverage — not another 99% panel-wide dip.
+6. **Non-gating factorial audit at restart:** old panel + sanitation vs
+   expanded panel + sanitation, published as diagnostics.
+7. **Family-wise false-hold budget** declared from governance risk tolerance
+   before calibration runs (not chosen by watching where the incident lands).
+
+Language discipline (Pro, matching the CLI voice): the gate detects
+**source-health anomalies** — never claim "physically impossible" or "proven
+corruption."
+
 ## Open questions for the superseding record
 
 - Sentinel control panel (non-ranked packages watched only for source health):

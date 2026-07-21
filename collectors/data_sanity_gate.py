@@ -174,17 +174,34 @@ def max_clean_move(all_series: dict, exclude_snaps: set) -> tuple:
 # ---------- commands ----------
 
 def calibrate() -> int:
+    """Council correction (Pro voice, 2026-07-21): calibrate ONLY on the same
+    source's clean transitions (deps_v2) — different sources need not share
+    anomaly distributions, so pooling them into calibration is illegitimate.
+    The institute's OTHER series serve as NEGATIVE-CONTROL FALSIFICATION: the
+    derived rule must fire zero times on them, else the feature family is
+    wrong. Both results go into the artifact."""
     dep_series, _ = deps_v2_series()
-    corpus = {"deps_v2": dep_series, **other_series()}
-    max_move, max_share, transitions = max_clean_move(corpus, CHALLENGE)
+    max_move, max_share, transitions = max_clean_move({"deps_v2": dep_series}, CHALLENGE)
     move_bound = max(max_move * 1.0, math.log(2))  # never below 2x (physical floor)
     # panel threshold: max clean big-move share x margin, floored at 10% so a
     # single entity in a small panel cannot quarantine a partition alone
     panel_threshold = max(max_share * SAFETY_MARGIN, 0.10)
+
+    # negative control: apply the derived rule to every other-series transition
+    controls = other_series()
+    nc_fired = []
+    for label, series in controls.items():
+        snaps = sorted({s for pts in series.values() for s in pts})
+        for i in range(1, len(snaps) - 1):
+            share, eligible = reversal_share(series, snaps, i, move_bound)
+            if eligible >= 10 and share > panel_threshold:
+                nc_fired.append({"series": label, "at": snaps[i],
+                                 "share": round(share, 4)})
     artifact = {
         "v": GATE_VERSION,
-        "procedure": "max clean observation x declared margin; challenge partitions excluded from calibration",
-        "corpus_series": sorted(corpus.keys()),
+        "procedure": "same-source calibration (deps_v2 clean transitions only) x declared margin; "
+                     "other institute series = negative-control falsification, never pooled",
+        "calibration_series": ["deps_v2"],
         "challenge_partitions_excluded": sorted(CHALLENGE),
         "clean_transitions_scanned": len(transitions),
         "max_clean_single_entity_log_move": round(max_move, 4),
@@ -194,20 +211,25 @@ def calibrate() -> int:
         "safety_margin": SAFETY_MARGIN,
         "coverage_min": COVERAGE_MIN,
         "value_floor": VALUE_FLOOR,
+        "negative_control_series": sorted(controls.keys()),
+        "negative_control_firings": nc_fired,
+        "negative_control_pass": not nc_fired,
     }
     blob = json.dumps(artifact, indent=2, sort_keys=True) + "\n"
     digest = hashlib.sha256(blob.encode()).hexdigest()
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / f"sanity-calibration-{digest[:12]}.json"
     path.write_text(blob)
-    print(f"[{GATE_VERSION}] calibration over {len(transitions)} clean transitions:")
+    print(f"[{GATE_VERSION}] same-source calibration over {len(transitions)} clean deps_v2 transitions:")
     print(f"  max clean single-entity |log-move|: {max_move:.4f} "
           f"({math.exp(max_move):.2f}x)")
     print(f"  max clean big-move (>2x) share in one transition: {max_share:.4f}")
     print(f"  derived move bound: {move_bound:.4f} ({math.exp(move_bound):.2f}x)")
     print(f"  derived panel threshold: {panel_threshold:.4f}")
+    print(f"  negative control ({', '.join(sorted(controls))}): "
+          f"{'PASS — zero firings' if not nc_fired else 'FAIL — ' + str(nc_fired)}")
     print(f"  artifact: {path.relative_to(REPO)}")
-    return 0
+    return 0 if not nc_fired else 1
 
 
 def check(calibration_path: str) -> int:
