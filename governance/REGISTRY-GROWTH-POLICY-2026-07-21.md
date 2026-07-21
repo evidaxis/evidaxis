@@ -57,12 +57,18 @@
 - Activation in deterministic order (repository ID ascending — no prominence
   ordering), complete within ≤12 months; forward crossings take priority from
   2026-08-01 so new coverage debt never accumulates.
-- **Crawl-budget discipline (keeper, 2026-07-21):** the wave publishes the
-  MANIFEST at once (a machine-readable membership file, not pages); CARDS go
-  live in monthly tranches of ~100-200 on a young domain — a sudden burst of
-  thousands of templated URLs on a fresh domain is a programmatic-SEO spam
-  pattern; gradual activation with history-rich cards is healthy catalog
-  growth. Completeness is carried by the manifest, not by page count.
+- **Crawl-budget discipline — geometric weekly activation (founder, 2026-07-21):**
+  the wave publishes the MANIFEST at once (a machine-readable membership file,
+  not pages); CARDS go live WEEKLY at **+6% of the current live-card count**
+  (floor: 10/week; cap: the available pending queue). Rationale: a constant
+  RELATIVE rate reads as organic growth to crawlers (no step-bursts), and the
+  absolute tranche scales with the domain's own maturing crawl budget
+  (137 -> +8/wk at start, ~+150/wk at year-end; mid backlog absorbed in
+  ~10-11 months, after which the rate naturally collapses to the true forward
+  flow). A sudden burst of thousands of templated URLs on a fresh domain is a
+  programmatic-SEO spam pattern; geometric activation with history-rich cards
+  is healthy catalog growth. Completeness is carried by the manifest, not by
+  page count. Activation order stays deterministic (repository ID ascending).
 - Backlog cards enter with their FULL history from repo creation (commit +
   citation series) — the registry's GEO anchor, not its burden.
 
