@@ -42,6 +42,8 @@
 - **Shadow layer (non-public): 200-499★ candidates** get minimal weekly
   observation (star counts only) — early point-in-time raw material for
   future private data products; never published, never a card.
+  Storage: a PRIVATE GitHub repository in the Evidaxis org (survives any
+  laptop; invisible to the public site), collected by cloud Actions.
 - **Expected flow: ~55 systems/month (range 36-72), capacity 75, uncapped.**
   The first 6 monthly censuses measure the true crossing flow (the initial
   estimates are stocks with right-censoring); forecasts adapt, the rule does
@@ -55,6 +57,12 @@
 - Activation in deterministic order (repository ID ascending — no prominence
   ordering), complete within ≤12 months; forward crossings take priority from
   2026-08-01 so new coverage debt never accumulates.
+- **Crawl-budget discipline (keeper, 2026-07-21):** the wave publishes the
+  MANIFEST at once (a machine-readable membership file, not pages); CARDS go
+  live in monthly tranches of ~100-200 on a young domain — a sudden burst of
+  thousands of templated URLs on a fresh domain is a programmatic-SEO spam
+  pattern; gradual activation with history-rich cards is healthy catalog
+  growth. Completeness is carried by the manifest, not by page count.
 - Backlog cards enter with their FULL history from repo creation (commit +
   citation series) — the registry's GEO anchor, not its burden.
 
