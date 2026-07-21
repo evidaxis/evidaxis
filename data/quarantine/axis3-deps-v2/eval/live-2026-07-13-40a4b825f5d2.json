@@ -1,0 +1,312 @@
+{
+  "as_of": "2026-07-13",
+  "axes_snapshot_used": "2026-07-11",
+  "criteria": {
+    "c1_coverage": {
+      "pass": false,
+      "threshold": 30,
+      "value": 22
+    },
+    "c2_independence": {
+      "pairs": 8,
+      "pass": true,
+      "threshold": 0.5,
+      "unevaluable": false,
+      "value": 0.4854
+    },
+    "c3_flip": {
+      "pass": true,
+      "transitions": [
+        {
+          "denom": 0,
+          "from": "2026-03-30 21:01:01",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-06 21:00:48"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-06 21:00:48",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-14 05:32:47"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-14 05:32:47",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-20 21:00:53"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-20 21:00:53",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-28 01:42:12"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-28 01:42:12",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-05 01:20:05"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-05 01:20:05",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-11 21:00:51"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-11 21:00:51",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-18 21:00:52"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-18 21:00:52",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-01 21:00:47"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-01 21:00:47",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-11 22:24:59"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-11 22:24:59",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-15 21:00:56"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-15 21:00:56",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-23 13:18:31"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-23 13:18:31",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-29 21:01:04"
+        },
+        {
+          "churn": 1.0,
+          "denom": 20,
+          "flip": 0.0,
+          "from": "2026-06-29 21:01:04",
+          "pass": true,
+          "to": "2026-07-06 21:01:02"
+        },
+        {
+          "churn": 0.0909,
+          "denom": 22,
+          "flip": 0.0455,
+          "from": "2026-07-06 21:01:02",
+          "pass": true,
+          "to": "2026-07-13"
+        }
+      ]
+    },
+    "c4_nondegeneracy": {
+      "pass": false,
+      "shares": {
+        "agent-frameworks": 0.125,
+        "coding-agents": 0.0,
+        "gui-agents": 0.0,
+        "inference-serving": 0.0,
+        "media-generation": 0.0,
+        "post-training-alignment": 0.0,
+        "robotics-embodied": 0.0
+      }
+    },
+    "c5_floors": {
+      "note": "floors enforced in code: >=14 points, >=5 deps",
+      "pass": true
+    },
+    "c6_no_lookahead": {
+      "note": "as-of filter structural; series from committed observations only",
+      "pass": true
+    }
+  },
+  "entities_with_series": 31,
+  "frozen_sample_sha256": "1ee18e6e142ded02bc18cd048b39bc47e3beacd0c74c46c543fe257086de4efa",
+  "label": "live",
+  "per_entity": {
+    "e_03QFRGK7VQX": {
+      "cohort": "robotics-embodied",
+      "latest": 176,
+      "rising": false,
+      "slope": -0.056453,
+      "z": -0.674
+    },
+    "e_13NVVKJA2MM": {
+      "cohort": "agent-frameworks",
+      "latest": 1451,
+      "rising": false,
+      "slope": -0.053798,
+      "z": 0.477
+    },
+    "e_1GSH6ZQHW7B": {
+      "cohort": "gui-agents",
+      "latest": 87,
+      "rising": false,
+      "slope": -0.063801,
+      "z": 0.0
+    },
+    "e_2CS7SM2993J": {
+      "cohort": "agent-frameworks",
+      "latest": 413,
+      "rising": false,
+      "slope": -0.057324,
+      "z": -0.279
+    },
+    "e_77AC6K7XEWB": {
+      "cohort": "inference-serving",
+      "latest": 7,
+      "rising": false,
+      "slope": -0.029165,
+      "z": 0.0
+    },
+    "e_8N97348DQ66": {
+      "cohort": "robotics-embodied",
+      "latest": 850,
+      "rising": false,
+      "slope": -0.071628,
+      "z": 0.0
+    },
+    "e_97SYW64PA3G": {
+      "cohort": "agent-frameworks",
+      "latest": 28,
+      "rising": false,
+      "slope": 0.009124,
+      "z": 0.339
+    },
+    "e_9VRK70WNP96": {
+      "cohort": "media-generation",
+      "latest": 365,
+      "rising": false,
+      "slope": -0.065048,
+      "z": 0.0
+    },
+    "e_B1Q69HZTTMA": {
+      "cohort": "post-training-alignment",
+      "latest": 150,
+      "rising": false,
+      "slope": -0.062036,
+      "z": -0.674
+    },
+    "e_EF7QKB37YJK": {
+      "cohort": "coding-agents",
+      "latest": 5,
+      "rising": false,
+      "slope": -0.014415,
+      "z": 0.0
+    },
+    "e_EY620A0EAK9": {
+      "cohort": "agent-frameworks",
+      "latest": 100,
+      "rising": false,
+      "slope": -0.063424,
+      "z": -1.194
+    },
+    "e_H6PPP8CA9RR": {
+      "cohort": "robotics-embodied",
+      "latest": 71,
+      "rising": false,
+      "slope": -0.046887,
+      "z": -0.976
+    },
+    "e_HTQD84GES1K": {
+      "cohort": "agent-frameworks",
+      "latest": 8,
+      "rising": false,
+      "slope": -0.018228,
+      "z": -1.089
+    },
+    "e_J16JY8N155H": {
+      "cohort": "post-training-alignment",
+      "latest": 27,
+      "rising": false,
+      "slope": -0.025016,
+      "z": 0.0
+    },
+    "e_MB6DQ5PDDKH": {
+      "cohort": "media-generation",
+      "latest": 48,
+      "rising": false,
+      "slope": -0.037743,
+      "z": 0.0
+    },
+    "e_P4YGBAFMV94": {
+      "cohort": "coding-agents",
+      "latest": 16,
+      "rising": false,
+      "slope": -0.044531,
+      "z": 0.0
+    },
+    "e_R372CCSVG44": {
+      "cohort": "inference-serving",
+      "latest": 159,
+      "rising": false,
+      "slope": -0.057102,
+      "z": -3.0
+    },
+    "e_SV60T2QMXGE": {
+      "cohort": "agent-frameworks",
+      "latest": 278,
+      "rising": false,
+      "slope": -0.041213,
+      "z": 0.0
+    },
+    "e_TRJN6D7V12H": {
+      "cohort": "inference-serving",
+      "latest": 1021,
+      "rising": false,
+      "slope": -0.068349,
+      "z": 0.674
+    },
+    "e_TV0JWZEFEAQ": {
+      "cohort": "agent-frameworks",
+      "latest": 19,
+      "rising": true,
+      "slope": 0.061546,
+      "z": 1.72
+    },
+    "e_X9JA7ZTD6TF": {
+      "cohort": "agent-frameworks",
+      "latest": 163,
+      "rising": false,
+      "slope": -0.054504,
+      "z": -0.674
+    },
+    "e_Y3HMWAG1BQZ": {
+      "cohort": "robotics-embodied",
+      "latest": 10,
+      "rising": false,
+      "slope": -0.010355,
+      "z": 0.004
+    }
+  },
+  "rising": [
+    "e_TV0JWZEFEAQ"
+  ],
+  "snapshots_in_series": [
+    "2026-03-30 21:01:01",
+    "2026-04-06 21:00:48",
+    "2026-04-14 05:32:47",
+    "2026-04-20 21:00:53",
+    "2026-04-28 01:42:12",
+    "2026-05-05 01:20:05",
+    "2026-05-11 21:00:51",
+    "2026-05-18 21:00:52",
+    "2026-06-01 21:00:47",
+    "2026-06-11 22:24:59",
+    "2026-06-15 21:00:56",
+    "2026-06-23 13:18:31",
+    "2026-06-29 21:01:04",
+    "2026-07-06 21:01:02",
+    "2026-07-13"
+  ],
+  "v": "axis3_v2_eval_1",
+  "voting": 22
+}

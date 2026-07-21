@@ -1,0 +1,12 @@
+{
+  "collector_version": "t2_deps_v2",
+  "captured_at": "2026-07-21T10:52:35Z",
+  "snapshot_at": "2026-07-13",
+  "query_sha256": "ae33e49ac6c84a5821d2cd833e34e1820dafed105d88fca80cc512ac9ad59abe",
+  "bigquery_job_id": "bqjob_r479b9120fee7c11_0000019f844e5f9e_1",
+  "observations_sha256": "d0dcf6645acbf115e275c2806c0e0526ca85e4cc9feb5586dad102e4a3b3e825",
+  "entity_count": 41,
+  "matched": 31,
+  "not_in_snapshot": 10,
+  "no_pin": 96
+}
