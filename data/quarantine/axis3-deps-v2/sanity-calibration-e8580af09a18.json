@@ -1,0 +1,29 @@
+{
+  "calibration_series": [
+    "deps_v2"
+  ],
+  "challenge_partitions_excluded": [
+    "2026-06-11",
+    "2026-06-15"
+  ],
+  "clean_transitions_scanned": 13,
+  "coverage_min": 30,
+  "coverage_rel_threshold": 0.9,
+  "coverage_series_median_clean": 63,
+  "derived_move_bound_log": 0.6931,
+  "derived_panel_threshold": 0.1,
+  "max_clean_big_move_share": 0.0,
+  "max_clean_single_entity_log_move": 0.5909,
+  "negative_control_firings": [],
+  "negative_control_pass": true,
+  "negative_control_series": [
+    "deps_v1",
+    "t2_open_issues",
+    "t2_watchers"
+  ],
+  "procedure": "same-source calibration (deps_v2 clean transitions only) x declared margin; other institute series = negative-control falsification, never pooled",
+  "safety_margin": 3.0,
+  "series_kind": "v2h1",
+  "v": "data_sanity_gate_1",
+  "value_floor": 5
+}

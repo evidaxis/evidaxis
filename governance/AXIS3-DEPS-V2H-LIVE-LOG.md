@@ -159,3 +159,42 @@ machine + gate + canary + provisional-last-point + expansion, dual-rationale)
 → new baseline backfill (14 most recent CONFIRMED-CLEAN partitions, ~$48) →
 live floor restarts. Earliest promotion verdict shifts to ~late September 2026
 (4 confirmed-clean live snapshots + 28 days from restart).
+
+### v2h.1 baseline EXECUTED on the expanded panel — 2026-07-21 (evening)
+
+**Burn:** 17 partitions (2026-03-16 … 2026-07-13) with the ENRICHED scan
+(fingerprints + sketch64 + per-package + eco_top + canaries in the same
+$3.44/partition). Two incidents during the burn, both caught by design:
+(1) a GROUPING-SETS alias-shadowing bug produced zero parsed canaries on the
+first partition — the canary fail-fast principle stopped the series at $3.44
+of waste; fixed (pkg_out alias), smoke-verified, resumed; (2) the pre-existing
+"<30" coverage contract is panel-relative and would have missed 06-15 on the
+90-system panel (50 matched > 30) — the council-approved relative-coverage
+layer (matched < threshold x series median, threshold calibration-derived,
+floor 0.90) was implemented and calibrated.
+
+**Gate on the new series (17 partitions): KILL-BAR PASS** — flags exactly
+{2026-06-11 (SUSPECT_CORRUPT share=1.0 + coverage 46 < 0.9x63),
+2026-06-15 (INVALID_COVERAGE 50 < 0.9x63)}, zero false positives on 14 clean;
+negative controls (t2 x2, v1): zero firings. Check artifact
+`sanity-check-631597ae6555.json`, calibration `sanity-calibration-e8580af09a18.json`.
+
+**First honest evaluation (baseline, non-gating), evaluator v2h.1:**
+confirmed-clean prefix = 14 partitions (03-16…07-06, corrupt pair excluded),
+official cutoff 2026-07-06, 07-13 PROVISIONAL (diagnostics only).
+47 voting / 9 rising / 1 unstable-vetoed (LOO). **c1 PASS 46>=30** (expansion
+repaired the structural under-power) · **c2 PASS r=+0.2985 on 38 pooled pairs**
+(was +0.61 poisoned / 0.49 fragile — now far from the bound and multi-cohort) ·
+c3 PASS (last clean transition flip 0.19) · **c4 FAIL** — but the failure mode
+CHANGED CLASS: agent-frameworks 23.5% and coding-agents 27.3% are alive and
+in-band; the fail comes from small cohorts (n=1-5) at 0% and robotics-embodied
+at exactly 0.40 (boundary). This is small-cohort granularity, not the poisoned
+panel-wide-zero regime. Verdict-layer canary: agreement 0.91-1.0 across all
+cohorts, zero HOLDs. c5/c6 PASS.
+
+**Read:** the axis is alive on the expanded panel; 4/6 criteria pass at
+baseline with a healthy verdict layer. c4's small-cohort behavior is a known
+structural property to watch at live cutoffs (baseline is non-gating either
+way). Live floor: first live capture = the next upstream partition (~2026-07-20,
+expected in BigQuery within days); promotion window ≈ late August 2026
+(4 confirmed-clean live snapshots + 28 days + successor confirmation lag).

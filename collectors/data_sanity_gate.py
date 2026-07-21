@@ -58,6 +58,27 @@ VALUE_FLOOR = 5            # reversal counted only for entities with pre-move va
 
 # ---------- series loading ----------
 
+def deps_v2h1_series() -> tuple:
+    """(series, coverage) for the v2h.1 expanded-panel capture files."""
+    series, coverage = defaultdict(dict), defaultdict(int)
+    files = sorted((OBS / "backfill" / "axis3-deps-v2h1").glob("deps_v2h1-????-??-??.jsonl")) + \
+        sorted(OBS.glob("*/deps_v2h1-????-??-??.jsonl"))
+    for f in files:
+        for line in f.read_text().splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            snap = (row.get("snapshot_at") or "")[:10]
+            if not snap or row.get("coverage") != "matched":
+                continue
+            sig = (row.get("signals") or {}).get("deps_v2h1_unique_direct")
+            if not sig or sig.get("value") is None:
+                continue
+            series[row["entity_id"]][snap] = int(sig["value"])
+            coverage[snap] += 1
+    return series, coverage
+
+
 def deps_v2_series() -> tuple:
     """(series: entity -> {snap: value}, coverage: snap -> matched_count)"""
     series, coverage = defaultdict(dict), defaultdict(int)
@@ -173,15 +194,25 @@ def max_clean_move(all_series: dict, exclude_snaps: set) -> tuple:
 
 # ---------- commands ----------
 
-def calibrate() -> int:
+def calibrate(series_kind: str = "v2") -> int:
     """Council correction (Pro voice, 2026-07-21): calibrate ONLY on the same
     source's clean transitions (deps_v2) — different sources need not share
     anomaly distributions, so pooling them into calibration is illegitimate.
     The institute's OTHER series serve as NEGATIVE-CONTROL FALSIFICATION: the
     derived rule must fire zero times on them, else the feature family is
     wrong. Both results go into the artifact."""
-    dep_series, _ = deps_v2_series()
-    max_move, max_share, transitions = max_clean_move({"deps_v2": dep_series}, CHALLENGE)
+    if series_kind == "v2h1":
+        dep_series, coverage = deps_v2h1_series()
+    else:
+        dep_series, coverage = deps_v2_series()
+    max_move, max_share, transitions = max_clean_move({series_kind: dep_series}, CHALLENGE)
+    # coverage-relative rule (council statistical layer): threshold derived from
+    # clean history — 1 - margin x max clean relative deviation from the median,
+    # floored at 0.90 (never more permissive than the v1-draft anchor)
+    snaps_cov = {s: c for s, c in coverage.items() if s not in CHALLENGE}
+    med_cov = sorted(snaps_cov.values())[len(snaps_cov) // 2] if snaps_cov else 0
+    max_dev = max((abs(c - med_cov) / med_cov for c in snaps_cov.values()), default=0.0) if med_cov else 0.0
+    coverage_rel_threshold = min(0.90, 1 - SAFETY_MARGIN * max_dev) if med_cov else 0.90
     move_bound = max(max_move * 1.0, math.log(2))  # never below 2x (physical floor)
     # panel threshold: max clean big-move share x margin, floored at 10% so a
     # single entity in a small panel cannot quarantine a partition alone
@@ -210,7 +241,10 @@ def calibrate() -> int:
         "derived_panel_threshold": round(panel_threshold, 4),
         "safety_margin": SAFETY_MARGIN,
         "coverage_min": COVERAGE_MIN,
+        "coverage_rel_threshold": round(coverage_rel_threshold, 4),
+        "coverage_series_median_clean": med_cov,
         "value_floor": VALUE_FLOOR,
+        "series_kind": series_kind,
         "negative_control_series": sorted(controls.keys()),
         "negative_control_firings": nc_fired,
         "negative_control_pass": not nc_fired,
@@ -232,12 +266,18 @@ def calibrate() -> int:
     return 0 if not nc_fired else 1
 
 
-def check(calibration_path: str) -> int:
+def check(calibration_path: str, series_kind: str = "v2") -> int:
     cal = json.loads(Path(calibration_path).read_text())
     move_bound = cal["derived_move_bound_log"]
     panel_threshold = cal["derived_panel_threshold"]
-    series, coverage = deps_v2_series()
+    if series_kind == "v2h1":
+        series, coverage = deps_v2h1_series()
+    else:
+        series, coverage = deps_v2_series()
+    rel_thr = cal.get("coverage_rel_threshold", 0.90)
     snaps = sorted({s for pts in series.values() for s in pts})
+    cov_clean = [coverage[s] for s in snaps if s not in CHALLENGE]
+    cov_med = sorted(cov_clean)[len(cov_clean) // 2] if cov_clean else 0
     verdicts = {}
     for i, snap in enumerate(snaps):
         if coverage.get(snap, 0) < COVERAGE_MIN and coverage.get(snap, 0) < max(coverage.values()):
@@ -254,8 +294,16 @@ def check(calibration_path: str) -> int:
         status = "SUSPECT_CORRUPT" if (eligible >= 10 and share > panel_threshold) else "CLEAN"
         verdicts[snap] = {"status": status, "reversal_share": round(share, 4),
                           "eligible": eligible}
-    # stage-1 coverage contract (uniform, pre-registered constant)
+    # stage-1 coverage contracts: absolute pre-registered floor + relative-to-median
     for snap in snaps:
+        c = coverage.get(snap, 0)
+        if cov_med and c < rel_thr * cov_med:
+            v = verdicts.setdefault(snap, {})
+            v["coverage"] = c
+            v["coverage_contract"] = (f"matched {c} < {rel_thr:.2f} x series median {cov_med} "
+                                      "(relative-coverage rule, calibration-derived)")
+            if v.get("status") not in ("SUSPECT_CORRUPT",):
+                v["status"] = "INVALID_COVERAGE"
         if coverage.get(snap, 0) < COVERAGE_MIN:
             v = verdicts.setdefault(snap, {})
             v["coverage"] = coverage.get(snap, 0)
@@ -293,11 +341,12 @@ def main() -> int:
     sub.add_argument("--calibrate", action="store_true",
                      help="derive bounds from the clean corpus; write calibration artifact")
     sub.add_argument("--check", metavar="CALIBRATION_JSON",
-                     help="apply the gate to the deps_v2 series using a calibration artifact")
+                     help="apply the gate to the series using a calibration artifact")
+    ap.add_argument("--series", choices=["v2", "v2h1"], default="v2")
     args = ap.parse_args()
     if args.calibrate:
-        return calibrate()
-    return check(args.check)
+        return calibrate(args.series)
+    return check(args.check, args.series)
 
 
 if __name__ == "__main__":

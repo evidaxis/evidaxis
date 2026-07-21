@@ -1,0 +1,112 @@
+{
+  "calibration_sha256_prefix": "e8580af09a18",
+  "flagged": [
+    "2026-06-11",
+    "2026-06-15"
+  ],
+  "v": "data_sanity_gate_1",
+  "verdicts": {
+    "2026-03-16": {
+      "coverage": 62,
+      "note": "first point; no predecessor",
+      "status": "CLEAN"
+    },
+    "2026-03-23": {
+      "coverage": 62,
+      "eligible": 43,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-03-30": {
+      "coverage": 62,
+      "eligible": 44,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-04-06": {
+      "coverage": 62,
+      "eligible": 44,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-04-14": {
+      "coverage": 62,
+      "eligible": 44,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-04-20": {
+      "coverage": 62,
+      "eligible": 44,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-04-28": {
+      "coverage": 62,
+      "eligible": 45,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-05-05": {
+      "coverage": 63,
+      "eligible": 45,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-05-11": {
+      "coverage": 63,
+      "eligible": 45,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-05-18": {
+      "coverage": 63,
+      "eligible": 44,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-06-01": {
+      "coverage": 63,
+      "eligible": 43,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-06-11": {
+      "coverage": 46,
+      "coverage_contract": "matched 46 < 0.90 x series median 63 (relative-coverage rule, calibration-derived)",
+      "eligible": 41,
+      "reversal_share": 1.0,
+      "status": "SUSPECT_CORRUPT"
+    },
+    "2026-06-15": {
+      "coverage": 50,
+      "coverage_contract": "matched 50 < 0.90 x series median 63 (relative-coverage rule, calibration-derived)",
+      "eligible": 8,
+      "reversal_share": 0.0,
+      "status": "INVALID_COVERAGE"
+    },
+    "2026-06-23": {
+      "coverage": 63,
+      "eligible": 8,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-06-29": {
+      "coverage": 63,
+      "eligible": 47,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-07-06": {
+      "coverage": 63,
+      "eligible": 47,
+      "reversal_share": 0.0,
+      "status": "CLEAN"
+    },
+    "2026-07-13": {
+      "coverage": 63,
+      "note": "last point; shape rules need a successor",
+      "status": "PROVISIONAL"
+    }
+  }
+}

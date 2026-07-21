@@ -59,8 +59,8 @@ CRIT = {"coverage_min": 30, "independence_max_abs_r": 0.5,
 
 def load_series(as_of: str) -> dict:
     series = defaultdict(dict)
-    files = sorted(OBS.glob("*/deps_v2.jsonl")) + \
-        sorted((OBS / "backfill" / "axis3-deps-v2").glob("deps_v2.jsonl"))
+    files = sorted((OBS / "backfill" / "axis3-deps-v2h1").glob("deps_v2h1-????-??-??.jsonl")) + \
+        sorted(OBS.glob("*/deps_v2h1-????-??-??.jsonl"))
     for f in files:
         for line in f.read_text().splitlines():
             if not line.strip():
@@ -71,7 +71,7 @@ def load_series(as_of: str) -> dict:
                 continue
             if row.get("coverage") != "matched":
                 continue
-            sig = (row.get("signals") or {}).get("deps_v2_unique_direct")
+            sig = (row.get("signals") or {}).get("deps_v2h1_unique_direct")
             if sig is None or sig.get("value") is None:
                 continue
             series[row["entity_id"]][snap] = int(sig["value"])
