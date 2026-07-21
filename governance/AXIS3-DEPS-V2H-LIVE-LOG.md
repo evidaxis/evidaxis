@@ -76,3 +76,47 @@ would be a query/identity change ⇒ a NEW superseding record + live-floor resta
 so it is deliberately NOT applied mid-floor. Continue capturing new snapshots as
 they land (next expected ≈ weekly; 2026-07-20 partition not yet in BigQuery as of
 2026-07-21).
+
+### Data-integrity finding — 2026-07-21 (dated correction; supersedes the c4 read above)
+
+A free diagnostic over the committed 15-snapshot series (no new BigQuery reads)
+found that **the c4 verdict — and in fact the entire cutoff-1 scoring — is
+contaminated by two corrupt upstream partitions: 2026-06-11 and 2026-06-15.**
+
+Evidence (raw `unique_direct` trajectories):
+- langgraph: …06-01=1313 → **06-11=16 → 06-15=12** → 06-23=1361…
+- crewAI: …241 → **1 → 4** → 250… · ollama: …967 → **15 → 6** → 977… · vllm: …151 → **3 → 2** → 151…
+
+A package's direct-dependent count cannot fall ~99% in one week and fully recover
+the next; these two snapshots are partial/mid-recompute (matched coverage 22 and
+25 of 31 vs 31 on every clean partition; both off the ~weekly cadence — 06-11 at
+22:24, off-cycle). The evaluator's `votes_at_cutoff` has no anomaly guard, so it
+fits `slope(log1p)` across these two deep mid-series dips, which sit right of the
+series centre and drag the least-squares slope negative for nearly every entity.
+Result: **only 2/22 voting entities show positive slope** even though **26/31
+matched packages are rising endpoint-to-endpoint** (langgraph 1008→1451, ollama
+847→1021, crewAI 168→278). "0% rising per cohort" is therefore an artifact of the
+two bad weeks, NOT a property of the systems, and NOT a strict-gate effect.
+
+**Corrections to prior notes (append-only; earlier text left intact):**
+- The cutoff-1 table above ("c4 … panel-wide negative-slope regime persists";
+  "unique-direct flat/declining for ~all systems") is a MIS-DIAGNOSIS. The metric
+  is healthy and near-monotonically rising; the failure is contaminated slopes.
+- Because c2 and c3 are computed on the same poisoned slopes/z-scores, the
+  cutoff-1 verdicts for c2 (r=0.4854) and c3 are also **not trustworthy**. No
+  criterion verdict from this cutoff should be relied on.
+- The 2026-07-16 baseline note's "panel-wide negative slope regime / unique-direct
+  падает у ВСЕХ" carries the same error.
+
+**Implication.** Capturing further live snapshots on top of this contaminated
+baseline is pointless. The disciplined fix is a NEW superseding record that
+(1) adds a PRE-REGISTERED anomalous-partition guard (exclude partitions whose
+panel-wide value collapses and recovers — a physically-impossible-drop rule,
+fixed on principle, not tuned to results; disclosed) and, since the floor
+restarts anyway, (2) expands the pin panel (conda / HF-hub / Go / monorepo + more
+systems) to lift c1. Per the change-discipline this restarts the live floor
+(new baseline backfill ≈ $48, + live). Because it alters a pre-registered scoring
++ panel on seen data, it goes through an adversarial spar (external review) BEFORE
+commit — not a unilateral edit. A clean re-score is deliberately NOT computed here
+to keep the exclusion rule blind to its own effect until pre-registered. Live
+floor is HELD pending the keeper's decision on the restart.
