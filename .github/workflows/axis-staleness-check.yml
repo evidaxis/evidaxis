@@ -1,0 +1,42 @@
+name: Axis capture staleness check
+# Fail-safe sensor for the weekly v2h.1 capture ritual (keeper request 2026-07-21:
+# "I will forget — wire it into rituals"). Pure git-based fact sensor (external-seam
+# doctrine): if the newest committed deps_v2h1 capture manifest is older than the
+# threshold, ping Telegram. SILENT while the weekly ritual runs on time — this is a
+# dead-week alarm, not a notification channel (Reddit-watcher lesson respected).
+on:
+  schedule:
+    - cron: '23 8 * * *'   # daily 08:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check days since last axis capture
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+          THRESHOLD_DAYS: '8'
+        run: |
+          set -euo pipefail
+          newest_file=$(ls data/observations/backfill/axis3-deps-v2h1/deps_v2h1-*-manifest.json \
+                          data/observations/*/deps_v2h1-*-manifest.json 2>/dev/null | while read -r p; do
+                            echo "$(git log -1 --format=%ct -- "$p") $p"; done | sort -n | tail -1)
+          if [ -z "$newest_file" ]; then echo "no captures found"; exit 1; fi
+          ts=${newest_file%% *}
+          days=$(( ( $(date +%s) - ts ) / 86400 ))
+          latest="commit $(date -u -d @"$ts" +%F) (${newest_file#* })"
+          echo "newest capture commit: $latest (${days}d ago)"
+          if [ "$days" -gt "$THRESHOLD_DAYS" ]; then
+            msg="⏰ Evidaxis: ось m3 не капчурилась ${days} дн. Скажи Клоду: «ритуал недели» или «продолжаем evidaxis»."
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -d chat_id="${ALERT_CHAT_ID}" -d text="$msg" >/dev/null
+            echo "alert sent"; exit 1
+          fi
