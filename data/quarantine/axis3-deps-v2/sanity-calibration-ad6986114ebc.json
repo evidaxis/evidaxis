@@ -1,0 +1,22 @@
+{
+  "challenge_partitions_excluded": [
+    "2026-06-11",
+    "2026-06-15"
+  ],
+  "clean_transitions_scanned": 71,
+  "corpus_series": [
+    "deps_v1",
+    "deps_v2",
+    "t2_open_issues",
+    "t2_watchers"
+  ],
+  "coverage_min": 30,
+  "derived_move_bound_log": 1.0986,
+  "derived_panel_threshold": 0.2143,
+  "max_clean_big_move_share": 0.0714,
+  "max_clean_single_entity_log_move": 1.0986,
+  "procedure": "max clean observation x declared margin; challenge partitions excluded from calibration",
+  "safety_margin": 3.0,
+  "v": "data_sanity_gate_1",
+  "value_floor": 5
+}

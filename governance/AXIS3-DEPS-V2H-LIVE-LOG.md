@@ -120,3 +120,42 @@ systems) to lift c1. Per the change-discipline this restarts the live floor
 commit — not a unilateral edit. A clean re-score is deliberately NOT computed here
 to keep the exclusion rule blind to its own effect until pre-registered. Live
 floor is HELD pending the keeper's decision on the restart.
+
+### Council review + retraction + gate implementation — 2026-07-21 (same day, later)
+
+**7-model adversarial council** reviewed the incident, the keeper post-mortem and
+DRAFT v1 (roster: ChatGPT 5.6 Sol xhigh · GLM 5.2 · Kimi K3 · Grok 4.5 ·
+MiniMax M3 · Claude Opus 4.8 · DeepSeek V4 Pro; synthesis judged in the keeper's
+planning layer). Verdict highlights: DRAFT v1's hand-set constants and drop-only
+direction REJECTED (a drop-only filter in a positive-only institute =
+positive-momentum laundering risk); replacement = typed evaluation state machine
++ two-stage direction-neutral gate + verdict-layer canary + provisional-last-point
+policy + procedure-derived thresholds with the two bad partitions as challenge
+cases (challenge != holdout); restart fork = clean+expand in one cycle, 7/7, with
+a value-blind expansion manifest and dual-rationale record. Operative rewrite:
+`DRAFT-data-sanity-gate.md` v2.
+
+**Executed same day:**
+- **Retraction:** both evaluation artifacts (baseline + cutoff #1) retagged
+  INVALID_INPUT — `eval/RETRACTION-2026-07-21.md`. No m3-v2h criteria verdict
+  stands; the "1/4 live floor" state above is void with them.
+- **Gate implemented:** `collectors/data_sanity_gate.py` (two-stage, symmetric,
+  corpus-calibrated: 71 clean transitions across 3 series; move bound 3.0x,
+  panel threshold 0.214). **Kill-bar PASS:** flags exactly {2026-06-11,
+  2026-06-15}, zero clean partitions. 06-11 fires BOTH stages (coverage 22<30
+  pre-registered floor + reversal-share 1.0 vs 0.214 threshold); 06-15 fires the
+  stage-1 contract (25<30; the second partition of a consecutive corrupt pair is
+  invisible to a 1-step shape rule — RECOVERY_WINDOW=2 now covers the pair class).
+- **Free row-count sentinel measured** (INFORMATION_SCHEMA, $0, 169 partitions
+  2023-04..2026-07): the 2026-06 incident had NORMAL total_rows (ratio 1.039) —
+  content corruption at normal cardinality; row counts alone are insufficient,
+  panel contracts are load-bearing. Upstream history DOES contain
+  truncated/inflated partitions (2024-02..03 at ratio ~0.4; 2023-11 / 2024-08
+  spikes 2-3x) — the sentinel catches that other class for free.
+
+**Next (in order):** value-blind expansion manifest (metadata-only pin
+eligibility, frozen before any value query) → superseding record v2h.1 (state
+machine + gate + canary + provisional-last-point + expansion, dual-rationale)
+→ new baseline backfill (14 most recent CONFIRMED-CLEAN partitions, ~$48) →
+live floor restarts. Earliest promotion verdict shifts to ~late September 2026
+(4 confirmed-clean live snapshots + 28 days from restart).

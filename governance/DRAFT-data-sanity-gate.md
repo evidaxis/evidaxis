@@ -1,52 +1,139 @@
-# DRAFT — Data-sanity gate for external data seams (NOT in force)
+# DRAFT v2 — Data-sanity gate + evaluation state machine (NOT in force)
 
-> status: DRAFT 2026-07-21 — spar material for the next superseding record.
-> NOT operative until adversarially reviewed and committed as a dated record.
-> Trigger incident: the 2026-06-11 / 2026-06-15 deps.dev partitions (see
-> AXIS3-DEPS-V2H-LIVE-LOG.md, data-integrity finding 2026-07-21).
+> status: DRAFT v2, 2026-07-21 — rewritten after a 7-model adversarial council
+> review of DRAFT v1 (the council REJECTED v1's hand-set constants and drop-only
+> direction; this v2 is the agreed replacement). Becomes operative only as part
+> of the next dated superseding record.
+> Trigger incident: 2026-06-11 / 2026-06-15 corrupt partitions (see
+> AXIS3-DEPS-V2H-LIVE-LOG.md; retraction: eval/RETRACTION-2026-07-21.md).
+> Reference implementation: `collectors/data_sanity_gate.py` (kill-bar PASS
+> 2026-07-21: flags exactly the two challenge partitions, zero clean ones).
 
-## Problem class
+## Council verdict on DRAFT v1 (recorded honestly)
 
-Every integrity mechanism in this repo defends against OUR OWN dishonesty
-(pre-registration, blindness, frozen panels, content-addressed artifacts,
-look-ahead guards). Nothing defended against UPSTREAM data corruption. A
-mechanical evaluator amplifies bad input into confident false verdicts — twice
-(baseline 2026-07-16, cutoff-1 2026-07-21) an artifact of two partial upstream
-partitions was recorded as "panel-wide decline" without a raw-data look.
+- Hand-set constants (30%/20/50%/80%/90%) — rejected: "optically fatal";
+  unanswerable to a hostile reviewer.
+- Drop-only detection — rejected as **positive-momentum laundering risk**: in a
+  positive-only institute, a filter that preferentially excludes value dips is
+  indistinguishable from deleting inconvenient declines. All shape rules must be
+  direction-neutral (dip-and-recover AND spike-and-revert).
+- "Physically impossible" language — rejected as overclaim: a panel-wide
+  transition is evidence of source inconsistency, not proof of its cause.
+  Quarantine language: "unfit for inference," never "proven corruption."
+- Survivor-bias: entities that VANISH from a partition are a stronger signal
+  than entities with collapsed values; coverage must be a first-class contract,
+  not a footnote.
 
-## Proposed rule (to be fixed on principle, then validated — never tuned)
+## The agreed design (two-stage gate + typed state machine)
 
-A snapshot/partition is quarantined as `suspect_corrupt` when EITHER:
+**Evaluation state machine** (no criterion may be computed on non-eligible input):
 
-1. **Physically-impossible transition**: for >= K% of matched entities with
-   prior value >= V_min, the value drops by more than D% at this snapshot AND
-   recovers to more than R% of the pre-drop value at the next snapshot.
-   (Straw-man numbers for the spar: K=30%, V_min=20, D=50%, R=80%. The rule
-   fires on a PANEL-WIDE dip-and-recover — a single entity collapsing is a
-   legitimate observation; half the panel collapsing and recovering is not.)
-2. **Coverage collapse**: matched-entity count < M% of the series median
-   (straw-man: M=90%; the incident partitions were 22 and 25 vs a median of 31).
+```
+captured → integrity-eligible → confirmed-clean → computable → PASS/FAIL
+```
 
-Quarantined partitions: excluded from slope/z/criteria computation; retained in
-the archive verbatim (never deleted — retraction-by-tag, not erasure); listed in
-every evaluation artifact under `excluded_partitions` with the firing rule.
-The LAST point of a series can only be `provisionally_clean` (rule 1 needs a
-successor point) — verdicts at such a cutoff must carry that caveat.
+- A verdict computed on input later shown unfit is retagged INVALID_INPUT (not
+  FAIL) by a dated retraction note; quarantined snapshots never count toward
+  the live floor (>=4 means >=4 CONFIRMED-CLEAN snapshots).
 
-## Blindness clarification (doctrinal, needs the spar's eyes)
+**Stage 1 — hard contracts (fire immediately, single partition):**
+- Coverage contract: `matched < 30` → INVALID_COVERAGE. The constant 30 is the
+  PRE-EXISTING pre-registered promotion-criterion floor (PREREG c1), fixed
+  2026-07-16 before the incident was known — zero post-incident numbers. Both
+  incident partitions (22, 25) fail it.
+- Row-count fingerprint (free, INFORMATION_SCHEMA): partition total_rows
+  deviating >15% from the local (±10-partition) median → SUSPECT flag. Catches
+  the truncated-partition class (which HAS occurred upstream: 2024-02..03 series
+  at ratio 0.4, spikes 2-3x in 2023-11/2024-08). Note: the 2026-06 incident had
+  NORMAL row counts (ratio 1.039) — this layer alone is insufficient, which is
+  why panel-level rules are load-bearing.
+- Identity-set: the matched-entity roster is diffed against the previous clean
+  partition; disappearances are listed in the artifact (survivor-bias guard).
 
-Blindness discipline binds THRESHOLDS AND VERDICTS (no tuning on seen data).
-It does NOT bind data sanitation. Raw-series inspection (sparkline/dump after
-every capture) is mandatory hygiene, not peeking. Conflating the two is what
-let two corrupt partitions poison two evaluation rounds.
+**Stage 2 — symmetric shape rules (need successor(s)):**
+- Reversal rule: an eligible entity (pre-move value >= 5, the existing
+  DEPS_FLOOR) counts as a reversal at partition p if |log(v_p/v_prev)| > bound
+  AND it returns to within bound/2 of the pre-move level within the next
+  RECOVERY_WINDOW=2 partitions (2 covers a consecutive corrupt pair — the
+  actual incident shape — while staying too short to absorb a real regime
+  change). Direction-neutral by construction.
+- Panel threshold: partition p → SUSPECT_CORRUPT when reversal-share among
+  eligible entities exceeds the calibrated threshold (>=10 eligible required).
+- The LAST partition of a series is at most PROVISIONAL (shape rules need
+  successors). Promotion/termination verdicts are computed ONLY on the
+  confirmed-clean prefix (official cutoff = t−1); the newest point is published
+  as UNCONFIRMED diagnostics.
 
-## Open questions for the spar
+**Threshold derivation (procedure pre-registered, constants computed):**
+- Calibration corpus (frozen, declared): every clean transition in all of the
+  institute's series — deps_v2 partitions minus the two DECLARED challenge
+  partitions, t2 watchers + open_issues (137 systems, daily), terminated v1
+  dependents (88). 71 clean transitions as of 2026-07-21.
+- Bounds = max clean observation × declared safety margin (3×), floored at
+  physical minimums (move bound never below 2×; panel threshold never below
+  10% so one entity cannot quarantine a partition). Computed 2026-07-21:
+  move bound 3.0× (max clean single move was exactly 3.0×), panel threshold
+  0.214 (max clean big-move share 0.071 × 3).
+- Plateau argument (stated, per council): the incident partitions sit at
+  reversal-share 1.0 — nearly 5× above the threshold; any margin in [2, 10]
+  separates them from clean history. The exact margin is policy, not a fit.
+- The two known-bad partitions are CHALLENGE CASES: excluded from calibration,
+  used only to verify firing. They cannot validate a detector designed after
+  seeing them (challenge ≠ holdout); validation is the ZERO false positives on
+  71 clean transitions across three independent series.
+- **Kill-bar (pre-registered, verified PASS 2026-07-21):** the gate must flag
+  exactly {2026-06-11, 2026-06-15} and zero clean partitions. Any other outcome
+  = the rule is wrong, the superseding record must not be committed.
 
-- Are K/V_min/D/R/M defensible a priori, or tuned to the known-bad partitions?
-  (They were written after seeing 06-11/06-15 — the spar must attack this.)
-- Should rule 1 require BOTH panel-wide dip-and-recover AND coverage drop, or
-  is either alone sufficient?
-- Retroactivity: applying the gate to the existing baseline restarts the live
-  floor per change-discipline. Bundle with panel expansion or run clean-only?
-- Does the gate itself need a gaming analysis (can upstream manipulation of
-  one partition force us to discard an honest signal)?
+**Verdict-layer canary (council: the cheapest universal defense):**
+- Alongside the primary estimator (slope of log1p), every evaluation computes
+  the naive endpoint-sign fraction per cohort. Disagreement beyond a declared
+  band forces HOLD — never an operator-authored explanation. (This check,
+  performed manually, is what actually caught the incident.)
+
+**Meta-monitor (Grok):** gate fire-rate tracked; a gate that suddenly fires
+often or never is itself suspect.
+
+**Blindness clarification (doctrinal):** blindness binds THRESHOLDS AND
+VERDICTS (no tuning on seen data). It does NOT bind data sanitation. Raw-series
+inspection after capture is mandatory hygiene, not peeking.
+
+**Epistemic typing (journal/memory):** entries are typed
+measured | derived | operator-hypothesis; a causal label about external data
+without an attached machine artifact is not journalable; a later session may
+not consume an operator-hypothesis as a premise without re-derivation.
+
+## Restart plan (council: option B, 7/7)
+
+One restart, one superseding record, with **dual rationale** (two independently
+justified changes, each standing on its own):
+1. Sanity gate + state machine (grounds: the incident + upstream's own history
+   of unstable partitions).
+2. Panel expansion across ecosystems — conda / HF-hub / Go / monorepo
+   sub-packages (grounds: PRE-EXISTING structural under-power, independent of
+   the incident: voting ceiling ≈24 < 30 after DEPS_FLOOR on the 41-pin panel;
+   independence pairs confined to one dense cohort). Expansion manifest is
+   VALUE-BLIND: pins selected by metadata/semantic eligibility rules frozen
+   before any value-bearing query; no hand-picking against criteria.
+   Cost note: expansion does NOT raise the per-partition read cost (the query
+   scans the whole day-partition regardless of pin count, ~$3.45).
+
+Clean-only restart (option A) was rejected 7/7 as a predetermined negative
+("credibility theater" — the coverage criterion is structurally unreachable on
+the 41-pin panel).
+
+Baseline rule fix (gap found in synthesis): the new baseline = the 14 most
+recent CONFIRMED-CLEAN partitions before the record (reaching deeper than 14
+calendar-weekly partitions if corrupt ones fall in the window) — the old
+"14 most recent" wording breaks when corrupt partitions land inside it.
+
+## Open questions for the superseding record
+
+- Sentinel control panel (non-ranked packages watched only for source health):
+  adopt only if marginal cost is truly ~0 (same-partition reads) — verify.
+- Annual re-idempotence spot-check (re-read one historical partition, compare
+  observation sha256; ~$3.44/yr) — adopt as calendar ritual?
+- Gate gaming analysis (can adversarial upstream noise force quarantines of
+  honest signal?) — deferred to the next review cycle, documented as residual.
+- Slow monotonic drift remains the known-uncovered class (no cheap automated
+  defense); documented as residual risk per council.
