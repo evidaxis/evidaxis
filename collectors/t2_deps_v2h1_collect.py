@@ -84,7 +84,7 @@ WITH obs AS (
 )
 SELECT
   entity_key,
-  IFNULL(pkg, '__SYSTEM__') AS pkg,
+  IFNULL(pkg, '__SYSTEM__') AS pkg_out,
   FORMAT_TIMESTAMP('%F %T', ANY_VALUE(snapshot_ts)) AS snapshot_at,
   COUNT(DISTINCT IF(direct, dep_key, NULL)) AS unique_direct,
   COUNT(DISTINCT IF(resolved, dep_key, NULL)) AS unique_any_depth,
@@ -94,7 +94,7 @@ SELECT
   APPROX_TOP_COUNT(IF(direct, dep_system, NULL), 8) AS eco_top
 FROM fps
 GROUP BY GROUPING SETS ((entity_key), (entity_key, pkg))
-ORDER BY entity_key, pkg
+ORDER BY entity_key, pkg_out
 """
 
 
@@ -178,8 +178,8 @@ def capture_one(entity_pkgs: dict, manifest_sha: str, snapshot: str,
     sql_sha = hashlib.sha256(sql.encode()).hexdigest()
     rows, job_id = _bq(sql)
     captured_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    sys_rows = {r["entity_key"]: r for r in rows if r["pkg"] == "__SYSTEM__"}
-    pkg_rows = [r for r in rows if r["pkg"] != "__SYSTEM__"]
+    sys_rows = {r["entity_key"]: r for r in rows if r["pkg_out"] == "__SYSTEM__"}
+    pkg_rows = [r for r in rows if r["pkg_out"] != "__SYSTEM__"]
     snapshot_at = rows[0]["snapshot_at"] if rows else f"{snapshot} 00:00:00"
 
     def _sig(row):
@@ -209,13 +209,17 @@ def capture_one(entity_pkgs: dict, manifest_sha: str, snapshot: str,
         })
     canaries = {k.split("CANARY:", 1)[1]: _sig(r)
                 for k, r in sys_rows.items() if k.startswith("CANARY:")}
+    if not canaries:
+        raise RuntimeError(
+            f"zero canaries parsed for {snapshot} — query/parse broken; aborting before "
+            "burning more partitions (canary absence is impossible by design)")
     out_dir.mkdir(parents=True, exist_ok=True)
     obs_text = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in records)
     (out_dir / f"deps_v2h1-{snapshot}.jsonl").write_text(obs_text)
     # per-package breakdown: INTERNAL diagnostics (never published per council —
     # package-level churn is an internal explanation for a system observation)
     pkg_text = "".join(json.dumps({
-        "entity_key": r["entity_key"], "pkg": r["pkg"], "snapshot_at": snapshot,
+        "entity_key": r["entity_key"], "pkg": r["pkg_out"], "snapshot_at": snapshot,
         "unique_direct": int(r["unique_direct"]),
         "xor_fp_direct": r.get("xor_fp_direct"),
         "sketch64": [int(x) for x in (r.get("sketch64") or [])],
