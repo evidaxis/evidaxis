@@ -204,6 +204,11 @@
       "linkage_verified_at": "2026-07-16T17:30:00Z",
       "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
+    "microsoft/bioemu": {
+      "system": "pypi",
+      "package": "bioemu",
+      "pinned_at": "2026-07-24T09:00:57Z"
+    },
     "modelscope/ms-swift": {
       "system": "pypi",
       "package": "ms-swift",
