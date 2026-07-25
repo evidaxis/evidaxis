@@ -14,18 +14,18 @@ classification:
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 064bcdd1c2d3
-  captured_at: 2026-07-18T08:17:42+00:00
-  period: 2026-w29
-  momentum: 59.7
-  percentile: 85
+  snapshot_id: be624cbf9aec
+  captured_at: 2026-07-25T08:32:38+00:00
+  period: 2026-w30
+  momentum: 61.2
+  percentile: 100
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.04661445429593896, "cohort_z": 0.779, "recent_weekly_commits": 40.9, "stars_not_scored": 5875}
+    github_commit_velocity: {"slope": 0.05138527842709699, "cohort_z": 0.896, "recent_weekly_commits": 43.1, "stars_not_scored": 5994}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 13, "by_year": {"2026": 1, "2025": 12}, "proxy": null}
 ---
 

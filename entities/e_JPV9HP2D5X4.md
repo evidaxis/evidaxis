@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 064bcdd1c2d3
-  captured_at: 2026-07-18T08:17:42+00:00
-  period: 2026-w29
-  momentum: 62.2
-  percentile: 72
+  snapshot_id: be624cbf9aec
+  captured_at: 2026-07-25T08:32:38+00:00
+  period: 2026-w30
+  momentum: 91.8
+  percentile: 100
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0005056627221859711, "cohort_z": 0.977, "recent_weekly_commits": 0.7, "stars_not_scored": 849}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 238, "by_year": {"2026": 170, "2025": 68}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0272779726668385, "cohort_z": 3.348, "recent_weekly_commits": 1.5, "stars_not_scored": 855}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 240, "by_year": {"2026": 172, "2025": 68}, "proxy": null}
 ---
 
 # BioEmu

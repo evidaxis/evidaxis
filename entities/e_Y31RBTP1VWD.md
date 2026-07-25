@@ -14,18 +14,18 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 064bcdd1c2d3
-  captured_at: 2026-07-18T08:17:42+00:00
-  period: 2026-w29
-  momentum: 65.2
-  percentile: 86
+  snapshot_id: be624cbf9aec
+  captured_at: 2026-07-25T08:32:38+00:00
+  period: 2026-w30
+  momentum: 67.7
+  percentile: 93
   confidence: low
   rising: false
   status: watch
   axes_present: ["github_commit_velocity"]
   convergent_axes: ["github_commit_velocity"]
   axes:
-    github_commit_velocity: {"slope": 0.012608850810173324, "cohort_z": 1.22, "recent_weekly_commits": 32.1, "stars_not_scored": 3846}
+    github_commit_velocity: {"slope": 0.023059830972807827, "cohort_z": 1.412, "recent_weekly_commits": 38.6, "stars_not_scored": 3853}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent."
 ---

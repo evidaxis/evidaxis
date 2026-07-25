@@ -14,19 +14,19 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 064bcdd1c2d3
-  captured_at: 2026-07-18T08:17:42+00:00
-  period: 2026-w29
-  momentum: 42.2
-  percentile: 29
+  snapshot_id: be624cbf9aec
+  captured_at: 2026-07-25T08:32:38+00:00
+  period: 2026-w30
+  momentum: 43.3
+  percentile: 33
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.007127019288183717, "cohort_z": -0.631, "recent_weekly_commits": 0.2, "stars_not_scored": 3067}
-    openalex_citation_momentum: {"status": "present", "slope": -0.8435411298625544, "cohort_z": -0.612, "total_citations": 197, "by_year": {"2024": 3, "2023": 5, "2022": 10, "2021": 82, "2020": 72, "2019": 25}, "proxy": null}
+    github_commit_velocity: {"slope": -0.00882610075812423, "cohort_z": -0.467, "recent_weekly_commits": 0.2, "stars_not_scored": 3077}
+    openalex_citation_momentum: {"status": "present", "slope": -0.8435411298625544, "cohort_z": -0.611, "total_citations": 197, "by_year": {"2024": 3, "2023": 5, "2022": 10, "2021": 82, "2020": 72, "2019": 25}, "proxy": null}
 note: "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
 ---
 

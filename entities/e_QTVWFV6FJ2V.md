@@ -14,19 +14,19 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 064bcdd1c2d3
-  captured_at: 2026-07-18T08:17:42+00:00
-  period: 2026-w29
-  momentum: 59.2
-  percentile: 75
+  snapshot_id: be624cbf9aec
+  captured_at: 2026-07-25T08:32:38+00:00
+  period: 2026-w30
+  momentum: 60.0
+  percentile: 80
   confidence: medium
   rising: false
   status: watch
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["openalex_citation_momentum"]
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.137, "recent_weekly_commits": 0.0, "stars_not_scored": 69420}
-    openalex_citation_momentum: {"status": "present", "slope": 0.8817942961306795, "cohort_z": 1.332, "total_citations": 145, "by_year": {"2026": 19, "2025": 69, "2024": 46, "2023": 11}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.27, "recent_weekly_commits": 0.0, "stars_not_scored": 69503}
+    openalex_citation_momentum: {"status": "present", "slope": 0.8817942961306795, "cohort_z": 1.332, "total_citations": 146, "by_year": {"2026": 20, "2025": 69, "2024": 46, "2023": 11}, "proxy": null}
 ---
 
 # MetaGPT

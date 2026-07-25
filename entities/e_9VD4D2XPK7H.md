@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 064bcdd1c2d3
-  captured_at: 2026-07-18T08:17:42+00:00
-  period: 2026-w29
-  momentum: 54.2
-  percentile: 44
+  snapshot_id: be624cbf9aec
+  captured_at: 2026-07-25T08:32:38+00:00
+  period: 2026-w30
+  momentum: 56.4
+  percentile: 67
   confidence: medium
   rising: false
   status: watch
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["openalex_citation_momentum"]
   axes:
-    github_commit_velocity: {"slope": -0.001184866975316146, "cohort_z": -1.406, "recent_weekly_commits": 0.1, "stars_not_scored": 4118}
-    openalex_citation_momentum: {"status": "present", "slope": 2.3659014184607288, "cohort_z": 2.078, "total_citations": 422, "by_year": {"2026": 179, "2025": 226, "2024": 16, "2023": 1}, "proxy": null}
+    github_commit_velocity: {"slope": -0.002606707345695521, "cohort_z": -1.046, "recent_weekly_commits": 0.1, "stars_not_scored": 4133}
+    openalex_citation_momentum: {"status": "present", "slope": 2.3659014184607288, "cohort_z": 2.077, "total_citations": 431, "by_year": {"2026": 188, "2025": 226, "2024": 16, "2023": 1}, "proxy": null}
 ---
 
 # Boltz
