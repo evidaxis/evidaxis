@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "network_count": 74,
+  "fork": false,
+  "stargazers_count": 672,
+  "description": "Trinity-RFT is a general-purpose, flexible and scalable framework designed for reinforcement fine-tuning (RFT) of large language models (LLM).",
+  "name": "Trinity-RFT",
+  "subscribers_count": 6,
+  "watchers_count": 672,
+  "size": 1515456,
+  "private": false,
+  "homepage": "https://agentscope-ai.github.io/Trinity-RFT/",
+  "default_branch": "main",
+  "topics": [
+    "agent",
+    "llm",
+    "rlhf"
+  ],
+  "full_name": "agentscope-ai/Trinity-RFT",
+  "forks_count": 74,
+  "updated_at": "2026-07-22T01:47:06Z",
+  "pushed_at": "2026-07-21T13:30:44Z",
+  "open_issues_count": 45,
+  "language": "Python",
+  "archived": false,
+  "created_at": "2025-04-09T03:46:14Z",
+  "visibility": "public",
+  "node_id": "R_kgDOOWasKg",
+  "id": 963030058,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
