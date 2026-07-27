@@ -198,3 +198,38 @@ structural property to watch at live cutoffs (baseline is non-gating either
 way). Live floor: first live capture = the next upstream partition (~2026-07-20,
 expected in BigQuery within days); promotion window ≈ late August 2026
 (4 confirmed-clean live snapshots + 28 days + successor confirmation lag).
+
+## 2026-07-27 — FIRST LIVE CAPTURE (weekly cadence, ritual A13)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-07-20` — the first live partition
+under the v2h.1 record. 63/90 systems matched, 10/12 canaries, job
+`bqjob_r418517b49bb53e9e_0000019fa2d20c34_1`. Coverage 63 is **the clean-series median**
+(`coverage_series_median_clean: 63` in the sanity calibration), not a shortfall: the panel
+declares 90 systems, but only those with dependents present in a given partition are
+measurable. Reading 63/90 as "coverage drop" would have been exactly the m3-class error
+the sanity gate exists to prevent — the gate, not the operator, classifies partitions.
+
+**Sidecar** (`--sidecar 2026-07-20`): PV2P 1131 rows, Projects 119 rows, retention tripwire
+`earliest 2023-04-10 · latest 2026-07-20 · n=170 · rows_total 987,298,245,180` — upstream
+history is not being rewritten or pruned at this observation.
+
+**Sanity gate** (`--check sanity-calibration-e8580af09a18.json --series v2h1`):
+17 partitions classified. **KILL-BAR PASS** — flagged exactly the two known-bad partitions
+(`2026-06-11 SUSPECT_CORRUPT cov=46 share=1.0`, `2026-06-15 INVALID_COVERAGE cov=50`),
+no false positives, negative control intact. **2026-07-13 promoted PROVISIONAL → CLEAN**
+(the 07-20 capture is its successor confirmation); **2026-07-20 is PROVISIONAL** as the
+newest partition, per the record's necessarily-provisional rule.
+Artifact: `data/quarantine/axis3-deps-v2/sanity-check-0e3e9a2d8420.json`.
+
+**Evaluation** (`evaluate_axis3_v2h1.py --as-of 2026-07-13 --label live`):
+status EVALUATED, official cutoff **2026-07-13**, 48 voting / 7 rising, 0 unstable-vetoed.
+**c1 PASS · c2 PASS · c3 PASS · c4 FAIL · c5 PASS · c6 PASS** — 5/6, and the c4 failure is
+the same small-cohort granularity already characterised at baseline (n=1-5 cohorts at 0%,
+robotics-embodied at the 0.40 boundary), not the poisoned panel-wide-zero regime.
+Artifact: `eval/v2h1-live-2026-07-13-406d06d7e660.json` (sha256 406d06d7e660…).
+
+**Promotion accounting.** Gate requires ≥4 NEW confirmed-clean partitions captured via the
+live path after the record, plus ≥28 days of live quarantine. This week contributes **one**
+capture (2026-07-20), still PROVISIONAL until its successor lands (~2026-07-27, next ritual).
+Nothing about the axis verdict changes today; promotion window remains late August 2026.
+Cost this week: $3.44 capture + ~$0.08 sidecar.
