@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "node_id": "R_kgDONV-LBQ",
+  "homepage": "https://aivideo.hunyuan.tencent.com",
+  "network_count": 1288,
+  "fork": false,
+  "name": "HunyuanVideo",
+  "topics": [
+    "diffusion-models",
+    "diffusion-transformer",
+    "video-generation"
+  ],
+  "archived": false,
+  "size": 109274,
+  "stargazers_count": 12375,
+  "forks_count": 1288,
+  "visibility": "public",
+  "full_name": "Tencent-Hunyuan/HunyuanVideo",
+  "pushed_at": "2026-06-29T09:33:50Z",
+  "id": 895453957,
+  "description": "HunyuanVideo: A Systematic Framework For Large Video Generation Model",
+  "default_branch": "main",
+  "open_issues_count": 181,
+  "private": false,
+  "language": "Python",
+  "updated_at": "2026-07-28T09:04:25Z",
+  "watchers_count": 12375,
+  "created_at": "2024-11-28T08:38:31Z",
+  "subscribers_count": 140,
+  "owner_type": "Organization",
+  "license_spdx_id": "NOASSERTION",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
