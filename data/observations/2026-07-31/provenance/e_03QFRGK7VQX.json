@@ -1,0 +1,33 @@
+{
+  "stargazers_count": 14391,
+  "watchers_count": 14391,
+  "pushed_at": "2026-07-30T23:26:58Z",
+  "full_name": "google-deepmind/mujoco",
+  "network_count": 1659,
+  "description": "Multi-Joint dynamics with Contact. A general purpose physics simulator.",
+  "created_at": "2021-08-27T12:25:48Z",
+  "disabled": false,
+  "size": 137141,
+  "homepage": "https://mujoco.org",
+  "node_id": "MDEwOlJlcG9zaXRvcnk0MDA1MDExMzY=",
+  "visibility": "public",
+  "fork": false,
+  "archived": false,
+  "forks_count": 1659,
+  "default_branch": "main",
+  "topics": [
+    "mujoco",
+    "physics",
+    "robotics"
+  ],
+  "private": false,
+  "id": 400501136,
+  "language": "C++",
+  "name": "mujoco",
+  "open_issues_count": 374,
+  "updated_at": "2026-07-31T08:52:37Z",
+  "subscribers_count": 129,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
