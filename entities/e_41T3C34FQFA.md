@@ -14,19 +14,19 @@ classification:
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: be624cbf9aec
-  captured_at: 2026-07-25T08:32:38+00:00
-  period: 2026-w30
-  momentum: 61.8
-  percentile: 83
+  snapshot_id: fe618519ff6a
+  captured_at: 2026-08-01T08:41:48+00:00
+  period: 2026-w31
+  momentum: 62.0
+  percentile: 82
   confidence: low
   rising: false
   status: calibration
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.94, "recent_weekly_commits": 0.0, "stars_not_scored": 24942}
-    openalex_citation_momentum: {"status": "present", "slope": 1.619753504562312, "cohort_z": null, "total_citations": 687, "by_year": {"2026": 22, "2025": 258, "2024": 338, "2023": 67, "2022": 1, "2021": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.958, "recent_weekly_commits": 0.0, "stars_not_scored": 24959}
+    openalex_citation_momentum: {"status": "present", "slope": 1.619753504562312, "cohort_z": null, "total_citations": 689, "by_year": {"2026": 24, "2025": 258, "2024": 338, "2023": 67, "2022": 1, "2021": 1}, "proxy": null}
 note: "paper_ref: arXiv:2310.03744; incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 

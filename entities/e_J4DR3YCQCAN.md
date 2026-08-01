@@ -14,18 +14,18 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: be624cbf9aec
-  captured_at: 2026-07-25T08:32:38+00:00
-  period: 2026-w30
-  momentum: 38.0
-  percentile: 13
+  snapshot_id: fe618519ff6a
+  captured_at: 2026-08-01T08:41:48+00:00
+  period: 2026-w31
+  momentum: 41.5
+  percentile: 20
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.01384271458456749, "cohort_z": -0.956, "recent_weekly_commits": 18.2, "stars_not_scored": 29634}
+    github_commit_velocity: {"slope": -0.006896191187050654, "cohort_z": -0.679, "recent_weekly_commits": 20.2, "stars_not_scored": 29674}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "No canonical peer paper in OpenAlex; axis-2 absent."
 ---

@@ -14,10 +14,10 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: be624cbf9aec
-  captured_at: 2026-07-25T08:32:38+00:00
-  period: 2026-w30
-  momentum: 57.2
+  snapshot_id: fe618519ff6a
+  captured_at: 2026-08-01T08:41:48+00:00
+  period: 2026-w31
+  momentum: 56.1
   percentile: 78
   confidence: low
   rising: false
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.576, "recent_weekly_commits": 0.0, "stars_not_scored": 518}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 182, "by_year": {"2026": 83, "2025": 93, "2024": 6}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.489, "recent_weekly_commits": 0.0, "stars_not_scored": 519}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 185, "by_year": {"2026": 86, "2025": 93, "2024": 6}, "proxy": null}
 ---
 
 # DiffSBDD
