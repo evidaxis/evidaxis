@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "description": "An Efficient and User-Friendly Scaling Library for Reinforcement Learning with Large Language Models",
+  "subscribers_count": 14,
+  "node_id": "R_kgDOOx_J6Q",
+  "default_branch": "main",
+  "updated_at": "2026-08-02T04:45:04Z",
+  "pushed_at": "2026-08-02T01:43:30Z",
+  "archived": false,
+  "watchers_count": 3339,
+  "open_issues_count": 119,
+  "visibility": "public",
+  "disabled": false,
+  "id": 991939049,
+  "homepage": "https://alibaba.github.io/ROLL/",
+  "name": "ROLL",
+  "size": 118701,
+  "forks_count": 305,
+  "created_at": "2025-05-28T11:27:18Z",
+  "stargazers_count": 3339,
+  "language": "Python",
+  "fork": false,
+  "full_name": "alibaba/ROLL",
+  "network_count": 305,
+  "topics": [
+    "agentic",
+    "rlhf",
+    "rlvr"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
