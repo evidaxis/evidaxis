@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import urllib.error
 from pathlib import Path
 
 import pytest
@@ -164,3 +165,124 @@ def test_blocklist_rows_and_tokens_are_counted_without_names(tmp_path, monkeypat
     candidates = census.candidates_of(rows, histogram)
     assert [row["id"] for row in candidates] == [203]
     assert histogram == {"tutorial": 1, "awesome": 1}
+
+
+class _ReadmeResponse:
+    def __init__(self, body):
+        self.body = body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_args):
+        return False
+
+    def read(self):
+        return self.body
+
+
+def test_readme_prefix_tries_extended_names_and_keeps_ranged_request(monkeypatch):
+    requests = []
+
+    def open_readme(request, timeout):
+        requests.append(request)
+        if request.full_url.endswith("/docs/README.md"):
+            return _ReadmeResponse(b"AI system")
+        raise urllib.error.HTTPError(request.full_url, 404, "missing", {}, None)
+
+    monkeypatch.setattr(census.urllib.request, "urlopen", open_readme)
+
+    assert census.readme_prefix("group/project") == "AI system"
+    assert [request.full_url.rsplit("/HEAD/", 1)[1] for request in requests] == list(
+        census.README_NAMES
+    )
+    assert {request.get_header("Range") for request in requests} == {
+        f"bytes=0-{census.README_PREFIX}"
+    }
+
+
+def test_readme_prefix_rejects_non_utf8_text(monkeypatch):
+    monkeypatch.setattr(
+        census.urllib.request,
+        "urlopen",
+        lambda _request, timeout: _ReadmeResponse(b"\xff\xfe"),
+    )
+
+    assert census.readme_prefix("group/project") == ""
+
+
+def test_deepcheck_records_repository_without_default_branch(tmp_path, monkeypatch):
+    node = {
+        "databaseId": 7,
+        "nameWithOwner": "group/empty",
+        "isFork": False,
+        "isArchived": False,
+        "licenseInfo": {"spdxId": None},
+        "primaryLanguage": None,
+        "defaultBranchRef": None,
+        "releases": {"totalCount": 0},
+    }
+    monkeypatch.setattr(census, "gh_graphql", lambda _query: ({"r0": node}, True))
+    monkeypatch.setattr(
+        census, "readme_batch", lambda names: dict.fromkeys(names, "")
+    )
+    monkeypatch.setattr(census.time, "sleep", lambda _seconds: None)
+    output = tmp_path / "deepcheck.jsonl"
+
+    census.deepcheck([{"id": 7, "full_name": "group/empty"}], output)
+
+    recorded = json.loads(output.read_text())
+    assert recorded["no_default_branch"] is True
+    assert recorded["commit_oid"] is None
+
+
+def test_stock_census_flag_stamps_intent_and_empty_repo_counter(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(census, "REPO", tmp_path)
+
+    def fake_emit(month_dir):
+        (month_dir / "pending-manifest.json").write_text(json.dumps({
+            "wave": "forward",
+            "members": [{"repo_id": 7, "wave": "forward"}],
+        }))
+        (month_dir / "census-run.json").write_text(json.dumps({
+            "aggregate": {"no_velocity": 1},
+            "pending_manifest_sha256": "stale",
+        }))
+        (month_dir / "deepcheck.jsonl").write_text(
+            json.dumps({"id": 7, "no_default_branch": True}) + "\n"
+        )
+
+    monkeypatch.setattr(census, "emit", fake_emit)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["census_ai_v1.py", "emit", "--month", "2026-09", "--stock-census"],
+    )
+
+    assert census.main() == 0
+
+    month_dir = tmp_path / "data" / "census" / "2026-09"
+    manifest = json.loads((month_dir / "pending-manifest.json").read_text())
+    run = json.loads((month_dir / "census-run.json").read_text())
+    assert manifest["stock_census"] is True
+    assert manifest["wave"] == "backlog"
+    assert manifest["members"][0]["wave"] == "backlog"
+    assert run["stock_census"] is True
+    assert run["activation_wave"] == "backlog"
+    assert run["aggregate"]["no_default_branch"] == 1
+    assert run["pending_manifest_sha256"] == census.sha256(
+        month_dir / "pending-manifest.json"
+    )
+    assert (month_dir / "census-run.sha256").read_text() == (
+        census.sha256(month_dir / "census-run.json") + "  census-run.json\n"
+    )
+
+
+def test_dead_channel_is_retained_only_for_historical_artifacts():
+    assert "weak-topic+second" in census.CHANNELS
+    table_rows = [
+        line for line in census.ACT.read_text().splitlines()
+        if line.startswith("|")
+    ]
+    assert not [line for line in table_rows if "weak-topic+second" in line]

@@ -3,10 +3,10 @@
  "builder": "census_ai_v1",
  "predicate": "AI-v1",
  "star_bar": 500,
- "run_at": "2026-08-03T12:35:36+00:00",
- "governance_act_sha256": "49d4a6cb5bc8eed22fb42fa84b2b0f908ab9fbd8b671a8a5c22bff411a965fe6",
+ "run_at": "2026-08-03T13:10:56+00:00",
+ "governance_act_sha256": "7bd31e20b7a3849b14647330044bd9f9835f6fd35b5736eb613697adf3d951fe",
  "scope_module_sha256": "b80170e53c329a34461fce2abae1414863023356089814e7be67e981a642af84",
- "executor_sha256": "aea0a6956bf9fd31cad6173a6fb7d7ddd4fec2a6cde71f8eb82af8b1ed408383",
+ "executor_sha256": "f8095216766316b881a3116cad0f03fe338965338a90a806e5c9f634f682c797",
  "sweep": {
   "bar_lo": 500,
   "bar_hi": 1000000,
@@ -99,249 +99,14 @@
  "legacy_reconciliation": {
   "note": "AI-v1 evaluated against the 137 members admitted under the pre-policy discretionary method. They remain members under the no-removal rule; this block reports where the predicate disagrees with the institute's own history rather than tuning the predicate to agree.",
   "legacy_evaluated": 130,
-  "legacy_failing_ai_v1": [
-   {
-    "full_name": "microsoft/autogen",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "TabbyML/tabby",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "fishaudio/fish-speech",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "voideditor/void",
-    "fails": [
-     "fork_or_archived"
-    ]
-   },
-   {
-    "full_name": "huggingface/smolagents",
-    "fails": [
-     "ai_scope"
-    ]
-   },
-   {
-    "full_name": "charmbracelet/crush",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "mastra-ai/mastra",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "huggingface/open-r1",
-    "fails": [
-     "ai_scope",
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "black-forest-labs/flux",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "deepseek-ai/DeepSeek-OCR",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "Wan-Video/Wan2.2",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "GeeeekExplorer/nano-vllm",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "google-deepmind/mujoco",
-    "fails": [
-     "ai_scope"
-    ]
-   },
-   {
-    "full_name": "NVIDIA/TensorRT-LLM",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "Tencent-Hunyuan/HunyuanVideo",
-    "fails": [
-     "license",
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "Lightricks/LTX-Video",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "m87-labs/moondream",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "hexgrad/kokoro",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "apple/ml-fastvlm",
-    "fails": [
-     "license",
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "multimodal-art-projection/YuE",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "SWE-bench/SWE-bench",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "deepseek-ai/DeepSeek-VL2",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "PeterGriffinJin/Search-R1",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "vllm-project/aibrix",
-    "fails": [
-     "ai_scope"
-    ]
-   },
-   {
-    "full_name": "ace-step/ACE-Step",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "facebookresearch/esm",
-    "fails": [
-     "fork_or_archived"
-    ]
-   },
-   {
-    "full_name": "huggingface/smollm",
-    "fails": [
-     "ai_scope",
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "ARISE-Initiative/robosuite",
-    "fails": [
-     "license"
-    ]
-   },
-   {
-    "full_name": "Lifelong-Robot-Learning/LIBERO",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "chaidiscovery/chai-lab",
-    "fails": [
-     "ai_scope"
-    ]
-   },
-   {
-    "full_name": "showlab/ShowUI",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "dauparas/ProteinMPNN",
-    "fails": [
-     "ai_scope"
-    ]
-   },
-   {
-    "full_name": "thu-ml/RoboticsDiffusionTransformer",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "Stability-AI/sd3.5",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "ATH-MaaS/Ovis",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "EmergenceAI/Agent-E",
-    "fails": [
-     "ai_scope",
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "MoonshotAI/Kimi-VL",
-    "fails": [
-     "code_language",
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "westlake-repl/SaProt",
-    "fails": [
-     "velocity"
-    ]
-   },
-   {
-    "full_name": "dauparas/LigandMPNN",
-    "fails": [
-     "ai_scope",
-     "velocity"
-    ]
-   }
-  ]
+  "legacy_failing_ai_v1_by_leg": {
+   "license": 9,
+   "fork_or_archived": 2,
+   "ai_scope": 9,
+   "velocity": 25,
+   "code_language": 1
+  },
+  "legacy_failing_ai_v1_total": 39
  },
  "bands": [
   {
@@ -2146,5 +1911,5 @@
    "done": true
   }
  ],
- "pending_manifest_sha256": "fde491f16ba1d4fd1bda870f9b65ee2aab0a2dcaf67aefc0ed60e28d2a2c326f"
+ "pending_manifest_sha256": "5a60568756ccfa0a607ffb1e07cec9021a2343f4dc6a45080641bff66bffb50b"
 }

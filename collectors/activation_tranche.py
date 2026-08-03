@@ -26,8 +26,9 @@ Outputs: data/census/<month>/tranches/<date>-tranche.json  (what to activate)
 
 Stars are RE-READ LIVE at tranche time (the policy says "current stars"), so the
 order reflects the week of publication, not the census month. A member whose
-repo went missing/archived since the census is skipped and reported (it stays in
-the pending manifest: membership is never silently revoked).
+repo went missing/archived since the census is skipped and reported with the
+terminal status ``unavailable``: membership is never silently revoked, but an
+unavailable member cannot occupy the pending queue forever.
 
 Usage:
   python3 collectors/activation_tranche.py --month 2026-08            # dry-run
@@ -96,6 +97,45 @@ def live_card_count() -> int:
     return sum(len(v["entities"]) for v in seeds["verticals"].values())
 
 
+def seeded_repo_ids(seeds: dict) -> set[int]:
+    """Resolve live-card identity without trusting a repository's mutable name.
+
+    Legacy cards predate an inline ``repo_id``, so their numeric identities come
+    from registry_ids.json. Census-activated cards retain the id either inline
+    or in a published pending manifest. Names are used only to locate those
+    identity records; the returned ids are the sole membership dedup keys.
+    """
+    entities = [
+        entity
+        for vertical in seeds["verticals"].values()
+        for entity in vertical["entities"]
+    ]
+    seed_names = {entity["github_repo"].lower() for entity in entities}
+    repo_ids = {
+        entity["repo_id"]
+        for entity in entities
+        if isinstance(entity.get("repo_id"), int)
+    }
+
+    registry_path = REPO / "data" / "registry_ids.json"
+    if registry_path.exists():
+        registry = json.loads(registry_path.read_text()).get("members", {})
+        for recorded_name, identity in registry.items():
+            aliases = {recorded_name.lower()}
+            if identity.get("canonical"):
+                aliases.add(identity["canonical"].lower())
+            if aliases & seed_names:
+                repo_ids.add(identity["repo_id"])
+
+    for manifest_path in (REPO / "data" / "census").glob(
+            "*/pending-manifest.json"):
+        historic = json.loads(manifest_path.read_text())
+        for member in historic.get("members", []):
+            if member.get("full_name", "").lower() in seed_names:
+                repo_ids.add(member["repo_id"])
+    return repo_ids
+
+
 def main() -> int:
     args = sys.argv[1:]
     month = (args[args.index("--month") + 1] if "--month" in args
@@ -120,10 +160,12 @@ def main() -> int:
     print("re-reading live stars for the pending queue ...")
     live_info = gh_repos_batch([m["full_name"] for m in pending])
     refreshed, missing = [], []
+    unavailable_ids = set()
     for m in pending:
         info = live_info.get(m["full_name"])
         if info is None or info["archived"] or info["fork"]:
             missing.append(m["full_name"])
+            unavailable_ids.add(m["repo_id"])
         else:
             refreshed.append({**m, "stars": info["stars"],
                               "repo_id": info["id"],
@@ -176,19 +218,20 @@ def main() -> int:
         "label": "Unassigned (AI-v1 census)",
         "industry_slug": "ai", "subniche_slug": "unassigned",
         "entities": []})
-    have = {e["github_repo"].lower()
-            for v in seeds["verticals"].values() for e in v["entities"]}
+    have = seeded_repo_ids(seeds)
     added = 0
     for m in tranche:
-        if m["full_name"].lower() in have:
+        if m["repo_id"] in have:
             continue
         vert["entities"].append({
             "github_repo": m["full_name"], "entity_type": "repo",
+            "repo_id": m["repo_id"],
             "name": m["full_name"].split("/")[-1],
             "homepage": f"https://github.com/{m['full_name']}",
             "openalex_work_ids": [],
             "note": f"Admitted by AI-v1 census {month}; axis-2 unresolved.",
         })
+        have.add(m["repo_id"])
         added += 1
     seeds["meta"][f"census_{month}"] = (
         f"{today}: activation tranche of {added} members "
@@ -206,12 +249,18 @@ def main() -> int:
         if member["repo_id"] in activated:
             member["status"] = "activated"
             member["activated_on"] = today
+        elif member["repo_id"] in unavailable_ids:
+            member["status"] = "unavailable"
+            member["unavailable_on"] = today
     manifest["queue_note"] = (
-        "status transitions pending -> activated as weekly tranches publish; "
+        "status transitions pending -> activated as weekly tranches publish, "
+        "or pending -> unavailable when a repository is gone, archived, or a "
+        "fork; "
         "the frozen admission record is census-run.json and the manifest hash "
         "recorded there at census time")
     mp.write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
     print(f"pending manifest: {len(activated)} marked activated, "
+          f"{len(unavailable_ids)} marked unavailable, "
           f"{sum(1 for m in manifest['members'] if m['status'] == 'pending')} "
           f"still pending")
 

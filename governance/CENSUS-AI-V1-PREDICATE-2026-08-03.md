@@ -153,6 +153,10 @@ ordered list of contributing `sources` (`topic`, `readme`, `manifest`) alongside
 the signals. The public record therefore states exactly which two independent
 registers supplied the admission.
 
+**ch-2 is text-only.** It reads a UTF-8 README prefix and does not inspect or
+OCR linked images. A non-UTF-8 README supplies no ch-2 signal, and an
+image-first pitch with no qualifying text likewise supplies no signal.
+
 **Topic normalisation is mechanical:** lowercase and strip non-alphanumerics;
 match a frozen entry against the whole normalised topic or a separator/digit
 component, and permit substring matching only for entries of at least five
@@ -250,6 +254,19 @@ code is worse than either.
 
 Star bar: **≥500** public registry · **200–499** shadow layer (ids and star
 counts only, stored outside the public repository, never published).
+
+### Adversarial cost, measured
+
+Admission of a non-AI repository that already has ≥500 stars costs under five
+minutes: edit a topic or the description to carry a decisive label. Admission
+of a fresh repository costs 10–20 minutes plus acquiring the stars. A third
+party can exclude a real system by archiving it, removing its licence, or
+getting a merged pull request to inject a blocklist word.
+
+This is a known, accepted property of the mechanical predicate. Per-case
+overrides are forbidden. The one mitigation is public falsifiability: every
+admission publishes the evidence that admitted it, so a gamed entry is a
+public, falsifiable self-declaration.
 
 ## 6. Census procedure
 

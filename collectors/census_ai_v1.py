@@ -25,6 +25,7 @@ Phases (checkpointed, resumable):
   emit       - census-run.json + pending-manifest.json + sha256 anchors
 
 Usage: python3 collectors/census_ai_v1.py <phase> [--month YYYY-MM]
+       python3 collectors/census_ai_v1.py emit [--month YYYY-MM] [--stock-census]
 """
 from __future__ import annotations
 
@@ -120,10 +121,11 @@ STRATUM_BY_SIGNAL = MappingProxyType({
 
 # The classifier's two tiers: `storefront` admits alone (the project's public
 # label), `corroborated` is two independent supporting registers (README prose,
-# a framework-tier dependency, an ambiguous topic). The single-source channels
-# below are retained so historical artifacts stay readable.
-CHANNELS = ("storefront", "corroborated",
-            "readme", "manifest", "weak-topic+second")
+# a framework-tier dependency, an ambiguous topic).
+CHANNELS = (
+    "storefront", "corroborated", "readme", "manifest",
+    "weak-topic+second",  # Historical artifacts only; no longer emitted.
+)
 
 
 def norm_license(spdx: str | None) -> str:
@@ -390,9 +392,9 @@ def _deep_query(batch: list[dict]) -> str:
             f' {files} }}')
     return "query {" + " ".join(parts) + "}"
 
-
-
-README_NAMES = ("README.md", "README.rst", "README", "readme.md", "docs/README.md")
+README_NAMES = (
+    "README.md", "README.rst", "README", "readme.md", "docs/README.md",
+)
 
 
 def readme_prefix(full_name: str) -> str:
@@ -413,7 +415,10 @@ def readme_prefix(full_name: str) -> str:
             "User-Agent": "evidaxis-census"})
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
-                return r.read().decode("utf-8", "replace")
+                try:
+                    return r.read().decode("utf-8")
+                except UnicodeDecodeError:
+                    return ""
         except urllib.error.HTTPError as e:
             if e.code in (404, 403):
                 continue          # try the next spelling
@@ -475,7 +480,8 @@ def deepcheck(rows: list[dict], out_path: Path, shard: int = 0,
                     else:
                         pending.append(r)
                     continue
-                tgt = ((node.get("defaultBranchRef") or {}).get("target") or {})
+                default_branch = node.get("defaultBranchRef")
+                tgt = ((default_branch or {}).get("target") or {})
                 manifests = {}
                 for k, f in enumerate(MANIFESTS):
                     blob = node.get(f"m{k}") or {}
@@ -487,6 +493,7 @@ def deepcheck(rows: list[dict], out_path: Path, shard: int = 0,
                     "isFork": node["isFork"], "isArchived": node["isArchived"],
                     "license": (node.get("licenseInfo") or {}).get("spdxId"),
                     "language": (node.get("primaryLanguage") or {}).get("name"),
+                    "no_default_branch": default_branch is None,
                     "releases": node["releases"]["totalCount"],
                     "commit_oid": tgt.get("oid"),
                     "commits365": (tgt.get("h365") or {}).get("totalCount", 0),
@@ -758,6 +765,42 @@ def channel_attribution(members: list[dict], census_date: str) -> dict:
     }
 
 
+def finalize_census_run(month_dir: Path, *, stock_census: bool) -> None:
+    """Stamp run intent and visible sensors without entering protected emit().
+
+    The base emitter predates both fields, and its reconciliation stays
+    independently maintainable. Finalization makes the published wave depend
+    on explicit stock-census intent, exposes empty repositories independently
+    of velocity, and refreshes both hashes after those publication changes.
+    """
+    manifest_path = month_dir / "pending-manifest.json"
+    census_path = month_dir / "census-run.json"
+    manifest = json.loads(manifest_path.read_text())
+    census = json.loads(census_path.read_text())
+
+    wave = "backlog" if stock_census else "forward"
+    manifest["stock_census"] = stock_census
+    manifest["wave"] = wave
+    for member in manifest["members"]:
+        member["wave"] = wave
+
+    no_default_branch = set()
+    for deep_path in sorted(month_dir.glob("deepcheck*.jsonl")):
+        for row in load_jsonl(deep_path):
+            if row.get("no_default_branch") and row.get("id") is not None:
+                no_default_branch.add(row["id"])
+    census["stock_census"] = stock_census
+    census["activation_wave"] = wave
+    census["aggregate"]["no_default_branch"] = len(no_default_branch)
+
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
+    census["pending_manifest_sha256"] = sha256(manifest_path)
+    census_path.write_text(json.dumps(census, ensure_ascii=False, indent=1))
+    (month_dir / "census-run.sha256").write_text(
+        sha256(census_path) + "  census-run.json\n"
+    )
+
+
 def candidates_of(raw: list[dict],
                   blocklist_histogram: dict[str, int] | None = None) -> list[dict]:
     """Storefront-channel pre-filter: who is worth a deep check at all."""
@@ -842,8 +885,7 @@ def emit(month_dir: Path) -> None:
         if is_legacy:
             agg["legacy_member"] += 1
             if legs:
-                legacy_fail.append({"full_name": r["full_name"],
-                                    "fails": legs})
+                legacy_fail.append(legs)
             continue
         if legs:
             key = {"ai_scope": "not_ai_scope", "license": "excluded_license",
@@ -866,8 +908,7 @@ def emit(month_dir: Path) -> None:
             if r["id"] in members:
                 agg["legacy_member"] += 1
                 if legs:
-                    legacy_fail.append({"full_name": r["full_name"],
-                                        "fails": legs})
+                    legacy_fail.append(legs)
                 continue
             if legs:
                 key = {"ai_scope": "not_ai_scope",
@@ -966,7 +1007,18 @@ def emit(month_dir: Path) -> None:
                      "predicate disagrees with the institute's own history "
                      "rather than tuning the predicate to agree."),
             "legacy_evaluated": agg["legacy_member"],
-            "legacy_failing_ai_v1": legacy_fail,
+            # Counts by leg, never names. The first published run listed 39
+            # legacy members with the leg each failed - "microsoft/autogen:
+            # license", "fishaudio/fish-speech: license" - which is a per-repo
+            # negative judgment about a third party printed with their name,
+            # exactly what the institute forbids itself. That it concerned the
+            # institute's OWN roster does not change what a reader receives,
+            # and it manufactured a public two-class roster: predicate members
+            # versus grandfathered exceptions with published defects. The
+            # falsification value lives entirely in the counts.
+            "legacy_failing_ai_v1_by_leg": dict(
+                Counter(leg for legs in legacy_fail for leg in legs)),
+            "legacy_failing_ai_v1_total": len(legacy_fail),
         },
         "bands": load_jsonl(month_dir / "bands-500plus.jsonl"),
         "pending_manifest_sha256": sha256(mp),
@@ -1074,6 +1126,7 @@ def main() -> int:
         return 0
     if phase == "emit":
         emit(month_dir)
+        finalize_census_run(month_dir, stock_census="--stock-census" in sys.argv)
         return 0
     print(__doc__)
     return 2
