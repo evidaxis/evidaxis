@@ -40,6 +40,7 @@ from __future__ import annotations
 import json
 import re
 import tomllib
+from pathlib import Path
 
 README_PREFIX = 2000
 
@@ -83,8 +84,27 @@ def norm_topic(t: str) -> str:
     return re.sub(r"[^a-z0-9]", "", t.lower())
 
 
+# Vocabulary bootstrapped from the census's OWN admitted members, re-derived at
+# every version: a topic qualifies when it is >=15x more frequent among members
+# than in the full >=500-star universe and appears on >=3 members. Lift does the
+# separating that a human otherwise would (python 1x, typescript 1x, cli 4x
+# against robot-learning 232x, moe 199x, vllm 60x). These are WEAK signals -
+# derived evidence must not carry the weight of the a-priori frozen set - and
+# the file is dated so an amendment is a versioned act, not an edit.
+# Known limit, stated rather than hidden: bootstrapping can only teach what the
+# roster already contains. The 137 legacy members carry no classical
+# computer-vision cohort, so this channel could never have recovered detectron2;
+# that gap is closed by the task vocabulary above, from an external taxonomy.
+def _load_bootstrap() -> frozenset[str]:
+    p = Path(__file__).resolve().parent.parent / "data" / "topic_lexicon_2026-08.json"
+    if not p.exists():
+        return frozenset()
+    return frozenset(json.loads(p.read_text())["topics"])
+
+
 _STRONG_NORM = {norm_topic(t) for t in AI_TOPICS_STRONG}
-_WEAK_NORM = {norm_topic(t) for t in AI_TOPICS_WEAK}
+_WEAK_NORM = {norm_topic(t) for t in AI_TOPICS_WEAK} | {
+    norm_topic(t) for t in _load_bootstrap()}
 
 
 _SPLIT = re.compile(r"[^a-z0-9]+|(?<=[a-z])(?=[0-9])|(?<=[0-9])(?=[a-z])")
@@ -126,18 +146,40 @@ def _topic_hit(topics, table) -> bool:
 # accepted "deepXlearning".
 AI_RE = re.compile(
     r"(?<![a-z])("
+    # architectures and paradigms
     r"LLMs?|GPTs?|transformers?|diffusion|neural|"
     r"deep[- ]?learning|machine[- ]?learning|reinforcement[- ]?learning|"
-    r"text[- ]?to[- ]?(image|video|speech|3d)|speech[- ]?to[- ]?text|"
     r"language model|foundation model|multi[- ]?modal|embedding|"
-    r"inference (engine|server|pipeline)|fine[- ]?tun|RLHF|RAG|"
-    r"retrieval[- ]?augmented|AI (agent|assistant|framework|toolkit|model)|"
-    r"agentic|copilot|vision[- ]?language|VLM|OCR|ASR|TTS|"
-    r"voice clon|image generat|video generat|"
-    r"protein (structure|design|folding)|molecul|drug discovery|"
-    r"robot (learning|manipulation)|embodied"
+    r"fine[- ]?tun|RLHF|RAG|retrieval[- ]?augmented|pre[- ]?train|"
+    # canonical TASK names of the field's subdisciplines. Sourced from the
+    # standard task taxonomy every practitioner shares (arXiv cs.CV/cs.CL/cs.LG
+    # subject descriptions and the Papers-With-Code task list), not from any
+    # repository that failed a fixture. Their absence was measured, not
+    # suspected: detectron2 ("object detection, segmentation and other visual
+    # recognition", 34.6k stars) and faiss ("similarity search and clustering
+    # of dense vectors", 40.7k) were invisible to a classifier that knew
+    # "computer-vision" only as a topic string.
+    r"object[- ]detection|instance[- ]segmentation|semantic[- ]segmentation|"
+    r"image[- ](classification|segmentation|recognition|generat)|"
+    r"visual[- ]recognition|pose[- ]estimation|face[- ](detection|recognition)|"
+    r"video[- ]generat|scene[- ]understanding|depth[- ]estimation|"
+    r"similarity[- ]search|vector[- ](search|database|index)|"
+    r"nearest[- ]neighbou?r|dense[- ]vectors|"
+    r"speech[- ](recognition|synthesis)|voice[- ](clon|conversion)|"
+    r"text[- ]?to[- ]?(image|video|speech|3d)|speech[- ]?to[- ]?text|"
+    r"machine[- ]translation|sentiment[- ]analysis|named[- ]entity|"
+    r"question[- ]answering|summari[sz]ation|"
+    # systems built ON models, by their own declared identity
+    r"inference[- ](engine|server|pipeline)|model[- ]serving|"
+    r"(AI|LLM|ML|coding|autonomous|browser|computer[- ]use|research|"
+    r"software) [- ]?(agents?|assistants?)|"
+    r"agentic|copilot|chatbot|vision[- ]?language|VLM|OCR|ASR|TTS|"
+    # scientific AI
+    r"protein[- ](structure|design|folding)|molecul|drug[- ]discovery|"
+    r"robot[- ](learning|manipulation)|embodied"
     r")",
     re.IGNORECASE)
+
 
 # --------------------------------------------------------------- ch-3 signals
 
@@ -230,7 +272,11 @@ def classify(name: str, description: str | None, topics: list[str],
     becomes a public self-declaration, falsifiable by anyone, rather than an
     inference the institute made privately.
     """
-    storefront = f"{name} {description or ''}"
+    # Topics are authored by the same hand as the description and carry the
+    # same task vocabulary in hyphenated form ("voice-conversion",
+    # "object-detection"). Reading them with the same regex is one rule, not
+    # a second vocabulary to keep in sync.
+    storefront = f"{name} {description or ''} {' '.join(topics or [])}"
     if _topic_hit(topics, _STRONG_NORM):
         return {"channel": "storefront", "signal": "topic"}
     m = AI_RE.search(storefront)

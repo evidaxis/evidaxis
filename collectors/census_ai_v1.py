@@ -7,6 +7,10 @@ publishes a BAR and a MECHANICAL PREDICATE, and every qualifier enters
 automatically. Nothing in this file may require a judgment call.
 
 Scope signals live in collectors/ai_scope.py - one source, quoted by the act.
+Their exact source hash and first qualifying census date are retained so a
+later declaration cannot be projected backward as historical AI identity.
+Mechanical strata, channel attribution and block-token aggregates keep changes
+in the instrument and changes in its heterogeneous population observable.
 
 Positive-only discipline (I1): the published artifacts are the ADMITTED members
 plus AGGREGATE exclusion counts. Per-repo negative judgments are never written
@@ -26,19 +30,31 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import time
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from types import MappingProxyType
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ai_scope import MANIFESTS, README_PREFIX, classify, is_blocked
+from ai_scope import (
+    BLOCK_NAME,
+    BLOCK_STRONG,
+    MANIFESTS,
+    README_PREFIX,
+    classify,
+    is_blocked,
+    parse_manifest,
+)
 
 REPO = Path(__file__).resolve().parent.parent
 BUILDER_VERSION = "census_ai_v1"
 ACT = REPO / "governance" / "CENSUS-AI-V1-PREDICATE-2026-08-03.md"
 SCOPE_SRC = Path(__file__).resolve().parent / "ai_scope.py"
+EXECUTOR_SRC = Path(__file__).resolve()
 SHADOW_STAGING = REPO.parent / "Evidaxis-shadow-staging"
 
 LICENSE_ALLOW = frozenset({
@@ -60,6 +76,46 @@ CODE_LANGS = frozenset({
     "PowerShell", "Perl", "Fortran", "MATLAB", "Assembly", "Verilog", "VHDL",
     "Mojo", "Solidity", "Vue", "Svelte", "Metal", "HLSL", "GLSL", "Cython",
 })
+
+STRATA = ("model-infrastructure", "declared-application", "other-declared")
+
+# This is the sole mechanical interpretation of classifier signals. Canonical
+# spaces absorb only the classifier's allowed hyphen/space spelling variants;
+# an unlisted signal remains visible in the other-declared continuity series.
+STRATUM_BY_SIGNAL = MappingProxyType({
+    "llm": "model-infrastructure",
+    "llms": "model-infrastructure",
+    "gpt": "model-infrastructure",
+    "gpts": "model-infrastructure",
+    "transformer": "model-infrastructure",
+    "transformers": "model-infrastructure",
+    "diffusion": "model-infrastructure",
+    "neural": "model-infrastructure",
+    "deep learning": "model-infrastructure",
+    "machine learning": "model-infrastructure",
+    "reinforcement learning": "model-infrastructure",
+    "language model": "model-infrastructure",
+    "foundation model": "model-infrastructure",
+    "embedding": "model-infrastructure",
+    "inference": "model-infrastructure",
+    "inference engine": "model-infrastructure",
+    "inference server": "model-infrastructure",
+    "inference pipeline": "model-infrastructure",
+    "model serving": "model-infrastructure",
+    "training": "model-infrastructure",
+    "fine tun": "model-infrastructure",
+    "rlhf": "model-infrastructure",
+    "ai model": "model-infrastructure",
+    "ai agent": "declared-application",
+    "ai assistant": "declared-application",
+    "agent": "declared-application",
+    "assistant": "declared-application",
+    "agentic": "declared-application",
+    "application": "declared-application",
+    "copilot": "declared-application",
+})
+
+CHANNELS = ("storefront", "readme", "manifest", "weak-topic+second")
 
 
 def norm_license(spdx: str | None) -> str:
@@ -330,8 +386,8 @@ def deepcheck(rows: list[dict], out_path: Path) -> None:
     while queue and rounds < 6:
         rounds += 1
         pending = []
-        for i in range(0, len(queue), 10):
-            batch = queue[i:i + 10]
+        for i in range(0, len(queue), 20):
+            batch = queue[i:i + 20]
             data, clean = gh_graphql(_deep_query(batch))
             for j, r in enumerate(batch):
                 node = data.get(f"r{j}")
@@ -368,7 +424,7 @@ def deepcheck(rows: list[dict], out_path: Path) -> None:
                     "manifests": manifests,
                 }, ensure_ascii=False) + "\n")
             out.flush()
-            if (i // 10) % 20 == 0:
+            if (i // 20) % 20 == 0:
                 print(f"  round {rounds}: {i}/{len(queue)}", flush=True)
             time.sleep(1.2)
         queue = pending
@@ -424,12 +480,197 @@ def sha256(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def candidates_of(raw: list[dict]) -> list[dict]:
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode()).hexdigest()
+
+
+def stratum_of(evidence: dict) -> str:
+    if evidence["channel"] == "manifest":
+        return "model-infrastructure"
+    signal = re.sub(r"[-_\s]+", " ", evidence["signal"].casefold()).strip()
+    return STRATUM_BY_SIGNAL.get(signal, "other-declared")
+
+
+def blocklist_token(name: str, description: str | None,
+                    topics: list[str]) -> str | None:
+    match = BLOCK_NAME.search(name)
+    if match is None:
+        match = BLOCK_STRONG.search(
+            f"{name} {description or ''} {' '.join(topics or [])}"
+        )
+    if match is None:
+        return None
+    return re.sub(r"[-\s]+", "-", match.group(1).casefold())
+
+
+def _line_at(text: str, offset: int) -> str:
+    start = text.rfind("\n", 0, offset) + 1
+    end = text.find("\n", offset)
+    if end == -1:
+        end = len(text)
+    return text[start:end].removesuffix("\r")
+
+
+def _closing_delimiter(text: str, opening: int, left: str, right: str) -> int:
+    depth = 0
+    quote = None
+    escaped = False
+    for offset in range(opening, len(text)):
+        char = text[offset]
+        if quote is not None:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote:
+                quote = None
+            continue
+        if char in "\"'":
+            quote = char
+        elif char == left:
+            depth += 1
+        elif char == right:
+            depth -= 1
+            if depth == 0:
+                return offset + 1
+    raise RuntimeError("qualifying manifest dependency value is unterminated")
+
+
+def _dependency_pattern(dependency: str) -> re.Pattern:
+    parts = re.split(r"[-_.]+", dependency)
+    body = r"[-_.]+".join(re.escape(part) for part in parts)
+    return re.compile(rf"(?<![A-Za-z0-9]){body}(?![A-Za-z0-9])",
+                      re.IGNORECASE)
+
+
+def manifest_dependency_line(filename: str, text: str,
+                             dependency: str) -> str:
+    """Recover the exact source line for an already-parsed runtime dependency."""
+    if filename == "requirements.txt":
+        for line in text.splitlines():
+            if dependency in parse_manifest(filename, line):
+                return line
+        raise RuntimeError("qualifying requirements dependency line not found")
+
+    pattern = _dependency_pattern(dependency)
+    if filename == "package.json":
+        header = re.search(r'"dependencies"\s*:\s*\{', text)
+        if header:
+            opening = text.find("{", header.start())
+            end = _closing_delimiter(text, opening, "{", "}")
+            match = re.search(
+                rf'"{pattern.pattern}"\s*:', text[opening:end], re.IGNORECASE
+            )
+            if match:
+                return _line_at(text, opening + match.start())
+    elif filename == "pyproject.toml":
+        project = re.search(r"(?m)^\s*\[project\]\s*(?:#.*)?$", text)
+        if project:
+            next_section = re.search(r"(?m)^\s*\[", text[project.end():])
+            section_end = (project.end() + next_section.start()
+                           if next_section else len(text))
+            dep_key = re.search(
+                r"(?m)^\s*dependencies\s*=\s*\[",
+                text[project.end():section_end],
+            )
+            if dep_key:
+                opening = text.find("[", project.end() + dep_key.start())
+                end = _closing_delimiter(text, opening, "[", "]")
+                match = pattern.search(text, opening, end)
+                if match:
+                    return _line_at(text, match.start())
+    elif filename == "Cargo.toml":
+        section = re.search(r"(?m)^\s*\[dependencies\]\s*(?:#.*)?$", text)
+        if section:
+            next_section = re.search(r"(?m)^\s*\[", text[section.end():])
+            section_end = (section.end() + next_section.start()
+                           if next_section else len(text))
+            match = pattern.search(text, section.end(), section_end)
+            if match:
+                return _line_at(text, match.start())
+    raise RuntimeError(
+        f"qualifying {filename} dependency line for {dependency!r} not found"
+    )
+
+
+def qualifying_text(row: dict, deep: dict, evidence: dict) -> str:
+    channel = evidence["channel"]
+    if channel == "manifest":
+        filename = evidence["manifest"]
+        return manifest_dependency_line(
+            filename, deep["manifests"][filename], evidence["signal"]
+        )
+    if channel == "readme":
+        return (deep.get("readme") or "")[:README_PREFIX]
+    if channel == "weak-topic+second":
+        second = classify(
+            "", None, [], readme=deep.get("readme"),
+            manifests=deep.get("manifests"),
+        )
+        if second is None:
+            raise RuntimeError("weak topic admission has no second channel")
+        return qualifying_text(row, deep, second)
+    if channel != "storefront":
+        raise RuntimeError(f"unknown qualification channel: {channel}")
+
+    signal = evidence["signal"]
+    for topic in row.get("topics") or []:
+        topic_evidence = classify("", None, [topic])
+        if topic_evidence and topic_evidence.get("signal") == signal:
+            return topic
+    name = row["full_name"].split("/")[-1]
+    name_evidence = classify(name, None, [])
+    if name_evidence and name_evidence.get("signal") == signal:
+        return name
+    description = row.get("description")
+    description_evidence = classify("", description, [])
+    if description_evidence and description_evidence.get("signal") == signal:
+        return description or ""
+    raise RuntimeError("storefront qualification source could not be reproduced")
+
+
+def previous_qualification_dates(month_dir: Path) -> dict[int, str]:
+    dates: dict[int, str] = {}
+    for manifest_path in sorted(month_dir.parent.glob("*/pending-manifest.json")):
+        manifest = json.loads(manifest_path.read_text())
+        fallback = (manifest.get("census_run_at") or "")[:10]
+        for member in manifest.get("members", []):
+            date = (member.get("first_qualified_on")
+                    or member.get("first_observed") or fallback)
+            repo_id = member.get("repo_id")
+            if repo_id is not None and date:
+                dates[repo_id] = min(date, dates.get(repo_id, date))
+    return dates
+
+
+def channel_attribution(members: list[dict], census_date: str) -> dict:
+    admitted = dict.fromkeys(CHANNELS, 0)
+    first_qualified = dict.fromkeys(CHANNELS, 0)
+    for member in members:
+        channel = member["admitted_by"]
+        if channel not in admitted:
+            raise RuntimeError(f"unknown qualification channel: {channel}")
+        admitted[channel] += 1
+        if member["first_qualified_on"] == census_date:
+            first_qualified[channel] += 1
+    return {
+        "all_admitted": admitted,
+        "first_qualified_on_this_census": first_qualified,
+    }
+
+
+def candidates_of(raw: list[dict],
+                  blocklist_histogram: dict[str, int] | None = None) -> list[dict]:
     """Storefront-channel pre-filter: who is worth a deep check at all."""
     out = []
     for r in raw:
         name = r["full_name"].split("/")[-1]
         if is_blocked(name, r["description"], r["topics"]):
+            token = blocklist_token(name, r["description"], r["topics"])
+            if token is None:
+                raise RuntimeError("blocked row has no attributable token")
+            if blocklist_histogram is not None:
+                blocklist_histogram[token] = blocklist_histogram.get(token, 0) + 1
             continue
         if classify(name, r["description"], r["topics"]):
             out.append(r)
@@ -458,8 +699,9 @@ def emit(month_dir: Path) -> None:
         "gone_since_sweep", "legacy_member", "admitted")}
     agg["universe"] = len(raw)
     admitted, rescue_q, legacy_fail = [], [], []
+    blocklist_histogram: Counter[str] = Counter()
 
-    for r in candidates_of(raw):
+    for r in candidates_of(raw, blocklist_histogram):
         d = deep.get(r["full_name"])
         is_legacy = r["id"] in members
         if d is None:
@@ -531,10 +773,35 @@ def emit(month_dir: Path) -> None:
                              "license_observed": d.get("license")})
         time.sleep(1.2)
 
+    agg["blocked_nonsystem"] = sum(blocklist_histogram.values())
     agg["admitted"] = len(admitted)
     admitted.sort(key=lambda r: (-r["stargazers_count"], r["id"]))
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    census_date = now[:10]
     month = month_dir.name
+    prior_dates = previous_qualification_dates(month_dir)
+    executor_hash = sha256(EXECUTOR_SRC)
+
+    manifest_members = []
+    for r in admitted:
+        first_qualified_on = min(
+            census_date, prior_dates.get(r["id"], census_date)
+        )
+        source_text = qualifying_text(r, deep[r["full_name"]], r["evidence"])
+        manifest_members.append({
+            "repo_id": r["id"], "full_name": r["full_name"],
+            "stars": r["stargazers_count"],
+            "first_observed": first_qualified_on,
+            "first_qualified_on": first_qualified_on,
+            "qualifying_text_sha256": sha256_text(source_text),
+            "cohort": "unassigned-v1", "status": "pending",
+            "wave": "backlog" if month == "2026-08" else "forward",
+            "commit_oid": r.get("commit_oid"),
+            "license_observed": r.get("license_observed"),
+            "admitted_by": r["evidence"]["channel"],
+            "signal": r["evidence"]["signal"],
+            "stratum": stratum_of(r["evidence"]),
+        })
 
     manifest = {
         "@type": "PendingMembershipManifest",
@@ -544,6 +811,7 @@ def emit(month_dir: Path) -> None:
         "governance_act": str(ACT.relative_to(REPO)),
         "governance_act_sha256": sha256(ACT),
         "scope_module_sha256": sha256(SCOPE_SRC),
+        "executor_sha256": executor_hash,
         "census_run_at": now,
         "note": ("New admissions of this census. COMPLETE MEMBERSHIP = this "
                  "file UNION the live registry (etl/seeds.json); legacy "
@@ -551,16 +819,7 @@ def emit(month_dir: Path) -> None:
                  "tranches and index after 4 weekly observations. Order of "
                  "publication is a marketing schedule, never a measurement "
                  "verdict."),
-        "members": [{
-            "repo_id": r["id"], "full_name": r["full_name"],
-            "stars": r["stargazers_count"], "first_observed": now[:10],
-            "cohort": "unassigned-v1", "status": "pending",
-            "wave": "backlog" if month == "2026-08" else "forward",
-            "commit_oid": r.get("commit_oid"),
-            "license_observed": r.get("license_observed"),
-            "admitted_by": r["evidence"]["channel"],
-            "signal": r["evidence"]["signal"],
-        } for r in admitted],
+        "members": manifest_members,
     }
     mp = month_dir / "pending-manifest.json"
     mp.write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
@@ -568,6 +827,9 @@ def emit(month_dir: Path) -> None:
     census = {
         "@type": "CensusRun", "builder": BUILDER_VERSION, "predicate": "AI-v1",
         "star_bar": 500, "run_at": now,
+        "governance_act_sha256": sha256(ACT),
+        "scope_module_sha256": sha256(SCOPE_SRC),
+        "executor_sha256": executor_hash,
         "sweep": json.loads(sentinel.read_text()),
         "method": ("Full-universe GitHub Search star sweep (geometric band "
                    "bisection, creation-timestamp slicing at the 1000-result "
@@ -576,6 +838,18 @@ def emit(month_dir: Path) -> None:
                    "deep legs via GraphQL. Positive-only: admitted members are "
                    "named, exclusions are aggregate."),
         "aggregate": agg,
+        "qualification_history_note": (
+            "Metrics predating first_qualified_on are pre-qualification history, "
+            "never evidence that the repository always declared an AI identity."
+        ),
+        "strata_counts": {
+            stratum: sum(m["stratum"] == stratum for m in manifest_members)
+            for stratum in STRATA
+        },
+        "channel_attribution": channel_attribution(
+            manifest_members, census_date
+        ),
+        "blocklist_token_histogram": dict(sorted(blocklist_histogram.items())),
         "legacy_reconciliation": {
             "note": ("AI-v1 evaluated against the 137 members admitted under "
                      "the pre-policy discretionary method. They remain members "

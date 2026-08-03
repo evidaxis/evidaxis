@@ -1,0 +1,147 @@
+{
+ "@type": "BootstrappedTopicLexicon",
+ "version": "2026-08",
+ "derivation": "Mechanical, re-derivable at every census: a topic enters when its frequency among admitted members is at least 15x its frequency in the full >=500-star universe AND it appears on at least 3 members. Lift separates AI vocabulary from generic software vocabulary without a human choosing: python lift 1, typescript 1, cli 4, framework 3 against robot-learning 232, moe 199, vllm 60, agent 17. Bootstrapped entries are WEAK signals - they require a second channel - because derived evidence must not carry the same weight as the a-priori frozen set.",
+ "computed_from": {
+  "members": 137,
+  "universe_rows": 63483,
+  "date": "2026-08-03"
+ },
+ "topics": [
+  "robot-learning",
+  "moe",
+  "blackwell",
+  "qwen3",
+  "llama3",
+  "gemma",
+  "qwen",
+  "computer-use",
+  "vllm",
+  "vision-language-model",
+  "llama",
+  "mistral",
+  "agent-framework",
+  "lora",
+  "deepseek",
+  "multi-agent",
+  "video-generation",
+  "cuda",
+  "agent"
+ ],
+ "detail": [
+  {
+   "topic": "robot-learning",
+   "lift": 231.7,
+   "members": 5,
+   "universe": 9
+  },
+  {
+   "topic": "moe",
+   "lift": 198.6,
+   "members": 6,
+   "universe": 13
+  },
+  {
+   "topic": "blackwell",
+   "lift": 198.6,
+   "members": 3,
+   "universe": 6
+  },
+  {
+   "topic": "qwen3",
+   "lift": 86.9,
+   "members": 3,
+   "universe": 15
+  },
+  {
+   "topic": "llama3",
+   "lift": 85.4,
+   "members": 7,
+   "universe": 37
+  },
+  {
+   "topic": "gemma",
+   "lift": 84.3,
+   "members": 4,
+   "universe": 21
+  },
+  {
+   "topic": "qwen",
+   "lift": 69.2,
+   "members": 10,
+   "universe": 66
+  },
+  {
+   "topic": "computer-use",
+   "lift": 60.4,
+   "members": 3,
+   "universe": 22
+  },
+  {
+   "topic": "vllm",
+   "lift": 59.8,
+   "members": 4,
+   "universe": 30
+  },
+  {
+   "topic": "vision-language-model",
+   "lift": 54.5,
+   "members": 4,
+   "universe": 33
+  },
+  {
+   "topic": "llama",
+   "lift": 37.4,
+   "members": 13,
+   "universe": 160
+  },
+  {
+   "topic": "mistral",
+   "lift": 31.6,
+   "members": 3,
+   "universe": 43
+  },
+  {
+   "topic": "agent-framework",
+   "lift": 26.2,
+   "members": 3,
+   "universe": 52
+  },
+  {
+   "topic": "lora",
+   "lift": 24.8,
+   "members": 3,
+   "universe": 55
+  },
+  {
+   "topic": "deepseek",
+   "lift": 20.6,
+   "members": 6,
+   "universe": 134
+  },
+  {
+   "topic": "multi-agent",
+   "lift": 20.1,
+   "members": 4,
+   "universe": 91
+  },
+  {
+   "topic": "video-generation",
+   "lift": 18.3,
+   "members": 3,
+   "universe": 75
+  },
+  {
+   "topic": "cuda",
+   "lift": 16.9,
+   "members": 5,
+   "universe": 136
+  },
+  {
+   "topic": "agent",
+   "lift": 16.9,
+   "members": 17,
+   "universe": 465
+  }
+ ]
+}
