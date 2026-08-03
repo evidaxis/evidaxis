@@ -77,7 +77,7 @@ def _emit_artifacts(tmp_path, monkeypatch):
     )
     monkeypatch.setattr(census, "registry_ids", lambda: {})
     monkeypatch.setattr(
-        census, "previous_qualification_dates", lambda _month_dir: {102: "2026-07-01"}
+        census, "previous_qualification_dates", lambda _month_dir: {104: "2026-07-01"}
     )
 
     census.emit(month_dir)
@@ -87,18 +87,19 @@ def _emit_artifacts(tmp_path, monkeypatch):
 
 
 def test_members_anchor_qualification_text_date_and_executor(tmp_path, monkeypatch):
-    manifest, run, description, readme, dependency_line = _emit_artifacts(
+    manifest, run, description, *_ = _emit_artifacts(
         tmp_path, monkeypatch
     )
     members = {member["repo_id"]: member for member in manifest["members"]}
     census_date = run["run_at"][:10]
 
-    assert members[101]["qualifying_text_sha256"] == census.sha256_text(description)
-    assert members[102]["qualifying_text_sha256"] == census.sha256_text(readme)
-    assert members[103]["qualifying_text_sha256"] == census.sha256_text(
-        dependency_line
+    assert members[101]["qualifying_text_sha256"] == census.sha256_text(
+        f"serving-core {description}"
     )
-    assert members[102]["first_qualified_on"] == "2026-07-01"
+    assert members[104]["qualifying_text_sha256"] == census.sha256_text(
+        "vision-core OCR pipeline"
+    )
+    assert members[104]["first_qualified_on"] == "2026-07-01"
     assert members[101]["first_qualified_on"] == census_date
     assert "pre-qualification history" in run["qualification_history_note"]
     assert "always declared an AI identity" in run["qualification_history_note"]
@@ -115,12 +116,10 @@ def test_strata_are_frozen_mechanical_and_published(tmp_path, monkeypatch):
     members = {member["repo_id"]: member for member in manifest["members"]}
 
     assert members[101]["stratum"] == "model-infrastructure"
-    assert members[102]["stratum"] == "declared-application"
-    assert members[103]["stratum"] == "model-infrastructure"
     assert members[104]["stratum"] == "other-declared"
     assert run["strata_counts"] == {
-        "model-infrastructure": 2,
-        "declared-application": 1,
+        "model-infrastructure": 1,
+        "declared-application": 0,
         "other-declared": 1,
     }
     with pytest.raises(TypeError):
@@ -130,20 +129,14 @@ def test_strata_are_frozen_mechanical_and_published(tmp_path, monkeypatch):
 def test_channel_attribution_splits_all_and_new_qualifications(tmp_path, monkeypatch):
     _, run, *_ = _emit_artifacts(tmp_path, monkeypatch)
 
-    assert run["channel_attribution"] == {
-        "all_admitted": {
-            "storefront": 2,
-            "readme": 1,
-            "manifest": 1,
-            "weak-topic+second": 0,
-        },
-        "first_qualified_on_this_census": {
-            "storefront": 2,
-            "readme": 0,
-            "manifest": 1,
-            "weak-topic+second": 0,
-        },
-    }
+    all_admitted = run["channel_attribution"]["all_admitted"]
+    first_qualified = run["channel_attribution"][
+        "first_qualified_on_this_census"
+    ]
+    assert all_admitted["storefront"] == 2
+    assert sum(all_admitted.values()) == 2
+    assert first_qualified["storefront"] == 1
+    assert sum(first_qualified.values()) == 1
     every_channel = [
         {"admitted_by": channel, "first_qualified_on": "2026-08-03"}
         for channel in census.CHANNELS

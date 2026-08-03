@@ -55,7 +55,7 @@ AI_TOPICS_STRONG = frozenset({
     "speech-recognition", "text-to-speech", "speech-synthesis", "asr",
     "multimodal", "vlm", "neural-network", "neural-networks", "gpt",
     "stable-diffusion", "model-serving", "mlops", "embodied-ai",
-    "protein-structure", "drug-discovery", "fine-tuning", "embeddings",
+    "protein-structure", "drug-discovery", "fine-tuning",
     # The spelled-out form must be listed explicitly: stripping separators from
     # "retrieval-augmented-generation" does not leave the substring "rag", so
     # the abbreviation alone never covered it.
@@ -69,6 +69,10 @@ AI_TOPICS_STRONG = frozenset({
 AI_TOPICS_WEAK = frozenset({
     "ai", "agents", "inference", "diffusion", "transformer", "tts",
     "robotics", "embedding",
+    # `embeddings` was strong until supabase (107k, a Postgres platform) entered
+    # on it: pgvector makes it an honest tag for a database. Ambiguous, so it
+    # now needs a second register like every other ambiguous term.
+    "embeddings",
 })
 
 
@@ -266,40 +270,83 @@ def classify(name: str, description: str | None, topics: list[str],
              manifests: dict[str, str] | None = None) -> dict | None:
     """Return the POSITIVE evidence that admitted this repo, or None.
 
+    TWO evidentiary tiers, because a claim and a mention are not the same act.
+
+    ADMITS ALONE - the storefront: a high-specificity topic, or the task/system
+    vocabulary in the repository's NAME or DESCRIPTION. That text is the
+    project's public label; it is what users see first and what the maintainers
+    chose as their identity.
+
+    ADMITS ONLY IN PAIRS - README prose, a framework-tier dependency, and an
+    ambiguous topic. Each of these is a MENTION, not a label, and a mention
+    alone admitted absurdities on live data: freeCodeCamp (453k stars, a
+    learning platform) entered because its README says "machine learning
+    curriculum", and TheAlgorithms/Python (223k, an algorithms collection)
+    entered because `keras` appears in a manifest. The council had already
+    ruled that an implementation detail must never admit on its own; that
+    ruling applies to incidental prose exactly as it applies to an API client.
+    Two independent supporting signals restore the declaration: a project whose
+    README says AI AND that builds on a framework, or that carries an AI topic,
+    has said it twice in two different registers.
+
     The returned dict is published on the admitted member's card: which channel
     admitted it and which token fired. Publishing the evidence is what keeps a
     weak channel honest - an entry obtained by writing "LLM agent" into a README
     becomes a public self-declaration, falsifiable by anyone, rather than an
     inference the institute made privately.
     """
-    # Topics are authored by the same hand as the description and carry the
-    # same task vocabulary in hyphenated form ("voice-conversion",
-    # "object-detection"). Reading them with the same regex is one rule, not
-    # a second vocabulary to keep in sync.
-    storefront = f"{name} {description or ''} {' '.join(topics or [])}"
     if _topic_hit(topics, _STRONG_NORM):
         return {"channel": "storefront", "signal": "topic"}
-    m = AI_RE.search(storefront)
+    label = f"{name} {description or ''}"
+    m = AI_RE.search(label)
     if m:
         return {"channel": "storefront", "signal": m.group(0).lower()}
 
-    weak_topic = _topic_hit(topics, _WEAK_NORM)
-    dep_hit = None
+    support: list[dict] = []
+    if _topic_hit(topics, _WEAK_NORM):
+        support.append({"kind": "topic", "signal": "weak-topic"})
+    else:
+        mt = AI_RE.search(" ".join(topics or []))
+        if mt:
+            support.append({"kind": "topic", "signal": mt.group(0).lower()})
     if manifests:
         for fn, text in manifests.items():
             hit = parse_manifest(fn, text) & FRAMEWORK_DEPS
             if hit:
-                dep_hit = (fn, sorted(hit)[0])
+                support.append({"kind": "manifest", "signal": sorted(hit)[0],
+                                "manifest": fn})
                 break
-    readme_m = AI_RE.search((readme or "")[:README_PREFIX])
+    mr = AI_RE.search((readme or "")[:README_PREFIX])
+    if mr:
+        support.append({"kind": "readme", "signal": mr.group(0).lower()})
 
-    if dep_hit:
-        return {"channel": "manifest", "signal": dep_hit[1],
-                "manifest": dep_hit[0]}
-    if readme_m:
-        return {"channel": "readme", "signal": readme_m.group(0).lower()}
-    if weak_topic and (dep_hit or readme_m):      # ambiguous topic + 2nd signal
-        return {"channel": "weak-topic+second", "signal": "topic"}
+    # A non-system marker anywhere disqualifies the WEAK tier. Measured:
+    # Snailclimb/JavaGuide (157k) is a Java interview guide carrying topics
+    # `agent`/`ai`/`deepseek` and the word RAG in its README - two supporting
+    # signals and nothing else. Against a public identity label such a marker
+    # loses (catboost ships tutorials and is still a library); against a pair of
+    # mentions it wins, because mentions are exactly what a guide accumulates.
+    if BLOCK_WEAK_TIER.search(f"{description or ''} {' '.join(topics or [])}"):
+        return None
+
+    # Two mentions are not a declaration. The council's line is declared
+    # IDENTITY or declared CONSTRUCTION; a repository that fails the identity
+    # tier can only be admitted on construction evidence, corroborated by a
+    # second register. Measured: supabase (107k, "The Postgres development
+    # platform") carries the topics `ai`+`embeddings` and the word Embedding in
+    # its README - two mentions, honest ones, from a database that supports
+    # pgvector - and declares no ML framework anywhere. kokoro, by contrast,
+    # declares torch AND says TTS: it is built out of the field, not adjacent
+    # to it.
+    has_construction = any(x["kind"] == "manifest" for x in support)
+    if len(support) >= 2 and has_construction:
+        ev = {"channel": "corroborated",
+              "signal": "+".join(x["signal"] for x in support),
+              "sources": [x["kind"] for x in support]}
+        man = next((x for x in support if x["kind"] == "manifest"), None)
+        if man:
+            ev["manifest"] = man["manifest"]
+        return ev
     return None
 
 
@@ -315,10 +362,22 @@ def classify(name: str, description: str | None, topics: list[str],
 # is measured rather than asserted.
 BLOCK_NAME = re.compile(
     r"(?<![a-z])(curated|collection[- ]of|list[- ]of|interviews?|books?|"
-    r"courses?|tutorials?|mirrors?|weights|checkpoints?)(?![a-z])",
+    r"courses?|tutorials?|mirrors?|weights|checkpoints?|"
+    r"beginners?|lessons?|handbooks?|bootcamps?|workshops?|"
+    r"learning[- ]paths?|study[- ]guides?)(?![a-z])",
     re.IGNORECASE)
 # Strong tokens: unambiguous non-system markers WHEREVER they appear. A working
 # library does not call itself awesome/roadmap/cheatsheet in its own pitch.
+# Teaching artifacts declare themselves in the same breath as their subject:
+# "21 Lessons, Get Started Building with Generative AI" is a course about the
+# field, not a system in it. These disqualify a NAME outright, and disqualify a
+# weak-tier admission wherever they appear.
+BLOCK_WEAK_TIER = re.compile(
+    r"(?<![a-z])(interviews?|lessons?|tutorials?|courses?|curriculum|"
+    r"beginners?|handbooks?|bootcamps?|workshops?|roadmaps?|"
+    r"cheat-?sheets?|study[- ]guides?|learning[- ]paths?|"
+    r"awesome|curated)(?![a-z])", re.IGNORECASE)
+
 BLOCK_STRONG = re.compile(
     r"(?<![a-z])(awesome|roadmaps?|cheat-?sheets?|reading-?lists?|"
     r"paper-?lists?|question-?banks?|study-?guides?)(?![a-z])",
@@ -326,6 +385,14 @@ BLOCK_STRONG = re.compile(
 
 
 def is_blocked(name: str, description: str | None, topics: list[str]) -> bool:
+    """Non-system filter.
+
+    The name is matched on its SEPARATOR-SPLIT parts as well as whole, because
+    repository names are compounds: `generative-ai-for-beginners` (115k, "21
+    Lessons, Get Started Building with Generative AI") is a course about the
+    field and carries the strong topic `generative-ai`, so only the name can
+    disqualify it - and only if `beginners` is seen as its own token.
+    """
     """Non-system filter, deliberately narrow.
 
     Weak tokens fire on the repository NAME only. In a description or a topic
@@ -336,7 +403,8 @@ def is_blocked(name: str, description: str | None, topics: list[str]) -> bool:
     the code-language leg instead - an awesome-list is Markdown-only - which is
     a structural property rather than a word match.
     """
-    if BLOCK_NAME.search(name):
+    name_forms = name + " " + " ".join(_SPLIT.split(name.lower()))
+    if BLOCK_NAME.search(name_forms):
         return True
     topic_str = " ".join(topics or [])
     return bool(BLOCK_STRONG.search(f"{name} {description or ''} {topic_str}"))

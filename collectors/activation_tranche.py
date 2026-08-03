@@ -47,18 +47,48 @@ REPO = Path(__file__).resolve().parent.parent
 SEEDS = REPO / "etl" / "seeds.json"
 
 
-def gh_repo(full_name: str) -> dict | None:
-    p = subprocess.run(
-        ["gh", "api", f"repos/{full_name}",
-         "--jq", "{id:.id, full_name:.full_name, stars:.stargazers_count, "
-                 "archived:.archived, fork:.fork}"],
-        capture_output=True, text=True, timeout=60)
-    if p.returncode != 0:
-        return None
-    try:
-        return json.loads(p.stdout)
-    except json.JSONDecodeError:
-        return None
+def gh_repos_batch(names: list[str]) -> dict[str, dict]:
+    """Live stars for the whole pending queue, batched.
+
+    One REST call per member re-read 7,410 members at ~0.35s each: 43 minutes
+    to choose ten cards. The queue must be read whole (the policy orders by
+    CURRENT stars, not census stars), so the fix is batching, not sampling -
+    sampling would let a member that gained stars since the census sort below
+    one that lost them, which is precisely the ordering the policy fixes.
+    """
+    out: dict[str, dict] = {}
+    for i in range(0, len(names), 50):
+        batch = names[i:i + 50]
+        parts = []
+        for j, fn in enumerate(batch):
+            if "/" not in fn:
+                continue
+            owner, name = fn.split("/", 1)
+            parts.append(
+                f'r{j}: repository(owner:"{owner}", name:"{name}") {{'
+                f' databaseId nameWithOwner stargazerCount isArchived isFork }}')
+        if not parts:
+            continue
+        p = subprocess.run(
+            ["gh", "api", "graphql", "-f",
+             "query=query {" + " ".join(parts) + "}"],
+            capture_output=True, text=True, timeout=180)
+        try:
+            data = (json.loads(p.stdout).get("data") or {}) if p.stdout else {}
+        except json.JSONDecodeError:
+            data = {}
+        for j, fn in enumerate(batch):
+            node = data.get(f"r{j}")
+            if node:
+                out[fn] = {"id": node["databaseId"],
+                           "full_name": node["nameWithOwner"],
+                           "stars": node["stargazerCount"],
+                           "archived": node["isArchived"],
+                           "fork": node["isFork"]}
+        if (i // 50) % 20 == 0:
+            print(f"  live stars {i}/{len(names)}", flush=True)
+        time.sleep(0.2)
+    return out
 
 
 def live_card_count() -> int:
@@ -88,18 +118,16 @@ def main() -> int:
 
     # Re-read live stars for the whole pending queue (order is "current stars").
     print("re-reading live stars for the pending queue ...")
+    live_info = gh_repos_batch([m["full_name"] for m in pending])
     refreshed, missing = [], []
-    for i, m in enumerate(pending, 1):
-        info = gh_repo(m["full_name"])
-        if info is None or info.get("archived") or info.get("fork"):
+    for m in pending:
+        info = live_info.get(m["full_name"])
+        if info is None or info["archived"] or info["fork"]:
             missing.append(m["full_name"])
         else:
             refreshed.append({**m, "stars": info["stars"],
                               "repo_id": info["id"],
                               "full_name": info["full_name"]})
-        if i % 50 == 0:
-            print(f"  {i}/{len(pending)}", flush=True)
-        time.sleep(0.35)
 
     # TWO queues, not one sorted list. The module header claimed this from the
     # start while the code sorted a single merged queue by stars - a docstring

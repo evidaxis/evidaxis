@@ -1,0 +1,2150 @@
+{
+ "@type": "CensusRun",
+ "builder": "census_ai_v1",
+ "predicate": "AI-v1",
+ "star_bar": 500,
+ "run_at": "2026-08-03T12:35:36+00:00",
+ "governance_act_sha256": "49d4a6cb5bc8eed22fb42fa84b2b0f908ab9fbd8b671a8a5c22bff411a965fe6",
+ "scope_module_sha256": "b80170e53c329a34461fce2abae1414863023356089814e7be67e981a642af84",
+ "executor_sha256": "aea0a6956bf9fd31cad6173a6fb7d7ddd4fec2a6cde71f8eb82af8b1ed408383",
+ "sweep": {
+  "bar_lo": 500,
+  "bar_hi": 1000000,
+  "collected": 121044,
+  "requests": 1142,
+  "bands_done": 179,
+  "universe_at_sweep_end": 121050,
+  "delta_vs_universe": -6,
+  "band_shortfall_total": 4,
+  "band_surplus_total": 2,
+  "note": "delta_vs_universe compares a multi-hour collection against a single-instant count; band_shortfall is the sum of per-band gaps against GitHub's own index estimate. Both are published rather than reconciled away - the coverage claim is 'these N repositories were observed', never 'nothing was missed'.",
+  "finished_at": "2026-08-03T09:35:10+00:00"
+ },
+ "method": "Full-universe GitHub Search star sweep (geometric band bisection, creation-timestamp slicing at the 1000-result cap, per-band collected==total_count assertion); scope by the three declaration channels of collectors/ai_scope.py; deep legs via GraphQL. Positive-only: admitted members are named, exclusions are aggregate.",
+ "aggregate": {
+  "universe": 121044,
+  "blocked_nonsystem": 5620,
+  "not_ai_scope": 64494,
+  "excluded_license": 3119,
+  "no_code_language": 401,
+  "no_velocity": 3668,
+  "rescued": 406,
+  "fork_or_archived": 724,
+  "gone_since_sweep": 1,
+  "legacy_member": 130,
+  "admitted": 5522
+ },
+ "qualification_history_note": "Metrics predating first_qualified_on are pre-qualification history, never evidence that the repository always declared an AI identity.",
+ "strata_counts": {
+  "model-infrastructure": 539,
+  "declared-application": 225,
+  "other-declared": 4758
+ },
+ "channel_attribution": {
+  "all_admitted": {
+   "storefront": 5342,
+   "corroborated": 180,
+   "readme": 0,
+   "manifest": 0,
+   "weak-topic+second": 0
+  },
+  "first_qualified_on_this_census": {
+   "storefront": 5342,
+   "corroborated": 180,
+   "readme": 0,
+   "manifest": 0,
+   "weak-topic+second": 0
+  }
+ },
+ "blocklist_token_histogram": {
+  "awesome": 3324,
+  "beginner": 22,
+  "beginners": 47,
+  "book": 289,
+  "books": 132,
+  "bootcamp": 29,
+  "cheat-sheet": 62,
+  "cheat-sheets": 12,
+  "cheatsheet": 141,
+  "cheatsheets": 53,
+  "checkpoint": 4,
+  "collection-of": 1,
+  "course": 221,
+  "courses": 32,
+  "curated": 8,
+  "handbook": 69,
+  "handbooks": 1,
+  "interview": 279,
+  "interviews": 24,
+  "learning-path": 6,
+  "lesson": 3,
+  "lessons": 10,
+  "list-of": 16,
+  "mirror": 44,
+  "mirrors": 5,
+  "paper-list": 35,
+  "paper-lists": 1,
+  "paperlist": 3,
+  "paperlists": 1,
+  "reading-list": 19,
+  "roadmap": 180,
+  "roadmaps": 15,
+  "study-guide": 13,
+  "studyguide": 1,
+  "tutorial": 318,
+  "tutorials": 126,
+  "workshop": 69,
+  "workshops": 5
+ },
+ "legacy_reconciliation": {
+  "note": "AI-v1 evaluated against the 137 members admitted under the pre-policy discretionary method. They remain members under the no-removal rule; this block reports where the predicate disagrees with the institute's own history rather than tuning the predicate to agree.",
+  "legacy_evaluated": 130,
+  "legacy_failing_ai_v1": [
+   {
+    "full_name": "microsoft/autogen",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "TabbyML/tabby",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "fishaudio/fish-speech",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "voideditor/void",
+    "fails": [
+     "fork_or_archived"
+    ]
+   },
+   {
+    "full_name": "huggingface/smolagents",
+    "fails": [
+     "ai_scope"
+    ]
+   },
+   {
+    "full_name": "charmbracelet/crush",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "mastra-ai/mastra",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "huggingface/open-r1",
+    "fails": [
+     "ai_scope",
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "black-forest-labs/flux",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "deepseek-ai/DeepSeek-OCR",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "Wan-Video/Wan2.2",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "GeeeekExplorer/nano-vllm",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "google-deepmind/mujoco",
+    "fails": [
+     "ai_scope"
+    ]
+   },
+   {
+    "full_name": "NVIDIA/TensorRT-LLM",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "Tencent-Hunyuan/HunyuanVideo",
+    "fails": [
+     "license",
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "Lightricks/LTX-Video",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "m87-labs/moondream",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "hexgrad/kokoro",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "apple/ml-fastvlm",
+    "fails": [
+     "license",
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "multimodal-art-projection/YuE",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "SWE-bench/SWE-bench",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "deepseek-ai/DeepSeek-VL2",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "PeterGriffinJin/Search-R1",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "vllm-project/aibrix",
+    "fails": [
+     "ai_scope"
+    ]
+   },
+   {
+    "full_name": "ace-step/ACE-Step",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "facebookresearch/esm",
+    "fails": [
+     "fork_or_archived"
+    ]
+   },
+   {
+    "full_name": "huggingface/smollm",
+    "fails": [
+     "ai_scope",
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "ARISE-Initiative/robosuite",
+    "fails": [
+     "license"
+    ]
+   },
+   {
+    "full_name": "Lifelong-Robot-Learning/LIBERO",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "chaidiscovery/chai-lab",
+    "fails": [
+     "ai_scope"
+    ]
+   },
+   {
+    "full_name": "showlab/ShowUI",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "dauparas/ProteinMPNN",
+    "fails": [
+     "ai_scope"
+    ]
+   },
+   {
+    "full_name": "thu-ml/RoboticsDiffusionTransformer",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "Stability-AI/sd3.5",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "ATH-MaaS/Ovis",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "EmergenceAI/Agent-E",
+    "fails": [
+     "ai_scope",
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "MoonshotAI/Kimi-VL",
+    "fails": [
+     "code_language",
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "westlake-repl/SaProt",
+    "fails": [
+     "velocity"
+    ]
+   },
+   {
+    "full_name": "dauparas/LigandMPNN",
+    "fails": [
+     "ai_scope",
+     "velocity"
+    ]
+   }
+  ]
+ },
+ "bands": [
+  {
+   "lo": 149536,
+   "hi": 1000000,
+   "created": "",
+   "total": 54,
+   "fresh": 54,
+   "done": true
+  },
+  {
+   "lo": 57826,
+   "hi": 149535,
+   "created": "",
+   "total": 321,
+   "fresh": 321,
+   "done": true
+  },
+  {
+   "lo": 35959,
+   "hi": 57825,
+   "created": "",
+   "total": 466,
+   "fresh": 466,
+   "done": true
+  },
+  {
+   "lo": 28356,
+   "hi": 35958,
+   "created": "",
+   "total": 438,
+   "fresh": 438,
+   "done": true
+  },
+  {
+   "lo": 22361,
+   "hi": 28355,
+   "created": "",
+   "total": 610,
+   "fresh": 610,
+   "done": true
+  },
+  {
+   "lo": 17634,
+   "hi": 22360,
+   "created": "",
+   "total": 708,
+   "fresh": 708,
+   "done": true
+  },
+  {
+   "lo": 15660,
+   "hi": 17633,
+   "created": "",
+   "total": 434,
+   "fresh": 434,
+   "done": true
+  },
+  {
+   "lo": 13906,
+   "hi": 15659,
+   "created": "",
+   "total": 568,
+   "fresh": 568,
+   "done": true
+  },
+  {
+   "lo": 12349,
+   "hi": 13905,
+   "created": "",
+   "total": 593,
+   "fresh": 593,
+   "done": true
+  },
+  {
+   "lo": 10966,
+   "hi": 12348,
+   "created": "",
+   "total": 656,
+   "fresh": 656,
+   "done": true
+  },
+  {
+   "lo": 9738,
+   "hi": 10965,
+   "created": "",
+   "total": 776,
+   "fresh": 776,
+   "done": true
+  },
+  {
+   "lo": 8648,
+   "hi": 9737,
+   "created": "",
+   "total": 868,
+   "fresh": 868,
+   "done": true
+  },
+  {
+   "lo": 7680,
+   "hi": 8647,
+   "created": "",
+   "total": 996,
+   "fresh": 996,
+   "done": true
+  },
+  {
+   "lo": 7237,
+   "hi": 7679,
+   "created": "",
+   "total": 508,
+   "fresh": 508,
+   "done": true
+  },
+  {
+   "lo": 6820,
+   "hi": 7236,
+   "created": "",
+   "total": 591,
+   "fresh": 591,
+   "done": true
+  },
+  {
+   "lo": 6427,
+   "hi": 6819,
+   "created": "",
+   "total": 626,
+   "fresh": 626,
+   "done": true
+  },
+  {
+   "lo": 6056,
+   "hi": 6426,
+   "created": "",
+   "total": 635,
+   "fresh": 635,
+   "done": true
+  },
+  {
+   "lo": 5707,
+   "hi": 6055,
+   "created": "",
+   "total": 710,
+   "fresh": 710,
+   "done": true
+  },
+  {
+   "lo": 5378,
+   "hi": 5706,
+   "created": "",
+   "total": 718,
+   "collected": 719,
+   "done": false,
+   "error": "collected != total_count"
+  },
+  {
+   "lo": 5378,
+   "hi": 5706,
+   "created": "",
+   "total": 719,
+   "fresh": 719,
+   "done": true
+  },
+  {
+   "lo": 5068,
+   "hi": 5377,
+   "created": "",
+   "total": 840,
+   "collected": 840,
+   "index_drift": 0,
+   "fresh": 840,
+   "done": true
+  },
+  {
+   "lo": 4776,
+   "hi": 5067,
+   "created": "",
+   "total": 846,
+   "collected": 846,
+   "index_drift": 0,
+   "fresh": 846,
+   "done": true
+  },
+  {
+   "lo": 4501,
+   "hi": 4775,
+   "created": "",
+   "total": 844,
+   "collected": 844,
+   "index_drift": 0,
+   "fresh": 844,
+   "done": true
+  },
+  {
+   "lo": 4241,
+   "hi": 4500,
+   "created": "",
+   "total": 985,
+   "collected": 985,
+   "index_drift": 0,
+   "fresh": 985,
+   "done": true
+  },
+  {
+   "lo": 3996,
+   "hi": 4240,
+   "created": "",
+   "total": 991,
+   "collected": 991,
+   "index_drift": 0,
+   "fresh": 991,
+   "done": true
+  },
+  {
+   "lo": 3879,
+   "hi": 3995,
+   "created": "",
+   "total": 507,
+   "collected": 507,
+   "index_drift": 0,
+   "fresh": 507,
+   "done": true
+  },
+  {
+   "lo": 3766,
+   "hi": 3878,
+   "created": "",
+   "total": 573,
+   "collected": 573,
+   "index_drift": 0,
+   "fresh": 573,
+   "done": true
+  },
+  {
+   "lo": 3656,
+   "hi": 3765,
+   "created": "",
+   "total": 537,
+   "collected": 537,
+   "index_drift": 0,
+   "fresh": 537,
+   "done": true
+  },
+  {
+   "lo": 3549,
+   "hi": 3655,
+   "created": "",
+   "total": 536,
+   "collected": 536,
+   "index_drift": 0,
+   "fresh": 536,
+   "done": true
+  },
+  {
+   "lo": 3445,
+   "hi": 3548,
+   "created": "",
+   "total": 644,
+   "collected": 644,
+   "index_drift": 0,
+   "fresh": 644,
+   "done": true
+  },
+  {
+   "lo": 3344,
+   "hi": 3444,
+   "created": "",
+   "total": 561,
+   "collected": 561,
+   "index_drift": 0,
+   "fresh": 561,
+   "done": true
+  },
+  {
+   "lo": 3246,
+   "hi": 3343,
+   "created": "",
+   "total": 596,
+   "collected": 596,
+   "index_drift": 0,
+   "fresh": 596,
+   "done": true
+  },
+  {
+   "lo": 3151,
+   "hi": 3245,
+   "created": "",
+   "total": 614,
+   "collected": 614,
+   "index_drift": 0,
+   "fresh": 614,
+   "done": true
+  },
+  {
+   "lo": 3059,
+   "hi": 3150,
+   "created": "",
+   "total": 682,
+   "collected": 682,
+   "index_drift": 0,
+   "fresh": 682,
+   "done": true
+  },
+  {
+   "lo": 2970,
+   "hi": 3058,
+   "created": "",
+   "total": 618,
+   "collected": 618,
+   "index_drift": 0,
+   "fresh": 618,
+   "done": true
+  },
+  {
+   "lo": 2883,
+   "hi": 2969,
+   "created": "",
+   "total": 747,
+   "collected": 747,
+   "index_drift": 0,
+   "fresh": 747,
+   "done": true
+  },
+  {
+   "lo": 2799,
+   "hi": 2882,
+   "created": "",
+   "total": 724,
+   "collected": 724,
+   "index_drift": 0,
+   "fresh": 724,
+   "done": true
+  },
+  {
+   "lo": 2717,
+   "hi": 2798,
+   "created": "",
+   "total": 724,
+   "collected": 724,
+   "index_drift": 0,
+   "fresh": 724,
+   "done": true
+  },
+  {
+   "lo": 2637,
+   "hi": 2716,
+   "created": "",
+   "total": 765,
+   "collected": 765,
+   "index_drift": 0,
+   "fresh": 765,
+   "done": true
+  },
+  {
+   "lo": 2560,
+   "hi": 2636,
+   "created": "",
+   "total": 767,
+   "collected": 767,
+   "index_drift": 0,
+   "fresh": 767,
+   "done": true
+  },
+  {
+   "lo": 2485,
+   "hi": 2559,
+   "created": "",
+   "total": 774,
+   "collected": 774,
+   "index_drift": 0,
+   "fresh": 774,
+   "done": true
+  },
+  {
+   "lo": 2412,
+   "hi": 2484,
+   "created": "",
+   "total": 806,
+   "collected": 806,
+   "index_drift": 0,
+   "fresh": 806,
+   "done": true
+  },
+  {
+   "lo": 2342,
+   "hi": 2411,
+   "created": "",
+   "total": 756,
+   "collected": 756,
+   "index_drift": 0,
+   "fresh": 756,
+   "done": true
+  },
+  {
+   "lo": 2274,
+   "hi": 2341,
+   "created": "",
+   "total": 808,
+   "collected": 808,
+   "index_drift": 0,
+   "fresh": 808,
+   "done": true
+  },
+  {
+   "lo": 2207,
+   "hi": 2273,
+   "created": "",
+   "total": 934,
+   "collected": 934,
+   "index_drift": 0,
+   "fresh": 934,
+   "done": true
+  },
+  {
+   "lo": 2143,
+   "hi": 2206,
+   "created": "",
+   "total": 929,
+   "collected": 929,
+   "index_drift": 0,
+   "fresh": 929,
+   "done": true
+  },
+  {
+   "lo": 2080,
+   "hi": 2142,
+   "created": "",
+   "total": 945,
+   "collected": 945,
+   "index_drift": 0,
+   "fresh": 945,
+   "done": true
+  },
+  {
+   "lo": 2019,
+   "hi": 2079,
+   "created": "",
+   "total": 939,
+   "collected": 938,
+   "attempt": 1,
+   "done": false,
+   "error": "collected < total_count"
+  },
+  {
+   "lo": 2019,
+   "hi": 2079,
+   "created": "",
+   "total": 939,
+   "collected": 938,
+   "attempt": 2,
+   "done": false,
+   "error": "collected < total_count"
+  },
+  {
+   "lo": 2019,
+   "hi": 2079,
+   "created": "",
+   "total": 939,
+   "collected": 938,
+   "attempt": 3,
+   "done": false,
+   "error": "collected < total_count"
+  },
+  {
+   "lo": 2019,
+   "hi": 2079,
+   "created": "",
+   "total": 939,
+   "collected": 938,
+   "attempt": 4,
+   "done": false,
+   "error": "collected < total_count"
+  },
+  {
+   "lo": 2019,
+   "hi": 2079,
+   "created": "",
+   "total": 939,
+   "collected": 938,
+   "index_drift": -1,
+   "fresh": 938,
+   "done": true
+  },
+  {
+   "lo": 1989,
+   "hi": 2018,
+   "created": "",
+   "total": 506,
+   "collected": 506,
+   "index_drift": 0,
+   "fresh": 506,
+   "done": true
+  },
+  {
+   "lo": 1960,
+   "hi": 1988,
+   "created": "",
+   "total": 507,
+   "collected": 507,
+   "index_drift": 0,
+   "fresh": 507,
+   "done": true
+  },
+  {
+   "lo": 1931,
+   "hi": 1959,
+   "created": "",
+   "total": 538,
+   "collected": 538,
+   "index_drift": 0,
+   "fresh": 538,
+   "done": true
+  },
+  {
+   "lo": 1903,
+   "hi": 1930,
+   "created": "",
+   "total": 513,
+   "collected": 513,
+   "index_drift": 0,
+   "fresh": 513,
+   "done": true
+  },
+  {
+   "lo": 1875,
+   "hi": 1902,
+   "created": "",
+   "total": 510,
+   "collected": 510,
+   "index_drift": 0,
+   "fresh": 510,
+   "done": true
+  },
+  {
+   "lo": 1847,
+   "hi": 1874,
+   "created": "",
+   "total": 561,
+   "collected": 561,
+   "index_drift": 0,
+   "fresh": 561,
+   "done": true
+  },
+  {
+   "lo": 1820,
+   "hi": 1846,
+   "created": "",
+   "total": 546,
+   "collected": 546,
+   "index_drift": 0,
+   "fresh": 546,
+   "done": true
+  },
+  {
+   "lo": 1793,
+   "hi": 1819,
+   "created": "",
+   "total": 564,
+   "collected": 564,
+   "index_drift": 0,
+   "fresh": 564,
+   "done": true
+  },
+  {
+   "lo": 1766,
+   "hi": 1792,
+   "created": "",
+   "total": 626,
+   "collected": 626,
+   "index_drift": 0,
+   "fresh": 626,
+   "done": true
+  },
+  {
+   "lo": 1740,
+   "hi": 1765,
+   "created": "",
+   "total": 558,
+   "collected": 558,
+   "index_drift": 0,
+   "fresh": 558,
+   "done": true
+  },
+  {
+   "lo": 1714,
+   "hi": 1739,
+   "created": "",
+   "total": 587,
+   "collected": 587,
+   "index_drift": 0,
+   "fresh": 587,
+   "done": true
+  },
+  {
+   "lo": 1689,
+   "hi": 1713,
+   "created": "",
+   "total": 565,
+   "collected": 565,
+   "index_drift": 0,
+   "fresh": 565,
+   "done": true
+  },
+  {
+   "lo": 1664,
+   "hi": 1688,
+   "created": "",
+   "total": 600,
+   "collected": 600,
+   "index_drift": 0,
+   "fresh": 600,
+   "done": true
+  },
+  {
+   "lo": 1640,
+   "hi": 1663,
+   "created": "",
+   "total": 583,
+   "collected": 583,
+   "index_drift": 0,
+   "fresh": 583,
+   "done": true
+  },
+  {
+   "lo": 1616,
+   "hi": 1639,
+   "created": "",
+   "total": 577,
+   "collected": 577,
+   "index_drift": 0,
+   "fresh": 577,
+   "done": true
+  },
+  {
+   "lo": 1592,
+   "hi": 1615,
+   "created": "",
+   "total": 623,
+   "collected": 623,
+   "index_drift": 0,
+   "fresh": 623,
+   "done": true
+  },
+  {
+   "lo": 1568,
+   "hi": 1591,
+   "created": "",
+   "total": 669,
+   "collected": 669,
+   "index_drift": 0,
+   "fresh": 669,
+   "done": true
+  },
+  {
+   "lo": 1545,
+   "hi": 1567,
+   "created": "",
+   "total": 605,
+   "collected": 605,
+   "index_drift": 0,
+   "fresh": 605,
+   "done": true
+  },
+  {
+   "lo": 1522,
+   "hi": 1544,
+   "created": "",
+   "total": 657,
+   "collected": 657,
+   "index_drift": 0,
+   "fresh": 657,
+   "done": true
+  },
+  {
+   "lo": 1500,
+   "hi": 1521,
+   "created": "",
+   "total": 657,
+   "collected": 657,
+   "index_drift": 0,
+   "fresh": 657,
+   "done": true
+  },
+  {
+   "lo": 1478,
+   "hi": 1499,
+   "created": "",
+   "total": 679,
+   "collected": 679,
+   "index_drift": 0,
+   "fresh": 679,
+   "done": true
+  },
+  {
+   "lo": 1456,
+   "hi": 1477,
+   "created": "",
+   "total": 650,
+   "collected": 650,
+   "index_drift": 0,
+   "fresh": 650,
+   "done": true
+  },
+  {
+   "lo": 1434,
+   "hi": 1455,
+   "created": "",
+   "total": 702,
+   "collected": 702,
+   "index_drift": 0,
+   "fresh": 702,
+   "done": true
+  },
+  {
+   "lo": 1413,
+   "hi": 1433,
+   "created": "",
+   "total": 694,
+   "collected": 694,
+   "index_drift": 0,
+   "fresh": 694,
+   "done": true
+  },
+  {
+   "lo": 1392,
+   "hi": 1412,
+   "created": "",
+   "total": 668,
+   "collected": 668,
+   "index_drift": 0,
+   "fresh": 668,
+   "done": true
+  },
+  {
+   "lo": 1372,
+   "hi": 1391,
+   "created": "",
+   "total": 655,
+   "collected": 655,
+   "index_drift": 0,
+   "fresh": 655,
+   "done": true
+  },
+  {
+   "lo": 1352,
+   "hi": 1371,
+   "created": "",
+   "total": 698,
+   "collected": 698,
+   "index_drift": 0,
+   "fresh": 698,
+   "done": true
+  },
+  {
+   "lo": 1332,
+   "hi": 1351,
+   "created": "",
+   "total": 701,
+   "collected": 701,
+   "index_drift": 0,
+   "fresh": 701,
+   "done": true
+  },
+  {
+   "lo": 1312,
+   "hi": 1331,
+   "created": "",
+   "total": 748,
+   "collected": 748,
+   "index_drift": 0,
+   "fresh": 748,
+   "done": true
+  },
+  {
+   "lo": 1293,
+   "hi": 1311,
+   "created": "",
+   "total": 662,
+   "collected": 662,
+   "index_drift": 0,
+   "fresh": 662,
+   "done": true
+  },
+  {
+   "lo": 1274,
+   "hi": 1292,
+   "created": "",
+   "total": 675,
+   "collected": 675,
+   "index_drift": 0,
+   "fresh": 675,
+   "done": true
+  },
+  {
+   "lo": 1255,
+   "hi": 1273,
+   "created": "",
+   "total": 712,
+   "collected": 712,
+   "index_drift": 0,
+   "fresh": 712,
+   "done": true
+  },
+  {
+   "lo": 1236,
+   "hi": 1254,
+   "created": "",
+   "total": 721,
+   "collected": 721,
+   "index_drift": 0,
+   "fresh": 721,
+   "done": true
+  },
+  {
+   "lo": 1218,
+   "hi": 1235,
+   "created": "",
+   "total": 711,
+   "collected": 711,
+   "index_drift": 0,
+   "fresh": 711,
+   "done": true
+  },
+  {
+   "lo": 1200,
+   "hi": 1217,
+   "created": "",
+   "total": 720,
+   "collected": 720,
+   "index_drift": 0,
+   "fresh": 720,
+   "done": true
+  },
+  {
+   "lo": 1182,
+   "hi": 1199,
+   "created": "",
+   "total": 739,
+   "collected": 739,
+   "index_drift": 0,
+   "fresh": 739,
+   "done": true
+  },
+  {
+   "lo": 1165,
+   "hi": 1181,
+   "created": "",
+   "total": 741,
+   "collected": 741,
+   "index_drift": 0,
+   "fresh": 741,
+   "done": true
+  },
+  {
+   "lo": 1148,
+   "hi": 1164,
+   "created": "",
+   "total": 787,
+   "collected": 787,
+   "index_drift": 0,
+   "fresh": 787,
+   "done": true
+  },
+  {
+   "lo": 1131,
+   "hi": 1147,
+   "created": "",
+   "total": 720,
+   "collected": 720,
+   "index_drift": 0,
+   "fresh": 720,
+   "done": true
+  },
+  {
+   "lo": 1115,
+   "hi": 1130,
+   "created": "",
+   "total": 784,
+   "collected": 784,
+   "index_drift": 0,
+   "fresh": 784,
+   "done": true
+  },
+  {
+   "lo": 1098,
+   "hi": 1114,
+   "created": "",
+   "total": 712,
+   "collected": 712,
+   "index_drift": 0,
+   "fresh": 712,
+   "done": true
+  },
+  {
+   "lo": 1082,
+   "hi": 1097,
+   "created": "",
+   "total": 766,
+   "collected": 766,
+   "index_drift": 0,
+   "fresh": 766,
+   "done": true
+  },
+  {
+   "lo": 1066,
+   "hi": 1081,
+   "created": "",
+   "total": 792,
+   "collected": 792,
+   "index_drift": 0,
+   "fresh": 792,
+   "done": true
+  },
+  {
+   "lo": 1051,
+   "hi": 1065,
+   "created": "",
+   "total": 782,
+   "collected": 782,
+   "index_drift": 0,
+   "fresh": 782,
+   "done": true
+  },
+  {
+   "lo": 1035,
+   "hi": 1050,
+   "created": "",
+   "total": 874,
+   "collected": 874,
+   "index_drift": 0,
+   "fresh": 874,
+   "done": true
+  },
+  {
+   "lo": 1020,
+   "hi": 1034,
+   "created": "",
+   "total": 759,
+   "collected": 759,
+   "index_drift": 0,
+   "fresh": 759,
+   "done": true
+  },
+  {
+   "lo": 1005,
+   "hi": 1019,
+   "created": "",
+   "total": 811,
+   "collected": 811,
+   "index_drift": 0,
+   "fresh": 811,
+   "done": true
+  },
+  {
+   "lo": 990,
+   "hi": 1004,
+   "created": "",
+   "total": 810,
+   "collected": 810,
+   "index_drift": 0,
+   "fresh": 810,
+   "done": true
+  },
+  {
+   "lo": 975,
+   "hi": 989,
+   "created": "",
+   "total": 902,
+   "collected": 902,
+   "index_drift": 0,
+   "fresh": 902,
+   "done": true
+  },
+  {
+   "lo": 961,
+   "hi": 974,
+   "created": "",
+   "total": 884,
+   "collected": 884,
+   "index_drift": 0,
+   "fresh": 884,
+   "done": true
+  },
+  {
+   "lo": 947,
+   "hi": 960,
+   "created": "",
+   "total": 983,
+   "collected": 983,
+   "index_drift": 0,
+   "fresh": 983,
+   "done": true
+  },
+  {
+   "lo": 933,
+   "hi": 946,
+   "created": "",
+   "total": 940,
+   "collected": 940,
+   "index_drift": 0,
+   "fresh": 940,
+   "done": true
+  },
+  {
+   "lo": 919,
+   "hi": 932,
+   "created": "",
+   "total": 972,
+   "collected": 972,
+   "index_drift": 0,
+   "fresh": 972,
+   "done": true
+  },
+  {
+   "lo": 906,
+   "hi": 918,
+   "created": "",
+   "total": 919,
+   "collected": 919,
+   "index_drift": 0,
+   "fresh": 919,
+   "done": true
+  },
+  {
+   "lo": 893,
+   "hi": 905,
+   "created": "",
+   "total": 919,
+   "collected": 919,
+   "index_drift": 0,
+   "fresh": 919,
+   "done": true
+  },
+  {
+   "lo": 880,
+   "hi": 892,
+   "created": "",
+   "total": 953,
+   "collected": 953,
+   "index_drift": 0,
+   "fresh": 953,
+   "done": true
+  },
+  {
+   "lo": 873,
+   "hi": 879,
+   "created": "",
+   "total": 573,
+   "collected": 573,
+   "index_drift": 0,
+   "fresh": 573,
+   "done": true
+  },
+  {
+   "lo": 867,
+   "hi": 872,
+   "created": "",
+   "total": 472,
+   "collected": 472,
+   "index_drift": 0,
+   "fresh": 472,
+   "done": true
+  },
+  {
+   "lo": 860,
+   "hi": 866,
+   "created": "",
+   "total": 589,
+   "collected": 589,
+   "index_drift": 0,
+   "fresh": 589,
+   "done": true
+  },
+  {
+   "lo": 854,
+   "hi": 859,
+   "created": "",
+   "total": 434,
+   "collected": 434,
+   "index_drift": 0,
+   "fresh": 434,
+   "done": true
+  },
+  {
+   "lo": 847,
+   "hi": 853,
+   "created": "",
+   "total": 577,
+   "collected": 577,
+   "index_drift": 0,
+   "fresh": 577,
+   "done": true
+  },
+  {
+   "lo": 841,
+   "hi": 846,
+   "created": "",
+   "total": 507,
+   "collected": 507,
+   "index_drift": 0,
+   "fresh": 507,
+   "done": true
+  },
+  {
+   "lo": 835,
+   "hi": 840,
+   "created": "",
+   "total": 528,
+   "collected": 528,
+   "index_drift": 0,
+   "fresh": 528,
+   "done": true
+  },
+  {
+   "lo": 829,
+   "hi": 834,
+   "created": "",
+   "total": 502,
+   "collected": 502,
+   "index_drift": 0,
+   "fresh": 502,
+   "done": true
+  },
+  {
+   "lo": 822,
+   "hi": 828,
+   "created": "",
+   "total": 625,
+   "collected": 625,
+   "index_drift": 0,
+   "fresh": 625,
+   "done": true
+  },
+  {
+   "lo": 816,
+   "hi": 821,
+   "created": "",
+   "total": 541,
+   "collected": 541,
+   "index_drift": 0,
+   "fresh": 541,
+   "done": true
+  },
+  {
+   "lo": 810,
+   "hi": 815,
+   "created": "",
+   "total": 574,
+   "collected": 574,
+   "index_drift": 0,
+   "fresh": 574,
+   "done": true
+  },
+  {
+   "lo": 804,
+   "hi": 809,
+   "created": "",
+   "total": 582,
+   "collected": 582,
+   "index_drift": 0,
+   "fresh": 582,
+   "done": true
+  },
+  {
+   "lo": 798,
+   "hi": 803,
+   "created": "",
+   "total": 496,
+   "collected": 496,
+   "index_drift": 0,
+   "fresh": 496,
+   "done": true
+  },
+  {
+   "lo": 792,
+   "hi": 797,
+   "created": "",
+   "total": 567,
+   "collected": 567,
+   "index_drift": 0,
+   "fresh": 567,
+   "done": true
+  },
+  {
+   "lo": 786,
+   "hi": 791,
+   "created": "",
+   "total": 579,
+   "collected": 579,
+   "index_drift": 0,
+   "fresh": 579,
+   "done": true
+  },
+  {
+   "lo": 781,
+   "hi": 785,
+   "created": "",
+   "total": 468,
+   "collected": 468,
+   "index_drift": 0,
+   "fresh": 468,
+   "done": true
+  },
+  {
+   "lo": 775,
+   "hi": 780,
+   "created": "",
+   "total": 614,
+   "collected": 614,
+   "index_drift": 0,
+   "fresh": 614,
+   "done": true
+  },
+  {
+   "lo": 769,
+   "hi": 774,
+   "created": "",
+   "total": 587,
+   "collected": 587,
+   "index_drift": 0,
+   "fresh": 587,
+   "done": true
+  },
+  {
+   "lo": 763,
+   "hi": 768,
+   "created": "",
+   "total": 608,
+   "collected": 608,
+   "index_drift": 0,
+   "fresh": 608,
+   "done": true
+  },
+  {
+   "lo": 758,
+   "hi": 762,
+   "created": "",
+   "total": 517,
+   "collected": 517,
+   "index_drift": 0,
+   "fresh": 517,
+   "done": true
+  },
+  {
+   "lo": 752,
+   "hi": 757,
+   "created": "",
+   "total": 608,
+   "collected": 608,
+   "index_drift": 0,
+   "fresh": 608,
+   "done": true
+  },
+  {
+   "lo": 747,
+   "hi": 751,
+   "created": "",
+   "total": 526,
+   "collected": 526,
+   "index_drift": 0,
+   "fresh": 526,
+   "done": true
+  },
+  {
+   "lo": 741,
+   "hi": 746,
+   "created": "",
+   "total": 619,
+   "collected": 619,
+   "index_drift": 0,
+   "fresh": 619,
+   "done": true
+  },
+  {
+   "lo": 736,
+   "hi": 740,
+   "created": "",
+   "total": 502,
+   "collected": 502,
+   "index_drift": 0,
+   "fresh": 502,
+   "done": true
+  },
+  {
+   "lo": 730,
+   "hi": 735,
+   "created": "",
+   "total": 677,
+   "collected": 677,
+   "index_drift": 0,
+   "fresh": 677,
+   "done": true
+  },
+  {
+   "lo": 725,
+   "hi": 729,
+   "created": "",
+   "total": 556,
+   "collected": 556,
+   "index_drift": 0,
+   "fresh": 556,
+   "done": true
+  },
+  {
+   "lo": 719,
+   "hi": 724,
+   "created": "",
+   "total": 674,
+   "collected": 674,
+   "index_drift": 0,
+   "fresh": 674,
+   "done": true
+  },
+  {
+   "lo": 714,
+   "hi": 718,
+   "created": "",
+   "total": 546,
+   "collected": 546,
+   "index_drift": 0,
+   "fresh": 546,
+   "done": true
+  },
+  {
+   "lo": 708,
+   "hi": 713,
+   "created": "",
+   "total": 706,
+   "collected": 706,
+   "index_drift": 0,
+   "fresh": 706,
+   "done": true
+  },
+  {
+   "lo": 703,
+   "hi": 707,
+   "created": "",
+   "total": 586,
+   "collected": 586,
+   "index_drift": 0,
+   "fresh": 586,
+   "done": true
+  },
+  {
+   "lo": 698,
+   "hi": 702,
+   "created": "",
+   "total": 561,
+   "collected": 561,
+   "index_drift": 0,
+   "fresh": 561,
+   "done": true
+  },
+  {
+   "lo": 693,
+   "hi": 697,
+   "created": "",
+   "total": 595,
+   "collected": 595,
+   "index_drift": 0,
+   "fresh": 595,
+   "done": true
+  },
+  {
+   "lo": 688,
+   "hi": 692,
+   "created": "",
+   "total": 607,
+   "collected": 606,
+   "index_drift": -1,
+   "fresh": 606,
+   "done": true
+  },
+  {
+   "lo": 683,
+   "hi": 687,
+   "created": "",
+   "total": 594,
+   "collected": 594,
+   "index_drift": 0,
+   "fresh": 594,
+   "done": true
+  },
+  {
+   "lo": 678,
+   "hi": 682,
+   "created": "",
+   "total": 568,
+   "collected": 568,
+   "index_drift": 0,
+   "fresh": 568,
+   "done": true
+  },
+  {
+   "lo": 673,
+   "hi": 677,
+   "created": "",
+   "total": 631,
+   "collected": 631,
+   "index_drift": 0,
+   "fresh": 631,
+   "done": true
+  },
+  {
+   "lo": 668,
+   "hi": 672,
+   "created": "",
+   "total": 657,
+   "collected": 657,
+   "index_drift": 0,
+   "fresh": 657,
+   "done": true
+  },
+  {
+   "lo": 663,
+   "hi": 667,
+   "created": "",
+   "total": 599,
+   "collected": 599,
+   "index_drift": 0,
+   "fresh": 599,
+   "done": true
+  },
+  {
+   "lo": 658,
+   "hi": 662,
+   "created": "",
+   "total": 637,
+   "collected": 638,
+   "index_drift": 1,
+   "fresh": 638,
+   "done": true
+  },
+  {
+   "lo": 653,
+   "hi": 657,
+   "created": "",
+   "total": 675,
+   "collected": 675,
+   "index_drift": 0,
+   "fresh": 675,
+   "done": true
+  },
+  {
+   "lo": 648,
+   "hi": 652,
+   "created": "",
+   "total": 719,
+   "collected": 719,
+   "index_drift": 0,
+   "fresh": 719,
+   "done": true
+  },
+  {
+   "lo": 643,
+   "hi": 647,
+   "created": "",
+   "total": 692,
+   "collected": 692,
+   "index_drift": 0,
+   "fresh": 692,
+   "done": true
+  },
+  {
+   "lo": 638,
+   "hi": 642,
+   "created": "",
+   "total": 721,
+   "collected": 721,
+   "index_drift": 0,
+   "fresh": 721,
+   "done": true
+  },
+  {
+   "lo": 634,
+   "hi": 637,
+   "created": "",
+   "total": 520,
+   "collected": 520,
+   "index_drift": 0,
+   "fresh": 520,
+   "done": true
+  },
+  {
+   "lo": 629,
+   "hi": 633,
+   "created": "",
+   "total": 725,
+   "collected": 725,
+   "index_drift": 0,
+   "fresh": 725,
+   "done": true
+  },
+  {
+   "lo": 624,
+   "hi": 628,
+   "created": "",
+   "total": 775,
+   "collected": 775,
+   "index_drift": 0,
+   "fresh": 775,
+   "done": true
+  },
+  {
+   "lo": 619,
+   "hi": 623,
+   "created": "",
+   "total": 713,
+   "collected": 713,
+   "index_drift": 0,
+   "fresh": 713,
+   "done": true
+  },
+  {
+   "lo": 615,
+   "hi": 618,
+   "created": "",
+   "total": 564,
+   "collected": 564,
+   "index_drift": 0,
+   "fresh": 564,
+   "done": true
+  },
+  {
+   "lo": 610,
+   "hi": 614,
+   "created": "",
+   "total": 744,
+   "collected": 744,
+   "index_drift": 0,
+   "fresh": 744,
+   "done": true
+  },
+  {
+   "lo": 606,
+   "hi": 609,
+   "created": "",
+   "total": 607,
+   "collected": 607,
+   "index_drift": 0,
+   "fresh": 607,
+   "done": true
+  },
+  {
+   "lo": 601,
+   "hi": 605,
+   "created": "",
+   "total": 779,
+   "collected": 779,
+   "index_drift": 0,
+   "fresh": 779,
+   "done": true
+  },
+  {
+   "lo": 597,
+   "hi": 600,
+   "created": "",
+   "total": 629,
+   "collected": 628,
+   "index_drift": -1,
+   "fresh": 628,
+   "done": true
+  },
+  {
+   "lo": 592,
+   "hi": 596,
+   "created": "",
+   "total": 790,
+   "collected": 790,
+   "index_drift": 0,
+   "fresh": 790,
+   "done": true
+  },
+  {
+   "lo": 588,
+   "hi": 591,
+   "created": "",
+   "total": 650,
+   "collected": 650,
+   "index_drift": 0,
+   "fresh": 650,
+   "done": true
+  },
+  {
+   "lo": 584,
+   "hi": 587,
+   "created": "",
+   "total": 656,
+   "collected": 657,
+   "index_drift": 1,
+   "fresh": 657,
+   "done": true
+  },
+  {
+   "lo": 580,
+   "hi": 583,
+   "created": "",
+   "total": 682,
+   "collected": 682,
+   "index_drift": 0,
+   "fresh": 682,
+   "done": true
+  },
+  {
+   "lo": 575,
+   "hi": 579,
+   "created": "",
+   "total": 842,
+   "collected": 842,
+   "index_drift": 0,
+   "fresh": 842,
+   "done": true
+  },
+  {
+   "lo": 571,
+   "hi": 574,
+   "created": "",
+   "total": 694,
+   "collected": 694,
+   "index_drift": 0,
+   "fresh": 694,
+   "done": true
+  },
+  {
+   "lo": 567,
+   "hi": 570,
+   "created": "",
+   "total": 720,
+   "collected": 720,
+   "index_drift": 0,
+   "fresh": 720,
+   "done": true
+  },
+  {
+   "lo": 563,
+   "hi": 566,
+   "created": "",
+   "total": 745,
+   "collected": 745,
+   "index_drift": 0,
+   "fresh": 745,
+   "done": true
+  },
+  {
+   "lo": 559,
+   "hi": 562,
+   "created": "",
+   "total": 686,
+   "collected": 686,
+   "index_drift": 0,
+   "fresh": 686,
+   "done": true
+  },
+  {
+   "lo": 555,
+   "hi": 558,
+   "created": "",
+   "total": 715,
+   "collected": 715,
+   "index_drift": 0,
+   "fresh": 715,
+   "done": true
+  },
+  {
+   "lo": 551,
+   "hi": 554,
+   "created": "",
+   "total": 738,
+   "collected": 737,
+   "index_drift": -1,
+   "fresh": 737,
+   "done": true
+  },
+  {
+   "lo": 547,
+   "hi": 550,
+   "created": "",
+   "total": 731,
+   "collected": 731,
+   "index_drift": 0,
+   "fresh": 731,
+   "done": true
+  },
+  {
+   "lo": 543,
+   "hi": 546,
+   "created": "",
+   "total": 728,
+   "collected": 728,
+   "index_drift": 0,
+   "fresh": 728,
+   "done": true
+  },
+  {
+   "lo": 539,
+   "hi": 542,
+   "created": "",
+   "total": 784,
+   "collected": 784,
+   "index_drift": 0,
+   "fresh": 784,
+   "done": true
+  },
+  {
+   "lo": 535,
+   "hi": 538,
+   "created": "",
+   "total": 790,
+   "collected": 790,
+   "index_drift": 0,
+   "fresh": 790,
+   "done": true
+  },
+  {
+   "lo": 531,
+   "hi": 534,
+   "created": "",
+   "total": 775,
+   "collected": 775,
+   "index_drift": 0,
+   "fresh": 775,
+   "done": true
+  },
+  {
+   "lo": 527,
+   "hi": 530,
+   "created": "",
+   "total": 787,
+   "collected": 787,
+   "index_drift": 0,
+   "fresh": 787,
+   "done": true
+  },
+  {
+   "lo": 523,
+   "hi": 526,
+   "created": "",
+   "total": 866,
+   "collected": 866,
+   "index_drift": 0,
+   "fresh": 866,
+   "done": true
+  },
+  {
+   "lo": 519,
+   "hi": 522,
+   "created": "",
+   "total": 744,
+   "collected": 744,
+   "index_drift": 0,
+   "fresh": 744,
+   "done": true
+  },
+  {
+   "lo": 515,
+   "hi": 518,
+   "created": "",
+   "total": 788,
+   "collected": 788,
+   "index_drift": 0,
+   "fresh": 788,
+   "done": true
+  },
+  {
+   "lo": 511,
+   "hi": 514,
+   "created": "",
+   "total": 801,
+   "collected": 801,
+   "index_drift": 0,
+   "fresh": 801,
+   "done": true
+  },
+  {
+   "lo": 507,
+   "hi": 510,
+   "created": "",
+   "total": 820,
+   "collected": 820,
+   "index_drift": 0,
+   "fresh": 820,
+   "done": true
+  },
+  {
+   "lo": 503,
+   "hi": 506,
+   "created": "",
+   "total": 855,
+   "collected": 855,
+   "index_drift": 0,
+   "fresh": 855,
+   "done": true
+  },
+  {
+   "lo": 500,
+   "hi": 502,
+   "created": "",
+   "total": 641,
+   "collected": 641,
+   "index_drift": 0,
+   "fresh": 641,
+   "done": true
+  }
+ ],
+ "pending_manifest_sha256": "fde491f16ba1d4fd1bda870f9b65ee2aab0a2dcaf67aefc0ed60e28d2a2c326f"
+}

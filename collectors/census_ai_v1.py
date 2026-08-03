@@ -34,6 +34,9 @@ import re
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -115,7 +118,12 @@ STRATUM_BY_SIGNAL = MappingProxyType({
     "copilot": "declared-application",
 })
 
-CHANNELS = ("storefront", "readme", "manifest", "weak-topic+second")
+# The classifier's two tiers: `storefront` admits alone (the project's public
+# label), `corroborated` is two independent supporting registers (README prose,
+# a framework-tier dependency, an ambiguous topic). The single-source channels
+# below are retained so historical artifacts stay readable.
+CHANNELS = ("storefront", "corroborated",
+            "readme", "manifest", "weak-topic+second")
 
 
 def norm_license(spdx: str | None) -> str:
@@ -170,7 +178,17 @@ def gh_graphql(query: str) -> tuple[dict, bool]:
             d = json.loads(p.stdout) if p.stdout else {}
         except json.JSONDecodeError:
             d = {}
-        if p.returncode == 0 and d.get("data") and not d.get("errors"):
+        errors = d.get("errors") or []
+        # NOT_FOUND is a PERMANENT fact about that alias (the repository was
+        # deleted or renamed away between the sweep and the deep check), not a
+        # transport failure. Treating every `errors` payload as transient sent
+        # a deleted repo into an unbounded retry loop and failed the whole
+        # shard - measured on kweaver-ai/kweaver-core, gone since the 09:35
+        # sweep. Only non-NOT_FOUND errors mean "ask again".
+        transient = [e for e in errors if e.get("type") != "NOT_FOUND"]
+        if p.returncode == 0 and d.get("data") and not errors:
+            return d["data"], True
+        if d.get("data") and not transient:
             return d["data"], True
         if d.get("data"):
             return d["data"], False
@@ -369,15 +387,67 @@ def _deep_query(batch: list[dict]) -> str:
             f'  h365: history(since:"{SINCE}") {{ totalCount }}'
             f'  h90: history(since:"{SINCE90}") {{ totalCount }} }} }} }}'
             f' releases(first:1) {{ totalCount }}'
-            f' readme: object(expression:"HEAD:README.md")'
-            f' {{ ... on Blob {{ text }} }}'
             f' {files} }}')
     return "query {" + " ".join(parts) + "}"
 
 
-def deepcheck(rows: list[dict], out_path: Path) -> None:
-    done = {json.loads(l)["full_name"] for l in out_path.open()} \
-        if out_path.exists() else set()
+
+README_NAMES = ("README.md", "README.rst", "README", "readme.md", "docs/README.md")
+
+
+def readme_prefix(full_name: str) -> str:
+    """First README_PREFIX bytes of the README, over raw.githubusercontent.
+
+    Measured 2026-08-03: pulling READMEs inside the GraphQL batch returned
+    1.6 MB per 20 repositories and made the phase bandwidth-bound - ten
+    parallel workers moved 280 repos/min while 89% of the API budget sat
+    unused, because cost is 1 point per query regardless of payload. A ranged
+    request over the raw CDN returns exactly the 2000 bytes the classifier
+    reads (HTTP 206, 93% less traffic for pytorch/pytorch) and does not touch
+    the API budget at all.
+    """
+    for name in README_NAMES:
+        url = f"https://raw.githubusercontent.com/{full_name}/HEAD/{name}"
+        req = urllib.request.Request(url, headers={
+            "Range": f"bytes=0-{README_PREFIX}",
+            "User-Agent": "evidaxis-census"})
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return r.read().decode("utf-8", "replace")
+        except urllib.error.HTTPError as e:
+            if e.code in (404, 403):
+                continue          # try the next spelling
+            return ""
+        except (urllib.error.URLError, OSError, TimeoutError):
+            return ""
+    return ""
+
+
+def readme_batch(names: list[str]) -> dict[str, str]:
+    with ThreadPoolExecutor(max_workers=16) as pool:
+        return dict(zip(names, pool.map(readme_prefix, names)))
+
+
+def deepcheck(rows: list[dict], out_path: Path, shard: int = 0,
+              shards: int = 1) -> None:
+    """Deep legs for the candidate set, shardable.
+
+    Measured 2026-08-03: one batch of 20 takes ~9s and returns ~1.6 MB (the
+    README text is the entire payload; without it the same batch is 198 KB).
+    Serial, that is ~26 hours for 78k candidates. The GraphQL budget is NOT the
+    constraint - cost is 1 point per query and 4795 of 5000 points were free
+    while the serial run crawled - so the work is latency-bound and shards
+    linearly. Each shard writes its own file; emit() reads them all.
+    """
+    if shards > 1:
+        rows = [r for i, r in enumerate(rows) if i % shards == shard]
+    # The cache is read across ALL shard files, not just this worker's own, so
+    # re-sharding (changing the worker count mid-run) never redoes finished
+    # work and never drops any.
+    done = set()
+    for cached in out_path.parent.glob("deepcheck*.jsonl"):
+        for line in cached.open():
+            done.add(json.loads(line)["full_name"])
     todo = [r for r in rows if r["full_name"] not in done]
     print(f"deepcheck: {len(todo)} to go ({len(done)} cached)", flush=True)
     out = out_path.open("a")
@@ -389,6 +459,7 @@ def deepcheck(rows: list[dict], out_path: Path) -> None:
         for i in range(0, len(queue), 20):
             batch = queue[i:i + 20]
             data, clean = gh_graphql(_deep_query(batch))
+            readmes = readme_batch([r['full_name'] for r in batch])
             for j, r in enumerate(batch):
                 node = data.get(f"r{j}")
                 if node is None:
@@ -419,14 +490,14 @@ def deepcheck(rows: list[dict], out_path: Path) -> None:
                     "commit_oid": tgt.get("oid"),
                     "commits365": (tgt.get("h365") or {}).get("totalCount", 0),
                     "commits90": (tgt.get("h90") or {}).get("totalCount", 0),
-                    "readme": ((node.get("readme") or {}).get("text") or ""
-                               )[:README_PREFIX],
+                    "readme": readmes.get(node["nameWithOwner"], "")[
+                        :README_PREFIX],
                     "manifests": manifests,
                 }, ensure_ascii=False) + "\n")
             out.flush()
             if (i // 20) % 20 == 0:
                 print(f"  round {rounds}: {i}/{len(queue)}", flush=True)
-            time.sleep(1.2)
+            time.sleep(0.2)   # not rate-bound: 1 point/query, 5000/hour
         queue = pending
         if queue:
             print(f"  {len(queue)} transient failures, retrying", flush=True)
@@ -493,7 +564,16 @@ def stratum_of(evidence: dict) -> str:
 
 def blocklist_token(name: str, description: str | None,
                     topics: list[str]) -> str | None:
-    match = BLOCK_NAME.search(name)
+    """Which token blocked this row, for the aggregate histogram.
+
+    Must mirror is_blocked EXACTLY, including its separator-split view of the
+    name: `generative-ai-for-beginners` blocks on the part `beginners`, which a
+    whole-string search never sees. A mismatch here aborted the census rather
+    than mis-reporting one histogram bucket - fail-closed in the wrong place.
+    """
+    from ai_scope import _SPLIT
+    name_forms = name + " " + " ".join(_SPLIT.split(name.lower()))
+    match = BLOCK_NAME.search(name_forms)
     if match is None:
         match = BLOCK_STRONG.search(
             f"{name} {description or ''} {' '.join(topics or [])}"
@@ -594,12 +674,23 @@ def manifest_dependency_line(filename: str, text: str,
 
 
 def qualifying_text(row: dict, deep: dict, evidence: dict) -> str:
+    """The exact text that fired, for the anti-look-ahead hash.
+
+    Failure to isolate the precise span must DEGRADE, never abort: provenance
+    is evidence about one member, a census is the whole record, and letting the
+    finer artifact kill the coarser one inverts their importance. An unusual
+    manifest (an unterminated array, an exotic dialect) falls back to hashing
+    the whole file, which is still a sound point-in-time commitment - only less
+    specific. The degradation is visible in the artifact via the prefix.
+    """
     channel = evidence["channel"]
     if channel == "manifest":
         filename = evidence["manifest"]
-        return manifest_dependency_line(
-            filename, deep["manifests"][filename], evidence["signal"]
-        )
+        text = (deep.get("manifests") or {}).get(filename) or ""
+        try:
+            return manifest_dependency_line(filename, text, evidence["signal"])
+        except (RuntimeError, ValueError, KeyError, IndexError):
+            return f"[whole-manifest:{filename}]\n{text}"
     if channel == "readme":
         return (deep.get("readme") or "")[:README_PREFIX]
     if channel == "weak-topic+second":
@@ -610,23 +701,30 @@ def qualifying_text(row: dict, deep: dict, evidence: dict) -> str:
         if second is None:
             raise RuntimeError("weak topic admission has no second channel")
         return qualifying_text(row, deep, second)
+    if channel == "corroborated":
+        # Two independent registers admitted this member, so the commitment is
+        # to BOTH of them: the storefront it published, the opening of its
+        # README, and the manifests it declares. Hashing the union is what the
+        # anti-look-ahead guarantee needs - it pins everything that spoke.
+        parts = [f"{row['full_name'].split('/')[-1]} "
+                 f"{row.get('description') or ''} "
+                 f"{' '.join(row.get('topics') or [])}".strip(),
+                 (deep.get("readme") or "")[:README_PREFIX]]
+        for fn, text in sorted((deep.get("manifests") or {}).items()):
+            parts.append(f"[{fn}]\n{text}")
+        return "\n---\n".join(parts)
     if channel != "storefront":
         raise RuntimeError(f"unknown qualification channel: {channel}")
 
-    signal = evidence["signal"]
-    for topic in row.get("topics") or []:
-        topic_evidence = classify("", None, [topic])
-        if topic_evidence and topic_evidence.get("signal") == signal:
-            return topic
-    name = row["full_name"].split("/")[-1]
-    name_evidence = classify(name, None, [])
-    if name_evidence and name_evidence.get("signal") == signal:
-        return name
-    description = row.get("description")
-    description_evidence = classify("", description, [])
-    if description_evidence and description_evidence.get("signal") == signal:
-        return description or ""
-    raise RuntimeError("storefront qualification source could not be reproduced")
+    # The storefront IS the declaration - name, description and topics as the
+    # classifier reads them, joined. An earlier version tried to reproduce
+    # WHICH part fired by re-classifying each in isolation and raised when it
+    # could not; that breaks whenever a match spans the join (the regex reads
+    # the concatenation), and a provenance detail must never be able to abort
+    # a census. Hashing the whole storefront is a stronger commitment anyway:
+    # it pins everything the repository said about itself at census time.
+    return f"{row['full_name'].split('/')[-1]} {row.get('description') or ''} " \
+           f"{' '.join(row.get('topics') or [])}".strip()
 
 
 def previous_qualification_dates(month_dir: Path) -> dict[int, str]:
@@ -690,7 +788,16 @@ def emit(month_dir: Path) -> None:
             "sweep sentinel missing - the universe is partial; emitting now "
             "would hash-anchor a manifest whose completeness claim is false")
     raw = load_jsonl(month_dir / "raw-500plus.jsonl")
-    deep = {d["full_name"]: d for d in load_jsonl(month_dir / "deepcheck.jsonl")}
+    # Keyed on the NUMERIC id, not the name: GraphQL resolves a renamed
+    # repository and returns its CANONICAL name, so a name-keyed lookup misses
+    # every member that moved between the sweep and the deep check. Measured:
+    # d3george/slash-admin is dingyi214/slash-admin today. Same class as the 8
+    # stale names in the legacy roster.
+    deep = {}
+    for p_deep in sorted(month_dir.glob("deepcheck*.jsonl")):
+        for d in load_jsonl(p_deep):
+            if d.get("id") is not None:
+                deep[d["id"]] = d
     members = registry_ids()
 
     agg = {k: 0 for k in (
@@ -702,10 +809,11 @@ def emit(month_dir: Path) -> None:
     blocklist_histogram: Counter[str] = Counter()
 
     for r in candidates_of(raw, blocklist_histogram):
-        d = deep.get(r["full_name"])
+        d = deep.get(r["id"])
         is_legacy = r["id"] in members
         if d is None:
-            raise RuntimeError(f"candidate never deep-checked: {r['full_name']}")
+            raise RuntimeError(
+                f"candidate never deep-checked: {r['full_name']} (id {r['id']})")
         if d.get("missing"):
             agg["gone_since_sweep"] += 1
             continue
@@ -787,7 +895,7 @@ def emit(month_dir: Path) -> None:
         first_qualified_on = min(
             census_date, prior_dates.get(r["id"], census_date)
         )
-        source_text = qualifying_text(r, deep[r["full_name"]], r["evidence"])
+        source_text = qualifying_text(r, deep[r["id"]], r["evidence"])
         manifest_members.append({
             "repo_id": r["id"], "full_name": r["full_name"],
             "stars": r["stargazers_count"],
@@ -953,8 +1061,15 @@ def main() -> int:
     if phase == "deepcheck":
         raw = load_jsonl(month_dir / "raw-500plus.jsonl")
         cands = candidates_of(raw)
-        print(f"deepcheck candidates: {len(cands)} of {len(raw)}")
-        deepcheck(cands, month_dir / "deepcheck.jsonl")
+        shard, shards = 0, 1
+        if "--shard" in sys.argv:
+            shard, shards = (int(x) for x in
+                             sys.argv[sys.argv.index("--shard") + 1].split("/"))
+        out = (month_dir / f"deepcheck-{shard}.jsonl" if shards > 1
+               else month_dir / "deepcheck.jsonl")
+        print(f"deepcheck candidates: {len(cands)} of {len(raw)} "
+              f"(shard {shard}/{shards})")
+        deepcheck(cands, out, shard, shards)
         return 0
     if phase == "emit":
         emit(month_dir)

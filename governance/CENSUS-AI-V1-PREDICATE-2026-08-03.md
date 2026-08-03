@@ -1,7 +1,9 @@
 # Governance act: AI-v1 predicate (census wave 1)
 
-> status: **v2 DRAFT** — rewritten 2026-08-03 after an adversarial review that
-> broke v1 in eleven places. Pending: the census run itself, then hash freeze.
+> status: **v2 DRAFT — TWO-TIER-RERUN-PENDING** — rewritten 2026-08-03 after
+> an adversarial review that broke v1 in eleven places, then amended after the
+> first census measured five further defects. Pending: the two-tier rerun, then
+> hash freeze.
 > Subordinate to REGISTRY-GROWTH-POLICY-2026-07-21.md; closes its three open
 > questions (dedup unit, licence allowlist, blocklist + AI-scope signals).
 > Predicate amendments = a new dated version re-run retroactively against the
@@ -15,9 +17,12 @@
 > Grok's lane DNF'd twice on a headless watchdog and is recorded as missing,
 > not silently absorbed.
 
-## 0. What v1 got wrong (kept, because a frozen act must show its scars)
+## 0. What v1 and the first census implementation got wrong
 
-| v1 claim | What measurement showed |
+Kept, because a frozen act must show its scars. The first eleven rows produced
+v2; the final five were measured while executing it and produced this rewrite.
+
+| earlier claim or implementation | What measurement showed |
 |---|---|
 | regex `…\|molecul\|fine.?tun…)\b` | The trailing `\b` made **"fine tuning", "voice cloning", "image generation", "molecular docking" all fail** — the exact words the stems existed for. `.?` also accepted "deepXlearning". |
 | blocklist over name+description+topics | Killed **367 of 2,592 AI-scope repos (14.2%)** on 16,860 live rows, including `huggingface/pytorch-image-models` (timm) via "largest **collection of** PyTorch image encoders" and `catboost` (9.1k★) via the topic `tutorial`. timm is not among the 137, so the v1 fixture passed green while excluding it. |
@@ -30,6 +35,11 @@
 | nulled GraphQL node = repo missing | A 502 (measured: `dependencyGraphManifests` 502s at batch size 3) became a **permanent exclusion** that resume never revisited. |
 | §3(b) "publish 50 named blocked repos" | Is itself a per-repo negative judgment — contradicts positive-only discipline. |
 | `≥1 registry package (deps.dev)` leg | Was in the act, absent from the code: the executed predicate was narrower than the frozen one. |
+| README prose or one framework dependency admits alone | Live execution admitted **freeCodeCamp (453k★), a learning platform, because its README says "machine learning curriculum"**, and **TheAlgorithms/Python (223k★), an algorithms collection, because `keras` appears in a manifest**. A mention is supporting evidence, not a public identity label; §4 now requires two independent supporting registers. |
+| broad field labels cover task vocabulary | **detectron2 (34.6k★)** declared "object detection, segmentation and other visual recognition" and **faiss (40.7k★)** declared "similarity search and clustering of dense vectors", yet both were invisible to a classifier that knew computer vision only through the topic string `computer-vision`. The task vocabulary in §4 therefore comes from the field's standard taxonomies, not from repository-by-repository repair. |
+| a fixed hand-written topic set covers the field | In the 121,044-repository sweep, generic vocabulary measured near baseline (`python` 1×, `typescript` 1×, `cli` 4×), while field vocabulary concentrated among admitted members (`robot-learning` 232×, `moe` 199×, `vllm` 60×). The dated ≥15×/≥3-member bootstrap in §4 captures that separation mechanically; its entries remain weak because the roster supplied them. |
+| finishing every search band proves nothing was missed | The sweep observed **121,044 repositories** against a universe count of **121,050 at sweep end**: delta **−6**, with band shortfall **4**, band surplus **2**, **179 bands** and **1,142 requests**. A moving index permits an observed-set claim, not an exhaustive-set claim; every result act must publish the gap. |
+| mutable names and member-level evidence failures can control the census | A renamed repository keyed by `full_name` silently looked new in membership and deep-check joins; a deleted repository returning GraphQL `NOT_FOUND` sent a shard into an unbounded retry loop when treated as transport failure; and failure to isolate one member's qualification span aborted the whole census. Joins now use numeric repository ids, clean `NOT_FOUND` is permanent absence, and qualification provenance degrades visibly instead of destroying the aggregate record. |
 
 ## 1. Dedup unit and identity
 
@@ -108,23 +118,69 @@ storefront-AI repos instead of 14.2%, and timm and catboost survive.
 names, so over-blocking is visible in aggregate without a negative judgment
 about any identifiable project.
 
-## 4. AI-scope: three declaration channels
+## 4. AI-scope: public labels and corroborated support
 
 Implemented once in `collectors/ai_scope.py`; this act quotes it and the
 module's sha256 is recorded in every census artifact. The classifier reads only
 what a project **declares about itself**, never third-party inference.
 
-| channel | source | role |
-|---|---|---|
-| ch-1 storefront | name + description + topics | admits alone (strong topics / regex) |
-| ch-2 README | **first 2000 characters** of README.md | admits alone |
-| ch-3 manifest | direct RUNTIME dependencies, framework tier | admits alone |
-| weak topics | `ai · agents · inference · diffusion · transformer · tts · robotics · embedding` | never alone — requires ch-2 or ch-3 |
+There are two evidentiary tiers. Admission is **one decisive signal OR two
+independent supporting registers**. Repetition inside one register never counts
+twice.
 
-**Topic normalisation (one mechanical rule, not a token list):** lowercase,
-strip non-alphanumerics, then match a frozen entry as a substring. This picks up
-`multi-modal`, `gpt-4`, `gpt-4o`, `gpt-35-turbo`, `chatgpt` without naming a
-single repository.
+| tier | register | source | admission weight |
+|---|---|---|---|
+| decisive public label | high-specificity topic | repository topics | admits alone |
+| decisive public label | task/system vocabulary | repository **name or description** | admits alone |
+| supporting mention | topic | ambiguous topic, task vocabulary occurring only in a topic, or the dated bootstrapped lexicon | one half of a pair |
+| supporting mention | README | **first 2000 characters** of the README | one half of a pair |
+| supporting implementation | manifest | direct RUNTIME dependency in the framework tier | one half of a pair |
+
+Name and description carry decisive weight because they are the project's
+public label. README prose, a dependency and an ambiguous topic do not: live
+execution admitted **freeCodeCamp (453k★), a learning platform, solely because
+its README says "machine learning curriculum"**, and **TheAlgorithms/Python
+(223k★), an algorithms collection, solely because `keras` appears in a
+manifest**. Those measured errors produced the pair rule. Two different
+supporting registers — topic + README, topic + manifest, or README + manifest —
+are corroboration; two terms in one README or two dependencies in one manifest
+are still one register.
+
+An alone-admitted member publishes evidence channel `storefront`. A member
+admitted by a supporting pair publishes evidence channel `corroborated` and the
+ordered list of contributing `sources` (`topic`, `readme`, `manifest`) alongside
+the signals. The public record therefore states exactly which two independent
+registers supplied the admission.
+
+**Topic normalisation is mechanical:** lowercase and strip non-alphanumerics;
+match a frozen entry against the whole normalised topic or a separator/digit
+component, and permit substring matching only for entries of at least five
+characters. The earlier unrestricted substring rule let the three-letter
+abbreviation `rag` fire inside unrelated words while the spelled-out
+`retrieval-augmented-generation` form missed; the length and form constraints
+are the measured repair.
+
+**Task vocabulary comes from the field's standard taxonomy**, specifically the
+arXiv cs.CV/cs.CL/cs.LG subject descriptions and the Papers-With-Code task list:
+object detection; instance and semantic segmentation; pose estimation;
+similarity and vector search; voice conversion; machine translation; question
+answering; and agent/assistant compositions. This is not vocabulary fitted to
+individual misses. The missing abstraction was measured when **detectron2
+(34.6k★)** declared "object detection, segmentation and other visual
+recognition" and **faiss (40.7k★)** declared "similarity search and clustering
+of dense vectors", while a classifier that recognised computer vision only as
+the topic string `computer-vision` saw neither.
+
+**The bootstrapped topic lexicon is weak by construction.** The dated file
+`data/topic_lexicon_2026-08.json` contains a topic only when it is at least
+**15× more frequent among admitted members than in the full 121,044-repository
+universe and appears on at least 3 members**. Lift supplied the separation:
+`python` 1×, `typescript` 1× and `cli` 4× against `robot-learning` 232×, `moe`
+199× and `vllm` 60×. Because the admitted roster supplied the evidence, every
+bootstrapped entry is supporting and must pair with README or manifest evidence.
+The limit is structural and published: bootstrapping can teach only vocabulary
+already represented in the roster; it could not create the missing
+computer-vision cohort that the external task taxonomy supplied.
 
 **Manifest channel rules** (each closes a measured false positive): parse per
 format, never regex raw text (`tch` matches *patch/fetch/watch*; `ort` matches
@@ -140,22 +196,24 @@ a different population (measured: `home-assistant/core` carries
 `openai`+`anthropic`). Admitting them is worth a 3–10× population swing and
 needs its own dated act, not a quiet allowlist edit.
 
-**Measured trade-off (recall fixture of 31 known AI systems the storefront misses;
-precision sample of 180 drawn at random from live rows the storefront called
-non-AI):**
+**Measurement that bounded the supporting registers** (recall fixture of 31
+known AI systems the storefront misses; precision sample of 180 drawn at random
+from live rows the storefront called non-AI):
 
 | rule | recall (31) | false (180) |
 |---|---|---|
 | ch-3 manifest only | 16 · 51.6% | 1 · 0.6% |
 | ch-2 README[:2000] | 20 · 64.5% | 11 · 6.1% |
-| **ch-2 OR ch-3 — FROZEN** | **23 · 74.2%** | **12 · 6.7%** |
+| ch-2 OR ch-3 — superseded single-support rule | 23 · 74.2% | 12 · 6.7% |
 | ch-2 README[:20000] | 25 · 80.6% | 27 · 15.0% |
 | ch-2[:20000] OR ch-3 | 27 · 87.1% | 28 · 15.6% |
 
-The 2000-character cut is a rule about **where a self-declaration lives** — a
-project that IS an AI system says so in its opening pitch; one that merely uses
-a model mentions it further down. No repository name entered the rule. Reading
-the full README buys 4 more fixture members at 2.3× the false rate.
+These rows measure each support sensor; none is now an admission rule by itself.
+The 2000-character cut remains a rule about **where supporting self-description
+lives**. Reading 20,000 characters bought 5 more README fixture hits than 2,000
+and raised false hits from 11 to 27; adding manifests bought 4 more combined
+fixture hits and raised false hits from 12 to 28. No repository name entered
+the cutoff.
 
 **Rejected sensors, each measured, so they are not re-proposed:** the SBOM
 endpoint has its own **100 requests/hour** bucket (700 h at this scale) and
@@ -197,22 +255,34 @@ counts only, stored outside the public repository, never published).
 1. **Enumerate** the full universe `stars:lo..hi fork:false is:public`, sorted
    `stars desc`, partitioned geometrically on stars and then on creation
    TIMESTAMP down to one second whenever a band exceeds the 1000-result cap.
-   `incomplete_results=true` is retried, never accepted. A band is recorded
-   `done` only when **distinct ids collected == reported total**; otherwise it is
-   requeued. Terminal partition still over the cap → **fail closed**, recorded.
+   `incomplete_results=true` is retried, never accepted. GitHub's `total_count`
+   is an index estimate: one band reported 939 while complete pagination
+   reproducibly returned 938 distinct ids in four attempts. Therefore every
+   band records `reported`, distinct `collected` and signed drift; a shortfall
+   beyond the frozen mechanical tolerance is retried and then fails closed.
+   Terminal partition still over the cap → **fail closed**, recorded.
 2. **Sentinel.** The sweep writes `raw-500plus-complete.json` only when the
-   partition stack empties. `emit()` refuses to run without it, so a partial
-   universe can never be hash-anchored as complete.
+   partition stack empties. `emit()` refuses to run without it. The sentinel
+   proves procedural completion, not exhaustive coverage of a moving index:
+   the first sweep observed **121,044** against **121,050** at sweep end
+   (delta **−6**, band shortfall **4**, band surplus **2**, **179 bands**, **1,142
+   requests**), and those fields are published with the result.
 3. **Deep legs** via batched GraphQL: licence, primary language, releases,
    365/90-day commit counts, default-branch `oid`, README prefix, manifests.
-   A nulled node is treated as "gone" only inside a CLEAN response; anything
-   else is retried, and residual failures abort the emit.
+   Sweep rows, deep-check rows and membership all join on numeric repository id,
+   never mutable `full_name`. A nulled node is treated as "gone" only inside a
+   clean response; clean GraphQL `NOT_FOUND` is permanent absence, while
+   transport errors are retried. This distinction was added after one deleted
+   repository otherwise sent its shard into an unbounded retry loop.
 4. **Emit** `census-run.json` (aggregates + the full band ledger inline +
    sweep sentinel + `legacy_reconciliation`) and `pending-manifest.json`
    (admitted members with `repo_id`, `commit_oid`, `license_observed`,
-   `admitted_by` channel and the `signal` that fired). Both hashed;
-   `census-run.sha256` written alongside. Only these two files are committed;
-   raw sweep rows and deep-check evidence are gitignored.
+   `admitted_by` channel, the `signal` that fired, and `sources` for
+   `corroborated` admissions). Both hashed; `census-run.sha256` written
+   alongside. Qualification-provenance isolation is finer evidence about one
+   member: if the exact span cannot be isolated, provenance degrades visibly to
+   the whole source instead of aborting the census. Only the result artifacts
+   are committed; raw sweep rows and deep-check evidence are gitignored.
 5. Any `etl/seeds.json` change is paired with a dated frontier manifest, as CI
    already enforces.
 
@@ -249,11 +319,17 @@ is 10.) Tool: `collectors/activation_tranche.py`.
 
 ## Changelog
 
+- **2026-08-03 v2 amendment** — the first execution added five measured scars
+  to §0. AI scope now separates decisive public labels from supporting mentions,
+  admits support only in pairs as `corroborated`, adds external task vocabulary
+  and a weak lift-derived topic lexicon, and publishes the sweep gap. Numeric-id
+  joins, clean `NOT_FOUND`, and degrading qualification provenance close the
+  three execution defects found by the census. The first result is superseded
+  pending a two-tier rerun.
 - **2026-08-03 v2** — rewritten after adversarial review; eleven v1 defects
   listed in §0, each with the measurement that found it. Licence leg kept for
   wave 1 with the council's split recorded; named annex withdrawn; blocklist
-  narrowed to two tiers; AI-scope rebuilt as three declaration channels with
-  published per-member evidence; identity anchored on repository id;
-  enumeration made coverage-asserting and fail-closed; deps.dev activity
-  alternative struck.
+  narrowed to two tiers; AI scope rebuilt with published per-member evidence;
+  identity anchored on repository id; enumeration made fail-closed; deps.dev
+  activity alternative struck.
 - **2026-08-03 v1** — first draft (superseded the same day).
