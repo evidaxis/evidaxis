@@ -243,3 +243,45 @@ def test_short_band_within_tolerance_is_recorded_not_retried(tmp_path, monkeypat
     assert len(done) == 1
     assert done[0]["index_drift"] == -1
     assert calls <= 2
+
+
+def test_vanished_repository_is_churn_not_failure(tmp_path):
+    """A repository present at discovery and gone at observation is DATA.
+
+    Measured on the first live run: id 7061513 resolved during discovery and
+    was unresolvable four hours later. At 146,589 repositories over a
+    multi-hour gap that is ordinary churn, and aborting the weekly snapshot
+    over one of them is the wrong trade - the same defect already fixed in the
+    census collector, reproduced in this module because the fix lived in only
+    one file.
+    """
+    import shadow_snapshot as shadow
+
+    path = tmp_path / "shard-0.jsonl"
+    # 200 discovered, 1 vanished: below the 1% allowance (ids are 1-based;
+    # 0 is not a valid GitHub repository id and the record validator says so)
+    expected = [{"id": i, "full_name": f"o/r{i}"} for i in range(1, 201)]
+    got = [{"id": i, "stars": 300, "observed_at": "2026-08-03T00:00:00Z"}
+           for i in range(1, 200)]
+    path.write_text("\n".join(json.dumps(r) for r in got) + "\n")
+    records = shadow._validate_observation_shard(path, "2026-08-03", expected)
+    assert len(records) == 199, "churn below the allowance must not fail"
+
+
+def test_mass_disappearance_still_fails(tmp_path):
+    """Churn is tolerated; a systemic fault is not.
+
+    A bad token or a wrong id set makes MANY ids unresolvable at once. The
+    allowance exists to tell those apart, not to make absence invisible.
+    """
+    import pytest
+
+    import shadow_snapshot as shadow
+
+    path = tmp_path / "shard-0.jsonl"
+    expected = [{"id": i, "full_name": f"o/r{i}"} for i in range(1, 201)]
+    got = [{"id": i, "stars": 300, "observed_at": "2026-08-03T00:00:00Z"}
+           for i in range(1, 101)]
+    path.write_text("\n".join(json.dumps(r) for r in got) + "\n")
+    with pytest.raises(RuntimeError, match="churn allowance"):
+        shadow._validate_observation_shard(path, "2026-08-03", expected)

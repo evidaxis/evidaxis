@@ -431,15 +431,41 @@ def _graphql_query(batch: Sequence[dict]) -> str:
     return "query {" + " ".join(parts) + "}"
 
 
+# Repositories present at discovery that no longer resolve at observation time.
+# Module-level because the shard reports the total once, not per batch.
+_ABSENT: list[int] = []
+ABSENT_LIMIT = 0.01          # 1% of a shard: churn below, systemic fault above
+
+
 def _observe_batch(batch: Sequence[dict], observed_at: str) -> list[dict]:
+    """Star counts for one batch. A vanished repository is DATA, not an error.
+
+    Measured on the first live observation: id 7061513 was present at discovery
+    and unresolvable four hours later - deleted, made private, or taken down.
+    At 146,589 repositories over a multi-hour gap that is ordinary churn, and
+    the first version aborted the whole shard on it, exactly the defect already
+    fixed in the census collector (a clean NOT_FOUND is a permanent fact about
+    that repository, never a transport failure).
+
+    Refusing to publish a weekly snapshot because one repository of 146,589
+    disappeared is the wrong trade. But silently dropping many WOULD hide a
+    systemic fault - a bad token, a wrong id set - so the caller counts the
+    absences and fails if their share crosses ABSENT_LIMIT. Churn is recorded;
+    breakage still stops the run.
+    """
     for attempt in range(1, 7):
         data, clean = census_graphql(_graphql_query(batch))
         missing = [index for index in range(len(batch)) if data.get(f"r{index}") is None]
         if clean and missing:
-            repo_ids = ", ".join(str(batch[index]["id"]) for index in missing[:10])
-            raise RuntimeError(
-                "GraphQL could not resolve discovered repository id(s): " + repo_ids
-            )
+            records = []
+            for index, expected in enumerate(batch):
+                node = data.get(f"r{index}")
+                if node is None:
+                    _ABSENT.append(expected["id"])
+                    continue
+                records.append(observation_record(
+                    node["databaseId"], node["stargazerCount"], observed_at))
+            return records
         if clean and not missing:
             records = []
             for index, expected in enumerate(batch):
@@ -468,13 +494,24 @@ def _validate_observation_shard(
     )
     expected_ids = {record["id"] for record in expected}
     actual_ids = {record["id"] for record in records}
-    if actual_ids != expected_ids:
-        missing = len(expected_ids - actual_ids)
-        extra = len(actual_ids - expected_ids)
+    extra = actual_ids - expected_ids
+    if extra:
+        # An id nobody discovered means the shard observed something outside
+        # its own assignment: always a fault, never churn.
         raise RuntimeError(
-            f"observation shard coverage mismatch in {path}: "
-            f"{missing} missing, {extra} extra"
-        )
+            f"observation shard {path} carries {len(extra)} ids that were "
+            f"never discovered")
+    absent = expected_ids - actual_ids
+    share = len(absent) / max(len(expected_ids), 1)
+    if share > ABSENT_LIMIT:
+        raise RuntimeError(
+            f"observation shard {path}: {len(absent)} of {len(expected_ids)} "
+            f"discovered repositories ({share:.1%}) did not resolve, above the "
+            f"{ABSENT_LIMIT:.0%} churn allowance - investigate the token or the "
+            f"id set before publishing this snapshot")
+    if absent:
+        print(f"  {len(absent)} of {len(expected_ids)} discovered repositories "
+              f"({share:.2%}) no longer resolve - recorded as churn", flush=True)
     return records
 
 
