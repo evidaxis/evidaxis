@@ -162,6 +162,7 @@ def sweep(lo: int, hi: int, out_path: Path, bands_path: Path,
         "%Y-%m-%dT00:00:00Z")
     out, bands = out_path.open("a"), bands_path.open("a")
     stack: list[tuple[int, int, str]] = [(lo, hi, "")]
+    attempts: dict[tuple[int, int, str], int] = {}
     n_req = 0
     while stack:
         blo, bhi, created = stack.pop()
@@ -203,19 +204,32 @@ def sweep(lo: int, hi: int, out_path: Path, bands_path: Path,
             items += gh_search(q, page)["items"]
             n_req += 1
         band_ids = {it["id"] for it in items}
-        if len(band_ids) != total:
-            # Pagination lost or duplicated rows: retry the band rather than
-            # recording a coverage claim that is not true.
+        # Coverage is a ONE-SIDED claim: fewer rows than the API reported means
+        # pagination lost some and the band must be retried. MORE rows is the
+        # live index moving under us - a repo gains a star mid-pagination and
+        # enters the band - which costs no coverage and must not block. The
+        # first version demanded exact equality and deadlocked at 719 vs 718.
+        drift = len(band_ids) - total
+        if drift < 0:
+            attempts[(blo, bhi, created)] = attempts.get(
+                (blo, bhi, created), 0) + 1
+            n_try = attempts[(blo, bhi, created)]
             bands.write(json.dumps({
                 "lo": blo, "hi": bhi, "created": created, "total": total,
-                "collected": len(band_ids), "done": False,
-                "error": "collected != total_count"}) + "\n")
+                "collected": len(band_ids), "attempt": n_try, "done": False,
+                "error": "collected < total_count"}) + "\n")
             bands.flush()
-            print(f"  band {blo}..{bhi}: {len(band_ids)}/{total} - requeued",
-                  flush=True)
-            stack.append((blo, bhi, created))
-            time.sleep(10)
-            continue
+            if n_try <= 3:
+                print(f"  band {blo}..{bhi}: {len(band_ids)}/{total} - retry "
+                      f"{n_try}", flush=True)
+                stack.append((blo, bhi, created))
+                time.sleep(10)
+                continue
+            # Three honest attempts failed: partition instead of looping, and
+            # never silently accept the shortfall.
+            raise RuntimeError(
+                f"band {blo}..{bhi} {created} short by {-drift} after "
+                f"{n_try} attempts - investigate before publishing coverage")
         fresh = 0
         for it in items:
             if it["id"] in seen:
@@ -227,7 +241,8 @@ def sweep(lo: int, hi: int, out_path: Path, bands_path: Path,
             fresh += 1
         out.flush()
         bands.write(json.dumps({"lo": blo, "hi": bhi, "created": created,
-                                "total": total, "fresh": fresh,
+                                "total": total, "collected": len(band_ids),
+                                "index_drift": drift, "fresh": fresh,
                                 "done": True}) + "\n")
         bands.flush()
         done.add((blo, bhi, created))
