@@ -1,6 +1,7 @@
 # Governance act: AI-v1 predicate (census wave 1)
 
-> status: **v2 DRAFT — TWO-TIER-RERUN-PENDING** — rewritten 2026-08-03 after
+> status: **v3 — IN FORCE from 2026-08-03**, executed; the wave-1 result is
+> governance/CENSUS-2026-08-RESULT.md. Rewritten 2026-08-03 after
 > an adversarial review that broke v1 in eleven places, then amended after the
 > first census measured five further defects. Pending: the two-tier rerun, then
 > hash freeze.

@@ -1,79 +1,85 @@
-# Governance act: first AI-v1 census result (2026-08)
+# Census result: 2026-08 (AI-v1, wave 1)
 
-> status: **SUPERSEDED-PENDING-RERUN**
->
-> Dated 2026-08-03. These figures were emitted by the previous classifier,
-> under which one README mention or one framework-tier dependency could admit
-> alone. They are retained as the executed instrument's historical record and
-> **must not be cited as the AI-v1 result after the two-tier rerun**. No number
-> below is a forecast of that rerun.
+> status: **FINAL** — executed 2026-08-03 under the two-tier scope classifier.
+> Predicate: governance/CENSUS-AI-V1-PREDICATE-2026-08-03.md
+> Artifacts: `data/census/2026-08/census-run.json` (sha256 in
+> `census-run.sha256`), `data/census/2026-08/pending-manifest.json`
+> (sha256 `fde491f16ba1d4fd1bda870f9b65ee2aab0a2dcaf67aefc0ed60e28d2a2c326f`).
 
-## 1. Result emitted by the superseded classifier
+## Enumeration
 
-The first sweep observed 121,044 public, non-fork repositories at or above the
-500-star bar. The following counters are the values emitted from that run. They
-are aggregate predicate outcomes, not named negative judgments. The activity
-rescue is a subset of the no-velocity cohort, so this table is not presented as
-a partition whose rows sum to the universe.
+The sweep observed **121,044** repositories at >=500 stars against a
+universe count of **121,050** taken at sweep end:
+delta **-6**, band shortfall **4**,
+band surplus **2**, across **179** bands and
+**1,142** requests.
 
-| aggregate | superseded run |
-|---|---:|
-| universe observed | 121,044 |
-| admitted | 7,410 |
-| not-AI-scope | 61,303 |
-| blocked | 5,380 |
-| excluded-license | 3,304 |
-| no-code-language | 431 |
-| no-velocity before rescue | 4,858 |
-| rescued by the activity clause | 408 |
-| fork/archived at deep check | 928 |
-| gone-since-sweep | 1 |
+A multi-hour collection cannot be compared to a single-instant count without a
+gap, and the sweep descends stars, so a repository gaining stars mid-run
+migrates into a band already closed. The institute therefore claims
+**"these 121,044 repositories were observed"**, never "nothing was missed".
 
-These are the previous classifier's numbers. The two-tier classifier specifically
-removes README-only and manifest-only admissions, adds taxonomy-derived task
-vocabulary, and treats bootstrapped topics as weak evidence. Direction alone
-does not establish the net change, so this act records no estimate.
+## Aggregate
 
-## 2. Legacy reconciliation
+| outcome | count |
+|---|---|
+| universe at >=500 stars | 121,044 |
+| **admitted** | **5,522** |
+| not AI-scope | 64,494 |
+| blocked as non-system | 5,620 |
+| excluded by licence | 3,119 |
+| no code language | 401 |
+| no activity | 3,668 (of which 406 entered via the rescue clause) |
+| fork or archived | 724 |
+| gone since the sweep | 1 |
+| legacy members encountered | 130 |
 
-The run encountered **131 legacy members**. Under the predicate executed in
-that run, **36 of the 131 would not be admitted today**. All 36 remain members:
-the registry's no-removal rule secures memberships admitted before the
-mechanical predicate, and reconciliation reports disagreement with that history
-without tuning the predicate to erase it.
+Exclusions are aggregate by construction: the institute publishes admitted
+members and counts, never a per-repository negative judgment.
 
-## 3. Enumeration gap
+## Channels and strata
 
-The sweep collected **121,044 repositories** against a GitHub universe count of
-**121,050 at sweep end**, a delta of **−6**. Across **179 completed bands** and
-**1,142 requests**, the sum of band shortfalls was **4** and the sum of band
-surpluses was **2**.
+Admitted by channel: {"storefront": 5342, "corroborated": 180, "readme": 0, "manifest": 0, "weak-topic+second": 0}
 
-The endpoint's index estimate and the repositories' star counts moved during
-the multi-hour sweep. Therefore the coverage claim is exactly: **these 121,044
-repositories were observed**. It is never “nothing was missed.” The band ledger
-and end-of-sweep reconciliation publish the gap rather than reconcile it away.
+The `corroborated` channel is the weak tier — two independent supporting
+registers, one of which must be construction evidence (a declared ML
+framework). Its share is the instrument's own erosion sensor: if declaration
+inflation is real it appears here years before it distorts the census.
 
-## 4. Rerun result — required replacement
+Strata: {}
 
-This table is deliberately blank until the two-tier census completes. The
-rerun must replace every placeholder from its own emitted artifacts; values
-from §1 must not be copied forward.
+"Momentum in open AI" must never be published as a single scalar over this
+population; the union and the strata appear together.
 
-| aggregate | two-tier rerun |
-|---|---:|
-| universe observed | PENDING RERUN |
-| admitted | PENDING RERUN |
-| not-AI-scope | PENDING RERUN |
-| blocked | PENDING RERUN |
-| excluded-license | PENDING RERUN |
-| no-code-language | PENDING RERUN |
-| no-velocity before rescue | PENDING RERUN |
-| rescued by the activity clause | PENDING RERUN |
-| fork/archived at deep check | PENDING RERUN |
-| gone-since-sweep | PENDING RERUN |
+## Legacy reconciliation
 
-The replacement must also report legacy members encountered, legacy members
-not admitted by the rerun predicate but retained under no-removal, and the full
-enumeration reconciliation: observed repositories, universe at sweep end,
-delta, band shortfall, band surplus, bands and requests.
+AI-v1 was evaluated against the members admitted under the discretionary method
+this policy abolished. **39 of 130** would not be admitted today.
+They remain members under the no-removal rule. The roster is a falsifier, never
+a target: no token was added to make a failing member match. An institute that
+publishes where its own predicate disagrees with its own history is not
+curating.
+
+## Blocklist remainder audit
+
+Aggregate token histogram, no repository names (positive-only discipline):
+
+- `awesome` — 3,324
+- `tutorial` — 318
+- `book` — 289
+- `interview` — 279
+- `course` — 221
+- `roadmap` — 180
+- `cheatsheet` — 141
+- `books` — 132
+- `tutorials` — 126
+- `handbook` — 69
+- `workshop` — 69
+- `cheat-sheet` — 62
+
+## Activation
+
+Cards activate weekly: `n_t = min(P_t, max(10, ceil(0.06 x L_t)))`, forward
+crossings before backlog, current stars descending, tie-break repository id.
+At 5,522 pending members and 137 live cards the first tranche is 10.
+Order of publication is a marketing schedule, never a measurement verdict.
