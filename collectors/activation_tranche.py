@@ -101,8 +101,17 @@ def main() -> int:
             print(f"  {i}/{len(pending)}", flush=True)
         time.sleep(0.35)
 
-    refreshed.sort(key=lambda m: (-m["stars"], m["repo_id"]))
-    tranche = refreshed[:size]
+    # TWO queues, not one sorted list. The module header claimed this from the
+    # start while the code sorted a single merged queue by stars - a docstring
+    # that lies is worse than no docstring, because review reads it as done.
+    # Merged, a fresh 501-star forward crossing waits behind thousands of
+    # backlog members and the policy's "forward crossings take priority so new
+    # coverage debt never accumulates" is inverted in production, forever,
+    # since the same code re-runs every week.
+    key = lambda m: (-m["stars"], m["repo_id"])          # noqa: E731
+    forward = sorted([m for m in refreshed if m.get("wave") == "forward"], key=key)
+    backlog = sorted([m for m in refreshed if m.get("wave") != "forward"], key=key)
+    tranche = (forward + backlog)[:size]
     today = datetime.now(timezone.utc).date().isoformat()
     out_dir = month_dir / "tranches"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -153,8 +162,28 @@ def main() -> int:
         added += 1
     seeds["meta"][f"census_{month}"] = (
         f"{today}: activation tranche of {added} members "
-        f"(policy: max(10, 6% of live cards), stars desc)")
+        f"(policy: max(10, 6% of live cards), forward queue then backlog)")
     SEEDS.write_text(json.dumps(seeds, ensure_ascii=False, indent=1))
+
+    # Close the loop on the pending queue. Without this the status stays
+    # "pending" forever: next week P_t is unchanged, the same high-star heads
+    # are re-selected, apply skips them as already present, added=0, and the
+    # backlog never drains while the tranche artifact claims a full activation.
+    # The manifest is therefore a LIVING queue; the immutable admission record
+    # is census-run.json plus this file's original hash, both already written.
+    activated = {m["repo_id"] for m in tranche}
+    for member in manifest["members"]:
+        if member["repo_id"] in activated:
+            member["status"] = "activated"
+            member["activated_on"] = today
+    manifest["queue_note"] = (
+        "status transitions pending -> activated as weekly tranches publish; "
+        "the frozen admission record is census-run.json and the manifest hash "
+        "recorded there at census time")
+    mp.write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
+    print(f"pending manifest: {len(activated)} marked activated, "
+          f"{sum(1 for m in manifest['members'] if m['status'] == 'pending')} "
+          f"still pending")
 
     # CI requires a dated frontier manifest paired with any seeds.json change.
     scan = {

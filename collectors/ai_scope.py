@@ -55,6 +55,10 @@ AI_TOPICS_STRONG = frozenset({
     "multimodal", "vlm", "neural-network", "neural-networks", "gpt",
     "stable-diffusion", "model-serving", "mlops", "embodied-ai",
     "protein-structure", "drug-discovery", "fine-tuning", "embeddings",
+    # The spelled-out form must be listed explicitly: stripping separators from
+    # "retrieval-augmented-generation" does not leave the substring "rag", so
+    # the abbreviation alone never covered it.
+    "retrieval-augmented-generation",
 })
 
 # Ambiguous topics: real words in other fields ("inference" = type inference,
@@ -83,11 +87,35 @@ _STRONG_NORM = {norm_topic(t) for t in AI_TOPICS_STRONG}
 _WEAK_NORM = {norm_topic(t) for t in AI_TOPICS_WEAK}
 
 
+_SPLIT = re.compile(r"[^a-z0-9]+|(?<=[a-z])(?=[0-9])|(?<=[0-9])(?=[a-z])")
+
+
 def _topic_hit(topics, table) -> bool:
+    """Match a frozen entry against a topic by FORM, never by bare substring.
+
+    The first version matched any frozen entry as a substring of the normalised
+    topic. Measured consequence: `rag` is inside `sto-rag-e`, `cove-rag-e`,
+    `f-rag-ment`, `d-rag-anddrop`, so localForage (25.8k), lowdb (22.6k),
+    juicefs (14.3k), puter (42.9k) and simplecov (4.9k) all classified as AI
+    systems on the storefront channel alone. Irony that proves the rule was
+    wrong: `retrieval-augmented-generation` does NOT contain the substring
+    `rag` once separators are stripped, so a genuine RAG topic missed while
+    object storage hit.
+
+    The rule now: a topic matches if a frozen entry equals its normalised form
+    or one of its separator/digit-boundary parts (`gpt-4o` -> {gpt, 4, o}),
+    or - only for entries of 5+ characters, where accidental containment is
+    vanishingly unlikely - appears inside the normalised form.
+    """
     for raw in topics or []:
+        low = raw.lower()
         n = norm_topic(raw)
-        if any(e in n for e in table):
-            return True
+        forms = {n} | {p for p in _SPLIT.split(low) if p}
+        for e in table:
+            if e in forms:
+                return True
+            if len(e) >= 5 and e in n:
+                return True
     return False
 
 

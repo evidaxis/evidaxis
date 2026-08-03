@@ -33,8 +33,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ai_scope import (FRAMEWORK_DEPS, MANIFESTS, README_PREFIX,  # noqa: E402
-                      classify, is_blocked)
+from ai_scope import MANIFESTS, README_PREFIX, classify, is_blocked
 
 REPO = Path(__file__).resolve().parent.parent
 BUILDER_VERSION = "census_ai_v1"
@@ -210,7 +209,15 @@ def sweep(lo: int, hi: int, out_path: Path, bands_path: Path,
         # enters the band - which costs no coverage and must not block. The
         # first version demanded exact equality and deadlocked at 719 vs 718.
         drift = len(band_ids) - total
-        if drift < 0:
+        # GitHub's total_count is an INDEX ESTIMATE, not a promise. Measured on
+        # band 2019..2079: total_count=939, full pagination yields 938 distinct
+        # ids with zero duplicates and incomplete_results=false, reproducibly
+        # across four attempts. Demanding equality of someone else's estimate
+        # is not rigour, it is a deadlock. Tolerate a small shortfall, RECORD
+        # every occurrence, and publish the reconciliation - a real pagination
+        # loss is large and random, an index estimate is off by one or two.
+        tolerance = max(2, int(total * 0.005))
+        if drift < -tolerance:
             attempts[(blo, bhi, created)] = attempts.get(
                 (blo, bhi, created), 0) + 1
             n_try = attempts[(blo, bhi, created)]
@@ -251,14 +258,36 @@ def sweep(lo: int, hi: int, out_path: Path, bands_path: Path,
         time.sleep(2.2)
     out.close()
     bands.close()
-    # The sentinel is what lets emit() know the universe is whole. Without it,
-    # emit() would happily hash a manifest built from a partial sweep and label
-    # it complete.
+    # Reconciliation. Two things move under a multi-hour sweep and neither can
+    # be eliminated, only measured: GitHub's total_count is an index estimate,
+    # and the sweep descends stars, so a repo that GAINS stars mid-run migrates
+    # into a band already marked done and is missed (one that loses stars falls
+    # into unvisited territory and is caught). The honest instrument reports the
+    # gap instead of claiming it away.
+    all_bands = [json.loads(l) for l in bands_path.open()]
+    done_bands = [b for b in all_bands if b.get("done")]
+    shortfall = sum(-b["index_drift"] for b in done_bands
+                    if b.get("index_drift", 0) < 0)
+    surplus = sum(b["index_drift"] for b in done_bands
+                  if b.get("index_drift", 0) > 0)
+    live = gh_search(f"stars:{lo}..{hi} fork:false is:public", 1)["total_count"]
     (out_path.parent / f"{out_path.stem}-complete.json").write_text(json.dumps({
-        "bar_lo": lo, "bar_hi": hi, "universe": len(seen), "requests": n_req,
+        "bar_lo": lo, "bar_hi": hi, "collected": len(seen), "requests": n_req,
+        "bands_done": len(done_bands),
+        "universe_at_sweep_end": live,
+        "delta_vs_universe": len(seen) - live,
+        "band_shortfall_total": shortfall,
+        "band_surplus_total": surplus,
+        "note": ("delta_vs_universe compares a multi-hour collection against a "
+                 "single-instant count; band_shortfall is the sum of per-band "
+                 "gaps against GitHub's own index estimate. Both are published "
+                 "rather than reconciled away - the coverage claim is 'these N "
+                 "repositories were observed', never 'nothing was missed'."),
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }, indent=1))
-    print(f"sweep complete: {len(seen)} repos, {n_req} requests", flush=True)
+    print(f"sweep complete: {len(seen)} collected, universe now {live} "
+          f"(delta {len(seen)-live:+d}), band shortfall {shortfall}, "
+          f"{n_req} requests", flush=True)
 
 
 # ------------------------------------------------------------------ deepcheck
@@ -480,7 +509,7 @@ def emit(month_dir: Path) -> None:
         verdict = rescue_contributors([r["full_name"] for r, _, _, _ in chunk])
         for r, d, ev, legs in chunk:
             if not verdict.get(r["full_name"]):
-                legs = legs + ["velocity"]
+                legs = [*legs, "velocity"]
             else:
                 agg["rescued"] += 1
             if r["id"] in members:
