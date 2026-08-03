@@ -550,7 +550,16 @@ def collect_observation(shadow_repo: Path, snapshot_date: str, shard: Shard) -> 
 
 
 def merge_observation(shadow_repo: Path, snapshot_date: str, shards: int) -> Path:
-    """Merge a dated observation only when every discovered id is present."""
+    """Merge a dated observation, tolerating the same churn the shards tolerate.
+
+    The shard validator already separates churn from breakage by share, and the
+    first live run proved the split works: two shards each reported one
+    vanished repository at 0.00%. The merge then demanded EXACT equality and
+    failed the snapshot at 146,570 of 146,572 - the invariant had been fixed at
+    one level and not the other, which is the same shape as the fix that lived
+    in the census collector and not in this module. One rule, applied wherever
+    coverage is judged.
+    """
     snapshot_date = _parse_date(snapshot_date)
     _month, _path, discovery = newest_discovery(shadow_repo)
     directory = shadow_repo / "observations" / snapshot_date
@@ -559,7 +568,9 @@ def merge_observation(shadow_repo: Path, snapshot_date: str, shards: int) -> Pat
     for index, path in enumerate(paths):
         expected = partition_for_shard(discovery, Shard(index, shards))
         records.extend(_validate_observation_shard(path, snapshot_date, expected))
-    if len(records) != len(discovery):
+    absent = len(discovery) - len(records)
+    share = absent / max(len(discovery), 1)
+    if absent < 0 or share > ABSENT_LIMIT:
         raise RuntimeError(
             f"observation merge coverage mismatch: {len(records)}/{len(discovery)} repos"
         )

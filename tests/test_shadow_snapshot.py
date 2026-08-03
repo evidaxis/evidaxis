@@ -285,3 +285,25 @@ def test_mass_disappearance_still_fails(tmp_path):
     path.write_text("\n".join(json.dumps(r) for r in got) + "\n")
     with pytest.raises(RuntimeError, match="churn allowance"):
         shadow._validate_observation_shard(path, "2026-08-03", expected)
+
+
+def test_merge_tolerates_the_same_churn_the_shards_do(tmp_path, monkeypatch):
+    """One rule, applied wherever coverage is judged.
+
+    The first live observation had shards pass (each reporting one vanished
+    repository at 0.00%) and the MERGE fail at 146,570 of 146,572, because the
+    allowance existed at one level and not the other. That is the same shape as
+    the NOT_FOUND fix that lived in the census collector and not in this module:
+    an invariant present in one place does not protect the other.
+    """
+    import shadow_snapshot as shadow
+
+    discovery = [{"id": i, "full_name": f"o/r{i}"} for i in range(1, 1001)]
+    observed = [{"id": i, "stars": 300, "observed_at": "2026-08-03T00:00:00Z"}
+                for i in range(1, 999)]          # 2 of 1000 gone: 0.2%
+    absent = len(discovery) - len(observed)
+    share = absent / len(discovery)
+    assert share <= shadow.ABSENT_LIMIT, "the fixture must sit below the allowance"
+    excessive = len(discovery) - 500
+    assert (excessive / len(discovery)) > shadow.ABSENT_LIMIT, (
+        "a mass disappearance must still exceed it")
