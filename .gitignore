@@ -51,3 +51,11 @@ spine/
 
 # quarantine shadow-runs (never published; promotion only via A/B + human gate)
 shadow-runs/
+
+# Census working data — positive-only discipline: derived exclusion evidence
+# (deepcheck velocity/license per non-admitted repo) must not enter the public
+# tree. Only census-run.json (aggregates) + pending-manifest.json (admitted)
+# are committed. Decided 2026-08-03 after red-team finding #13.
+data/census/*/raw-500plus.jsonl
+data/census/*/bands-500plus.jsonl
+data/census/*/deepcheck.jsonl

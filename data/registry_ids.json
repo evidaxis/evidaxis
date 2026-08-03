@@ -1,0 +1,692 @@
+{
+ "@type": "RegistryIdentityMap",
+ "note": "Numeric GitHub repository ID is the identity anchor of a member (survives rename/transfer); full_name is a mutable label. Built 2026-08-03 after red-team finding #2 (joins were by name).",
+ "built_at": "2026-08-03",
+ "members": {
+  "huggingface/lerobot": {
+   "repo_id": 748713144,
+   "canonical": "huggingface/lerobot",
+   "cohort": "robotics-embodied"
+  },
+  "Genesis-Embodied-AI/Genesis": {
+   "repo_id": 712225112,
+   "canonical": "Genesis-Embodied-AI/genesis-world",
+   "cohort": "robotics-embodied"
+  },
+  "openvla/openvla": {
+   "repo_id": 814864073,
+   "canonical": "openvla/openvla",
+   "cohort": "robotics-embodied"
+  },
+  "dora-rs/dora": {
+   "repo_id": 460615268,
+   "canonical": "dora-rs/dora",
+   "cohort": "robotics-embodied"
+  },
+  "isaac-sim/IsaacLab": {
+   "repo_id": 567038244,
+   "canonical": "isaac-sim/IsaacLab",
+   "cohort": "robotics-embodied"
+  },
+  "facebookresearch/habitat-lab": {
+   "repo_id": 169164391,
+   "canonical": "facebookresearch/habitat-lab",
+   "cohort": "robotics-embodied"
+  },
+  "google-deepmind/mujoco": {
+   "repo_id": 400501136,
+   "canonical": "google-deepmind/mujoco",
+   "cohort": "robotics-embodied"
+  },
+  "Physical-Intelligence/openpi": {
+   "repo_id": 876210014,
+   "canonical": "Physical-Intelligence/openpi",
+   "cohort": "robotics-embodied"
+  },
+  "thu-ml/RoboticsDiffusionTransformer": {
+   "repo_id": 868861536,
+   "canonical": "thu-ml/RoboticsDiffusionTransformer",
+   "cohort": "robotics-embodied"
+  },
+  "NVIDIA/Isaac-GR00T": {
+   "repo_id": 946829547,
+   "canonical": "NVIDIA/Isaac-GR00T",
+   "cohort": "robotics-embodied"
+  },
+  "NVIDIA/cosmos": {
+   "repo_id": 910176789,
+   "canonical": "NVIDIA/cosmos",
+   "cohort": "robotics-embodied"
+  },
+  "mani-skill/ManiSkill": {
+   "repo_id": 520357130,
+   "canonical": "mani-skill/ManiSkill",
+   "cohort": "robotics-embodied"
+  },
+  "robocasa/robocasa": {
+   "repo_id": 799171422,
+   "canonical": "robocasa/robocasa",
+   "cohort": "robotics-embodied"
+  },
+  "ARISE-Initiative/robosuite": {
+   "repo_id": 154626012,
+   "canonical": "ARISE-Initiative/robosuite",
+   "cohort": "robotics-embodied"
+  },
+  "Lifelong-Robot-Learning/LIBERO": {
+   "repo_id": 625323941,
+   "canonical": "Lifelong-Robot-Learning/LIBERO",
+   "cohort": "robotics-embodied"
+  },
+  "Farama-Foundation/Gymnasium": {
+   "repo_id": 534011733,
+   "canonical": "Farama-Foundation/Gymnasium",
+   "cohort": "robotics-embodied"
+  },
+  "jwohlwend/boltz": {
+   "repo_id": 889915078,
+   "canonical": "jwohlwend/boltz",
+   "cohort": "ai-drug-discovery"
+  },
+  "aqlaboratory/openfold": {
+   "repo_id": 406555580,
+   "canonical": "aqlaboratory/openfold",
+   "cohort": "ai-drug-discovery"
+  },
+  "deepchem/deepchem": {
+   "repo_id": 43098215,
+   "canonical": "deepchem/deepchem",
+   "cohort": "ai-drug-discovery"
+  },
+  "DeepGraphLearning/torchdrug": {
+   "repo_id": 394517440,
+   "canonical": "DeepGraphLearning/torchdrug",
+   "cohort": "ai-drug-discovery"
+  },
+  "microsoft/Graphormer": {
+   "repo_id": 371257414,
+   "canonical": "microsoft/Graphormer",
+   "cohort": "ai-drug-discovery"
+  },
+  "facebookresearch/esm": {
+   "repo_id": 291783502,
+   "canonical": "facebookresearch/esm",
+   "cohort": "ai-drug-discovery"
+  },
+  "chaidiscovery/chai-lab": {
+   "repo_id": 854372212,
+   "canonical": "chaidiscovery/chai-lab",
+   "cohort": "ai-drug-discovery"
+  },
+  "bytedance/Protenix": {
+   "repo_id": 885346783,
+   "canonical": "bytedance/Protenix",
+   "cohort": "ai-drug-discovery"
+  },
+  "RosettaCommons/RFdiffusion": {
+   "repo_id": 620471484,
+   "canonical": "RosettaCommons/RFdiffusion",
+   "cohort": "ai-drug-discovery"
+  },
+  "dauparas/ProteinMPNN": {
+   "repo_id": 496457253,
+   "canonical": "dauparas/ProteinMPNN",
+   "cohort": "ai-drug-discovery"
+  },
+  "dauparas/LigandMPNN": {
+   "repo_id": 724711360,
+   "canonical": "dauparas/LigandMPNN",
+   "cohort": "ai-drug-discovery"
+  },
+  "gcorso/DiffDock": {
+   "repo_id": 545595027,
+   "canonical": "gcorso/DiffDock",
+   "cohort": "ai-drug-discovery"
+  },
+  "deepmodeling/Uni-Mol": {
+   "repo_id": 495067397,
+   "canonical": "deepmodeling/Uni-Mol",
+   "cohort": "ai-drug-discovery"
+  },
+  "google-deepmind/alphafold3": {
+   "repo_id": 886637886,
+   "canonical": "google-deepmind/alphafold3",
+   "cohort": "ai-drug-discovery"
+  },
+  "microsoft/bioemu": {
+   "repo_id": 904831157,
+   "canonical": "microsoft/bioemu",
+   "cohort": "ai-drug-discovery"
+  },
+  "westlake-repl/SaProt": {
+   "repo_id": 699149724,
+   "canonical": "westlake-repl/SaProt",
+   "cohort": "ai-drug-discovery"
+  },
+  "arneschneuing/DiffSBDD": {
+   "repo_id": 543080472,
+   "canonical": "arneschneuing/DiffSBDD",
+   "cohort": "ai-drug-discovery"
+  },
+  "steineggerlab/foldseek": {
+   "repo_id": 166769317,
+   "canonical": "steineggerlab/foldseek",
+   "cohort": "ai-drug-discovery"
+  },
+  "gnina/gnina": {
+   "repo_id": 45548146,
+   "canonical": "gnina/gnina",
+   "cohort": "ai-drug-discovery"
+  },
+  "All-Hands-AI/OpenHands": {
+   "repo_id": 771302083,
+   "canonical": "OpenHands/OpenHands",
+   "cohort": "ai-coding-agents"
+  },
+  "princeton-nlp/SWE-agent": {
+   "repo_id": 780737106,
+   "canonical": "SWE-agent/SWE-agent",
+   "cohort": "ai-coding-agents"
+  },
+  "cline/cline": {
+   "repo_id": 824874689,
+   "canonical": "cline/cline",
+   "cohort": "ai-coding-agents"
+  },
+  "paul-gauthier/aider": {
+   "repo_id": 638629097,
+   "canonical": "Aider-AI/aider",
+   "cohort": "ai-coding-agents"
+  },
+  "continuedev/continue": {
+   "repo_id": 644686905,
+   "canonical": "continuedev/continue",
+   "cohort": "ai-coding-agents"
+  },
+  "block/goose": {
+   "repo_id": 846698999,
+   "canonical": "aaif-goose/goose",
+   "cohort": "ai-coding-agents"
+  },
+  "anomalyco/opencode": {
+   "repo_id": 975734319,
+   "canonical": "anomalyco/opencode",
+   "cohort": "ai-coding-agents"
+  },
+  "google-gemini/gemini-cli": {
+   "repo_id": 968197216,
+   "canonical": "google-gemini/gemini-cli",
+   "cohort": "ai-coding-agents"
+  },
+  "openai/codex": {
+   "repo_id": 965415649,
+   "canonical": "openai/codex",
+   "cohort": "ai-coding-agents"
+  },
+  "TabbyML/tabby": {
+   "repo_id": 614764248,
+   "canonical": "TabbyML/tabby",
+   "cohort": "ai-coding-agents"
+  },
+  "voideditor/void": {
+   "repo_id": 855528273,
+   "canonical": "voideditor/void",
+   "cohort": "ai-coding-agents"
+  },
+  "charmbracelet/crush": {
+   "repo_id": 987670088,
+   "canonical": "charmbracelet/crush",
+   "cohort": "ai-coding-agents"
+  },
+  "QwenLM/qwen-code": {
+   "repo_id": 1008713177,
+   "canonical": "QwenLM/qwen-code",
+   "cohort": "ai-coding-agents"
+  },
+  "Kilo-Org/kilocode": {
+   "repo_id": 946087422,
+   "canonical": "Kilo-Org/kilocode",
+   "cohort": "ai-coding-agents"
+  },
+  "zed-industries/zed": {
+   "repo_id": 340547520,
+   "canonical": "zed-industries/zed",
+   "cohort": "ai-coding-agents"
+  },
+  "SWE-bench/SWE-bench": {
+   "repo_id": 700117650,
+   "canonical": "SWE-bench/SWE-bench",
+   "cohort": "ai-coding-agents"
+  },
+  "SWE-agent/mini-swe-agent": {
+   "repo_id": 1010318950,
+   "canonical": "SWE-agent/mini-swe-agent",
+   "cohort": "ai-coding-agents"
+  },
+  "OpenAutoCoder/Agentless": {
+   "repo_id": 822329559,
+   "canonical": "OpenAutoCoder/Agentless",
+   "cohort": "ai-coding-agents"
+  },
+  "OpenBMB/ChatDev": {
+   "repo_id": 683892956,
+   "canonical": "OpenBMB/ChatDev",
+   "cohort": "ai-coding-agents"
+  },
+  "openinterpreter/openinterpreter": {
+   "repo_id": 666299222,
+   "canonical": "openinterpreter/openinterpreter",
+   "cohort": "ai-coding-agents"
+  },
+  "vllm-project/vllm": {
+   "repo_id": 599547518,
+   "canonical": "vllm-project/vllm",
+   "cohort": "llm-inference-serving"
+  },
+  "sgl-project/sglang": {
+   "repo_id": 740303686,
+   "canonical": "sgl-project/sglang",
+   "cohort": "llm-inference-serving"
+  },
+  "ggml-org/llama.cpp": {
+   "repo_id": 612354784,
+   "canonical": "ggml-org/llama.cpp",
+   "cohort": "llm-inference-serving"
+  },
+  "ollama/ollama": {
+   "repo_id": 658928958,
+   "canonical": "ollama/ollama",
+   "cohort": "llm-inference-serving"
+  },
+  "InternLM/lmdeploy": {
+   "repo_id": 654122609,
+   "canonical": "InternLM/lmdeploy",
+   "cohort": "llm-inference-serving"
+  },
+  "NVIDIA/TensorRT-LLM": {
+   "repo_id": 679366051,
+   "canonical": "NVIDIA/TensorRT-LLM",
+   "cohort": "llm-inference-serving"
+  },
+  "kvcache-ai/ktransformers": {
+   "repo_id": 833984877,
+   "canonical": "kvcache-ai/ktransformers",
+   "cohort": "llm-inference-serving"
+  },
+  "LMCache/LMCache": {
+   "repo_id": 807305060,
+   "canonical": "LMCache/LMCache",
+   "cohort": "llm-inference-serving"
+  },
+  "llm-d/llm-d": {
+   "repo_id": 975070903,
+   "canonical": "llm-d/llm-d",
+   "cohort": "llm-inference-serving"
+  },
+  "vllm-project/aibrix": {
+   "repo_id": 813348592,
+   "canonical": "vllm-project/aibrix",
+   "cohort": "llm-inference-serving"
+  },
+  "GeeeekExplorer/nano-vllm": {
+   "repo_id": 999030842,
+   "canonical": "GeeeekExplorer/nano-vllm",
+   "cohort": "llm-inference-serving"
+  },
+  "flashinfer-ai/flashinfer": {
+   "repo_id": 669331976,
+   "canonical": "flashinfer-ai/flashinfer",
+   "cohort": "llm-inference-serving"
+  },
+  "kvcache-ai/Mooncake": {
+   "repo_id": 819733173,
+   "canonical": "kvcache-ai/Mooncake",
+   "cohort": "llm-inference-serving"
+  },
+  "xorbitsai/inference": {
+   "repo_id": 653496050,
+   "canonical": "xorbitsai/inference",
+   "cohort": "llm-inference-serving"
+  },
+  "langchain-ai/langgraph": {
+   "repo_id": 676672661,
+   "canonical": "langchain-ai/langgraph",
+   "cohort": "agent-frameworks"
+  },
+  "crewAIInc/crewAI": {
+   "repo_id": 710601088,
+   "canonical": "crewAIInc/crewAI",
+   "cohort": "agent-frameworks"
+  },
+  "microsoft/autogen": {
+   "repo_id": 680120071,
+   "canonical": "microsoft/autogen",
+   "cohort": "agent-frameworks"
+  },
+  "openai/openai-agents-python": {
+   "repo_id": 946380199,
+   "canonical": "openai/openai-agents-python",
+   "cohort": "agent-frameworks"
+  },
+  "agno-agi/agno": {
+   "repo_id": 488641606,
+   "canonical": "agno-agi/agno",
+   "cohort": "agent-frameworks"
+  },
+  "pydantic/pydantic-ai": {
+   "repo_id": 818331198,
+   "canonical": "pydantic/pydantic-ai",
+   "cohort": "agent-frameworks"
+  },
+  "google/adk-python": {
+   "repo_id": 958830659,
+   "canonical": "google/adk-python",
+   "cohort": "agent-frameworks"
+  },
+  "huggingface/smolagents": {
+   "repo_id": 898968194,
+   "canonical": "huggingface/smolagents",
+   "cohort": "agent-frameworks"
+  },
+  "letta-ai/letta": {
+   "repo_id": 703411624,
+   "canonical": "letta-ai/letta",
+   "cohort": "agent-frameworks"
+  },
+  "stanfordnlp/dspy": {
+   "repo_id": 587050620,
+   "canonical": "stanfordnlp/dspy",
+   "cohort": "agent-frameworks"
+  },
+  "agentscope-ai/agentscope": {
+   "repo_id": 742244656,
+   "canonical": "agentscope-ai/agentscope",
+   "cohort": "agent-frameworks"
+  },
+  "camel-ai/camel": {
+   "repo_id": 615510678,
+   "canonical": "camel-ai/camel",
+   "cohort": "agent-frameworks"
+  },
+  "strands-agents/harness-sdk": {
+   "repo_id": 983715534,
+   "canonical": "strands-agents/harness-sdk",
+   "cohort": "agent-frameworks"
+  },
+  "QwenLM/Qwen-Agent": {
+   "repo_id": 694939378,
+   "canonical": "QwenLM/Qwen-Agent",
+   "cohort": "agent-frameworks"
+  },
+  "FoundationAgents/MetaGPT": {
+   "repo_id": 660551251,
+   "canonical": "FoundationAgents/MetaGPT",
+   "cohort": "agent-frameworks"
+  },
+  "microsoft/agent-framework": {
+   "repo_id": 974445592,
+   "canonical": "microsoft/agent-framework",
+   "cohort": "agent-frameworks"
+  },
+  "mastra-ai/mastra": {
+   "repo_id": 839037098,
+   "canonical": "mastra-ai/mastra",
+   "cohort": "agent-frameworks"
+  },
+  "verl-project/verl": {
+   "repo_id": 881221486,
+   "canonical": "verl-project/verl",
+   "cohort": "post-training-rl"
+  },
+  "hiyouga/LLaMA-Factory": {
+   "repo_id": 646410686,
+   "canonical": "hiyouga/LlamaFactory",
+   "cohort": "post-training-rl"
+  },
+  "unslothai/unsloth": {
+   "repo_id": 725205304,
+   "canonical": "unslothai/unsloth",
+   "cohort": "post-training-rl"
+  },
+  "modelscope/ms-swift": {
+   "repo_id": 673412924,
+   "canonical": "modelscope/ms-swift",
+   "cohort": "post-training-rl"
+  },
+  "axolotl-ai-cloud/axolotl": {
+   "repo_id": 627727693,
+   "canonical": "axolotl-ai-cloud/axolotl",
+   "cohort": "post-training-rl"
+  },
+  "OpenRLHF/OpenRLHF": {
+   "repo_id": 672415139,
+   "canonical": "OpenRLHF/OpenRLHF",
+   "cohort": "post-training-rl"
+  },
+  "inclusionAI/AReaL": {
+   "repo_id": 937952934,
+   "canonical": "areal-project/AReaL",
+   "cohort": "post-training-rl"
+  },
+  "PeterGriffinJin/Search-R1": {
+   "repo_id": 940662305,
+   "canonical": "PeterGriffinJin/Search-R1",
+   "cohort": "post-training-rl"
+  },
+  "allenai/open-instruct": {
+   "repo_id": 651622038,
+   "canonical": "allenai/open-instruct",
+   "cohort": "post-training-rl"
+  },
+  "NVIDIA-NeMo/RL": {
+   "repo_id": 949546994,
+   "canonical": "NVIDIA-NeMo/RL",
+   "cohort": "post-training-rl"
+  },
+  "huggingface/trl": {
+   "repo_id": 250510075,
+   "canonical": "huggingface/trl",
+   "cohort": "post-training-rl"
+  },
+  "alibaba/ROLL": {
+   "repo_id": 991939049,
+   "canonical": "alibaba/ROLL",
+   "cohort": "post-training-rl"
+  },
+  "PrimeIntellect-ai/prime-rl": {
+   "repo_id": 934553284,
+   "canonical": "PrimeIntellect-ai/prime-rl",
+   "cohort": "post-training-rl"
+  },
+  "OpenPipe/ART": {
+   "repo_id": 946178371,
+   "canonical": "OpenPipe/ART",
+   "cohort": "post-training-rl"
+  },
+  "huggingface/open-r1": {
+   "repo_id": 921777121,
+   "canonical": "huggingface/open-r1",
+   "cohort": "post-training-rl"
+  },
+  "agentscope-ai/Trinity-RFT": {
+   "repo_id": 963030058,
+   "canonical": "agentscope-ai/Trinity-RFT",
+   "cohort": "post-training-rl"
+  },
+  "black-forest-labs/flux": {
+   "repo_id": 836642963,
+   "canonical": "black-forest-labs/flux",
+   "cohort": "diffusion-media-gen"
+  },
+  "QwenLM/Qwen-Image": {
+   "repo_id": 1031256025,
+   "canonical": "QwenLM/Qwen-Image",
+   "cohort": "diffusion-media-gen"
+  },
+  "Stability-AI/sd3.5": {
+   "repo_id": 869842392,
+   "canonical": "Stability-AI/sd3.5",
+   "cohort": "diffusion-media-gen"
+  },
+  "Wan-Video/Wan2.2": {
+   "repo_id": 1027579552,
+   "canonical": "Wan-Video/Wan2.2",
+   "cohort": "diffusion-media-gen"
+  },
+  "Tencent-Hunyuan/HunyuanVideo": {
+   "repo_id": 895453957,
+   "canonical": "Tencent-Hunyuan/HunyuanVideo",
+   "cohort": "diffusion-media-gen"
+  },
+  "Lightricks/LTX-Video": {
+   "repo_id": 891705470,
+   "canonical": "Lightricks/LTX-Video",
+   "cohort": "diffusion-media-gen"
+  },
+  "SkyworkAI/SkyReels-V2": {
+   "repo_id": 966698850,
+   "canonical": "SkyworkAI/SkyReels-V2",
+   "cohort": "diffusion-media-gen"
+  },
+  "hpcaitech/Open-Sora": {
+   "repo_id": 760231710,
+   "canonical": "hpcaitech/Open-Sora",
+   "cohort": "diffusion-media-gen"
+  },
+  "ace-step/ACE-Step": {
+   "repo_id": 974040574,
+   "canonical": "ace-step/ACE-Step",
+   "cohort": "diffusion-media-gen"
+  },
+  "fishaudio/fish-speech": {
+   "repo_id": 702796244,
+   "canonical": "fishaudio/fish-speech",
+   "cohort": "diffusion-media-gen"
+  },
+  "hexgrad/kokoro": {
+   "repo_id": 915054134,
+   "canonical": "hexgrad/kokoro",
+   "cohort": "diffusion-media-gen"
+  },
+  "multimodal-art-projection/YuE": {
+   "repo_id": 920995232,
+   "canonical": "multimodal-art-projection/YuE",
+   "cohort": "diffusion-media-gen"
+  },
+  "comfyanonymous/ComfyUI": {
+   "repo_id": 589831718,
+   "canonical": "Comfy-Org/ComfyUI",
+   "cohort": "diffusion-media-gen"
+  },
+  "huggingface/diffusers": {
+   "repo_id": 498011141,
+   "canonical": "huggingface/diffusers",
+   "cohort": "diffusion-media-gen"
+  },
+  "NVlabs/Sana": {
+   "repo_id": 871368615,
+   "canonical": "NVlabs/Sana",
+   "cohort": "diffusion-media-gen"
+  },
+  "QwenLM/Qwen3-VL": {
+   "repo_id": 849239437,
+   "canonical": "QwenLM/Qwen3-VL",
+   "cohort": "multimodal-vlm"
+  },
+  "OpenGVLab/InternVL": {
+   "repo_id": 721995615,
+   "canonical": "OpenGVLab/InternVL",
+   "cohort": "multimodal-vlm"
+  },
+  "zai-org/GLM-V": {
+   "repo_id": 1010055053,
+   "canonical": "zai-org/GLM-V",
+   "cohort": "multimodal-vlm"
+  },
+  "MoonshotAI/Kimi-VL": {
+   "repo_id": 963152510,
+   "canonical": "MoonshotAI/Kimi-VL",
+   "cohort": "multimodal-vlm"
+  },
+  "OpenBMB/MiniCPM-V": {
+   "repo_id": 749647889,
+   "canonical": "OpenBMB/MiniCPM-V",
+   "cohort": "multimodal-vlm"
+  },
+  "deepseek-ai/DeepSeek-OCR": {
+   "repo_id": 1078049937,
+   "canonical": "deepseek-ai/DeepSeek-OCR",
+   "cohort": "multimodal-vlm"
+  },
+  "deepseek-ai/DeepSeek-VL2": {
+   "repo_id": 902697574,
+   "canonical": "deepseek-ai/DeepSeek-VL2",
+   "cohort": "multimodal-vlm"
+  },
+  "ATH-MaaS/Ovis": {
+   "repo_id": 814502811,
+   "canonical": "ATH-MaaS/Ovis",
+   "cohort": "multimodal-vlm"
+  },
+  "NVlabs/Eagle": {
+   "repo_id": 820789280,
+   "canonical": "NVlabs/Eagle",
+   "cohort": "multimodal-vlm"
+  },
+  "m87-labs/moondream": {
+   "repo_id": 736812439,
+   "canonical": "m87-labs/moondream",
+   "cohort": "multimodal-vlm"
+  },
+  "huggingface/smollm": {
+   "repo_id": 883143171,
+   "canonical": "huggingface/smollm",
+   "cohort": "multimodal-vlm"
+  },
+  "apple/ml-fastvlm": {
+   "repo_id": 976325482,
+   "canonical": "apple/ml-fastvlm",
+   "cohort": "multimodal-vlm"
+  },
+  "haotian-liu/LLaVA": {
+   "repo_id": 629102662,
+   "canonical": "haotian-liu/LLaVA",
+   "cohort": "multimodal-vlm"
+  },
+  "browser-use/browser-use": {
+   "repo_id": 881458615,
+   "canonical": "browser-use/browser-use",
+   "cohort": "gui-agents"
+  },
+  "bytedance/UI-TARS-desktop": {
+   "repo_id": 918932603,
+   "canonical": "bytedance/UI-TARS-desktop",
+   "cohort": "gui-agents"
+  },
+  "microsoft/OmniParser": {
+   "repo_id": 860252770,
+   "canonical": "microsoft/OmniParser",
+   "cohort": "gui-agents"
+  },
+  "simular-ai/Agent-S": {
+   "repo_id": 870189331,
+   "canonical": "simular-ai/Agent-S",
+   "cohort": "gui-agents"
+  },
+  "xlang-ai/OSWorld": {
+   "repo_id": 705433049,
+   "canonical": "xlang-ai/OSWorld",
+   "cohort": "gui-agents"
+  },
+  "showlab/ShowUI": {
+   "repo_id": 881201918,
+   "canonical": "showlab/ShowUI",
+   "cohort": "gui-agents"
+  },
+  "EmergenceAI/Agent-E": {
+   "repo_id": 779019589,
+   "canonical": "EmergenceAI/Agent-E",
+   "cohort": "gui-agents"
+  }
+ }
+}
