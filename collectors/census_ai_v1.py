@@ -749,6 +749,30 @@ def previous_qualification_dates(month_dir: Path) -> dict[int, str]:
     return dates
 
 
+def previous_activation(month_dir: Path) -> dict[int, dict]:
+    """Activation state already published, carried across every re-emit.
+
+    emit() regenerates the manifest from the census, and on 2026-08-03 a re-emit
+    after an unrelated fix silently wiped the ten `activated` marks the first
+    tranche had written an hour earlier. The next weekly tranche would then have
+    re-selected the same ten heads, applied zero (they are already members), and
+    the backlog would never have drained - the very defect an adversarial review
+    had already found by a different route.
+
+    Activation is published history. A census may recompute who QUALIFIES; it
+    may never un-publish what was already activated.
+    """
+    state: dict[int, dict] = {}
+    for manifest_path in sorted(month_dir.parent.glob("*/pending-manifest.json")):
+        manifest = json.loads(manifest_path.read_text())
+        for member in manifest.get("members", []):
+            repo_id = member.get("repo_id")
+            if repo_id is not None and member.get("status") != "pending":
+                state[repo_id] = {"status": member["status"],
+                                  "activated_on": member.get("activated_on")}
+    return state
+
+
 def channel_attribution(members: list[dict], census_date: str) -> dict:
     admitted = dict.fromkeys(CHANNELS, 0)
     first_qualified = dict.fromkeys(CHANNELS, 0)
@@ -933,18 +957,23 @@ def emit(month_dir: Path) -> None:
     executor_hash = sha256(EXECUTOR_SRC)
 
     manifest_members = []
+    prior_activation = previous_activation(month_dir)
     for r in admitted:
         first_qualified_on = min(
             census_date, prior_dates.get(r["id"], census_date)
         )
         source_text = qualifying_text(r, deep[r["id"]], r["evidence"])
+        already = prior_activation.get(r["id"], {})
         manifest_members.append({
             "repo_id": r["id"], "full_name": r["full_name"],
             "stars": r["stargazers_count"],
             "first_observed": first_qualified_on,
             "first_qualified_on": first_qualified_on,
             "qualifying_text_sha256": sha256_text(source_text),
-            "cohort": "unassigned-v1", "status": "pending",
+            "cohort": "unassigned-v1",
+            "status": already.get("status", "pending"),
+            **({"activated_on": already["activated_on"]}
+               if already.get("activated_on") else {}),
             "wave": "backlog" if month == "2026-08" else "forward",
             "commit_oid": r.get("commit_oid"),
             "license_observed": r.get("license_observed"),

@@ -286,3 +286,29 @@ def test_dead_channel_is_retained_only_for_historical_artifacts():
         if line.startswith("|")
     ]
     assert not [line for line in table_rows if "weak-topic+second" in line]
+
+
+def test_reemit_never_unpublishes_an_activation(tmp_path, monkeypatch):
+    """A census may recompute who QUALIFIES; it may never un-publish history.
+
+    Measured 2026-08-03: the first tranche marked ten members `activated`, and a
+    re-emit an hour later - run for an unrelated fix - regenerated the manifest
+    and wiped those marks. The next weekly tranche would have re-selected the
+    same ten heads, applied zero because they are already members, and the
+    backlog would never have drained. An adversarial review had already found
+    that failure by a different route; regeneration reopened it.
+    """
+    import census_ai_v1 as census
+
+    month_dir = tmp_path / "2026-08"
+    month_dir.mkdir(parents=True)
+    (month_dir / "pending-manifest.json").write_text(json.dumps({
+        "members": [
+            {"repo_id": 1, "status": "activated", "activated_on": "2026-08-03"},
+            {"repo_id": 2, "status": "pending"},
+        ]}))
+
+    carried = census.previous_activation(month_dir)
+    assert carried[1]["status"] == "activated"
+    assert carried[1]["activated_on"] == "2026-08-03"
+    assert 2 not in carried, "pending is the default, not carried state"

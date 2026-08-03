@@ -3,10 +3,10 @@
  "builder": "census_ai_v1",
  "predicate": "AI-v1",
  "star_bar": 500,
- "run_at": "2026-08-03T13:10:56+00:00",
- "governance_act_sha256": "7bd31e20b7a3849b14647330044bd9f9835f6fd35b5736eb613697adf3d951fe",
+ "run_at": "2026-08-03T19:24:10+00:00",
+ "governance_act_sha256": "409db71ffdce1f0bee8c3e1e1e759ab5eedd3281557dc99ea7b3a9bbf764c11b",
  "scope_module_sha256": "b80170e53c329a34461fce2abae1414863023356089814e7be67e981a642af84",
- "executor_sha256": "f8095216766316b881a3116cad0f03fe338965338a90a806e5c9f634f682c797",
+ "executor_sha256": "8fb193ee43f597b3f67ad60219fc5600b7454573c2e1272a041403b8a4dc4d10",
  "sweep": {
   "bar_lo": 500,
   "bar_hi": 1000000,
@@ -27,29 +27,30 @@
   "not_ai_scope": 64494,
   "excluded_license": 3119,
   "no_code_language": 401,
-  "no_velocity": 3668,
-  "rescued": 406,
+  "no_velocity": 3667,
+  "rescued": 408,
   "fork_or_archived": 724,
   "gone_since_sweep": 1,
   "legacy_member": 130,
-  "admitted": 5522
+  "admitted": 5523,
+  "no_default_branch": 0
  },
  "qualification_history_note": "Metrics predating first_qualified_on are pre-qualification history, never evidence that the repository always declared an AI identity.",
  "strata_counts": {
   "model-infrastructure": 539,
-  "declared-application": 225,
+  "declared-application": 226,
   "other-declared": 4758
  },
  "channel_attribution": {
   "all_admitted": {
-   "storefront": 5342,
+   "storefront": 5343,
    "corroborated": 180,
    "readme": 0,
    "manifest": 0,
    "weak-topic+second": 0
   },
   "first_qualified_on_this_census": {
-   "storefront": 5342,
+   "storefront": 5343,
    "corroborated": 180,
    "readme": 0,
    "manifest": 0,
@@ -1911,5 +1912,7 @@
    "done": true
   }
  ],
- "pending_manifest_sha256": "5a60568756ccfa0a607ffb1e07cec9021a2343f4dc6a45080641bff66bffb50b"
+ "pending_manifest_sha256": "80000493a27c6b17840704c2bcb08332145b9c4e5b9c32432a227be20ed4a44e",
+ "stock_census": false,
+ "activation_wave": "forward"
 }
