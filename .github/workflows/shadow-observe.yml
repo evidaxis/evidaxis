@@ -1,0 +1,178 @@
+name: shadow-observe
+
+# Weekly star observations over the newest complete private discovery set.
+# GraphQL shards retain only id, stars, and one UTC observation timestamp.
+
+on:
+  schedule:
+    - cron: "43 5 * * 0"   # Sundays 05:43 UTC, weekly
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shadow-layer
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      date: ${{ steps.period.outputs.date }}
+    steps:
+      - id: period
+        run: echo "date=$(date -u +%Y-%m-%d)" >> "${GITHUB_OUTPUT}"
+
+  observe:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    env:
+      EVIDAXIS_SHADOW_REPO: ${{ vars.EVIDAXIS_SHADOW_REPO }}
+      SNAPSHOT_DATE: ${{ needs.prepare.outputs.date }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+
+      - name: Verify and clone the private destination
+        env:
+          GH_TOKEN: ${{ secrets.SHADOW_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::SHADOW_REPO_TOKEN is missing"
+            exit 1
+          fi
+          if [ -z "${EVIDAXIS_SHADOW_REPO}" ]; then
+            echo "::error::Actions variable EVIDAXIS_SHADOW_REPO is missing"
+            exit 1
+          fi
+          VISIBILITY=$(gh repo view "${EVIDAXIS_SHADOW_REPO}" --json visibility --jq .visibility)
+          if [ "${VISIBILITY}" != "PRIVATE" ]; then
+            echo "::error::EVIDAXIS_SHADOW_REPO must identify a private repository"
+            exit 1
+          fi
+          SHADOW_WORKTREE="${RUNNER_TEMP}/shadow-repository"
+          gh auth setup-git
+          gh repo clone "${EVIDAXIS_SHADOW_REPO}" "${SHADOW_WORKTREE}"
+          if [ -z "$(git -C "${SHADOW_WORKTREE}" branch --show-current)" ]; then
+            echo "::error::private repository must have an initialized default branch"
+            exit 1
+          fi
+
+      - name: Observe and push this shard
+        env:
+          GH_TOKEN: ${{ secrets.SHADOW_REPO_TOKEN }}
+          SHARD_INDEX: ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          SHADOW_WORKTREE="${RUNNER_TEMP}/shadow-repository"
+          EVIDAXIS_SHADOW_REPO="${SHADOW_WORKTREE}" \
+            python3 collectors/shadow_snapshot.py \
+              --mode observe \
+              --date "${SNAPSHOT_DATE}" \
+              --shard "${SHARD_INDEX}/4"
+
+          cd "${SHADOW_WORKTREE}"
+          git config user.name "Evidaxis"
+          git config user.email "git@evidaxis.org"
+          git add -- "observations/${SNAPSHOT_DATE}/shard-${SHARD_INDEX}.jsonl"
+          if git diff --cached --quiet; then
+            echo "observation shard ${SHARD_INDEX}/4 already present"
+            exit 0
+          fi
+          git commit -m "shadow: observation ${SNAPSHOT_DATE} shard ${SHARD_INDEX}/4"
+          BRANCH=$(git branch --show-current)
+          for ATTEMPT in 1 2 3; do
+            if git push origin "HEAD:${BRANCH}"; then
+              exit 0
+            fi
+            echo "push rejected; rebase and retry (${ATTEMPT}/3)"
+            git pull --rebase origin "${BRANCH}"
+          done
+          echo "::error::private observation shard push failed after 3 attempts"
+          exit 1
+
+  merge:
+    needs: [prepare, observe]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      EVIDAXIS_SHADOW_REPO: ${{ vars.EVIDAXIS_SHADOW_REPO }}
+      SNAPSHOT_DATE: ${{ needs.prepare.outputs.date }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.14"
+
+      - name: Verify and clone the private destination
+        env:
+          GH_TOKEN: ${{ secrets.SHADOW_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::SHADOW_REPO_TOKEN is missing"
+            exit 1
+          fi
+          if [ -z "${EVIDAXIS_SHADOW_REPO}" ]; then
+            echo "::error::Actions variable EVIDAXIS_SHADOW_REPO is missing"
+            exit 1
+          fi
+          VISIBILITY=$(gh repo view "${EVIDAXIS_SHADOW_REPO}" --json visibility --jq .visibility)
+          if [ "${VISIBILITY}" != "PRIVATE" ]; then
+            echo "::error::EVIDAXIS_SHADOW_REPO must identify a private repository"
+            exit 1
+          fi
+          SHADOW_WORKTREE="${RUNNER_TEMP}/shadow-repository"
+          gh auth setup-git
+          gh repo clone "${EVIDAXIS_SHADOW_REPO}" "${SHADOW_WORKTREE}"
+
+      - name: Merge, verify, and push observation
+        env:
+          GH_TOKEN: ${{ secrets.SHADOW_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          SHADOW_WORKTREE="${RUNNER_TEMP}/shadow-repository"
+          EVIDAXIS_SHADOW_REPO="${SHADOW_WORKTREE}" \
+            python3 collectors/shadow_snapshot.py \
+              --mode observe \
+              --date "${SNAPSHOT_DATE}" \
+              --merge \
+              --shards 4
+
+          cd "${SHADOW_WORKTREE}"
+          git config user.name "Evidaxis"
+          git config user.email "git@evidaxis.org"
+          git add -- \
+            "observations/${SNAPSHOT_DATE}/snapshot.jsonl" \
+            "observations/${SNAPSHOT_DATE}/snapshot.sha256"
+          if git diff --cached --quiet; then
+            echo "observation ${SNAPSHOT_DATE} already merged and verified"
+            exit 0
+          fi
+          git commit -m "shadow: merge observation ${SNAPSHOT_DATE}"
+          BRANCH=$(git branch --show-current)
+          for ATTEMPT in 1 2 3; do
+            if git push origin "HEAD:${BRANCH}"; then
+              exit 0
+            fi
+            echo "push rejected; rebase and retry (${ATTEMPT}/3)"
+            git pull --rebase origin "${BRANCH}"
+          done
+          echo "::error::private observation merge push failed after 3 attempts"
+          exit 1
