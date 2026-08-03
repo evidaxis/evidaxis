@@ -1,0 +1,3107 @@
+{
+ "@type": "RecallFixture",
+ "version": "2026-08",
+ "purpose": "Known-true AI systems at >=500 stars, collected INDEPENDENTLY of the classifier by a live-web agent seeded with ~725 candidates across paper drops, Chinese labs, bio/speech/robotics/inference/RL and thin-metadata repositories, then verified one by one against the GitHub API. It exists so recall is a measured number at every predicate version instead of an assertion, and so a later version cannot quietly trade recall away.",
+ "discipline": "This fixture may FALSIFY a rule - a known-true system failing reveals an over-broad filter - but may NEVER supply tokens to match its own rows. Recall figures are published with their precision denominator; a recall number alone is not evidence of anything.",
+ "known_impurity": "Seeded by an agent, so it contains a few non-systems: grpc/grpc and NVIDIA/open-gpu-kernel-modules were classed as AI systems by the collector and are not. Recall measured on it is therefore a slight UNDER-estimate of true recall, which is the safe direction for a fixture.",
+ "built_at": "2026-08-03",
+ "count": 516,
+ "entries": [
+  {
+   "repo_id": 965415649,
+   "full_name": "openai/codex",
+   "stars_at_build": 103452,
+   "why_ai": "Lightweight coding agent that runs in your terminal"
+  },
+  {
+   "repo_id": 666299222,
+   "full_name": "openinterpreter/openinterpreter",
+   "stars_at_build": 67519,
+   "why_ai": "A coding agent for open models like Kimi K3"
+  },
+  {
+   "repo_id": 27729880,
+   "full_name": "grpc/grpc",
+   "stars_at_build": 45240,
+   "why_ai": "C++ based gRPC (C++, Python, Ruby, Objective-C, PHP, C#)"
+  },
+  {
+   "repo_id": 81227005,
+   "full_name": "facebookresearch/faiss",
+   "stars_at_build": 40651,
+   "why_ai": "A library for efficient similarity search and clustering of dense vectors."
+  },
+  {
+   "repo_id": 619521008,
+   "full_name": "RVC-Project/Retrieval-based-Voice-Conversion-WebUI",
+   "stars_at_build": 36965,
+   "why_ai": "Easily train a good VC model with voice data <= 10 mins!"
+  },
+  {
+   "repo_id": 644686905,
+   "full_name": "continuedev/continue",
+   "stars_at_build": 35289,
+   "why_ai": "open-source coding agent"
+  },
+  {
+   "repo_id": 206660580,
+   "full_name": "facebookresearch/detectron2",
+   "stars_at_build": 34645,
+   "why_ai": "Detectron2 is a platform for object detection, segmentation and other visual recognition tasks."
+  },
+  {
+   "repo_id": 217475193,
+   "full_name": "PaddlePaddle/PaddleDetection",
+   "stars_at_build": 14353,
+   "why_ai": "Object Detection toolkit based on PaddlePaddle. It supports object detection, instance segmentation, multiple object tracking and real-time multi-person keypoin"
+  },
+  {
+   "repo_id": 630141866,
+   "full_name": "openai/shap-e",
+   "stars_at_build": 12264,
+   "why_ai": "Generate 3D objects conditioned on text or images"
+  },
+  {
+   "repo_id": 106473613,
+   "full_name": "NVIDIA/k8s-device-plugin",
+   "stars_at_build": 3836,
+   "why_ai": "NVIDIA device plugin for Kubernetes"
+  },
+  {
+   "repo_id": 590187800,
+   "full_name": "anthropics/anthropic-sdk-python",
+   "stars_at_build": 3787,
+   "why_ai": "Known AI system codebase: anthropics/anthropic-sdk-python"
+  },
+  {
+   "repo_id": 210951915,
+   "full_name": "facebookresearch/fvcore",
+   "stars_at_build": 2249,
+   "why_ai": "Collection of common code that's shared among different research projects in FAIR computer vision team."
+  },
+  {
+   "repo_id": 908531752,
+   "full_name": "deepseek-ai/DeepSeek-V3",
+   "stars_at_build": 104089,
+   "why_ai": "Known AI system codebase: deepseek-ai/DeepSeek-V3"
+  },
+  {
+   "repo_id": 824874689,
+   "full_name": "cline/cline",
+   "stars_at_build": 65533,
+   "why_ai": "Autonomous coding agent as an SDK, IDE extension, or CLI assistant."
+  },
+  {
+   "repo_id": 612640604,
+   "full_name": "mckaywrigley/chatbot-ui",
+   "stars_at_build": 33325,
+   "why_ai": "AI chat for any model."
+  },
+  {
+   "repo_id": 145670234,
+   "full_name": "open-mmlab/mmdetection",
+   "stars_at_build": 32859,
+   "why_ai": "OpenMMLab Detection Toolbox and Benchmark"
+  },
+  {
+   "repo_id": 494232964,
+   "full_name": "Dao-AILab/flash-attention",
+   "stars_at_build": 24600,
+   "why_ai": "Fast and memory-efficient exact attention"
+  },
+  {
+   "repo_id": 761974775,
+   "full_name": "openai/swarm",
+   "stars_at_build": 21871,
+   "why_ai": "Educational framework exploring ergonomic, lightweight multi-agent orchestration. Managed by OpenAI Solution team."
+  },
+  {
+   "repo_id": 655797848,
+   "full_name": "huggingface/candle",
+   "stars_at_build": 20829,
+   "why_ai": "Minimalist ML framework for Rust"
+  },
+  {
+   "repo_id": 918932479,
+   "full_name": "bytedance/UI-TARS",
+   "stars_at_build": 11253,
+   "why_ai": "Pioneering Automated GUI Interaction with Native Agents"
+  },
+  {
+   "repo_id": 191632914,
+   "full_name": "facebookresearch/hydra",
+   "stars_at_build": 10559,
+   "why_ai": "Hydra is a framework for elegantly configuring complex applications"
+  },
+  {
+   "repo_id": 272133018,
+   "full_name": "open-mmlab/mmsegmentation",
+   "stars_at_build": 9897,
+   "why_ai": "OpenMMLab Semantic Segmentation Toolbox and Benchmark."
+  },
+  {
+   "repo_id": 278003645,
+   "full_name": "open-mmlab/mmpose",
+   "stars_at_build": 7794,
+   "why_ai": "OpenMMLab Pose Estimation Toolbox and Benchmark."
+  },
+  {
+   "repo_id": 145670155,
+   "full_name": "open-mmlab/mmcv",
+   "stars_at_build": 6462,
+   "why_ai": "OpenMMLab Computer Vision Foundation"
+  },
+  {
+   "repo_id": 929311290,
+   "full_name": "stepfun-ai/Step-Video-T2V",
+   "stars_at_build": 3186,
+   "why_ai": "Known AI system codebase: stepfun-ai/Step-Video-T2V"
+  },
+  {
+   "repo_id": 196905457,
+   "full_name": "s3prl/s3prl",
+   "stars_at_build": 2558,
+   "why_ai": "Self-Supervised Speech Pre-training and Representation Learning Toolkit"
+  },
+  {
+   "repo_id": 739342735,
+   "full_name": "mistralai/cookbook",
+   "stars_at_build": 2300,
+   "why_ai": "Known AI system codebase: mistralai/cookbook"
+  },
+  {
+   "repo_id": 496457253,
+   "full_name": "dauparas/ProteinMPNN",
+   "stars_at_build": 1814,
+   "why_ai": "Code for the ProteinMPNN paper"
+  },
+  {
+   "repo_id": 568127635,
+   "full_name": "Sense-X/Co-DETR",
+   "stars_at_build": 1357,
+   "why_ai": "[ICCV 2023] DETRs with Collaborative Hybrid Assignments Training"
+  },
+  {
+   "repo_id": 375765893,
+   "full_name": "allenai/natural-instructions",
+   "stars_at_build": 1045,
+   "why_ai": "Expanding natural instructions"
+  },
+  {
+   "repo_id": 776899311,
+   "full_name": "OpenGVLab/VideoChat-Flash",
+   "stars_at_build": 526,
+   "why_ai": "[ICLR2026] VideoChat-Flash: Hierarchical Compression for Long-Context Video Modeling"
+  },
+  {
+   "repo_id": 614765452,
+   "full_name": "Significant-Gravitas/AutoGPT",
+   "stars_at_build": 185780,
+   "why_ai": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters."
+  },
+  {
+   "repo_id": 658928958,
+   "full_name": "ollama/ollama",
+   "stars_at_build": 177643,
+   "why_ai": "Get up and running with Kimi-K2.6, GLM-5.2, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models."
+  },
+  {
+   "repo_id": 888092115,
+   "full_name": "microsoft/markitdown",
+   "stars_at_build": 170963,
+   "why_ai": "Python tool for converting files and office documents to Markdown."
+  },
+  {
+   "repo_id": 527591471,
+   "full_name": "AUTOMATIC1111/stable-diffusion-webui",
+   "stars_at_build": 164361,
+   "why_ai": "Stable Diffusion web UI"
+  },
+  {
+   "repo_id": 155220641,
+   "full_name": "huggingface/transformers",
+   "stars_at_build": 163278,
+   "why_ai": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference an"
+  },
+  {
+   "repo_id": 552661142,
+   "full_name": "langchain-ai/langchain",
+   "stars_at_build": 143272,
+   "why_ai": "The agent engineering platform."
+  },
+  {
+   "repo_id": 589831718,
+   "full_name": "Comfy-Org/ComfyUI",
+   "stars_at_build": 123304,
+   "why_ai": "The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface."
+  },
+  {
+   "repo_id": 612354784,
+   "full_name": "ggml-org/llama.cpp",
+   "stars_at_build": 122501,
+   "why_ai": "LLM inference in C/C++"
+  },
+  {
+   "repo_id": 537603333,
+   "full_name": "openai/whisper",
+   "stars_at_build": 106499,
+   "why_ai": "Robust Speech Recognition via Large-Scale Weak Supervision"
+  },
+  {
+   "repo_id": 695864515,
+   "full_name": "hacksider/Deep-Live-Cam",
+   "stars_at_build": 95501,
+   "why_ai": "real time face swap and one-click video deepfake with only a single image"
+  },
+  {
+   "repo_id": 5108051,
+   "full_name": "opencv/opencv",
+   "stars_at_build": 90271,
+   "why_ai": "Open Source Computer Vision Library"
+  },
+  {
+   "repo_id": 612344730,
+   "full_name": "ChatGPTNextWeb/NextChat",
+   "stars_at_build": 88585,
+   "why_ai": "✨ Light and Fast AI Assistant. Support: Web | iOS | MacOS | Android |  Linux | Windows"
+  },
+  {
+   "repo_id": 599547518,
+   "full_name": "vllm-project/vllm",
+   "stars_at_build": 88018,
+   "why_ai": "A high-throughput and memory-efficient inference and serving engine for LLMs"
+  },
+  {
+   "repo_id": 262296122,
+   "full_name": "PaddlePaddle/PaddleOCR",
+   "stars_at_build": 86838,
+   "why_ai": "Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports"
+  },
+  {
+   "repo_id": 771302083,
+   "full_name": "OpenHands/OpenHands",
+   "stars_at_build": 82944,
+   "why_ai": "🙌 OpenHands: AI-Driven Development"
+  },
+  {
+   "repo_id": 979115477,
+   "full_name": "bytedance/deer-flow",
+   "stars_at_build": 79049,
+   "why_ai": "An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message ga"
+  },
+  {
+   "repo_id": 619959033,
+   "full_name": "nomic-ai/gpt4all",
+   "stars_at_build": 77407,
+   "why_ai": "GPT4All: Run Local LLMs on Any Device. Open-source and available for commercial use."
+  },
+  {
+   "repo_id": 468576060,
+   "full_name": "openai/openai-cookbook",
+   "stars_at_build": 75070,
+   "why_ai": "Examples and guides for using the OpenAI API"
+  },
+  {
+   "repo_id": 646410686,
+   "full_name": "hiyouga/LlamaFactory",
+   "stars_at_build": 73703,
+   "why_ai": "Unified Efficient Fine-Tuning of 100+ LLMs & VLMs (ACL 2024)"
+  },
+  {
+   "repo_id": 523379232,
+   "full_name": "CompVis/stable-diffusion",
+   "stars_at_build": 73263,
+   "why_ai": "A latent text-to-image diffusion model"
+  },
+  {
+   "repo_id": 616372661,
+   "full_name": "binary-husky/gpt_academic",
+   "stars_at_build": 71179,
+   "why_ai": "为GPT/GLM等LLM大语言模型提供实用化交互接口，特别优化论文阅读/润色/写作体验，模块化设计，支持自定义快捷按钮&函数插件，支持Python和C++等项目剖析&自译解功能，PDF/LaTex论文翻译&总结功能，支持并行问询多种LLM模型，支持chatglm3等本地模型。接入通义千问, deepseekcoder,"
+  },
+  {
+   "repo_id": 660551251,
+   "full_name": "FoundationAgents/MetaGPT",
+   "stars_at_build": 69643,
+   "why_ai": "🌟 The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming"
+  },
+  {
+   "repo_id": 725205304,
+   "full_name": "unslothai/unsloth",
+   "stars_at_build": 69420,
+   "why_ai": "Unsloth is a local UI for training and running Kimi K3, Gemma 4, Qwen3.6, DeepSeek-V4, GLM and other models."
+  },
+  {
+   "repo_id": 843222,
+   "full_name": "scikit-learn/scikit-learn",
+   "stars_at_build": 66855,
+   "why_ai": "scikit-learn: machine learning in Python"
+  },
+  {
+   "repo_id": 620936652,
+   "full_name": "xtekky/gpt4free",
+   "stars_at_build": 66525,
+   "why_ai": "The official gpt4free repository | various collection of powerful language models | opus 4.6 gpt 5.3 kimi 2.5 deepseek v3.2 gemini 3"
+  },
+  {
+   "repo_id": 582822129,
+   "full_name": "karpathy/nanoGPT",
+   "stars_at_build": 61808,
+   "why_ai": "The simplest, fastest repository for training/finetuning medium-sized GPTs."
+  },
+  {
+   "repo_id": 743230067,
+   "full_name": "RVC-Boss/GPT-SoVITS",
+   "stars_at_build": 60341,
+   "why_ai": "1 min voice data can also be used to train a good TTS model! (few shot voice cloning)"
+  },
+  {
+   "repo_id": 680120071,
+   "full_name": "microsoft/autogen",
+   "stars_at_build": 60183,
+   "why_ai": "A programming framework for agentic AI"
+  },
+  {
+   "repo_id": 535360445,
+   "full_name": "ultralytics/ultralytics",
+   "stars_at_build": 60157,
+   "why_ai": "Ultralytics YOLO26, YOLO11, YOLOv8 — object detection, instance segmentation, semantic segmentation, image classification, pose estimation, object tracking"
+  },
+  {
+   "repo_id": 264818686,
+   "full_name": "ultralytics/yolov5",
+   "stars_at_build": 57788,
+   "why_ai": "Ultralytics YOLOv5 in PyTorch for object detection, instance segmentation, classification, training, and export."
+  },
+  {
+   "repo_id": 635240594,
+   "full_name": "zylon-ai/private-gpt",
+   "stars_at_build": 57397,
+   "why_ai": "Complete API layer for private AI applications on local models: RAG, skills, tools, MCP, text-to-sql, and more. Works with any OpenAI-compatible inference serve"
+  },
+  {
+   "repo_id": 710601088,
+   "full_name": "crewAIInc/crewAI",
+   "stars_at_build": 56542,
+   "why_ai": "Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work together seamlessly, tac"
+  },
+  {
+   "repo_id": 671269505,
+   "full_name": "BerriAI/litellm",
+   "stars_at_build": 55399,
+   "why_ai": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and l"
+  },
+  {
+   "repo_id": 618058471,
+   "full_name": "facebookresearch/segment-anything",
+   "stars_at_build": 54637,
+   "why_ai": "The repository provides code for running inference with the SegmentAnything Model (SAM), links for downloading the trained model checkpoints, and example notebo"
+  },
+  {
+   "repo_id": 575340621,
+   "full_name": "lencx/ChatGPT",
+   "stars_at_build": 54428,
+   "why_ai": "❄️ ChatGPT Desktop Application (Mac, Windows and Linux)"
+  },
+  {
+   "repo_id": 541269386,
+   "full_name": "ggml-org/whisper.cpp",
+   "stars_at_build": 52541,
+   "why_ai": "Port of OpenAI's Whisper model in C/C++"
+  },
+  {
+   "repo_id": 773286980,
+   "full_name": "xai-org/grok-1",
+   "stars_at_build": 52097,
+   "why_ai": "Grok open release"
+  },
+  {
+   "repo_id": 1044296738,
+   "full_name": "microsoft/VibeVoice",
+   "stars_at_build": 51879,
+   "why_ai": "Open-Source Frontier Voice AI"
+  },
+  {
+   "repo_id": 676676006,
+   "full_name": "lllyasviel/Fooocus",
+   "stars_at_build": 51875,
+   "why_ai": "Focus on prompting and generating"
+  },
+  {
+   "repo_id": 560704231,
+   "full_name": "run-llama/llama_index",
+   "stars_at_build": 51326,
+   "why_ai": "LlamaIndex is the leading document agent and OCR platform"
+  },
+  {
+   "repo_id": 678973052,
+   "full_name": "anthropics/claude-cookbooks",
+   "stars_at_build": 50870,
+   "why_ai": "A collection of notebooks/recipes showcasing some fun and effective ways of using Claude."
+  },
+  {
+   "repo_id": 615869301,
+   "full_name": "mudler/LocalAI",
+   "stars_at_build": 48162,
+   "why_ai": "LocalAI is the open-source AI engine. Run any model - LLMs, vision, voice, image, video - on any hardware. No GPU required."
+  },
+  {
+   "repo_id": 638629097,
+   "full_name": "Aider-AI/aider",
+   "stars_at_build": 47896,
+   "why_ai": "aider is AI pair programming in your terminal"
+  },
+  {
+   "repo_id": 287463830,
+   "full_name": "microsoft/qlib",
+   "stars_at_build": 46962,
+   "why_ai": "Qlib is an AI-oriented Quant investment platform that aims to use AI tech to empower Quant Research, from exploring ideas to implementing productions. Qlib supp"
+  },
+  {
+   "repo_id": 265612440,
+   "full_name": "coqui-ai/TTS",
+   "stars_at_build": 45852,
+   "why_ai": "🐸💬 - a deep learning toolkit for Text-to-Speech, battle-tested in research and production"
+  },
+  {
+   "repo_id": 71932349,
+   "full_name": "ray-project/ray",
+   "stars_at_build": 43417,
+   "why_ai": "Ray is an AI compute engine. Ray consists of a core distributed runtime and a set of AI Libraries for accelerating ML workloads."
+  },
+  {
+   "repo_id": 235860204,
+   "full_name": "deepspeedai/DeepSpeed",
+   "stars_at_build": 42850,
+   "why_ai": "DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective."
+  },
+  {
+   "repo_id": 600596928,
+   "full_name": "danny-avila/LibreChat",
+   "stars_at_build": 41594,
+   "why_ai": "Enhanced ChatGPT Clone: Features Agents, MCP, Skills, DeepSeek, Anthropic, AWS, OpenAI, Responses API, Azure, Groq, o1, GPT-5, Mistral, OpenRouter, Vertex AI, G"
+  },
+  {
+   "repo_id": 488641606,
+   "full_name": "agno-agi/agno",
+   "stars_at_build": 41551,
+   "why_ai": "Build, run, and manage agent platforms."
+  },
+  {
+   "repo_id": 422274596,
+   "full_name": "hpcaitech/ColossalAI",
+   "stars_at_build": 41430,
+   "why_ai": "Making large AI models cheaper, faster and more accessible"
+  },
+  {
+   "repo_id": 613349035,
+   "full_name": "zai-org/ChatGLM-6B",
+   "stars_at_build": 41012,
+   "why_ai": "ChatGLM-6B: An Open Bilingual Dialogue Language Model | 开源双语对话语言模型"
+  },
+  {
+   "repo_id": 838253246,
+   "full_name": "microsoft/BitNet",
+   "stars_at_build": 39806,
+   "why_ai": "Official inference framework for 1-bit LLMs"
+  },
+  {
+   "repo_id": 806709826,
+   "full_name": "2noise/ChatTTS",
+   "stars_at_build": 39727,
+   "why_ai": "A generative speech model for daily dialogue."
+  },
+  {
+   "repo_id": 615882673,
+   "full_name": "lm-sys/FastChat",
+   "stars_at_build": 39511,
+   "why_ai": "An open platform for training, serving, and evaluating large language models. Release repo for Vicuna and Chatbot Arena."
+  },
+  {
+   "repo_id": 624994625,
+   "full_name": "suno-ai/bark",
+   "stars_at_build": 39218,
+   "why_ai": "🔊 Text-Prompted Generative Audio Model"
+  },
+  {
+   "repo_id": 676672661,
+   "full_name": "langchain-ai/langgraph",
+   "stars_at_build": 38728,
+   "why_ai": "Build resilient agents."
+  },
+  {
+   "repo_id": 151619717,
+   "full_name": "google-research/google-research",
+   "stars_at_build": 38466,
+   "why_ai": "Google Research"
+  },
+  {
+   "repo_id": 918932603,
+   "full_name": "bytedance/UI-TARS-desktop",
+   "stars_at_build": 38408,
+   "why_ai": "The Open-Source Multimodal AI Agent Stack: Connecting Cutting-Edge AI Models and Agent Infra"
+  },
+  {
+   "repo_id": 349321229,
+   "full_name": "TencentARC/GFPGAN",
+   "stars_at_build": 37646,
+   "why_ai": "GFPGAN aims at developing Practical Algorithms for Real-world Face Restoration."
+  },
+  {
+   "repo_id": 577603990,
+   "full_name": "LAION-AI/Open-Assistant",
+   "stars_at_build": 37393,
+   "why_ai": "OpenAssistant is a chat-based assistant that understands tasks, can interact with third-party systems, and retrieve information dynamically to do so."
+  },
+  {
+   "repo_id": 725089041,
+   "full_name": "myshell-ai/OpenVoice",
+   "stars_at_build": 37074,
+   "why_ai": "Instant voice cloning by MIT and MyShell. Audio foundation model."
+  },
+  {
+   "repo_id": 168799526,
+   "full_name": "huggingface/pytorch-image-models",
+   "stars_at_build": 37035,
+   "why_ai": "The largest collection of PyTorch image encoders / backbones. Including train, eval, inference, export scripts, and pretrained weights -- ResNet, ResNeXT, Effic"
+  },
+  {
+   "repo_id": 587050620,
+   "full_name": "stanfordnlp/dspy",
+   "stars_at_build": 36570,
+   "why_ai": "DSPy: The framework for programming—not prompting—language models"
+  },
+  {
+   "repo_id": 191820100,
+   "full_name": "google-ai-edge/mediapipe",
+   "stars_at_build": 36435,
+   "why_ai": "Cross-platform, customizable ML solutions for live and streaming media."
+  },
+  {
+   "repo_id": 154739597,
+   "full_name": "jax-ml/jax",
+   "stars_at_build": 36087,
+   "why_ai": "Composable transformations of Python+NumPy programs: differentiate, vectorize, JIT to GPU/TPU, and more"
+  },
+  {
+   "repo_id": 778431525,
+   "full_name": "microsoft/graphrag",
+   "stars_at_build": 35189,
+   "why_ai": "A modular graph-based Retrieval-Augmented Generation (RAG) system"
+  },
+  {
+   "repo_id": 498011141,
+   "full_name": "huggingface/diffusers",
+   "stars_at_build": 34222,
+   "why_ai": "🤗 Diffusers: State-of-the-art diffusion models for image, video, and audio generation in PyTorch."
+  },
+  {
+   "repo_id": 321960447,
+   "full_name": "openai/CLIP",
+   "stars_at_build": 34122,
+   "why_ai": "CLIP (Contrastive Language-Image Pretraining),  Predict the most relevant text snippet given an image"
+  },
+  {
+   "repo_id": 595893961,
+   "full_name": "lllyasviel/ControlNet",
+   "stars_at_build": 34033,
+   "why_ai": "Let us control diffusion models!"
+  },
+  {
+   "repo_id": 683892956,
+   "full_name": "OpenBMB/ChatDev",
+   "stars_at_build": 33900,
+   "why_ai": "ChatDev 2.0: Dev All through LLM-powered Multi-Agent Collaboration"
+  },
+  {
+   "repo_id": 702796244,
+   "full_name": "fishaudio/fish-speech",
+   "stars_at_build": 31947,
+   "why_ai": "SOTA Open Source TTS"
+  },
+  {
+   "repo_id": 307213173,
+   "full_name": "openai/openai-python",
+   "stars_at_build": 31281,
+   "why_ai": "The official Python library for the OpenAI API"
+  },
+  {
+   "repo_id": 178626720,
+   "full_name": "Lightning-AI/pytorch-lightning",
+   "stars_at_build": 31267,
+   "why_ai": "Pretrain, finetune ANY AI model of ANY size on 1 or 10,000+ GPUs with zero code changes."
+  },
+  {
+   "repo_id": 740303686,
+   "full_name": "sgl-project/sglang",
+   "stars_at_build": 31132,
+   "why_ai": "SGLang is a high-performance serving framework for large language models and multimodal models."
+  },
+  {
+   "repo_id": 783833344,
+   "full_name": "karpathy/llm.c",
+   "stars_at_build": 30712,
+   "why_ai": "LLM training in simple, raw C/CUDA"
+  },
+  {
+   "repo_id": 590669331,
+   "full_name": "google-research/tuning_playbook",
+   "stars_at_build": 30268,
+   "why_ai": "A playbook for systematically maximizing the performance of deep learning models."
+  },
+  {
+   "repo_id": 612427246,
+   "full_name": "tatsu-lab/stanford_alpaca",
+   "stars_at_build": 30247,
+   "why_ai": "Code and documentation to train Stanford's Alpaca models, and generate the data."
+  },
+  {
+   "repo_id": 247266215,
+   "full_name": "JaidedAI/EasyOCR",
+   "stars_at_build": 29857,
+   "why_ai": "Ready-to-use OCR with 80+ supported languages and all popular writing scripts including Latin, Chinese, Arabic, Devanagari, Cyrillic and etc."
+  },
+  {
+   "repo_id": 760231710,
+   "full_name": "hpcaitech/Open-Sora",
+   "stars_at_build": 29233,
+   "why_ai": "Open-Sora: Democratizing Efficient Video Production for All"
+  },
+  {
+   "repo_id": 639835356,
+   "full_name": "assafelovic/gpt-researcher",
+   "stars_at_build": 28785,
+   "why_ai": "An autonomous agent that conducts deep research on any data using any LLM providers"
+  },
+  {
+   "repo_id": 898968194,
+   "full_name": "huggingface/smolagents",
+   "stars_at_build": 28645,
+   "why_ai": "🤗 smolagents: a barebones library for agents that think in code."
+  },
+  {
+   "repo_id": 16587283,
+   "full_name": "dmlc/xgboost",
+   "stars_at_build": 28620,
+   "why_ai": "Scalable, Portable and Distributed Gradient Boosting (GBDT, GBRT or GBM) Library,  for Python, R, Java, Scala, C and more. Runs on single machine, Hadoop, Spark"
+  },
+  {
+   "repo_id": 607289185,
+   "full_name": "microsoft/semantic-kernel",
+   "stars_at_build": 28409,
+   "why_ai": "Integrate cutting-edge LLM technology quickly and easily into your apps"
+  },
+  {
+   "repo_id": 752925682,
+   "full_name": "QwenLM/Qwen3",
+   "stars_at_build": 27453,
+   "why_ai": "Qwen3 is the large language model series developed by Qwen team, Alibaba Cloud."
+  },
+  {
+   "repo_id": 656933936,
+   "full_name": "Stability-AI/generative-models",
+   "stars_at_build": 27239,
+   "why_ai": "Generative Models by Stability AI"
+  },
+  {
+   "repo_id": 793784055,
+   "full_name": "google-research/timesfm",
+   "stars_at_build": 27197,
+   "why_ai": "TimesFM (Time Series Foundation Model) is a pretrained time-series foundation model developed by Google Research for time-series forecasting."
+  },
+  {
+   "repo_id": 748713144,
+   "full_name": "huggingface/lerobot",
+   "stars_at_build": 26337,
+   "why_ai": "🤗 LeRobot: Making AI for Robotics more accessible with end-to-end learning"
+  },
+  {
+   "repo_id": 749647889,
+   "full_name": "OpenBMB/MiniCPM-V",
+   "stars_at_build": 26086,
+   "why_ai": "A Pocket-Sized MLLM for Ultra-Efficient Image and Video Understanding on Your Phone"
+  },
+  {
+   "repo_id": 836642963,
+   "full_name": "black-forest-labs/flux",
+   "stars_at_build": 25849,
+   "why_ai": "Official inference repo for FLUX.1 models"
+  },
+  {
+   "repo_id": 689773665,
+   "full_name": "mozilla-ai/llamafile",
+   "stars_at_build": 25483,
+   "why_ai": "Distribute and run LLMs with a single file."
+  },
+  {
+   "repo_id": 300996055,
+   "full_name": "lucidrains/vit-pytorch",
+   "stars_at_build": 25457,
+   "why_ai": "Implementation of Vision Transformer, a simple way to achieve SOTA in vision classification with only a single transformer encoder, in Pytorch"
+  },
+  {
+   "repo_id": 621118467,
+   "full_name": "microsoft/JARVIS",
+   "stars_at_build": 25120,
+   "why_ai": "JARVIS, a system to connect LLMs with ML community. Paper: https://arxiv.org/pdf/2303.17580.pdf"
+  },
+  {
+   "repo_id": 629102662,
+   "full_name": "haotian-liu/LLaVA",
+   "stars_at_build": 24962,
+   "why_ai": "[NeurIPS'23 Oral] Visual Instruction Tuning (LLaVA) built towards GPT-4V level capabilities and beyond."
+  },
+  {
+   "repo_id": 288108533,
+   "full_name": "karpathy/minGPT",
+   "stars_at_build": 24759,
+   "why_ai": "A minimal PyTorch re-implementation of the OpenAI GPT (Generative Pretrained Transformer) training"
+  },
+  {
+   "repo_id": 600368121,
+   "full_name": "SYSTRAN/faster-whisper",
+   "stars_at_build": 24714,
+   "why_ai": "Faster Whisper transcription with CTranslate2"
+  },
+  {
+   "repo_id": 707551301,
+   "full_name": "deepseek-ai/DeepSeek-Coder",
+   "stars_at_build": 24015,
+   "why_ai": "DeepSeek Coder: Let the Code Write Itself"
+  },
+  {
+   "repo_id": 106024057,
+   "full_name": "pyg-team/pytorch_geometric",
+   "stars_at_build": 23973,
+   "why_ai": "Graph Neural Network Library for PyTorch"
+  },
+  {
+   "repo_id": 534397970,
+   "full_name": "karpathy/nn-zero-to-hero",
+   "stars_at_build": 23838,
+   "why_ai": "Neural Networks: Zero to Hero"
+  },
+  {
+   "repo_id": 1078049937,
+   "full_name": "deepseek-ai/DeepSeek-OCR",
+   "stars_at_build": 23722,
+   "why_ai": "Contexts Optical Compression"
+  },
+  {
+   "repo_id": 650945129,
+   "full_name": "facebookresearch/audiocraft",
+   "stars_at_build": 23532,
+   "why_ai": "Audiocraft is a library for audio processing and generation with deep learning. It features the state-of-the-art EnCodec audio compressor / tokenizer, along wit"
+  },
+  {
+   "repo_id": 634081686,
+   "full_name": "mlc-ai/mlc-llm",
+   "stars_at_build": 23020,
+   "why_ai": "Universal LLM Deployment Engine with ML Compilation"
+  },
+  {
+   "repo_id": 662028682,
+   "full_name": "graphdeco-inria/gaussian-splatting",
+   "stars_at_build": 22855,
+   "why_ai": "Original reference implementation of \"3D Gaussian Splatting for Real-Time Radiance Field Rendering\""
+  },
+  {
+   "repo_id": 881221486,
+   "full_name": "verl-project/verl",
+   "stars_at_build": 22762,
+   "why_ai": "verl/HybridFlow: A Flexible and Efficient RL Post-Training Framework"
+  },
+  {
+   "repo_id": 823430322,
+   "full_name": "QwenAudio/CosyVoice",
+   "stars_at_build": 22550,
+   "why_ai": "Multi-lingual large voice generation model, providing inference, training and deployment full-stack ability."
+  },
+  {
+   "repo_id": 198350484,
+   "full_name": "microsoft/unilm",
+   "stars_at_build": 22178,
+   "why_ai": "Large-scale Self-supervised Pre-training Across Tasks, Languages, and Modalities"
+  },
+  {
+   "repo_id": 149430917,
+   "full_name": "recommenders-team/recommenders",
+   "stars_at_build": 21848,
+   "why_ai": "Best Practices on Recommendation Systems"
+  },
+  {
+   "repo_id": 250213286,
+   "full_name": "huggingface/datasets",
+   "stars_at_build": 21798,
+   "why_ai": "🤗 The largest hub of ready-to-use datasets for AI models with fast, easy-to-use and efficient data manipulation tools"
+  },
+  {
+   "repo_id": 564443255,
+   "full_name": "guidance-ai/guidance",
+   "stars_at_build": 21700,
+   "why_ai": "A guidance language for controlling large language models."
+  },
+  {
+   "repo_id": 674075444,
+   "full_name": "QwenLM/Qwen",
+   "stars_at_build": 21516,
+   "why_ai": "The official repo of Qwen (通义千问) chat & pretrained large language model proposed by Alibaba Cloud."
+  },
+  {
+   "repo_id": 570384908,
+   "full_name": "huggingface/peft",
+   "stars_at_build": 21484,
+   "why_ai": "🤗 PEFT: State-of-the-art Parameter-Efficient Fine-Tuning."
+  },
+  {
+   "repo_id": 156939672,
+   "full_name": "microsoft/onnxruntime",
+   "stars_at_build": 21255,
+   "why_ai": "ONNX Runtime: cross-platform, high performance ML inferencing and training accelerator"
+  },
+  {
+   "repo_id": 780737106,
+   "full_name": "SWE-agent/SWE-agent",
+   "stars_at_build": 19989,
+   "why_ai": "SWE-agent takes a GitHub issue and tries to automatically fix it, using your LM of choice. It can also be employed for offensive cybersecurity or competitive co"
+  },
+  {
+   "repo_id": 849239437,
+   "full_name": "QwenLM/Qwen3-VL",
+   "stars_at_build": 19716,
+   "why_ai": "Qwen3-VL is the multimodal large language model series developed by Qwen team, Alibaba Cloud."
+  },
+  {
+   "repo_id": 835452752,
+   "full_name": "facebookresearch/sam2",
+   "stars_at_build": 19640,
+   "why_ai": "The repository provides code for running inference with the Meta Segment Anything Model 2 (SAM 2), links for downloading the trained model checkpoints, and exam"
+  },
+  {
+   "repo_id": 569959091,
+   "full_name": "modelscope/FunASR",
+   "stars_at_build": 19607,
+   "why_ai": "Open-source speech recognition toolkit for training, inference, streaming ASR, VAD, punctuation, speaker diarization pipelines, and OpenAI-compatible/MCP servin"
+  },
+  {
+   "repo_id": 592489166,
+   "full_name": "openai/evals",
+   "stars_at_build": 19094,
+   "why_ai": "Evals is a framework for evaluating LLMs and LLM systems, and an open-source registry of benchmarks."
+  },
+  {
+   "repo_id": 250510075,
+   "full_name": "huggingface/trl",
+   "stars_at_build": 18989,
+   "why_ai": "Train transformer language models with reinforcement learning."
+  },
+  {
+   "repo_id": 198616978,
+   "full_name": "huggingface/sentence-transformers",
+   "stars_at_build": 18965,
+   "why_ai": "State-of-the-Art Embeddings, Retrieval, and Reranking"
+  },
+  {
+   "repo_id": 614325365,
+   "full_name": "ymcui/Chinese-LLaMA-Alpaca",
+   "stars_at_build": 18943,
+   "why_ai": "中文LLaMA&Alpaca大语言模型+本地CPU/GPU训练部署 (Chinese LLaMA & Alpaca LLMs)"
+  },
+  {
+   "repo_id": 613591358,
+   "full_name": "tloen/alpaca-lora",
+   "stars_at_build": 18912,
+   "why_ai": "Instruct-tune LLaMA on consumer hardware"
+  },
+  {
+   "repo_id": 573203730,
+   "full_name": "openai/tiktoken",
+   "stars_at_build": 18905,
+   "why_ai": "tiktoken is a fast BPE tokeniser for use with OpenAI's models."
+  },
+  {
+   "repo_id": 725839295,
+   "full_name": "state-spaces/mamba",
+   "stars_at_build": 18702,
+   "why_ai": "Mamba SSM architecture"
+  },
+  {
+   "repo_id": 64991887,
+   "full_name": "lightgbm-org/LightGBM",
+   "stars_at_build": 18656,
+   "why_ai": "A fast, distributed, high performance gradient boosting (GBT, GBDT, GBRT, GBM or MART) framework based on decision tree algorithms, used for ranking, classifica"
+  },
+  {
+   "repo_id": 627561173,
+   "full_name": "mlc-ai/web-llm",
+   "stars_at_build": 18496,
+   "why_ai": "High-performance In-browser LLM Inference Engine"
+  },
+  {
+   "repo_id": 566576114,
+   "full_name": "apple/ml-stable-diffusion",
+   "stars_at_build": 17953,
+   "why_ai": "Stable Diffusion with Core ML on Apple Silicon"
+  },
+  {
+   "repo_id": 681566005,
+   "full_name": "google/magika",
+   "stars_at_build": 17862,
+   "why_ai": "Fast and accurate AI powered file content types detection"
+  },
+  {
+   "repo_id": 200722670,
+   "full_name": "NVIDIA-NeMo/Speech",
+   "stars_at_build": 17853,
+   "why_ai": "A scalable generative AI framework built for researchers and developers working on Large Language Models, Multimodal, and Speech AI (Automatic Speech Recognitio"
+  },
+  {
+   "repo_id": 600798098,
+   "full_name": "Mikubill/sd-webui-controlnet",
+   "stars_at_build": 17852,
+   "why_ai": "WebUI extension for ControlNet"
+  },
+  {
+   "repo_id": 874559208,
+   "full_name": "deepseek-ai/Janus",
+   "stars_at_build": 17757,
+   "why_ai": "Janus-Series: Unified Multimodal Understanding and Generation Models"
+  },
+  {
+   "repo_id": 624249899,
+   "full_name": "IDEA-Research/Grounded-Segment-Anything",
+   "stars_at_build": 17689,
+   "why_ai": "Grounded SAM: Marrying Grounding DINO with Segment Anything & Stable Diffusion & Recognize Anything - Automatically Detect , Segment and Generate Anything"
+  },
+  {
+   "repo_id": 771670025,
+   "full_name": "google-gemini/cookbook",
+   "stars_at_build": 17599,
+   "why_ai": "Examples and guides for using the Gemini API"
+  },
+  {
+   "repo_id": 615510678,
+   "full_name": "camel-ai/camel",
+   "stars_at_build": 17530,
+   "why_ai": "🐫 CAMEL: The first and the best multi-agent framework. Finding the Scaling Law of Agents. https://www.camel-ai.org"
+  },
+  {
+   "repo_id": 444886996,
+   "full_name": "NVlabs/instant-ngp",
+   "stars_at_build": 17512,
+   "why_ai": "Instant neural graphics primitives: lightning fast NeRF and more"
+  },
+  {
+   "repo_id": 176982014,
+   "full_name": "NVIDIA/Megatron-LM",
+   "stars_at_build": 17305,
+   "why_ai": "Ongoing research training transformer models at scale"
+  },
+  {
+   "repo_id": 255231293,
+   "full_name": "karpathy/micrograd",
+   "stars_at_build": 16962,
+   "why_ai": "A tiny scalar-valued autograd engine and a neural net library on top of it with PyTorch-like API"
+  },
+  {
+   "repo_id": 694939378,
+   "full_name": "QwenLM/Qwen-Agent",
+   "stars_at_build": 16895,
+   "why_ai": "Agent framework and applications built upon Qwen>=3.0, featuring Function Calling, MCP, Code Interpreter, RAG, Chrome extension, etc."
+  },
+  {
+   "repo_id": 787368344,
+   "full_name": "QwenLM/Qwen3-Coder",
+   "stars_at_build": 16761,
+   "why_ai": "Qwen3-Coder is the code version of Qwen3, the large language model series developed by Qwen team."
+  },
+  {
+   "repo_id": 92238803,
+   "full_name": "openai/baselines",
+   "stars_at_build": 16746,
+   "why_ai": "OpenAI Baselines: high-quality implementations of reinforcement learning algorithms"
+  },
+  {
+   "repo_id": 938717878,
+   "full_name": "Wan-Video/Wan2.1",
+   "stars_at_build": 16718,
+   "why_ai": "Wan: Open and Advanced Large-Scale Video Generative Models"
+  },
+  {
+   "repo_id": 351432397,
+   "full_name": "microsoft/Swin-Transformer",
+   "stars_at_build": 16024,
+   "why_ai": "This is an official implementation for \"Swin Transformer: Hierarchical Vision Transformer using Shifted Windows\"."
+  },
+  {
+   "repo_id": 615403340,
+   "full_name": "dottxt-ai/outlines",
+   "stars_at_build": 15486,
+   "why_ai": "Structured Outputs"
+  },
+  {
+   "repo_id": 538180525,
+   "full_name": "ggml-org/ggml",
+   "stars_at_build": 15106,
+   "why_ai": "Tensor library for machine learning"
+  },
+  {
+   "repo_id": 869549554,
+   "full_name": "SWivid/F5-TTS",
+   "stars_at_build": 15055,
+   "why_ai": "Official code for \"F5-TTS: A Fairytaler that Fakes Fluent and Faithful Speech with Flow Matching\""
+  },
+  {
+   "repo_id": 673412924,
+   "full_name": "modelscope/ms-swift",
+   "stars_at_build": 15024,
+   "why_ai": "Use PEFT or Full-parameter to CPT/SFT/DPO/GRPO 600+ LLMs (Qwen3.6, DeepSeek-V4, GLM-5.1, InternLM3, Llama4, ...) and 300+ MLLMs (Qwen3-VL, Qwen3-Omni, InternVL3"
+  },
+  {
+   "repo_id": 452939314,
+   "full_name": "neonbjb/tortoise-tts",
+   "stars_at_build": 14866,
+   "why_ai": "A multi-voice TTS system trained with an emphasis on quality"
+  },
+  {
+   "repo_id": 131881622,
+   "full_name": "NVIDIA/DeepLearningExamples",
+   "stars_at_build": 14843,
+   "why_ai": "State-of-the-Art Deep Learning scripts organized by models - easy to train and deploy with reproducible accuracy and performance on enterprise-grade infrastruct"
+  },
+  {
+   "repo_id": 377851948,
+   "full_name": "google-deepmind/alphafold",
+   "stars_at_build": 14770,
+   "why_ai": "Open source code for AlphaFold 2."
+  },
+  {
+   "repo_id": 1605598,
+   "full_name": "bulletphysics/bullet3",
+   "stars_at_build": 14650,
+   "why_ai": "Bullet Physics SDK: real-time collision detection and multi-physics simulation for VR, games, visual effects, robotics, machine learning etc."
+  },
+  {
+   "repo_id": 393874035,
+   "full_name": "BlinkDL/RWKV-LM",
+   "stars_at_build": 14645,
+   "why_ai": "RWKV (pronounced RwaKuv) is an RNN with great LLM performance, which can also be directly trained like a GPT transformer (parallelizable). We are at RWKV-7 \"Goo"
+  },
+  {
+   "repo_id": 400501136,
+   "full_name": "google-deepmind/mujoco",
+   "stars_at_build": 14419,
+   "why_ai": "Multi-Joint dynamics with Contact. A general purpose physics simulator."
+  },
+  {
+   "repo_id": 919835586,
+   "full_name": "Tencent-Hunyuan/Hunyuan3D-2",
+   "stars_at_build": 14414,
+   "why_ai": "High-Resolution 3D Assets Generation with Large Scale Hunyuan3D Diffusion Models."
+  },
+  {
+   "repo_id": 679366051,
+   "full_name": "NVIDIA/TensorRT-LLM",
+   "stars_at_build": 14284,
+   "why_ai": "TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inferen"
+  },
+  {
+   "repo_id": 130375797,
+   "full_name": "dmlc/dgl",
+   "stars_at_build": 14282,
+   "why_ai": "Python package built to ease deep learning on graph, on top of existing DL frameworks."
+  },
+  {
+   "repo_id": 934997412,
+   "full_name": "facebookresearch/vggt",
+   "stars_at_build": 14136,
+   "why_ai": "[CVPR 2025 Best Paper Award] VGGT: Visual Geometry Grounded Transformer"
+  },
+  {
+   "repo_id": 511187726,
+   "full_name": "WongKinYiu/yolov7",
+   "stars_at_build": 14135,
+   "why_ai": "Implementation of paper - YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors"
+  },
+  {
+   "repo_id": 440244590,
+   "full_name": "CompVis/latent-diffusion",
+   "stars_at_build": 14121,
+   "why_ai": "High-Resolution Image Synthesis with Latent Diffusion Models"
+  },
+  {
+   "repo_id": 781261349,
+   "full_name": "microsoft/RD-Agent",
+   "stars_at_build": 14115,
+   "why_ai": "Research and development (R&D) is crucial for the enhancement of industrial productivity, especially in the AI era, where the core aspects of R&D are mainly foc"
+  },
+  {
+   "repo_id": 390536799,
+   "full_name": "mlfoundations/open_clip",
+   "stars_at_build": 14036,
+   "why_ai": "An open source implementation of CLIP."
+  },
+  {
+   "repo_id": 531380835,
+   "full_name": "k2-fsa/sherpa-onnx",
+   "stars_at_build": 13934,
+   "why_ai": "Speech-to-text, text-to-speech, speaker diarization, speech enhancement, source separation, and VAD using next-gen Kaldi with onnxruntime without Internet conne"
+  },
+  {
+   "repo_id": 378010497,
+   "full_name": "microsoft/LoRA",
+   "stars_at_build": 13704,
+   "why_ai": "Code for loralib, an implementation of \"LoRA: Low-Rank Adaptation of Large Language Models\""
+  },
+  {
+   "repo_id": 710159073,
+   "full_name": "zai-org/ChatGLM3",
+   "stars_at_build": 13664,
+   "why_ai": "ChatGLM3 series: Open Bilingual Chat LLMs | 开源双语对话语言模型"
+  },
+  {
+   "repo_id": 261372860,
+   "full_name": "DLR-RM/stable-baselines3",
+   "stars_at_build": 13647,
+   "why_ai": "PyTorch version of Stable Baselines, reliable implementations of reinforcement learning algorithms."
+  },
+  {
+   "repo_id": 636372163,
+   "full_name": "Lightning-AI/litgpt",
+   "stars_at_build": 13600,
+   "why_ai": "20+ high-performance LLMs with recipes to pretrain, finetune and deploy at scale."
+  },
+  {
+   "repo_id": 290909192,
+   "full_name": "EleutherAI/lm-evaluation-harness",
+   "stars_at_build": 13511,
+   "why_ai": "A framework for few-shot evaluation of language models."
+  },
+  {
+   "repo_id": 897148306,
+   "full_name": "microsoft/TRELLIS",
+   "stars_at_build": 13375,
+   "why_ai": "Official repo for paper \"Structured 3D Latents for Scalable and Versatile 3D Generation\" (CVPR'25 Spotlight)."
+  },
+  {
+   "repo_id": 620911108,
+   "full_name": "facebookresearch/dinov2",
+   "stars_at_build": 13185,
+   "why_ai": "PyTorch code and models for the DINOv2 self-supervised learning method."
+  },
+  {
+   "repo_id": 876210014,
+   "full_name": "Physical-Intelligence/openpi",
+   "stars_at_build": 13116,
+   "why_ai": "Known AI system codebase: Physical-Intelligence/openpi"
+  },
+  {
+   "repo_id": 497512032,
+   "full_name": "zai-org/CogVideo",
+   "stars_at_build": 12928,
+   "why_ai": "text and image to video generation: CogVideoX (2024) and CogVideo (ICLR 2023)"
+  },
+  {
+   "repo_id": 743116659,
+   "full_name": "lllyasviel/stable-diffusion-webui-forge",
+   "stars_at_build": 12914,
+   "why_ai": "Known AI system codebase: lllyasviel/stable-diffusion-webui-forge"
+  },
+  {
+   "repo_id": 728770766,
+   "full_name": "modelscope/DiffSynth-Studio",
+   "stars_at_build": 12794,
+   "why_ai": "Enjoy the magic of Diffusion models!"
+  },
+  {
+   "repo_id": 110688239,
+   "full_name": "PaddlePaddle/PaddleSpeech",
+   "stars_at_build": 12656,
+   "why_ai": "Easy-to-use Speech Toolkit including Self-Supervised Learning model, SOTA/Streaming ASR with punctuation, Streaming TTS with text frontend, Speaker Verification"
+  },
+  {
+   "repo_id": 306018946,
+   "full_name": "google-research/vision_transformer",
+   "stars_at_build": 12653,
+   "why_ai": "Known AI system codebase: google-research/vision_transformer"
+  },
+  {
+   "repo_id": 559584476,
+   "full_name": "bmaltais/kohya_ss",
+   "stars_at_build": 12512,
+   "why_ai": "Known AI system codebase: bmaltais/kohya_ss"
+  },
+  {
+   "repo_id": 895453957,
+   "full_name": "Tencent-Hunyuan/HunyuanVideo",
+   "stars_at_build": 12400,
+   "why_ai": "HunyuanVideo: A Systematic Framework For Large Video Generation Model"
+  },
+  {
+   "repo_id": 627727693,
+   "full_name": "axolotl-ai-cloud/axolotl",
+   "stars_at_build": 12298,
+   "why_ai": "Go ahead and axolotl questions"
+  },
+  {
+   "repo_id": 534011733,
+   "full_name": "Farama-Foundation/Gymnasium",
+   "stars_at_build": 12266,
+   "why_ai": "A standard API for single-agent reinforcement learning environments, with popular reference environments and related utilities (formerly Gym)"
+  },
+  {
+   "repo_id": 654930782,
+   "full_name": "guoyww/AnimateDiff",
+   "stars_at_build": 12207,
+   "why_ai": "Official implementation of AnimateDiff."
+  },
+  {
+   "repo_id": 760482259,
+   "full_name": "PKU-YuanGroup/Open-Sora-Plan",
+   "stars_at_build": 12158,
+   "why_ai": "This project aim to reproduce Sora (Open AI T2V model), we wish the open source community contribute to this project."
+  },
+  {
+   "repo_id": 36027077,
+   "full_name": "karpathy/char-rnn",
+   "stars_at_build": 12085,
+   "why_ai": "Multi-layer Recurrent Neural Networks (LSTM, GRU, RNN) for character-level language models in Torch"
+  },
+  {
+   "repo_id": 673596675,
+   "full_name": "FlagOpen/FlagEmbedding",
+   "stars_at_build": 12008,
+   "why_ai": "Retrieval and Retrieval-augmented LLMs"
+  },
+  {
+   "repo_id": 84183882,
+   "full_name": "google/sentencepiece",
+   "stars_at_build": 12004,
+   "why_ai": "Unsupervised text tokenizer for Neural Network-based text generation."
+  },
+  {
+   "repo_id": 156606738,
+   "full_name": "openai/spinningup",
+   "stars_at_build": 11877,
+   "why_ai": "An educational resource to help anyone learn deep reinforcement learning."
+  },
+  {
+   "repo_id": 259710503,
+   "full_name": "speechbrain/speechbrain",
+   "stars_at_build": 11730,
+   "why_ai": "A PyTorch-based Speech Toolkit"
+  },
+  {
+   "repo_id": 478823173,
+   "full_name": "lucidrains/DALLE2-pytorch",
+   "stars_at_build": 11308,
+   "why_ai": "Implementation of DALL-E 2, OpenAI's updated text-to-image synthesis neural network,  in Pytorch"
+  },
+  {
+   "repo_id": 528238131,
+   "full_name": "salesforce/LAVIS",
+   "stars_at_build": 11263,
+   "why_ai": "LAVIS - A One-stop Library for Language-Vision Intelligence"
+  },
+  {
+   "repo_id": 121539858,
+   "full_name": "NVIDIA/FastPhotoStyle",
+   "stars_at_build": 11178,
+   "why_ai": "Style transfer, deep learning, feature transform"
+  },
+  {
+   "repo_id": 639346169,
+   "full_name": "artidoro/qlora",
+   "stars_at_build": 10979,
+   "why_ai": "QLoRA: Efficient Finetuning of Quantized LLMs"
+  },
+  {
+   "repo_id": 219035799,
+   "full_name": "huggingface/tokenizers",
+   "stars_at_build": 10943,
+   "why_ai": "💥 Fast State-of-the-Art Tokenizers optimized for Research and Production"
+  },
+  {
+   "repo_id": 603085008,
+   "full_name": "huggingface/chat-ui",
+   "stars_at_build": 10862,
+   "why_ai": "The open source codebase powering HuggingChat"
+  },
+  {
+   "repo_id": 891705470,
+   "full_name": "Lightricks/LTX-Video",
+   "stars_at_build": 10796,
+   "why_ai": "Official repository for LTX-Video"
+  },
+  {
+   "repo_id": 290373506,
+   "full_name": "lucidrains/denoising-diffusion-pytorch",
+   "stars_at_build": 10667,
+   "why_ai": "Implementation of Denoising Diffusion Probabilistic Model in Pytorch"
+  },
+  {
+   "repo_id": 146165888,
+   "full_name": "ultralytics/yolov3",
+   "stars_at_build": 10588,
+   "why_ai": "PyTorch implementation of YOLOv3, YOLOv3-SPP, and YOLOv3-tiny for real-time object detection with training, validation, inference, and multi-format export."
+  },
+  {
+   "repo_id": 839428333,
+   "full_name": "huggingface/speech-to-speech",
+   "stars_at_build": 10541,
+   "why_ai": "Build local voice agents with open-source models"
+  },
+  {
+   "repo_id": 416849738,
+   "full_name": "facebookresearch/xformers",
+   "stars_at_build": 10531,
+   "why_ai": "Hackable and optimized Transformers building blocks, supporting a composable construction."
+  },
+  {
+   "repo_id": 617868717,
+   "full_name": "abetlen/llama-cpp-python",
+   "stars_at_build": 10524,
+   "why_ai": "Python bindings for llama.cpp"
+  },
+  {
+   "repo_id": 611591640,
+   "full_name": "IDEA-Research/GroundingDINO",
+   "stars_at_build": 10465,
+   "why_ai": "[ECCV 2024] Official implementation of the paper \"Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection\""
+  },
+  {
+   "repo_id": 190776339,
+   "full_name": "vwxyzjn/cleanrl",
+   "stars_at_build": 10203,
+   "why_ai": "High-quality single file implementation of Deep Reinforcement Learning algorithms with research-friendly features (PPO, DQN, C51, DDPG, TD3, SAC, PPG)"
+  },
+  {
+   "repo_id": 719017363,
+   "full_name": "open-mmlab/Amphion",
+   "stars_at_build": 10121,
+   "why_ai": "Amphion (/æmˈfaɪən/) is a toolkit for Audio, Music, and Speech Generation. Its purpose is to support reproducible research and help junior researchers and engin"
+  },
+  {
+   "repo_id": 721995615,
+   "full_name": "OpenGVLab/InternVL",
+   "stars_at_build": 10116,
+   "why_ai": "[CVPR 2024 Oral] InternVL Family: A Pioneering Open-Source Alternative to GPT-4o.  接近GPT-4o表现的开源多模态对话模型"
+  },
+  {
+   "repo_id": 749703336,
+   "full_name": "OpenBMB/MiniCPM",
+   "stars_at_build": 10093,
+   "why_ai": "MiniCPM5-1B: A SOTA 1B on-device LLM, small yet powerful."
+  },
+  {
+   "repo_id": 650657566,
+   "full_name": "facebookresearch/nougat",
+   "stars_at_build": 10055,
+   "why_ai": "Implementation of Nougat Neural Optical Understanding for Academic Documents"
+  },
+  {
+   "repo_id": 87067212,
+   "full_name": "google-deepmind/sonnet",
+   "stars_at_build": 9945,
+   "why_ai": "TensorFlow-based neural network library"
+  },
+  {
+   "repo_id": 217433767,
+   "full_name": "facebookresearch/pytorch3d",
+   "stars_at_build": 9943,
+   "why_ai": "PyTorch3D is FAIR's library of reusable components for deep learning with 3D data"
+  },
+  {
+   "repo_id": 114054873,
+   "full_name": "espnet/espnet",
+   "stars_at_build": 9906,
+   "why_ai": "End-to-End Speech Processing Toolkit"
+  },
+  {
+   "repo_id": 672415139,
+   "full_name": "OpenRLHF/OpenRLHF",
+   "stars_at_build": 9871,
+   "why_ai": "An Easy-to-use, Scalable and High-performance Agentic RL Framework based on Ray (PPO & DAPO & REINFORCE++ &  VLM & TIS & vLLM & Ray & Async  RL)"
+  },
+  {
+   "repo_id": 315270108,
+   "full_name": "snakers4/silero-vad",
+   "stars_at_build": 9846,
+   "why_ai": "Silero VAD: pre-trained enterprise-grade Voice Activity Detector"
+  },
+  {
+   "repo_id": 308638334,
+   "full_name": "huggingface/accelerate",
+   "stars_at_build": 9805,
+   "why_ai": "🚀 A simple way to launch, train, and use PyTorch models on almost any device and distributed configuration, automatic mixed precision (including fp8), and easy-"
+  },
+  {
+   "repo_id": 759338070,
+   "full_name": "WongKinYiu/yolov9",
+   "stars_at_build": 9542,
+   "why_ai": "Implementation of paper - YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information"
+  },
+  {
+   "repo_id": 588477692,
+   "full_name": "BlinkDL/ChatRWKV",
+   "stars_at_build": 9500,
+   "why_ai": "ChatRWKV is like ChatGPT but powered by RWKV (100% RNN) language model, and open source."
+  },
+  {
+   "repo_id": 631580207,
+   "full_name": "nlpxucan/WizardLM",
+   "stars_at_build": 9484,
+   "why_ai": "LLMs build upon Evol Insturct: WizardLM, WizardCoder, WizardMath"
+  },
+  {
+   "repo_id": 653496050,
+   "full_name": "xorbitsai/inference",
+   "stars_at_build": 9473,
+   "why_ai": "Swap GPT for any LLM by changing a single line of code. Xinference lets you run open-source, speech, and multimodal models on cloud, on-prem, or your laptop — a"
+  },
+  {
+   "repo_id": 618029110,
+   "full_name": "facebookresearch/ImageBind",
+   "stars_at_build": 9065,
+   "why_ai": "ImageBind One Embedding Space to Bind Them All"
+  },
+  {
+   "repo_id": 517552648,
+   "full_name": "modelscope/modelscope",
+   "stars_at_build": 9063,
+   "why_ai": "ModelScope: bring the notion of Model-as-a-Service to life."
+  },
+  {
+   "repo_id": 97556265,
+   "full_name": "catboost/catboost",
+   "stars_at_build": 9051,
+   "why_ai": "A fast, scalable, high performance Gradient Boosting on Decision Trees library, used for ranking, classification, regression and other machine learning tasks fo"
+  },
+  {
+   "repo_id": 982697710,
+   "full_name": "bytedance/Dolphin",
+   "stars_at_build": 9043,
+   "why_ai": "The official repo for “Dolphin: Document Image Parsing via Heterogeneous Anchor Prompting”, ACL, 2025."
+  },
+  {
+   "repo_id": 748674684,
+   "full_name": "X-PLUG/MobileAgent",
+   "stars_at_build": 9022,
+   "why_ai": "Mobile-Agent: The Powerful GUI Agent Family"
+  },
+  {
+   "repo_id": 130725814,
+   "full_name": "NVIDIA/apex",
+   "stars_at_build": 8986,
+   "why_ai": "A PyTorch Extension:  Tools for easy mixed precision and distributed training in Pytorch"
+  },
+  {
+   "repo_id": 608892940,
+   "full_name": "togethercomputer/OpenChatKit",
+   "stars_at_build": 8986,
+   "why_ai": "Known AI system codebase: togethercomputer/OpenChatKit"
+  },
+  {
+   "repo_id": 823429665,
+   "full_name": "QwenAudio/SenseVoice",
+   "stars_at_build": 8983,
+   "why_ai": "Open-source SenseVoiceSmall model for Mandarin, Cantonese, English, Japanese, and Korean ASR, language ID, emotion recognition, and audio event detection."
+  },
+  {
+   "repo_id": 546476703,
+   "full_name": "ashawkey/stable-dreamfusion",
+   "stars_at_build": 8850,
+   "why_ai": "Text-to-3D & Image-to-3D & Mesh Exportation with NeRF + Diffusion."
+  },
+  {
+   "repo_id": 929868765,
+   "full_name": "LearningCircuit/local-deep-research",
+   "stars_at_build": 8836,
+   "why_ai": "~95% on SimpleQA (e.g. Qwen3.6-27B on a 3090). Supports all local and cloud LLMs (llama.cpp, Ollama, Google, ...). 10+ search engines - arXiv, PubMed, your priv"
+  },
+  {
+   "repo_id": 537827151,
+   "full_name": "zai-org/CodeGeeX",
+   "stars_at_build": 8809,
+   "why_ai": "CodeGeeX: An Open Multilingual Code Generation Model (KDD 2023)"
+  },
+  {
+   "repo_id": 672224983,
+   "full_name": "fishaudio/Bert-VITS2",
+   "stars_at_build": 8787,
+   "why_ai": "vits2 backbone with multilingual-bert"
+  },
+  {
+   "repo_id": 178976529,
+   "full_name": "bentoml/BentoML",
+   "stars_at_build": 8749,
+   "why_ai": "The easiest way to serve AI apps and models - Build Model Inference APIs, Job queues, LLM apps, Multi-model pipelines, and more!"
+  },
+  {
+   "repo_id": 871368615,
+   "full_name": "NVlabs/Sana",
+   "stars_at_build": 8650,
+   "why_ai": "SANA: Efficient High-Resolution Image Synthesis with Linear Diffusion Transformer"
+  },
+  {
+   "repo_id": 495587598,
+   "full_name": "lucidrains/imagen-pytorch",
+   "stars_at_build": 8416,
+   "why_ai": "Implementation of Imagen, Google's Text-to-Image Neural Network, in Pytorch"
+  },
+  {
+   "repo_id": 886637886,
+   "full_name": "google-deepmind/alphafold3",
+   "stars_at_build": 8399,
+   "why_ai": "AlphaFold 3 inference pipeline."
+  },
+  {
+   "repo_id": 373674258,
+   "full_name": "bitsandbytes-foundation/bitsandbytes",
+   "stars_at_build": 8379,
+   "why_ai": "Accessible large language models via k-bit quantization for PyTorch."
+  },
+  {
+   "repo_id": 915054134,
+   "full_name": "hexgrad/kokoro",
+   "stars_at_build": 8241,
+   "why_ai": "https://hf.co/hexgrad/Kokoro-82M"
+  },
+  {
+   "repo_id": 654122609,
+   "full_name": "InternLM/lmdeploy",
+   "stars_at_build": 7986,
+   "why_ai": "LMDeploy is a toolkit for compressing, deploying, and serving LLMs."
+  },
+  {
+   "repo_id": 576380523,
+   "full_name": "lucidrains/PaLM-rlhf-pytorch",
+   "stars_at_build": 7865,
+   "why_ai": "Implementation of RLHF (Reinforcement Learning with Human Feedback) on top of the PaLM architecture. Basically ChatGPT but with PaLM"
+  },
+  {
+   "repo_id": 567038244,
+   "full_name": "isaac-sim/IsaacLab",
+   "stars_at_build": 7823,
+   "why_ai": "Unified framework for robot learning built on NVIDIA Isaac Sim"
+  },
+  {
+   "repo_id": 713967573,
+   "full_name": "01-ai/Yi",
+   "stars_at_build": 7822,
+   "why_ai": "A series of large language models trained from scratch by developers @01-ai"
+  },
+  {
+   "repo_id": 173544440,
+   "full_name": "PaddlePaddle/ERNIE",
+   "stars_at_build": 7734,
+   "why_ai": "The official repository for ERNIE 4.5 and ERNIEKit – its industrial-grade development toolkit based on PaddlePaddle."
+  },
+  {
+   "repo_id": 760022246,
+   "full_name": "myshell-ai/MeloTTS",
+   "stars_at_build": 7557,
+   "why_ai": "High-quality multi-lingual text-to-speech library by MyShell.ai. Support English, Spanish, French, Chinese, Japanese and Korean."
+  },
+  {
+   "repo_id": 575628616,
+   "full_name": "cloneofsimo/lora",
+   "stars_at_build": 7544,
+   "why_ai": "Using Low-rank adaptation to quickly fine-tune diffusion models."
+  },
+  {
+   "repo_id": 669882047,
+   "full_name": "zai-org/CodeGeeX2",
+   "stars_at_build": 7541,
+   "why_ai": "CodeGeeX2: A More Powerful Multilingual Code Generation Model"
+  },
+  {
+   "repo_id": 323651234,
+   "full_name": "EleutherAI/gpt-neox",
+   "stars_at_build": 7447,
+   "why_ai": "An implementation of model parallel autoregressive transformers on GPUs, based on the Megatron and DeepSpeed libraries"
+  },
+  {
+   "repo_id": 362242108,
+   "full_name": "openai/guided-diffusion",
+   "stars_at_build": 7412,
+   "why_ai": "Known AI system codebase: openai/guided-diffusion"
+  },
+  {
+   "repo_id": 203465734,
+   "full_name": "facebookresearch/SlowFast",
+   "stars_at_build": 7396,
+   "why_ai": "PySlowFast: video understanding codebase from FAIR for reproducing state-of-the-art video models."
+  },
+  {
+   "repo_id": 75190475,
+   "full_name": "google-deepmind/lab",
+   "stars_at_build": 7368,
+   "why_ai": "A customisable 3D platform for agent-based AI research"
+  },
+  {
+   "repo_id": 233016299,
+   "full_name": "google/flax",
+   "stars_at_build": 7286,
+   "why_ai": "Flax is a neural network library for JAX that is designed for flexibility."
+  },
+  {
+   "repo_id": 654124617,
+   "full_name": "open-compass/opencompass",
+   "stars_at_build": 7263,
+   "why_ai": "OpenCompass is an LLM evaluation platform, supporting a wide range of models (Llama3, Mistral, InternLM2,GPT-4,LLaMa2, Qwen,GLM, Claude, etc) over 100+ datasets"
+  },
+  {
+   "repo_id": 662878020,
+   "full_name": "InternLM/InternLM",
+   "stars_at_build": 7256,
+   "why_ai": "Official release of InternLM series (InternLM, InternLM2, InternLM2.5, InternLM3)."
+  },
+  {
+   "repo_id": 698344263,
+   "full_name": "mit-han-lab/streaming-llm",
+   "stars_at_build": 7253,
+   "why_ai": "[ICLR 2024] Efficient Streaming Language Models with Attention Sinks"
+  },
+  {
+   "repo_id": 579557127,
+   "full_name": "kohya-ss/sd-scripts",
+   "stars_at_build": 7192,
+   "why_ai": "Known AI system codebase: kohya-ss/sd-scripts"
+  },
+  {
+   "repo_id": 725062669,
+   "full_name": "deepseek-ai/DeepSeek-LLM",
+   "stars_at_build": 7187,
+   "why_ai": "DeepSeek LLM: Let there be answers"
+  },
+  {
+   "repo_id": 668052031,
+   "full_name": "ymcui/Chinese-LLaMA-Alpaca-2",
+   "stars_at_build": 7132,
+   "why_ai": "中文LLaMA-2 & Alpaca-2大模型二期项目 + 64K超长上下文模型 (Chinese LLaMA-2 & Alpaca-2 LLMs with 64K long context models)"
+  },
+  {
+   "repo_id": 800839481,
+   "full_name": "zai-org/GLM-4",
+   "stars_at_build": 7076,
+   "why_ai": "GLM-4 series: Open Multilingual Multimodal Chat LMs | 开源多语言多模态对话模型"
+  },
+  {
+   "repo_id": 624336501,
+   "full_name": "threestudio-project/threestudio",
+   "stars_at_build": 7039,
+   "why_ai": "A unified framework for 3D content generation."
+  },
+  {
+   "repo_id": 82841862,
+   "full_name": "OpenNMT/OpenNMT-py",
+   "stars_at_build": 7012,
+   "why_ai": "Open Source Neural Machine Translation and (Large) Language Models in PyTorch"
+  },
+  {
+   "repo_id": 471527576,
+   "full_name": "NVIDIA/warp",
+   "stars_at_build": 6937,
+   "why_ai": "A Python framework for GPU-accelerated simulation, robotics, and machine learning."
+  },
+  {
+   "repo_id": 43098215,
+   "full_name": "deepchem/deepchem",
+   "stars_at_build": 6908,
+   "why_ai": "Democratizing Deep-Learning for Drug Discovery, Quantum Chemistry, Materials Science and Biology"
+  },
+  {
+   "repo_id": 575048321,
+   "full_name": "openai/point-e",
+   "stars_at_build": 6891,
+   "why_ai": "Point cloud diffusion for 3D model synthesis"
+  },
+  {
+   "repo_id": 629494390,
+   "full_name": "NVIDIA-NeMo/Guardrails",
+   "stars_at_build": 6862,
+   "why_ai": "NeMo Guardrails is an open-source toolkit for easily adding programmable guardrails to LLM-based conversational systems."
+  },
+  {
+   "repo_id": 692935244,
+   "full_name": "zai-org/CogVLM",
+   "stars_at_build": 6743,
+   "why_ai": "a state-of-the-art-level open visual language model | 多模态预训练模型"
+  },
+  {
+   "repo_id": 681075491,
+   "full_name": "QwenLM/Qwen-VL",
+   "stars_at_build": 6720,
+   "why_ai": "The official repo of Qwen-VL (通义千问-VL) chat & pretrained large vision language model proposed by Alibaba Cloud."
+  },
+  {
+   "repo_id": 679073548,
+   "full_name": "tencent-ailab/IP-Adapter",
+   "stars_at_build": 6650,
+   "why_ai": "The image prompt adapter is designed to enable a pretrained text-to-image diffusion model to generate images with image prompt."
+  },
+  {
+   "repo_id": 604360463,
+   "full_name": "allenai/OLMo",
+   "stars_at_build": 6615,
+   "why_ai": "Modeling, training, eval, and inference code for OLMo"
+  },
+  {
+   "repo_id": 748393188,
+   "full_name": "Stability-AI/StableCascade",
+   "stars_at_build": 6542,
+   "why_ai": "Official Code for Stable Cascade"
+  },
+  {
+   "repo_id": 322324704,
+   "full_name": "CompVis/taming-transformers",
+   "stars_at_build": 6521,
+   "why_ai": "Taming Transformers for High-Resolution Image Synthesis"
+  },
+  {
+   "repo_id": 653386433,
+   "full_name": "yl4579/StyleTTS2",
+   "stars_at_build": 6327,
+   "why_ai": "StyleTTS 2: Towards Human-Level Text-to-Speech through Style Diffusion and Adversarial Training with Large Speech Language Models"
+  },
+  {
+   "repo_id": 819733173,
+   "full_name": "kvcache-ai/Mooncake",
+   "stars_at_build": 6132,
+   "why_ai": "Mooncake is the serving platform for Kimi, a leading LLM service provided by Moonshot AI."
+  },
+  {
+   "repo_id": 669331976,
+   "full_name": "flashinfer-ai/flashinfer",
+   "stars_at_build": 6088,
+   "why_ai": "FlashInfer: Kernel Library for LLM Serving"
+  },
+  {
+   "repo_id": 617504730,
+   "full_name": "Lightning-AI/lit-llama",
+   "stars_at_build": 6084,
+   "why_ai": "Implementation of the LLaMA language model based on nanoGPT. Supports flash attention, Int8 and GPTQ 4bit quantization, LoRA and LLaMA-Adapter fine-tuning, pre-"
+  },
+  {
+   "repo_id": 294685606,
+   "full_name": "snakers4/silero-models",
+   "stars_at_build": 6039,
+   "why_ai": "Silero Models: pre-trained text-to-speech models made embarrassingly simple"
+  },
+  {
+   "repo_id": 667645956,
+   "full_name": "aiwaves-cn/agents",
+   "stars_at_build": 5955,
+   "why_ai": "An Open-source Framework for Data-centric, Self-evolving Autonomous Language Agents"
+  },
+  {
+   "repo_id": 901797250,
+   "full_name": "bytedance/LatentSync",
+   "stars_at_build": 5952,
+   "why_ai": "Taming Stable Diffusion for Lip Sync!"
+  },
+  {
+   "repo_id": 306980630,
+   "full_name": "lucidrains/x-transformers",
+   "stars_at_build": 5933,
+   "why_ai": "A concise but complete full-attention transformer with a set of promising experimental features from various papers"
+  },
+  {
+   "repo_id": 135768037,
+   "full_name": "NVIDIA/DALI",
+   "stars_at_build": 5732,
+   "why_ai": "A GPU-accelerated library containing highly optimized building blocks and an execution engine for data processing to accelerate deep learning training and infer"
+  },
+  {
+   "repo_id": 653595084,
+   "full_name": "baichuan-inc/Baichuan-7B",
+   "stars_at_build": 5652,
+   "why_ai": "A large-scale 7B pretraining language model developed by BaiChuan-Inc."
+  },
+  {
+   "repo_id": 760683276,
+   "full_name": "google-deepmind/gemma",
+   "stars_at_build": 5620,
+   "why_ai": "Gemma open-weight LLM library, from Google DeepMind"
+  },
+  {
+   "repo_id": 700117650,
+   "full_name": "SWE-bench/SWE-bench",
+   "stars_at_build": 5552,
+   "why_ai": "SWE-bench: Can Language Models Resolve Real-world Github Issues?"
+  },
+  {
+   "repo_id": 416157128,
+   "full_name": "mosaicml/composer",
+   "stars_at_build": 5493,
+   "why_ai": "Supercharge Your Model Training"
+  },
+  {
+   "repo_id": 146863062,
+   "full_name": "google-deepmind/graph_nets",
+   "stars_at_build": 5406,
+   "why_ai": "Build Graph Nets in Tensorflow"
+  },
+  {
+   "repo_id": 198232685,
+   "full_name": "google-deepmind/open_spiel",
+   "stars_at_build": 5380,
+   "why_ai": "OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning and search/planning in games."
+  },
+  {
+   "repo_id": 95862535,
+   "full_name": "apple/coremltools",
+   "stars_at_build": 5375,
+   "why_ai": "Core ML tools contain supporting tools for Core ML model conversion, editing, and validation."
+  },
+  {
+   "repo_id": 902697574,
+   "full_name": "deepseek-ai/DeepSeek-VL2",
+   "stars_at_build": 5350,
+   "why_ai": "DeepSeek-VL2: Mixture-of-Experts Vision-Language Models for Advanced Multimodal Understanding"
+  },
+  {
+   "repo_id": 313501668,
+   "full_name": "wenet-e2e/wenet",
+   "stars_at_build": 5216,
+   "why_ai": "Production First and Production Ready End-to-End Speech Recognition Toolkit"
+  },
+  {
+   "repo_id": 475174123,
+   "full_name": "salesforce/CodeGen",
+   "stars_at_build": 5179,
+   "why_ai": "CodeGen is a family of open-source model for program synthesis. Trained on TPU-v4. Competitive with OpenAI Codex."
+  },
+  {
+   "repo_id": 664913876,
+   "full_name": "InternLM/xtuner",
+   "stars_at_build": 5170,
+   "why_ai": "A Next-Generation Training Engine Built for Ultra-Large MoE Models"
+  },
+  {
+   "repo_id": 278810244,
+   "full_name": "open-mmlab/mmaction2",
+   "stars_at_build": 5119,
+   "why_ai": "OpenMMLab's Next Generation Video Understanding Toolbox and Benchmark"
+  },
+  {
+   "repo_id": 790044051,
+   "full_name": "deepseek-ai/DeepSeek-V2",
+   "stars_at_build": 5023,
+   "why_ai": "DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model"
+  },
+  {
+   "repo_id": 628065950,
+   "full_name": "togethercomputer/RedPajama-Data",
+   "stars_at_build": 4976,
+   "why_ai": "The RedPajama-Data repository contains code for preparing large datasets for training large language models."
+  },
+  {
+   "repo_id": 704543233,
+   "full_name": "huggingface/text-embeddings-inference",
+   "stars_at_build": 4968,
+   "why_ai": "A blazing fast inference solution for text embeddings models"
+  },
+  {
+   "repo_id": 643150126,
+   "full_name": "OpenGVLab/DragGAN",
+   "stars_at_build": 4949,
+   "why_ai": "Unofficial Implementation of DragGAN - \"Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold\" （DragGAN 全功能实现，在线Demo，本地部署试用，代码、模型"
+  },
+  {
+   "repo_id": 639772835,
+   "full_name": "Stability-AI/StableSwarmUI",
+   "stars_at_build": 4939,
+   "why_ai": "StableSwarmUI, A Modular Stable Diffusion Web-User-Interface, with an emphasis on making powertools easily accessible, high performance, and extensibility."
+  },
+  {
+   "repo_id": 702719235,
+   "full_name": "google-deepmind/alphageometry",
+   "stars_at_build": 4873,
+   "why_ai": "Known AI system codebase: google-deepmind/alphageometry"
+  },
+  {
+   "repo_id": 676028871,
+   "full_name": "xlang-ai/OpenAgents",
+   "stars_at_build": 4856,
+   "why_ai": "[COLM 2024] OpenAgents: An Open Platform for Language Agents in the Wild"
+  },
+  {
+   "repo_id": 873818808,
+   "full_name": "facebookresearch/lingua",
+   "stars_at_build": 4759,
+   "why_ai": "Meta Lingua: a lean, efficient, and easy-to-hack codebase to research LLMs."
+  },
+  {
+   "repo_id": 545104023,
+   "full_name": "CarperAI/trlx",
+   "stars_at_build": 4752,
+   "why_ai": "A repo for distributed training of language models with Reinforcement Learning via Human Feedback (RLHF)"
+  },
+  {
+   "repo_id": 355559187,
+   "full_name": "open-mmlab/mmocr",
+   "stars_at_build": 4751,
+   "why_ai": "OpenMMLab Text Detection, Recognition and Understanding Toolbox"
+  },
+  {
+   "repo_id": 769149672,
+   "full_name": "LLaVA-VL/LLaVA-NeXT",
+   "stars_at_build": 4711,
+   "why_ai": "Known AI system codebase: LLaVA-VL/LLaVA-NeXT"
+  },
+  {
+   "repo_id": 972578539,
+   "full_name": "MoonshotAI/Kimi-Audio",
+   "stars_at_build": 4706,
+   "why_ai": "Kimi-Audio, an open-source audio foundation model excelling in audio understanding, generation, and conversation"
+  },
+  {
+   "repo_id": 115744122,
+   "full_name": "google-deepmind/dm_control",
+   "stars_at_build": 4657,
+   "why_ai": "Google DeepMind's software stack for physics-based simulation and Reinforcement Learning environments, using MuJoCo."
+  },
+  {
+   "repo_id": 657780946,
+   "full_name": "NVlabs/neuralangelo",
+   "stars_at_build": 4610,
+   "why_ai": "Official implementation of \"Neuralangelo: High-Fidelity Neural Surface Reconstruction\" (CVPR 2023)"
+  },
+  {
+   "repo_id": 210299376,
+   "full_name": "OpenNMT/CTranslate2",
+   "stars_at_build": 4606,
+   "why_ai": "Fast inference engine for Transformer models"
+  },
+  {
+   "repo_id": 684980325,
+   "full_name": "turboderp-org/exllamav2",
+   "stars_at_build": 4598,
+   "why_ai": "A fast inference library for running LLMs locally on modern consumer-class GPUs"
+  },
+  {
+   "repo_id": 785446833,
+   "full_name": "openai/simple-evals",
+   "stars_at_build": 4590,
+   "why_ai": "Known AI system codebase: openai/simple-evals"
+  },
+  {
+   "repo_id": 358678977,
+   "full_name": "NVlabs/tiny-cuda-nn",
+   "stars_at_build": 4520,
+   "why_ai": "Lightning fast C++/CUDA neural network framework"
+  },
+  {
+   "repo_id": 784696015,
+   "full_name": "TencentARC/InstantMesh",
+   "stars_at_build": 4484,
+   "why_ai": "InstantMesh: Efficient 3D Mesh Generation from a Single Image with Sparse-view Large Reconstruction Models"
+  },
+  {
+   "repo_id": 634046345,
+   "full_name": "mosaicml/llm-foundry",
+   "stars_at_build": 4433,
+   "why_ai": "LLM training code for Databricks foundation models"
+  },
+  {
+   "repo_id": 697339753,
+   "full_name": "dreamgaussian/dreamgaussian",
+   "stars_at_build": 4350,
+   "why_ai": "[ICLR 2024 Oral] Generative Gaussian Splatting for Efficient 3D Content Creation"
+  },
+  {
+   "repo_id": 624236959,
+   "full_name": "Instruction-Tuning-with-GPT-4/GPT-4-LLM",
+   "stars_at_build": 4334,
+   "why_ai": "Instruction Tuning with GPT-4"
+  },
+  {
+   "repo_id": 728399986,
+   "full_name": "meta-llama/PurpleLlama",
+   "stars_at_build": 4326,
+   "why_ai": "Set of tools to assess and improve LLM security."
+  },
+  {
+   "repo_id": 725956246,
+   "full_name": "open-compass/VLMEvalKit",
+   "stars_at_build": 4321,
+   "why_ai": "Open-source evaluation toolkit of large multi-modality models (LMMs), support 220+ LMMs, 80+ benchmarks"
+  },
+  {
+   "repo_id": 798671457,
+   "full_name": "Tencent-Hunyuan/HunyuanDiT",
+   "stars_at_build": 4292,
+   "why_ai": "Hunyuan-DiT : A Powerful Multi-Resolution Diffusion Transformer with Fine-Grained Chinese Understanding"
+  },
+  {
+   "repo_id": 669420857,
+   "full_name": "ModelTC/LightLLM",
+   "stars_at_build": 4204,
+   "why_ai": "LightLLM is a Python-based LLM (Large Language Model) inference and serving framework, notable for its lightweight design, easy scalability, and high-speed perf"
+  },
+  {
+   "repo_id": 631522874,
+   "full_name": "zai-org/VisualGLM-6B",
+   "stars_at_build": 4157,
+   "why_ai": "Chinese and English multimodal conversational language model | 多模态中英双语对话语言模型"
+  },
+  {
+   "repo_id": 768519717,
+   "full_name": "deepseek-ai/DeepSeek-VL",
+   "stars_at_build": 4148,
+   "why_ai": "DeepSeek-VL: Towards Real-World Vision-Language Understanding"
+  },
+  {
+   "repo_id": 707237272,
+   "full_name": "NVIDIA/GenerativeAIExamples",
+   "stars_at_build": 4138,
+   "why_ai": "Generative AI reference workflows optimized for accelerated infrastructure and microservice architecture."
+  },
+  {
+   "repo_id": 422148948,
+   "full_name": "IDEA-CCNL/Fengshenbang-LM",
+   "stars_at_build": 4126,
+   "why_ai": "Fengshenbang-LM(封神榜大模型)是IDEA研究院认知计算与自然语言研究中心主导的大模型开源体系，成为中文AIGC和认知智能的基础设施。"
+  },
+  {
+   "repo_id": 685444668,
+   "full_name": "baichuan-inc/Baichuan2",
+   "stars_at_build": 4088,
+   "why_ai": "A series of large language models developed by Baichuan Intelligent Technology"
+  },
+  {
+   "repo_id": 952842018,
+   "full_name": "QwenLM/Qwen2.5-Omni",
+   "stars_at_build": 4055,
+   "why_ai": "Qwen2.5-Omni is an end-to-end multimodal model by Qwen team at Alibaba Cloud, capable of understanding text, audio, vision, video, and performing real-time spee"
+  },
+  {
+   "repo_id": 260420185,
+   "full_name": "google-deepmind/acme",
+   "stars_at_build": 4035,
+   "why_ai": "A library of reinforcement learning components and agents"
+  },
+  {
+   "repo_id": 554807775,
+   "full_name": "facebookresearch/encodec",
+   "stars_at_build": 4007,
+   "why_ai": "State-of-the-art deep learning based audio codec supporting both mono 24 kHz audio and stereo 48 kHz audio."
+  },
+  {
+   "repo_id": 271090649,
+   "full_name": "lucidrains/vector-quantize-pytorch",
+   "stars_at_build": 3993,
+   "why_ai": "Vector (and Scalar) Quantization, in Pytorch"
+  },
+  {
+   "repo_id": 743179447,
+   "full_name": "Codium-ai/AlphaCodium",
+   "stars_at_build": 3962,
+   "why_ai": "Official implementation for the paper: \"Code Generation with AlphaCodium: From Prompt Engineering to Flow Engineering\"\""
+  },
+  {
+   "repo_id": 877649153,
+   "full_name": "hao-ai-lab/FastVideo",
+   "stars_at_build": 3908,
+   "why_ai": "A unified inference and post-training framework for accelerated video generation."
+  },
+  {
+   "repo_id": 492713876,
+   "full_name": "FlagAI-Open/FlagAI",
+   "stars_at_build": 3869,
+   "why_ai": "FlagAI (Fast LArge-scale General AI models) is a fast, easy-to-use and extensible toolkit for large-scale model."
+  },
+  {
+   "repo_id": 762193211,
+   "full_name": "NVlabs/VILA",
+   "stars_at_build": 3846,
+   "why_ai": "VILA is a family of state-of-the-art vision language models (VLMs) for diverse multimodal AI tasks across the edge, data center, and cloud."
+  },
+  {
+   "repo_id": 278415292,
+   "full_name": "open-mmlab/mmpretrain",
+   "stars_at_build": 3846,
+   "why_ai": "OpenMMLab Pre-training Toolbox and Benchmark"
+  },
+  {
+   "repo_id": 337207225,
+   "full_name": "openai/improved-diffusion",
+   "stars_at_build": 3842,
+   "why_ai": "Release for Improved Denoising Diffusion Probabilistic Models"
+  },
+  {
+   "repo_id": 644481540,
+   "full_name": "Stability-AI/stable-audio-tools",
+   "stars_at_build": 3832,
+   "why_ai": "Generative models for conditional audio generation"
+  },
+  {
+   "repo_id": 707818217,
+   "full_name": "predibase/lorax",
+   "stars_at_build": 3820,
+   "why_ai": "Multi-LoRA inference server that scales to 1000s of fine-tuned LLMs"
+  },
+  {
+   "repo_id": 385275507,
+   "full_name": "google-research/scenic",
+   "stars_at_build": 3818,
+   "why_ai": "Scenic: A Jax Library for Computer Vision Research and Beyond"
+  },
+  {
+   "repo_id": 651622038,
+   "full_name": "allenai/open-instruct",
+   "stars_at_build": 3814,
+   "why_ai": "AllenAI's post-training codebase"
+  },
+  {
+   "repo_id": 797465563,
+   "full_name": "microsoft/PhiCookBook",
+   "stars_at_build": 3780,
+   "why_ai": "This is a Phi Family of SLMs book for getting started with Phi Models. Phi a family of open sourced AI models developed by Microsoft. Phi models are the most ca"
+  },
+  {
+   "repo_id": 169164539,
+   "full_name": "facebookresearch/habitat-sim",
+   "stars_at_build": 3769,
+   "why_ai": "A flexible, high-performance 3D simulator for Embodied AI research."
+  },
+  {
+   "repo_id": 855533850,
+   "full_name": "genmoai/mochi",
+   "stars_at_build": 3704,
+   "why_ai": "The best OSS video generation models, created by Genmo"
+  },
+  {
+   "repo_id": 612244355,
+   "full_name": "xinyu1205/recognize-anything",
+   "stars_at_build": 3698,
+   "why_ai": "Open-source and strong foundation image recognition models."
+  },
+  {
+   "repo_id": 358458050,
+   "full_name": "princeton-nlp/SimCSE",
+   "stars_at_build": 3656,
+   "why_ai": "[EMNLP 2021] SimCSE: Simple Contrastive Learning of Sentence Embeddings https://arxiv.org/abs/2104.08821"
+  },
+  {
+   "repo_id": 671759870,
+   "full_name": "THUDM/AgentBench",
+   "stars_at_build": 3635,
+   "why_ai": "A Comprehensive Benchmark to Evaluate LLMs as Agents (ICLR'24)"
+  },
+  {
+   "repo_id": 588898844,
+   "full_name": "danijar/dreamerv3",
+   "stars_at_build": 3621,
+   "why_ai": "Mastering Diverse Domains through World Models"
+  },
+  {
+   "repo_id": 647984858,
+   "full_name": "mit-han-lab/llm-awq",
+   "stars_at_build": 3600,
+   "why_ai": "[MLSys 2024 Best Paper Award] AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration"
+  },
+  {
+   "repo_id": 477682941,
+   "full_name": "google-research/big_vision",
+   "stars_at_build": 3504,
+   "why_ai": "Official codebase used to develop Vision Transformer, SigLIP, MLP-Mixer, LiT and more."
+  },
+  {
+   "repo_id": 708655533,
+   "full_name": "PKU-YuanGroup/Video-LLaVA",
+   "stars_at_build": 3498,
+   "why_ai": "【EMNLP 2024🔥】Video-LLaVA: Learning United Visual Representation by Alignment Before Projection"
+  },
+  {
+   "repo_id": 235012937,
+   "full_name": "Farama-Foundation/PettingZoo",
+   "stars_at_build": 3487,
+   "why_ai": "A standard API for multi-agent reinforcement learning environments, with popular reference environments and related utilities"
+  },
+  {
+   "repo_id": 881283060,
+   "full_name": "Tencent-Hunyuan/Hunyuan3D-1",
+   "stars_at_build": 3476,
+   "why_ai": "Tencent Hunyuan3D-1.0: A Unified Framework for Text-to-3D and Image-to-3D Generation"
+  },
+  {
+   "repo_id": 730898383,
+   "full_name": "NVlabs/FoundationPose",
+   "stars_at_build": 3462,
+   "why_ai": "[CVPR 2024 Highlight] FoundationPose: Unified 6D Pose Estimation and Tracking of Novel Objects"
+  },
+  {
+   "repo_id": 537972211,
+   "full_name": "open-mmlab/mmyolo",
+   "stars_at_build": 3461,
+   "why_ai": "OpenMMLab YOLO series toolbox and benchmark. Implemented RTMDet, RTMDet-Rotated,YOLOv5, YOLOv6, YOLOv7, YOLOv8,YOLOX, PPYOLOE, etc."
+  },
+  {
+   "repo_id": 916695726,
+   "full_name": "MiniMax-AI/MiniMax-01",
+   "stars_at_build": 3448,
+   "why_ai": "The official repo of MiniMax-Text-01 and MiniMax-VL-01, large-language-model & vision-language-model based on Linear Attention"
+  },
+  {
+   "repo_id": 667660033,
+   "full_name": "continue-revolution/sd-webui-animatediff",
+   "stars_at_build": 3427,
+   "why_ai": "AnimateDiff for AUTOMATIC1111 Stable Diffusion WebUI"
+  },
+  {
+   "repo_id": 406555580,
+   "full_name": "aqlaboratory/openfold",
+   "stars_at_build": 3403,
+   "why_ai": "Trainable, memory-efficient, and GPU-friendly PyTorch reproduction of AlphaFold 2"
+  },
+  {
+   "repo_id": 752957295,
+   "full_name": "deepseek-ai/DeepSeek-Math",
+   "stars_at_build": 3396,
+   "why_ai": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models"
+  },
+  {
+   "repo_id": 190153979,
+   "full_name": "clovaai/CRAFT-pytorch",
+   "stars_at_build": 3394,
+   "why_ai": "Official implementation of Character Region Awareness for Text Detection (CRAFT)"
+  },
+  {
+   "repo_id": 629922458,
+   "full_name": "OpenGVLab/Ask-Anything",
+   "stars_at_build": 3345,
+   "why_ai": "[CVPR2024 Highlight][VideoChatGPT] ChatGPT with video understanding! And many more supported LMs such as miniGPT4, StableLM, and MOSS."
+  },
+  {
+   "repo_id": 624184221,
+   "full_name": "mit-han-lab/efficientvit",
+   "stars_at_build": 3338,
+   "why_ai": "Efficient vision foundation models for high-resolution generation and perception."
+  },
+  {
+   "repo_id": 594096901,
+   "full_name": "lucidrains/musiclm-pytorch",
+   "stars_at_build": 3299,
+   "why_ai": "Implementation of MusicLM, Google's new SOTA model for music generation using attention networks, in Pytorch"
+  },
+  {
+   "repo_id": 202577283,
+   "full_name": "resemble-ai/Resemblyzer",
+   "stars_at_build": 3292,
+   "why_ai": "A python package to analyze and compare voices with deep learning"
+  },
+  {
+   "repo_id": 241296160,
+   "full_name": "google-deepmind/dm-haiku",
+   "stars_at_build": 3267,
+   "why_ai": "JAX-based neural network library"
+  },
+  {
+   "repo_id": 520357130,
+   "full_name": "mani-skill/ManiSkill",
+   "stars_at_build": 3197,
+   "why_ai": "Manipulation Skill Framework, an open source GPU parallelized robotics simulator and benchmark"
+  },
+  {
+   "repo_id": 225393289,
+   "full_name": "huawei-noah/Pretrained-Language-Model",
+   "stars_at_build": 3162,
+   "why_ai": "Pretrained language model and its related optimization techniques developed by Huawei Noah's Ark Lab."
+  },
+  {
+   "repo_id": 714940169,
+   "full_name": "ali-vilab/VGen",
+   "stars_at_build": 3155,
+   "why_ai": "Official repo for VGen: a holistic video generation ecosystem for video generation building on diffusion models"
+  },
+  {
+   "repo_id": 637126931,
+   "full_name": "DAMO-NLP-SG/Video-LLaMA",
+   "stars_at_build": 3141,
+   "why_ai": "[EMNLP 2023 Demo] Video-LLaMA: An Instruction-tuned Audio-Visual Language Model for Video Understanding"
+  },
+  {
+   "repo_id": 169164391,
+   "full_name": "facebookresearch/habitat-lab",
+   "stars_at_build": 3083,
+   "why_ai": "A modular high-level library to train embodied AI agents across a variety of tasks and environments."
+  },
+  {
+   "repo_id": 610307205,
+   "full_name": "qwopqwop200/GPTQ-for-LLaMa",
+   "stars_at_build": 3072,
+   "why_ai": "4 bits quantization of LLaMA using GPTQ"
+  },
+  {
+   "repo_id": 705433049,
+   "full_name": "xlang-ai/OSWorld",
+   "stars_at_build": 3054,
+   "why_ai": "[NeurIPS 2024] OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments"
+  },
+  {
+   "repo_id": 368915773,
+   "full_name": "bigscience-workshop/promptsource",
+   "stars_at_build": 3027,
+   "why_ai": "Toolkit for creating, sharing and using natural language prompts."
+  },
+  {
+   "repo_id": 625021917,
+   "full_name": "facebookresearch/Pearl",
+   "stars_at_build": 3018,
+   "why_ai": "A Production-ready Reinforcement Learning AI Agent Library brought by the Applied Reinforcement Learning team at Meta."
+  },
+  {
+   "repo_id": 708693209,
+   "full_name": "deepseek-ai/DreamCraft3D",
+   "stars_at_build": 3013,
+   "why_ai": "[ICLR 2024] Official implementation of DreamCraft3D: Hierarchical 3D Generation with Bootstrapped Diffusion Prior"
+  },
+  {
+   "repo_id": 846145923,
+   "full_name": "NVIDIA/NeMo-Retriever",
+   "stars_at_build": 2958,
+   "why_ai": "NeMo Retriever Library is a scalable, performance-oriented document content and metadata extraction microservice. NeMo Retriever Library uses specialized NVIDIA"
+  },
+  {
+   "repo_id": 390573152,
+   "full_name": "patrick-kidger/equinox",
+   "stars_at_build": 2937,
+   "why_ai": "Elegant easy-to-use neural networks + scientific computing in JAX. https://docs.kidger.site/equinox/"
+  },
+  {
+   "repo_id": 636467087,
+   "full_name": "turboderp/exllama",
+   "stars_at_build": 2936,
+   "why_ai": "A more memory-efficient rewrite of the HF transformers implementation of Llama for use with quantized weights."
+  },
+  {
+   "repo_id": 696572451,
+   "full_name": "InternLM/InternLM-XComposer",
+   "stars_at_build": 2923,
+   "why_ai": "InternLM-XComposer2.5-OmniLive: A Comprehensive Multimodal System for Long-term Streaming Video and Audio Interactions"
+  },
+  {
+   "repo_id": 118840360,
+   "full_name": "rail-berkeley/rlkit",
+   "stars_at_build": 2922,
+   "why_ai": "Collection of reinforcement learning algorithms"
+  },
+  {
+   "repo_id": 1091349815,
+   "full_name": "facebookresearch/omnilingual-asr",
+   "stars_at_build": 2875,
+   "why_ai": "Omnilingual ASR Open-Source Multilingual SpeechRecognition for 1600+ Languages"
+  },
+  {
+   "repo_id": 441778458,
+   "full_name": "EleutherAI/pythia",
+   "stars_at_build": 2869,
+   "why_ai": "The hub for EleutherAI's work on interpretability and learning dynamics"
+  },
+  {
+   "repo_id": 387617756,
+   "full_name": "sokrypton/ColabFold",
+   "stars_at_build": 2863,
+   "why_ai": "Making Protein folding accessible to all!"
+  },
+  {
+   "repo_id": 467139740,
+   "full_name": "IDEA-Research/DINO",
+   "stars_at_build": 2827,
+   "why_ai": "[ICLR 2023] Official implementation of the paper \"DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection\""
+  },
+  {
+   "repo_id": 281770989,
+   "full_name": "google-research/kubric",
+   "stars_at_build": 2786,
+   "why_ai": "A data generation pipeline for creating semi-realistic synthetic multi-object videos with rich annotations such as instance segmentation masks, depth maps, and "
+  },
+  {
+   "repo_id": 508972059,
+   "full_name": "huggingface/setfit",
+   "stars_at_build": 2777,
+   "why_ai": "Efficient few-shot learning with Sentence Transformers"
+  },
+  {
+   "repo_id": 690106318,
+   "full_name": "huggingface/nanotron",
+   "stars_at_build": 2771,
+   "why_ai": "Minimalistic large language model 3D-parallelism training"
+  },
+  {
+   "repo_id": 621705019,
+   "full_name": "OpenBMB/BMTools",
+   "stars_at_build": 2770,
+   "why_ai": "Tool Learning for Big Models, Open-Source Solutions of ChatGPT-Plugins"
+  },
+  {
+   "repo_id": 499580907,
+   "full_name": "apple/ml-ane-transformers",
+   "stars_at_build": 2730,
+   "why_ai": "Reference implementation of the Transformer architecture optimized for Apple Neural Engine (ANE)"
+  },
+  {
+   "repo_id": 281528773,
+   "full_name": "intel/neural-compressor",
+   "stars_at_build": 2694,
+   "why_ai": "SOTA low-bit LLM quantization (INT8/FP8/MXFP8/INT4/MXFP4/NVFP4) & sparsity; leading model compression techniques on PyTorch, TensorFlow, and ONNX Runtime"
+  },
+  {
+   "repo_id": 344354127,
+   "full_name": "coqui-ai/STT",
+   "stars_at_build": 2600,
+   "why_ai": "🐸STT - The deep learning toolkit for Speech-to-Text. Training and deploying STT models has never been so easy."
+  },
+  {
+   "repo_id": 506033104,
+   "full_name": "crowsonkb/k-diffusion",
+   "stars_at_build": 2599,
+   "why_ai": "Karras et al. (2022) diffusion models for PyTorch"
+  },
+  {
+   "repo_id": 1103476826,
+   "full_name": "black-forest-labs/flux2",
+   "stars_at_build": 2592,
+   "why_ai": "Official inference repo for FLUX.2 models"
+  },
+  {
+   "repo_id": 154626012,
+   "full_name": "ARISE-Initiative/robosuite",
+   "stars_at_build": 2544,
+   "why_ai": "robosuite: A Modular Simulation Framework and Benchmark for Robot Learning"
+  },
+  {
+   "repo_id": 632244130,
+   "full_name": "X-PLUG/mPLUG-Owl",
+   "stars_at_build": 2539,
+   "why_ai": "mPLUG-Owl: The Powerful Multi-modal Large Language Model  Family"
+  },
+  {
+   "repo_id": 798679341,
+   "full_name": "zai-org/CogVLM2",
+   "stars_at_build": 2435,
+   "why_ai": "GPT4V-level open-source multi-modal model based on Llama3-8B"
+  },
+  {
+   "repo_id": 167628014,
+   "full_name": "chemprop/chemprop",
+   "stars_at_build": 2423,
+   "why_ai": "Message Passing Neural Networks for Molecule Property Prediction"
+  },
+  {
+   "repo_id": 1010055053,
+   "full_name": "zai-org/GLM-V",
+   "stars_at_build": 2363,
+   "why_ai": "GLM-4.6V/4.5V/4.1V-Thinking: Towards Versatile Multimodal Reasoning with Scalable Reinforcement Learning"
+  },
+  {
+   "repo_id": 554293908,
+   "full_name": "IST-DASLab/gptq",
+   "stars_at_build": 2346,
+   "why_ai": "Code for the ICLR 2023 paper \"GPTQ: Accurate Post-training Quantization of Generative Pretrained Transformers\"."
+  },
+  {
+   "repo_id": 569713120,
+   "full_name": "OpenGVLab/InternVideo",
+   "stars_at_build": 2345,
+   "why_ai": "[ECCV2024] Video Foundation Models & Data for Multimodal Understanding"
+  },
+  {
+   "repo_id": 778490975,
+   "full_name": "facebookresearch/schedule_free",
+   "stars_at_build": 2319,
+   "why_ai": "Schedule-Free Optimization in PyTorch"
+  },
+  {
+   "repo_id": 271834742,
+   "full_name": "google-deepmind/optax",
+   "stars_at_build": 2308,
+   "why_ai": "Optax is a gradient processing and optimization library for JAX."
+  },
+  {
+   "repo_id": 520014232,
+   "full_name": "IDEA-Research/detrex",
+   "stars_at_build": 2304,
+   "why_ai": "detrex is a research platform for DETR-based object detection, segmentation, pose estimation and other visual recognition tasks."
+  },
+  {
+   "repo_id": 973111956,
+   "full_name": "XiaomiMiMo/MiMo",
+   "stars_at_build": 2291,
+   "why_ai": "MiMo: Unlocking the Reasoning Potential of Language Model – From Pretraining to Posttraining"
+  },
+  {
+   "repo_id": 680797687,
+   "full_name": "InternLM/lagent",
+   "stars_at_build": 2274,
+   "why_ai": "A lightweight framework for building LLM-based agents"
+  },
+  {
+   "repo_id": 381498685,
+   "full_name": "RosettaCommons/RoseTTAFold",
+   "stars_at_build": 2251,
+   "why_ai": "This package contains deep learning models and related scripts for RoseTTAFold"
+  },
+  {
+   "repo_id": 601904916,
+   "full_name": "lucidrains/lion-pytorch",
+   "stars_at_build": 2198,
+   "why_ai": "🦁 Lion, new optimizer discovered by Google Brain using genetic algorithms that is purportedly better than Adam(w), in Pytorch"
+  },
+  {
+   "repo_id": 478484453,
+   "full_name": "alibaba/EasyNLP",
+   "stars_at_build": 2181,
+   "why_ai": "EasyNLP: A Comprehensive and Easy-to-use NLP Toolkit"
+  },
+  {
+   "repo_id": 138929098,
+   "full_name": "google/gin-config",
+   "stars_at_build": 2153,
+   "why_ai": "Gin provides a lightweight configuration framework for Python"
+  },
+  {
+   "repo_id": 223495162,
+   "full_name": "snap-stanford/ogb",
+   "stars_at_build": 2093,
+   "why_ai": "Benchmark datasets, data loaders, and evaluators for graph machine learning"
+  },
+  {
+   "repo_id": 389461512,
+   "full_name": "patrick-kidger/diffrax",
+   "stars_at_build": 2078,
+   "why_ai": "Numerical differential equation solvers in JAX. Autodifferentiable and GPU-capable. https://docs.kidger.site/diffrax/"
+  },
+  {
+   "repo_id": 417157956,
+   "full_name": "THUDM/P-tuning-v2",
+   "stars_at_build": 2077,
+   "why_ai": "An optimized deep prompt tuning strategy comparable to fine-tuning across scales and tasks"
+  },
+  {
+   "repo_id": 369537808,
+   "full_name": "alibaba/AliceMind",
+   "stars_at_build": 2043,
+   "why_ai": "ALIbaba's Collection of Encoder-decoders from MinD (Machine IntelligeNce of Damo) Lab"
+  },
+  {
+   "repo_id": 885346783,
+   "full_name": "bytedance/Protenix",
+   "stars_at_build": 2016,
+   "why_ai": "Toward High-Accuracy Open-Source Biomolecular Structure Prediction."
+  },
+  {
+   "repo_id": 150172473,
+   "full_name": "allenai/scispacy",
+   "stars_at_build": 1981,
+   "why_ai": "A full spaCy pipeline and models for scientific/biomedical documents."
+  },
+  {
+   "repo_id": 716476891,
+   "full_name": "ymcui/Chinese-LLaMA-Alpaca-3",
+   "stars_at_build": 1974,
+   "why_ai": "中文羊驼大模型三期项目 (Chinese Llama-3 LLMs) developed from Meta Llama 3"
+  },
+  {
+   "repo_id": 10178188,
+   "full_name": "openmm/openmm",
+   "stars_at_build": 1938,
+   "why_ai": "OpenMM is a toolkit for molecular simulation using high performance GPU code."
+  },
+  {
+   "repo_id": 715441002,
+   "full_name": "QwenLM/Qwen-Audio",
+   "stars_at_build": 1933,
+   "why_ai": "The official repo of Qwen-Audio (通义千问-Audio) chat & pretrained large audio language model proposed by Alibaba Cloud."
+  },
+  {
+   "repo_id": 2629302,
+   "full_name": "materialsproject/pymatgen",
+   "stars_at_build": 1933,
+   "why_ai": "Python Materials Genomics (pymatgen) is a robust materials analysis code that defines classes for structures and molecules with support for many electronic stru"
+  },
+  {
+   "repo_id": 303907761,
+   "full_name": "snap-stanford/GraphGym",
+   "stars_at_build": 1901,
+   "why_ai": "Platform for designing and evaluating Graph Neural Networks (GNN)"
+  },
+  {
+   "repo_id": 781756197,
+   "full_name": "google-deepmind/penzai",
+   "stars_at_build": 1897,
+   "why_ai": "A JAX research toolkit for building, editing, and visualizing neural networks."
+  },
+  {
+   "repo_id": 841541826,
+   "full_name": "THUDM/LongWriter",
+   "stars_at_build": 1871,
+   "why_ai": "[ICLR 2025] LongWriter: Unleashing 10,000+ Word Generation from Long Context LLMs"
+  },
+  {
+   "repo_id": 207383121,
+   "full_name": "Farama-Foundation/Metaworld",
+   "stars_at_build": 1863,
+   "why_ai": "Collections of robotics environments geared towards benchmarking multi-task and meta reinforcement learning"
+  },
+  {
+   "repo_id": 301561595,
+   "full_name": "ermongroup/ddim",
+   "stars_at_build": 1841,
+   "why_ai": "Denoising Diffusion Implicit Models"
+  },
+  {
+   "repo_id": 176315637,
+   "full_name": "THUDM/CogDL",
+   "stars_at_build": 1818,
+   "why_ai": "CogDL: A Comprehensive Library for Graph Deep Learning (WWW 2023)"
+  },
+  {
+   "repo_id": 769852109,
+   "full_name": "TencentARC/BrushNet",
+   "stars_at_build": 1738,
+   "why_ai": "[ECCV 2024] The official implementation of paper \"BrushNet: A Plug-and-Play Image Inpainting Model with Decomposed Dual-Branch Diffusion\""
+  },
+  {
+   "repo_id": 622147274,
+   "full_name": "zai-org/ImageReward",
+   "stars_at_build": 1697,
+   "why_ai": "[NeurIPS 2023] ImageReward: Learning and Evaluating Human Preferences for Text-to-image Generation"
+  },
+  {
+   "repo_id": 255029381,
+   "full_name": "Farama-Foundation/D4RL",
+   "stars_at_build": 1695,
+   "why_ai": "A collection of reference environments for offline reinforcement learning"
+  },
+  {
+   "repo_id": 217529714,
+   "full_name": "google-research/dex-lang",
+   "stars_at_build": 1688,
+   "why_ai": "Research language for array processing in the Haskell/ML family"
+  },
+  {
+   "repo_id": 567389569,
+   "full_name": "mit-han-lab/smoothquant",
+   "stars_at_build": 1674,
+   "why_ai": "[ICML 2023] SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models"
+  },
+  {
+   "repo_id": 912869501,
+   "full_name": "bytedance/Sa2VA",
+   "stars_at_build": 1650,
+   "why_ai": "Official Repo For Pixel-LLM Codebase: Sa2VA (T-PAMI-26), SAMTok (CVPR-26), VRT (Arxiv-25), SaSaSa2VA (1-st solution for LSVOS)"
+  },
+  {
+   "repo_id": 640914148,
+   "full_name": "PKU-Alignment/safe-rlhf",
+   "stars_at_build": 1611,
+   "why_ai": "Safe RLHF: Constrained Value Alignment via Safe Reinforcement Learning from Human Feedback"
+  },
+  {
+   "repo_id": 293649366,
+   "full_name": "hendrycks/test",
+   "stars_at_build": 1605,
+   "why_ai": "Measuring Massive Multitask Language Understanding | ICLR 2021"
+  },
+  {
+   "repo_id": 646488027,
+   "full_name": "THUDM/WebGLM",
+   "stars_at_build": 1601,
+   "why_ai": "WebGLM: An Efficient Web-enhanced Question Answering System (KDD 2023)"
+  },
+  {
+   "repo_id": 721643027,
+   "full_name": "google-deepmind/concordia",
+   "stars_at_build": 1593,
+   "why_ai": "A library for generative social simulation"
+  },
+  {
+   "repo_id": 394517440,
+   "full_name": "DeepGraphLearning/torchdrug",
+   "stars_at_build": 1585,
+   "why_ai": "A powerful and flexible machine learning platform for drug discovery"
+  },
+  {
+   "repo_id": 758762367,
+   "full_name": "stanfordnlp/pyreft",
+   "stars_at_build": 1576,
+   "why_ai": "Stanford NLP Python library for Representation Finetuning (ReFT)"
+  },
+  {
+   "repo_id": 501667548,
+   "full_name": "mosaicml/streaming",
+   "stars_at_build": 1540,
+   "why_ai": "A Data Streaming Library for Efficient Neural Network Training"
+  },
+  {
+   "repo_id": 393275285,
+   "full_name": "ARISE-Initiative/robomimic",
+   "stars_at_build": 1506,
+   "why_ai": "robomimic: A Modular Framework for Robot Learning from Demonstration"
+  },
+  {
+   "repo_id": 706842035,
+   "full_name": "THUDM/AgentTuning",
+   "stars_at_build": 1502,
+   "why_ai": "AgentTuning: Enabling Generalized Agent Abilities for LLMs"
+  },
+  {
+   "repo_id": 728080663,
+   "full_name": "TencentARC/MotionCtrl",
+   "stars_at_build": 1497,
+   "why_ai": "Official Code for MotionCtrl [SIGGRAPH 2024]"
+  },
+  {
+   "repo_id": 677284959,
+   "full_name": "bytedance/SALMONN",
+   "stars_at_build": 1485,
+   "why_ai": "SALMONN family: A suite of advanced multi-modal LLMs"
+  },
+  {
+   "repo_id": 456857425,
+   "full_name": "open-mmlab/mmengine",
+   "stars_at_build": 1484,
+   "why_ai": "OpenMMLab Foundational Library for Training Deep Learning Models"
+  },
+  {
+   "repo_id": 380467096,
+   "full_name": "k2-fsa/icefall",
+   "stars_at_build": 1469,
+   "why_ai": "Known AI system codebase: k2-fsa/icefall"
+  },
+  {
+   "repo_id": 776513710,
+   "full_name": "allenai/OLMo-core",
+   "stars_at_build": 1444,
+   "why_ai": "PyTorch building blocks for the OLMo ecosystem"
+  },
+  {
+   "repo_id": 160139764,
+   "full_name": "rail-berkeley/softlearning",
+   "stars_at_build": 1434,
+   "why_ai": "Softlearning is a reinforcement learning framework for training maximum entropy policies in continuous domains. Includes the official implementation of the Soft"
+  },
+  {
+   "repo_id": 687727674,
+   "full_name": "shivammehta25/Matcha-TTS",
+   "stars_at_build": 1340,
+   "why_ai": "[ICASSP 2024] 🍵 Matcha-TTS: A fast TTS architecture with conditional flow matching"
+  },
+  {
+   "repo_id": 808716789,
+   "full_name": "DAMO-NLP-SG/VideoLLaMA2",
+   "stars_at_build": 1305,
+   "why_ai": "VideoLLaMA 2: Advancing Spatial-Temporal Modeling and Audio Understanding in Video-LLMs"
+  },
+  {
+   "repo_id": 206295259,
+   "full_name": "huawei-noah/Efficient-Computing",
+   "stars_at_build": 1305,
+   "why_ai": "Efficient computing methods developed by Huawei Noah's Ark Lab"
+  },
+  {
+   "repo_id": 360111507,
+   "full_name": "google-deepmind/android_env",
+   "stars_at_build": 1236,
+   "why_ai": "RL research on Android devices."
+  },
+  {
+   "repo_id": 816158613,
+   "full_name": "ModelCloud/GPTQModel",
+   "stars_at_build": 1221,
+   "why_ai": "LLM model quantization (compression) toolkit with HW acceleration support for Nvidia, AMD, Intel GPU and Intel/AMD/Apple CPU via HF, vLLM, and SGLang."
+  },
+  {
+   "repo_id": 963152510,
+   "full_name": "MoonshotAI/Kimi-VL",
+   "stars_at_build": 1219,
+   "why_ai": "Kimi-VL: Mixture-of-Experts Vision-Language Model for Multimodal Reasoning, Long-Context Understanding, and Strong Agent Capabilities"
+  },
+  {
+   "repo_id": 672301570,
+   "full_name": "THUDM/LongBench",
+   "stars_at_build": 1219,
+   "why_ai": "LongBench v2 and LongBench (ACL 25'&24')"
+  },
+  {
+   "repo_id": 518394619,
+   "full_name": "xorbitsai/xorbits",
+   "stars_at_build": 1200,
+   "why_ai": "Scalable Python DS & ML, in an API compatible & lightning fast way."
+  },
+  {
+   "repo_id": 724535804,
+   "full_name": "zai-org/CogAgent",
+   "stars_at_build": 1190,
+   "why_ai": "An open-sourced end-to-end VLM-based GUI Agent"
+  },
+  {
+   "repo_id": 128312370,
+   "full_name": "hendrycks/robustness",
+   "stars_at_build": 1171,
+   "why_ai": "Corruption and Perturbation Robustness (ICLR 2019)"
+  },
+  {
+   "repo_id": 644071541,
+   "full_name": "princeton-nlp/MeZO",
+   "stars_at_build": 1169,
+   "why_ai": "[NeurIPS 2023] MeZO: Fine-Tuning Language Models with Just Forward Passes. https://arxiv.org/abs/2305.17333"
+  },
+  {
+   "repo_id": 414203752,
+   "full_name": "THUDM/SwissArmyTransformer",
+   "stars_at_build": 1119,
+   "why_ai": "SwissArmyTransformer is a flexible and powerful library to develop your own Transformer variants."
+  },
+  {
+   "repo_id": 839750798,
+   "full_name": "QwenLM/Qwen2.5-Math",
+   "stars_at_build": 1083,
+   "why_ai": "A series of math-specific large language models of our Qwen2 series."
+  },
+  {
+   "repo_id": 1059794903,
+   "full_name": "XiaomiMiMo/MiMo-Audio",
+   "stars_at_build": 1070,
+   "why_ai": "MiMo-Audio: Audio Language Models are Few-Shot Learners"
+  },
+  {
+   "repo_id": 500285239,
+   "full_name": "megvii-research/PETR",
+   "stars_at_build": 1066,
+   "why_ai": "[ECCV2022] PETR: Position Embedding Transformation for Multi-View 3D Object Detection & [ICCV2023] PETRv2: A Unified Framework for 3D Perception from Multi-Came"
+  },
+  {
+   "repo_id": 775232941,
+   "full_name": "flagos-ai/FlagGems",
+   "stars_at_build": 1061,
+   "why_ai": "FlagGems is an operator library for large language models implemented in the Triton Language."
+  },
+  {
+   "repo_id": 522950827,
+   "full_name": "bigcode-project/bigcode-evaluation-harness",
+   "stars_at_build": 1056,
+   "why_ai": "A framework for the evaluation of autoregressive code generation language models."
+  },
+  {
+   "repo_id": 714151130,
+   "full_name": "lmarena/arena-hard-auto",
+   "stars_at_build": 1055,
+   "why_ai": "Arena-Hard-Auto: An automatic LLM benchmark."
+  },
+  {
+   "repo_id": 318652090,
+   "full_name": "danijar/dreamerv2",
+   "stars_at_build": 1054,
+   "why_ai": "Mastering Atari with Discrete World Models"
+  },
+  {
+   "repo_id": 750767122,
+   "full_name": "BAAI-DCAI/Bunny",
+   "stars_at_build": 1053,
+   "why_ai": "A family of lightweight multimodal models."
+  },
+  {
+   "repo_id": 818790648,
+   "full_name": "allenai/OLMoE",
+   "stars_at_build": 1049,
+   "why_ai": "OLMoE: Open Mixture-of-Experts Language Models"
+  },
+  {
+   "repo_id": 724564445,
+   "full_name": "OpenBMB/RepoAgent",
+   "stars_at_build": 1022,
+   "why_ai": "An LLM-powered repository agent designed to assist developers and teams in generating documentation and understanding repositories quickly."
+  },
+  {
+   "repo_id": 427347642,
+   "full_name": "kakaobrain/kogpt",
+   "stars_at_build": 1011,
+   "why_ai": "KakaoBrain KoGPT (Korean Generative Pre-trained Transformer)"
+  },
+  {
+   "repo_id": 756761504,
+   "full_name": "TRI-ML/prismatic-vlms",
+   "stars_at_build": 1005,
+   "why_ai": "A flexible and efficient codebase for training visually-conditioned language models (VLMs)"
+  },
+  {
+   "repo_id": 159494117,
+   "full_name": "molecularsets/moses",
+   "stars_at_build": 988,
+   "why_ai": "Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models"
+  },
+  {
+   "repo_id": 494320113,
+   "full_name": "k2-fsa/sherpa",
+   "stars_at_build": 967,
+   "why_ai": "Speech-to-text server framework with next-gen Kaldi"
+  },
+  {
+   "repo_id": 771234452,
+   "full_name": "LiveCodeBench/LiveCodeBench",
+   "stars_at_build": 923,
+   "why_ai": "Official repository for the paper \"LiveCodeBench: Holistic and Contamination Free Evaluation of Large Language Models for Code\""
+  },
+  {
+   "repo_id": 710079101,
+   "full_name": "nicklashansen/tdmpc2",
+   "stars_at_build": 912,
+   "why_ai": "Code for \"TD-MPC2: Scalable, Robust World Models for Continuous Control\""
+  },
+  {
+   "repo_id": 386577599,
+   "full_name": "google-deepmind/meltingpot",
+   "stars_at_build": 859,
+   "why_ai": "A suite of test scenarios for multi-agent reinforcement learning."
+  },
+  {
+   "repo_id": 189626307,
+   "full_name": "aspuru-guzik-group/selfies",
+   "stars_at_build": 857,
+   "why_ai": "Robust representation of semantically constrained graphs, in particular for molecules in chemistry"
+  },
+  {
+   "repo_id": 618338116,
+   "full_name": "TencentARC/MasaCtrl",
+   "stars_at_build": 843,
+   "why_ai": "[ICCV 2023] Consistent Image Synthesis and Editing"
+  },
+  {
+   "repo_id": 481169520,
+   "full_name": "LAION-AI/CLIP_benchmark",
+   "stars_at_build": 815,
+   "why_ai": "CLIP-like model evaluation"
+  },
+  {
+   "repo_id": 259940805,
+   "full_name": "google-research/bleurt",
+   "stars_at_build": 794,
+   "why_ai": "BLEURT is a metric for Natural Language Generation based on transfer learning."
+  },
+  {
+   "repo_id": 434220897,
+   "full_name": "google-research/jax3d",
+   "stars_at_build": 764,
+   "why_ai": "Known AI system codebase: google-research/jax3d"
+  },
+  {
+   "repo_id": 770272502,
+   "full_name": "TheAgentCompany/TheAgentCompany",
+   "stars_at_build": 755,
+   "why_ai": "An agent benchmark with tasks in a simulated software company."
+  },
+  {
+   "repo_id": 824067953,
+   "full_name": "deepseek-ai/ESFT",
+   "stars_at_build": 741,
+   "why_ai": "Expert Specialized Fine-Tuning"
+  },
+  {
+   "repo_id": 735090310,
+   "full_name": "allenai/reward-bench",
+   "stars_at_build": 730,
+   "why_ai": "RewardBench: the first evaluation tool for reward models."
+  },
+  {
+   "repo_id": 6604361,
+   "full_name": "mdtraj/mdtraj",
+   "stars_at_build": 727,
+   "why_ai": "An open library for the analysis of molecular dynamics trajectories"
+  },
+  {
+   "repo_id": 662392605,
+   "full_name": "PaddlePaddle/PaddleMIX",
+   "stars_at_build": 725,
+   "why_ai": "Paddle Multimodal Integration and eXploration, supporting mainstream multi-modal tasks, including end-to-end large-scale multi-modal pretrain models and diffusi"
+  },
+  {
+   "repo_id": 493025361,
+   "full_name": "salesforce/progen",
+   "stars_at_build": 705,
+   "why_ai": "Official release of the ProGen models"
+  },
+  {
+   "repo_id": 112321712,
+   "full_name": "chainer/chainer-chemistry",
+   "stars_at_build": 703,
+   "why_ai": "Chainer Chemistry: A Library for Deep Learning in Biology and Chemistry"
+  },
+  {
+   "repo_id": 205957008,
+   "full_name": "zhijian-liu/torchprofile",
+   "stars_at_build": 645,
+   "why_ai": "Count the MACs / FLOPs of PyTorch models"
+  },
+  {
+   "repo_id": 513813137,
+   "full_name": "PaddlePaddle/Paddle3D",
+   "stars_at_build": 642,
+   "why_ai": "A 3D computer vision development toolkit based on PaddlePaddle. It supports point-cloud object detection, segmentation, and monocular 3D object detection models"
+  },
+  {
+   "repo_id": 467433205,
+   "full_name": "megvii-research/CREStereo",
+   "stars_at_build": 629,
+   "why_ai": "Official MegEngine implementation of CREStereo(CVPR 2022 Oral)."
+  },
+  {
+   "repo_id": 516457982,
+   "full_name": "HeliXonProtein/OmegaFold",
+   "stars_at_build": 625,
+   "why_ai": "OmegaFold Release Code"
+  },
+  {
+   "repo_id": 758163683,
+   "full_name": "Lightning-AI/litData",
+   "stars_at_build": 606,
+   "why_ai": "Speed up model training by fixing data loading."
+  },
+  {
+   "repo_id": 235607333,
+   "full_name": "denisyarats/pytorch_sac",
+   "stars_at_build": 600,
+   "why_ai": "PyTorch implementation of Soft Actor-Critic (SAC)"
+  },
+  {
+   "repo_id": 399361130,
+   "full_name": "OpenBMB/BMInf",
+   "stars_at_build": 583,
+   "why_ai": "Efficient Inference for Big Models"
+  },
+  {
+   "repo_id": 843001887,
+   "full_name": "deepseek-ai/DeepSeek-Prover-V1.5",
+   "stars_at_build": 580,
+   "why_ai": "Known AI system codebase: deepseek-ai/DeepSeek-Prover-V1.5"
+  },
+  {
+   "repo_id": 530347014,
+   "full_name": "materialyzeai/matgl",
+   "stars_at_build": 564,
+   "why_ai": "Graph deep learning library for materials"
+  },
+  {
+   "repo_id": 747848740,
+   "full_name": "princeton-nlp/LESS",
+   "stars_at_build": 532,
+   "why_ai": "[ICML 2024] LESS: Selecting Influential Data for Targeted Instruction Tuning"
+  },
+  {
+   "repo_id": 157866463,
+   "full_name": "BenevolentAI/guacamol",
+   "stars_at_build": 527,
+   "why_ai": "Benchmarks for generative chemistry"
+  },
+  {
+   "repo_id": 297634132,
+   "full_name": "google-deepmind/dqn_zoo",
+   "stars_at_build": 509,
+   "why_ai": "DQN Zoo is a collection of reference implementations of reinforcement learning agents developed at DeepMind based on the Deep Q-Network (DQN) agent."
+  }
+ ]
+}
