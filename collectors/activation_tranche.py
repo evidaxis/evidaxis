@@ -108,7 +108,9 @@ def main() -> int:
     # backlog members and the policy's "forward crossings take priority so new
     # coverage debt never accumulates" is inverted in production, forever,
     # since the same code re-runs every week.
-    key = lambda m: (-m["stars"], m["repo_id"])          # noqa: E731
+    def key(m):
+        return (-m["stars"], m["repo_id"])
+
     forward = sorted([m for m in refreshed if m.get("wave") == "forward"], key=key)
     backlog = sorted([m for m in refreshed if m.get("wave") != "forward"], key=key)
     tranche = (forward + backlog)[:size]
