@@ -233,3 +233,40 @@ live path after the record, plus ≥28 days of live quarantine. This week contri
 capture (2026-07-20), still PROVISIONAL until its successor lands (~2026-07-27, next ritual).
 Nothing about the axis verdict changes today; promotion window remains late August 2026.
 Cost this week: $3.44 capture + ~$0.08 sidecar.
+
+## Live capture 2026-07-27 (ritual 2026-08-03, recovered late)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-07-27` — 63/90 matched, 10 canaries,
+job `bqjob_r3c3b9046b980c837_0000019fc769416c_1`, snapshot_at `2026-07-27 21:01:02`.
+Panel manifest `026eaa45377a…` unchanged from the previous week, so coverage is comparable
+by construction. 63 is the clean-series median (`coverage_series_median_clean: 63`), i.e.
+the expected panel size, not a shortfall.
+
+**Sidecar** (`--sidecar 2026-07-27`): PV2P 1132 rows, Projects 122 rows, retention tripwire
+`{earliest: 20230410, latest: 20260727, n: 171}` — no history attrition detected.
+
+**Sanity gate** (`--check sanity-calibration-e8580af09a18.json --series v2h1`): 19 partitions
+checked, **KILL-BAR PASS** — flagged exactly `['2026-06-11', '2026-06-15']`, the two known
+corrupt partitions, and nothing else. 2026-07-20 **promoted CLEAN**; 2026-07-27 PROVISIONAL
+per the necessarily-provisional rule for the newest partition.
+Artifact: `data/quarantine/axis3-deps-v2/sanity-check-9698fea08fe1.json`.
+
+**Evaluation** (`evaluate_axis3_v2h1.py --as-of 2026-07-20 --label live`): status EVALUATED,
+official cutoff **2026-07-20**, 48 voting / 9 rising (was 7 at the 07-13 cutoff),
+0 unstable-vetoed.
+**c1 PASS · c2 PASS · c3 PASS · c4 FAIL · c5 PASS · c6 PASS** — 5/6, and c4 is again the
+small-cohort granularity characterised at baseline, not the poisoned panel-wide-zero regime.
+Artifact: `eval/v2h1-live-2026-07-20-a801727c8d6b.json` (sha256 a801727c8d6b…).
+
+**Promotion accounting.** Two confirmed-clean live partitions (2026-07-13, 2026-07-20) of the
+four required; 2026-07-27 stays provisional until its successor lands (~2026-08-03, next
+ritual). Promotion window remains late August 2026.
+Cost this week: $3.44 capture + ~$0.08 sidecar.
+
+**Process note — why this is dated 08-03 and not 07-27.** The 2026-08-03 weekly ritual did
+not run component A13 at all; the gap surfaced only when the whole ritual was audited against
+its artifacts afterwards. The repo's own staleness check (`.github/workflows/
+axis-staleness-check.yml`, fires above 8 days) had not yet triggered — it would have caught
+this on 08-04, after the fact rather than before. The capture itself is unaffected: deps.dev
+partitions are addressable by snapshot day, so a late capture recovers the same data. What a
+miss actually costs is calendar time in the 28-day live-quarantine clock, not data.
