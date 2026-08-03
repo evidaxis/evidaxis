@@ -1,0 +1,85 @@
+{
+  "v": "frontier_1",
+  "date": "2026-08-03",
+  "recorded_at": "2026-08-03T12:51:43Z",
+  "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+  "sources": [
+    "github-search-api",
+    "github-graphql"
+  ],
+  "examined_estimate": 5522,
+  "candidates_returned": 10,
+  "candidates": [
+    {
+      "repo": "obra/superpowers",
+      "cohort": "unassigned-v1",
+      "stars": 265478,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "cohort": "unassigned-v1",
+      "stars": 237222,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "cohort": "unassigned-v1",
+      "stars": 224663,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "tensorflow/tensorflow",
+      "cohort": "unassigned-v1",
+      "stars": 196769,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "AUTOMATIC1111/stable-diffusion-webui",
+      "cohort": "unassigned-v1",
+      "stars": 164372,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "huggingface/transformers",
+      "cohort": "unassigned-v1",
+      "stars": 163292,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "firecrawl/firecrawl",
+      "cohort": "unassigned-v1",
+      "stars": 159805,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "langflow-ai/langflow",
+      "cohort": "unassigned-v1",
+      "stars": 152789,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "langchain-ai/langchain",
+      "cohort": "unassigned-v1",
+      "stars": 143310,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Graphify-Labs/graphify",
+      "cohort": "unassigned-v1",
+      "stars": 101513,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    }
+  ],
+  "note": "Discovery-frontier denominator (un-backfillable). Candidates are systems CONSIDERED at scan time, not judgments; admission happens via a paired seeds.json change (CI enforces the pairing). Positive-only: no per-system negatives are recorded."
+}
