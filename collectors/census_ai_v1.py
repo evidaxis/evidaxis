@@ -425,7 +425,8 @@ def readme_prefix(full_name: str) -> str:
 
 def readme_batch(names: list[str]) -> dict[str, str]:
     with ThreadPoolExecutor(max_workers=16) as pool:
-        return dict(zip(names, pool.map(readme_prefix, names)))
+        return dict(zip(names, pool.map(readme_prefix, names),
+                        strict=True))
 
 
 def deepcheck(rows: list[dict], out_path: Path, shard: int = 0,
