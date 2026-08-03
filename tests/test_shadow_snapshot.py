@@ -57,7 +57,7 @@ def test_snapshot_bytes_have_only_the_shadow_projection(tmp_path, monkeypatch):
     assert shadow.collect_snapshot(tmp_path, "2026-08-03") == snapshot
 
 
-def test_short_band_retries_three_times_then_raises(tmp_path, monkeypatch):
+def test_short_band_beyond_tolerance_retries_then_raises(tmp_path, monkeypatch):
     calls = 0
     item = {
         "id": 7,
@@ -76,14 +76,14 @@ def test_short_band_retries_three_times_then_raises(tmp_path, monkeypatch):
         calls += 1
         assert query.startswith("stars:200..200")
         assert page == 1
-        return {"total_count": 2, "incomplete_results": False, "items": [item]}
+        return {"total_count": 12, "incomplete_results": False, "items": [item]}
 
     monkeypatch.setattr(census, "gh_search", short_search)
     monkeypatch.setattr(census.time, "sleep", lambda _seconds: None)
     raw_path = tmp_path / "repos.jsonl"
     bands_path = tmp_path / "bands.jsonl"
 
-    with pytest.raises(RuntimeError, match="short by 1 after 4 attempts"):
+    with pytest.raises(RuntimeError, match="short by 11 after 4 attempts"):
         census.sweep(
             200,
             200,
@@ -132,3 +132,37 @@ def test_surplus_is_accepted_and_recorded_as_index_drift(tmp_path, monkeypatch):
     assert band["done"] is True
     assert band["index_drift"] == 1
     assert len(raw_path.read_text().splitlines()) == 2
+
+
+def test_short_band_within_tolerance_is_recorded_not_retried(tmp_path, monkeypatch):
+    """GitHub's total_count is an index ESTIMATE and is reproducibly off by one.
+
+    Measured live on band 2019..2079: total_count=939, full pagination returns
+    938 distinct ids, zero duplicates, incomplete_results=false, four attempts
+    in a row. Demanding equality of a third party's estimate deadlocked the
+    sweep. A small shortfall must be accepted AND recorded, never silently
+    swallowed and never treated as a coverage loss.
+    """
+    item = {
+        "id": 11, "full_name": "o/n", "stargazers_count": 300,
+        "created_at": "2020-01-01T00:00:00Z",
+        "pushed_at": "2026-08-03T00:00:00Z", "language": "Python",
+        "description": None, "topics": [], "license": None,
+    }
+    calls = 0
+
+    def one_short(query, page):
+        nonlocal calls
+        calls += 1
+        return {"total_count": 2, "incomplete_results": False, "items": [item]}
+
+    monkeypatch.setattr(census, "gh_search", one_short)
+    monkeypatch.setattr(census.time, "sleep", lambda _s: None)
+    raw_path, bands_path = tmp_path / "r.jsonl", tmp_path / "b.jsonl"
+    census.sweep(300, 300, raw_path, bands_path)
+
+    bands = [json.loads(line) for line in bands_path.read_text().splitlines()]
+    done = [b for b in bands if b.get("done")]
+    assert len(done) == 1, "a within-tolerance shortfall must close the band"
+    assert done[0]["index_drift"] == -1, "the shortfall must be RECORDED"
+    assert calls <= 2, "it must not retry a within-tolerance shortfall"
