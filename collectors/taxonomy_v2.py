@@ -44,6 +44,12 @@ VKEY_TO_V2 = {
     "diffusion-media-gen":   ("multimodal-media", "media-generation"),
     "multimodal-vlm":        ("foundation-models", "multimodal-foundation-models"),
     "gui-agents":            ("ai-agents", "gui-agents"),
+    # AI-v1 census intake. Members enter the registry before any cohort has
+    # been assigned to them; the census admits on the predicate, and cohort
+    # assignment is a separate, later act. Parking them here keeps the mapping
+    # honest instead of guessing a cohort at admission time - and keeps the
+    # weekly pipeline alive, which raises KeyError on an unknown key by design.
+    "unassigned-v1":         ("unassigned", "unassigned-v1"),
 }
 # v2 cohort slug -> its field, so an already-migrated snapshot resolves to itself (idempotent).
 V2_COHORT_TO_FIELD = {cohort: field for field, cohort in VKEY_TO_V2.values()}

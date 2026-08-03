@@ -37,6 +37,7 @@ const SHORT: Record<string, string> = {
   'media-generation': 'Media',
   'multimodal-foundation-models': 'Multimodal',
   'gui-agents': 'GUI',
+  'unassigned-v1': 'Unassigned',
 };
 export function cohortShort(cohortKey: string): string {
   return SHORT[cohortKey] ?? cohortLabel(cohortKey).split(/[ ,]/)[0];
