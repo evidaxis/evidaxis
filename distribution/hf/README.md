@@ -19,7 +19,7 @@ momentum). The archive is append-only: published snapshots are never rewritten.
 
 - **Canonical source:** https://evidaxis.org (llms.txt: https://evidaxis.org/llms.txt)
 - **Methodology (versioned):** https://evidaxis.org/methodology/current/
-- **Concept DOI:** 10.5281/zenodo.21076012
+- **Concept DOI:** 10.5281/zenodo.21076011 (resolves to the latest version)
 - **License:** CC0-1.0 — reuse, redistribute, train on, cite freely.
 - **Cite a system:** `urn:evidaxis:claim:{entity_id}:{methodology}:{snapshot_date}`
   (per-record URNs are listed in each snapshot and on evidaxis.org).
