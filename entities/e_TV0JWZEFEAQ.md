@@ -14,18 +14,18 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: fe618519ff6a
-  captured_at: 2026-08-01T08:41:48+00:00
-  period: 2026-w31
-  momentum: 56.3
-  percentile: 75
+  snapshot_id: 035a72a81e59
+  captured_at: 2026-08-08T07:26:37+00:00
+  period: 2026-w32
+  momentum: 57.7
+  percentile: 69
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.008315904024970764, "cohort_z": 0.503, "recent_weekly_commits": 268.5, "stars_not_scored": 26800}
+    github_commit_velocity: {"slope": 0.012378166219736367, "cohort_z": 0.618, "recent_weekly_commits": 291.1, "stars_not_scored": 27036}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---

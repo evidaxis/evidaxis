@@ -14,9 +14,9 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: fe618519ff6a
-  captured_at: 2026-08-01T08:41:48+00:00
-  period: 2026-w31
+  snapshot_id: 035a72a81e59
+  captured_at: 2026-08-08T07:26:37+00:00
+  period: 2026-w32
   momentum: 42.2
   percentile: 27
   confidence: medium
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["openalex_citation_momentum"]
   axes:
-    github_commit_velocity: {"slope": -0.07655302446869099, "cohort_z": -3.051, "recent_weekly_commits": 19.9, "stars_not_scored": 7814}
+    github_commit_velocity: {"slope": -0.10141237028323548, "cohort_z": -3.051, "recent_weekly_commits": 14.8, "stars_not_scored": 7857}
     openalex_citation_momentum: {"status": "present", "slope": 1.406705358380018, "cohort_z": 1.811, "total_citations": 240, "by_year": {"2026": 43, "2025": 149, "2024": 40, "2023": 8}, "proxy": "Orbit (the predecessor framework that became Isaac Lab)"}
 ---
 

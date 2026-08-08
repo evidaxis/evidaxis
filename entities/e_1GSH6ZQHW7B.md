@@ -14,10 +14,10 @@ classification:
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: fe618519ff6a
-  captured_at: 2026-08-01T08:41:48+00:00
-  period: 2026-w31
-  momentum: 21.5
+  snapshot_id: 035a72a81e59
+  captured_at: 2026-08-08T07:26:37+00:00
+  period: 2026-w32
+  momentum: 22.3
   percentile: 17
   confidence: low
   rising: false
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.06812028769111522, "cohort_z": -2.283, "recent_weekly_commits": 46.9, "stars_not_scored": 107452}
+    github_commit_velocity: {"slope": -0.03654532952818102, "cohort_z": -2.214, "recent_weekly_commits": 68.7, "stars_not_scored": 108237}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---
