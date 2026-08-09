@@ -134,6 +134,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "firecrawl/firecrawl": {
+      "system": "pypi",
+      "package": "firecrawl",
+      "pinned_at": "2026-08-09T07:27:46Z"
+    },
     "google-deepmind/mujoco": {
       "system": "pypi",
       "package": "mujoco",
@@ -164,6 +169,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "huggingface/transformers": {
+      "system": "pypi",
+      "package": "transformers",
+      "pinned_at": "2026-08-09T07:27:46Z"
+    },
     "huggingface/trl": {
       "system": "pypi",
       "package": "trl",
@@ -175,6 +185,11 @@
       "package": "ktransformers",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "langchain-ai/langchain": {
+      "system": "pypi",
+      "package": "langchain",
+      "pinned_at": "2026-08-09T07:27:46Z"
     },
     "langchain-ai/langgraph": {
       "system": "pypi",
