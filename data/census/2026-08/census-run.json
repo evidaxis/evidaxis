@@ -1912,7 +1912,8 @@
    "done": true
   }
  ],
- "pending_manifest_sha256": "80000493a27c6b17840704c2bcb08332145b9c4e5b9c32432a227be20ed4a44e",
- "stock_census": false,
- "activation_wave": "forward"
+ "pending_manifest_sha256": "3821ea368192c5ccff943c41ebc1f6e7a1d1019f55b55c23453bc314ae4e9497",
+ "stock_census": true,
+ "activation_wave": "backlog",
+ "wave_erratum": "Corrected 2026-08-10; superseded field values and the reason are published in governance/CENSUS-2026-08-WAVE-ERRATUM-2026-08-10.md"
 }

@@ -773,6 +773,48 @@ def previous_activation(month_dir: Path) -> dict[int, dict]:
     return state
 
 
+def previous_wave(month_dir: Path) -> dict[int, str]:
+    """Queue placement already published, carried across every re-emit.
+
+    Sibling of previous_activation(), and it exists for the same reason one
+    class of defect keeps recurring here: emit() regenerates the manifest, and
+    anything the regeneration does not carry forward is silently rewritten.
+
+    On 2026-08-03 the stock census emitted 5,522 members stamped ``backlog``.
+    A re-emit hours later, run without the flag that declared stock intent,
+    re-stamped every one of them ``forward``. Nothing failed and nothing said
+    so. The consequence would have surfaced a month later, in September, when
+    genuine new crossings would have queued behind a stock backlog wearing
+    their label - the exact inversion the two-queue policy exists to prevent,
+    and one that no weekly run would have flagged.
+
+    First stamp wins. A census may recompute who QUALIFIES; it may never
+    re-file a member that is already queued.
+    """
+    state: dict[int, str] = {}
+    for manifest_path in sorted(month_dir.parent.glob("*/pending-manifest.json")):
+        manifest = json.loads(manifest_path.read_text())
+        for member in manifest.get("members", []):
+            repo_id, wave = member.get("repo_id"), member.get("wave")
+            if repo_id is not None and wave and repo_id not in state:
+                state[repo_id] = wave
+    return state
+
+
+def is_stock_census(month_dir: Path) -> bool:
+    """Stock intent read off the archive, never typed at the command line.
+
+    The stock census is the one that enumerated the pre-existing universe: the
+    earliest census month the registry holds. Deriving it removes the operator
+    from the loop, because ``--stock-census`` was a flag whose absence silently
+    meant "forward" - a default that quietly published the wrong queue when a
+    re-run omitted it (2026-08-03).
+    """
+    months = sorted(p.name for p in month_dir.parent.iterdir()
+                    if p.is_dir() and (p / "pending-manifest.json").exists())
+    return not months or month_dir.name <= months[0]
+
+
 def channel_attribution(members: list[dict], census_date: str) -> dict:
     admitted = dict.fromkeys(CHANNELS, 0)
     first_qualified = dict.fromkeys(CHANNELS, 0)
@@ -789,24 +831,33 @@ def channel_attribution(members: list[dict], census_date: str) -> dict:
     }
 
 
-def finalize_census_run(month_dir: Path, *, stock_census: bool) -> None:
+def finalize_census_run(month_dir: Path) -> None:
     """Stamp run intent and visible sensors without entering protected emit().
 
     The base emitter predates both fields, and its reconciliation stays
-    independently maintainable. Finalization makes the published wave depend
-    on explicit stock-census intent, exposes empty repositories independently
-    of velocity, and refreshes both hashes after those publication changes.
+    independently maintainable. Finalization records the run's stock intent,
+    exposes empty repositories independently of velocity, and refreshes both
+    hashes after those publication changes.
+
+    What it no longer does is re-stamp the members' queue placement. It used to
+    write ``wave`` over every member from a command-line flag, so a re-emit that
+    omitted the flag re-filed the whole stock census as ``forward`` and no check
+    noticed (2026-08-03; corrected by governance/CENSUS-2026-08-WAVE-ERRATUM-
+    2026-08-10.md). Placement is now emit()'s business, sticky per member, and
+    stock intent is derived from the archive rather than typed.
     """
     manifest_path = month_dir / "pending-manifest.json"
     census_path = month_dir / "census-run.json"
     manifest = json.loads(manifest_path.read_text())
     census = json.loads(census_path.read_text())
 
+    stock_census = is_stock_census(month_dir)
     wave = "backlog" if stock_census else "forward"
     manifest["stock_census"] = stock_census
-    manifest["wave"] = wave
+    manifest.setdefault("wave", wave)
     for member in manifest["members"]:
-        member["wave"] = wave
+        # Fill in only what an older executor left blank; never overwrite.
+        member.setdefault("wave", wave)
 
     no_default_branch = set()
     for deep_path in sorted(month_dir.glob("deepcheck*.jsonl")):
@@ -814,7 +865,7 @@ def finalize_census_run(month_dir: Path, *, stock_census: bool) -> None:
             if row.get("no_default_branch") and row.get("id") is not None:
                 no_default_branch.add(row["id"])
     census["stock_census"] = stock_census
-    census["activation_wave"] = wave
+    census["activation_wave"] = manifest["wave"]
     census["aggregate"]["no_default_branch"] = len(no_default_branch)
 
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
@@ -958,6 +1009,10 @@ def emit(month_dir: Path) -> None:
 
     manifest_members = []
     prior_activation = previous_activation(month_dir)
+    prior_wave = previous_wave(month_dir)
+    # Derived from the archive (earliest census month = the stock enumeration),
+    # not from a flag: see is_stock_census() and previous_wave().
+    census_wave = "backlog" if is_stock_census(month_dir) else "forward"
     for r in admitted:
         first_qualified_on = min(
             census_date, prior_dates.get(r["id"], census_date)
@@ -974,7 +1029,7 @@ def emit(month_dir: Path) -> None:
             "status": already.get("status", "pending"),
             **({"activated_on": already["activated_on"]}
                if already.get("activated_on") else {}),
-            "wave": "backlog" if month == "2026-08" else "forward",
+            "wave": prior_wave.get(r["id"], census_wave),
             "commit_oid": r.get("commit_oid"),
             "license_observed": r.get("license_observed"),
             "admitted_by": r["evidence"]["channel"],
@@ -986,7 +1041,7 @@ def emit(month_dir: Path) -> None:
         "@type": "PendingMembershipManifest",
         "predicate": "AI-v1",
         "census_month": month,
-        "wave": "backlog" if month == "2026-08" else "forward",
+        "wave": census_wave,
         "governance_act": str(ACT.relative_to(REPO)),
         "governance_act_sha256": sha256(ACT),
         "scope_module_sha256": sha256(SCOPE_SRC),
@@ -1154,8 +1209,15 @@ def main() -> int:
         deepcheck(cands, out, shard, shards)
         return 0
     if phase == "emit":
+        if "--stock-census" in sys.argv:
+            # The flag is gone on purpose: its ABSENCE, not its presence, is
+            # what published the wrong queue. Fail loudly rather than accept an
+            # argument that no longer decides anything.
+            print("--stock-census is no longer accepted: stock intent is "
+                  "derived from the archive (earliest census month).")
+            return 2
         emit(month_dir)
-        finalize_census_run(month_dir, stock_census="--stock-census" in sys.argv)
+        finalize_census_run(month_dir)
         return 0
     print(__doc__)
     return 2

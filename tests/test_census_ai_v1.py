@@ -236,15 +236,13 @@ def test_deepcheck_records_repository_without_default_branch(tmp_path, monkeypat
     assert recorded["commit_oid"] is None
 
 
-def test_stock_census_flag_stamps_intent_and_empty_repo_counter(
-        tmp_path, monkeypatch):
+def _finalize_fixture(tmp_path, monkeypatch, month, *, members):
     monkeypatch.setattr(census, "REPO", tmp_path)
 
     def fake_emit(month_dir):
-        (month_dir / "pending-manifest.json").write_text(json.dumps({
-            "wave": "forward",
-            "members": [{"repo_id": 7, "wave": "forward"}],
-        }))
+        (month_dir / "pending-manifest.json").write_text(
+            json.dumps({"members": members})
+        )
         (month_dir / "census-run.json").write_text(json.dumps({
             "aggregate": {"no_velocity": 1},
             "pending_manifest_sha256": "stale",
@@ -255,16 +253,21 @@ def test_stock_census_flag_stamps_intent_and_empty_repo_counter(
 
     monkeypatch.setattr(census, "emit", fake_emit)
     monkeypatch.setattr(
-        sys,
-        "argv",
-        ["census_ai_v1.py", "emit", "--month", "2026-09", "--stock-census"],
+        sys, "argv", ["census_ai_v1.py", "emit", "--month", month],
     )
-
     assert census.main() == 0
+    month_dir = tmp_path / "data" / "census" / month
+    return (json.loads((month_dir / "pending-manifest.json").read_text()),
+            json.loads((month_dir / "census-run.json").read_text()),
+            month_dir)
 
-    month_dir = tmp_path / "data" / "census" / "2026-09"
-    manifest = json.loads((month_dir / "pending-manifest.json").read_text())
-    run = json.loads((month_dir / "census-run.json").read_text())
+
+def test_stock_intent_is_derived_and_stamps_the_empty_repo_counter(
+        tmp_path, monkeypatch):
+    manifest, run, month_dir = _finalize_fixture(
+        tmp_path, monkeypatch, "2026-09", members=[{"repo_id": 7}])
+
+    # Earliest (here: only) census month in the archive = the stock enumeration.
     assert manifest["stock_census"] is True
     assert manifest["wave"] == "backlog"
     assert manifest["members"][0]["wave"] == "backlog"
@@ -277,6 +280,64 @@ def test_stock_census_flag_stamps_intent_and_empty_repo_counter(
     assert (month_dir / "census-run.sha256").read_text() == (
         census.sha256(month_dir / "census-run.json") + "  census-run.json\n"
     )
+
+
+def test_a_later_census_is_forward_without_anyone_saying_so(
+        tmp_path, monkeypatch):
+    stock = tmp_path / "data" / "census" / "2026-08"
+    stock.mkdir(parents=True)
+    (stock / "pending-manifest.json").write_text(
+        json.dumps({"members": [{"repo_id": 1, "wave": "backlog"}]})
+    )
+
+    manifest, run, _ = _finalize_fixture(
+        tmp_path, monkeypatch, "2026-09", members=[{"repo_id": 7}])
+    assert manifest["stock_census"] is False
+    assert manifest["wave"] == "forward"
+    assert run["activation_wave"] == "forward"
+
+
+def test_stock_census_flag_is_refused_rather_than_ignored(tmp_path, monkeypatch):
+    """Its ABSENCE published the wrong queue, so it may not linger as a no-op."""
+    monkeypatch.setattr(census, "REPO", tmp_path)
+    monkeypatch.setattr(
+        sys, "argv",
+        ["census_ai_v1.py", "emit", "--month", "2026-09", "--stock-census"],
+    )
+    assert census.main() == 2
+
+
+def test_reemit_never_refiles_a_published_queue_placement(tmp_path):
+    """Measured 2026-08-03: a re-emit re-stamped 5,522 backlog members forward.
+
+    Silent at the time and invisible for a month: the inversion only bites in
+    September, when real crossings would queue behind a stock backlog wearing
+    their label. First stamp wins.
+    """
+    month_dir = tmp_path / "2026-08"
+    month_dir.mkdir(parents=True)
+    (month_dir / "pending-manifest.json").write_text(json.dumps({
+        "members": [
+            {"repo_id": 1, "wave": "backlog"},
+            {"repo_id": 2},
+        ]}))
+
+    carried = census.previous_wave(month_dir)
+    assert carried[1] == "backlog"
+    assert 2 not in carried, "an unstamped member takes this census's wave"
+
+
+def test_finalize_may_not_overwrite_a_wave_it_did_not_publish(
+        tmp_path, monkeypatch):
+    stock = tmp_path / "data" / "census" / "2026-08"
+    stock.mkdir(parents=True)
+    (stock / "pending-manifest.json").write_text(json.dumps({"members": []}))
+
+    manifest, _, _ = _finalize_fixture(
+        tmp_path, monkeypatch, "2026-09",
+        members=[{"repo_id": 7, "wave": "backlog"}])
+    # 2026-09 is a forward census, but this member was already filed backlog.
+    assert manifest["members"][0]["wave"] == "backlog"
 
 
 def test_dead_channel_is_retained_only_for_historical_artifacts():
