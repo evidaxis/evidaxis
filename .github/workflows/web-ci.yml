@@ -5,12 +5,19 @@ name: web-ci
 # single h1). Must stay green before the redesign is promoted to production.
 
 on:
+  # Bot-written trees must face the gate too: commits pushed with the default
+  # GITHUB_TOKEN start no workflows, so the snapshot that broke this build on
+  # 2026-08-08 went unnoticed until an unrelated human push on 2026-08-10.
+  workflow_run:
+    workflows: ["weekly-snapshot", "t2-daily-snapshot"]
+    types: [completed]
   push:
     paths:
       - "web/**"
       - "data/**"
       - "taxonomy/**"
       - "redirects.yaml"
+      - "scripts/**"
       - ".github/workflows/web-ci.yml"
   pull_request:
     paths:
@@ -25,6 +32,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # See the workflow_run note above: the default ref for that event is
+          # the commit BEFORE the producer's own output.
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
       - name: Set up Node 22
         uses: actions/setup-node@v4
@@ -40,6 +51,13 @@ jobs:
       - name: Unit tests (vitest)
         working-directory: web
         run: npm run test:run
+
+      - name: Unit tests (prod sensors, plain node)
+        # The liveness and freshness sensors are the only code that decides
+        # whether a human is told publication broke. They were unit-tested but
+        # nothing ran those tests; a sensor whose tests never run is a sensor
+        # nobody is watching.
+        run: node --test scripts/liveness.test.mjs scripts/freshness.test.mjs
 
       - name: Build (astro, reads ../data + ../taxonomy)
         working-directory: web

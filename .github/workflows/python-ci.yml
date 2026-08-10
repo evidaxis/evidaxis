@@ -8,6 +8,14 @@ name: python-ci
 # discipline run before a mint, not a GitHub workflow. See AUDIT-BASELINE.md §CI.
 
 on:
+  # The automated producers push with the default GITHUB_TOKEN, and GitHub does
+  # not start workflows for those commits, so a bot-written tree was never
+  # gated: the 2026-08-08 snapshot broke the site build and this workflow only
+  # went red on 2026-08-10, when a human pushed for unrelated reasons. Gates
+  # must see the commits that were never reviewed by a person, first of all.
+  workflow_run:
+    workflows: ["weekly-snapshot", "t2-daily-snapshot"]
+    types: [completed]
   push:
     paths:
       - "etl/**"
@@ -40,6 +48,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          # workflow_run hands over the SHA the producer STARTED from, i.e. the
+          # tree before the data it just committed; gating that proves nothing.
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5

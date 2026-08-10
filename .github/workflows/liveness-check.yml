@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 22
       - name: Check prod liveness
+        id: liveness
         env:
           SITE_URL: https://evidaxis.org
           MARKER: 'Evidaxis, the longitudinal map of open AI momentum'
@@ -28,3 +29,17 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
         run: node scripts/liveness-check.mjs
+
+      # Second, independent fact (added 2026-08-10): being UP is not being
+      # PUBLISHED. Since CI took over deploys, "prod == the archive" became an
+      # invariant nothing watched, and the 08-08 snapshot sat unpublished for a
+      # week while this workflow stayed green every 30 minutes. Runs even when
+      # the liveness step alerted, so one outage does not hide the other fact.
+      - name: Check that prod serves the snapshot the archive holds
+        if: always() && steps.liveness.outcome != 'skipped'
+        env:
+          SITE_URL: https://evidaxis.org
+          SITE_LABEL: evidaxis
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+        run: node scripts/freshness-check.mjs

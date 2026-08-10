@@ -62,6 +62,20 @@ jobs:
         # and restores the canonical v2 nodes.json, so the heartbeat stays v2-consistent.
         run: python3 collectors/taxonomy_v2.py --date "$(date -u +%Y-%m-%d)"
 
+      - name: Refresh the owner-publication cache for newly seeded repositories
+        # The person-free guard fails CLOSED: the site refuses to render a card
+        # whose owner is unclassified, which is correct and was also the reason
+        # the whole build died once the first census tranche seeded ten repos
+        # (2026-08-10: "repository publication classification is unavailable").
+        # The collector regenerates etl/id_map.json here, so this is where the
+        # cache has to keep up; a registry that grows weekly cannot depend on
+        # someone remembering to run a classifier by hand.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 collectors/owner_classify.py
+          python3 collectors/owner_classify.py --verify
+
       - name: Restore public redirects mirror (frozen collector writes a stale one)
         # etl/collect.py is byte-frozen and re-emits the genesis redirects.yaml every
         # run; regenerate it from web/vercel.json (the config that actually executes)

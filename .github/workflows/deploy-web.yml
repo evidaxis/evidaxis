@@ -10,11 +10,28 @@ name: deploy-web
 
 # ACTIVATED 2026-07-11: VERCEL_* secrets set; prod HTML is now a pure function of
 # the committed tree (map#16 closed). deploy.sh remains the manual fallback.
+
+# PUBLICATION CHAIN REPAIRED 2026-08-10. The `push` trigger below can never fire
+# for the weekly snapshot: GitHub deliberately does not start workflows for
+# commits pushed with the default GITHUB_TOKEN, and weekly-snapshot pushes with
+# exactly that token. So every automated snapshot since deploys were activated
+# landed in git and stopped there, and prod only moved when a human happened to
+# push web/** afterwards. Evidence: five weekly-snapshot runs between 07-11 and
+# 08-08, two deploy-web runs in the same window, both from human pushes; on
+# 2026-08-10 prod still served the 08-01 snapshot (135 systems) while main held
+# 08-08 (143), so the first census activation tranche was invisible for a week.
+# The `workflow_run` trigger closes that gap, and the post-deploy step below
+# turns "prod serves the snapshot main holds" into a checked fact rather than an
+# assumption. Freshness is watched independently every 30 min by
+# scripts/freshness-check.mjs (liveness-check.yml).
 on:
   workflow_dispatch: {}
   push:
     branches: [main]
-    paths: ['web/**', 'data/snapshots/**', 'data/latest.json']
+    paths: ['web/**', 'data/snapshots/**', 'data/latest.json', 'data/observations/**']
+  workflow_run:
+    workflows: ["weekly-snapshot"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -22,10 +39,16 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # A failed or cancelled producer must not publish a half-written snapshot.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           persist-credentials: false
+          # workflow_run checks out the SHA the PRODUCER started from, which is
+          # the commit BEFORE the snapshot it just wrote. Deploying that would
+          # republish last week verbatim and look like a successful publication.
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
       - name: Require Vercel secrets
         env:
@@ -62,3 +85,22 @@ jobs:
           printf '{"projectId":"%s","orgId":"%s"}\n' "$VERCEL_PROJECT_ID" "$VERCEL_ORG_ID" > dist/.vercel/project.json
           cd dist
           npx vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"
+
+      - name: Verify prod serves the snapshot this tree holds
+        # A deploy whose CLI exited 0 while the live host keeps serving last
+        # week's snapshot is exactly the silent failure this chain exists to
+        # prevent, so publication is confirmed against evidaxis.org itself.
+        run: |
+          DATE=$(python3 -c "import json;print(json.load(open('data/latest.json'))['snapshot_date'])")
+          URL="https://evidaxis.org/snapshots/$DATE/snapshot.json"
+          for i in $(seq 1 12); do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -H 'cache-control: no-cache' "$URL" || echo 000)
+            if [ "$CODE" = "200" ]; then
+              echo "prod serves $DATE"
+              exit 0
+            fi
+            echo "attempt $i: $URL -> $CODE"
+            sleep 15
+          done
+          echo "::error::prod does not serve $DATE although the deploy reported success"
+          exit 1
