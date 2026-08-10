@@ -4,7 +4,7 @@
   "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
-  "census_2026-08": "2026-08-03: activation tranche of 10 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-08": "2026-08-10: activation tranche of 10 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1390,6 +1390,96 @@
      "entity_type": "repo",
      "name": "graphify",
      "homepage": "https://github.com/Graphify-Labs/graphify",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "harry0703/MoneyPrinterTurbo",
+     "entity_type": "repo",
+     "repo_id": 770153867,
+     "name": "MoneyPrinterTurbo",
+     "homepage": "https://github.com/harry0703/MoneyPrinterTurbo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "DietrichGebert/ponytail",
+     "entity_type": "repo",
+     "repo_id": 1266797999,
+     "name": "ponytail",
+     "homepage": "https://github.com/DietrichGebert/ponytail",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "JuliusBrussee/caveman",
+     "entity_type": "repo",
+     "repo_id": 1201173969,
+     "name": "caveman",
+     "homepage": "https://github.com/JuliusBrussee/caveman",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "TauricResearch/TradingAgents",
+     "entity_type": "repo",
+     "repo_id": 909213664,
+     "name": "TradingAgents",
+     "homepage": "https://github.com/TauricResearch/TradingAgents",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "hacksider/Deep-Live-Cam",
+     "entity_type": "repo",
+     "repo_id": 695864515,
+     "name": "Deep-Live-Cam",
+     "homepage": "https://github.com/hacksider/Deep-Live-Cam",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "opencv/opencv",
+     "entity_type": "repo",
+     "repo_id": 5108051,
+     "name": "opencv",
+     "homepage": "https://github.com/opencv/opencv",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "thedotmack/claude-mem",
+     "entity_type": "repo",
+     "repo_id": 1048065319,
+     "name": "claude-mem",
+     "homepage": "https://github.com/thedotmack/claude-mem",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ChatGPTNextWeb/NextChat",
+     "entity_type": "repo",
+     "repo_id": 612344730,
+     "name": "NextChat",
+     "homepage": "https://github.com/ChatGPTNextWeb/NextChat",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "PaddlePaddle/PaddleOCR",
+     "entity_type": "repo",
+     "repo_id": 262296122,
+     "name": "PaddleOCR",
+     "homepage": "https://github.com/PaddlePaddle/PaddleOCR",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "infiniflow/ragflow",
+     "entity_type": "repo",
+     "repo_id": 730534580,
+     "name": "ragflow",
+     "homepage": "https://github.com/infiniflow/ragflow",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
     }

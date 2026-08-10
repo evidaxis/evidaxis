@@ -1,0 +1,80 @@
+{
+ "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+ "sources": [
+  "github-search-api",
+  "github-graphql"
+ ],
+ "examined_estimate": 5513,
+ "candidates": [
+  {
+   "repo": "harry0703/MoneyPrinterTurbo",
+   "cohort": "unassigned-v1",
+   "stars": 102428,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "DietrichGebert/ponytail",
+   "cohort": "unassigned-v1",
+   "stars": 99809,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "JuliusBrussee/caveman",
+   "cohort": "unassigned-v1",
+   "stars": 97180,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "TauricResearch/TradingAgents",
+   "cohort": "unassigned-v1",
+   "stars": 96923,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "hacksider/Deep-Live-Cam",
+   "cohort": "unassigned-v1",
+   "stars": 95839,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "opencv/opencv",
+   "cohort": "unassigned-v1",
+   "stars": 90359,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "thedotmack/claude-mem",
+   "cohort": "unassigned-v1",
+   "stars": 90278,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "ChatGPTNextWeb/NextChat",
+   "cohort": "unassigned-v1",
+   "stars": 88603,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "PaddlePaddle/PaddleOCR",
+   "cohort": "unassigned-v1",
+   "stars": 87337,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "infiniflow/ragflow",
+   "cohort": "unassigned-v1",
+   "stars": 87174,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  }
+ ]
+}
