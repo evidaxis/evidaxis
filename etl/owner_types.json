@@ -10,6 +10,11 @@
       "owner_type": "Organization",
       "repo_id": 814502811
     },
+    "AUTOMATIC1111/stable-diffusion-webui": {
+      "full_name": "AUTOMATIC1111/stable-diffusion-webui",
+      "owner_type": "User",
+      "repo_id": 527591471
+    },
     "All-Hands-AI/OpenHands": {
       "full_name": "OpenHands/OpenHands",
       "owner_type": "Organization",
@@ -44,6 +49,11 @@
       "full_name": "Genesis-Embodied-AI/genesis-world",
       "owner_type": "Organization",
       "repo_id": 712225112
+    },
+    "Graphify-Labs/graphify": {
+      "full_name": "Graphify-Labs/graphify",
+      "owner_type": "Organization",
+      "repo_id": 1200597263
     },
     "InternLM/lmdeploy": {
       "full_name": "InternLM/lmdeploy",
@@ -104,6 +114,11 @@
       "full_name": "NVlabs/Sana",
       "owner_type": "Organization",
       "repo_id": 871368615
+    },
+    "NousResearch/hermes-agent": {
+      "full_name": "NousResearch/hermes-agent",
+      "owner_type": "Organization",
+      "repo_id": 1024554267
     },
     "OpenAutoCoder/Agentless": {
       "full_name": "OpenAutoCoder/Agentless",
@@ -214,6 +229,11 @@
       "full_name": "ace-step/ACE-Step",
       "owner_type": "Organization",
       "repo_id": 974040574
+    },
+    "affaan-m/ECC": {
+      "full_name": "affaan-m/ECC",
+      "owner_type": "User",
+      "repo_id": 1136590548
     },
     "agentscope-ai/Trinity-RFT": {
       "full_name": "agentscope-ai/Trinity-RFT",
@@ -370,6 +390,11 @@
       "owner_type": "Organization",
       "repo_id": 169164391
     },
+    "firecrawl/firecrawl": {
+      "full_name": "firecrawl/firecrawl",
+      "owner_type": "Organization",
+      "repo_id": 787076358
+    },
     "fishaudio/fish-speech": {
       "full_name": "fishaudio/fish-speech",
       "owner_type": "Organization",
@@ -460,6 +485,11 @@
       "owner_type": "Organization",
       "repo_id": 883143171
     },
+    "huggingface/transformers": {
+      "full_name": "huggingface/transformers",
+      "owner_type": "Organization",
+      "repo_id": 155220641
+    },
     "huggingface/trl": {
       "full_name": "huggingface/trl",
       "owner_type": "Organization",
@@ -490,10 +520,20 @@
       "owner_type": "Organization",
       "repo_id": 833984877
     },
+    "langchain-ai/langchain": {
+      "full_name": "langchain-ai/langchain",
+      "owner_type": "Organization",
+      "repo_id": 552661142
+    },
     "langchain-ai/langgraph": {
       "full_name": "langchain-ai/langgraph",
       "owner_type": "Organization",
       "repo_id": 676672661
+    },
+    "langflow-ai/langflow": {
+      "full_name": "langflow-ai/langflow",
+      "owner_type": "Organization",
+      "repo_id": 599320067
     },
     "letta-ai/letta": {
       "full_name": "letta-ai/letta",
@@ -554,6 +594,11 @@
       "full_name": "multimodal-art-projection/YuE",
       "owner_type": "Organization",
       "repo_id": 920995232
+    },
+    "obra/superpowers": {
+      "full_name": "obra/superpowers",
+      "owner_type": "User",
+      "repo_id": 1073224795
     },
     "ollama/ollama": {
       "full_name": "ollama/ollama",
@@ -629,6 +674,11 @@
       "full_name": "strands-agents/harness-sdk",
       "owner_type": "Organization",
       "repo_id": 983715534
+    },
+    "tensorflow/tensorflow": {
+      "full_name": "tensorflow/tensorflow",
+      "owner_type": "Organization",
+      "repo_id": 45717250
     },
     "thu-ml/RoboticsDiffusionTransformer": {
       "full_name": "thu-ml/RoboticsDiffusionTransformer",
