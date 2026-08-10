@@ -270,3 +270,40 @@ axis-staleness-check.yml`, fires above 8 days) had not yet triggered — it woul
 this on 08-04, after the fact rather than before. The capture itself is unaffected: deps.dev
 partitions are addressable by snapshot day, so a late capture recovers the same data. What a
 miss actually costs is calendar time in the 28-day live-quarantine clock, not data.
+
+## Live capture 2026-08-03 (ritual 2026-08-10)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-08-03` — 63/90 matched (clean-series
+median), 10 canaries, job `bqjob_r33a035eade0e1c47_0000019feae67b03_1`. Panel manifest
+`026eaa45377a…` unchanged — coverage comparable by construction.
+
+**Sidecar** (`--sidecar 2026-08-03`): PV2P 1133 rows, Projects 122 rows, retention tripwire
+`{earliest: 20230410, latest: 20260803, n: 172}` — no history attrition.
+
+**Same-day capture attempt (process note).** A `--snapshot 2026-08-10` call was also made and
+was aborted by the canary-absence guard ("zero canaries parsed — query/parse broken; aborting
+before burning more partitions"). That is the guard working as designed: the deps.dev partition
+for the current Monday has not landed yet. The weekly tact captures the PREVIOUS Monday's
+partition; no partitions were burned.
+
+**Sanity gate** (`--check sanity-calibration-…9817.json --series v2h1`): KILL-BAR PASS —
+flagged exactly `['2026-06-11', '2026-06-15']` and nothing else. **2026-07-27 promoted CLEAN**;
+2026-08-03 PROVISIONAL per the necessarily-provisional rule.
+Artifact: `data/quarantine/axis3-deps-v2/sanity-check-e4ee7a2d62ab.json`.
+
+**Evaluation** (`--as-of 2026-07-27 --label live`): status EVALUATED, official cutoff
+**2026-07-27**, 48 voting / 9 rising, 0 unstable-vetoed.
+**c1 PASS · c2 PASS · c3 PASS · c4 FAIL · c5 PASS · c6 PASS** — 5/6; c4 is again the
+small-cohort granularity characterised at baseline, not the poisoned panel-wide-zero regime.
+Artifact: `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-07-27-302bfb08cef9.json`
+(sha256 302bfb08cef9329d…).
+
+**Promotion accounting.** Three confirmed-clean live partitions (2026-07-13, 2026-07-20,
+2026-07-27) of the four required; 2026-08-03 stays provisional until its successor lands
+(~2026-08-17, next ritual). Promotion window remains late August 2026.
+Cost this week: $3.44 capture + ~$0.08 sidecar.
+
+**Weekly card activation (policy REGISTRY-GROWTH-POLICY-2026-07-21, first tranche).** NOT run
+in the ritual chat: no activation pipeline exists yet (policy defines the formula, no script or
+publish path). Per the ritual's own rule, non-routine goes to a dedicated Evidaxis chat — the
+first tranche is a build task (manifest → live cards → deploy), routed there.
