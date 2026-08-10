@@ -28,7 +28,10 @@ on:
   workflow_dispatch: {}
   push:
     branches: [main]
-    paths: ['web/**', 'data/snapshots/**', 'data/latest.json', 'data/observations/**']
+    # Everything the build reads, kept in step with web-ci's input set. The old
+    # list omitted etl/ and taxonomy/, so an activation tranche or a fresh owner
+    # classification changed what the site should say and published nothing.
+    paths: ['web/**', 'data/**', 'etl/**', 'taxonomy/**', 'redirects.yaml']
   workflow_run:
     workflows: ["weekly-snapshot"]
     types: [completed]
