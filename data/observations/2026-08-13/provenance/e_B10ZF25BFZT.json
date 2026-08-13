@@ -1,0 +1,32 @@
+{
+  "network_count": 1402,
+  "updated_at": "2026-08-13T07:34:55Z",
+  "subscribers_count": 57,
+  "size": 46361,
+  "stargazers_count": 12348,
+  "language": "Python",
+  "fork": false,
+  "node_id": "R_kgDOJWpdTQ",
+  "forks_count": 1402,
+  "description": "Go ahead and axolotl questions",
+  "id": 627727693,
+  "visibility": "public",
+  "disabled": false,
+  "default_branch": "main",
+  "full_name": "axolotl-ai-cloud/axolotl",
+  "archived": false,
+  "watchers_count": 12348,
+  "private": false,
+  "pushed_at": "2026-08-13T06:26:39Z",
+  "topics": [
+    "fine-tuning",
+    "llm"
+  ],
+  "name": "axolotl",
+  "homepage": "https://docs.axolotl.ai",
+  "created_at": "2023-04-14T04:25:47Z",
+  "open_issues_count": 269,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
