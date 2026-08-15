@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 035a72a81e59
-  captured_at: 2026-08-08T07:26:37+00:00
-  period: 2026-w32
-  momentum: 52.9
-  percentile: 67
+  snapshot_id: 9d18a826a3f1
+  captured_at: 2026-08-15T07:11:33+00:00
+  period: 2026-w33
+  momentum: 50.5
+  percentile: 56
   confidence: medium
   rising: false
   status: calibration
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.026, "recent_weekly_commits": 0.0, "stars_not_scored": 4171}
-    openalex_citation_momentum: {"status": "present", "slope": 1.6333792263158817, "cohort_z": 0.492, "total_citations": 5769, "by_year": {"2026": 1421, "2025": 2048, "2024": 1507, "2023": 736, "2022": 52, "2020": 1, "2013": 1, "2012": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.41, "recent_weekly_commits": 0.0, "stars_not_scored": 4169}
+    openalex_citation_momentum: {"status": "present", "slope": 1.6333792263158817, "cohort_z": 0.489, "total_citations": 5835, "by_year": {"2026": 1487, "2025": 2048, "2024": 1507, "2023": 736, "2022": 52, "2020": 1, "2013": 1, "2012": 3}, "proxy": null}
 note: "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
 ---
 

@@ -14,19 +14,19 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 035a72a81e59
-  captured_at: 2026-08-08T07:26:37+00:00
-  period: 2026-w32
-  momentum: 49.8
-  percentile: 46
+  snapshot_id: 9d18a826a3f1
+  captured_at: 2026-08-15T07:11:33+00:00
+  period: 2026-w33
+  momentum: 48.7
+  percentile: 47
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.005554674454537242, "cohort_z": -0.014, "recent_weekly_commits": 5.0, "stars_not_scored": 73912}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 345, "by_year": {"2026": 121, "2025": 189, "2024": 35}, "proxy": null}
+    github_commit_velocity: {"slope": -1.691944324388542e-06, "cohort_z": -0.103, "recent_weekly_commits": 4.8, "stars_not_scored": 74107}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 356, "by_year": {"2026": 131, "2025": 190, "2024": 35}, "proxy": null}
 note: "paper_ref: 2403.13372; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
