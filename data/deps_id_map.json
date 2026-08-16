@@ -26,6 +26,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "PaddlePaddle/PaddleOCR": {
+      "system": "pypi",
+      "package": "paddleocr",
+      "pinned_at": "2026-08-16T07:06:23Z"
+    },
     "QwenLM/Qwen-Agent": {
       "system": "pypi",
       "package": "qwen-agent",
@@ -263,6 +268,11 @@
       "package": "dspy",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "thedotmack/claude-mem": {
+      "system": "npm",
+      "package": "claude-mem",
+      "pinned_at": "2026-08-16T07:06:23Z"
     },
     "unslothai/unsloth": {
       "system": "pypi",
