@@ -1,0 +1,44 @@
+name: Registry tranche staleness check
+# Fail-safe sensor for the weekly card-activation tranche («пополнение индекса»).
+# Twin of axis-staleness-check (keeper request 2026-07-21: "I will forget — wire it
+# into rituals"; extended 2026-08-18 after the third tranche slipped a day: the
+# ritual captured the axis but no chat owned the tranche). Pure git-based fact
+# sensor: if the newest committed tranche file is older than the threshold, ping
+# Telegram. SILENT while the weekly tranche lands on time — dead-week alarm, not a
+# notification channel.
+on:
+  schedule:
+    - cron: '41 8 * * *'   # daily 08:41 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check days since last activation tranche
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+          THRESHOLD_DAYS: '8'
+        run: |
+          set -euo pipefail
+          newest_file=$(find data/census -path '*/tranches/*-tranche.json' -print0 2>/dev/null \
+                          | xargs -0 -I{} sh -c 'echo "$(git log -1 --format=%ct -- "{}") {}"' \
+                          | sort -n | tail -1 || true)
+          if [ -z "$newest_file" ]; then echo "no tranches found"; exit 1; fi
+          ts=${newest_file%% *}
+          days=$(( ( $(date +%s) - ts ) / 86400 ))
+          latest="commit $(date -u -d @"$ts" +%F) (${newest_file#* })"
+          echo "newest tranche commit: $latest (${days}d ago)"
+          if [ "$days" -gt "$THRESHOLD_DAYS" ]; then
+            msg="⏰ Evidaxis: пополнение индекса (недельный транш карточек) не исполнялось ${days} дн. Скажи Клоду: «продолжаем evidaxis, пополнение индекса»."
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -d chat_id="${ALERT_CHAT_ID}" -d text="$msg" >/dev/null
+            echo "alert sent"; exit 1
+          fi

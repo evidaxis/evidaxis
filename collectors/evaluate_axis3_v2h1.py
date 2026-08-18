@@ -43,7 +43,11 @@ REPO = Path(__file__).resolve().parent.parent
 OBS = REPO / "data" / "observations"
 OUT = REPO / "data" / "quarantine" / "axis3-deps-v2" / "eval"
 
-EVALUATOR_VERSION = "axis3_v2h1_eval_1"
+EVALUATOR_VERSION = "axis3_v2h1_eval_2"
+CRITERIA_RECORD = "AXIS3-DEPS-V2H2-SUPERSESSION-2026-08-18.md"  # c4 -> c4' (panel-level
+                               # gating + >=2 rising cohorts; per-cohort = diagnostic).
+                               # A promotion claim citing an artifact with a different
+                               # criteria version is invalid on its face (record §3).
 MIN_POINTS = 14
 DEPS_FLOOR = 5
 Z_FLOOR = 1.0
@@ -298,12 +302,24 @@ def evaluate(as_of: str, label: str, gate_artifact: Path) -> dict:
         coh_stats[c][1] += 1
         if per_entity[eid]["rising"]:
             coh_stats[c][0] += 1
-    shares = {c: ris / tot for c, (ris, tot) in coh_stats.items() if c not in held_cohorts}
-    c4 = {"shares": {c: round(s, 3) for c, s in shares.items()},
+    # c4' (record AXIS3-DEPS-V2H2-SUPERSESSION-2026-08-18.md §3): non-degeneracy is a
+    # PANEL-level statement. Gating: (a) panel rising share strictly inside
+    # (lo, hi); (b) risers span >= 2 distinct cohorts. Per-cohort shares are
+    # DIAGNOSTIC only — a cohort of n <= 2 cannot attain a share inside the open
+    # band at all (attainable iff n >= 3), which is why the per-cohort form of
+    # c4 was retired as unsatisfiable by construction.
+    panel_share = (len(R) / len(E)) if E else 0.0
+    rising_cohorts = sorted({per_entity[eid]["cohort"] for eid in R})
+    c4 = {"panel_share": round(panel_share, 4),
+          "rising_cohorts": rising_cohorts,
+          "per_cohort_diagnostic": {
+              c: {"share": round(ris / tot, 3), "n": tot, "attainable": tot >= 3}
+              for c, (ris, tot) in sorted(coh_stats.items())},
           "held_cohorts": held_cohorts,
-          "pass": bool(shares) and not held_cohorts and
-                  all(CRIT["rising_share_lo"] < s < CRIT["rising_share_hi"]
-                      for s in shares.values())}
+          "record": CRITERIA_RECORD,
+          "pass": bool(E) and not held_cohorts and
+                  CRIT["rising_share_lo"] < panel_share < CRIT["rising_share_hi"]
+                  and len(rising_cohorts) >= 2}
 
     status = "HOLD" if held_cohorts else "EVALUATED"
     result = {
@@ -340,7 +356,8 @@ def evaluate(as_of: str, label: str, gate_artifact: Path) -> dict:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--as-of", required=True)
-    ap.add_argument("--label", required=True, choices=["baseline", "live"])
+    ap.add_argument("--label", required=True,
+                    choices=["baseline", "live", "diagnostic"])
     ap.add_argument("--gate-check", required=True,
                     help="data_sanity_gate --check artifact (partition states)")
     args = ap.parse_args()

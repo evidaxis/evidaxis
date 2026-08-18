@@ -1,0 +1,830 @@
+{
+  "as_of": "2026-08-03",
+  "axes_snapshot_used": "2026-08-01",
+  "canary": {
+    "agent-frameworks": {
+      "agreement": 0.941,
+      "hold": false,
+      "n": 17
+    },
+    "ai-drug-discovery": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 1
+    },
+    "coding-agents": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 11
+    },
+    "gui-agents": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 2
+    },
+    "inference-serving": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 5
+    },
+    "media-generation": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 2
+    },
+    "multimodal-foundation-models": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 1
+    },
+    "post-training-alignment": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 2
+    },
+    "robotics-embodied": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 6
+    },
+    "unknown": {
+      "agreement": 1.0,
+      "hold": false,
+      "n": 1
+    }
+  },
+  "criteria": {
+    "c1_coverage": {
+      "pass": true,
+      "threshold": 30,
+      "value": 47
+    },
+    "c2_independence": {
+      "pairs": 39,
+      "pass": true,
+      "threshold": 0.5,
+      "unevaluable": false,
+      "value": 0.2847
+    },
+    "c3_flip": {
+      "pass": true,
+      "transitions": [
+        {
+          "denom": 0,
+          "from": "2026-03-16",
+          "status": "UNEVALUABLE",
+          "to": "2026-03-23"
+        },
+        {
+          "denom": 0,
+          "from": "2026-03-23",
+          "status": "UNEVALUABLE",
+          "to": "2026-03-30"
+        },
+        {
+          "denom": 0,
+          "from": "2026-03-30",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-06"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-06",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-14"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-14",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-20"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-20",
+          "status": "UNEVALUABLE",
+          "to": "2026-04-28"
+        },
+        {
+          "denom": 0,
+          "from": "2026-04-28",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-05"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-05",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-11"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-11",
+          "status": "UNEVALUABLE",
+          "to": "2026-05-18"
+        },
+        {
+          "denom": 0,
+          "from": "2026-05-18",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-01"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-01",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-23"
+        },
+        {
+          "denom": 0,
+          "from": "2026-06-23",
+          "status": "UNEVALUABLE",
+          "to": "2026-06-29"
+        },
+        {
+          "churn": 1.0,
+          "denom": 47,
+          "flip": 0.1277,
+          "from": "2026-06-29",
+          "pass": true,
+          "to": "2026-07-06"
+        },
+        {
+          "churn": 0.0208,
+          "denom": 48,
+          "flip": 0.0417,
+          "from": "2026-07-06",
+          "pass": true,
+          "to": "2026-07-13"
+        },
+        {
+          "churn": 0.0,
+          "denom": 48,
+          "flip": 0.0,
+          "from": "2026-07-13",
+          "pass": true,
+          "to": "2026-07-20"
+        },
+        {
+          "churn": 0.0,
+          "denom": 48,
+          "flip": 0.0417,
+          "from": "2026-07-20",
+          "pass": true,
+          "to": "2026-07-27"
+        },
+        {
+          "churn": 0.0,
+          "denom": 48,
+          "flip": 0.0625,
+          "from": "2026-07-27",
+          "pass": true,
+          "to": "2026-08-03"
+        }
+      ]
+    },
+    "c4_nondegeneracy": {
+      "held_cohorts": [],
+      "panel_share": 0.1458,
+      "pass": true,
+      "per_cohort_diagnostic": {
+        "agent-frameworks": {
+          "attainable": true,
+          "n": 17,
+          "share": 0.235
+        },
+        "ai-drug-discovery": {
+          "attainable": false,
+          "n": 1,
+          "share": 0.0
+        },
+        "coding-agents": {
+          "attainable": true,
+          "n": 11,
+          "share": 0.273
+        },
+        "gui-agents": {
+          "attainable": false,
+          "n": 2,
+          "share": 0.0
+        },
+        "inference-serving": {
+          "attainable": true,
+          "n": 5,
+          "share": 0.0
+        },
+        "media-generation": {
+          "attainable": false,
+          "n": 2,
+          "share": 0.0
+        },
+        "multimodal-foundation-models": {
+          "attainable": false,
+          "n": 1,
+          "share": 0.0
+        },
+        "post-training-alignment": {
+          "attainable": false,
+          "n": 2,
+          "share": 0.0
+        },
+        "robotics-embodied": {
+          "attainable": true,
+          "n": 6,
+          "share": 0.0
+        },
+        "unknown": {
+          "attainable": false,
+          "n": 1,
+          "share": 0.0
+        }
+      },
+      "record": "AXIS3-DEPS-V2H2-SUPERSESSION-2026-08-18.md",
+      "rising_cohorts": [
+        "agent-frameworks",
+        "coding-agents"
+      ]
+    },
+    "c5_floors": {
+      "note": ">= 14 clean points, >= 5 deps",
+      "pass": true
+    },
+    "c6_no_lookahead": {
+      "note": "as-of + gate-artifact pinned; clean prefix only",
+      "pass": true
+    }
+  },
+  "label": "diagnostic",
+  "per_entity": {
+    "e_03QFRGK7VQX": {
+      "cohort": "robotics-embodied",
+      "endpoint_up": true,
+      "latest": 194,
+      "points": 18,
+      "rising": false,
+      "slope": 0.019226,
+      "theil_sen": 0.018688,
+      "unstable": false,
+      "z": 0.592
+    },
+    "e_13NVVKJA2MM": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 1616,
+      "points": 18,
+      "rising": false,
+      "slope": 0.030593,
+      "theil_sen": 0.030602,
+      "unstable": false,
+      "z": 0.626
+    },
+    "e_15264R968MN": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": false,
+      "latest": 13,
+      "points": 18,
+      "rising": false,
+      "slope": 0.001147,
+      "theil_sen": 0.0,
+      "unstable": true,
+      "z": -1.674
+    },
+    "e_1GSH6ZQHW7B": {
+      "cohort": "gui-agents",
+      "endpoint_up": true,
+      "latest": 92,
+      "points": 18,
+      "rising": false,
+      "slope": 0.009992,
+      "theil_sen": 0.010458,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_2CS7SM2993J": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 629,
+      "points": 18,
+      "rising": false,
+      "slope": 0.026929,
+      "theil_sen": 0.026915,
+      "unstable": false,
+      "z": 0.308
+    },
+    "e_3HZS2JPM2CR": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 332,
+      "points": 18,
+      "rising": false,
+      "slope": 0.020953,
+      "theil_sen": 0.020685,
+      "unstable": false,
+      "z": -0.129
+    },
+    "e_3K17NV4B0JF": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 185,
+      "points": 18,
+      "rising": true,
+      "slope": 0.039652,
+      "theil_sen": 0.039006,
+      "unstable": false,
+      "z": 1.004
+    },
+    "e_4A9TG2M8403": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 69,
+      "points": 18,
+      "rising": false,
+      "slope": 0.016949,
+      "theil_sen": 0.015939,
+      "unstable": false,
+      "z": -0.013
+    },
+    "e_4P7EDPAWCY2": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 95,
+      "points": 18,
+      "rising": false,
+      "slope": 0.011829,
+      "theil_sen": 0.011583,
+      "unstable": false,
+      "z": -0.821
+    },
+    "e_5WYRYN5H1XY": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 455,
+      "points": 18,
+      "rising": false,
+      "slope": 0.019035,
+      "theil_sen": 0.018876,
+      "unstable": false,
+      "z": 0.085
+    },
+    "e_77AC6K7XEWB": {
+      "cohort": "inference-serving",
+      "endpoint_up": true,
+      "latest": 11,
+      "points": 18,
+      "rising": false,
+      "slope": 0.03538,
+      "theil_sen": 0.033789,
+      "unstable": false,
+      "z": 0.571
+    },
+    "e_8N97348DQ66": {
+      "cohort": "robotics-embodied",
+      "endpoint_up": true,
+      "latest": 874,
+      "points": 18,
+      "rising": false,
+      "slope": 0.009593,
+      "theil_sen": 0.009598,
+      "unstable": false,
+      "z": -0.674
+    },
+    "e_97SYW64PA3G": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 27,
+      "points": 18,
+      "rising": true,
+      "slope": 0.071727,
+      "theil_sen": 0.068782,
+      "unstable": false,
+      "z": 2.866
+    },
+    "e_9VRK70WNP96": {
+      "cohort": "media-generation",
+      "endpoint_up": true,
+      "latest": 371,
+      "points": 18,
+      "rising": false,
+      "slope": 0.010057,
+      "theil_sen": 0.00991,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_A4CCB1NFPZB": {
+      "cohort": "gui-agents",
+      "endpoint_up": true,
+      "latest": 75,
+      "points": 18,
+      "rising": false,
+      "slope": 0.009393,
+      "theil_sen": 0.00901,
+      "unstable": false,
+      "z": -0.674
+    },
+    "e_ADT3TJHK8W8": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 206,
+      "points": 18,
+      "rising": false,
+      "slope": 0.034309,
+      "theil_sen": 0.033227,
+      "unstable": false,
+      "z": 0.674
+    },
+    "e_B1Q69HZTTMA": {
+      "cohort": "post-training-alignment",
+      "endpoint_up": true,
+      "latest": 153,
+      "points": 18,
+      "rising": false,
+      "slope": 0.015503,
+      "theil_sen": 0.014985,
+      "unstable": false,
+      "z": -0.674
+    },
+    "e_BTT9Q5KW4YN": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 1959,
+      "points": 18,
+      "rising": true,
+      "slope": 0.064516,
+      "theil_sen": 0.06352,
+      "unstable": false,
+      "z": 2.224
+    },
+    "e_DAFJYGYBDKF": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 6,
+      "points": 18,
+      "rising": false,
+      "slope": 0.031894,
+      "theil_sen": 0.030387,
+      "unstable": false,
+      "z": 0.692
+    },
+    "e_EDX1R1KVT3X": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 146,
+      "points": 18,
+      "rising": false,
+      "slope": 0.0157,
+      "theil_sen": 0.015344,
+      "unstable": false,
+      "z": -0.537
+    },
+    "e_EF7QKB37YJK": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 6,
+      "points": 18,
+      "rising": false,
+      "slope": 0.017192,
+      "theil_sen": 0.014025,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_EY620A0EAK9": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 104,
+      "points": 18,
+      "rising": false,
+      "slope": 0.016283,
+      "theil_sen": 0.015453,
+      "unstable": false,
+      "z": -0.531
+    },
+    "e_H6PPP8CA9RR": {
+      "cohort": "robotics-embodied",
+      "endpoint_up": true,
+      "latest": 80,
+      "points": 18,
+      "rising": false,
+      "slope": 0.020909,
+      "theil_sen": 0.021127,
+      "unstable": false,
+      "z": 0.74
+    },
+    "e_HTQD84GES1K": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 8,
+      "points": 18,
+      "rising": false,
+      "slope": 0.019281,
+      "theil_sen": 0.015707,
+      "unstable": false,
+      "z": -0.564
+    },
+    "e_J16JY8N155H": {
+      "cohort": "post-training-alignment",
+      "endpoint_up": true,
+      "latest": 26,
+      "points": 18,
+      "rising": false,
+      "slope": 0.029399,
+      "theil_sen": 0.027031,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_J4DR3YCQCAN": {
+      "cohort": "robotics-embodied",
+      "endpoint_up": true,
+      "latest": 5,
+      "points": 18,
+      "rising": false,
+      "slope": 0.015052,
+      "theil_sen": 0.012155,
+      "unstable": false,
+      "z": -0.451
+    },
+    "e_JA1TAYFFAHR": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 11,
+      "points": 18,
+      "rising": true,
+      "slope": 0.077739,
+      "theil_sen": 0.072257,
+      "unstable": false,
+      "z": 2.848
+    },
+    "e_JBM5J6NVTF7": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 499,
+      "points": 18,
+      "rising": true,
+      "slope": 0.09301,
+      "theil_sen": 0.092796,
+      "unstable": false,
+      "z": 3.0
+    },
+    "e_KRDEF79H7GD": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 75,
+      "points": 18,
+      "rising": false,
+      "slope": 0.002127,
+      "theil_sen": 0.001254,
+      "unstable": false,
+      "z": -0.71
+    },
+    "e_M5SCCQPBZ89": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 16,
+      "points": 18,
+      "rising": true,
+      "slope": 0.082952,
+      "theil_sen": 0.08397,
+      "unstable": false,
+      "z": 3.0
+    },
+    "e_MB6DQ5PDDKH": {
+      "cohort": "media-generation",
+      "endpoint_up": true,
+      "latest": 97,
+      "points": 18,
+      "rising": false,
+      "slope": 0.041775,
+      "theil_sen": 0.03494,
+      "unstable": false,
+      "z": -0.674
+    },
+    "e_MX90J81EYDE": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 121454,
+      "points": 18,
+      "rising": false,
+      "slope": 0.007882,
+      "theil_sen": 0.008075,
+      "unstable": false,
+      "z": -0.442
+    },
+    "e_P4YGBAFMV94": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 64,
+      "points": 18,
+      "rising": false,
+      "slope": 0.002877,
+      "theil_sen": 0.002953,
+      "unstable": false,
+      "z": -0.674
+    },
+    "e_QTVWFV6FJ2V": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 11,
+      "points": 18,
+      "rising": false,
+      "slope": 0.010891,
+      "theil_sen": 0.009668,
+      "unstable": false,
+      "z": -1.07
+    },
+    "e_R372CCSVG44": {
+      "cohort": "inference-serving",
+      "endpoint_up": true,
+      "latest": 160,
+      "points": 18,
+      "rising": false,
+      "slope": 0.012215,
+      "theil_sen": 0.011822,
+      "unstable": false,
+      "z": -1.011
+    },
+    "e_SV60T2QMXGE": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 308,
+      "points": 18,
+      "rising": true,
+      "slope": 0.043589,
+      "theil_sen": 0.041602,
+      "unstable": false,
+      "z": 1.3
+    },
+    "e_TBARBJKAD2G": {
+      "cohort": "coding-agents",
+      "endpoint_up": true,
+      "latest": 20,
+      "points": 18,
+      "rising": false,
+      "slope": 0.014765,
+      "theil_sen": 0.010104,
+      "unstable": false,
+      "z": -0.115
+    },
+    "e_TRJN6D7V12H": {
+      "cohort": "inference-serving",
+      "endpoint_up": true,
+      "latest": 1059,
+      "points": 18,
+      "rising": false,
+      "slope": 0.015929,
+      "theil_sen": 0.015797,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_TV0JWZEFEAQ": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 385,
+      "points": 18,
+      "rising": false,
+      "slope": 0.022781,
+      "theil_sen": 0.022882,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_VBBNJDDB0DA": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 13,
+      "points": 18,
+      "rising": false,
+      "slope": 0.041622,
+      "theil_sen": 0.039973,
+      "unstable": false,
+      "z": 0.893
+    },
+    "e_VMQ8QRRDWVS": {
+      "cohort": "inference-serving",
+      "endpoint_up": true,
+      "latest": 11,
+      "points": 18,
+      "rising": false,
+      "slope": 0.01967,
+      "theil_sen": 0.01798,
+      "unstable": false,
+      "z": -1.082
+    },
+    "e_VVAJB7D0NQX": {
+      "cohort": "multimodal-foundation-models",
+      "endpoint_up": true,
+      "latest": 61,
+      "points": 18,
+      "rising": false,
+      "slope": 0.022099,
+      "theil_sen": 0.021788,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_X33782S1M13": {
+      "cohort": "unknown",
+      "endpoint_up": true,
+      "latest": 17,
+      "points": 18,
+      "rising": false,
+      "slope": 0.063644,
+      "theil_sen": 0.058892,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_X9JA7ZTD6TF": {
+      "cohort": "agent-frameworks",
+      "endpoint_up": true,
+      "latest": 168,
+      "points": 18,
+      "rising": false,
+      "slope": 0.020938,
+      "theil_sen": 0.021121,
+      "unstable": false,
+      "z": -0.192
+    },
+    "e_Y31RBTP1VWD": {
+      "cohort": "robotics-embodied",
+      "endpoint_up": true,
+      "latest": 79,
+      "points": 18,
+      "rising": false,
+      "slope": 0.010886,
+      "theil_sen": 0.009524,
+      "unstable": false,
+      "z": -0.766
+    },
+    "e_Y3HMWAG1BQZ": {
+      "cohort": "robotics-embodied",
+      "endpoint_up": true,
+      "latest": 14,
+      "points": 18,
+      "rising": false,
+      "slope": 0.017324,
+      "theil_sen": 0.009531,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_YTYXW2BB5AP": {
+      "cohort": "ai-drug-discovery",
+      "endpoint_up": true,
+      "latest": 8,
+      "points": 18,
+      "rising": false,
+      "slope": 0.014036,
+      "theil_sen": 0.009815,
+      "unstable": false,
+      "z": 0.0
+    },
+    "e_Z7YDNC4F139": {
+      "cohort": "inference-serving",
+      "endpoint_up": true,
+      "latest": 64,
+      "points": 18,
+      "rising": false,
+      "slope": 0.031074,
+      "theil_sen": 0.029687,
+      "unstable": false,
+      "z": 0.674
+    }
+  },
+  "rising": [
+    "e_3K17NV4B0JF",
+    "e_97SYW64PA3G",
+    "e_BTT9Q5KW4YN",
+    "e_JA1TAYFFAHR",
+    "e_JBM5J6NVTF7",
+    "e_M5SCCQPBZ89",
+    "e_SV60T2QMXGE"
+  ],
+  "state_machine": {
+    "confirmed_clean": [
+      "2026-03-16",
+      "2026-03-23",
+      "2026-03-30",
+      "2026-04-06",
+      "2026-04-14",
+      "2026-04-20",
+      "2026-04-28",
+      "2026-05-05",
+      "2026-05-11",
+      "2026-05-18",
+      "2026-06-01",
+      "2026-06-23",
+      "2026-06-29",
+      "2026-07-06",
+      "2026-07-13",
+      "2026-07-20",
+      "2026-07-27",
+      "2026-08-03"
+    ],
+    "excluded_partitions": [
+      "2026-06-11",
+      "2026-06-15"
+    ],
+    "gate_artifact": "sanity-check-961a42fc06f2.json",
+    "official_cutoff": "2026-08-03",
+    "provisional": []
+  },
+  "status": "EVALUATED",
+  "unstable_vetoed": [],
+  "v": "axis3_v2h1_eval_2",
+  "voting": 48
+}

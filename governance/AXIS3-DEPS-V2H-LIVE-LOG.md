@@ -333,3 +333,31 @@ Artifact: `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-08-03-ef7b1b3a402d.
 itself (supersession record + panel verdict) is a governance step, not a ritual step —
 routed to a dedicated Evidaxis chat per the non-routine rule.
 Cost this week: $3.44 capture + ~$0.08 sidecar.
+
+## 2026-08-18 — Promotion adjudication: NOT promoted; c4 re-specified forward-only (v2h.2)
+
+**Correction to the 2026-08-17 entry.** "Promotion accounting — GATE MET (4/4)" was wrong
+in two ways. (1) The count included 2026-07-13, a partition captured inside the v2h.1
+BASELINE run; the record forbids the baseline from promoting. Forward-captured
+confirmed-clean partitions are **three** (07-20, 07-27, 08-03); 08-10 becomes clean at the
+2026-08-24 tact. (2) The count was never the whole gate: clause 3 requires c1/c2/c4/c5/c6
+PASS at EVERY confirmed-clean live cutoff, and **c4 has FAILED at all four cutoffs** — the
+"5/6" reported weekly was itself the gate not being met.
+
+**Adjudication:** NOT PROMOTED; axis remains in live quarantine. Termination not
+triggered (criterion-construct failure, not axis death). Full record:
+`AXIS3-DEPS-V2H2-SUPERSESSION-2026-08-18.md` — c4 was unsatisfiable by construction for
+6 of 10 cohorts (n<=2 admits no share inside the open band (0, 0.40); smallest attaining
+n is 3), and re-specified as c4′: panel-level share in (0, 40%) + risers in >=2 cohorts,
+per-cohort shares demoted to diagnostics with an attainability flag. Evaluator bumped to
+`axis3_v2h1_eval_2`; artifacts name the governing record.
+
+**Forward window:** partitions 2026-08-17 / 08-24 / 08-31, captured at the 08-24 / 08-31 /
+09-07 tacts, each confirmed clean by its successor → promotion window **~2026-09-14**.
+
+**Diagnostics (disclosed, never gate evidence):** under c4′ all four existing cutoffs
+evaluate 6/6 (`v2h1-diagnostic-2026-07-13-9cffdd563740` · `…-07-20-6212857b0a3a` ·
+`…-07-27-d6307865ce42` · `…-08-03-e3debb70249a`; panel shares 0.146/0.188/0.188/0.146,
+rising cohorts 2/3/3/2). Recorded so the forward window is not read as waiting for a
+different answer — the change is forward-only precisely because it would decide the
+outcome retroactively.
