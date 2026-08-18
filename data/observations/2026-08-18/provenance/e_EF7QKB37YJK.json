@@ -1,0 +1,33 @@
+{
+  "description": "SWE-bench: Can Language Models Resolve Real-world Github Issues?",
+  "network_count": 943,
+  "node_id": "R_kgDOKbrykg",
+  "created_at": "2023-10-04T01:22:46Z",
+  "open_issues_count": 6,
+  "pushed_at": "2026-08-18T01:07:16Z",
+  "topics": [
+    "benchmark",
+    "language-model",
+    "software-engineering"
+  ],
+  "default_branch": "main",
+  "full_name": "SWE-bench/SWE-bench",
+  "disabled": false,
+  "size": 79682,
+  "language": "Python",
+  "fork": false,
+  "id": 700117650,
+  "stargazers_count": 5657,
+  "private": false,
+  "watchers_count": 5657,
+  "updated_at": "2026-08-18T03:00:59Z",
+  "forks_count": 943,
+  "name": "SWE-bench",
+  "subscribers_count": 36,
+  "visibility": "public",
+  "archived": false,
+  "homepage": "https://www.swebench.com",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
