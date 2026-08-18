@@ -1,0 +1,85 @@
+{
+  "v": "frontier_1",
+  "date": "2026-08-18",
+  "recorded_at": "2026-08-18T07:17:34Z",
+  "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+  "sources": [
+    "github-search-api",
+    "github-graphql"
+  ],
+  "examined_estimate": 5499,
+  "candidates_returned": 10,
+  "candidates": [
+    {
+      "repo": "earendil-works/pi",
+      "cohort": "unassigned-v1",
+      "stars": 92670,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "nexu-io/open-design",
+      "cohort": "unassigned-v1",
+      "stars": 88551,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "cohort": "unassigned-v1",
+      "stars": 88128,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "netdata/netdata",
+      "cohort": "unassigned-v1",
+      "stars": 80218,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "bytedance/deer-flow",
+      "cohort": "unassigned-v1",
+      "stars": 80216,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "d2l-ai/d2l-zh",
+      "cohort": "unassigned-v1",
+      "stars": 79778,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Egonex-AI/Understand-Anything",
+      "cohort": "unassigned-v1",
+      "stars": 79666,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "unclecode/crawl4ai",
+      "cohort": "unassigned-v1",
+      "stars": 78549,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "nomic-ai/gpt4all",
+      "cohort": "unassigned-v1",
+      "stars": 77406,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "rtk-ai/rtk",
+      "cohort": "unassigned-v1",
+      "stars": 76442,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    }
+  ],
+  "note": "Discovery-frontier denominator (un-backfillable). Candidates are systems CONSIDERED at scan time, not judgments; admission happens via a paired seeds.json change (CI enforces the pairing). Positive-only: no per-system negatives are recorded."
+}

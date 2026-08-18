@@ -4,7 +4,7 @@
   "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
-  "census_2026-08": "2026-08-10: activation tranche of 10 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-08": "2026-08-18: activation tranche of 10 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1480,6 +1480,96 @@
      "repo_id": 730534580,
      "name": "ragflow",
      "homepage": "https://github.com/infiniflow/ragflow",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "earendil-works/pi",
+     "entity_type": "repo",
+     "repo_id": 1035029907,
+     "name": "pi",
+     "homepage": "https://github.com/earendil-works/pi",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nexu-io/open-design",
+     "entity_type": "repo",
+     "repo_id": 1223170290,
+     "name": "open-design",
+     "homepage": "https://github.com/nexu-io/open-design",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "addyosmani/agent-skills",
+     "entity_type": "repo",
+     "repo_id": 1158722119,
+     "name": "agent-skills",
+     "homepage": "https://github.com/addyosmani/agent-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "netdata/netdata",
+     "entity_type": "repo",
+     "repo_id": 10744183,
+     "name": "netdata",
+     "homepage": "https://github.com/netdata/netdata",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "bytedance/deer-flow",
+     "entity_type": "repo",
+     "repo_id": 979115477,
+     "name": "deer-flow",
+     "homepage": "https://github.com/bytedance/deer-flow",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "d2l-ai/d2l-zh",
+     "entity_type": "repo",
+     "repo_id": 101138315,
+     "name": "d2l-zh",
+     "homepage": "https://github.com/d2l-ai/d2l-zh",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Egonex-AI/Understand-Anything",
+     "entity_type": "repo",
+     "repo_id": 1182081931,
+     "name": "Understand-Anything",
+     "homepage": "https://github.com/Egonex-AI/Understand-Anything",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "unclecode/crawl4ai",
+     "entity_type": "repo",
+     "repo_id": 798201435,
+     "name": "crawl4ai",
+     "homepage": "https://github.com/unclecode/crawl4ai",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nomic-ai/gpt4all",
+     "entity_type": "repo",
+     "repo_id": 619959033,
+     "name": "gpt4all",
+     "homepage": "https://github.com/nomic-ai/gpt4all",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "rtk-ai/rtk",
+     "entity_type": "repo",
+     "repo_id": 1139971460,
+     "name": "rtk",
+     "homepage": "https://github.com/rtk-ai/rtk",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
     }

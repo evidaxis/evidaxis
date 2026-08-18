@@ -358,13 +358,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "f8d690c98251876b20dabac74c42bce7355bc96df15da771215269af003f774e",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "dceac12f70df2b9eb0fae9c90aff1fe75da309c0",
    "license_observed": "Apache-2.0",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 1035029907,
@@ -374,13 +375,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "4c0ad1dc2a794ac5e4bed9784add4fc6404d614f500f2cfd7d8f173cdaaf2dce",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "c6eb6281a806a9c5d7ec41d2850692f7f7ebcb59",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "ai agent",
-   "stratum": "declared-application"
+   "stratum": "declared-application",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 1158722119,
@@ -390,13 +392,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "5073104a4d81c692b63cd86cb6ad59a5fafdb16e0d550116697ee5bfadb3b940",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "7829ffd90d973b6325f5f12f1b1226dcace74443",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "coding agents",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 10744183,
@@ -406,13 +409,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "861057761476bacce1120d7a27302846668582462267251b8cced9bb8181b4fd",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "281f482207ed3c4b4feca4b65901c97f5bc76eef",
    "license_observed": "GPL-3.0",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 101138315,
@@ -422,13 +426,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "43a21b96fafb26ad466d6384e8409745d192cd976d225bad10d0e5495e1ffc59",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "e6b18ccea71451a55fcd861d7b96fddf2587b09a",
    "license_observed": "Apache-2.0",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 979115477,
@@ -438,13 +443,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "a4cff4f08e7efaf404ddca2fad1eaa1adcc14200879641adefb322fe590f5006",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "8659fca8fd6bb8db9b1ad4e7f79dfd01fe5d0a0f",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 619959033,
@@ -454,13 +460,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "09c8a64472da5a27f24bd37996ee48a3ae5f27557e27aa3b395a600ff0ad14c4",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "b666d16db5aeab8b91aaf7963adcee9c643734d7",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 1182081931,
@@ -470,13 +477,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "8adf5d808f6ff0e6275d86648a1b4ea23f841851d23a1f854bc3655bbac7a7aa",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "fe8c5bc591716aafd79b4765549328f08ef5a52e",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 798201435,
@@ -486,13 +494,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "5f0fe6d29f182046aa3889e6f5bd4de98132bd3ee391a7e6ef1b51f7fe2cb4a5",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "7e801521428ee12509994d39151006f64055ebe3",
    "license_observed": "Apache-2.0",
    "admitted_by": "storefront",
    "signal": "llm",
-   "stratum": "model-infrastructure"
+   "stratum": "model-infrastructure",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 22887094,
@@ -534,13 +543,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "980f4cc6444307d8857a4d29411a8cfc733ec71d9de04f96712509c425c5aeb2",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "activated",
    "wave": "backlog",
    "commit_oid": "8722378a22d197ad8cc2e86d40b468cc8fb8571d",
    "license_observed": "Apache-2.0",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "activated_on": "2026-08-18"
   },
   {
    "repo_id": 1010681419,
@@ -39992,13 +40002,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "77513c15d3a7bbcf01d64ccde03fe1d651223fc4b6f9f5ec01aa004b509a4db3",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "unavailable",
    "wave": "backlog",
    "commit_oid": "0ae5c75fa77df3ce2154cc5701a531a9507ade65",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "coding agents",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "unavailable_on": "2026-08-18"
   },
   {
    "repo_id": 1003248064,
@@ -56264,13 +56275,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "054b9613eae7a21b34a27d40852d0a63f1d3f3e7cfd0328de04617e12d4a51bb",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "unavailable",
    "wave": "backlog",
    "commit_oid": "8edeef3e574f8fb68ad2f665cd42074850215ddb",
    "license_observed": "MIT",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "unavailable_on": "2026-08-18"
   },
   {
    "repo_id": 494468353,
@@ -85274,13 +85286,14 @@
    "first_qualified_on": "2026-08-03",
    "qualifying_text_sha256": "78b41d3fa2de044cdbb97024b930b7e45bf52544cd0b4a994755b1920cbf99d8",
    "cohort": "unassigned-v1",
-   "status": "pending",
+   "status": "unavailable",
    "wave": "backlog",
    "commit_oid": "7b3a79708d881fc5543a314656d804ebd18fcf3c",
    "license_observed": "GPL-3.0",
    "admitted_by": "storefront",
    "signal": "topic",
-   "stratum": "other-declared"
+   "stratum": "other-declared",
+   "unavailable_on": "2026-08-18"
   },
   {
    "repo_id": 693936906,
