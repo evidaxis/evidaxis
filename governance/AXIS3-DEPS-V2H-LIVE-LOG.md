@@ -307,3 +307,29 @@ Cost this week: $3.44 capture + ~$0.08 sidecar.
 in the ritual chat: no activation pipeline exists yet (policy defines the formula, no script or
 publish path). Per the ritual's own rule, non-routine goes to a dedicated Evidaxis chat — the
 first tranche is a build task (manifest → live cards → deploy), routed there.
+
+## Live capture 2026-08-10 (ritual 2026-08-17)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-08-10` — 66/93 matched, 10 canaries
+(panel 93 systems / 631 packages, manifest 026eaa45377a…, job bqjob_r1605ef5733587e07…).
+
+**Sidecar** (`--sidecar 2026-08-10`): PV2P 1141 rows, Projects 132 rows, retention tripwire
+{earliest 20230410 · latest 20260810 · n 173}.
+
+**Sanity gate** (`--check sanity-calibration-3e51319d9817.json --series v2h1`): KILL-BAR PASS —
+flagged exactly `['2026-06-11', '2026-06-15']` and nothing else. **2026-08-03 promoted CLEAN**
+(cov=63, share=0.0); 2026-08-10 PROVISIONAL per the necessarily-provisional rule (cov=66).
+Artifact: `data/quarantine/axis3-deps-v2/sanity-check-961a42fc06f2.json`.
+
+**Evaluation** (`--as-of 2026-08-03 --label live --gate-check sanity-check-961a42fc06f2.json`):
+status EVALUATED, official cutoff **2026-08-03**, 48 voting / 7 rising, 0 unstable-vetoed.
+**c1 PASS · c2 PASS · c3 PASS · c4 FAIL · c5 PASS · c6 PASS** — 5/6; c4 is again the
+small-cohort granularity characterised at baseline.
+Artifact: `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-08-03-ef7b1b3a402d.json`
+(sha256 ef7b1b3a402df736…).
+
+**Promotion accounting — GATE MET.** Four confirmed-clean live partitions
+(2026-07-13, 2026-07-20, 2026-07-27, 2026-08-03) of the four required. The promotion act
+itself (supersession record + panel verdict) is a governance step, not a ritual step —
+routed to a dedicated Evidaxis chat per the non-routine rule.
+Cost this week: $3.44 capture + ~$0.08 sidecar.
