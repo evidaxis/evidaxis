@@ -147,14 +147,17 @@ export function recencySwing(weekly: number[]): RecencySwing | Reserved {
   const denom = Math.abs(priorSlope) < 1e-6 ? 1e-6 * Math.sign(priorSlope || 1) : priorSlope;
   const value = recentSlope / denom;
   let label: string;
+  // Data-voice labels only: positive words are allowed, deficit predications on a
+  // named card are not (lexicon guard). Negative regimes are described by the
+  // slopes themselves, never by a verdict word.
   if (Math.abs(priorSlope) < 1e-6) {
-    label = recentSlope > 1e-6 ? 'accelerating from a flat base' : recentSlope < -1e-6 ? 'declining from a flat base' : 'flat';
+    label = recentSlope > 1e-6 ? 'accelerating from a flat base' : recentSlope < -1e-6 ? 'recent slope negative on a flat base' : 'flat';
   } else if (value > 1.15) {
     label = 'accelerating';
   } else if (value < 0) {
-    label = 'reversing';
+    label = 'recent slope sign differs from prior window';
   } else if (value < 0.85) {
-    label = 'decelerating';
+    label = 'recent slope below prior window';
   } else {
     label = 'steady';
   }

@@ -31,6 +31,53 @@ export const FORBIDDEN_ENTITY_LEXICON = [
   /\bcalibration\b/i,
 ];
 
+// Verdict-class terms are forbidden ANYWHERE on a named entity surface (the
+// whole page is about that system); context-class terms above are checked in a
+// window around the name because they can appear legitimately in shared chrome.
+export const FORBIDDEN_ENTITY_PAGE_WIDE = [
+  /\bno signal published\b/i,
+  /\bverdict\b/i,
+  /\bpath to rising\b/i,
+  /\bdecelerat(?:e|es|ed|ing|ion)\b/i,
+  /\bnot rising\b/i,
+  /\bgate shut\b/i,
+  /\bneeds? to recover\b/i,
+  /\bdeclin(?:e|es|ed|ing)\b/i,
+  /\blos(?:e|es|ing) momentum\b/i,
+  /\bfall(?:s|ing) behind\b/i,
+];
+
+/**
+ * Page-wide scan of an entity surface: verdict-class terms are forbidden
+ * regardless of proximity to the name. JSON is parsed to string values first.
+ * @param {string} content
+ * @returns {{ term: string, context: string }[]}
+ */
+export function scanEntityPageWide(content) {
+  const surfaces = [];
+  const trimmed = content.trimStart();
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+    try {
+      surfaces.push(...jsonStrings(JSON.parse(content)));
+    } catch {
+      surfaces.push(normalizeLexiconSurface(content));
+    }
+  } else {
+    surfaces.push(normalizeLexiconSurface(content));
+  }
+  const findings = [];
+  for (const surface of surfaces) {
+    for (const pattern of FORBIDDEN_ENTITY_PAGE_WIDE) {
+      const flags = pattern.flags.includes('g') ? pattern.flags : `${pattern.flags}g`;
+      for (const forbidden of surface.matchAll(new RegExp(pattern.source, flags))) {
+        const start = Math.max(0, (forbidden.index ?? 0) - 60);
+        findings.push({ term: forbidden[0], context: surface.slice(start, (forbidden.index ?? 0) + forbidden[0].length + 60) });
+      }
+    }
+  }
+  return findings;
+}
+
 /** @param {string} file */
 export function entityLexiconAllowed(file) {
   return ENTITY_LEXICON_ALLOWLIST.some((prefix) => file.replace(/^\/+/, '').startsWith(prefix));

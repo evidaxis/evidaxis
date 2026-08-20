@@ -18,7 +18,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
-import { entityLexiconAllowed, scanEntityLexicon } from './entity-lexicon.mjs';
+import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -62,9 +62,13 @@ for (const { id, name } of entityRecords) {
     if (!existsSync(path)) continue;
     const r = rel(path);
     if (entityLexiconAllowed(r)) continue;
-    const findings = scanEntityLexicon(readFileSync(path, 'utf8'), name);
+    const content = readFileSync(path, 'utf8');
+    const findings = scanEntityLexicon(content, name);
     for (const finding of findings) {
       errors.push(`${r}: forbidden entity-adjacent term "${finding.term}" near ${name}`);
+    }
+    for (const finding of scanEntityPageWide(content)) {
+      errors.push(`${r}: forbidden verdict-class term "${finding.term}" on entity surface (…${finding.context}…)`);
     }
   }
 }
