@@ -32,7 +32,11 @@ export default defineConfig({
   integrations: [
     sitemap({
       // _charttest is an underscore private route (not built); filter is belt-and-suspenders.
-      filter: (page) => !page.includes('/charttest') && !page.includes('/_charttest') && !page.includes('/methodology/current/'),
+      filter: (page) =>
+        !page.includes('/charttest')
+        && !page.includes('/_charttest')
+        && !page.includes('/methodology/current/')
+        && !new URL(page).pathname.startsWith('/signals/'),
       serialize(item) {
         const path = new URL(item.url).pathname;
         item.lastmod = (path.includes('/methodology/') || path.includes('/about/'))

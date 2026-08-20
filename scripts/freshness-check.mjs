@@ -4,7 +4,7 @@
 // under plain `node` — no npm install (see freshness.mjs for the fact it
 // watches and why it is separate from the liveness sensor).
 import { readFileSync } from 'node:fs';
-import { evaluateFreshness } from './freshness.mjs';
+import { evaluateFeedFreshness, evaluateFreshness } from './freshness.mjs';
 
 /** @param {string} url */
 async function probe(url) {
@@ -17,6 +17,25 @@ async function probe(url) {
     return { reached: true, status: res.status };
   } catch {
     return { reached: false, status: 0 };
+  }
+}
+
+/** @param {string} url */
+async function probeFeed(url) {
+  try {
+    const res = await fetch(url, {
+      redirect: 'follow',
+      headers: { 'user-agent': 'freshness-sensor/1', 'cache-control': 'no-cache' },
+      signal: AbortSignal.timeout(12_000),
+    });
+    let latestEntryAt = null;
+    if (res.ok) {
+      const body = await res.json().catch(() => null);
+      latestEntryAt = body?.items?.[0]?.date_published ?? null;
+    }
+    return { reached: true, status: res.status, latestEntryAt };
+  } catch {
+    return { reached: false, status: 0, latestEntryAt: null };
   }
 }
 
@@ -64,14 +83,20 @@ try {
 const url = `${site}/snapshots/${snapshotDate}/snapshot.json`;
 const p = await probe(url);
 const result = evaluateFreshness({ site, snapshotDate, now: new Date(), ...p });
-console.log(JSON.stringify({ url, snapshotDate, status: p.status, ...result }));
+const feedUrl = `${site}/feed.json`;
+const feedProbe = await probeFeed(feedUrl);
+const feedResult = evaluateFeedFreshness({ site, now: new Date(), ...feedProbe });
+console.log(JSON.stringify({
+  snapshot: { url, snapshotDate, httpStatus: p.status, ...result },
+  feed: { url: feedUrl, httpStatus: feedProbe.status, latestEntryAt: feedProbe.latestEntryAt, ...feedResult },
+}));
 
-if (result.alert) {
+if (result.alert || feedResult.alert) {
   const actionsLink =
     process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY
       ? `\n${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions`
       : '';
-  await sendTelegram(`🟠 ${label} · публикация отстала\n\n${result.message}${actionsLink}`);
+  await sendTelegram(`🟠 ${label} · публикация отстала\n\n${result.message}\n${feedResult.message}${actionsLink}`);
   process.exit(1);
 }
 process.exit(0);

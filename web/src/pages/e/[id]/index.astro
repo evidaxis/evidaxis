@@ -17,6 +17,9 @@ import { entityGraph, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
 import DepsSparkline from '../../../components/charts/DepsSparkline.astro';
 import Sparkline from '../../../components/Sparkline.astro';
+import { measurementPhrases, measurementStateFor } from '../../../lib/measurement';
+import { canaryGroup, treatmentAnswerFirst, treatmentTitle } from '../../../lib/canary';
+import CitationBlock from '../../../components/CitationBlock.astro';
 
 export function getStaticPaths() {
   return entityUniverse.map((record) => ({ params: { id: record.entity.entity_id }, props: { record } }));
@@ -56,40 +59,23 @@ const repoUrl = publicRepoUrl(e);
 const homepageUrl = publicHomepage(e);
 const distinctHomepageUrl = homepageUrl && homepageUrl !== repoUrl ? homepageUrl : null;
 
-const velRising = e.convergent_axes?.includes('github_commit_velocity') ?? false;
-const citRising = e.convergent_axes?.includes('openalex_citation_momentum') ?? false;
-let pathToRising: string | null = null;
-if (!e.incumbent && e.status !== 'rising') {
-  const need: string[] = [];
-  if (!velRising) need.push(a1.recent_weekly_commits != null && a1.recent_weekly_commits < 5
-    ? 'development velocity to recover (at least 5 commits per week and a positive within-cohort slope)'
-    : 'development velocity to turn positive within its cohort');
-  if (!citRising) need.push(a2.status === 'absent'
-    ? 'a second measurable axis to exist (no academic paper is currently tracked)'
-    : a2.status === 'insufficient' ? 'its citation history to mature (at least 3 completed years) and rise'
-    : 'citation momentum to turn positive within its cohort');
-  pathToRising = need.join('; ');
-}
+const measurementState = measurementStateFor(e, snapshot);
+const statePhrases = measurementPhrases(measurementState);
+const canary = canaryGroup(e.entity_id);
+const isTreatment = canary === 'treatment';
 
 const badgePath = `/badge/${e.entity_id}/${snapshot.period}.svg`;
 const badgeMd = `[![Evidaxis: ${e.name}](https://evidaxis.org${badgePath})](https://evidaxis.org/e/${e.entity_id})`;
-const desc = `Evidaxis measurement of ${e.name}: momentum ${e.momentum != null ? e.momentum.toFixed(1) : 'n/a'} of 100, status ${e.status}, in the ${e.sub_niche} cohort. Computed on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
+const desc = `Weekly open-data measurement of ${e.name} in the ${cohortName} cohort: ${statePhrases.compact}. Methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}.`;
 
-// Answer-first measurement BLUF (quotability lever, SEO/GEO audit 2026-07-14). One
-// self-contained factual sentence carrying the score plus methodology tokens plus
-// gate-state, so a reader or LLM can quote it verbatim. It measures THIS system only;
-// it never ranks it against others (no-rank invariant). "watch" etc. are the site's
-// own gate vocabulary describing one system's convergence state, not a placement.
+// Answer-first measurement summary. State language comes from measurement.ts;
+// this page only combines the typed phrases with score and snapshot identifiers.
 const momStr = e.momentum != null ? `${e.momentum.toFixed(1)} of 100` : 'not yet scored';
-const risingAxes = e.convergent_axes.map((ax) => ax === 'github_commit_velocity' ? 'development-velocity' : 'citation-momentum');
-let blufGate: string;
-if (e.status === 'rising') blufGate = 'Both independent axes are rising within the cohort, so it clears the two-axis convergence gate.';
-else if (e.status === 'watch') blufGate = `Its ${risingAxes.join(' and ')} axis is rising within the cohort while a second independent axis has not converged, so it sits below the two-axis gate.`;
-else if (e.status === 'calibration') blufGate = 'It is a mature incumbent included to calibrate the cohort, measured but not gate-eligible.';
-else blufGate = `No axis is currently rising within the cohort${a2.status !== 'present' ? ', and no second (citation) axis is available' : ''}, so it sits below the two-axis gate.`;
-const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}, measured within the ${cohortName} cohort (n = ${cohortN}). ${blufGate}`;
+const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}, measured within the ${cohortName} cohort (n = ${cohortN}). ${statePhrases.axis_coverage} ${statePhrases.gate}`;
+const answerFirst = treatmentAnswerFirst(e.name, cohortName, measurementState);
+const pageTitle = isTreatment ? treatmentTitle(e.name, measurementState) : `${e.name}, Evidaxis measurement`;
 ---
-<Base title={`${e.name}, Evidaxis measurement`} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]}>
+<Base title={pageTitle} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]} feedLinks={canary !== 'control'}>
   <section class="section ent-wrap">
     <div class="wrap">
       <nav class="crumb mono" aria-label="Breadcrumb">
@@ -99,9 +85,10 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
         <span>{e.name}</span>
       </nav>
 
+      {isTreatment && <p class="measure-bluf" data-canary-treatment="answer-first">{answerFirst}</p>}
       {isSuperseded ? (
         <article class="panel preserved-record">
-          <p class="preserved-banner">Preserved historical record; last measured {record.lastSeenSnapshot}; status superseded</p>
+          <p class="preserved-banner">Preserved historical record; last measured {record.lastSeenSnapshot}; record status: superseded</p>
           <header>
             <p class="eyebrow">Stable entity record</p>
             <h1>{e.name}</h1>
@@ -109,9 +96,9 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
           </header>
           <div class="preserved-grid">
             <div><span>Momentum</span><strong>{e.momentum != null ? e.momentum.toFixed(1) : 'n/a'}</strong></div>
-            <div><span>Status at measurement</span><strong>{e.status}</strong></div>
+            <div><span>Measurement state</span><strong>{statePhrases.compact}</strong></div>
             <div><span>Development velocity z</span><strong>{fmtZ(a1?.cohort_z ?? null)}</strong><small>slope {fmtSlope(a1?.slope ?? null)}</small></div>
-            <div><span>Citation momentum z</span><strong>{fmtZ(a2?.cohort_z ?? null)}</strong><small>{a2?.status ?? 'n/a'}</small></div>
+            <div><span>Citation momentum z</span><strong>{fmtZ(a2?.cohort_z ?? null)}</strong><small>{statePhrases.citation_axis}</small></div>
           </div>
           <div class="preserved-context">
             <h2>Historical context</h2>
@@ -121,14 +108,14 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
           </div>
           {related.length > 0 && <div class="preserved-context">
             <h2>Peers in the last-seen snapshot</h2>
-            <ul>{related.map((peer) => <li><a href={`/e/${peer.entity_id}/`}>{peer.name}</a> <span class="mono muted">{peer.status}</span></li>)}</ul>
+            <ul>{related.map((peer) => <li><a href={`/e/${peer.entity_id}/`}>{peer.name}</a> <span class="mono muted">{measurementPhrases(measurementStateFor(peer, snapshot)).compact}</span></li>)}</ul>
           </div>}
         </article>
       ) : (<>
       <EntityCard entity={e} />
 
       <!-- ANSWER-FIRST measurement BLUF: one quotable factual sentence (audit 2026-07-14) -->
-      <p class="measure-bluf">{bluf}</p>
+      {!isTreatment && <p class="measure-bluf">{bluf}</p>}
 
       <!-- DERIVED SIGNALS band -->
       <section class="derived-band" aria-label="Derived signals">
@@ -185,18 +172,12 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
         </div>
       )}
 
-      <!-- VERDICT -->
+      <!-- MEASUREMENT STATE -->
       <div class="panel verdict-panel">
-        <h2 class="eyebrow sec-h">Verdict</h2>
+        <h2 class="eyebrow sec-h">Measurement states</h2>
         <p class="verdict-text">
-          {e.status === 'rising' && <>Both independent axes are rising within the {cohortLabel(e.cohort)} cohort. <strong>{e.name}</strong> meets the convergence gate.</>}
-          {e.status === 'watch' && <><strong>{e.name}</strong> is rising on <strong>{e.convergent_axes.map(a=>a==='github_commit_velocity'?'development velocity':'citation momentum').join(' and ')}</strong>, but a second independent axis has not yet converged. It is on watch.</>}
-          {e.status === 'calibration' && <><strong>{e.name}</strong> is a mature incumbent included to calibrate its cohort. It is measured but not badge-eligible.</>}
-          {(e.status==='tracked'||e.status==='single-axis') && <><strong>{e.name}</strong> is tracked. No axis is currently rising relative to its cohort{a2.status!=='present' ? ', and it has no second (citation) axis available' : ''}.</>}
+          <strong>{e.name}</strong> is under weekly measurement. {statePhrases.history} {statePhrases.development_axis} {statePhrases.citation_axis} {statePhrases.gate}
         </p>
-        {pathToRising && (
-          <p class="path-rising mono"><span class="pr-label">Path to Rising:</span> needs {pathToRising}.</p>
-        )}
       </div>
 
       <!-- SOURCES + BADGE -->
@@ -209,11 +190,11 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
             {distinctHomepageUrl && <div><a href={distinctHomepageUrl}>{distinctHomepageUrl.replace(/^https?:\/\//,'').replace(/\/$/,'')}</a> <span class="mono muted src-note">homepage</span></div>}
           </div>
         </div>
-        <div class="panel badge-panel">
+        {measurementState.positive_signal.state === 'published' && <div class="panel badge-panel">
           <h2 class="eyebrow sec-h">Embed this badge</h2>
-          <div class="badge-img"><img src={badgePath} alt={`Evidaxis ${e.status}, ${e.name}`} width="232" height="56" /></div>
+          <div class="badge-img"><img src={badgePath} alt={`Evidaxis Rising, ${e.name}`} width="232" height="56" /></div>
           <pre class="badge-md mono">{badgeMd}</pre>
-        </div>
+        </div>}
       </div>
 
       {related.length > 0 && (
@@ -226,6 +207,8 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
         </div>
       )}
       </>)}
+
+      {isTreatment && <CitationBlock name={e.name} entityId={e.entity_id} snapshotDate={snapshot.snapshot_date} />}
 
       <!-- RECEIPT -->
       <div class="receipt mono">
@@ -278,9 +261,6 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
   .backfill-panel .bf-cap { font-size: .72rem; color: var(--ink-soft); line-height: 1.5; max-width: 52ch; }
   .backfill-panel .bf-cap b { color: var(--ink-soft); }
   .verdict-text { font-size: 1.05rem; margin: .5rem 0 0; max-width: 66ch; line-height: 1.6; }
-  .path-rising { font-size: .82rem; margin: .9rem 0 0; color: var(--ink-soft); border-left: 3px solid var(--citation); padding-left: 12px; line-height: 1.55; }
-  .path-rising .pr-label { color: var(--citation-ink); }
-
   .ent-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
   @media (max-width: 720px) { .ent-cols { grid-template-columns: 1fr; } }
   .src-panel, .badge-panel { padding: 18px 20px; }

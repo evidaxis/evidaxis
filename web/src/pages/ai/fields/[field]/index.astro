@@ -2,6 +2,8 @@
 import Base from '../../../../layouts/Base.astro';
 import { industries, entitiesInCohort } from '../../../../lib/data';
 import { breadcrumb } from '../../../../lib/jsonld';
+import { measurementStateFor } from '../../../../lib/measurement';
+import { snapshot } from '../../../../lib/data';
 
 export function getStaticPaths() {
   return [...industries().values()].map((f) => ({
@@ -31,7 +33,7 @@ const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Fi
       <div class="stack" style="margin-top:1.6rem">
         {cohorts.map((c) => {
           const es = entitiesInCohort(c.cohortKey);
-          const top = es.filter((e) => e.status === 'rising' || e.status === 'watch').slice(0, 3);
+          const top = es.filter((e) => measurementStateFor(e, snapshot).positive_signal.state === 'published').slice(0, 3);
           return (
             <a class="card" href={`/ai/cohorts/${c.slug}/`}>
               <div class="row" style="justify-content:space-between;align-items:baseline">

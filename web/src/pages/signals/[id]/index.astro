@@ -1,0 +1,42 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { signalEntries, type FeedEntry } from '../../../lib/feed';
+import { breadcrumb } from '../../../lib/jsonld';
+
+export function getStaticPaths() {
+  return signalEntries().map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props as { entry: FeedEntry };
+const canonical = `/signals/${entry.id}/`;
+const desc = entry.summary;
+---
+<Base title={`${entry.title} | Evidaxis`} description={desc} canonical={canonical} noindex={true} jsonLd={breadcrumb([{ name: 'Signal record', path: canonical }])}>
+  <section class="section">
+    <div class="wrap signal-wrap">
+      <p class="eyebrow">{entry.type.replace('_', ' ')} · immutable record</p>
+      <h1>{entry.title}</h1>
+      <p class="lead">{entry.summary}</p>
+      <dl class="panel signal-meta mono">
+        <div><dt>id</dt><dd>{entry.id}</dd></div>
+        <div><dt>event type</dt><dd>{entry.type}</dd></div>
+        <div><dt>event kind</dt><dd>{entry.event_kind}</dd></div>
+        <div><dt>snapshot</dt><dd><a href={`/snapshots/${entry.snapshot_date}/`}>{entry.snapshot_date}</a></dd></div>
+        <div><dt>period</dt><dd>{entry.period}</dd></div>
+      </dl>
+      <h2>Source fields</h2>
+      <ul class="mono source-fields">{entry.source_fields.map((field) => <li>{field}</li>)}</ul>
+      <h2>Typed state</h2>
+      <pre class="state-json">{JSON.stringify(entry.state, null, 2)}</pre>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .signal-wrap { max-width: 850px; }
+  .signal-meta { padding: 18px 20px; margin: 1.5rem 0; }
+  .signal-meta div { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 5px 0; }
+  .signal-meta dt { color: var(--ink-mute); }
+  .signal-meta dd { margin: 0; overflow-wrap: anywhere; }
+  .source-fields { font-size: .78rem; }
+  .state-json { padding: 16px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--surface); overflow: auto; font-size: .72rem; }
+</style>

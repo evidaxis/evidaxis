@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { entityUniverse, publicEntity, publicHomepage, publicRepoUrl } from '../../lib/data';
 import type { ArchivedEntity } from '../../lib/archive';
 import { claimUrnForEntity } from '../../lib/claim_urn';
+import { measurementStateFor, serializeMeasurementState } from '../../lib/measurement';
 
 export function getStaticPaths() {
   return entityUniverse.map((record) => ({ params: { id: record.entity.entity_id }, props: { record } }));
@@ -13,8 +14,19 @@ export const GET: APIRoute = ({ props }) => {
   const snapshot = record.snapshot;
   const repoUrl = publicRepoUrl(e);
   const homepage = publicHomepage(e);
+  const projected = publicEntity(e);
+  const {
+    status: _legacyStatus,
+    rising: _legacyRising,
+    axes_present: _legacyAxesPresent,
+    convergent_axes: _legacyConvergentAxes,
+    note: _legacyNote,
+    ...typedEntity
+  } = projected;
+  const measurementState = measurementStateFor(e, snapshot);
   const body = {
-    entity: publicEntity(e),
+    entity: typedEntity,
+    measurement_state: serializeMeasurementState(measurementState),
     record_status: record.recordStatus,
     last_seen_snapshot: record.lastSeenSnapshot,
     // Format-independent canonical reference (CLAIM-URN.md); cite this, not the URL.

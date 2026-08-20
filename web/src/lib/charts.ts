@@ -17,6 +17,29 @@ export interface Point {
   y: number;
 }
 
+/** Stable, content-addressed DOM id for build-rendered SVG title/desc nodes. */
+export function stableDomId(prefix: string, ...parts: unknown[]): string {
+  const input = parts.map((part) => typeof part === 'string' ? part : stableJson(part)).join('\u001f');
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < input.length; index += 1) {
+    hash ^= input.charCodeAt(index);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return `${prefix}-${(hash >>> 0).toString(36)}`;
+}
+
+function stableJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map((item) => stableJson(item)).join(',')}]`;
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, item]) => item !== undefined && typeof item !== 'function' && typeof item !== 'symbol')
+      .sort(([a], [b]) => a.localeCompare(b));
+    return `{${entries.map(([key, item]) => `${JSON.stringify(key)}:${stableJson(item)}`).join(',')}}`;
+  }
+  const serialized = JSON.stringify(value);
+  return serialized === undefined ? 'null' : serialized;
+}
+
 /** SVG-format a number with bounded precision and no trailing-zero noise. */
 function n2(v: number, dp = 2): string {
   return Number.isFinite(v) ? Number(v.toFixed(dp)).toString() : '0';

@@ -5,9 +5,11 @@ import Beeswarm from '../../components/charts/Beeswarm.astro';
 import Donut from '../../components/charts/Donut.astro';
 import { snapshot, industries, entitiesInCohort, SNAP_DATE } from '../../lib/data';
 import { itemListDataset, breadcrumb } from '../../lib/jsonld';
+import { measurementStateFor } from '../../lib/measurement';
+import { computePowerFunnel } from '../../lib/power';
 const inds = [...industries().values()];
 const allCohorts = inds.flatMap((ind) => [...ind.subniches.values()].map((sn) => ({ ind, sn })));
-const c = snapshot.counts;
+const power = computePowerFunnel(snapshot);
 const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts, plus an explicit map of what is not yet measured.`;
 const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: snapshot.entities });
 ---
@@ -33,11 +35,11 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
         </div>
         <div class="donut-pair" style="margin-top:1.4rem">
           <div class="donut-card">
-            <Donut numerator={c.rising} denominator={c.entities} label="convergence" />
-            <div class="cap mono">cross the gate<br />(both axes rising)</div>
+            <Donut numerator={power.rising_published} denominator={power.gate_eligible} label="published Rising" />
+            <div class="cap mono">published positive signals<br />from gate-eligible systems</div>
           </div>
           <div class="donut-card">
-            <Donut numerator={c.axis2_present} denominator={c.entities} label="axis coverage" color="var(--citation)" />
+            <Donut numerator={power.two_axis_measurable} denominator={power.history_sufficient} label="axis coverage" color="var(--citation)" />
             <div class="cap mono">have a measurable<br />citation axis</div>
           </div>
         </div>
@@ -46,7 +48,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
       <div class="stack" style="margin-top:2.4rem">
         {allCohorts.map(({ ind, sn }) => {
           const es = entitiesInCohort(sn.cohortKey);
-          const withCite = es.filter((e) => e.axes.openalex_citation_momentum.status === 'present').length;
+          const withCite = es.filter((e) => measurementStateFor(e, snapshot).axis_coverage.axes.openalex_citation_momentum === 'measurable').length;
           return (
             <div class="panel" style="padding:20px 22px">
               <div class="row" style="justify-content:space-between;align-items:baseline">
@@ -55,7 +57,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
               </div>
               <div class="row" style="margin-top:.9rem;gap:8px">
                 {es.map((e) => (
-                  <a href={`/e/${e.entity_id}/`} class="badge" style={`text-transform:none;${e.status==='rising'?'border-color:var(--velocity);color:var(--velocity-ink)':e.status==='watch'?'border-color:var(--citation);color:var(--citation-ink)':''}`}>{e.name}</a>
+                  <a href={`/e/${e.entity_id}/`} class={`system-link ${measurementStateFor(e, snapshot).positive_signal.state === 'published' ? 'positive-signal' : ''}`}>{e.name}</a>
                 ))}
               </div>
             </div>
@@ -67,12 +69,13 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
         <div class="eyebrow" style="color:var(--citation-ink)">Known gaps</div>
         <ul class="prose" style="margin-top:.7rem;margin-bottom:0">
           <li><strong>Closed-source systems.</strong> Private SaaS leaves few public, hard-to-game signals; this pilot tracks OSS / research-native systems where the data is rich and tamper-resistant.</li>
-          <li><strong>Systems without a paper.</strong> Several tracked systems (e.g. in coding agents) have no academic publication, so they have no citation axis and cannot, by construction, satisfy the two-axis gate. They appear as single-axis.</li>
-          <li><strong>New systems.</strong> Genuinely new (2024–25) systems lack the citation history to confirm momentum yet. Each weekly snapshot adds one data point. Confirmation arrives with time, not before it.</li>
+          <li><strong>Systems without a paper.</strong> Where no academic source is configured, citation-source availability is recorded as <span class="mono">source_not_measured</span>.</li>
+          <li><strong>New systems.</strong> Weekly history is reported as an exact count against the four-observation minimum. Each weekly snapshot adds one observation.</li>
           <li><strong>Beyond AI.</strong> The taxonomy reserves room beyond AI; this pilot measures three AI frontiers only.</li>
         </ul>
       </div>
       <p class="lead" style="max-width:62ch;margin-top:2rem">The record gets stronger the longer it runs. Only a continuous baseline can catch a flare against its own past, and ours starts here.</p>
+      <p class="muted" style="margin-top:1rem"><a href="/coverage/power/">See the measurement power funnel →</a></p>
       <p class="muted" style="margin-top:1.4rem"><a href={`/snapshots/${SNAP_DATE}/`}>See the full snapshot →</a></p>
     </div>
   </section>
@@ -86,6 +89,8 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
   .donut-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 420px; }
   .donut-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 14px; text-align: center; box-shadow: var(--shadow-card); }
   .donut-card .cap { font-size: 11px; color: var(--ink-mute); margin-top: 10px; line-height: 1.45; }
+  .system-link { border: 1px solid var(--hairline); border-radius: 5px; padding: 3px 8px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-soft); }
+  .system-link.positive-signal { border-color: var(--velocity); color: var(--velocity-ink); }
   @media (max-width: 860px) {
     .wall-grid { grid-template-columns: 1fr; }
     .donut-pair { max-width: none; }

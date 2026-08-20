@@ -1,0 +1,223 @@
+{
+ "created": "2026-08-20",
+ "window": "2026-07-22..2026-08-18",
+ "rule": "entity pages impr>=2, sorted impr desc, adjacent pairs, alternating assignment",
+ "pairs": [
+  {
+   "pair": 0,
+   "treatment": "https://evidaxis.org/e/e_S7DQ1QJCCMT/",
+   "t_impr": 221,
+   "t_pos": 9.7,
+   "control": "https://evidaxis.org/e/e_QHYA574DXDQ/",
+   "c_impr": 68,
+   "c_pos": 26.0
+  },
+  {
+   "pair": 1,
+   "treatment": "https://evidaxis.org/e/e_0E3Q2DQH0BA/",
+   "t_impr": 41,
+   "t_pos": 36.9,
+   "control": "https://evidaxis.org/e/e_92WR5N03859/",
+   "c_impr": 56,
+   "c_pos": 26.8
+  },
+  {
+   "pair": 2,
+   "treatment": "https://evidaxis.org/e/e_03QFRGK7VQX/",
+   "t_impr": 37,
+   "t_pos": 32.1,
+   "control": "https://evidaxis.org/e/e_J4DR3YCQCAN/",
+   "c_impr": 35,
+   "c_pos": 17.6
+  },
+  {
+   "pair": 3,
+   "treatment": "https://evidaxis.org/e/e_N73RT0QZ0X4/",
+   "t_impr": 28,
+   "t_pos": 21.4,
+   "control": "https://evidaxis.org/e/e_BQ6HA5A661Z/",
+   "c_impr": 30,
+   "c_pos": 13.2
+  },
+  {
+   "pair": 4,
+   "treatment": "https://evidaxis.org/e/e_Y3HMWAG1BQZ/",
+   "t_impr": 24,
+   "t_pos": 23.3,
+   "control": "https://evidaxis.org/e/e_JA1TAYFFAHR/",
+   "c_impr": 22,
+   "c_pos": 4.1
+  },
+  {
+   "pair": 5,
+   "treatment": "https://evidaxis.org/e/e_1GSH6ZQHW7B/",
+   "t_impr": 20,
+   "t_pos": 8.2,
+   "control": "https://evidaxis.org/e/e_R2KZCZM6TGV/",
+   "c_impr": 22,
+   "c_pos": 55.6
+  },
+  {
+   "pair": 6,
+   "treatment": "https://evidaxis.org/e/e_Y31RBTP1VWD/",
+   "t_impr": 20,
+   "t_pos": 16.2,
+   "control": "https://evidaxis.org/e/e_FJPV9XH9GPR/",
+   "c_impr": 20,
+   "c_pos": 16.5
+  },
+  {
+   "pair": 7,
+   "treatment": "https://evidaxis.org/e/e_7X1NF3PMZZM/",
+   "t_impr": 17,
+   "t_pos": 46.0,
+   "control": "https://evidaxis.org/e/e_KRDEF79H7GD/",
+   "c_impr": 20,
+   "c_pos": 36.5
+  },
+  {
+   "pair": 8,
+   "treatment": "https://evidaxis.org/e/e_1ER3NPA3Y77/",
+   "t_impr": 16,
+   "t_pos": 24.4,
+   "control": "https://evidaxis.org/e/e_DHESXAYAQHW/",
+   "c_impr": 16,
+   "c_pos": 29.3
+  },
+  {
+   "pair": 9,
+   "treatment": "https://evidaxis.org/e/e_9VRK70WNP96/",
+   "t_impr": 14,
+   "t_pos": 8.9,
+   "control": "https://evidaxis.org/e/e_W4SFE6Q23VK/",
+   "c_impr": 15,
+   "c_pos": 48.2
+  },
+  {
+   "pair": 10,
+   "treatment": "https://evidaxis.org/e/e_M6GFCMQK7DQ/",
+   "t_impr": 14,
+   "t_pos": 9.6,
+   "control": "https://evidaxis.org/e/e_EY620A0EAK9/",
+   "c_impr": 14,
+   "c_pos": 31.4
+  },
+  {
+   "pair": 11,
+   "treatment": "https://evidaxis.org/e/e_MMGH765AVAA/",
+   "t_impr": 12,
+   "t_pos": 40.9,
+   "control": "https://evidaxis.org/e/e_Z5PD7ZHKYWB/",
+   "c_impr": 13,
+   "c_pos": 11.2
+  },
+  {
+   "pair": 12,
+   "treatment": "https://evidaxis.org/e/e_ZTAQY2693CR/",
+   "t_impr": 12,
+   "t_pos": 45.9,
+   "control": "https://evidaxis.org/e/e_26C836YXKF2/",
+   "c_impr": 11,
+   "c_pos": 5.7
+  },
+  {
+   "pair": 13,
+   "treatment": "https://evidaxis.org/e/e_QF7Y4CJ00Q4/",
+   "t_impr": 10,
+   "t_pos": 12.8,
+   "control": "https://evidaxis.org/e/e_D81ZQF8BMQS/",
+   "c_impr": 11,
+   "c_pos": 39.0
+  },
+  {
+   "pair": 14,
+   "treatment": "https://evidaxis.org/e/e_9VD4D2XPK7H/",
+   "t_impr": 10,
+   "t_pos": 17.5,
+   "control": "https://evidaxis.org/e/e_P6TVM7W57M8/",
+   "c_impr": 10,
+   "c_pos": 20.1
+  },
+  {
+   "pair": 15,
+   "treatment": "https://evidaxis.org/e/e_4249BQNHNVB/",
+   "t_impr": 9,
+   "t_pos": 43.1,
+   "control": "https://evidaxis.org/e/e_N0ZEZQYXT6K/",
+   "c_impr": 9,
+   "c_pos": 28.8
+  },
+  {
+   "pair": 16,
+   "treatment": "https://evidaxis.org/e/e_5WYRYN5H1XY/",
+   "t_impr": 8,
+   "t_pos": 9.8,
+   "control": "https://evidaxis.org/e/e_607VJ9XWYRJ/",
+   "c_impr": 8,
+   "c_pos": 17.2
+  },
+  {
+   "pair": 17,
+   "treatment": "https://evidaxis.org/e/e_9SWWW2SWASG/",
+   "t_impr": 8,
+   "t_pos": 22.5,
+   "control": "https://evidaxis.org/e/e_AZ9YNR6FPQZ/",
+   "c_impr": 8,
+   "c_pos": 20.0
+  },
+  {
+   "pair": 18,
+   "treatment": "https://evidaxis.org/e/e_JPV9HP2D5X4/",
+   "t_impr": 8,
+   "t_pos": 25.6,
+   "control": "https://evidaxis.org/e/e_P4YGBAFMV94/",
+   "c_impr": 7,
+   "c_pos": 11.0
+  },
+  {
+   "pair": 19,
+   "treatment": "https://evidaxis.org/e/e_77AC6K7XEWB/",
+   "t_impr": 7,
+   "t_pos": 19.3,
+   "control": "https://evidaxis.org/e/e_97SYW64PA3G/",
+   "c_impr": 7,
+   "c_pos": 14.6
+  },
+  {
+   "pair": 20,
+   "treatment": "https://evidaxis.org/e/e_B1Q69HZTTMA/",
+   "t_impr": 7,
+   "t_pos": 20.9,
+   "control": "https://evidaxis.org/e/e_YTYXW2BB5AP/",
+   "c_impr": 7,
+   "c_pos": 25.9
+  },
+  {
+   "pair": 21,
+   "treatment": "https://evidaxis.org/e/e_KZ3W52ZYP6H/",
+   "t_impr": 7,
+   "t_pos": 30.0,
+   "control": "https://evidaxis.org/e/e_2XFTYTGJT3Z/",
+   "c_impr": 7,
+   "c_pos": 26.3
+  },
+  {
+   "pair": 22,
+   "treatment": "https://evidaxis.org/e/e_R2623KSCANW/",
+   "t_impr": 7,
+   "t_pos": 43.4,
+   "control": "https://evidaxis.org/e/e_SV60T2QMXGE/",
+   "c_impr": 6,
+   "c_pos": 11.0
+  },
+  {
+   "pair": 23,
+   "treatment": "https://evidaxis.org/e/e_EDX1R1KVT3X/",
+   "t_impr": 6,
+   "t_pos": 19.2,
+   "control": "https://evidaxis.org/e/e_8N97348DQ66/",
+   "c_impr": 6,
+   "c_pos": 12.0
+  }
+ ]
+}

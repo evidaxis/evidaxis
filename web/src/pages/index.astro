@@ -4,12 +4,14 @@ import CitBars from '../components/charts/CitBars.astro';
 import RankTable from '../components/RankTable.astro';
 import { snapshot, entities, industries, entitiesInCohort, SNAP_DATE } from '../lib/data';
 import { cohortColor, cohortLabel, COHORT_ORDER } from '../lib/cohorts';
+import { CITATION_AXIS, measurementStateFor } from '../lib/measurement';
+import { computePowerFunnel } from '../lib/power';
 import { orgGraph, snapshotDataset } from '../lib/jsonld';
 
-const c = snapshot.counts;
+const power = computePowerFunnel(snapshot);
 const nCohorts = Object.keys(snapshot.cohorts).length;
 const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
-const hero = byMom.find((e) => e.axes.openalex_citation_momentum.status === 'present') ?? byMom[0];
+const hero = byMom.find((e) => measurementStateFor(e, snapshot).axis_coverage.axes[CITATION_AXIS] === 'measurable') ?? byMom[0];
 
 const cohortDesc: Record<string, string> = {
   'robotics-embodied': 'Policies, simulators and embodied agents.',
@@ -23,7 +25,7 @@ const cohortSlug = (key: string) => {
   return '/coverage/';
 };
 
-const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI systems, scored by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
+const desc = `Evidaxis: a weekly record of momentum across ${power.registry_members} open AI systems, scored by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
 ---
 <Base
   title="Evidaxis, the longitudinal map of open AI momentum"
@@ -37,10 +39,10 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow rv">Evidaxis · Pilot 2026</span>
-        <h1 class="rv">We track open AI systems by momentum, and watch which ones <span class="em">accelerate</span>.</h1>
-        <p class="lead rv">We hold a longitudinal record of open AI momentum: every system we track, every week, each input hash-pinned with raw provenance published. Size is never scored. We score the rate of change of public signals, and a system rises only when two independent axes climb together. The baseline comes first. The flare gets recorded against it. Open data, CC0.</p>
+        <h1 class="rv">We measure open AI systems by momentum, <span class="em">week by week</span>.</h1>
+        <p class="lead rv">We hold a longitudinal record of open AI momentum: every system in the census, every week, each input hash-pinned with raw provenance published. Size is never scored. We measure the rate of change of public signals, and publish Rising only when two independent axes converge. Open data, CC0.</p>
         <div class="metastrip mono rv">
-          <span><b>{c.entities}</b> systems</span><span class="dot">·</span>
+          <span><b>{power.registry_members}</b> systems</span><span class="dot">·</span>
           <span><b>{nCohorts}</b> cohorts</span><span class="dot">·</span>
           <span>snapshot <b>{snapshot.snapshot_id}</b></span><span class="dot">·</span>
           <span>period <b>{snapshot.period}</b></span><span class="dot">·</span>
@@ -77,8 +79,8 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
           </div>
           <div class="statcard sc-2">
             <div class="k">rising this snapshot</div>
-            <div class="v">{c.rising}<span style="font-size:14px;color:var(--ink-mute)"> / {c.entities}</span></div>
-            <div class="sub">convergence is rare by design</div>
+            <div class="v">{power.rising_published}<span style="font-size:14px;color:var(--ink-mute)"> / {power.gate_eligible}</span></div>
+            <div class="sub">published / gate eligible</div>
           </div>
         </div>
       </div>
@@ -103,7 +105,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
         </div>
         <div class="axis-item rv">
           <span class="axis-chip gate">gate</span>
-          <div><h3>The convergence gate</h3><p>A system earns the Rising badge only when both axes rise at once. Watch is one axis rising with the other still present; single-axis systems lack a second axis to converge; tracked dual-axis systems are measured for context; calibration anchors are measured, not badged.</p></div>
+          <div><h3>The convergence gate</h3><p>A system receives a Rising badge only when both measurable axes converge. History, axis coverage, cohort floor, and reference-measurement rules are evaluated mechanically each week.</p></div>
         </div>
       </div>
       <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. <a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
@@ -115,23 +117,23 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">2.0, State of snapshot {snapshot.snapshot_id}</span></div>
       <h2 class="rv">Convergence is rare, and that is the point.</h2>
-      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {c.entities} systems across {nCohorts} frontiers in period {snapshot.period}, scored every week, each input hash-pinned. {c.rising === 0 ? 'None cross the gate yet' : `${c.rising} cross the gate`}. A fast codebase runs years ahead of its citations, and a genuinely new system has no citation history yet, so convergence stays rare on purpose. Every weekly snapshot deepens the record the next flare gets measured against.</p>
+      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {power.registry_members} systems across {nCohorts} frontiers in period {snapshot.period}, measured every week, each input hash-pinned. Published Rising signals: {power.rising_published}. Every weekly snapshot extends the observation history used by the next evaluation.</p>
 
       <div class="stat-row">
         <div class="stat rising rv">
           <div class="top"><span class="label">Rising</span><span class="badge rising">both axes</span></div>
-          <div class="num">{c.rising}</div>
-          <div class="delta">{c.rising === 0 ? 'no convergence this snapshot, by design' : 'the full badge, velocity + citations'}</div>
+          <div class="num">{power.rising_published}</div>
+          <div class="delta">published positive signals</div>
         </div>
-        <div class="stat watch rv">
-          <div class="top"><span class="label">Watch</span><span class="badge watch">one rising</span></div>
-          <div class="num">{c.watch}</div>
-          <div class="delta">one axis rising, dual-axis present (not single-axis)</div>
+        <div class="stat history rv">
+          <div class="top"><span class="label">History sufficient</span><span class="mechanical-label mono">≥4 weeks</span></div>
+          <div class="num">{power.history_sufficient}</div>
+          <div class="delta">distinct weekly observations</div>
         </div>
-        <div class="stat tracked rv">
-          <div class="top"><span class="label">Tracked</span><span class="badge tracked">context</span></div>
-          <div class="num">{c.tracked + c.calibration}</div>
-          <div class="delta">tracked + single-axis + calibration, measured for context</div>
+        <div class="stat axes rv">
+          <div class="top"><span class="label">Two axes measurable</span><span class="mechanical-label mono">coverage</span></div>
+          <div class="num">{power.two_axis_measurable}</div>
+          <div class="delta">development and citation axes</div>
         </div>
       </div>
 
@@ -144,7 +146,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
   <section id="coverage" class="below-fold">
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">3.0, Coverage</span></div>
-      <h2 class="rv">{nCohorts} frontiers under watch.</h2>
+      <h2 class="rv">{nCohorts} frontiers under weekly measurement.</h2>
       <p class="sec-sub rv">Across {nCohorts} cohorts, every score is checkable against its hash-pinned inputs. Each system is normalized only against its own cohort.</p>
 
       <div class="cohort-cards">
@@ -164,6 +166,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
       </div>
 
       <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, chart wall, and the frontier we are still extending <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+      <p style="margin-top:12px"><a class="textlink rv" href="/coverage/power/">Measurement power funnel <span class="arr" aria-hidden="true">&rarr;</span></a></p>
     </div>
   </section>
 </Base>
@@ -221,8 +224,9 @@ const desc = `Evidaxis: a weekly record of momentum across ${c.entities} open AI
   .stat .num { font-family: var(--font-display); font-weight: 600; font-size: 3.1rem; line-height: 1; letter-spacing: -.04em; margin: 14px 0 0; }
   .stat .delta { font-family: var(--font-mono); font-size: 12px; margin-top: 8px; color: var(--ink-soft); }
   .stat.rising .num { color: var(--velocity); }
-  .stat.watch .num { color: var(--citation-ink); }
-  .stat.tracked .num { color: var(--ink-soft); }
+  .stat.history .num { color: var(--citation-ink); }
+  .stat.axes .num { color: var(--ink-soft); }
+  .mechanical-label { color: var(--ink-mute); font-size: 10px; }
 
   /* ---- coverage ---- */
   .below-fold { content-visibility: auto; contain-intrinsic-size: auto 600px; }

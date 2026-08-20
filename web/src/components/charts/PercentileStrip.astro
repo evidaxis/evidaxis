@@ -4,7 +4,7 @@
  * marker at the entity's percentile. Null-safe (calibration entities may have
  * no percentile -> honest empty track + "n/a").
  */
-import { scaleLinear } from '../../lib/charts';
+import { scaleLinear, stableDomId } from '../../lib/charts';
 
 export interface Props {
   percentile: number | null;
@@ -17,7 +17,7 @@ const bx = 2, bw = width - 4, by = 9, bh = 8;
 const sx = scaleLinear([0, 100], [bx, bx + bw]);
 const present = percentile != null && isFinite(percentile);
 const mx = present ? sx(percentile as number) : bx;
-const titleId = `ps-t-${Math.random().toString(36).slice(2, 8)}`;
+const titleId = stableDomId('ps-t', percentile, color, width, height);
 ---
 <figure class="evchart" style="margin:0">
   <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={titleId} preserveAspectRatio="none">

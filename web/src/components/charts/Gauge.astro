@@ -5,7 +5,7 @@
  * absent) it renders an honest "no citation axis" state, never a fake value.
  * Recolours in the dark band via the passed CSS-var color (default currentColor).
  */
-import { polar, arcPath, gaugeNeedle } from '../../lib/charts';
+import { polar, arcPath, gaugeNeedle, stableDomId } from '../../lib/charts';
 import { fmtSlope } from '../../lib/data';
 import { fmtZsafe } from '../../lib/cohorts';
 
@@ -24,8 +24,9 @@ const cx = W / 2, cy = W / 2, r = Math.round(size * 0.36);
 const A0 = -135, A1 = 135;
 const tickIds = [-2, -1, 0, 1, 2];
 const zeroPt = polar(cx, cy, r + 8, A0 + (A1 - A0) * 0.5);
-const titleId = `g-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `g-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('g', axisLabel, z, slope, size);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 
 const present = z != null && isFinite(z);
 let g = present ? gaugeNeedle(z as number, cx, cy, r) : null;

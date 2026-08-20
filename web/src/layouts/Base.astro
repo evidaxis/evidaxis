@@ -27,8 +27,10 @@ export interface Props {
   ogImage?: string;             // path; defaults to the brand card
   jsonTwin?: string;            // path to the machine-readable JSON twin (entity/snapshot)
   citeAs?: string;              // durable claim-URN for signposting (RFC 8574 cite-as)
+  noindex?: boolean;
+  feedLinks?: boolean;
 }
-const { title, description, canonical, jsonLd, ogType = 'website', ogImage = '/og.png', jsonTwin, citeAs } = Astro.props;
+const { title, description, canonical, jsonLd, ogType = 'website', ogImage = '/og.png', jsonTwin, citeAs, noindex = false, feedLinks = true } = Astro.props;
 const site = 'https://evidaxis.org';
 const url = site + canonical;
 const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
@@ -60,10 +62,12 @@ const nav = [
   <meta property="og:image" content={site + ogImage} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content={site + ogImage} />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-image-preview:large'} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <link rel="alternate" type="text/plain" href="/llms.txt" />
+  {feedLinks && <link rel="alternate" type="application/atom+xml" title="Evidaxis typed measurement feed" href="/feed.atom" />}
+  {feedLinks && <link rel="alternate" type="application/feed+json" title="Evidaxis typed measurement feed" href="/feed.json" />}
   {jsonTwin && <link rel="alternate" type="application/json" href={jsonTwin} />}
   {citeAs && <link rel="cite-as" href={citeAs} />}
   {blocks.map((b) => (
@@ -117,7 +121,7 @@ const nav = [
         <div>
           <p class="foot-h">Open data</p>
           <a href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Snapshot JSON</a>
-          <a href="/llms.txt">llms.txt</a>
+          <a href="/llms.txt">llms.txt</a>{feedLinks && <> <a href="/feed.atom">Atom feed</a></>}
           <a href="https://github.com/evidaxis">GitHub</a>
           <a href="/about/#cite">How to cite</a>
         </div>

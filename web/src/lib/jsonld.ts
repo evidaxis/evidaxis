@@ -3,6 +3,7 @@
 import type { DepsSignal, Entity, Snapshot } from './data';
 import { publicHomepage, publicOwnerType, publicRepoUrl, snapshots } from './data';
 import { hasSnapshotArtifact } from './archive';
+import { measurementPhrases, measurementStateFor } from './measurement';
 
 import registry from './methodology-registry.json';
 
@@ -124,6 +125,8 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
   const a1 = e.axes.github_commit_velocity;
   const a2 = e.axes.openalex_citation_momentum;
   const vars: any[] = [];
+  const measurementState = measurementStateFor(e, snap);
+  const statePhrases = measurementPhrases(measurementState);
   if (e.momentum != null)
     vars.push({ '@type': 'PropertyValue', name: 'Evidaxis Momentum Score', value: e.momentum, minValue: 0, maxValue: 100, unitText: 'points', measurementTechnique: methodologyPath(snap.methodology_version) });
   if (a1.cohort_z != null)
@@ -134,11 +137,17 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
   // folded into the momentum score (scoring methodology is frozen). Point-in-time.
   if (depsSig)
     vars.push({ '@type': 'PropertyValue', name: 'deps.dev dependents (adoption, R0)', value: depsSig.value, description: 'Count of downstream packages depending on this system (deps.dev), point-in-time. Adoption signal, not part of the momentum score.' });
+  vars.push(
+    { '@type': 'PropertyValue', name: 'Weekly observation history', value: measurementState.history_sufficiency.weekly_observations, minValue: 0, unitText: 'weekly observations' },
+    { '@type': 'PropertyValue', name: 'Measurable axis count', value: measurementState.axis_coverage.measurable_axis_count, minValue: 0, maxValue: 2, unitText: 'axes' },
+    { '@type': 'PropertyValue', name: 'Gate eligibility state', value: measurementState.gate_eligibility.state },
+    { '@type': 'PropertyValue', name: 'Positive signal state', value: measurementState.positive_signal.state },
+  );
 
   const desc =
     `Independent Evidaxis measurement of ${e.name}, an open ${e.entity_type} in the ${e.sub_niche} cohort. ` +
     (e.momentum != null ? `Momentum score ${e.momentum.toFixed(1)}/100. ` : '') +
-    `Status: ${e.status}. ${e.convergent_axes.length} of 2 independent axes rising. ` +
+    `${statePhrases.axis_coverage} ${statePhrases.gate} ` +
     `Computed on Evidaxis methodology ${snap.methodology_version} from public signals (snapshot ${snap.snapshot_date}).`;
 
   const paperId = e.openalex_work_ids?.[0];

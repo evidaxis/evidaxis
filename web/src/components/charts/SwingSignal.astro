@@ -8,7 +8,7 @@
  * Recolours in the dark band via --velocity. Geometry is SSR; values are <text>.
  */
 import { recencySwing } from '../../lib/derived';
-import { scaleLinear } from '../../lib/charts';
+import { scaleLinear, stableDomId } from '../../lib/charts';
 import SnapshotProvenance from './SnapshotProvenance.astro';
 
 export interface Props {
@@ -20,8 +20,9 @@ const { series, width = 240, height = 96 } = Astro.props;
 const sig = recencySwing(series);
 const reserved = 'reserved' in sig;
 const sigData = 'reserved' in sig ? null : sig;   // union narrowing (review 2026-07-10)
-const titleId = `sw-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `sw-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('sw', series, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 
 // For the SHIP viz we re-derive the two window slopes for the two bars, by the
 // same windows derived.ts declares (13w recent vs 39w prior) so the picture and

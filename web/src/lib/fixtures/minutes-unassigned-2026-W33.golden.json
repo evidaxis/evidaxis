@@ -1,0 +1,113 @@
+{
+  "schema_version": "cohort_minutes_1",
+  "cohort": "unassigned-v1",
+  "slug": "unassigned-v1",
+  "label": "Unassigned (AI-v1 census)",
+  "period": "2026-w33",
+  "week": "2026-W33",
+  "snapshot_date": "2026-08-15",
+  "previous_snapshot_date": "2026-08-08",
+  "sentences": [
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for MoneyPrinterTurbo.",
+      "entity_ids": [
+        "e_01E6T51Z5NE"
+      ],
+      "source_fields": [
+        "/entities/e_01E6T51Z5NE"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for ragflow.",
+      "entity_ids": [
+        "e_0HWS8572QP9"
+      ],
+      "source_fields": [
+        "/entities/e_0HWS8572QP9"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for TradingAgents.",
+      "entity_ids": [
+        "e_10DHTZ75A5K"
+      ],
+      "source_fields": [
+        "/entities/e_10DHTZ75A5K"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for NextChat.",
+      "entity_ids": [
+        "e_44E0GZ3MAKS"
+      ],
+      "source_fields": [
+        "/entities/e_44E0GZ3MAKS"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for claude-mem.",
+      "entity_ids": [
+        "e_4VBT50A7VD2"
+      ],
+      "source_fields": [
+        "/entities/e_4VBT50A7VD2"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for caveman.",
+      "entity_ids": [
+        "e_5AE2F3GDM57"
+      ],
+      "source_fields": [
+        "/entities/e_5AE2F3GDM57"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for PaddleOCR.",
+      "entity_ids": [
+        "e_5VB3GYJAWRC"
+      ],
+      "source_fields": [
+        "/entities/e_5VB3GYJAWRC"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for opencv.",
+      "entity_ids": [
+        "e_824XAJ5ETWG"
+      ],
+      "source_fields": [
+        "/entities/e_824XAJ5ETWG"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for ponytail.",
+      "entity_ids": [
+        "e_9CDJXKFG3CJ"
+      ],
+      "source_fields": [
+        "/entities/e_9CDJXKFG3CJ"
+      ]
+    },
+    {
+      "event_kind": "measurement_activated",
+      "text": "Weekly measurement activated for Deep-Live-Cam.",
+      "entity_ids": [
+        "e_JJMQ9HG9Y99"
+      ],
+      "source_fields": [
+        "/entities/e_JJMQ9HG9Y99"
+      ]
+    }
+  ],
+  "noindex": false
+}

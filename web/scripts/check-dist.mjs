@@ -15,10 +15,14 @@
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { relative } from 'node:path';
+import { createHash } from 'node:crypto';
+import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
+import { entityLexiconAllowed, scanEntityLexicon } from './entity-lexicon.mjs';
 
-const DIST = new URL('../dist/', import.meta.url).pathname;
+const DIST = process.env.EVIDAXIS_DIST
+  ? `${resolve(process.env.EVIDAXIS_DIST)}/`
+  : new URL('../dist/', import.meta.url).pathname;
 const htmlFiles = [];
 const distFiles = [];
 (function walk(dir) {
@@ -36,6 +40,101 @@ const distFiles = [];
 const errors = [];
 const warns = [];
 const rel = (p) => p.replace(DIST, '');
+
+// Positive-only entity language: every built entity HTML page and JSON twin is
+// checked in a +/-120 character window around every occurrence of its system
+// name. Terminology pages are explicitly allowlisted by the shared scanner.
+const entityRecords = [];
+for (const file of distFiles) {
+  const r = rel(file);
+  if (!/^e\/e_[^/]+\.json$/.test(r)) continue;
+  try {
+    const body = JSON.parse(readFileSync(file, 'utf8'));
+    const name = body?.entity?.name;
+    const id = body?.entity?.entity_id;
+    if (typeof name === 'string' && typeof id === 'string') entityRecords.push({ id, name });
+  } catch (e) {
+    errors.push(`${r}: entity JSON twin does not parse (${e.message})`);
+  }
+}
+for (const { id, name } of entityRecords) {
+  for (const path of [join(DIST, 'e', id, 'index.html'), join(DIST, 'e', `${id}.json`)]) {
+    if (!existsSync(path)) continue;
+    const r = rel(path);
+    if (entityLexiconAllowed(r)) continue;
+    const findings = scanEntityLexicon(readFileSync(path, 'utf8'), name);
+    for (const finding of findings) {
+      errors.push(`${r}: forbidden entity-adjacent term "${finding.term}" near ${name}`);
+    }
+  }
+}
+
+// Matched-control isolation: controls retain the baseline title and receive no
+// treatment-only answer block, citation UI, feed head links, or analytics tags.
+const CANARY = JSON.parse(readFileSync(new URL('../src/data/canary-assignment.json', import.meta.url), 'utf8'));
+const CONTROL_BASELINE = JSON.parse(readFileSync(new URL('../src/data/canary-control-baseline.json', import.meta.url), 'utf8'));
+if (CANARY.pairs?.length !== 24) errors.push('canary assignment must contain exactly 24 pairs');
+if (existsSync(new URL('../../canary-assignment.input.json', import.meta.url))) {
+  errors.push('root canary-assignment.input.json must be removed after the permanent data move');
+}
+const decodeTitle = (value) => value
+  .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+const canaryId = (url) => new URL(url).pathname.match(/^\/e\/(e_[A-Z0-9]+)\/$/)?.[1];
+// Byte-pinned control shell from the pre-canary render. Task 1 intentionally
+// changes descriptions, typed status bodies, JSON-LD, and component CSS; this
+// shell selects the remaining byte-stable title, identity, navigation,
+// breadcrumb, receipt, and citation regions. Treatment-marker checks below
+// cover the intentionally excluded body regions.
+const controlShellPatterns = [
+  /<title>[\s\S]*?<\/title>/,
+  /<link rel="canonical"[^>]*>/,
+  /<meta property="og:title"[^>]*>/,
+  /<meta property="og:url"[^>]*>/,
+  /<link rel="alternate" type="application\/json"[^>]*>/,
+  /<link rel="cite-as"[^>]*>/,
+  /<nav class="nav">[\s\S]*?<\/nav>/,
+  /<nav class="crumb mono"[\s\S]*?<\/nav>/,
+  /<div class="receipt mono"[\s\S]*?<\/div>/,
+  /<p class="cite mono muted"[\s\S]*?<\/p>/,
+  /<p class="cite-urn mono muted"[\s\S]*?<\/p>/,
+];
+const controlShellHash = (html) => createHash('sha256')
+  .update(controlShellPatterns.map((pattern) => html.match(pattern)?.[0] ?? 'MISSING').join('\n'))
+  .digest('hex');
+for (const pair of CANARY.pairs ?? []) {
+  for (const group of ['treatment', 'control']) {
+    const id = canaryId(pair[group]);
+    if (!id) {
+      errors.push(`canary pair ${pair.pair}: invalid ${group} URL`);
+      continue;
+    }
+    const htmlPath = join(DIST, 'e', id, 'index.html');
+    const jsonPath = join(DIST, 'e', `${id}.json`);
+    if (!existsSync(htmlPath) || !existsSync(jsonPath)) continue;
+    const html = readFileSync(htmlPath, 'utf8');
+    const record = JSON.parse(readFileSync(jsonPath, 'utf8'));
+    const name = record.entity.name;
+    const title = decodeTitle(html.match(/<title>([^<]+)<\/title>/)?.[1] ?? '');
+    if (group === 'control') {
+      if (title !== `${name}, Evidaxis measurement`) errors.push(`e/${id}/index.html: control title changed`);
+      if (controlShellHash(html) !== CONTROL_BASELINE.controls?.[id]) {
+        errors.push(`e/${id}/index.html: control byte shell changed from pre-canary baseline`);
+      }
+      for (const marker of ['data-canary-treatment', 'data-canary-citation', 'data-canary-event', 'weekly open data', '/feed.atom']) {
+        if (html.includes(marker)) errors.push(`e/${id}/index.html: control contains treatment marker ${marker}`);
+      }
+    } else {
+      const citationMeasured = record.measurement_state?.axis_coverage?.axes?.openalex_citation_momentum === 'measurable';
+      const expected = citationMeasured
+        ? `${name} momentum: development velocity & citation signals — weekly open data`
+        : `${name} momentum: development velocity signals — weekly open data`;
+      if (title !== expected) errors.push(`e/${id}/index.html: treatment title does not match measured axes`);
+      for (const marker of ['data-canary-treatment="answer-first"', 'data-canary-citation', 'Download record (JSON)']) {
+        if (!html.includes(marker)) errors.push(`e/${id}/index.html: treatment missing ${marker}`);
+      }
+    }
+  }
+}
 
 // 0. Person-free repository publication is fail-closed. The internal id-map key
 // remains stable, while public output uses the canonical repository identity.
@@ -108,8 +207,12 @@ for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
   const r = rel(file);
 
-  // 1. em-dash
-  const emdash = (html.match(/—/g) || []).length;
+  // 1. em-dash. Two controlled instrument phrases use the punctuation as part
+  // of their canonical schema copy: canary titles and gate non-computability.
+  const htmlWithoutCanonicalDashes = html
+    .replace(/ momentum: development velocity(?: &(?:amp;|#38;) citation)? signals — weekly open data/g, '')
+    .replace(/Gate: not computable — (?:history \d+ of \d+ weekly observations|\d+ of 2 axes measurable(?: \((?:coverage|unmeasured|missing|cohort comparison unavailable|source returned too few observations|axis was not declared measurable)\))?|cohort below comparison floor|reference measurement)/g, '');
+  const emdash = (htmlWithoutCanonicalDashes.match(/—/g) || []).length;
   if (emdash > 0) errors.push(`${r}: ${emdash} em-dash (U+2014) in rendered HTML`);
 
   // 2. client-injected chart placeholders
@@ -215,6 +318,57 @@ for (const { date } of archiveSnapshots) {
 if (!existsSync(join(DIST, 'snapshots', 'index.html'))) errors.push('snapshots/index.html: missing snapshot archive index');
 if (!existsSync(join(DIST, 'snapshots', '2026-06-27', 'index.html'))) errors.push('snapshots/2026-06-27/index.html: missing genesis route');
 
+// Wave-1 generated surfaces: power denominator, typed feeds, immutable signal
+// records, and source-traceable cohort minutes.
+if (!existsSync(join(DIST, 'coverage', 'power', 'index.html'))) errors.push('coverage/power/index.html: missing power funnel');
+const feedJsonPath = join(DIST, 'feed.json');
+const feedAtomPath = join(DIST, 'feed.atom');
+if (!existsSync(feedJsonPath)) errors.push('feed.json: missing typed JSON Feed');
+if (!existsSync(feedAtomPath)) errors.push('feed.atom: missing typed Atom feed');
+if (existsSync(feedJsonPath)) {
+  try {
+    const feed = JSON.parse(readFileSync(feedJsonPath, 'utf8'));
+    if (feed.version !== 'https://jsonfeed.org/version/1.1') errors.push('feed.json: expected JSON Feed 1.1');
+    if (!Array.isArray(feed.items) || feed.items.length === 0) errors.push('feed.json: expected at least one latest-diff entry');
+    const ids = new Set();
+    for (const item of feed.items ?? []) {
+      const entry = item?._evidaxis;
+      if (!entry || !['observation', 'moment_signal'].includes(entry.type)) errors.push('feed.json: entry has invalid typed payload');
+      const canonicalGate = entry?.state?.phrases?.gate;
+      const canonicalGateSentence = typeof canonicalGate === 'string'
+        ? `${canonicalGate}${canonicalGate.endsWith('.') ? '' : '.'}`
+        : null;
+      if (canonicalGateSentence && !String(item.content_text ?? '').endsWith(canonicalGateSentence)) {
+        errors.push(`feed.json: entry ${item.id} does not serialize its canonical gate phrase`);
+      }
+      if (ids.has(item.id)) errors.push(`feed.json: duplicate immutable id ${item.id}`);
+      ids.add(item.id);
+      const match = String(item.id ?? '').match(/^https:\/\/evidaxis\.org\/signals\/([^/]+)\/$/);
+      if (!match || !existsSync(join(DIST, 'signals', match[1], 'index.html'))) errors.push(`feed.json: signal page missing for ${item.id}`);
+      if (entry?.type === 'moment_signal') {
+        if (entry.state?.positive_signal?.state !== 'published'
+          || entry.state?.axis_coverage?.measurable_axis_count < 2) {
+          errors.push(`feed.json: moment_signal ${item.id} lacks published two-axis convergence`);
+        }
+      }
+    }
+  } catch (e) {
+    errors.push(`feed.json: does not parse (${e.message})`);
+  }
+}
+if (existsSync(feedAtomPath)) {
+  const atom = readFileSync(feedAtomPath, 'utf8');
+  if (!/^<\?xml version="1\.0"/.test(atom) || !/<feed xmlns="http:\/\/www\.w3\.org\/2005\/Atom">/.test(atom) || !/<\/feed>\s*$/.test(atom)) {
+    errors.push('feed.atom: invalid Atom document shell');
+  }
+}
+for (const file of htmlFiles.filter((path) => /\/ai\/cohorts\/[^/]+\/minutes\/[^/]+\/index\.html$/.test(path))) {
+  const html = readFileSync(file, 'utf8');
+  const events = [...html.matchAll(/<li[^>]*data-event-kind="[^"]+"[^>]*data-source-field="([^"]*)"/g)];
+  if (events.length === 0) errors.push(`${rel(file)}: cohort minutes has no newsworthy events`);
+  for (const event of events) if (!event[1].trim()) errors.push(`${rel(file)}: minute sentence lacks a source field`);
+}
+
 // WP-J / V1: homepage HTML size budget (dist, not gzip). Hard assert.
 const HOME_BUDGET = 250 * 1024; // 250 KB
 const homePath = join(DIST, 'index.html');
@@ -237,6 +391,13 @@ const sitemapPath = join(DIST, 'sitemap-0.xml');
 if (existsSync(sitemapPath)) {
   const sm = readFileSync(sitemapPath, 'utf8');
   if (/charttest/i.test(sm)) errors.push('sitemap-0.xml: charttest must not be listed');
+  if (/\/signals\//i.test(sm)) errors.push('sitemap-0.xml: immutable signal records must not be listed');
+}
+for (const file of htmlFiles.filter((path) => /\/signals\/[^/]+\/index\.html$/.test(path))) {
+  const html = readFileSync(file, 'utf8');
+  if (!/<meta name="robots" content="noindex, follow"/.test(html)) {
+    errors.push(`${rel(file)}: immutable signal record must be noindex, follow`);
+  }
 }
 
 const lastSeen = new Map();

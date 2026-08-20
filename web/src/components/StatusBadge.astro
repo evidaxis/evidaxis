@@ -1,6 +1,10 @@
 ---
-import { STATUS_LABEL } from '../lib/data';
-export interface Props { status: keyof typeof STATUS_LABEL; }
-const { status } = Astro.props;
+import type { MeasurementState } from '../lib/measurement';
+import { measurementPhrases } from '../lib/measurement';
+export interface Props { state: MeasurementState; }
+const { state } = Astro.props;
+const phrases = measurementPhrases(state);
 ---
-<span class={`badge ${status}`}>{STATUS_LABEL[status]}</span>
+{state.positive_signal.state === 'published'
+  ? <span class="badge rising">Rising</span>
+  : <span class="mono muted" style="font-size:.72rem">{phrases.compact}</span>}

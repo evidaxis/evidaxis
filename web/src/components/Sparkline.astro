@@ -5,6 +5,7 @@
  * machine-readable in the static HTML, not inferred from the path. When wrapped
  * inline (caption={false}) it keeps the bare-svg behaviour the old callers use.
  */
+import { stableDomId } from '../lib/charts';
 export interface Props {
   values: number[];
   width?: number;
@@ -38,8 +39,9 @@ if (pts.length >= 2) {
   [lastX, lastY] = coords[coords.length - 1];
 }
 const aria = label ?? 'trend';
-const titleId = `sl-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `sl-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('sl', aria, pts, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 const last = pts.length ? pts[pts.length - 1] : null;
 ---
 {pts.length >= 2 ? (

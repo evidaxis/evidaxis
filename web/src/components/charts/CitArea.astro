@@ -1,11 +1,12 @@
 ---
 /**
- * Cumulative citation area from citationSeries(e) (the watch-twin "axis that
- * passes" panel). Fallback honest null state when the citation axis is absent.
+ * Cumulative citation area from citationSeries(e). The fallback renders the
+ * canonical mechanical state phrase when citation coverage is not measurable.
  */
-import { scaleLinear, linePath, areaPath } from '../../lib/charts';
-import { citationSeries } from '../../lib/data';
+import { scaleLinear, linePath, areaPath, stableDomId } from '../../lib/charts';
+import { citationSeries, snapshot } from '../../lib/data';
 import type { Entity } from '../../lib/data';
+import { CITATION_AXIS, measurementPhrases, measurementStateFor } from '../../lib/measurement';
 
 export interface Props {
   entity: Entity;
@@ -15,7 +16,9 @@ export interface Props {
 }
 const { entity, color = 'var(--citation)', width = 240, height = 52 } = Astro.props;
 const a2 = entity.axes.openalex_citation_momentum;
-const present = a2.status === 'present';
+const state = measurementStateFor(entity, snapshot);
+const citationPhrase = measurementPhrases(state).citation_axis;
+const present = state.axis_coverage.axes[CITATION_AXIS] === 'measurable';
 const raw = present ? citationSeries(entity) : [];
 
 // cumulative
@@ -30,8 +33,9 @@ const bw = cum.length > 1 ? iw / (cum.length - 1) : 0;
 const sy = scaleLinear([0, max], [m.t + ih, m.t]);
 const pts = cum.map((s, i) => ({ x: m.l + i * bw, y: sy(s.n) }));
 const baseline = m.t + ih;
-const titleId = `ca-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `ca-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('ca', entity.entity_id, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 ---
 {present && hasData ? (
   <figure class="evchart" style={`color:${color}`}>
@@ -52,5 +56,5 @@ const descId = `ca-d-${Math.random().toString(36).slice(2, 8)}`;
     {/* Cumulative series is derived from the entity JSON twin (V4). */}
   </figure>
 ) : (
-  <div class="chart-null" role="img" aria-label="no citation axis"><span class="nx">&empty;</span><span>no citation axis</span></div>
+  <div class="chart-null" role="img" aria-label={citationPhrase}><span class="nx">&empty;</span><span>{citationPhrase}</span></div>
 )}

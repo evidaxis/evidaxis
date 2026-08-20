@@ -1,0 +1,46 @@
+---
+import Base from '../../../../../../layouts/Base.astro';
+import { cohortMinutes, type CohortMinutes } from '../../../../../../lib/minutes';
+import { breadcrumb } from '../../../../../../lib/jsonld';
+
+export function getStaticPaths() {
+  return cohortMinutes().map((minutes) => ({
+    params: { cohort: minutes.slug, week: minutes.week },
+    props: { minutes },
+  }));
+}
+const { minutes } = Astro.props as { minutes: CohortMinutes };
+const canonical = `/ai/cohorts/${minutes.slug}/minutes/${minutes.week}/`;
+const desc = `${minutes.label} cohort minutes for ${minutes.week}: ${minutes.sentences.length} traceable snapshot-diff events.`;
+---
+<Base title={`${minutes.label} cohort minutes, ${minutes.week} | Evidaxis`} description={desc} canonical={canonical} noindex={minutes.noindex} jsonLd={breadcrumb([
+  { name: `Cohort: ${minutes.label}`, path: `/ai/cohorts/${minutes.slug}/` },
+  { name: `Minutes: ${minutes.week}`, path: canonical },
+])}>
+  <section class="section">
+    <div class="wrap minutes-wrap">
+      <p class="eyebrow">Cohort minutes · {minutes.week}</p>
+      <h1>{minutes.label}</h1>
+      <p class="lead" data-source-field="/snapshot_date,/previous_snapshot_date">Snapshot diff {minutes.previous_snapshot_date} to {minutes.snapshot_date}.</p>
+      <ol class="minute-events">
+        {minutes.sentences.map((sentence) => <li
+          data-event-kind={sentence.event_kind}
+          data-source-field={sentence.source_fields.join(',')}
+        >
+          <p>{sentence.text}</p>
+          <small class="mono">source: {sentence.source_fields.join(' · ')}</small>
+        </li>)}
+      </ol>
+      <p class="mono receipt" data-source-field="/schema_version,/period">{minutes.schema_version} · {minutes.period}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .minutes-wrap { max-width: 850px; }
+  .minute-events { padding-left: 1.4rem; margin-top: 2rem; }
+  .minute-events li { padding: 12px 0 16px 8px; border-bottom: 1px solid var(--hairline); }
+  .minute-events p { margin: 0; }
+  .minute-events small { display: block; margin-top: 5px; color: var(--ink-mute); overflow-wrap: anywhere; }
+  .receipt { color: var(--ink-mute); font-size: .72rem; margin-top: 1.5rem; }
+</style>

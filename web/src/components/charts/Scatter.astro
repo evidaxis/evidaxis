@@ -8,10 +8,11 @@
  * Entities missing a citation axis sit on a dedicated lower rail (honest).
  * "Rising" captions count only status === 'rising' (full gate predicate).
  */
-import { scaleLinear } from '../../lib/charts';
+import { scaleLinear, stableDomId } from '../../lib/charts';
 import { entities as allEntities, snapshot, risingZFloor } from '../../lib/data';
 import type { Entity } from '../../lib/data';
-import { cohortColor, cohortLabel, COHORT_ORDER, fmtZsafe } from '../../lib/cohorts';
+import { cohortColor, cohortLabel, COHORT_ORDER } from '../../lib/cohorts';
+import { measurementStateFor } from '../../lib/measurement';
 
 export interface Props {
   entities?: Entity[];
@@ -52,10 +53,11 @@ const nullVel = entities.filter((e) =>
   e.axes.github_commit_velocity.cohort_z == null
   && e.axes.openalex_citation_momentum.cohort_z != null);
 // Full gate predicate only (status is the pipeline's convergent_axes + cohort + floors).
-const risingCount = entities.filter((e) => e.status === 'rising').length;
+const risingCount = entities.filter((e) => measurementStateFor(e, snapshot).positive_signal.state === 'published').length;
 const ticks = [-2, -1, 1, 2];
-const titleId = `sc-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `sc-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('sc', entities.map((entity) => entity.entity_id), width, height, dom);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 
 const cohortCount = (key: string) => entities.filter((e) => e.cohort === key).length;
 const gateLabel = `RISING z>=${zFloor}`;
@@ -117,10 +119,8 @@ const washH = Math.max(0, yGate - m.t);
       const rr = rOf(e.momentum);
       return (
         <>
-          {e.status === 'rising' && <circle cx={px} cy={py} r={rr + 4} fill="none" stroke={c} stroke-width="1.3" opacity="0.45" />}
-          <circle cx={px} cy={py} r={rr} fill={c} fill-opacity="0.9" stroke="var(--surface)" stroke-width="1.3">
-            <title>{e.name}: velocity z {fmtZsafe(vz)}, citation z {fmtZsafe(cz)}, momentum {e.momentum ?? 'n/a'}</title>
-          </circle>
+          {measurementStateFor(e, snapshot).positive_signal.state === 'published' && <circle cx={px} cy={py} r={rr + 4} fill="none" stroke={c} stroke-width="1.3" opacity="0.45" />}
+          <circle cx={px} cy={py} r={rr} fill={c} fill-opacity="0.9" stroke="var(--surface)" stroke-width="1.3" />
         </>
       );
     })}
@@ -135,9 +135,7 @@ const washH = Math.max(0, yGate - m.t);
       const py = m.t + planeH + railH / 2;
       const c = cohortColor(e.cohort);
       return (
-        <circle cx={px} cy={py} r={rOf(e.momentum)} fill={c} fill-opacity="0.32" stroke={c} stroke-width="1" stroke-dasharray="2 2">
-          <title>{e.name}: velocity z {fmtZsafe(vz)}, citation axis absent, momentum {e.momentum ?? 'n/a'}</title>
-        </circle>
+        <circle cx={px} cy={py} r={rOf(e.momentum)} fill={c} fill-opacity="0.32" stroke={c} stroke-width="1" stroke-dasharray="2 2" />
       );
     })}
   </svg>

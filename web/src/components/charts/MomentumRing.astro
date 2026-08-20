@@ -4,7 +4,7 @@
  * Null-safe: momentum can be null (calibration entities) -> renders an empty
  * track with an honest "n/a" center.
  */
-import { donutDash } from '../../lib/charts';
+import { donutDash, stableDomId } from '../../lib/charts';
 
 export interface Props {
   momentum: number | null;
@@ -16,7 +16,7 @@ const { momentum, percentile = null, color = 'currentColor', size = 104 } = Astr
 const cx = size / 2, cy = size / 2, r = size / 2 - 9;
 const present = momentum != null && isFinite(momentum);
 const dash = present ? donutDash(momentum as number, r) : donutDash(0, r);
-const titleId = `mr-t-${Math.random().toString(36).slice(2, 8)}`;
+const titleId = stableDomId('mr-t', momentum, percentile, color, size);
 ---
 <figure class="evchart" style="margin:0;display:flex;flex-direction:column;align-items:center;gap:6px">
   <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-labelledby={titleId}>

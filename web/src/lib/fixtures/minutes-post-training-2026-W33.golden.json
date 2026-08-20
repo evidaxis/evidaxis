@@ -1,0 +1,33 @@
+{
+  "schema_version": "cohort_minutes_1",
+  "cohort": "post-training-alignment",
+  "slug": "post-training-alignment",
+  "label": "Post-training & Alignment",
+  "period": "2026-w33",
+  "week": "2026-W33",
+  "snapshot_date": "2026-08-15",
+  "previous_snapshot_date": "2026-08-08",
+  "sentences": [
+    {
+      "event_kind": "measurement_resumed",
+      "text": "Weekly measurement resumed for ART.",
+      "entity_ids": [
+        "e_2S60RGNZHBS"
+      ],
+      "source_fields": [
+        "/entities/e_2S60RGNZHBS"
+      ]
+    },
+    {
+      "event_kind": "measurement_resumed",
+      "text": "Weekly measurement resumed for Unsloth.",
+      "entity_ids": [
+        "e_J16JY8N155H"
+      ],
+      "source_fields": [
+        "/entities/e_J16JY8N155H"
+      ]
+    }
+  ],
+  "noindex": false
+}

@@ -7,10 +7,11 @@
  * toggle (default OFF) reorders existing <tr> nodes without changing source order
  * for non-JS consumers. Null citation axis renders "no axis", never a fake z.
  */
-import { entities as allEntities, commitSeries } from '../lib/data';
+import { entities as allEntities, commitSeries, snapshot } from '../lib/data';
 import type { Entity } from '../lib/data';
 import { cohortColor, cohortLabel, COHORT_ORDER, fmtZsafe } from '../lib/cohorts';
 import Sparkline from './Sparkline.astro';
+import { measurementPhrases, measurementStateFor } from '../lib/measurement';
 
 export interface Props {
   entities?: Entity[];
@@ -69,6 +70,8 @@ const sparkColor = (e: Entity) => {
         {catalog.map((e) => {
           const vz = e.axes.github_commit_velocity.cohort_z;
           const cz = e.axes.openalex_citation_momentum.cohort_z;
+          const state = measurementStateFor(e, snapshot);
+          const phrases = measurementPhrases(state);
           return (
             <tr
               data-coh-idx={cohortIdx(e.cohort)}
@@ -80,7 +83,9 @@ const sparkColor = (e: Entity) => {
               <td class={`z num ${zClass(vz)}`}><data value={String(vz ?? '')}>{fmtZsafe(vz)}</data></td>
               <td class={`z num ${zClass(cz, true)}`}><data value={String(cz ?? '')}>{fmtZsafe(cz)}</data></td>
               <td class="mo num">{e.momentum != null ? <data value={String(e.momentum)}>{e.momentum}</data> : <span class="muted">n/a</span>}</td>
-              <td><span class={`badge ${e.status}`}>{e.status}</span></td>
+              <td>{state.positive_signal.state === 'published'
+                ? <span class="badge rising">Rising</span>
+                : <span class="muted mono" style="font-size:10px">{phrases.compact}</span>}</td>
               {showSparks && <td class="sp"><Sparkline values={commitSeries(e.entity_id)} color={sparkColor(e)} width={120} height={26} /></td>}
             </tr>
           );
@@ -88,7 +93,7 @@ const sparkColor = (e: Entity) => {
       </tbody>
     </table>
   </div>
-  <div class="rank-foot">Default order: cohort, then alphabetical. Momentum is a within-pilot percentile of the combined signal (a measurement, not a placement). Cohort-normalized z-scores · status follows the two-axis gate · "no axis" = no measurable citation series yet. Sort-by-momentum is optional client-side only.</div>
+  <div class="rank-foot">Default order: cohort, then alphabetical. Momentum is a within-pilot percentile of the combined signal (a measurement, not a placement). Cohort-normalized z-scores · measurement states are derived from source coverage and weekly history · "no axis" = no measurable citation series yet. Sort-by-momentum is optional client-side only.</div>
 </div>
 
 <script>

@@ -4,7 +4,7 @@
  * watch-twin "axis that does not pass" panel). Trend label derives from a simple
  * first-half vs second-half mean comparison, not a fabricated slope.
  */
-import { scaleLinear } from '../../lib/charts';
+import { scaleLinear, stableDomId } from '../../lib/charts';
 
 export interface Props {
   series: number[];
@@ -29,8 +29,9 @@ const half = Math.floor(shown.length / 2);
 const meanFirst = half ? shown.slice(0, half).reduce((a, b) => a + b, 0) / half : 0;
 const meanLast = (shown.length - half) ? shown.slice(half).reduce((a, b) => a + b, 0) / (shown.length - half) : 0;
 const trend = meanLast > meanFirst * 1.1 ? 'rising trend' : meanLast < meanFirst * 0.9 ? 'falling trend' : 'flat trend';
-const titleId = `cf-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `cf-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('cf', label, shown, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 ---
 {hasData ? (
   <figure class="evchart">

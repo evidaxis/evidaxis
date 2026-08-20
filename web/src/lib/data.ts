@@ -154,10 +154,6 @@ export const entitiesInCohort = (cohortKey: string) =>
   entities.filter((e) => e.cohort === cohortKey)
     .sort((a, b) => a.name.localeCompare(b.name));
 
-export const STATUS_LABEL: Record<Entity['status'], string> = {
-  rising: 'Rising', watch: 'Watch', tracked: 'Tracked',
-  'single-axis': 'Single-axis', calibration: 'Calibration',
-};
 export const AXIS_LABEL: Record<string, string> = {
   github_commit_velocity: 'Development velocity',
   openalex_citation_momentum: 'Citation momentum',

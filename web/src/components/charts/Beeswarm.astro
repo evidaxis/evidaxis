@@ -2,9 +2,10 @@
 /**
  * Momentum beeswarm grouped by cohort, with a per-cohort median line.
  * Deterministic index-based jitter via beeswarmLayout(). Null momentum entities
- * (calibration) are listed in the <details> table but not plotted (no y).
+ * are omitted from the plotted distribution. Aggregate points are deliberately
+ * anonymous: cohort pages must not expose named peer scores on hover.
  */
-import { scaleLinear, beeswarmLayout } from '../../lib/charts';
+import { scaleLinear, beeswarmLayout, stableDomId } from '../../lib/charts';
 import { entities as allEntities } from '../../lib/data';
 import type { Entity } from '../../lib/data';
 import { cohortColor, cohortLabel, cohortShort, COHORT_ORDER } from '../../lib/cohorts';
@@ -41,8 +42,9 @@ const groups = cohorts.map((key, ci) => {
 });
 
 const yTicks = [0, 25, 50, 75, 100];
-const titleId = `bw-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `bw-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('bw', entities.map((entity) => entity.entity_id), width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 ---
 <figure class="evchart">
   <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${titleId} ${descId}`}>
@@ -70,9 +72,7 @@ const descId = `bw-d-${Math.random().toString(36).slice(2, 8)}`;
             </>
           )}
           {g.laid.map((b) => (
-            <circle cx={g.cx + b.dx} cy={sy(b.item.momentum as number)} r="5" fill={c} fill-opacity="0.85" stroke="var(--surface)" stroke-width="1">
-              <title>{b.item.name}: momentum {b.item.momentum}</title>
-            </circle>
+            <circle cx={g.cx + b.dx} cy={sy(b.item.momentum as number)} r="5" fill={c} fill-opacity="0.85" stroke="var(--surface)" stroke-width="1" />
           ))}
           <text x={g.cx} y={m.t + ih + 16} text-anchor="middle" font-size="8" fill="var(--ink-soft)" class="svgtxt"><title>{cohortLabel(g.key)}</title>{cohortShort(g.key)}</text>
           <text x={g.cx} y={m.t + ih + 27} text-anchor="middle" font-size="7" fill="var(--ink-mute)" class="svgtxt">n={g.members.length}</text>

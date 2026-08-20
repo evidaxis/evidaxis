@@ -6,10 +6,11 @@
  * follows methodology z floor (m2: z>=1). Verdict uses the full gate predicate
  * via convergent_axes / status, not mere z>=0 vs median.
  */
-import { scaleLinear } from '../../lib/charts';
+import { scaleLinear, stableDomId } from '../../lib/charts';
 import { entitiesInCohort, snapshot, risingZFloor } from '../../lib/data';
 import type { Entity } from '../../lib/data';
 import { cohortColor, fmtZsafe } from '../../lib/cohorts';
+import { measurementPhrases, measurementStateFor } from '../../lib/measurement';
 
 export interface Props {
   entity: Entity;
@@ -36,30 +37,14 @@ const peers = entitiesInCohort(entity.cohort).filter((e) => e.entity_id !== enti
 const peerPts = peers
   .filter((p) => p.axes.github_commit_velocity.cohort_z != null && p.axes.openalex_citation_momentum.cohort_z != null);
 
-// Gate language: full convergent_axes predicate, not z>=0.
-const velPass = entity.convergent_axes.includes('github_commit_velocity');
-const citPass = entity.convergent_axes.includes('openalex_citation_momentum');
-const fullGate = entity.status === 'rising';
-let verdict: string;
-if (cz == null || vz == null) {
-  verdict = vz == null && cz == null
-    ? 'both axes absent, excluded from the plane'
-    : cz == null
-      ? 'single-axis: citation axis absent, excluded from the plane'
-      : 'velocity z absent, excluded from the plane';
-} else if (fullGate) {
-  verdict = `full Rising gate (both axes pass, z>=${zFloor} + slope + floors)`;
-} else if (velPass && citPass) {
-  verdict = 'both axes listed as convergent (status not Rising; check cohort floor)';
-} else if (velPass || citPass) {
-  verdict = `${velPass ? 'velocity' : 'citation'} passes gate, the other does not`;
-} else {
-  verdict = `neither axis clears the Rising gate (z>=${zFloor} + positive slope)`;
-}
+const state = measurementStateFor(entity, snapshot);
+const phrases = measurementPhrases(state);
+const verdict = selfPlot ? phrases.gate : phrases.axis_coverage;
 
 const clamp = (v: number) => Math.max(-dom, Math.min(dom, v));
-const titleId = `q-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `q-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('q', entity.entity_id, width, height, dom);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 const washW = Math.max(0, (m.l + iw) - xGate);
 const washH = Math.max(0, yGate - m.t);
 ---
@@ -92,9 +77,7 @@ const washH = Math.max(0, yGate - m.t);
     <text transform="rotate(-90)" x={-(m.t)} y={9} text-anchor="end" font-size="6.5" fill="var(--ink-soft)" class="svgtxt">citation z &uarr;</text>
 
     {peerPts.map((p) => (
-      <circle cx={sx(clamp(p.axes.github_commit_velocity.cohort_z as number))} cy={sy(clamp(p.axes.openalex_citation_momentum.cohort_z as number))} r="2.6" fill="var(--ink-mute)" fill-opacity="0.5">
-        <title>{p.name}: velocity z {fmtZsafe(p.axes.github_commit_velocity.cohort_z)}, citation z {fmtZsafe(p.axes.openalex_citation_momentum.cohort_z)}</title>
-      </circle>
+      <circle cx={sx(clamp(p.axes.github_commit_velocity.cohort_z as number))} cy={sy(clamp(p.axes.openalex_citation_momentum.cohort_z as number))} r="2.6" fill="var(--ink-mute)" fill-opacity="0.5" />
     ))}
 
     {selfPlot && (

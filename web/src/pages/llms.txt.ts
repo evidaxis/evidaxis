@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { snapshot, SNAP_DATE, entities } from '../lib/data';
 import { cohortLabel, COHORT_ORDER } from '../lib/cohorts';
 import { claimUrn } from '../lib/claim_urn';
+import { measurementPhrases, measurementStateFor } from '../lib/measurement';
+import { computePowerFunnel } from '../lib/power';
 
 type SnapFlags = { provisional?: boolean; spine_complete?: boolean };
 
@@ -21,26 +23,22 @@ function byCohortThenAlpha<T extends { cohort: string; name: string }>(list: T[]
 function entityLine(e: (typeof entities)[number]): string {
   const mom = e.momentum != null ? e.momentum.toFixed(1) : 'n/a';
   const urn = claimUrn(e.entity_id, snapshot.methodology_version, snapshot.snapshot_date);
-  return `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${mom}, status ${e.status}, cohort ${cohortLabel(e.cohort)}. Cite-as: ${urn}. JSON: https://evidaxis.org/e/${e.entity_id}.json`;
+  const phrases = measurementPhrases(measurementStateFor(e, snapshot));
+  return `- [${e.name}](https://evidaxis.org/e/${e.entity_id}/): momentum ${mom}, ${phrases.compact.toLowerCase()}, cohort ${cohortLabel(e.cohort)}. Cite-as: ${urn}. JSON: https://evidaxis.org/e/${e.entity_id}.json`;
 }
 
 export const GET: APIRoute = () => {
   const flags = snapshot as typeof snapshot & SnapFlags;
-  const c = snapshot.counts;
+  const power = computePowerFunnel(snapshot);
   const provisional = flags.provisional === true;
   const spineComplete = flags.spine_complete === true;
 
-  const rising = byCohortThenAlpha(entities.filter((e) => e.status === 'rising'));
-  const watch = byCohortThenAlpha(entities.filter((e) => e.status === 'watch'));
+  const rising = byCohortThenAlpha(entities.filter((e) => measurementStateFor(e, snapshot).positive_signal.state === 'published'));
   const catalog = byCohortThenAlpha(entities);
 
   const risingSection = rising.length === 0
-    ? 'None. Two independent axes must converge; none this period.'
+    ? 'Published Rising signals: 0 for this period. Two independent axes must converge for publication.'
     : rising.map(entityLine).join('\n');
-
-  const watchSection = watch.length === 0
-    ? 'None this period.'
-    : watch.map(entityLine).join('\n');
 
   // Group catalog by cohort (canonical order), alphabetical already applied.
   const byCohort = new Map<string, typeof entities>();
@@ -76,19 +74,17 @@ export const GET: APIRoute = () => {
 
 ## Status (snapshot ${snapshot.period})
 
-- rising: ${c.rising}
-- watch: ${c.watch}
-- axis2_present: ${c.axis2_present}
+- rising_published: ${power.rising_published}
+- registry_members: ${power.registry_members}
+- history_sufficient: ${power.history_sufficient}
+- two_axis_measurable: ${power.two_axis_measurable}
+- gate_eligible: ${power.gate_eligible}
 - provisional: ${provisional}
 - spine_complete: ${spineComplete}
 
 ## Rising this period
 
 ${risingSection}
-
-## Watch list
-
-${watchSection}
 
 ## Catalog (by cohort, alphabetical within cohort)
 
@@ -103,6 +99,8 @@ ${catalogSections.join('\n\n')}
 - [Methodology version registry (JSON)](https://evidaxis.org/methodology-registry.json): machine-readable registry of methodology versions.
 - [Latest snapshot](https://evidaxis.org/snapshots/${SNAP_DATE}/): the most recent complete measurement snapshot (period ${snapshot.period}), with full JSON download.
 - [Coverage atlas](https://evidaxis.org/coverage/): every cohort tracked, and the gaps not yet measured.
+- [Atom feed](https://evidaxis.org/feed.atom): typed weekly observation events and published convergence signals.
+- [JSON Feed](https://evidaxis.org/feed.json): the same typed entries in JSON Feed 1.1 format.
 
 ## Data license
 
@@ -131,6 +129,8 @@ Evidaxis is static; the data IS the files:
 - Per-system JSON: https://evidaxis.org/e/{entity_id}.json
 - Per-snapshot JSON: https://evidaxis.org/snapshots/${SNAP_DATE}/snapshot.json
 - Methodology version registry (JSON): https://evidaxis.org/methodology-registry.json
+- Typed Atom feed: https://evidaxis.org/feed.atom
+- Typed JSON Feed: https://evidaxis.org/feed.json
 - Cohorts (canonical):
 ${cohortList}
 These URLs are stable and safe to fetch and cache.

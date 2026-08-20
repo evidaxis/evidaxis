@@ -2,7 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import { snapshot, SNAP_DATE, latestArchiveRoot } from '../../lib/data';
 import { orgGraph } from '../../lib/jsonld';
+import { computePowerFunnel } from '../../lib/power';
 const archiveRoot = latestArchiveRoot();
+const power = computePowerFunnel(snapshot);
 const desc = 'About Evidaxis, an independent observatory of momentum in open AI systems. Integrity commitments, governance, licensing, and how to cite. Data is CC0.';
 ---
 <Base title="About & integrity | Evidaxis" description={desc} canonical="/about/" jsonLd={orgGraph()}>
@@ -16,7 +18,7 @@ const desc = 'About Evidaxis, an independent observatory of momentum in open AI 
       <ul class="prose">
         <li><strong>Git is the only source of truth.</strong> Every score is checkable against its hash-pinned inputs, with raw provenance published. The website and any database are derived and rebuildable; no number is born in a database or edited by hand.</li>
         <li><strong>Freeze, don’t recompute.</strong> A published measurement is never silently changed. Corrections are new versioned rows; old citations stay meaningful.</li>
-        <li><strong>Positive-only.</strong> Evidaxis recognizes who is rising. A system rises only when two independent axes agree. This week, {snapshot.counts.rising} systems clear the bar, by design.</li>
+        <li><strong>Positive-only.</strong> Evidaxis publishes Rising only when two independent axes converge. This week, {power.rising_published} positive signals are published.</li>
         <li><strong>Systems, not people.</strong> The measured unit is always a system. People are never scored. There is no <span class="mono">/persons</span> surface anywhere in the data or API.</li>
         <li><strong>No pay-for-placement.</strong> Scores are computed mechanically from public signals by a published, versioned method; no input to a score can be purchased. Conflicts, where they exist, are disclosed as data.</li>
         <li><strong>Stable identity.</strong> Each system’s id (<span class="mono">e_…</span>) is minted once and never reused, so a rename or acquisition never breaks a citation or badge.</li>

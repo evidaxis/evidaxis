@@ -1,12 +1,13 @@
 ---
 /**
  * Citations-by-year bars + connecting trend line, from citationSeries(e).
- * FALLBACK: when the citation axis is not present (a2.status !== 'present')
- * renders an honest "no citation axis" state, never a fake bar.
+ * FALLBACK: when the typed citation-axis coverage is not measurable, renders
+ * the canonical mechanical state phrase, never a fake bar.
  */
-import { scaleLinear, linePath } from '../../lib/charts';
-import { citationSeries } from '../../lib/data';
+import { scaleLinear, linePath, stableDomId } from '../../lib/charts';
+import { citationSeries, snapshot } from '../../lib/data';
 import type { Entity } from '../../lib/data';
+import { CITATION_AXIS, measurementPhrases, measurementStateFor } from '../../lib/measurement';
 
 export interface Props {
   entity: Entity;
@@ -16,7 +17,9 @@ export interface Props {
 }
 const { entity, color = 'var(--citation)', width = 240, height = 72 } = Astro.props;
 const a2 = entity.axes.openalex_citation_momentum;
-const present = a2.status === 'present';
+const state = measurementStateFor(entity, snapshot);
+const citationPhrase = measurementPhrases(state).citation_axis;
+const present = state.axis_coverage.axes[CITATION_AXIS] === 'measurable';
 const series = present ? citationSeries(entity) : [];
 const hasData = series.length > 0;
 
@@ -27,8 +30,9 @@ const bw = hasData ? iw / series.length : 0;
 const sy = scaleLinear([0, max], [m.t + ih, m.t]);
 const pts = series.map((s, i) => ({ x: m.l + i * bw + bw / 2, y: sy(s.n) }));
 const total = a2.total_citations;
-const titleId = `cb-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `cb-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('cb', entity.entity_id, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 ---
 {present && hasData ? (
   <figure class="evchart" style={`color:${color}`}>
@@ -61,9 +65,8 @@ const descId = `cb-d-${Math.random().toString(36).slice(2, 8)}`;
     {/* Yearly citation counts ship on the entity JSON twin (V4). */}
   </figure>
 ) : (
-  <div class="chart-null" role="img" aria-label="no citation axis for this system">
+  <div class="chart-null" role="img" aria-label={citationPhrase}>
     <span class="nx">&empty;</span>
-    <span>no citation axis</span>
-    <span style="font-size:9px;opacity:.8">axis status: {a2.status}</span>
+    <span>{citationPhrase}</span>
   </div>
 )}

@@ -5,7 +5,7 @@
  * prototype's seeded-PRNG fake path. Empty / all-zero series renders a flat
  * faint row honestly. Recolours in the dark band (uses currentColor for cells).
  */
-import { heatmapCells } from '../../lib/charts';
+import { heatmapCells, stableDomId } from '../../lib/charts';
 
 export interface Props {
   series: number[];
@@ -22,8 +22,9 @@ const W = cols * (cell + gap), H = cell + 2;
 const total = shown.reduce((a, b) => a + b, 0);
 const peak = shown.reduce((mx, v) => (v > mx ? v : mx), 0);
 const nonZero = shown.filter((v) => v > 0).length;
-const titleId = `ch-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `ch-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('ch', label, shown);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 ---
 {cells.length > 0 ? (
   <figure class="evchart">

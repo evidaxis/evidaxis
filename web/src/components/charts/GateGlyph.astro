@@ -6,7 +6,10 @@
  * convergent_axes membership. Null citation axis -> citation arrow shows an
  * honest "no axis" dash, never a false pass.
  */
+import { snapshot } from '../../lib/data';
 import type { Entity } from '../../lib/data';
+import { measurementPhrases, measurementStateFor } from '../../lib/measurement';
+import { stableDomId } from '../../lib/charts';
 
 export interface Props {
   entity: Entity;
@@ -25,13 +28,10 @@ const gateX = width * 0.62;
 const gap = width * 0.07;
 const vY = height * 0.34, cY = height * 0.66;
 
-let verdict: string;
-if (vPass && cPass) verdict = 'both axes pass, gate open';
-else if (!citPresent) verdict = 'velocity only, citation axis absent';
-else if (vPass || cPass) verdict = `${vPass ? 'velocity' : 'citation'} passes, gate shut`;
-else verdict = 'gate shut';
+const state = measurementStateFor(entity, snapshot);
+const verdict = measurementPhrases(state).gate;
 
-const titleId = `gg-t-${Math.random().toString(36).slice(2, 8)}`;
+const titleId = stableDomId('gg-t', entity.entity_id, width, height);
 
 // arrow geometry helper values
 const startX = width * 0.07;
@@ -72,6 +72,6 @@ function arrowEnd(pass: boolean) { return pass ? gateX - 2 : gateX - 14; }
     <dl class="chart-dl" style="justify-content:center">
       <div><dt>gate</dt><dd><data value={String(conv.length)}>{conv.length}</data> of 2 axes</dd></div>
     </dl>
-    <p class="chart-verdict" style="text-align:center">{verdict}.</p>
+    <p class="chart-verdict" style="text-align:center">{verdict}</p>
   </figcaption>
 </figure>

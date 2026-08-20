@@ -12,20 +12,18 @@ async function body(): Promise<string> {
 }
 
 describe('llms.txt structure (WP-E status-first, no-rank)', () => {
-  it('leads with header then Status counts before Rising / Watch / Catalog', async () => {
+  it('leads with header then typed Status counts before Rising / Catalog', async () => {
     const txt = await body();
     expect(txt.startsWith('# Evidaxis\n')).toBe(true);
 
     const iStatus = txt.indexOf('## Status (snapshot ');
     const iRising = txt.indexOf('## Rising this period');
-    const iWatch = txt.indexOf('## Watch list');
     const iCatalog = txt.indexOf('## Catalog (by cohort, alphabetical within cohort)');
     const iKey = txt.indexOf('## Key resources');
 
     expect(iStatus).toBeGreaterThan(0);
     expect(iRising).toBeGreaterThan(iStatus);
-    expect(iWatch).toBeGreaterThan(iRising);
-    expect(iCatalog).toBeGreaterThan(iWatch);
+    expect(iCatalog).toBeGreaterThan(iRising);
     expect(iKey).toBeGreaterThan(iCatalog);
   });
 
@@ -35,7 +33,7 @@ describe('llms.txt structure (WP-E status-first, no-rank)', () => {
       txt.indexOf('## Status (snapshot '),
       txt.indexOf('## Rising this period'),
     );
-    for (const key of ['rising:', 'watch:', 'axis2_present:', 'provisional:', 'spine_complete:']) {
+    for (const key of ['rising_published:', 'registry_members:', 'history_sufficient:', 'two_axis_measurable:', 'gate_eligible:', 'provisional:', 'spine_complete:']) {
       expect(statusBlock).toContain(key);
     }
   });
@@ -45,7 +43,7 @@ describe('llms.txt structure (WP-E status-first, no-rank)', () => {
     // Either lists rising entities or the locked empty-state sentence.
     const risingBlock = txt.slice(
       txt.indexOf('## Rising this period'),
-      txt.indexOf('## Watch list'),
+      txt.indexOf('## Catalog (by cohort, alphabetical within cohort)'),
     );
     if (!/^-\s/m.test(risingBlock)) {
       expect(risingBlock).toMatch(/two independent axes must converge/i);

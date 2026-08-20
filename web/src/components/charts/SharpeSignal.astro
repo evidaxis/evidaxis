@@ -7,7 +7,7 @@
  * The CI is the rigor surface: a value with its uncertainty, not a bare point.
  */
 import { commitSharpe } from '../../lib/derived';
-import { scaleLinear } from '../../lib/charts';
+import { scaleLinear, stableDomId } from '../../lib/charts';
 import SnapshotProvenance from './SnapshotProvenance.astro';
 
 export interface Props {
@@ -18,8 +18,9 @@ export interface Props {
 const { series, width = 240, height = 92 } = Astro.props;
 const sig = commitSharpe(series);
 const reserved = 'reserved' in sig;
-const titleId = `sh-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `sh-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('sh', series, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 
 let lo = 0, hi = 0, val = 0, dof = 0;
 if (!reserved) { [lo, hi] = sig.ci; val = sig.value; dof = sig.dof; }

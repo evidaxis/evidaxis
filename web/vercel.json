@@ -4,6 +4,11 @@
   "cleanUrls": false,
   "redirects": [
     {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-index.xml",
+      "permanent": true
+    },
+    {
       "source": "/e/:entity_id/:slug",
       "destination": "/e/:entity_id/",
       "permanent": true

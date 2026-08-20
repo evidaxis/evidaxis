@@ -8,7 +8,7 @@
  * points ending at the snapshot date, so week i is SNAP_DATE - (n-1-i)*7 days.
  */
 import { commitChangepoint } from '../../lib/derived';
-import { linePath, scaleLinear } from '../../lib/charts';
+import { linePath, scaleLinear, stableDomId } from '../../lib/charts';
 import { SNAP_DATE } from '../../lib/data';
 import SnapshotProvenance from './SnapshotProvenance.astro';
 
@@ -22,8 +22,9 @@ const cp = commitChangepoint(series);
 const reserved = 'reserved' in cp;
 const none = !reserved && 'none' in cp;
 const hit = !reserved && !none;
-const titleId = `cp-t-${Math.random().toString(36).slice(2, 8)}`;
-const descId = `cp-d-${Math.random().toString(36).slice(2, 8)}`;
+const domId = stableDomId('cp', series, width, height);
+const titleId = `${domId}-t`;
+const descId = `${domId}-d`;
 
 const n = series.length;
 const m = { t: 10, b: 16, l: 8, r: 8 };

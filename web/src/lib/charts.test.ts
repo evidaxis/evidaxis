@@ -10,7 +10,24 @@ import {
   gaugeNeedle,
   heatmapCells,
   niceTicks,
+  stableDomId,
 } from './charts';
+
+describe('stableDomId', () => {
+  it('is byte-stable for identical inputs', () => {
+    expect(stableDomId('chart', 'entity', [1, 2, 3])).toBe(stableDomId('chart', 'entity', [1, 2, 3]));
+  });
+
+  it('changes when chart identity changes', () => {
+    expect(stableDomId('chart', 'entity-a')).not.toBe(stableDomId('chart', 'entity-b'));
+  });
+
+  it('recursively canonicalizes object keys while preserving array order', () => {
+    expect(stableDomId('chart', { b: 2, a: { d: 4, c: 3 } }))
+      .toBe(stableDomId('chart', { a: { c: 3, d: 4 }, b: 2 }));
+    expect(stableDomId('chart', [1, 2])).not.toBe(stableDomId('chart', [2, 1]));
+  });
+});
 
 describe('polar', () => {
   it('places 0deg at 12 o\'clock (straight up)', () => {

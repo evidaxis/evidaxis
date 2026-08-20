@@ -19,6 +19,7 @@
 /** @typedef {'ok'|'publishing'|'stale'|'unknown'} FreshnessStatus */
 
 const HOUR_MS = 3600_000;
+const DAY_MS = 24 * HOUR_MS;
 
 /**
  * @param {{
@@ -73,5 +74,56 @@ export function evaluateFreshness(i) {
       `Прод отстал: в репозитории снапшот ${i.snapshotDate}, ` +
       `${url} отдаёт HTTP ${i.status} спустя ${Math.floor(ageHours)} ч. ` +
       `Публикация не доехала — карточки живут в git, но не на сайте.`,
+  };
+}
+
+/**
+ * @param {{
+ *   site: string,
+ *   reached: boolean,
+ *   status: number,
+ *   latestEntryAt: string | null,
+ *   now: Date,
+ *   maxAgeDays?: number,
+ * }} i
+ * @returns {{ status: FreshnessStatus, alert: boolean, message: string }}
+ */
+export function evaluateFeedFreshness(i) {
+  const maxAgeDays = i.maxAgeDays ?? 8;
+  const url = `${i.site}/feed.json`;
+  if (!i.reached) {
+    return {
+      status: 'unknown',
+      alert: false,
+      message: `${url} не ответил — свежесть фида не проверялась.`,
+    };
+  }
+  if (i.status !== 200) {
+    return {
+      status: 'stale',
+      alert: true,
+      message: `${url} отдаёт HTTP ${i.status}; последняя запись фида не проверена.`,
+    };
+  }
+  const published = Date.parse(i.latestEntryAt ?? '');
+  if (Number.isNaN(published)) {
+    return {
+      status: 'stale',
+      alert: true,
+      message: `${url} не содержит корректную дату последней записи.`,
+    };
+  }
+  const ageDays = (i.now.getTime() - published) / DAY_MS;
+  if (ageDays <= maxAgeDays) {
+    return {
+      status: 'ok',
+      alert: false,
+      message: `Последняя запись ${url} имеет возраст ${Math.max(0, Math.floor(ageDays))} дн.`,
+    };
+  }
+  return {
+    status: 'stale',
+    alert: true,
+    message: `Последняя запись ${url} старше ${maxAgeDays} дн. (${Math.floor(ageDays)} дн.).`,
   };
 }

@@ -1,0 +1,64 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { snapshot } from '../../../lib/data';
+import { computePowerFunnel, computeSensitivity } from '../../../lib/power';
+import { breadcrumb } from '../../../lib/jsonld';
+
+const funnel = computePowerFunnel(snapshot);
+const sensitivity = computeSensitivity(snapshot);
+const stages = [
+  ['Registry members', funnel.registry_members, 'Current census members in the snapshot.'],
+  ['History sufficient', funnel.history_sufficient, 'At least 4 distinct weekly observations.'],
+  ['Two axes measurable', funnel.two_axis_measurable, 'Development velocity and citation signals are both measurable.'],
+  ['Gate eligible', funnel.gate_eligible, 'History, axis coverage, cohort floor, and reference-measurement rules applied.'],
+  ['Rising published', funnel.rising_published, 'Positive signals published after two-axis convergence.'],
+] as const;
+const desc = `Measurement power funnel for snapshot ${snapshot.snapshot_date}: ${funnel.registry_members} registry members through history, axis coverage, gate eligibility, and published Rising signals.`;
+---
+<Base title="Measurement power funnel | Evidaxis" description={desc} canonical="/coverage/power/" jsonLd={breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: 'Power funnel', path: '/coverage/power/' }])}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Coverage · measurement power</p>
+      <h1>The denominator behind a zero</h1>
+      <p class="lead">Every stage is computed at build time from snapshot {snapshot.snapshot_date}. The final zero is reported with its full measurement denominator.</p>
+
+      <ol class="funnel" aria-label="Measurement power funnel">
+        {stages.map(([label, value, note], index) => <li>
+          <span class="stage mono">{index + 1}</span>
+          <div><h2>{label}</h2><p>{note}</p></div>
+          <data value={String(value)}>{value}</data>
+        </li>)}
+      </ol>
+
+      <section class="panel sensitivity">
+        <h2>Sensitivity to the axis z threshold</h2>
+        <p>The current methodology uses z ≥ 1, a cohort floor of 5, and at least 5 average weekly commits for development velocity. The table changes only the z threshold; all other rules stay fixed.</p>
+        <table>
+          <thead><tr><th scope="col">Axis z threshold</th><th scope="col">Activity floor</th><th scope="col">Convergence signals</th></tr></thead>
+          <tbody>{sensitivity.map((row) => <tr>
+            <td>z ≥ {row.z_threshold.toFixed(1)}</td>
+            <td>{row.activity_floor_weekly_commits} commits/week</td>
+            <td><data value={String(row.convergence_signals)}>{row.convergence_signals}</data></td>
+          </tr>)}</tbody>
+        </table>
+      </section>
+
+      <p class="muted"><a href="/coverage/">Return to the coverage atlas</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .funnel { list-style: none; margin: 2rem 0; padding: 0; border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; background: var(--surface); }
+  .funnel li { display: grid; grid-template-columns: 34px 1fr auto; gap: 16px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--hairline); }
+  .funnel li:last-child { border-bottom: 0; }
+  .funnel .stage { color: var(--ink-mute); }
+  .funnel h2 { margin: 0; font-size: 1.05rem; }
+  .funnel p { margin: 3px 0 0; color: var(--ink-mute); font-size: .84rem; }
+  .funnel data { font-family: var(--font-display); font-size: 2rem; font-weight: 600; }
+  .sensitivity { padding: 20px; margin: 2rem 0; }
+  .sensitivity h2 { margin-top: 0; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--hairline); }
+  th { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-mute); }
+</style>

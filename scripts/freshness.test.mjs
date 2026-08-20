@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluateFreshness } from './freshness.mjs';
+import { evaluateFeedFreshness, evaluateFreshness } from './freshness.mjs';
 
 const base = { site: 'https://evidaxis.org', snapshotDate: '2026-08-08' };
 const long_after = new Date('2026-08-10T09:00:00Z');   // two days later
@@ -47,4 +47,40 @@ test('grace window is configurable and respected', () => {
   });
   assert.equal(r.status, 'publishing');
   assert.equal(r.alert, false);
+});
+
+test('feed entry age at eight days is accepted', () => {
+  const r = evaluateFeedFreshness({
+    site: base.site,
+    reached: true,
+    status: 200,
+    latestEntryAt: '2026-08-12T09:00:00Z',
+    now: new Date('2026-08-20T09:00:00Z'),
+  });
+  assert.equal(r.status, 'ok');
+  assert.equal(r.alert, false);
+});
+
+test('feed entry older than eight days alerts', () => {
+  const r = evaluateFeedFreshness({
+    site: base.site,
+    reached: true,
+    status: 200,
+    latestEntryAt: '2026-08-11T08:59:59Z',
+    now: new Date('2026-08-20T09:00:00Z'),
+  });
+  assert.equal(r.status, 'stale');
+  assert.equal(r.alert, true);
+});
+
+test('feed with an invalid latest-entry date cannot report fresh', () => {
+  const r = evaluateFeedFreshness({
+    site: base.site,
+    reached: true,
+    status: 200,
+    latestEntryAt: null,
+    now: long_after,
+  });
+  assert.equal(r.status, 'stale');
+  assert.equal(r.alert, true);
 });

@@ -5,6 +5,7 @@ import type { Snapshot } from '../../../lib/data';
 import { hasSnapshotArtifact } from '../../../lib/archive';
 import { snapshotDataset, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
+import { measurementPhrases, measurementStateFor } from '../../../lib/measurement';
 
 export function getStaticPaths() {
   return snapshots.map((snapshot) => ({
@@ -96,7 +97,7 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
           </tr></thead>
           <tbody>{all.map((e) => <tr>
             <th scope="row"><a href={`/e/${e.entity_id}/`}><strong>{e.name}</strong></a><small class="mono">{e.entity_id}</small><small class="mono urn">{claimUrnForEntity(e, snapshot)}</small></th>
-            <td>{e.status}</td>
+            <td>{measurementPhrases(measurementStateFor(e, snapshot)).compact}</td>
             <td>{fmt(e.momentum, 1)}</td>
             <td>{fmt(e.axes?.github_commit_velocity?.cohort_z)}</td>
             <td>{fmt(e.axes?.openalex_citation_momentum?.cohort_z)}</td>

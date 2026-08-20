@@ -1,0 +1,68 @@
+---
+import { citationText } from '../lib/canary';
+
+export interface Props {
+  name: string;
+  entityId: string;
+  snapshotDate: string;
+}
+const { name, entityId, snapshotDate } = Astro.props;
+const citation = citationText(name, entityId, snapshotDate);
+---
+<details
+  class="panel citation-block"
+  data-canary-citation
+  data-canary-group="treatment"
+  data-ph-capture-attribute-experiment="entity-ctr-canary"
+  data-ph-capture-attribute-action="citation-details"
+>
+  <summary
+    data-canary-event="citation-details-open"
+    data-ph-capture-attribute-event="citation-details-open"
+  >Cite this measurement</summary>
+  <div class="citation-body">
+    <h2>Plain citation</h2>
+    <p class="mono citation-text">{citation.plain}</p>
+    <button type="button" class="copy-citation" data-copy-citation data-citation-text={citation.plain}>Copy citation</button>
+    <h2>BibTeX</h2>
+    <pre class="mono">{citation.bibtex}</pre>
+    <p><a
+      href={`/e/${entityId}.json`}
+      data-canary-event="download-record"
+      data-ph-capture-attribute-experiment="entity-ctr-canary"
+      data-ph-capture-attribute-event="download-record"
+    >Download record (JSON)</a></p>
+  </div>
+</details>
+
+<script is:inline>
+  document.querySelectorAll('[data-canary-citation]:not([data-canary-bound])').forEach(function (details) {
+    details.setAttribute('data-canary-bound', '1');
+    details.addEventListener('toggle', function () {
+      if (details.open && typeof window.gtag === 'function') {
+        window.gtag('event', 'citation_details_open', { experiment: 'entity_ctr_canary' });
+      }
+    });
+    var link = details.querySelector('[data-canary-event="download-record"]');
+    if (link) link.addEventListener('click', function () {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'download_record', { experiment: 'entity_ctr_canary' });
+      }
+    });
+    var button = details.querySelector('[data-copy-citation]');
+    if (button) button.addEventListener('click', function () {
+      var value = button.getAttribute('data-citation-text') || '';
+      if (navigator.clipboard && value) navigator.clipboard.writeText(value);
+    });
+  });
+</script>
+
+<style is:inline>
+  .citation-block { margin-top: 18px; padding: 18px 20px; }
+  .citation-block summary { cursor: pointer; font-family: var(--font-display); font-weight: 600; }
+  .citation-body { margin-top: 16px; }
+  .citation-body h2 { font-size: .9rem; margin: 14px 0 6px; }
+  .citation-text, .citation-body pre { font-size: .72rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .citation-body pre { padding: 12px; background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; }
+  .copy-citation { border: 1px solid var(--hairline-2); border-radius: 6px; background: var(--surface); color: var(--ink-soft); padding: 7px 11px; cursor: pointer; font-family: var(--font-mono); font-size: .72rem; }
+</style>
