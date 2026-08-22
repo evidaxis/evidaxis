@@ -14,19 +14,19 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 9d18a826a3f1
-  captured_at: 2026-08-15T07:11:33+00:00
-  period: 2026-w33
-  momentum: 29.2
-  percentile: 22
+  snapshot_id: 66cffe06e8cb
+  captured_at: 2026-08-22T07:13:33+00:00
+  period: 2026-w34
+  momentum: 29.5
+  percentile: 18
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.03862432753539088, "cohort_z": -1.668, "recent_weekly_commits": 3.2, "stars_not_scored": 6513}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 99, "by_year": {"2026": 85, "2025": 14}, "proxy": null}
+    github_commit_velocity: {"slope": -0.024955349061725418, "cohort_z": -1.637, "recent_weekly_commits": 3.2, "stars_not_scored": 6677}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 105, "by_year": {"2026": 91, "2025": 14}, "proxy": null}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---
 

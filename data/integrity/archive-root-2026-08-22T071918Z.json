@@ -1,0 +1,12 @@
+{
+  "v": "merkle_1",
+  "algorithm": "sha256 binary Merkle; leaves domain-separated 0x00 (path\\0content), nodes 0x01; odd node promoted",
+  "scope": "every file under data/ except data/integrity/",
+  "root": "sha256:4a9359636aca792b58081cd8f968e8d4fa9fef2cb6ea6070cb435f40adc494e0",
+  "n_files": 8224,
+  "file_list_sha256": "sha256:8b6bfc7a0c4d1d93df979a8db7005332c8e7351cabf18bc188c303201ee5f50a",
+  "date": "2026-08-22",
+  "period": "2026-w34",
+  "computed_at": "2026-08-22T07:19:18Z",
+  "prev_root": "sha256:84a4eeb8767f5e308b00e199c8f17c09c494f852892df41c56dfd6576b030f9d"
+}

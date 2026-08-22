@@ -14,9 +14,9 @@ classification:
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 9d18a826a3f1
-  captured_at: 2026-08-15T07:11:33+00:00
-  period: 2026-w33
+  snapshot_id: 66cffe06e8cb
+  captured_at: 2026-08-22T07:13:33+00:00
+  period: 2026-w34
   momentum: 48.5
   percentile: 42
   confidence: low
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.122, "recent_weekly_commits": 0.0, "stars_not_scored": 5357}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.122, "recent_weekly_commits": 0.0, "stars_not_scored": 5371}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 25, "by_year": {"2026": 5, "2025": 20}, "proxy": null}
 note: "paper_ref: arXiv:2412.10302; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

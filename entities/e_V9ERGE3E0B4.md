@@ -14,18 +14,18 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 9d18a826a3f1
-  captured_at: 2026-08-15T07:11:33+00:00
-  period: 2026-w33
-  momentum: 12.7
-  percentile: 8
+  snapshot_id: 66cffe06e8cb
+  captured_at: 2026-08-22T07:13:33+00:00
+  period: 2026-w34
+  momentum: 10.8
+  percentile: 0
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.03836823626490686, "cohort_z": -2.982, "recent_weekly_commits": 0.2, "stars_not_scored": 32186}
+    github_commit_velocity: {"slope": -0.04519247461955456, "cohort_z": -3.135, "recent_weekly_commits": 0.1, "stars_not_scored": 32323}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "paper_ref: arXiv:2411.01156; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 9d18a826a3f1
-  captured_at: 2026-08-15T07:11:33+00:00
-  period: 2026-w33
-  momentum: 60.0
-  percentile: 89
+  snapshot_id: 66cffe06e8cb
+  captured_at: 2026-08-22T07:13:33+00:00
+  period: 2026-w34
+  momentum: 61.5
+  percentile: 83
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.03574342884145975, "cohort_z": 2.333, "recent_weekly_commits": 1.2, "stars_not_scored": 6939}
-    openalex_citation_momentum: {"status": "present", "slope": 0.42307467746016164, "cohort_z": -0.73, "total_citations": 3115, "by_year": {"2026": 364, "2025": 550, "2024": 518, "2023": 422, "2022": 374, "2021": 351, "2020": 294, "2019": 158, "2018": 76, "2017": 6, "2012": 2}, "proxy": "MoleculeNet (the standard DeepChem citation)"}
+    github_commit_velocity: {"slope": 0.047945242271253935, "cohort_z": 2.572, "recent_weekly_commits": 1.5, "stars_not_scored": 6951}
+    openalex_citation_momentum: {"status": "present", "slope": 0.4236134909164153, "cohort_z": -0.73, "total_citations": 3140, "by_year": {"2026": 387, "2025": 554, "2024": 518, "2023": 422, "2022": 374, "2021": 350, "2020": 293, "2019": 158, "2018": 76, "2017": 6, "2012": 2}, "proxy": "MoleculeNet (the standard DeepChem citation)"}
 ---
 
 # DeepChem
