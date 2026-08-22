@@ -1,0 +1,33 @@
+{
+  "network_count": 1420,
+  "archived": false,
+  "name": "Gymnasium",
+  "fork": false,
+  "language": "Python",
+  "topics": [
+    "api",
+    "gym",
+    "reinforcement-learning"
+  ],
+  "disabled": false,
+  "description": "A standard API for single-agent reinforcement learning environments, with popular reference environments and related utilities (formerly Gym)",
+  "updated_at": "2026-08-22T06:40:44Z",
+  "forks_count": 1420,
+  "default_branch": "main",
+  "visibility": "public",
+  "watchers_count": 12366,
+  "id": 534011733,
+  "size": 451489,
+  "stargazers_count": 12366,
+  "pushed_at": "2026-08-19T16:01:04Z",
+  "full_name": "Farama-Foundation/Gymnasium",
+  "homepage": "https://gymnasium.farama.org",
+  "created_at": "2022-09-08T01:58:05Z",
+  "subscribers_count": 62,
+  "open_issues_count": 77,
+  "private": false,
+  "node_id": "R_kgDOH9RfVQ",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
