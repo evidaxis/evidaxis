@@ -12,6 +12,7 @@
  *   3. a <script type=application/ld+json> that does not parse / lacks @context
  *   4. a page missing <title>, meta description, or canonical
  *   5. more than one <h1> on a page
+ *   6. entity robots/sitemap state disagrees with history sufficiency
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -147,6 +148,66 @@ for (const pair of CANARY.pairs ?? []) {
       for (const marker of ['data-canary-treatment="answer-first"', 'data-canary-citation', 'Download record (JSON)']) {
         if (!html.includes(marker)) errors.push(`e/${id}/index.html: treatment missing ${marker}`);
       }
+    }
+  }
+}
+
+// Registry growth policy: entity indexability comes only from the measurement
+// state serialized in the JSON twin. Current sufficient records must be in a
+// sitemap; insufficient records must be absent from every sitemap.
+const sitemapFiles = distFiles.filter((file) => /(^|\/)sitemap-.*\.xml$/.test(rel(file)));
+const sitemaps = sitemapFiles.map((file) => readFileSync(file, 'utf8'));
+for (const htmlPath of htmlFiles.filter((file) => /\/e\/e_[^/]+\/index\.html$/.test(file))) {
+  const id = htmlPath.match(/\/e\/(e_[^/]+)\/index\.html$/)?.[1];
+  if (!id) continue;
+  const jsonPath = join(DIST, 'e', `${id}.json`);
+  if (!existsSync(jsonPath)) continue;
+
+  let record;
+  try {
+    record = JSON.parse(readFileSync(jsonPath, 'utf8'));
+  } catch {
+    // The entity JSON scan above reports the parse failure.
+    continue;
+  }
+  const html = readFileSync(htmlPath, 'utf8');
+  const robots = html.match(/<meta\s+name="robots"\s+content="([^"]*)"/)?.[1] ?? '';
+  const directives = new Set(robots.split(',').map((value) => value.trim()));
+  const canonical = `https://evidaxis.org/e/${id}/`;
+  const inSitemap = sitemaps.some((body) => body.includes(`<loc>${canonical}</loc>`));
+  const historyState = record?.measurement_state?.history_sufficiency?.state;
+
+  if (historyState !== 'sufficient') {
+    if (!directives.has('noindex')) errors.push(`e/${id}/index.html: insufficient history must set robots noindex`);
+    if (inSitemap) errors.push(`e/${id}/: insufficient history must be absent from every sitemap`);
+  } else {
+    if (!directives.has('index') || !directives.has('follow')) {
+      errors.push(`e/${id}/index.html: sufficient history must set robots index, follow`);
+    }
+    if (record.record_status === 'current' && !inSitemap) {
+      errors.push(`e/${id}/: current entity with sufficient history must be present in a sitemap`);
+    }
+  }
+}
+
+// Both canary arms require mature history throughout the experiment. Otherwise
+// an indexability transition would become a treatment confound.
+for (const pair of CANARY.pairs ?? []) {
+  for (const group of ['treatment', 'control']) {
+    const id = canaryId(pair[group]);
+    if (!id) continue;
+    const jsonPath = join(DIST, 'e', `${id}.json`);
+    if (!existsSync(jsonPath)) {
+      errors.push(`e/${id}.json: canary ${group} is missing its JSON twin`);
+      continue;
+    }
+    try {
+      const record = JSON.parse(readFileSync(jsonPath, 'utf8'));
+      if (record?.measurement_state?.history_sufficiency?.state !== 'sufficient') {
+        errors.push(`e/${id}.json: canary ${group} must have sufficient history`);
+      }
+    } catch (e) {
+      errors.push(`e/${id}.json: canary ${group} JSON twin does not parse (${e.message})`);
     }
   }
 }

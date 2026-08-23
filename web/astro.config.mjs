@@ -16,6 +16,7 @@ const SNAP_DATE = JSON.parse(readFileSync(new URL('../data/latest.json', import.
 const METHODOLOGY_FROZEN = '2026-06-27';
 const snapshotDates = new Map();
 const entityLastSeen = new Map();
+const entityIndexability = new Map();
 for (const date of readdirSync(new URL('../data/snapshots/', import.meta.url)).filter((name) => /^\d{4}-\d{2}-\d{2}$/.test(name)).sort()) {
   const snap = JSON.parse(readFileSync(new URL(`../data/snapshots/${date}/snapshot.json`, import.meta.url), 'utf8'));
   if (snap.snapshot_date !== date) throw new Error(`snapshot date mismatch: directory ${date}, payload ${snap.snapshot_date}`);
@@ -23,6 +24,21 @@ for (const date of readdirSync(new URL('../data/snapshots/', import.meta.url)).f
   for (const entity of snap.entities) entityLastSeen.set(`/e/${entity.entity_id}/`, date);
 }
 if (![...snapshotDates.values()].includes(SNAP_DATE)) throw new Error(`data/latest.json points to missing snapshot ${SNAP_DATE}`);
+
+const entityPageIsIndexable = (page) => {
+  const match = new URL(page).pathname.match(/^\/e\/(e_[^/]+)\/$/);
+  if (!match) return true;
+  const id = match[1];
+  if (entityIndexability.has(id)) return entityIndexability.get(id);
+
+  let indexable = false;
+  try {
+    const twin = JSON.parse(readFileSync(new URL(`./dist/e/${id}.json`, import.meta.url), 'utf8'));
+    indexable = twin?.measurement_state?.history_sufficiency?.state === 'sufficient';
+  } catch {}
+  entityIndexability.set(id, indexable);
+  return indexable;
+};
 
 export default defineConfig({
   site: 'https://evidaxis.org',
@@ -36,7 +52,8 @@ export default defineConfig({
         !page.includes('/charttest')
         && !page.includes('/_charttest')
         && !page.includes('/methodology/current/')
-        && !new URL(page).pathname.startsWith('/signals/'),
+        && !new URL(page).pathname.startsWith('/signals/')
+        && entityPageIsIndexable(page),
       serialize(item) {
         const path = new URL(item.url).pathname;
         item.lastmod = (path.includes('/methodology/') || path.includes('/about/'))

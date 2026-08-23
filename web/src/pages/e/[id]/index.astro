@@ -75,7 +75,7 @@ const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodo
 const answerFirst = treatmentAnswerFirst(e.name, cohortName, measurementState);
 const pageTitle = isTreatment ? treatmentTitle(e.name, measurementState) : `${e.name}, Evidaxis measurement`;
 ---
-<Base title={pageTitle} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]} feedLinks={canary !== 'control'}>
+<Base title={pageTitle} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]} noindex={measurementState.history_sufficiency.state !== 'sufficient'} feedLinks={canary !== 'control'}>
   <section class="section ent-wrap">
     <div class="wrap">
       <nav class="crumb mono" aria-label="Breadcrumb">
