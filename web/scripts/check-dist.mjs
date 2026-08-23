@@ -102,8 +102,19 @@ const controlShellPatterns = [
   /<p class="cite mono muted"[\s\S]*?<\/p>/,
   /<p class="cite-urn mono muted"[\s\S]*?<\/p>/,
 ];
+// Weekly snapshot motion legitimately rewrites date-bearing shell tokens on
+// control and treatment alike: the receipt's snapshot id and period, the nav
+// snapshot link, and the claim-URN date in cite-as and the citation footer.
+// The 2026-08-22 snapshot proved the unmasked pin fails closed on ordinary
+// data motion (publication stalled >31 h on 24 false positives). Masking pins
+// every remaining byte - methodology version included, so a methodology bump
+// still demands a conscious baseline regeneration.
+const maskWeeklyTokens = (shell) => shell
+  .replace(/(snapshot <b[^>]*>)[0-9a-f]+(<\/b>)/g, '$1SNAPSHOT_ID$2')
+  .replace(/\b\d{4}-\d{2}-\d{2}\b/g, 'DATE')
+  .replace(/\b\d{4}-w\d{2}\b/g, 'PERIOD');
 const controlShellHash = (html) => createHash('sha256')
-  .update(controlShellPatterns.map((pattern) => html.match(pattern)?.[0] ?? 'MISSING').join('\n'))
+  .update(maskWeeklyTokens(controlShellPatterns.map((pattern) => html.match(pattern)?.[0] ?? 'MISSING').join('\n')))
   .digest('hex');
 for (const pair of CANARY.pairs ?? []) {
   for (const group of ['treatment', 'control']) {
