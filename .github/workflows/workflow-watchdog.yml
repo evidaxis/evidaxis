@@ -1,0 +1,34 @@
+name: workflow-watchdog
+
+# Known limitation: the watchdog cannot report its own absence. The daily T2
+# commits keep GitHub's 60-day cron auto-disable away, and a disabled watchdog
+# still surfaces through GitHub e-mail.
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      selftest:
+        description: Send a green Telegram test signal without evaluating workflows
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Watch all workflow outcomes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+        run: node scripts/workflow-watchdog-check.mjs ${{ inputs.selftest && '--selftest' || '' }}

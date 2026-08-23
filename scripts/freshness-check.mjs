@@ -4,7 +4,11 @@
 // under plain `node` — no npm install (see freshness.mjs for the fact it
 // watches and why it is separate from the liveness sensor).
 import { readFileSync } from 'node:fs';
-import { evaluateFeedFreshness, evaluateFreshness } from './freshness.mjs';
+import {
+  evaluateArchiveFreshness,
+  evaluateFeedFreshness,
+  evaluateFreshness,
+} from './freshness.mjs';
 
 /** @param {string} url */
 async function probe(url) {
@@ -82,21 +86,23 @@ try {
 
 const url = `${site}/snapshots/${snapshotDate}/snapshot.json`;
 const p = await probe(url);
-const result = evaluateFreshness({ site, snapshotDate, now: new Date(), ...p });
+const now = new Date();
+const result = evaluateFreshness({ site, snapshotDate, now, ...p });
 const feedUrl = `${site}/feed.json`;
 const feedProbe = await probeFeed(feedUrl);
-const feedResult = evaluateFeedFreshness({ site, now: new Date(), ...feedProbe });
+const feedResult = evaluateFeedFreshness({ site, now, ...feedProbe });
+const archiveResult = evaluateArchiveFreshness({ snapshotDate, nowIso: now.toISOString() });
 console.log(JSON.stringify({
   snapshot: { url, snapshotDate, httpStatus: p.status, ...result },
   feed: { url: feedUrl, httpStatus: feedProbe.status, latestEntryAt: feedProbe.latestEntryAt, ...feedResult },
+  archive: { snapshotDate, ...archiveResult },
 }));
 
-if (result.alert || feedResult.alert) {
-  const actionsLink =
-    process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY
-      ? `\n${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions`
-      : '';
-  await sendTelegram(`🟠 ${label} · публикация отстала\n\n${result.message}\n${feedResult.message}${actionsLink}`);
+if (result.alert || feedResult.alert || archiveResult.alert) {
+  await sendTelegram(
+    `🟠 ${label} · свежесть данных\n\n` +
+    `${result.message}\n${feedResult.message}\n${archiveResult.message}`,
+  );
   process.exit(1);
 }
 process.exit(0);

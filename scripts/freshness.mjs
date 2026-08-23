@@ -20,6 +20,62 @@
 
 const HOUR_MS = 3600_000;
 const DAY_MS = 24 * HOUR_MS;
+const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
+
+/** @param {string} snapshotDate */
+function captureTime(snapshotDate) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(snapshotDate)) return Number.NaN;
+  // snapshot_date has day precision, so anchor it to the scheduled 06:17 UTC
+  // capture. The 174-hour budget then expires at 12:17 the next Saturday.
+  const timestamp = Date.parse(`${snapshotDate}T06:17:00Z`);
+  if (Number.isNaN(timestamp)) return Number.NaN;
+  return new Date(timestamp).toISOString().slice(0, 10) === snapshotDate
+    ? timestamp
+    : Number.NaN;
+}
+
+/** @param {number} ageHours */
+function archiveAge(ageHours) {
+  const hours = Math.max(0, Math.floor(ageHours));
+  return `${hours} ч (${(hours / 24).toFixed(1)} дн.)`;
+}
+
+/**
+ * @param {{ snapshotDate: string, nowIso: string, budgetHours?: number }} i
+ * @returns {{ status: FreshnessStatus, alert: boolean, message: string }}
+ */
+export function evaluateArchiveFreshness(i) {
+  const budgetHours = i.budgetHours ?? 174;
+  const capturedAt = captureTime(i.snapshotDate);
+  const now = Date.parse(i.nowIso);
+  if (Number.isNaN(capturedAt) || Number.isNaN(now)) {
+    return {
+      status: 'stale',
+      alert: true,
+      message:
+        `Дата архивного снапшота «${i.snapshotDate}» некорректна: нельзя подтвердить, ` +
+        `что сам CAPTURE состоялся.\n${ACTIONS_URL}`,
+    };
+  }
+
+  const ageHours = (now - capturedAt) / HOUR_MS;
+  if (ageHours <= budgetHours) {
+    return {
+      status: 'ok',
+      alert: false,
+      message:
+        `Архивный снапшот ${i.snapshotDate} имеет возраст ${archiveAge(ageHours)}, ` +
+        `бюджет ${budgetHours} ч не исчерпан.\n${ACTIONS_URL}`,
+    };
+  }
+  return {
+    status: 'stale',
+    alert: true,
+    message:
+      `Сам CAPTURE не состоялся: новейшему архивному снапшоту ${i.snapshotDate} уже ` +
+      `${archiveAge(ageHours)}, бюджет ${budgetHours} ч исчерпан.\n${ACTIONS_URL}`,
+  };
+}
 
 /**
  * @param {{

@@ -1,6 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluateFeedFreshness, evaluateFreshness } from './freshness.mjs';
+import {
+  evaluateArchiveFreshness,
+  evaluateFeedFreshness,
+  evaluateFreshness,
+} from './freshness.mjs';
 
 const base = { site: 'https://evidaxis.org', snapshotDate: '2026-08-08' };
 const long_after = new Date('2026-08-10T09:00:00Z');   // two days later
@@ -80,6 +84,44 @@ test('feed with an invalid latest-entry date cannot report fresh', () => {
     status: 200,
     latestEntryAt: null,
     now: long_after,
+  });
+  assert.equal(r.status, 'stale');
+  assert.equal(r.alert, true);
+});
+
+test('archive snapshot younger than the capture budget is fresh', () => {
+  const r = evaluateArchiveFreshness({
+    snapshotDate: '2026-08-15',
+    nowIso: '2026-08-22T06:16:59Z',
+  });
+  assert.equal(r.status, 'ok');
+  assert.equal(r.alert, false);
+});
+
+test('archive snapshot older than the capture budget alerts', () => {
+  const r = evaluateArchiveFreshness({
+    snapshotDate: '2026-08-15',
+    nowIso: '2026-08-22T12:17:01Z',
+  });
+  assert.equal(r.status, 'stale');
+  assert.equal(r.alert, true);
+  assert.match(r.message, /CAPTURE не состоялся/);
+  assert.match(r.message, /174 ч \(7\.3 дн\.\)/);
+});
+
+test('archive age exactly at the budget boundary is fresh', () => {
+  const r = evaluateArchiveFreshness({
+    snapshotDate: '2026-08-15',
+    nowIso: '2026-08-22T12:17:00Z',
+  });
+  assert.equal(r.status, 'ok');
+  assert.equal(r.alert, false);
+});
+
+test('malformed archive snapshot date alerts fail-closed', () => {
+  const r = evaluateArchiveFreshness({
+    snapshotDate: '2026-02-30',
+    nowIso: '2026-08-22T12:17:00Z',
   });
   assert.equal(r.status, 'stale');
   assert.equal(r.alert, true);

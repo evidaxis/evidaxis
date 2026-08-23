@@ -57,7 +57,7 @@ jobs:
         # whether a human is told publication broke. They were unit-tested but
         # nothing ran those tests; a sensor whose tests never run is a sensor
         # nobody is watching.
-        run: node --test scripts/liveness.test.mjs scripts/freshness.test.mjs
+        run: node --test scripts/liveness.test.mjs scripts/freshness.test.mjs scripts/workflow-watchdog.test.mjs
 
       - name: Build (astro, reads ../data + ../taxonomy)
         working-directory: web
