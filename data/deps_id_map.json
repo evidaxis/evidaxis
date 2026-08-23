@@ -235,6 +235,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "nomic-ai/gpt4all": {
+      "system": "pypi",
+      "package": "gpt4all",
+      "pinned_at": "2026-08-23T07:08:06Z"
+    },
     "ollama/ollama": {
       "system": "pypi",
       "package": "ollama",
@@ -273,6 +278,11 @@
       "system": "npm",
       "package": "claude-mem",
       "pinned_at": "2026-08-16T07:06:23Z"
+    },
+    "unclecode/crawl4ai": {
+      "system": "pypi",
+      "package": "crawl4ai",
+      "pinned_at": "2026-08-23T07:08:06Z"
     },
     "unslothai/unsloth": {
       "system": "pypi",
