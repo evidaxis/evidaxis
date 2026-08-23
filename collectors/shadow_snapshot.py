@@ -434,6 +434,11 @@ def _graphql_query(batch: Sequence[dict]) -> str:
 # Repositories present at discovery that no longer resolve at observation time.
 # Module-level because the shard reports the total once, not per batch.
 _ABSENT: list[int] = []
+# Discovery paths that still resolve, but no longer to the same repository:
+# renamed, transferred, or deleted with the name re-taken by someone else.
+# Same class of fact as an absence, counted the same way, kept in its own list
+# so a systemic id-set fault stays legible instead of hiding inside churn.
+_REIDENTIFIED: list[tuple[int, int]] = []
 ABSENT_LIMIT = 0.01          # 1% of a shard: churn below, systemic fault above
 
 
@@ -455,25 +460,25 @@ def _observe_batch(batch: Sequence[dict], observed_at: str) -> list[dict]:
     """
     for attempt in range(1, 7):
         data, clean = census_graphql(_graphql_query(batch))
-        missing = [index for index in range(len(batch)) if data.get(f"r{index}") is None]
-        if clean and missing:
+        if clean:
             records = []
             for index, expected in enumerate(batch):
                 node = data.get(f"r{index}")
                 if node is None:
                     _ABSENT.append(expected["id"])
                     continue
-                records.append(observation_record(
-                    node["databaseId"], node["stargazerCount"], observed_at))
-            return records
-        if clean and not missing:
-            records = []
-            for index, expected in enumerate(batch):
-                node = data[f"r{index}"]
                 if node.get("databaseId") != expected["id"]:
-                    raise RuntimeError(
-                        f"GraphQL identity changed for repository id {expected['id']}"
-                    )
+                    # The path resolved, but to a different repository. Stars
+                    # read here belong to a stranger, so nothing is recorded:
+                    # a foreign measurement inside the series is worse than a
+                    # gap in it. Counted like an absence, so ABSENT_LIMIT still
+                    # stops a systemic fault while a few renames stay churn.
+                    # Identity is now checked on EVERY resolved node - the
+                    # earlier split checked it only when the whole batch was
+                    # present, so a batch holding one absence admitted foreign
+                    # star counts silently.
+                    _REIDENTIFIED.append((expected["id"], node["databaseId"]))
+                    continue
                 records.append(
                     observation_record(
                         node["databaseId"], node["stargazerCount"], observed_at
@@ -543,6 +548,10 @@ def collect_observation(shadow_repo: Path, snapshot_date: str, shard: Shard) -> 
             records.extend(_observe_batch(batch, observed_at))
             progress.advance(len(batch))
     records.sort(key=lambda record: record["id"])
+    if _REIDENTIFIED:
+        print(f"  {len(_REIDENTIFIED)} discovery paths now resolve to a "
+              f"different repository - not observed, counted as churn",
+              flush=True)
     _write_or_verify_records(output, records)
     _validate_observation_shard(output, snapshot_date, assigned)
     print(f"observe shard {shard} complete: {len(records)} repos", flush=True)
