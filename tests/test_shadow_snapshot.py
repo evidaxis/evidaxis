@@ -307,3 +307,92 @@ def test_merge_tolerates_the_same_churn_the_shards_do(tmp_path, monkeypatch):
     excessive = len(discovery) - 500
     assert (excessive / len(discovery)) > shadow.ABSENT_LIMIT, (
         "a mass disappearance must still exceed it")
+
+
+def _reset_churn():
+    """The collector counts churn in module-level lists; tests own their own tally."""
+    shadow._ABSENT.clear()
+    shadow._REIDENTIFIED.clear()
+
+
+def test_reidentified_repository_is_churn_not_a_crash(monkeypatch):
+    """A discovery path that resolves to a DIFFERENT repository is churn.
+
+    Three consecutive scheduled observations died on this (2026-08-09, -16, -23):
+    ids 682844590 and 171837101 were renamed, transferred, or deleted with the
+    name re-taken, and the collector raised, killing a whole shard and with it
+    the weekly observation. Renaming is ordinary GitHub behaviour, not a fault
+    of this archive - so it is counted like an absence, never recorded, never
+    fatal. Nothing was watching the SHAPE of the failure either: this test is
+    the regression net the 2026-08-23 fix shipped without.
+    """
+    _reset_churn()
+    batch = [{"id": 11, "full_name": "o/kept"}, {"id": 22, "full_name": "o/renamed"}]
+
+    def fake_graphql(_query):
+        return (
+            {
+                "r0": {"databaseId": 11, "stargazerCount": 300},
+                # Same path, different repository behind it now.
+                "r1": {"databaseId": 999, "stargazerCount": 41000},
+            },
+            True,
+        )
+
+    monkeypatch.setattr(shadow, "census_graphql", fake_graphql)
+    records = shadow._observe_batch(batch, "2026-08-30T05:43:00Z")
+
+    assert [record["id"] for record in records] == [11], "foreign stars must not enter the series"
+    assert not any(record["stars"] == 41000 for record in records)
+    assert shadow._REIDENTIFIED == [(22, 999)], "the churn must stay countable, not vanish"
+
+
+def test_identity_is_checked_even_when_the_batch_holds_an_absence(monkeypatch):
+    """The hole the 2026-08-23 fix closed, pinned so it cannot reopen.
+
+    Identity used to be verified only on a batch where every path resolved. A
+    batch holding one absence took the other branch and admitted whatever the
+    remaining paths returned - so a rename sitting next to a deletion put a
+    stranger's star count into the series silently. Silent is the part that
+    matters: a crash is visible, a foreign measurement is not.
+    """
+    _reset_churn()
+    batch = [
+        {"id": 11, "full_name": "o/kept"},
+        {"id": 22, "full_name": "o/vanished"},
+        {"id": 33, "full_name": "o/renamed"},
+    ]
+
+    def fake_graphql(_query):
+        return (
+            {
+                "r0": {"databaseId": 11, "stargazerCount": 300},
+                "r1": None,
+                "r2": {"databaseId": 999, "stargazerCount": 41000},
+            },
+            True,
+        )
+
+    monkeypatch.setattr(shadow, "census_graphql", fake_graphql)
+    records = shadow._observe_batch(batch, "2026-08-30T05:43:00Z")
+
+    assert [record["id"] for record in records] == [11]
+    assert shadow._ABSENT == [22]
+    assert shadow._REIDENTIFIED == [(33, 999)]
+
+
+def test_mass_reidentification_still_fails_the_shard(tmp_path):
+    """Tolerating churn must not tolerate a wrong id set.
+
+    Re-identified repositories never reach the shard file, so they land in the
+    same absence share the systemic-fault guard reads. A handful is churn; a
+    third of the shard resolving to strangers is a broken discovery set and
+    must stop the run exactly like a mass disappearance does.
+    """
+    path = tmp_path / "shard-0.jsonl"
+    expected = [{"id": i, "full_name": f"o/r{i}"} for i in range(1, 201)]
+    got = [{"id": i, "stars": 300, "observed_at": "2026-08-30T05:43:00Z"}
+           for i in range(1, 131)]
+    path.write_text("\n".join(json.dumps(r) for r in got) + "\n")
+    with pytest.raises(RuntimeError, match="churn allowance"):
+        shadow._validate_observation_shard(path, "2026-08-30", expected)
