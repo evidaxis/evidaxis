@@ -396,3 +396,56 @@ def test_mass_reidentification_still_fails_the_shard(tmp_path):
     path.write_text("\n".join(json.dumps(r) for r in got) + "\n")
     with pytest.raises(RuntimeError, match="churn allowance"):
         shadow._validate_observation_shard(path, "2026-08-30", expected)
+
+
+def test_observation_shards_are_samples_of_the_same_population():
+    """Equal COUNT was never the property the allowance needed - equal MIX was.
+
+    The discovery set is sorted by repository id, ids ascend with creation date,
+    and young repositories are the ones deleted and renamed. A contiguous split
+    therefore handed the last shard a different world: measured 2026-08-23 over
+    four identical 36,643-repo shards, absences were 15 / 16 / 19 / 109. The
+    systemic-fault allowance is a flat 1% per shard, so shard 3 always burned it
+    first - and one shard failing kills the whole weekly observation. Here the
+    tail of the ordered input stands in for "young"; every shard must get its
+    share of it.
+    """
+    ordered = list(range(1000))
+    young = set(range(900, 1000))
+    shards = [list(shadow.interleave_for_shard(ordered, shadow.Shard(i, 4)))
+              for i in range(4)]
+
+    per_shard = [len(young.intersection(shard)) for shard in shards]
+    assert per_shard == [25, 25, 25, 25], "no shard may carry the churn for the rest"
+
+    contiguous = [list(shadow.partition_for_shard(ordered, shadow.Shard(i, 4)))
+                  for i in range(4)]
+    assert [len(young.intersection(s)) for s in contiguous] == [0, 0, 0, 100], (
+        "the old rule concentrated the whole population in one shard - the defect"
+    )
+
+
+def test_interleaved_shards_still_cover_the_set_exactly_once():
+    """Rebalancing must not cost coverage: the union is still the whole set."""
+    ordered = list(range(997))          # prime length: no shard divides evenly
+    shards = [list(shadow.interleave_for_shard(ordered, shadow.Shard(i, 4)))
+              for i in range(4)]
+
+    seen = [item for shard in shards for item in shard]
+    assert sorted(seen) == ordered, "every repository observed exactly once"
+    assert max(len(s) for s in shards) - min(len(s) for s in shards) <= 1
+
+
+def test_discovery_keeps_contiguous_bands():
+    """Discovery must NOT interleave: its slice becomes one Search range query.
+
+    `collect_discovery` reads assigned[0] and assigned[-1] and asks GitHub for
+    `stars:{lo}..{hi}`. Interleaving star values would make every shard span the
+    full 200..499 interval, so all four would enumerate the same repositories.
+    """
+    star_values = list(range(200, 500))
+    for index in range(4):
+        assigned = list(shadow.partition_for_shard(star_values, shadow.Shard(index, 4)))
+        assert assigned == list(range(assigned[0], assigned[-1] + 1)), (
+            "a discovery shard must stay an unbroken star interval"
+        )

@@ -110,11 +110,38 @@ def parse_shard(value: str) -> Shard:
 
 
 def partition_for_shard(items: Sequence[T], shard: Shard) -> Sequence[T]:
-    """Return one contiguous, balanced partition of an ordered input."""
+    """Return one contiguous, balanced partition of an ordered input.
+
+    Contiguous ON PURPOSE, and only for DISCOVERY: that phase turns its slice
+    into a single Search range query (`stars:{lo}..{hi}`), so the slice must be
+    an unbroken interval. Observation has the opposite need - see
+    interleave_for_shard.
+    """
     base, remainder = divmod(len(items), shard.total)
     start = shard.index * base + min(shard.index, remainder)
     stop = start + base + (shard.index < remainder)
     return items[start:stop]
+
+
+def interleave_for_shard(items: Sequence[T], shard: Shard) -> Sequence[T]:
+    """Return every Nth item - equal COUNT and equal POPULATION per shard.
+
+    Observation splits the discovery set, which is sorted by repository id, and
+    a contiguous split there put a systematically different population in each
+    shard: ids ascend with creation date, so the last slice was the youngest
+    repositories, and the young are the ones that get deleted and renamed.
+    Measured 2026-08-23 over identical 36,643-repo shards: 15 / 16 / 19 / 109
+    absent. The 1% systemic-fault allowance is uniform, so the fourth shard
+    always burned it first - and a single shard failing takes the whole weekly
+    observation with it. Interleaving makes the four shards samples of the same
+    distribution, which is what the uniform allowance already assumed.
+
+    Changing this re-assigns repositories to different shard FILES, so it is
+    safe only between complete weekly observations: a partial re-run of a date
+    written under the other rule would compare a shard against the wrong
+    expected set.
+    """
+    return items[shard.index::shard.total]
 
 
 def _utc_timestamp() -> str:
@@ -524,7 +551,7 @@ def collect_observation(shadow_repo: Path, snapshot_date: str, shard: Shard) -> 
     """Refresh one balanced shard from the newest complete discovery set."""
     snapshot_date = _parse_date(snapshot_date)
     month, _path, discovery = newest_discovery(shadow_repo)
-    assigned = partition_for_shard(discovery, shard)
+    assigned = interleave_for_shard(discovery, shard)
     output = (
         shadow_repo
         / "observations"
@@ -575,7 +602,7 @@ def merge_observation(shadow_repo: Path, snapshot_date: str, shards: int) -> Pat
     paths = _required_shards(directory, shards)
     records: list[dict] = []
     for index, path in enumerate(paths):
-        expected = partition_for_shard(discovery, Shard(index, shards))
+        expected = interleave_for_shard(discovery, Shard(index, shards))
         records.extend(_validate_observation_shard(path, snapshot_date, expected))
     absent = len(discovery) - len(records)
     share = absent / max(len(discovery), 1)
