@@ -3,6 +3,11 @@ name: workflow-watchdog
 # Known limitation: the watchdog cannot report its own absence. The daily T2
 # commits keep GitHub's 60-day cron auto-disable away, and a disabled watchdog
 # still surfaces through GitHub e-mail.
+#
+# 2026-08-27: SITE_URL/MARKER added so the watchdog can check the FACT behind a
+# stale liveness-check (is the archive actually up?) instead of alarming about the
+# sensor's schedule. Same values as liveness-check.yml on purpose — one fact, one
+# marker, two independent observers of it.
 on:
   schedule:
     - cron: '23 */6 * * *'
@@ -31,4 +36,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+          SITE_URL: https://evidaxis.org
+          MARKER: 'Evidaxis, the longitudinal map of open AI momentum'
         run: node scripts/workflow-watchdog-check.mjs ${{ inputs.selftest && '--selftest' || '' }}

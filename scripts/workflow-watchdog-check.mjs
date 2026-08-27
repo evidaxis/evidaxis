@@ -2,20 +2,31 @@
 // source of run outcomes; Telegram is the independent delivery channel that
 // repeats every six hours until each failed or overdue workflow is green.
 import { readdirSync, readFileSync } from 'node:fs';
-import { evaluateWorkflowHealth } from './workflow-watchdog.mjs';
+import {
+  applyDroughtGate,
+  applyFactGates,
+  evaluateWorkflowHealth,
+} from './workflow-watchdog.mjs';
+import { evaluateLiveness } from './liveness.mjs';
 
 const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
 const WORKFLOW_DIR = '.github/workflows';
+
+// `dataLoss` = a missed run costs un-backfillable point-in-time CAPTURE (watchers,
+// stars, membership at an instant). Those stay loud even during a platform drought.
+// Verifiers (integrity, staleness checks) re-run to the same answer later: quiet.
+// `factGate` = the workflow stands for an observable fact the watchdog can check
+// itself, so overdue alone never wakes anyone. `self` = the watchdog's own row.
 const ROSTER = [
-  { name: 'liveness-check', kind: 'scheduled', budgetHours: 3 },
-  { name: 't2-daily-snapshot', kind: 'scheduled', budgetHours: 36 },
+  { name: 'liveness-check', kind: 'scheduled', budgetHours: 3, factGate: 'site' },
+  { name: 't2-daily-snapshot', kind: 'scheduled', budgetHours: 36, dataLoss: true },
   { name: 'archive-integrity', kind: 'scheduled', budgetHours: 36 },
   { name: 'axis-staleness-check', kind: 'scheduled', budgetHours: 36 },
   { name: 'registry-staleness-check', kind: 'scheduled', budgetHours: 36 },
-  { name: 'weekly-snapshot', kind: 'scheduled', budgetHours: 204 },
-  { name: 'shadow-observe', kind: 'scheduled', budgetHours: 204 },
-  { name: 'shadow-discover', kind: 'scheduled', budgetHours: 840 },
-  { name: 'workflow-watchdog', kind: 'scheduled', budgetHours: 13 },
+  { name: 'weekly-snapshot', kind: 'scheduled', budgetHours: 204, dataLoss: true },
+  { name: 'shadow-observe', kind: 'scheduled', budgetHours: 204, dataLoss: true },
+  { name: 'shadow-discover', kind: 'scheduled', budgetHours: 840, dataLoss: true },
+  { name: 'workflow-watchdog', kind: 'scheduled', budgetHours: 13, self: true },
   { name: 'deploy-web', kind: 'event' },
   { name: 'web-ci', kind: 'event' },
   { name: 'python-ci', kind: 'event' },
@@ -76,6 +87,41 @@ function unrosteredScheduledWorkflows() {
     .filter((name) => !rosterNames.has(name));
 }
 
+/**
+ * Direct observation behind a gated row. Only probes rows that would alert, and
+ * only reports a fact it actually obtained — an unreachable probe returns nothing,
+ * which keeps the alert loud upstream.
+ * @param {Array<any>} results
+ */
+async function probeFacts(results) {
+  const facts = {};
+  const gated = results.filter((result) => result.factGate === 'site' && result.alert);
+  if (!gated.length) return facts;
+  const url = process.env.SITE_URL;
+  const marker = process.env.MARKER || '';
+  if (!url) {
+    console.error('[workflow-watchdog] SITE_URL not set; fact gate cannot run');
+    return facts;
+  }
+  let probe;
+  try {
+    const res = await fetch(url, {
+      redirect: 'follow',
+      headers: { 'user-agent': 'workflow-watchdog-factgate/1', 'cache-control': 'no-cache' },
+      signal: AbortSignal.timeout(12_000),
+    });
+    const body = await res.text().catch(() => '');
+    probe = { reached: true, status: res.status, hasMarker: marker ? body.includes(marker) : true };
+  } catch {
+    probe = { reached: false, status: 0, hasMarker: false };
+  }
+  const liveness = evaluateLiveness({ url, marker, ...probe });
+  for (const result of gated) {
+    facts[result.name] = { ok: !liveness.alert, detail: liveness.message };
+  }
+  return facts;
+}
+
 async function evaluate() {
   const repository = process.env.GITHUB_REPOSITORY;
   if (!repository) throw new Error('GITHUB_REPOSITORY not set');
@@ -89,6 +135,7 @@ async function evaluate() {
 
   const latestCompleted = {};
   const latestSuccess = {};
+  const latestAnyRun = {};
   for (const item of ROSTER) {
     const workflow = byKey.get(item.name);
     if (!workflow) continue;
@@ -99,13 +146,24 @@ async function evaluate() {
     const runs = (body.workflow_runs ?? []).filter((run) => run.event !== 'pull_request');
     latestCompleted[item.name] = runs.find((run) => run.status === 'completed');
     latestSuccess[item.name] = runs.find((run) => run.conclusion === 'success');
+    latestAnyRun[item.name] = runs[0];
   }
 
-  const results = evaluateWorkflowHealth({
+  const nowIso = new Date().toISOString();
+  const judged = evaluateWorkflowHealth({
     roster: ROSTER,
     latestCompleted,
     latestSuccess,
-    nowIso: new Date().toISOString(),
+    nowIso,
+  });
+  // Fact BEFORE drought: an archive that is actually down must survive a platform
+  // outage that would otherwise quiet its row.
+  const facts = await probeFacts(judged);
+  const results = applyDroughtGate(applyFactGates(judged, facts), {
+    roster: ROSTER,
+    latestAnyRun,
+    latestCompleted,
+    nowIso,
   });
   for (const name of unrosteredScheduledWorkflows()) {
     results.push({
@@ -126,6 +184,12 @@ if (process.argv.includes('--selftest')) {
 try {
   const results = await evaluate();
   console.log(JSON.stringify(results));
+  // Quiet rows are the PULL channel: they live in this run log forever and never
+  // cost attention. Only what survived all three gates is pushed — and only a push
+  // reds the run, so GitHub's own failure e-mail stops duplicating quiet noise.
+  for (const result of results.filter((r) => !r.alert && r.quiet)) {
+    console.log(`[workflow-watchdog] (тихо · ${result.quiet}) ${result.message.split('\n')[0]}`);
+  }
   const alerts = results.filter((result) => result.alert);
   for (const result of alerts) {
     await sendTelegram(`🔴 evidaxis · сторож воркфлоу\n\n${result.message}`);
