@@ -4,6 +4,9 @@ name: Axis capture staleness check
 # doctrine): if the newest committed deps_v2h1 capture manifest is older than the
 # threshold, ping Telegram. SILENT while the weekly ritual runs on time — this is a
 # dead-week alarm, not a notification channel (Reddit-watcher lesson respected).
+#
+# 2026-08-28: a DELIVERED reminder now leaves the run GREEN — red is reserved for a
+# BROKEN sensor, never for late work (twin change in registry-staleness-check).
 on:
   schedule:
     - cron: '23 8 * * *'   # daily 08:23 UTC
@@ -36,7 +39,21 @@ jobs:
           echo "newest capture commit: $latest (${days}d ago)"
           if [ "$days" -gt "$THRESHOLD_DAYS" ]; then
             msg="⏰ Evidaxis: ось m3 не капчурилась ${days} дн. Скажи Клоду: «ритуал недели» или «продолжаем evidaxis»."
-            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-              -d chat_id="${ALERT_CHAT_ID}" -d text="$msg" >/dev/null
-            echo "alert sent"; exit 1
+            # Delivery IS the alarm (noise audit 2026-08-28). A DELIVERED reminder
+            # leaves the run GREEN: the daily cron already repeats the message, so a
+            # red run only adds a GitHub failure e-mail plus a second, contentless
+            # voice from workflow-watchdog on top of a message the keeper already
+            # holds — one overdue tranche produced 5 pushes across 3 channels.
+            # Fails CLOSED: if the reminder did NOT reach Telegram the run exits 1,
+            # so GitHub e-mail and the watchdog become the backup channel. Red now
+            # means "the sensor is broken", never "the work is late".
+            code=$(curl -s -o /tmp/tg-resp.json -w '%{http_code}' --max-time 20 \
+              -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -d chat_id="${ALERT_CHAT_ID}" -d text="$msg") || code=000
+            if [ "$code" = "200" ] && grep -q '"ok":true' /tmp/tg-resp.json; then
+              echo "::notice title=Axis capture overdue::${days}d — reminder delivered to Telegram"
+              exit 0
+            fi
+            echo "::error title=Alert delivery FAILED::HTTP ${code} — falling back to a red run"
+            exit 1
           fi

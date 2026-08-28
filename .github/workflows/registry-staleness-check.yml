@@ -6,6 +6,11 @@ name: Registry tranche staleness check
 # sensor: if the newest committed tranche file is older than the threshold, ping
 # Telegram. SILENT while the weekly tranche lands on time — dead-week alarm, not a
 # notification channel.
+#
+# 2026-08-28: a DELIVERED reminder now leaves the run GREEN. Overdue work is what
+# the Telegram line says; the red run added nothing but a GitHub e-mail and a
+# second, contentless voice from workflow-watchdog. Red is now reserved for a
+# BROKEN sensor (no tranches found, or the reminder never reached the keeper).
 on:
   schedule:
     - cron: '41 8 * * *'   # daily 08:41 UTC
@@ -38,7 +43,21 @@ jobs:
           echo "newest tranche commit: $latest (${days}d ago)"
           if [ "$days" -gt "$THRESHOLD_DAYS" ]; then
             msg="⏰ Evidaxis: пополнение индекса (недельный транш карточек) не исполнялось ${days} дн. Скажи Клоду: «продолжаем evidaxis, пополнение индекса»."
-            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-              -d chat_id="${ALERT_CHAT_ID}" -d text="$msg" >/dev/null
-            echo "alert sent"; exit 1
+            # Delivery IS the alarm (noise audit 2026-08-28). A DELIVERED reminder
+            # leaves the run GREEN: the daily cron already repeats the message, so a
+            # red run only adds a GitHub failure e-mail plus a second, contentless
+            # voice from workflow-watchdog on top of a message the keeper already
+            # holds — one overdue tranche produced 5 pushes across 3 channels.
+            # Fails CLOSED: if the reminder did NOT reach Telegram the run exits 1,
+            # so GitHub e-mail and the watchdog become the backup channel. Red now
+            # means "the sensor is broken", never "the work is late".
+            code=$(curl -s -o /tmp/tg-resp.json -w '%{http_code}' --max-time 20 \
+              -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -d chat_id="${ALERT_CHAT_ID}" -d text="$msg") || code=000
+            if [ "$code" = "200" ] && grep -q '"ok":true' /tmp/tg-resp.json; then
+              echo "::notice title=Tranche overdue::${days}d — reminder delivered to Telegram"
+              exit 0
+            fi
+            echo "::error title=Alert delivery FAILED::HTTP ${code} — falling back to a red run"
+            exit 1
           fi
