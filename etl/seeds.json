@@ -4,7 +4,7 @@
   "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
-  "census_2026-08": "2026-08-18: activation tranche of 10 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-08": "2026-08-28: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1570,6 +1570,105 @@
      "repo_id": 1139971460,
      "name": "rtk",
      "homepage": "https://github.com/rtk-ai/rtk",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Panniantong/Agent-Reach",
+     "entity_type": "repo",
+     "repo_id": 1165277268,
+     "name": "Agent-Reach",
+     "homepage": "https://github.com/Panniantong/Agent-Reach",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tesseract-ocr/tesseract",
+     "entity_type": "repo",
+     "repo_id": 22887094,
+     "name": "tesseract",
+     "homepage": "https://github.com/tesseract-ocr/tesseract",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "openai/openai-cookbook",
+     "entity_type": "repo",
+     "repo_id": 468576060,
+     "name": "openai-cookbook",
+     "homepage": "https://github.com/openai/openai-cookbook",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "shareAI-lab/learn-claude-code",
+     "entity_type": "repo",
+     "repo_id": 1010681419,
+     "name": "learn-claude-code",
+     "homepage": "https://github.com/shareAI-lab/learn-claude-code",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "666ghj/MiroFish",
+     "entity_type": "repo",
+     "repo_id": 1104332987,
+     "name": "MiroFish",
+     "homepage": "https://github.com/666ghj/MiroFish",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "binary-husky/gpt_academic",
+     "entity_type": "repo",
+     "repo_id": 616372661,
+     "name": "gpt_academic",
+     "homepage": "https://github.com/binary-husky/gpt_academic",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ruvnet/ruflo",
+     "entity_type": "repo",
+     "repo_id": 995029641,
+     "name": "ruflo",
+     "homepage": "https://github.com/ruvnet/ruflo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "headroomlabs-ai/headroom",
+     "entity_type": "repo",
+     "repo_id": 1129940957,
+     "name": "headroom",
+     "homepage": "https://github.com/headroomlabs-ai/headroom",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "scikit-learn/scikit-learn",
+     "entity_type": "repo",
+     "repo_id": 843222,
+     "name": "scikit-learn",
+     "homepage": "https://github.com/scikit-learn/scikit-learn",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "xtekky/gpt4free",
+     "entity_type": "repo",
+     "repo_id": 620936652,
+     "name": "gpt4free",
+     "homepage": "https://github.com/xtekky/gpt4free",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Fission-AI/OpenSpec",
+     "entity_type": "repo",
+     "repo_id": 1032459340,
+     "name": "OpenSpec",
+     "homepage": "https://github.com/Fission-AI/OpenSpec",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
     }

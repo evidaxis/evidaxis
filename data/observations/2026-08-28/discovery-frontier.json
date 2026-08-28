@@ -1,0 +1,92 @@
+{
+  "v": "frontier_1",
+  "date": "2026-08-28",
+  "recorded_at": "2026-08-28T21:34:58Z",
+  "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+  "sources": [
+    "github-search-api",
+    "github-graphql"
+  ],
+  "examined_estimate": 5486,
+  "candidates_returned": 11,
+  "candidates": [
+    {
+      "repo": "Panniantong/Agent-Reach",
+      "cohort": "unassigned-v1",
+      "stars": 76335,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "tesseract-ocr/tesseract",
+      "cohort": "unassigned-v1",
+      "stars": 76236,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "openai/openai-cookbook",
+      "cohort": "unassigned-v1",
+      "stars": 75588,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "shareAI-lab/learn-claude-code",
+      "cohort": "unassigned-v1",
+      "stars": 75551,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "666ghj/MiroFish",
+      "cohort": "unassigned-v1",
+      "stars": 71670,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "binary-husky/gpt_academic",
+      "cohort": "unassigned-v1",
+      "stars": 71267,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "cohort": "unassigned-v1",
+      "stars": 69643,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "headroomlabs-ai/headroom",
+      "cohort": "unassigned-v1",
+      "stars": 67925,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "scikit-learn/scikit-learn",
+      "cohort": "unassigned-v1",
+      "stars": 67088,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "xtekky/gpt4free",
+      "cohort": "unassigned-v1",
+      "stars": 66609,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Fission-AI/OpenSpec",
+      "cohort": "unassigned-v1",
+      "stars": 66571,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    }
+  ],
+  "note": "Discovery-frontier denominator (un-backfillable). Candidates are systems CONSIDERED at scan time, not judgments; admission happens via a paired seeds.json change (CI enforces the pairing). Positive-only: no per-system negatives are recorded."
+}
