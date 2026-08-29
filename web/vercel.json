@@ -24,6 +24,26 @@
       "permanent": true
     },
     {
+      "source": "/cohorts/:taxon/:period",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
+      "source": "/cohorts/:taxon/:period/",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
+      "source": "/cohorts/:taxon",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
+      "source": "/cohorts/:taxon/",
+      "destination": "/ai/cohorts/:taxon/",
+      "permanent": true
+    },
+    {
       "source": "/rankings/ai-coding-agents/:period",
       "destination": "/ai/cohorts/coding-agents/",
       "permanent": true

@@ -53,7 +53,7 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
         <ul class="verify-list mono">
           <li><a href={`/snapshots/${date}/manifest.json`}>manifest.json</a> <span class="muted">input pin list</span></li>
           <li><a href={`/snapshots/${date}/provenance.json`}>provenance.json</a> <span class="muted">raw source provenance</span></li>
-          <li><a href={`/snapshots/${date}/SHA256SUMS`}>SHA256SUMS</a> <span class="muted">text/plain checksums</span></li>
+          <li><a href={`/snapshots/${date}/SHA256SUMS/`}>SHA256SUMS</a> <span class="muted">text/plain checksums</span></li>
           {hasDropped && (
             <li><a href={`/snapshots/${date}/dropped.json`}>dropped.json</a> <span class="muted">entities dropped this run</span></li>
           )}

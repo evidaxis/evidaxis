@@ -14,6 +14,18 @@ rules:
   - from: '/methodology/'
     to: '/methodology/current/'
     status: 301
+  - from: '/cohorts/:taxon/:period'
+    to: '/ai/cohorts/:taxon/'
+    status: 301
+  - from: '/cohorts/:taxon/:period/'
+    to: '/ai/cohorts/:taxon/'
+    status: 301
+  - from: '/cohorts/:taxon'
+    to: '/ai/cohorts/:taxon/'
+    status: 301
+  - from: '/cohorts/:taxon/'
+    to: '/ai/cohorts/:taxon/'
+    status: 301
   - from: '/rankings/ai-coding-agents/:period'
     to: '/ai/cohorts/coding-agents/'
     status: 301

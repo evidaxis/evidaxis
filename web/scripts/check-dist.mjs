@@ -377,7 +377,11 @@ const latestSnapshot = archiveSnapshots.find((entry) => entry.date === latestDat
 if (!latestSnapshot) errors.push(`data/latest.json points to missing snapshot ${latestDate}`);
 
 for (const { date } of archiveSnapshots) {
-  if (!existsSync(join(DIST, 'snapshots', date, 'index.html'))) errors.push(`snapshots/${date}/index.html: missing frozen snapshot route`);
+  const snapshotPage = join(DIST, 'snapshots', date, 'index.html');
+  if (!existsSync(snapshotPage)) errors.push(`snapshots/${date}/index.html: missing frozen snapshot route`);
+  else if (!readFileSync(snapshotPage, 'utf8').includes(`href="/snapshots/${date}/SHA256SUMS/"`)) {
+    errors.push(`snapshots/${date}/index.html: checksum link must use its terminal trailing-slash URL`);
+  }
   if (!existsSync(join(DIST, 'snapshots', date, 'snapshot.json'))) errors.push(`snapshots/${date}/snapshot.json: missing frozen snapshot JSON twin`);
   // WP-H / F8: verification bundle must ship with every built snapshot.
   for (const artifact of ['manifest.json', 'provenance.json', 'SHA256SUMS']) {
@@ -443,6 +447,33 @@ for (const file of htmlFiles.filter((path) => /\/ai\/cohorts\/[^/]+\/minutes\/[^
   const events = [...html.matchAll(/<li[^>]*data-event-kind="[^"]+"[^>]*data-source-field="([^"]*)"/g)];
   if (events.length === 0) errors.push(`${rel(file)}: cohort minutes has no newsworthy events`);
   for (const event of events) if (!event[1].trim()) errors.push(`${rel(file)}: minute sentence lacks a source field`);
+}
+
+// Every cohort minute must be reachable from its cohort hub in raw HTML. The
+// link positions also pin reverse chronological ordering on the compact list.
+const minutesByCohort = new Map();
+for (const file of htmlFiles) {
+  const match = rel(file).match(/^ai\/cohorts\/([^/]+)\/minutes\/([^/]+)\/index\.html$/);
+  if (!match) continue;
+  const weeks = minutesByCohort.get(match[1]) ?? [];
+  weeks.push(match[2]);
+  minutesByCohort.set(match[1], weeks);
+}
+for (const [cohort, weeks] of minutesByCohort) {
+  const hubPath = join(DIST, 'ai', 'cohorts', cohort, 'index.html');
+  if (!existsSync(hubPath)) {
+    errors.push(`ai/cohorts/${cohort}/index.html: missing cohort hub for minutes history`);
+    continue;
+  }
+  const hubHtml = readFileSync(hubPath, 'utf8');
+  let previousPosition = -1;
+  for (const week of weeks.sort((a, b) => b.localeCompare(a))) {
+    const href = `href="/ai/cohorts/${cohort}/minutes/${week}/"`;
+    const position = hubHtml.indexOf(href);
+    if (position < 0) errors.push(`ai/cohorts/${cohort}/index.html: missing raw HTML link to minutes ${week}`);
+    else if (position < previousPosition) errors.push(`ai/cohorts/${cohort}/index.html: minutes links are not reverse chronological`);
+    previousPosition = position;
+  }
 }
 
 // WP-J / V1: homepage HTML size budget (dist, not gzip). Hard assert.

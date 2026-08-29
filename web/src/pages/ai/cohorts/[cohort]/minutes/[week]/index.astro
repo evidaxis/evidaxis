@@ -4,12 +4,29 @@ import { cohortMinutes, type CohortMinutes } from '../../../../../../lib/minutes
 import { breadcrumb } from '../../../../../../lib/jsonld';
 
 export function getStaticPaths() {
-  return cohortMinutes().map((minutes) => ({
-    params: { cohort: minutes.slug, week: minutes.week },
-    props: { minutes },
-  }));
+  const byCohort = new Map<string, CohortMinutes[]>();
+  for (const minutes of cohortMinutes()) {
+    const history = byCohort.get(minutes.slug) ?? [];
+    history.push(minutes);
+    byCohort.set(minutes.slug, history);
+  }
+  return [...byCohort.values()].flatMap((history) => {
+    history.sort((a, b) => a.week.localeCompare(b.week));
+    return history.map((minutes, index) => ({
+      params: { cohort: minutes.slug, week: minutes.week },
+      props: {
+        minutes,
+        previousMinutes: history[index - 1] ?? null,
+        nextMinutes: history[index + 1] ?? null,
+      },
+    }));
+  });
 }
-const { minutes } = Astro.props as { minutes: CohortMinutes };
+const { minutes, previousMinutes, nextMinutes } = Astro.props as {
+  minutes: CohortMinutes;
+  previousMinutes: CohortMinutes | null;
+  nextMinutes: CohortMinutes | null;
+};
 const canonical = `/ai/cohorts/${minutes.slug}/minutes/${minutes.week}/`;
 const desc = `${minutes.label} cohort minutes for ${minutes.week}: ${minutes.sentences.length} traceable snapshot-diff events.`;
 ---
@@ -32,6 +49,16 @@ const desc = `${minutes.label} cohort minutes for ${minutes.week}: ${minutes.sen
         </li>)}
       </ol>
       <p class="mono receipt" data-source-field="/schema_version,/period">{minutes.schema_version} · {minutes.period}</p>
+      {(previousMinutes || nextMinutes) && (
+        <nav class="minutes-navigation mono" aria-label="Adjacent cohort minutes">
+          {previousMinutes && (
+            <a rel="prev" href={`/ai/cohorts/${minutes.slug}/minutes/${previousMinutes.week}/`}>&larr; Previous: {previousMinutes.week}</a>
+          )}
+          {nextMinutes && (
+            <a rel="next" href={`/ai/cohorts/${minutes.slug}/minutes/${nextMinutes.week}/`}>Next: {nextMinutes.week} &rarr;</a>
+          )}
+        </nav>
+      )}
     </div>
   </section>
 </Base>
@@ -43,4 +70,5 @@ const desc = `${minutes.label} cohort minutes for ${minutes.week}: ${minutes.sen
   .minute-events p { margin: 0; }
   .minute-events small { display: block; margin-top: 5px; color: var(--ink-mute); overflow-wrap: anywhere; }
   .receipt { color: var(--ink-mute); font-size: .72rem; margin-top: 1.5rem; }
+  .minutes-navigation { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .7rem 1.2rem; margin-top: 1.4rem; font-size: .78rem; }
 </style>

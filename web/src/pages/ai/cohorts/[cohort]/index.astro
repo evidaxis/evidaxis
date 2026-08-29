@@ -19,7 +19,9 @@ const path = `/ai/cohorts/${cohort.slug}/`;
 const pageName = `${cohort.label} - cohort momentum`;
 const desc = `Evidaxis momentum for ${cohort.label}: ${es.length} open AI systems scored on development velocity and citation momentum.`;
 const listJson = itemListDataset({ path, name: pageName, description: desc, period: snapshot.period, snap: snapshot, entities: es });
-const latestMinutes = cohortMinutes().find((minutes) => minutes.slug === cohort.slug && minutes.period === snapshot.period);
+const minutesHistory = cohortMinutes()
+  .filter((minutes) => minutes.slug === cohort.slug)
+  .sort((a, b) => b.week.localeCompare(a.week));
 ---
 <Base title={`${pageName} | Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Field: ${field.label}`, path: `/ai/fields/${field.slug}/` }, { name: `Cohort: ${cohort.label}`, path }])]}>
   <section class="section">
@@ -31,8 +33,23 @@ const latestMinutes = cohortMinutes().find((minutes) => minutes.slug === cohort.
       <p class="eyebrow">Cohort</p>
       <h1>{cohort.label}</h1>
       <p class="lead" style="max-width:60ch">{es.length} systems measured in this cohort at period {snapshot.period}; each carries its momentum value. Sort as you wish - the archive does not rank.</p>
-      {latestMinutes && <p class="mono muted" style="font-size:.78rem"><a href={`/ai/cohorts/${cohort.slug}/minutes/${latestMinutes.week}/`}>Cohort minutes for {latestMinutes.week}</a></p>}
+      {minutesHistory.length > 0 && (
+        <nav class="minutes-history" aria-labelledby="minutes-history-heading">
+          <h2 id="minutes-history-heading">Weekly cohort minutes</h2>
+          <ul class="mono">
+            {minutesHistory.map((minutes) => (
+              <li><a href={`/ai/cohorts/${cohort.slug}/minutes/${minutes.week}/`}>{minutes.week}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
       <EntityTable entities={es} />
     </div>
   </section>
 </Base>
+
+<style>
+  .minutes-history { margin: 1.2rem 0 1.8rem; }
+  .minutes-history h2 { margin: 0 0 .55rem; font-size: 1rem; }
+  .minutes-history ul { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin: 0; padding: 0; list-style: none; font-size: .78rem; }
+</style>
