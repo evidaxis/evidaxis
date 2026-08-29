@@ -14,18 +14,18 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 66cffe06e8cb
-  captured_at: 2026-08-22T07:13:33+00:00
-  period: 2026-w34
-  momentum: 52.6
-  percentile: 59
+  snapshot_id: 46cf326e7985
+  captured_at: 2026-08-29T12:49:44+00:00
+  period: 2026-w35
+  momentum: 51.0
+  percentile: 61
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.005964104909467068, "cohort_z": 0.205, "recent_weekly_commits": 42.6, "stars_not_scored": 27567}
+    github_commit_velocity: {"slope": -0.010477796364457921, "cohort_z": 0.077, "recent_weekly_commits": 41.6, "stars_not_scored": 27775}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

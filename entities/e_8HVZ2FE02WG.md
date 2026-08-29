@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 66cffe06e8cb
-  captured_at: 2026-08-22T07:13:33+00:00
-  period: 2026-w34
-  momentum: 50.9
-  percentile: 50
+  snapshot_id: 46cf326e7985
+  captured_at: 2026-08-29T12:49:44+00:00
+  period: 2026-w35
+  momentum: 49.0
+  percentile: 33
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.001184866975316146, "cohort_z": 0.371, "recent_weekly_commits": 0.1, "stars_not_scored": 2470}
-    openalex_citation_momentum: {"status": "present", "slope": 0.06849889928584818, "cohort_z": -0.232, "total_citations": 130, "by_year": {"2026": 6, "2025": 22, "2024": 26, "2023": 30, "2022": 31, "2021": 14, "2020": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0007109201851896875, "cohort_z": 0.077, "recent_weekly_commits": 0.1, "stars_not_scored": 2473}
+    openalex_citation_momentum: {"status": "present", "slope": 0.06849889928584818, "cohort_z": -0.23, "total_citations": 130, "by_year": {"2026": 6, "2025": 22, "2024": 26, "2023": 30, "2022": 31, "2021": 14, "2020": 1}, "proxy": null}
 note: "OpenAlex undercounts; slope declining post-2022."
 ---
 

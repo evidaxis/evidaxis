@@ -14,10 +14,10 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 66cffe06e8cb
-  captured_at: 2026-08-22T07:13:33+00:00
-  period: 2026-w34
-  momentum: 51.6
+  snapshot_id: 46cf326e7985
+  captured_at: 2026-08-29T12:49:44+00:00
+  period: 2026-w35
+  momentum: 50.8
   percentile: 60
   confidence: low
   rising: false
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.128, "recent_weekly_commits": 0.0, "stars_not_scored": 6872}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 42, "by_year": {"2026": 8, "2025": 31, "2024": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.066, "recent_weekly_commits": 0.0, "stars_not_scored": 6913}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 43, "by_year": {"2026": 9, "2025": 31, "2024": 3}, "proxy": null}
 ---
 
 # OpenVLA

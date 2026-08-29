@@ -14,10 +14,10 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 66cffe06e8cb
-  captured_at: 2026-08-22T07:13:33+00:00
-  period: 2026-w34
-  momentum: 56.4
+  snapshot_id: 46cf326e7985
+  captured_at: 2026-08-29T12:49:44+00:00
+  period: 2026-w35
+  momentum: 54.4
   percentile: 80
   confidence: low
   rising: false
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.508, "recent_weekly_commits": 0.0, "stars_not_scored": 1776}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.351, "recent_weekly_commits": 0.0, "stars_not_scored": 1781}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 5, "by_year": {"2025": 5}, "proxy": null}
 note: "paper_ref: 2410.07864; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

@@ -1,5 +1,10 @@
 {
   "repos": {
+    "666ghj/MiroFish": {
+      "full_name": "666ghj/MiroFish",
+      "owner_type": "User",
+      "repo_id": 1104332987
+    },
     "ARISE-Initiative/robosuite": {
       "full_name": "ARISE-Initiative/robosuite",
       "owner_type": "Organization",
@@ -49,6 +54,11 @@
       "full_name": "Farama-Foundation/Gymnasium",
       "owner_type": "Organization",
       "repo_id": 534011733
+    },
+    "Fission-AI/OpenSpec": {
+      "full_name": "Fission-AI/OpenSpec",
+      "owner_type": "Organization",
+      "repo_id": 1032459340
     },
     "FoundationAgents/MetaGPT": {
       "full_name": "FoundationAgents/MetaGPT",
@@ -174,6 +184,11 @@
       "full_name": "PaddlePaddle/PaddleOCR",
       "owner_type": "Organization",
       "repo_id": 262296122
+    },
+    "Panniantong/Agent-Reach": {
+      "full_name": "Panniantong/Agent-Reach",
+      "owner_type": "User",
+      "repo_id": 1165277268
     },
     "PeterGriffinJin/Search-R1": {
       "full_name": "PeterGriffinJin/Search-R1",
@@ -319,6 +334,11 @@
       "full_name": "axolotl-ai-cloud/axolotl",
       "owner_type": "Organization",
       "repo_id": 627727693
+    },
+    "binary-husky/gpt_academic": {
+      "full_name": "binary-husky/gpt_academic",
+      "owner_type": "User",
+      "repo_id": 616372661
     },
     "black-forest-labs/flux": {
       "full_name": "black-forest-labs/flux",
@@ -504,6 +524,11 @@
       "full_name": "harry0703/MoneyPrinterTurbo",
       "owner_type": "User",
       "repo_id": 770153867
+    },
+    "headroomlabs-ai/headroom": {
+      "full_name": "headroomlabs-ai/headroom",
+      "owner_type": "Organization",
+      "repo_id": 1129940957
     },
     "hexgrad/kokoro": {
       "full_name": "hexgrad/kokoro",
@@ -695,6 +720,11 @@
       "owner_type": "Organization",
       "repo_id": 946380199
     },
+    "openai/openai-cookbook": {
+      "full_name": "openai/openai-cookbook",
+      "owner_type": "Organization",
+      "repo_id": 468576060
+    },
     "opencv/opencv": {
       "full_name": "opencv/opencv",
       "owner_type": "Organization",
@@ -735,10 +765,25 @@
       "owner_type": "Organization",
       "repo_id": 1139971460
     },
+    "ruvnet/ruflo": {
+      "full_name": "ruvnet/ruflo",
+      "owner_type": "User",
+      "repo_id": 995029641
+    },
+    "scikit-learn/scikit-learn": {
+      "full_name": "scikit-learn/scikit-learn",
+      "owner_type": "Organization",
+      "repo_id": 843222
+    },
     "sgl-project/sglang": {
       "full_name": "sgl-project/sglang",
       "owner_type": "Organization",
       "repo_id": 740303686
+    },
+    "shareAI-lab/learn-claude-code": {
+      "full_name": "shareAI-lab/learn-claude-code",
+      "owner_type": "Organization",
+      "repo_id": 1010681419
     },
     "showlab/ShowUI": {
       "full_name": "showlab/ShowUI",
@@ -769,6 +814,11 @@
       "full_name": "tensorflow/tensorflow",
       "owner_type": "Organization",
       "repo_id": 45717250
+    },
+    "tesseract-ocr/tesseract": {
+      "full_name": "tesseract-ocr/tesseract",
+      "owner_type": "Organization",
+      "repo_id": 22887094
     },
     "thedotmack/claude-mem": {
       "full_name": "thedotmack/claude-mem",
@@ -824,6 +874,11 @@
       "full_name": "xorbitsai/inference",
       "owner_type": "Organization",
       "repo_id": 653496050
+    },
+    "xtekky/gpt4free": {
+      "full_name": "xtekky/gpt4free",
+      "owner_type": "User",
+      "repo_id": 620936652
     },
     "zai-org/GLM-V": {
       "full_name": "zai-org/GLM-V",

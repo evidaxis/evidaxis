@@ -14,10 +14,10 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 66cffe06e8cb
-  captured_at: 2026-08-22T07:13:33+00:00
-  period: 2026-w34
-  momentum: 16.1
+  snapshot_id: 46cf326e7985
+  captured_at: 2026-08-29T12:49:44+00:00
+  period: 2026-w35
+  momentum: 30.1
   percentile: 6
   confidence: low
   rising: false
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.006859043852471027, "cohort_z": -2.709, "recent_weekly_commits": 0.1, "stars_not_scored": 1983}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 400, "by_year": {"2026": 171, "2025": 214, "2024": 15}, "proxy": null}
+    github_commit_velocity: {"slope": -0.008558125322411538, "cohort_z": -1.591, "recent_weekly_commits": 0.1, "stars_not_scored": 1987}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 406, "by_year": {"2026": 178, "2025": 213, "2024": 15}, "proxy": null}
 note: "paper_ref: biorxiv:10.1101/2024.10.10.615955; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 

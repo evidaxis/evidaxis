@@ -14,9 +14,9 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 66cffe06e8cb
-  captured_at: 2026-08-22T07:13:33+00:00
-  period: 2026-w34
+  snapshot_id: 46cf326e7985
+  captured_at: 2026-08-29T12:49:44+00:00
+  period: 2026-w35
   momentum: 88.2
   percentile: 100
   confidence: low
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.01403339405965779, "cohort_z": 3.057, "recent_weekly_commits": 2.3, "stars_not_scored": 8797}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 4, "by_year": {"2026": 1, "2025": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.01687161259374196, "cohort_z": 3.057, "recent_weekly_commits": 2.5, "stars_not_scored": 8883}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 5, "by_year": {"2026": 2, "2025": 3}, "proxy": null}
 ---
 
 # Sana
