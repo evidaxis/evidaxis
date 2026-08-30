@@ -260,6 +260,11 @@
       "linkage_verified_at": "2026-07-16T17:30:00Z",
       "linkage_note": "re-verified live (evidence field was not persisted at pin time; identity unchanged)"
     },
+    "scikit-learn/scikit-learn": {
+      "system": "pypi",
+      "package": "scikit-learn",
+      "pinned_at": "2026-08-30T12:03:03Z"
+    },
     "sgl-project/sglang": {
       "system": "pypi",
       "package": "sglang",
@@ -307,6 +312,11 @@
       "package": "vllm",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "xtekky/gpt4free": {
+      "system": "pypi",
+      "package": "gpt4free",
+      "pinned_at": "2026-08-30T12:03:03Z"
     }
   }
 }
