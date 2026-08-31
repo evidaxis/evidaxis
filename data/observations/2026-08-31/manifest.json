@@ -1,0 +1,56 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-08-31T14:08:36Z",
+  "date": "2026-08-31",
+  "period": "2026-w36",
+  "entity_count": 177,
+  "error_count": 1,
+  "error_rate": 0.0056,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "PaddlePaddle/PaddleOCR",
+      "error": "Remote end closed connection without response"
+    }
+  ],
+  "observations_sha256": "f103ffa91fb56183f4088a33d0c6e10729ddb6676ebeab381f1ca21f8270b386",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}
