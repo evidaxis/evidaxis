@@ -166,14 +166,14 @@ def gh_search(q: str, page: int) -> dict:
     raise RuntimeError(f"search failed after retries: q={q} page={page}")
 
 
-def gh_graphql(query: str) -> tuple[dict, bool]:
+def gh_graphql(query: str, attempts: int = 8) -> tuple[dict, bool]:
     """Return (data, clean). clean=False when any node came back null/errored.
 
     The caller must NOT persist a repo as 'missing' when clean is False: a
     502 or a rate-limit nulls nodes, and persisting that verdict turns a
     transient transport failure into a permanent exclusion from the census.
     """
-    for attempt in range(8):
+    for attempt in range(attempts):
         p = subprocess.run(["gh", "api", "graphql", "-f", f"query={query}"],
                            capture_output=True, text=True, timeout=240)
         try:
@@ -434,6 +434,43 @@ def readme_batch(names: list[str]) -> dict[str, str]:
                         strict=True))
 
 
+def deep_fetch(batch: list[dict]) -> tuple[dict, bool]:
+    """GraphQL for one batch, HALVING the batch on a gateway timeout.
+
+    Measured 2026-09-01 (September census, candidate 60..80): a batch of 20
+    that happens to hold several very large repositories - pytorch/pytorch,
+    microsoft/TypeScript, mrdoob/three.js in one query - exceeds GitHub's
+    server-side budget for the two history counts and comes back HTTP 504
+    with no body. The retry loop then resubmits the IDENTICAL batch eight
+    times with growing backoff, so the phase stalls on that batch forever
+    (measured: 17 minutes, 60 of 79102 candidates done, zero progress after
+    the third batch). The same repositories answer in 9.2s at batch 10,
+    3.7s at 5 and 1.2s alone, so the failure is batch WEIGHT, not the
+    repositories: halving is the fix, and it costs one extra query only on
+    the batches that actually overrun.
+
+    Two attempts before halving, full retries once a single repository is
+    left: at that point a failure really is transport, and giving up would
+    silently drop a census candidate.
+    """
+    try:
+        return gh_graphql(_deep_query(batch), attempts=2 if len(batch) > 1
+                          else 8)
+    except RuntimeError:
+        if len(batch) == 1:
+            raise
+        mid = len(batch) // 2
+        print(f"    batch of {len(batch)} overran, halving", flush=True)
+        left, left_clean = deep_fetch(batch[:mid])
+        right, right_clean = deep_fetch(batch[mid:])
+        merged = dict(left)
+        for j in range(len(batch) - mid):
+            node = right.get(f"r{j}")
+            if node is not None:
+                merged[f"r{mid + j}"] = node
+        return merged, left_clean and right_clean
+
+
 def deepcheck(rows: list[dict], out_path: Path, shard: int = 0,
               shards: int = 1) -> None:
     """Deep legs for the candidate set, shardable.
@@ -464,7 +501,7 @@ def deepcheck(rows: list[dict], out_path: Path, shard: int = 0,
         pending = []
         for i in range(0, len(queue), 20):
             batch = queue[i:i + 20]
-            data, clean = gh_graphql(_deep_query(batch))
+            data, clean = deep_fetch(batch)
             readmes = readme_batch([r['full_name'] for r in batch])
             for j, r in enumerate(batch):
                 node = data.get(f"r{j}")

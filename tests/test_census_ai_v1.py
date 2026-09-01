@@ -222,7 +222,10 @@ def test_deepcheck_records_repository_without_default_branch(tmp_path, monkeypat
         "defaultBranchRef": None,
         "releases": {"totalCount": 0},
     }
-    monkeypatch.setattr(census, "gh_graphql", lambda _query: ({"r0": node}, True))
+    monkeypatch.setattr(
+        census, "gh_graphql",
+        lambda _query, attempts=8: ({"r0": node}, True),
+    )
     monkeypatch.setattr(
         census, "readme_batch", lambda names: dict.fromkeys(names, "")
     )
@@ -373,3 +376,44 @@ def test_reemit_never_unpublishes_an_activation(tmp_path, monkeypatch):
     assert carried[1]["status"] == "activated"
     assert carried[1]["activated_on"] == "2026-08-03"
     assert 2 not in carried, "pending is the default, not carried state"
+
+
+def test_an_overrunning_batch_is_halved_instead_of_resubmitted(monkeypatch):
+    """A batch too heavy for the server must not be retried unchanged.
+
+    September 2026: twenty candidates including pytorch, TypeScript and
+    three.js returned HTTP 504 with no body, and the retry loop resubmitted
+    the same twenty eight times - the phase stalled at 60 of 79102 done.
+    Halving answers the same repositories, so a weight failure may never
+    present as a stalled census.
+    """
+    seen = []
+
+    def fake_graphql(query, attempts=8):
+        size = query.count("nameWithOwner")
+        seen.append(size)
+        if size > 2:
+            raise RuntimeError("graphql failed after retries")
+        return ({f"r{i}": {"nameWithOwner": f"group/r{i}"}
+                 for i in range(size)}, True)
+
+    monkeypatch.setattr(census, "gh_graphql", fake_graphql)
+    batch = [{"id": i, "full_name": f"group/r{i}"} for i in range(4)]
+
+    data, clean = census.deep_fetch(batch)
+
+    assert clean is True
+    assert sorted(data) == ["r0", "r1", "r2", "r3"]
+    assert seen[0] == 4 and max(seen[1:]) <= 2   # halved, never resubmitted
+
+
+def test_a_single_repository_that_never_answers_is_not_silently_dropped(
+        monkeypatch):
+    """Halving bottoms out at one repo; there, failure must still raise."""
+    def always_fails(query, attempts=8):
+        raise RuntimeError("graphql failed after retries")
+
+    monkeypatch.setattr(census, "gh_graphql", always_fails)
+
+    with pytest.raises(RuntimeError):
+        census.deep_fetch([{"id": 1, "full_name": "group/one"}])
