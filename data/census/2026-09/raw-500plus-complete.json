@@ -1,0 +1,13 @@
+{
+ "bar_lo": 500,
+ "bar_hi": 1000000,
+ "collected": 122433,
+ "requests": 1490,
+ "bands_done": 181,
+ "universe_at_sweep_end": 122439,
+ "delta_vs_universe": -6,
+ "band_shortfall_total": 6,
+ "band_surplus_total": 2,
+ "note": "delta_vs_universe compares a multi-hour collection against a single-instant count; band_shortfall is the sum of per-band gaps against GitHub's own index estimate. Both are published rather than reconciled away - the coverage claim is 'these N repositories were observed', never 'nothing was missed'.",
+ "finished_at": "2026-09-01T10:59:09+00:00"
+}
