@@ -388,3 +388,30 @@ toward the window: **2026-08-10 is the first of the three** (08-17 and 08-24 fol
 confirmed clean by its successor at the 08-31 / 09-07 tacts) → promotion window **~2026-09-14**
 unchanged. Nothing published, no registry change.
 Cost this week: ~$3.44 capture + ~$0.08 sidecar.
+
+## Live capture 2026-08-24 (ritual 2026-09-01)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-08-24` — 71/97 matched, 10 canaries
+(panel 97 systems / 635 packages, manifest 026eaa45377a…, job bqjob_r3ecc0ef9b6bcbf16…).
+
+**Sidecar** (`--sidecar 2026-08-24`): PV2P 1156 rows, Projects 161 rows, retention tripwire
+{earliest 20230410 · latest 20260831 · n 176}.
+
+**Sanity gate** (`--check data/quarantine/axis3-deps-v2/sanity-calibration-3e51319d9817.json
+--series v2h1`): KILL-BAR PASS — flagged exactly `['2026-06-11', '2026-06-15']` and nothing
+else. **2026-08-17 promoted CLEAN** (cov=71, share=0.0); 2026-08-24 PROVISIONAL per the
+necessarily-provisional rule (cov=71).
+Artifact: `data/quarantine/axis3-deps-v2/sanity-check-98bab4ff31d3.json`.
+
+**Evaluation** (`--as-of 2026-08-17 --label live --gate-check sanity-check-98bab4ff31d3.json`,
+evaluator `axis3_v2h1_eval_2`): status EVALUATED, official cutoff **2026-08-17**,
+48 voting / 8 rising, 0 unstable-vetoed.
+**c1 PASS · c2 PASS · c3 PASS · c4′ PASS · c5 PASS · c6 PASS — 6/6.**
+Artifact: `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-08-17-2da01f9e926f.json`
+(sha256 2da01f9e926f0337…).
+
+**Promotion accounting (v2h.2 forward window).** Forward-captured confirmed-clean partitions
+toward the window: **2026-08-10 and 2026-08-17 — two of the three required** (2026-08-24
+follows, confirmed clean by its successor at the 2026-09-07 tact) → promotion window
+**~2026-09-14** unchanged. Nothing published, no registry change.
+Cost this week: ~$3.44 capture + ~$0.08 sidecar.
