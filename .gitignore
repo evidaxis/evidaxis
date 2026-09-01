@@ -59,3 +59,6 @@ shadow-runs/
 data/census/*/raw-500plus.jsonl
 data/census/*/bands-500plus.jsonl
 data/census/*/deepcheck.jsonl
+# Sharding renames the file (deepcheck-0.jsonl ...): the single-name rule let
+# every shard through. Erratum 2026-09-01.
+data/census/*/deepcheck-*.jsonl
