@@ -1,0 +1,92 @@
+{
+  "v": "frontier_1",
+  "date": "2026-09-01",
+  "recorded_at": "2026-09-01T08:27:05Z",
+  "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+  "sources": [
+    "github-search-api",
+    "github-graphql"
+  ],
+  "examined_estimate": 5469,
+  "candidates_returned": 11,
+  "candidates": [
+    {
+      "repo": "Mintplex-Labs/anything-llm",
+      "cohort": "unassigned-v1",
+      "stars": 65452,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "warpdotdev/warp",
+      "cohort": "unassigned-v1",
+      "stars": 64696,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mem0ai/mem0",
+      "cohort": "unassigned-v1",
+      "stars": 64488,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ZhuLinsen/daily_stock_analysis",
+      "cohort": "unassigned-v1",
+      "stars": 64428,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "keras-team/keras",
+      "cohort": "unassigned-v1",
+      "stars": 64269,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "asgeirtj/system_prompts_leaks",
+      "cohort": "unassigned-v1",
+      "stars": 63913,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "sansan0/TrendRadar",
+      "cohort": "unassigned-v1",
+      "stars": 61976,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "upstash/context7",
+      "cohort": "unassigned-v1",
+      "stars": 61467,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "RVC-Boss/GPT-SoVITS",
+      "cohort": "unassigned-v1",
+      "stars": 61395,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ultralytics/ultralytics",
+      "cohort": "unassigned-v1",
+      "stars": 61142,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mvanhorn/last30days-skill",
+      "cohort": "unassigned-v1",
+      "stars": 60827,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    }
+  ],
+  "note": "Discovery-frontier denominator (un-backfillable). Candidates are systems CONSIDERED at scan time, not judgments; admission happens via a paired seeds.json change (CI enforces the pairing). Positive-only: no per-system negatives are recorded."
+}
