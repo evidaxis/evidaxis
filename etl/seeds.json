@@ -4,7 +4,7 @@
   "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
-  "census_2026-08": "2026-08-28: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-08": "2026-09-01: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1669,6 +1669,105 @@
      "repo_id": 1032459340,
      "name": "OpenSpec",
      "homepage": "https://github.com/Fission-AI/OpenSpec",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Mintplex-Labs/anything-llm",
+     "entity_type": "repo",
+     "repo_id": 649170660,
+     "name": "anything-llm",
+     "homepage": "https://github.com/Mintplex-Labs/anything-llm",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "warpdotdev/warp",
+     "entity_type": "repo",
+     "repo_id": 384219990,
+     "name": "warp",
+     "homepage": "https://github.com/warpdotdev/warp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mem0ai/mem0",
+     "entity_type": "repo",
+     "repo_id": 656099147,
+     "name": "mem0",
+     "homepage": "https://github.com/mem0ai/mem0",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ZhuLinsen/daily_stock_analysis",
+     "entity_type": "repo",
+     "repo_id": 1131513930,
+     "name": "daily_stock_analysis",
+     "homepage": "https://github.com/ZhuLinsen/daily_stock_analysis",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "keras-team/keras",
+     "entity_type": "repo",
+     "repo_id": 33015583,
+     "name": "keras",
+     "homepage": "https://github.com/keras-team/keras",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "asgeirtj/system_prompts_leaks",
+     "entity_type": "repo",
+     "repo_id": 976921297,
+     "name": "system_prompts_leaks",
+     "homepage": "https://github.com/asgeirtj/system_prompts_leaks",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "sansan0/TrendRadar",
+     "entity_type": "repo",
+     "repo_id": 974186260,
+     "name": "TrendRadar",
+     "homepage": "https://github.com/sansan0/TrendRadar",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "upstash/context7",
+     "entity_type": "repo",
+     "repo_id": 955620917,
+     "name": "context7",
+     "homepage": "https://github.com/upstash/context7",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "RVC-Boss/GPT-SoVITS",
+     "entity_type": "repo",
+     "repo_id": 743230067,
+     "name": "GPT-SoVITS",
+     "homepage": "https://github.com/RVC-Boss/GPT-SoVITS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ultralytics/ultralytics",
+     "entity_type": "repo",
+     "repo_id": 535360445,
+     "name": "ultralytics",
+     "homepage": "https://github.com/ultralytics/ultralytics",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mvanhorn/last30days-skill",
+     "entity_type": "repo",
+     "repo_id": 1140843380,
+     "name": "last30days-skill",
+     "homepage": "https://github.com/mvanhorn/last30days-skill",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
     }
