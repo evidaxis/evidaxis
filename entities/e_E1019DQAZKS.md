@@ -14,19 +14,19 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 46cf326e7985
-  captured_at: 2026-08-29T12:49:44+00:00
-  period: 2026-w35
-  momentum: 12.1
-  percentile: 0
+  snapshot_id: 515920e4ea3f
+  captured_at: 2026-09-05T10:50:51+00:00
+  period: 2026-w36
+  momentum: 17.9
+  percentile: 12
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.08919455304062628, "cohort_z": -3.03, "recent_weekly_commits": 0.2, "stars_not_scored": 34144}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 329, "by_year": {"2026": 161, "2025": 143, "2024": 25}, "proxy": null}
+    github_commit_velocity: {"slope": -0.08564927552019645, "cohort_z": -2.568, "recent_weekly_commits": 0.2, "stars_not_scored": 34213}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 340, "by_year": {"2026": 171, "2025": 144, "2024": 25}, "proxy": null}
 ---
 
 # ChatDev

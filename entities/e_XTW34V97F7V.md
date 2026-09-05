@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 46cf326e7985
-  captured_at: 2026-08-29T12:49:44+00:00
-  period: 2026-w35
-  momentum: 55.4
-  percentile: 78
+  snapshot_id: 515920e4ea3f
+  captured_at: 2026-09-05T10:50:51+00:00
+  period: 2026-w36
+  momentum: 58.4
+  percentile: 83
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.005946785144791795, "cohort_z": 1.22, "recent_weekly_commits": 0.3, "stars_not_scored": 966}
-    openalex_citation_momentum: {"status": "present", "slope": 0.43224291001310455, "cohort_z": -0.35, "total_citations": 868, "by_year": {"2026": 185, "2025": 249, "2024": 175, "2023": 186, "2022": 57, "2021": 16}, "proxy": null}
+    github_commit_velocity: {"slope": 0.004247703674851282, "cohort_z": 1.697, "recent_weekly_commits": 0.3, "stars_not_scored": 968}
+    openalex_citation_momentum: {"status": "present", "slope": 0.43224291001310455, "cohort_z": -0.352, "total_citations": 882, "by_year": {"2026": 199, "2025": 249, "2024": 175, "2023": 186, "2022": 57, "2021": 16}, "proxy": null}
 ---
 
 # gnina

@@ -14,18 +14,18 @@ classification:
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 46cf326e7985
-  captured_at: 2026-08-29T12:49:44+00:00
-  period: 2026-w35
-  momentum: 59.3
-  percentile: 83
+  snapshot_id: 515920e4ea3f
+  captured_at: 2026-09-05T10:50:51+00:00
+  period: 2026-w36
+  momentum: 56.6
+  percentile: 67
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.003080654135821979, "cohort_z": 0.747, "recent_weekly_commits": 0.1, "stars_not_scored": 25336}
+    github_commit_velocity: {"slope": 0.0026067073456955206, "cohort_z": 0.528, "recent_weekly_commits": 0.1, "stars_not_scored": 25370}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 2, "by_year": {"2026": 2}, "proxy": null}
 ---
 
