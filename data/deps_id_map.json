@@ -185,6 +185,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "keras-team/keras": {
+      "system": "pypi",
+      "package": "keras",
+      "pinned_at": "2026-09-06T11:07:59Z"
+    },
     "kvcache-ai/ktransformers": {
       "system": "pypi",
       "package": "ktransformers",
