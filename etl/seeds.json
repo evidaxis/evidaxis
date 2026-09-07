@@ -4,7 +4,8 @@
   "note": "Seed: 9 verticals of OSS / research-native AI systems. entity_type: repo|model|org. openalex_work_ids drive axis-2 (citation momentum); multiple IDs are summed by year (preprint + published split). Empty list = no academic paper = axis-2 structurally absent (cannot pass the >=2-axis gate). Manual curation per P5 (first ~200 nodes seeded by hand).",
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
-  "census_2026-08": "2026-09-01: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-08": "2026-09-01: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)",
+  "census_2026-09": "2026-09-07: activation tranche of 12 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1770,6 +1771,114 @@
      "homepage": "https://github.com/mvanhorn/last30days-skill",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
+    },
+    {
+     "github_repo": "deepseek-ai/deepseek-harness",
+     "entity_type": "repo",
+     "repo_id": 1333065091,
+     "name": "deepseek-harness",
+     "homepage": "https://github.com/deepseek-ai/deepseek-harness",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "openai/whisper",
+     "entity_type": "repo",
+     "repo_id": 537603333,
+     "name": "whisper",
+     "homepage": "https://github.com/openai/whisper",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "colbymchenry/codegraph",
+     "entity_type": "repo",
+     "repo_id": 1137078255,
+     "name": "codegraph",
+     "homepage": "https://github.com/colbymchenry/codegraph",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CherryHQ/cherry-studio",
+     "entity_type": "repo",
+     "repo_id": 805155266,
+     "name": "cherry-studio",
+     "homepage": "https://github.com/CherryHQ/cherry-studio",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "titanwings/distilly",
+     "entity_type": "repo",
+     "repo_id": 1195828337,
+     "name": "distilly",
+     "homepage": "https://github.com/titanwings/distilly",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "FlashML-org/FreeToken",
+     "entity_type": "repo",
+     "repo_id": 1307001698,
+     "name": "FreeToken",
+     "homepage": "https://github.com/FlashML-org/FreeToken",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CodebuffAI/freebuff",
+     "entity_type": "repo",
+     "repo_id": 826515105,
+     "name": "freebuff",
+     "homepage": "https://github.com/CodebuffAI/freebuff",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MIC-DKFZ/nnUNet",
+     "entity_type": "repo",
+     "repo_id": 181846371,
+     "name": "nnUNet",
+     "homepage": "https://github.com/MIC-DKFZ/nnUNet",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "elder-plinius/OBLITERATUS",
+     "entity_type": "repo",
+     "repo_id": 1171949255,
+     "name": "OBLITERATUS",
+     "homepage": "https://github.com/elder-plinius/OBLITERATUS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "yjh051108/dsh-routing-suite",
+     "entity_type": "repo",
+     "repo_id": 1334586481,
+     "name": "dsh-routing-suite",
+     "homepage": "https://github.com/yjh051108/dsh-routing-suite",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "GreptimeTeam/greptimedb",
+     "entity_type": "repo",
+     "repo_id": 480217156,
+     "name": "greptimedb",
+     "homepage": "https://github.com/GreptimeTeam/greptimedb",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "genspark-ai/genoffice",
+     "entity_type": "repo",
+     "repo_id": 1318187016,
+     "name": "genoffice",
+     "homepage": "https://github.com/genspark-ai/genoffice",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
     }
    ]
   }

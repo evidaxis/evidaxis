@@ -1,0 +1,94 @@
+{
+ "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+ "sources": [
+  "github-search-api",
+  "github-graphql"
+ ],
+ "examined_estimate": 5774,
+ "candidates": [
+  {
+   "repo": "deepseek-ai/deepseek-harness",
+   "cohort": "unassigned-v1",
+   "stars": 214615,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "openai/whisper",
+   "cohort": "unassigned-v1",
+   "stars": 108663,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "colbymchenry/codegraph",
+   "cohort": "unassigned-v1",
+   "stars": 69894,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "CherryHQ/cherry-studio",
+   "cohort": "unassigned-v1",
+   "stars": 51536,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "titanwings/distilly",
+   "cohort": "unassigned-v1",
+   "stars": 24406,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "FlashML-org/FreeToken",
+   "cohort": "unassigned-v1",
+   "stars": 11921,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "CodebuffAI/freebuff",
+   "cohort": "unassigned-v1",
+   "stars": 11771,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "MIC-DKFZ/nnUNet",
+   "cohort": "unassigned-v1",
+   "stars": 8858,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "elder-plinius/OBLITERATUS",
+   "cohort": "unassigned-v1",
+   "stars": 8230,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "yjh051108/dsh-routing-suite",
+   "cohort": "unassigned-v1",
+   "stars": 7116,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "GreptimeTeam/greptimedb",
+   "cohort": "unassigned-v1",
+   "stars": 6647,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "genspark-ai/genoffice",
+   "cohort": "unassigned-v1",
+   "stars": 5779,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  }
+ ]
+}
