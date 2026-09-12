@@ -14,18 +14,18 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 515920e4ea3f
-  captured_at: 2026-09-05T10:50:51+00:00
-  period: 2026-w36
-  momentum: 50.6
-  percentile: 60
+  snapshot_id: 0a7b1714d0ad
+  captured_at: 2026-09-12T11:03:57+00:00
+  period: 2026-w37
+  momentum: 51.4
+  percentile: 53
   confidence: low
   rising: false
   status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": -0.028723350507600397, "cohort_z": 0.048, "recent_weekly_commits": 1.9, "stars_not_scored": 698}
+    github_commit_velocity: {"slope": -0.031360421709184946, "cohort_z": 0.115, "recent_weekly_commits": 1.4, "stars_not_scored": 700}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---

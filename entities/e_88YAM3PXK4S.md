@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 515920e4ea3f
-  captured_at: 2026-09-05T10:50:51+00:00
-  period: 2026-w36
-  momentum: 56.8
-  percentile: 78
+  snapshot_id: 0a7b1714d0ad
+  captured_at: 2026-09-12T11:03:57+00:00
+  period: 2026-w37
+  momentum: 42.6
+  percentile: 28
   confidence: medium
   rising: false
   status: calibration
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0016892202681720642, "cohort_z": 0.672, "recent_weekly_commits": 3.1, "stars_not_scored": 8517}
-    openalex_citation_momentum: {"status": "present", "slope": 1.8029641528401243, "cohort_z": 0.41, "total_citations": 15562, "by_year": {"2026": 6087, "2025": 7532, "2024": 1918, "2023": 18, "2022": 4, "2021": 1, "2020": 1, "2014": 1}, "proxy": null}
+    github_commit_velocity: {"slope": -0.010165010256014337, "cohort_z": -1.597, "recent_weekly_commits": 3.1, "stars_not_scored": 8543}
+    openalex_citation_momentum: {"status": "present", "slope": 1.8028882759864708, "cohort_z": 0.411, "total_citations": 15607, "by_year": {"2026": 6136, "2025": 7528, "2024": 1918, "2023": 18, "2022": 4, "2021": 1, "2020": 1, "2014": 1}, "proxy": null}
 note: "paper_ref: openalex:10.1038/s41586-024-07487-w; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 

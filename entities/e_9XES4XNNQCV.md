@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 515920e4ea3f
-  captured_at: 2026-09-05T10:50:51+00:00
-  period: 2026-w36
-  momentum: 42.1
-  percentile: 17
+  snapshot_id: 0a7b1714d0ad
+  captured_at: 2026-09-12T11:03:57+00:00
+  period: 2026-w37
+  momentum: 50.6
+  percentile: 67
   confidence: medium
   rising: false
   status: watch
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["openalex_citation_momentum"]
   axes:
-    github_commit_velocity: {"slope": -0.005924334876580729, "cohort_z": -2.364, "recent_weekly_commits": 0.0, "stars_not_scored": 629}
-    openalex_citation_momentum: {"status": "present", "slope": 1.3772851083685516, "cohort_z": 1.098, "total_citations": 251, "by_year": {"2026": 74, "2025": 109, "2024": 62, "2023": 6}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.995, "recent_weekly_commits": 0.0, "stars_not_scored": 633}
+    openalex_citation_momentum: {"status": "present", "slope": 1.3772851083685516, "cohort_z": 1.099, "total_citations": 251, "by_year": {"2026": 74, "2025": 109, "2024": 62, "2023": 6}, "proxy": null}
 ---
 
 # SaProt

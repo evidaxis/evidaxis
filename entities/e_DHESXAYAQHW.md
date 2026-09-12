@@ -14,19 +14,19 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m2
-  snapshot_id: 515920e4ea3f
-  captured_at: 2026-09-05T10:50:51+00:00
-  period: 2026-w36
-  momentum: 48.9
-  percentile: 39
+  snapshot_id: 0a7b1714d0ad
+  captured_at: 2026-09-12T11:03:57+00:00
+  period: 2026-w37
+  momentum: 48.0
+  percentile: 50
   confidence: medium
   rising: false
   status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.0, "recent_weekly_commits": 0.0, "stars_not_scored": 1587}
-    openalex_citation_momentum: {"status": "present", "slope": -0.22599256187152872, "cohort_z": -0.173, "total_citations": 32, "by_year": {"2026": 2, "2025": 6, "2024": 11, "2023": 10, "2022": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.148, "recent_weekly_commits": 0.0, "stars_not_scored": 1587}
+    openalex_citation_momentum: {"status": "present", "slope": -0.22599256187152872, "cohort_z": -0.172, "total_citations": 32, "by_year": {"2026": 2, "2025": 6, "2024": 11, "2023": 10, "2022": 3}, "proxy": null}
 note: "Low absolute counts; slope noisy."
 ---
 
