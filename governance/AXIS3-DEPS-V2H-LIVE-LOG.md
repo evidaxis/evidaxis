@@ -444,3 +444,28 @@ window **~2026-09-14** is now fully backed by captures; the verdict itself is a 
 act (five-point gate, read by act — not by the partition counter) and belongs to its own
 session. Nothing published, no registry change at this tact.
 Cost this week: ~$3.44 capture + ~$0.08 sidecar.
+
+## Tact 2026-09-14 (weekly ritual; run by Claude after Codex sandbox could not reach gcloud credentials)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-09-07` — 74/100 matched, 10 canaries
+(panel 100 systems / 638 packages, manifest 026eaa45377a…, job bqjob_r40343eab610ecb2f…).
+
+**Sidecar** (`--sidecar 2026-09-07`): PV2P 1167 rows, Projects 186 rows, retention tripwire
+{earliest 20230410 · latest 20260907 · n 177}.
+
+**Sanity gate** (`--check data/quarantine/axis3-deps-v2/sanity-calibration-3e51319d9817.json
+--series v2h1`): 25 partitions checked; **2026-08-31 promoted CLEAN** (cov=73, share=0.0);
+2026-09-07 PROVISIONAL per the necessarily-provisional rule (cov=74).
+Artifact: `data/quarantine/axis3-deps-v2/sanity-check-3ce743562e36.json`.
+
+**Evaluation** (`--as-of 2026-08-31 --label live --gate-check sanity-check-3ce743562e36.json`,
+evaluator `axis3_v2h1_eval_2`): status EVALUATED, official cutoff **2026-08-31**,
+47 voting / 6 rising, 0 unstable-vetoed.
+**c1 PASS · c2 PASS · c3 PASS · c4′ PASS · c5 PASS · c6 PASS — 6/6.**
+Artifact: `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-08-31-e34f80ae4f53.json`
+(sha256 e34f80ae4f535d03…).
+
+**Promotion accounting.** Confirmed-clean forward partitions now 2026-08-10, 08-17, 08-24, 08-31
+(four; three were required). The verdict window ~2026-09-14 is open; the verdict itself remains a
+governance act for its own session — nothing published, no registry change at this tact.
+Cost this week: ~$3.44 capture + ~$0.08 sidecar.

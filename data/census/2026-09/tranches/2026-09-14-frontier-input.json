@@ -1,0 +1,101 @@
+{
+ "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+ "sources": [
+  "github-search-api",
+  "github-graphql"
+ ],
+ "examined_estimate": 5755,
+ "candidates": [
+  {
+   "repo": "deeplethe/utopia",
+   "cohort": "unassigned-v1",
+   "stars": 7370,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "MakazhanAlpamys/Soup",
+   "cohort": "unassigned-v1",
+   "stars": 6390,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "arcboxlabs/arcbox",
+   "cohort": "unassigned-v1",
+   "stars": 5635,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "epoko77-ai/im-not-ai",
+   "cohort": "unassigned-v1",
+   "stars": 5539,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "bbycroft/llm-viz",
+   "cohort": "unassigned-v1",
+   "stars": 5535,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "truefoundry/trueforge",
+   "cohort": "unassigned-v1",
+   "stars": 5422,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "apache/maka",
+   "cohort": "unassigned-v1",
+   "stars": 5375,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "QLHazyCoder/FlowPilot",
+   "cohort": "unassigned-v1",
+   "stars": 5167,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "CopilotKit/OpenBot",
+   "cohort": "unassigned-v1",
+   "stars": 4871,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "Awarexone/Agentic-Bug-Hunter",
+   "cohort": "unassigned-v1",
+   "stars": 4761,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "Waishnav/devspace",
+   "cohort": "unassigned-v1",
+   "stars": 4713,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "magnitudedev/magnitude",
+   "cohort": "unassigned-v1",
+   "stars": 4470,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "slvDev/esp32-ai",
+   "cohort": "unassigned-v1",
+   "stars": 4344,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  }
+ ]
+}

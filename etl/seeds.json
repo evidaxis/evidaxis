@@ -5,7 +5,7 @@
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
   "census_2026-08": "2026-09-01: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)",
-  "census_2026-09": "2026-09-07: activation tranche of 12 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-09": "2026-09-14: activation tranche of 13 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1877,6 +1877,123 @@
      "repo_id": 1318187016,
      "name": "genoffice",
      "homepage": "https://github.com/genspark-ai/genoffice",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "deeplethe/utopia",
+     "entity_type": "repo",
+     "repo_id": 1327088798,
+     "name": "utopia",
+     "homepage": "https://github.com/deeplethe/utopia",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MakazhanAlpamys/Soup",
+     "entity_type": "repo",
+     "repo_id": 1162516847,
+     "name": "Soup",
+     "homepage": "https://github.com/MakazhanAlpamys/Soup",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "arcboxlabs/arcbox",
+     "entity_type": "repo",
+     "repo_id": 1127761357,
+     "name": "arcbox",
+     "homepage": "https://github.com/arcboxlabs/arcbox",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "epoko77-ai/im-not-ai",
+     "entity_type": "repo",
+     "repo_id": 1220000506,
+     "name": "im-not-ai",
+     "homepage": "https://github.com/epoko77-ai/im-not-ai",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "bbycroft/llm-viz",
+     "entity_type": "repo",
+     "repo_id": 608057177,
+     "name": "llm-viz",
+     "homepage": "https://github.com/bbycroft/llm-viz",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "truefoundry/trueforge",
+     "entity_type": "repo",
+     "repo_id": 1309751899,
+     "name": "trueforge",
+     "homepage": "https://github.com/truefoundry/trueforge",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "apache/maka",
+     "entity_type": "repo",
+     "repo_id": 1251460378,
+     "name": "maka",
+     "homepage": "https://github.com/apache/maka",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "QLHazyCoder/FlowPilot",
+     "entity_type": "repo",
+     "repo_id": 1205523418,
+     "name": "FlowPilot",
+     "homepage": "https://github.com/QLHazyCoder/FlowPilot",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CopilotKit/OpenBot",
+     "entity_type": "repo",
+     "repo_id": 1336502227,
+     "name": "OpenBot",
+     "homepage": "https://github.com/CopilotKit/OpenBot",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Awarexone/Agentic-Bug-Hunter",
+     "entity_type": "repo",
+     "repo_id": 1175748759,
+     "name": "Agentic-Bug-Hunter",
+     "homepage": "https://github.com/Awarexone/Agentic-Bug-Hunter",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Waishnav/devspace",
+     "entity_type": "repo",
+     "repo_id": 1269395331,
+     "name": "devspace",
+     "homepage": "https://github.com/Waishnav/devspace",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "magnitudedev/magnitude",
+     "entity_type": "repo",
+     "repo_id": 1267145484,
+     "name": "magnitude",
+     "homepage": "https://github.com/magnitudedev/magnitude",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "slvDev/esp32-ai",
+     "entity_type": "repo",
+     "repo_id": 1310057619,
+     "name": "esp32-ai",
+     "homepage": "https://github.com/slvDev/esp32-ai",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
     }
