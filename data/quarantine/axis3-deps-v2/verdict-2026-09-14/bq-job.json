@@ -1,0 +1,12 @@
+{
+  "bigquery_job_id": "bqjob_r4b89e09caf3b99ec_000001a09fbe2911_1",
+  "bytes_billed": 2262411771904,
+  "cost_usd_on_demand": 12.86,
+  "cost_note": "2.058 TiB at $6.25/TiB; four Dependents partitions, same per-partition scan as a weekly capture",
+  "dataset": "bigquery-public-data.deps_dev_v1.Dependents",
+  "maximum_bytes_billed": 2500000000000,
+  "partitions": ["2026-08-10", "2026-08-17", "2026-08-24", "2026-08-31"],
+  "query_file": "bq-query.sql",
+  "rows_returned": 615,
+  "run_on": "2026-09-14"
+}

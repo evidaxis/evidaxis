@@ -1,0 +1,343 @@
+{
+  "bigquery_pull": {
+    "bigquery_job_id": "bqjob_r4b89e09caf3b99ec_000001a09fbe2911_1",
+    "bytes_billed": 2262411771904,
+    "cost_note": "2.058 TiB at $6.25/TiB; four Dependents partitions, same per-partition scan as a weekly capture",
+    "cost_usd_on_demand": 12.86,
+    "dataset": "bigquery-public-data.deps_dev_v1.Dependents",
+    "maximum_bytes_billed": 2500000000000,
+    "partitions": [
+      "2026-08-10",
+      "2026-08-17",
+      "2026-08-24",
+      "2026-08-31"
+    ],
+    "query_file": "bq-query.sql",
+    "rows_returned": 615,
+    "run_on": "2026-09-14"
+  },
+  "capture_query_hash_check": {
+    "2026-08-03": true,
+    "2026-08-10": true,
+    "2026-08-17": true,
+    "2026-08-24": true,
+    "2026-08-31": true,
+    "2026-09-07": true
+  },
+  "capture_query_hash_ok": true,
+  "excluded_pairs_touching_frozen_packages": [
+    [
+      "2026-08-10",
+      "NPM/css",
+      "NPM/transformers"
+    ],
+    [
+      "2026-08-10",
+      "PYPI/langgraph",
+      "PYPI/langchain"
+    ],
+    [
+      "2026-08-17",
+      "NPM/css",
+      "NPM/transformers"
+    ],
+    [
+      "2026-08-17",
+      "PYPI/gguf",
+      "PYPI/freetoken"
+    ],
+    [
+      "2026-08-17",
+      "PYPI/langgraph",
+      "PYPI/langchain"
+    ],
+    [
+      "2026-08-24",
+      "NPM/css",
+      "NPM/transformers"
+    ],
+    [
+      "2026-08-24",
+      "PYPI/gguf",
+      "PYPI/freetoken"
+    ],
+    [
+      "2026-08-24",
+      "PYPI/langgraph",
+      "PYPI/langchain"
+    ],
+    [
+      "2026-08-31",
+      "NPM/css",
+      "NPM/transformers"
+    ],
+    [
+      "2026-08-31",
+      "PYPI/gguf",
+      "PYPI/freetoken"
+    ],
+    [
+      "2026-08-31",
+      "PYPI/langgraph",
+      "PYPI/langchain"
+    ]
+  ],
+  "freeze_rev": "aaeefa43",
+  "frozen_panel": {
+    "frozen_systems_with_changed_package_sets": [],
+    "package_strings": 614,
+    "systems": 90
+  },
+  "post_freeze_packages_in_capture_panel": {
+    "2026-08-10": [
+      "PYPI/firecrawl",
+      "PYPI/langchain",
+      "PYPI/transformers"
+    ],
+    "2026-08-17": [
+      "NPM/claude-mem",
+      "PYPI/crawl4ai",
+      "PYPI/firecrawl",
+      "PYPI/gpt4all",
+      "PYPI/langchain",
+      "PYPI/paddleocr",
+      "PYPI/transformers"
+    ],
+    "2026-08-24": [
+      "NPM/claude-mem",
+      "PYPI/crawl4ai",
+      "PYPI/firecrawl",
+      "PYPI/gpt4all",
+      "PYPI/langchain",
+      "PYPI/paddleocr",
+      "PYPI/transformers"
+    ],
+    "2026-08-31": [
+      "NPM/claude-mem",
+      "PYPI/crawl4ai",
+      "PYPI/firecrawl",
+      "PYPI/gpt4all",
+      "PYPI/gpt4free",
+      "PYPI/langchain",
+      "PYPI/paddleocr",
+      "PYPI/scikit-learn",
+      "PYPI/transformers"
+    ]
+  },
+  "pull_uncovered_post_freeze_packages": [],
+  "record": "governance/AXIS3-DEPS-V2H2-VERDICT-2026-09-14.md",
+  "v": "axis3_v2h1_frozen_panel_replay_2",
+  "variants": {
+    "EXACT": {
+      "correction": {
+        "e_13NVVKJA2MM@2026-08-10": [
+          "PYPI/langchain"
+        ],
+        "e_13NVVKJA2MM@2026-08-17": [
+          "PYPI/langchain"
+        ],
+        "e_13NVVKJA2MM@2026-08-24": [
+          "PYPI/langchain"
+        ],
+        "e_13NVVKJA2MM@2026-08-31": [
+          "PYPI/langchain"
+        ]
+      },
+      "cutoffs": {
+        "2026-08-17": {
+          "c2_committed_replay": [
+            0.2907,
+            0.2908
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1667,
+            0.1667
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.001,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        },
+        "2026-08-24": {
+          "c2_committed_replay": [
+            0.1066,
+            0.1066
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1277,
+            0.1277
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.001,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        },
+        "2026-08-31": {
+          "c2_committed_replay": [
+            -0.0684,
+            -0.0683
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1277,
+            0.1277
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.002,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        }
+      },
+      "gate_flagged": [
+        "2026-06-11",
+        "2026-06-15"
+      ],
+      "gate_status_diffs": []
+    },
+    "FILTER_ONLY": {
+      "correction": {},
+      "cutoffs": {
+        "2026-08-17": {
+          "c2_committed_replay": [
+            0.2907,
+            0.2907
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1667,
+            0.1667
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.0,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        },
+        "2026-08-24": {
+          "c2_committed_replay": [
+            0.1066,
+            0.1066
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1277,
+            0.1277
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.0,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        },
+        "2026-08-31": {
+          "c2_committed_replay": [
+            -0.0684,
+            -0.0684
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1277,
+            0.1277
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.0,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        }
+      },
+      "gate_flagged": [
+        "2026-06-11",
+        "2026-06-15"
+      ],
+      "gate_status_diffs": []
+    },
+    "UPPER": {
+      "correction": {
+        "e_13NVVKJA2MM@2026-08-10": [
+          "PYPI/langchain"
+        ],
+        "e_13NVVKJA2MM@2026-08-17": [
+          "PYPI/langchain"
+        ],
+        "e_13NVVKJA2MM@2026-08-24": [
+          "PYPI/langchain"
+        ],
+        "e_13NVVKJA2MM@2026-08-31": [
+          "PYPI/langchain"
+        ],
+        "e_Z7YDNC4F139@2026-08-17": [
+          "PYPI/freetoken"
+        ],
+        "e_Z7YDNC4F139@2026-08-24": [
+          "PYPI/freetoken"
+        ],
+        "e_Z7YDNC4F139@2026-08-31": [
+          "PYPI/freetoken"
+        ]
+      },
+      "cutoffs": {
+        "2026-08-17": {
+          "c2_committed_replay": [
+            0.2907,
+            0.2908
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1667,
+            0.1667
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.001,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        },
+        "2026-08-24": {
+          "c2_committed_replay": [
+            0.1066,
+            0.1066
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1277,
+            0.1277
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.039,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        },
+        "2026-08-31": {
+          "c2_committed_replay": [
+            -0.0684,
+            -0.0683
+          ],
+          "c3_flips_identical": true,
+          "c4_panel_share_committed_replay": [
+            0.1277,
+            0.1277
+          ],
+          "canary_identical": true,
+          "criteria_pass_identical": true,
+          "max_abs_z_shift": 0.054,
+          "rising_identical": true,
+          "votes_and_unstable_identical": true
+        }
+      },
+      "gate_flagged": [
+        "2026-06-11",
+        "2026-06-15"
+      ],
+      "gate_status_diffs": []
+    }
+  },
+  "verdict_invariant": true,
+  "verdict_rev": "13742753"
+}

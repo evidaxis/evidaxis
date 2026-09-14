@@ -469,3 +469,36 @@ Artifact: `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-08-31-e34f80ae4f53.
 (four; three were required). The verdict window ~2026-09-14 is open; the verdict itself remains a
 governance act for its own session — nothing published, no registry change at this tact.
 Cost this week: ~$3.44 capture + ~$0.08 sidecar.
+
+## 2026-09-14 — VERDICT: promotion gate MET (v2h.2); the axis leaves live quarantine
+
+**Correction to the 2026-09-07 and 2026-09-14 tact entries.** Forward confirmed-clean
+partitions are **three** (2026-08-17, 08-24, 08-31), not four. 2026-08-10 was captured in
+`eb918a11` eleven minutes before the v2h.2 record (`b69bbf28`) and cannot count toward that
+record's forward floor, the same error class as the 2026-08-17 correction. The 2026-09-07
+entry's "three of the three" was one week early for the same reason.
+
+**Verdict:** all five gate clauses MET on committed artifacts. 6/6 at each forward cutoff
+(08-17 / 08-24 / 08-31), zero canary HOLDs, zero fragility vetoes, c3 PASS on all six
+fully-forward transitions (max flip 0.0638). Record with the five-section promotion
+artifact: `AXIS3-DEPS-V2H2-VERDICT-2026-09-14.md`. Nothing published changes at this
+commit; the axis enters scoring only through a separate m3 record. The methodology freeze
+ends.
+
+**Disclosed, non-material (replayed with committed evidence):** (A) the collector admitted
+post-freeze pins, so captures from partition 2026-08-10 carried extra systems AND their
+package names in the panel-wide self-dependent exclusion. A BigQuery-backed replay finds
+exactly one effect on a frozen count (`langchain` excluded as a dependent of `langgraph`,
+one of ~1,700) and reproduces every vote and every criterion PASS/FAIL outcome
+(`data/quarantine/axis3-deps-v2/verdict-2026-09-14/replay-results.json`; pull ≈ $12.9).
+Collector brought back into conformance:
+`ERRATUM-2026-09-14-v2h1-collector-panel-drift.md`. (C) The canary floor 0.8 was never
+re-derived; a HOLD would have needed a floor above 13/14 ≈ 0.9286.
+
+**Expect at the 2026-09-21 tact** (first capture after the fix): panel 90 systems / 628
+packages again, matched ~64 (not a coverage drop: the post-freeze systems are out), and
+`langgraph` counted without the drift exclusion, one dependent more than the drifted query
+would have returned on the same partition (its week-over-week change is not predicted).
+Partition 2026-09-07 was captured with the drift and was not reconstructed. Second opinion
+(Codex, blind): SLIP first, then PROMOTE 0.94 after the closure evidence; verdict record §6.
+Cost this session: ≈ $12.9 one-time pull.
