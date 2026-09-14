@@ -502,3 +502,23 @@ would have returned on the same partition (its week-over-week change is not pred
 Partition 2026-09-07 was captured with the drift and was not reconstructed. Second opinion
 (Codex, blind): SLIP first, then PROMOTE 0.94 after the closure evidence; verdict record §6.
 Cost this session: ≈ $12.9 one-time pull.
+
+## 2026-09-14 — m3 implementation shipped (activation 2026-09-19)
+
+**Record:** `METHODOLOGY-M3-2026-09-14.md` (implementation record; closes the verdict's
+recall window). Code commit `128df50b`: `collectors/score_m3.py` (post-step),
+`methodology/m3.json` (fingerprint `sha256:1aaae899…`), `collectors/axis3_forward_count.py`,
+`collectors/axis3_canary_floor.py`; the web renders axes per snapshot version. Rights: dated
+append to `RIGHTS-BASIS.md`. Canary: `CANARY-PROTOCOL-AMENDMENT-2026-09-14.md`.
+
+**Standing instructions for the next tacts:**
+- **Saturday 2026-09-19 (weekly snapshot):** first m3 snapshot; axis 3 should use cutoff
+  2026-08-31. If the scoring step fails, the workflow fails before the snapshot id is minted,
+  so nothing publishes half-scored.
+- **First production deploy rendering the 2026-09-19 snapshot:** the canary clock starts
+  (amendment); record the deploy time in this log.
+- **Monday 2026-09-21 tact:** capture partition 2026-09-14 as usual (the collector captures
+  the frozen 90 again: expect ~64 matched). If the 2026-09-19 snapshot has Rising systems,
+  write the first-Rising disclosure record (per riser: points, reconstructed points, latest
+  dependents, slope, z, veto checks, dependent-ecosystem composition from `eco_top`).
+- **Every tact:** `python3 collectors/score_m3.py --verify` must pass on the latest snapshot.

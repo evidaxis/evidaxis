@@ -69,10 +69,13 @@ supports as-of queries: which methodology was current at epoch T.
 | version | status | rising threshold | cohort floor | page | frozen |
 |---|---|---|---|---|---|
 | `m1` | superseded | `z >= 0` | none | `/methodology/v1/` | genesis DOI `10.5281/zenodo.21076012` |
-| `m2` | current | `z >= 1` | `>= 5` members | `/methodology/m2/` | commit `24e0fd4` |
+| `m2` | current until 2026-09-19, then superseded | `z >= 1` | `>= 5` members | `/methodology/m2/` | commit `24e0fd4` |
+| `m3` | current from 2026-09-19 | `z >= 1`; any two of three axes | `>= 5` members | `/methodology/m3/` | commit `128df50`; spec `methodology/m3.json` |
 
 `m1` scores (genesis snapshot, 2026-06-27) stay valid under `m1`; they are not
-recomputed under `m2`. New snapshots are computed under `m2`.
+recomputed under `m2`. `m2` scores stay valid under `m2` and are not recomputed under
+`m3`. Snapshots from 2026-09-19 are computed under `m3`
+(`governance/METHODOLOGY-M3-2026-09-14.md`).
 
 ## Seam rule — provisional snapshots and the Type-2 layer (dated 2026-07-02)
 
