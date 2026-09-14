@@ -24,7 +24,9 @@ web/        the public static site (Astro, 0 JS, GEO-optimized).
 ## Principles (locked in design)
 
 - **git = the only source of truth.** The database and site are derived and
-  rebuildable. Every score is byte-reproducible from the manifest.
+  rebuildable. Every score is checkable against its hash-pinned inputs, with raw
+  provenance published. Snapshot files carry their capture time, so their exact
+  bytes are preserved and anchored in git rather than regenerated.
 - **systems-not-people.** The measured unit is always a system; individuals are
   never named or scored. There is no `/persons` surface.
 - **Axes measure the *slope* of a trend**, normalized within a cohort

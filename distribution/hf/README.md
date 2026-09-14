@@ -35,10 +35,12 @@ Per snapshot date `YYYY-MM-DD/`:
 
 ## Integrity
 
-Every snapshot is content-addressed (`snapshot_id` = payload hash), anchored via
-OpenTimestamps in the source repository, and byte-reproducible from public inputs.
-The canonical bytes live in the public git archive; this dataset mirrors the
-publication projection for convenient training/retrieval use.
+Every snapshot is identified by `snapshot_id`, a hash of the methodology version and
+the manifest hash. Its inputs are hash-pinned in the manifest with raw provenance
+published, and the source repository anchors the archive via OpenTimestamps, so every
+score is checkable against its hash-pinned inputs. Snapshot files carry their capture
+time: their exact bytes are preserved in the public git archive, not regenerated.
+This dataset mirrors the publication projection for convenient training/retrieval use.
 
 ## Positive-only, person-free
 
