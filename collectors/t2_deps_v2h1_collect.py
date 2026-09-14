@@ -44,6 +44,9 @@ MAX_BYTES_BILLED = 600 * 10**9     # same circuit breaker as v2h
 
 MANIFEST = REPO / "data/quarantine/axis3-deps-v2/expansion-manifest-DRAFT.json"
 LEGACY_PINS = REPO / "data/deps_id_map.json"
+# Pins admitted to the frozen panel: pinned at or before the first v2h.1 capture commit
+# (aaeefa43, 2026-07-21 18:02:25 +01:00). ISO-8601 UTC strings compare correctly as text.
+FROZEN_PIN_CUTOFF = "2026-07-21T17:02:25Z"
 
 # Sentinel canaries — declared, never scored, chosen for fame/stability across
 # ecosystems and sizes BEFORE any capture (source-health only).
@@ -113,6 +116,13 @@ def load_panel() -> tuple:
     legacy = json.loads(LEGACY_PINS.read_text())["pins"]
     id_map = json.loads((REPO / "etl/id_map.json").read_text())
     for repo, pin in legacy.items():
+        # The v2h.1 record freezes the panel: later pin growth never enters it. Admitting
+        # post-freeze pins added rows AND put their names into the panel-wide self-name
+        # exclusion, silently lowering frozen systems' counts
+        # (governance/ERRATUM-2026-09-14-v2h1-collector-panel-drift.md). A pin without
+        # pinned_at cannot be shown to predate the freeze, so it stays out.
+        if not pin.get("pinned_at") or pin["pinned_at"] > FROZEN_PIN_CUTOFF:
+            continue
         eid = id_map.get(repo)
         if eid:
             entity_pkgs.setdefault(eid, set()).add(
