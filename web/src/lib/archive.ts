@@ -1,9 +1,8 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { REPO_ROOT, dataPath, repoDataPath } from './data-path';
 import type { Entity, Snapshot } from './data';
 
-const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** Frozen verification-bundle artifact names under data/snapshots/{date}/. */
@@ -29,7 +28,7 @@ function readJson(path: string): any {
 
 /** Absolute path to a frozen snapshot artifact (read-only archive layer). */
 export function snapshotArtifactPath(date: string, name: string, repoRoot = REPO_ROOT): string {
-  return join(repoRoot, 'data', 'snapshots', date, name);
+  return repoDataPath(repoRoot, 'snapshots', date, name);
 }
 
 /** True when the frozen artifact exists on disk for that snapshot date. */
@@ -53,7 +52,7 @@ export function readSnapshotArtifactRaw(date: string, name: string, repoRoot = R
 
 /** Enumerate immutable snapshot payloads. Exported with a root argument for tests. */
 export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
-  const snapshotsDir = join(repoRoot, 'data', 'snapshots');
+  const snapshotsDir = repoDataPath(repoRoot, 'snapshots');
   return readdirSync(snapshotsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && DATE_RE.test(entry.name))
     .map((entry) => {
@@ -87,7 +86,7 @@ export function buildEntityUniverse(allSnapshots: Snapshot[], latestDate: string
 }
 
 export const snapshots = enumerateSnapshots();
-const latestPointer = readJson(join(REPO_ROOT, 'data', 'latest.json')) as { snapshot_date: string };
+const latestPointer = readJson(dataPath('latest.json')) as { snapshot_date: string };
 const resolvedLatest = snapshots.find((snap) => snap.snapshot_date === latestPointer.snapshot_date);
 if (!resolvedLatest) {
   throw new Error(`data/latest.json points to missing snapshot ${latestPointer.snapshot_date}`);

@@ -3,15 +3,18 @@ import Base from '../../../layouts/Base.astro';
 import { snapshot } from '../../../lib/data';
 import { computePowerFunnel, computeSensitivity } from '../../../lib/power';
 import { breadcrumb } from '../../../lib/jsonld';
+import { methodologyAxes } from '../../../lib/methodology';
 
 const funnel = computePowerFunnel(snapshot);
 const sensitivity = computeSensitivity(snapshot);
+const axisCount = methodologyAxes(snapshot.methodology_version).length;
 const stages = [
   ['Registry members', funnel.registry_members, 'Current census members in the snapshot.'],
   ['History sufficient', funnel.history_sufficient, 'At least 4 distinct weekly observations.'],
-  ['Two axes measurable', funnel.two_axis_measurable, 'Development velocity and citation signals are both measurable.'],
+  [axisCount === 3 ? 'At least two of three axes measurable' : 'Two axes measurable', funnel.two_axis_measurable,
+    axisCount === 3 ? 'Any pair of development, citation, and direct-dependents axes can supply coverage.' : 'Development velocity and citation signals are both measurable.'],
   ['Gate eligible', funnel.gate_eligible, 'History, axis coverage, cohort floor, and reference-measurement rules applied.'],
-  ['Rising published', funnel.rising_published, 'Positive signals published after two-axis convergence.'],
+  ['Rising published', funnel.rising_published, 'Positive signals published after at least two axes converge.'],
 ] as const;
 const desc = `Measurement power funnel for snapshot ${snapshot.snapshot_date}: ${funnel.registry_members} registry members through history, axis coverage, gate eligibility, and published Rising signals.`;
 ---
@@ -20,7 +23,7 @@ const desc = `Measurement power funnel for snapshot ${snapshot.snapshot_date}: $
     <div class="wrap">
       <p class="eyebrow">Coverage · measurement power</p>
       <h1>The denominator behind a zero</h1>
-      <p class="lead">Every stage is computed at build time from snapshot {snapshot.snapshot_date}. The final zero is reported with its full measurement denominator.</p>
+      <p class="lead">Every stage is computed at build time from snapshot {snapshot.snapshot_date}. Published signals are reported with their full measurement denominator.</p>
 
       <ol class="funnel" aria-label="Measurement power funnel">
         {stages.map(([label, value, note], index) => <li>
@@ -29,6 +32,7 @@ const desc = `Measurement power funnel for snapshot ${snapshot.snapshot_date}: $
           <data value={String(value)}>{value}</data>
         </li>)}
       </ol>
+      {axisCount === 3 && <p>Among systems with sufficient weekly history, {funnel.three_axis_measurable} have all three axes measurable. The gate needs any two. Axis 3 coverage states remain visible on each record.</p>}
 
       <section class="panel sensitivity">
         <h2>Sensitivity to the axis z threshold</h2>

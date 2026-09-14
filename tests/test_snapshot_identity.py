@@ -53,6 +53,23 @@ def test_rewrite_is_idempotent(tmp_path, monkeypatch):
     assert old2 == new2 == new1
 
 
+def test_rewrite_keeps_latest_pointer_aligned(tmp_path):
+    snap_dir = tmp_path / "data/snapshots/2026-09-19"
+    snap_dir.mkdir(parents=True)
+    snap = _minimal_snap([{"entity_id": "e_A", "momentum": 65.0}], date="2026-09-19")
+    snap["methodology_version"] = "m3"
+    path = snap_dir / "snapshot.json"
+    path.write_text(json.dumps(snap))
+    pointer = tmp_path / "data/latest.json"
+    pointer.write_text(json.dumps({"snapshot_date": "2026-09-19", "snapshot_id": "old", "methodology_version": "m3"}))
+    _old, new, changed = si.rewrite_snapshot(path)
+    assert changed and json.loads(pointer.read_text())["snapshot_id"] == new
+    # An idempotent identity pass also repairs a stale pointer without reminting.
+    pointer.write_text(pointer.read_text().replace(new, "stale"))
+    assert si.rewrite_snapshot(path)[2] is False
+    assert json.loads(pointer.read_text())["snapshot_id"] == new
+
+
 def test_check_fails_on_synthetic_collision(tmp_path, monkeypatch):
     root = tmp_path / "data" / "snapshots"
     # Two dirs, same snapshot_id, different payloads.

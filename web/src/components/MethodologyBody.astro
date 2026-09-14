@@ -7,10 +7,12 @@
 //
 // C5: frozen methodology pages must NOT import the live snapshot (no period
 // interpolation that drifts when "current" advances).
+import MethodologyM3 from './MethodologyM3.astro';
 export interface Props { version?: string }
 const { version = 'm1' } = Astro.props;
 const isM2 = version === 'm2';
 ---
+{version === 'm3' ? <MethodologyM3 /> : <>
 <p class="lead" style="max-width:64ch">
   Evidaxis is a survey telescope pointed at open-source AI. It records each tracked system’s momentum week
   after week, builds the baseline, and recognizes a system as rising only when two independent axes
@@ -126,3 +128,4 @@ axis rising  ⟺  slope &gt; 0  ∧  z ≥ 0   (velocity also: commits/wk ≥ 5)
   <li><strong>License</strong>: all data is released under the <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Public Domain Dedication</a>.</li>
   <li><strong>Vocabulary</strong>: see the <a href="/glossary/">Evidaxis glossary</a> for definitions of every term used here.</li>
 </ul>
+</>}

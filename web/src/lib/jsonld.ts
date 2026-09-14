@@ -6,6 +6,7 @@ import { hasSnapshotArtifact } from './archive';
 import { measurementPhrases, measurementStateFor } from './measurement';
 
 import registry from './methodology-registry.json';
+import { AXIS3_ATTRIBUTION, AXIS3_ESTIMAND, DEPENDENTS_AXIS, methodologyAxes, methodologyEntry } from './methodology';
 
 const SITE = 'https://evidaxis.org';
 const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
@@ -38,7 +39,7 @@ const SAME_AS = [
 // Durable, VERSIONED methodology permalink for a given methodology_version. Records
 // cite the version they were computed under, never the moving /methodology/current/
 // alias, so a frozen citation never drifts when "current" advances (METHODOLOGY-VERSIONING.md).
-const methodologyPath = (version: string) => `${SITE}/methodology/${version === 'm1' ? 'v1' : version}/`;
+const methodologyPath = (version: string) => SITE + methodologyEntry(version).page;
 
 const typeForEntity = (t: string) =>
   t === 'org' || t === 'company' || t === 'lab' ? 'Organization'
@@ -124,6 +125,8 @@ export function orgGraph() {
 export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: DepsSignal | null) {
   const a1 = e.axes.github_commit_velocity;
   const a2 = e.axes.openalex_citation_momentum;
+  const a3 = e.axes.deps_direct_dependents_momentum;
+  const axisCount = methodologyAxes(snap.methodology_version).length;
   const vars: any[] = [];
   const measurementState = measurementStateFor(e, snap);
   const statePhrases = measurementPhrases(measurementState);
@@ -133,13 +136,17 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
     vars.push({ '@type': 'PropertyValue', name: 'Development-velocity z-score (within cohort)', value: a1.cohort_z });
   if (a2.cohort_z != null)
     vars.push({ '@type': 'PropertyValue', name: 'Citation-momentum z-score (within cohort)', value: a2.cohort_z });
-  // deps.dev dependents: an adoption (R0) signal, DISPLAYED and declared, never
-  // folded into the momentum score (scoring methodology is frozen). Point-in-time.
+  if (axisCount === 3 && a3?.status === 'scored') {
+    vars.push({ '@type': 'PropertyValue', name: 'Direct-dependents momentum (deps.dev)', value: a3.cohort_z,
+      description: `${AXIS3_ESTIMAND} As-of partition ${a3.as_of_partition}; ${a3.points_reconstructable} of ${a3.points} points are reconstructed history. ${AXIS3_ATTRIBUTION}`,
+      measurementTechnique: `${methodologyPath(snap.methodology_version)}#dependents` });
+  }
+  // The daily REST count and the scored weekly union are separate series.
   if (depsSig)
-    vars.push({ '@type': 'PropertyValue', name: 'deps.dev dependents (adoption, R0)', value: depsSig.value, description: 'Count of downstream packages depending on this system (deps.dev), point-in-time. Adoption signal, not part of the momentum score.' });
+    vars.push({ '@type': 'PropertyValue', name: 'Daily dependents count (unscored)', value: depsSig.value, description: 'Daily deps.dev REST count, captured point-in-time. The scored direct-dependents axis in m3 uses weekly partitions.' });
   vars.push(
     { '@type': 'PropertyValue', name: 'Weekly observation history', value: measurementState.history_sufficiency.weekly_observations, minValue: 0, unitText: 'weekly observations' },
-    { '@type': 'PropertyValue', name: 'Measurable axis count', value: measurementState.axis_coverage.measurable_axis_count, minValue: 0, maxValue: 2, unitText: 'axes' },
+    { '@type': 'PropertyValue', name: 'Measurable axis count', value: measurementState.axis_coverage.measurable_axis_count, minValue: 0, maxValue: axisCount, unitText: 'axes' },
     { '@type': 'PropertyValue', name: 'Gate eligibility state', value: measurementState.gate_eligibility.state },
     { '@type': 'PropertyValue', name: 'Positive signal state', value: measurementState.positive_signal.state },
   );
@@ -325,7 +332,7 @@ export function snapshotDataset(snap: Snapshot) {
           {
             '@type': 'PropertyValue',
             name: 'Evidaxis Momentum Score',
-            description: 'Within-pilot percentile of the combined two-axis signal.',
+            description: `Mean of present-axis z-scores mapped to 0-100 under a ${methodologyAxes(snap.methodology_version).length}-axis methodology.`,
             minValue: 0, maxValue: 100, unitText: 'points',
             measurementTechnique: methodologyPath(snap.methodology_version),
           },
@@ -341,6 +348,11 @@ export function snapshotDataset(snap: Snapshot) {
             description: 'Log-slope of yearly citations to the system paper, robust-z normalized within the cohort. Absent for systems with no measurable citation axis.',
             measurementTechnique: `${methodologyPath(snap.methodology_version)}#citation`,
           },
+          ...(methodologyAxes(snap.methodology_version).includes(DEPENDENTS_AXIS) ? [{
+            '@type': 'PropertyValue', name: 'Direct-dependents momentum (deps.dev)',
+            description: `${AXIS3_ESTIMAND} ${AXIS3_ATTRIBUTION}`,
+            measurementTechnique: `${methodologyPath(snap.methodology_version)}#dependents`,
+          }] : []),
         ],
         // Verification bundle: frozen hash-pinned artifacts (F8 / WP-H).
         distribution: (() => {

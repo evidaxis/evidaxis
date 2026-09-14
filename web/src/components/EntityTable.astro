@@ -5,9 +5,11 @@ import { COHORT_ORDER } from '../lib/cohorts';
 import Sparkline from './Sparkline.astro';
 import StatusBadge from './StatusBadge.astro';
 import { measurementPhrases, measurementStateFor } from '../lib/measurement';
-import { snapshot } from '../lib/data';
+import { snapshot, fmtZ, AXIS_LABEL } from '../lib/data';
+import { methodologyAxes, DEPENDENTS_AXIS } from '../lib/methodology';
 export interface Props { entities: Entity[]; }
 const { entities: raw } = Astro.props;
+const hasThirdAxis = methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS);
 
 const cohortIdx = (key: string) => {
   const i = COHORT_ORDER.indexOf(key);
@@ -31,7 +33,8 @@ const entities = [...raw].sort((a, b) => {
       <th scope="col" class="num">Momentum</th>
       <th scope="col">Dev velocity</th>
       <th scope="col">Citation momentum</th>
-      <th scope="col" class="num">Dependents</th>
+      {hasThirdAxis && <th scope="col">{AXIS_LABEL[DEPENDENTS_AXIS]}</th>}
+      <th scope="col" class="num">Daily dependents count (unscored)</th>
     </tr>
   </thead>
   <tbody>
@@ -59,7 +62,8 @@ const entities = [...raw].sort((a, b) => {
               ? <Sparkline values={cit} color="var(--citation)" width={104} height={28} label={`${e.name} citation momentum`} />
               : <span class="mono muted" style="font-size:.72rem">{measurementPhrases(measurementStateFor(e, snapshot)).citation_axis}</span>}
           </td>
-          <td class="num" title={dep ? `${dep.direct} direct${dep.indirect ? `, ${dep.indirect} indirect` : ''} (deps.dev ${dep.system}/${dep.package}); adoption signal, not part of the momentum score` : 'not measured'}>
+          {hasThirdAxis && <td class="num" title={measurementPhrases(measurementStateFor(e, snapshot)).dependents_axis}>{fmtZ(e.axes.deps_direct_dependents_momentum?.cohort_z ?? null)}</td>}
+          <td class="num" title={dep ? `${dep.direct} direct${dep.indirect ? `, ${dep.indirect} indirect` : ''} (deps.dev ${dep.system}/${dep.package}); daily unscored count` : 'not measured'}>
             {dep ? dep.value.toLocaleString() : <span class="mono muted" style="font-size:.72rem">n/a</span>}
           </td>
         </tr>
@@ -68,6 +72,6 @@ const entities = [...raw].sort((a, b) => {
   </tbody>
 </table>
 <p class="mono muted" style="font-size:.68rem;margin-top:.5rem">
-  Order: cohort, then alphabetical. Momentum is a measurement, not a placement. Dependents: downstream packages that build on the system (deps.dev); an adoption signal, not part of the momentum score.
+  Order: cohort, then alphabetical. Momentum is a measurement, not a placement. Daily dependents count is unscored; <a href="/methodology/m3/#dependents">the scored axis uses weekly partitions</a>.
 </p>
 </div>

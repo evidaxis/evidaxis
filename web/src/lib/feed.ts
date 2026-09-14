@@ -4,12 +4,14 @@ import { readSnapshotArtifactRaw, snapshots } from './archive';
 import {
   CITATION_AXIS,
   DEVELOPMENT_AXIS,
+  DEPENDENTS_AXIS,
   measurementPhrases,
   measurementStateFor,
   serializeMeasurementState,
   type AxisKey,
   type MeasurementState,
 } from './measurement';
+import { methodologyAxes } from './methodology';
 
 export type FeedEntryType = 'observation' | 'moment_signal';
 export type ObservationEventKind =
@@ -48,6 +50,7 @@ type StateResolver = (entity: Entity, snapshot: Snapshot) => MeasurementState;
 const axisLabel: Record<AxisKey, string> = {
   [DEVELOPMENT_AXIS]: 'Development velocity',
   [CITATION_AXIS]: 'Citation',
+  [DEPENDENTS_AXIS]: 'Direct-dependents',
 };
 
 export function entryId(payload: Omit<FeedEntry, 'id' | 'url'>): string {
@@ -179,7 +182,12 @@ export function diffFeedEntries(
     }
 
     const priorState = resolveState(prior, previous);
-    for (const axis of [DEVELOPMENT_AXIS, CITATION_AXIS] as AxisKey[]) {
+    // An axis that the previous snapshot's methodology did not define is a methodology
+    // change, announced by the registry and the methodology page, not a per-system
+    // measurement event; without this the first m3 snapshot emits one entry per system.
+    const priorAxes = methodologyAxes(previous.methodology_version);
+    for (const axis of methodologyAxes(current.methodology_version)) {
+      if (!priorAxes.includes(axis)) continue;
       if (priorState.axis_coverage.axes[axis] !== 'measurable' && state.axis_coverage.axes[axis] === 'measurable') {
         entries.push(typedObservation(
           current,
@@ -249,7 +257,7 @@ export function diffFeedEntries(
         type: 'moment_signal',
         event_kind: 'convergence_published',
         title: `Rising signal published: ${entity.name}`,
-        summary: `${entity.name} has a published two-axis convergence signal for ${current.period}. ${gate}`,
+        summary: `${entity.name} has a published convergence signal from at least two axes for ${current.period}. ${gate}`,
         snapshot_date: current.snapshot_date,
         period: current.period,
         date_published: current.captured_at,
@@ -329,7 +337,7 @@ export function jsonFeed(entries: FeedEntry[] = latestFeedEntries()) {
     title: 'Evidaxis typed measurement feed',
     home_page_url: 'https://evidaxis.org/',
     feed_url: 'https://evidaxis.org/feed.json',
-    description: 'Weekly observation events and published two-axis convergence signals.',
+    description: 'Weekly observation events and published convergence signals from at least two axes.',
     items: entries.map((entry) => ({
       id: entry.url,
       url: entry.url,

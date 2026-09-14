@@ -31,6 +31,13 @@ const desc = `Every frozen Evidaxis measurement snapshot, from genesis through $
           </tr>)}</tbody>
         </table>
       </div>
+      <section id="axis-correlations" style="margin-top:2rem">
+        <h2>Axis independence diagnostics</h2>
+        <p>Every m3 snapshot exposes <span class="mono">diagnostics.axis_correlations</span> with pooled and per-cohort Pearson values and pair counts.</p>
+        {rows.some(snap => snap.diagnostics?.axis_correlations) ? <ul>
+          {rows.filter(snap => snap.diagnostics?.axis_correlations).map(snap => <li><a href={`/snapshots/${snap.snapshot_date}/snapshot.json#diagnostics.axis_correlations`}>{snap.snapshot_date}: diagnostics.axis_correlations</a></li>)}
+        </ul> : <p>The first m3 snapshot is scheduled from 2026-09-19. No m3 snapshot has been published yet.</p>}
+      </section>
     </div>
   </section>
 </Base>

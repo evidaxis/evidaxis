@@ -17,6 +17,7 @@ on:
     paths:
       - "data/**"
       - "collectors/**"
+      - "methodology/**"
       - "etl/**"
       - "genesis-deposit/**"
       - ".github/workflows/archive-integrity.yml"
@@ -44,6 +45,9 @@ jobs:
 
       - name: Taxonomy v2 remap is idempotent on the committed snapshot
         run: python3 collectors/taxonomy_v2.py --verify
+
+      - name: Methodology m3 matches committed inputs (activation-aware)
+        run: python3 collectors/score_m3.py --verify
 
       - name: History ledger resolves (no phantom snapshot ids)
         run: python3 collectors/history_ledger_check.py

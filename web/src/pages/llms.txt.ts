@@ -78,7 +78,7 @@ export const GET: APIRoute = () => {
 - registry_members: ${power.registry_members}
 - history_sufficient: ${power.history_sufficient}
 - two_axis_measurable: ${power.two_axis_measurable}
-- gate_eligible: ${power.gate_eligible}
+${power.three_axis_measurable == null ? '' : `- three_axis_measurable: ${power.three_axis_measurable}\n`}- gate_eligible: ${power.gate_eligible}
 - provisional: ${provisional}
 - spine_complete: ${spineComplete}
 

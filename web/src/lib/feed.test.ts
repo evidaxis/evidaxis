@@ -44,6 +44,21 @@ describe('typed feeds and immutable signal ids', () => {
     expect(entries[0].event_kind).toBe('quiet_week');
   });
 
+  it('does not announce an axis the previous methodology lacked as a per-system event', () => {
+    const deps = { status: 'scored', slope: 0.2, cohort_z: 1.1, theil_sen: 0.2, latest: 30, points: 20,
+      points_reconstructable: 14, as_of_partition: '2026-08-24', unstable: false, rising_vote: false };
+    const previous = snap('2026-09-12', '2026-w37', Array.from({ length: 5 }, (_, i) => entity(`e_${i}`, [DEVELOPMENT_AXIS])));
+    const currentEntities = Array.from({ length: 5 }, (_, i) => {
+      const base = entity(`e_${i}`, [DEVELOPMENT_AXIS]);
+      return { ...base, axes_present: [DEVELOPMENT_AXIS, 'deps_direct_dependents_momentum'],
+        axes: { ...base.axes, deps_direct_dependents_momentum: deps } };
+    });
+    const current = { ...snap('2026-09-19', '2026-w38', currentEntities), methodology_version: 'm3' };
+    const resolve = (candidate: any, snapshot: any) => deriveMeasurementState(candidate, snapshot, 8);
+    const entries = diffFeedEntries(previous, current, { resolveState: resolve, dropped: new Set() });
+    expect(entries.some((entry: any) => entry.event_kind === 'axis_available')).toBe(false);
+  });
+
   it('uses the canonical gate phrase in typed state, JSON Feed, and Atom', () => {
     const currentEntities = Array.from({ length: 5 }, (_, i) => entity(`e_${i}`, [DEVELOPMENT_AXIS]));
     const previous = snap('2026-08-08', '2026-w32', [entity('e_prior', [DEVELOPMENT_AXIS])]);

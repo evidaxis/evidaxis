@@ -1,0 +1,65 @@
+---
+import { AXIS3_ATTRIBUTION, AXIS3_ESTIMAND } from '../lib/methodology';
+---
+<p class="lead" style="max-width:64ch">Three axes. One gate: any two converge. Methodology m3 adds direct-dependents momentum to development velocity and citation momentum. The gate is unchanged in form: at least two axes must be present and rising. No threshold changed from m2.</p>
+
+<h2 id="velocity">Axis 1: Development velocity</h2>
+<p class="prose">The OLS slope of log(1 + weekly commits) over the trailing 26 weeks, from GitHub. Within each cohort, robust z (median, 1.4826 × MAD, clamp ±3) is computed first, then adjusted for log(1 + stars). A rising vote requires a positive slope, z ≥ 1, and at least 5 average weekly commits. These values are unchanged from m2.</p>
+
+<h2 id="citation">Axis 2: Citation momentum</h2>
+<p class="prose">The OLS slope of log(1 + citations per year) from OpenAlex. Drop the partial current year and, when four or more completed years exist, the earliest birth year. At least three completed years are required. Within-cohort robust z is adjusted for log(1 + total citations). A rising vote requires slope &gt; 0 and z ≥ 1. These values are unchanged from m2.</p>
+
+<h2 id="dependents">Axis 3: Direct-dependents momentum (deps.dev)</h2>
+<p class="prose">Unique direct dependents over the union of each system's linkage-verified packages, from deps.dev BigQuery <span class="mono">Dependents</span> weekly partitions. Intra-panel self-dependents are excluded. The estimator is the OLS slope of log(1 + dependents) over confirmed-clean weekly points. The slope is residualized on log(1 + latest), then converted to robust z within cohort (median, 1.4826 × MAD, clamp ±3).</p>
+<p class="prose">A vote needs at least 14 confirmed-clean points and at least 5 latest dependents. Rising needs slope &gt; 0 and z ≥ 1. A one-way fragility veto withholds a rising vote if leaving out a point flips the slope sign or Theil-Sen disagrees in sign. A cohort whose slope-sign versus endpoint agreement falls below 0.80, with at least three voting systems, is held.</p>
+<p class="prose">The estimator reuses the frozen v2h.1 evaluator: points are ordered by partition and fitted at equally spaced point indices. Its robust normalization uses the upper-middle median and MAD; zero MAD gives z = 0.</p>
+
+<h2>The convergence gate</h2>
+<pre class="formula">Rising ⟺ not incumbent ∧ cohort_n ≥ 5 ∧ |axes_present| ≥ 2 ∧ |axes_rising| ≥ 2
+axis rising ⟺ slope &gt; 0 ∧ z ≥ 1, plus the axis's floors and veto</pre>
+<p class="prose">Only a scored third axis counts toward axes present. The coverage states are <span class="mono">scored</span>, <span class="mono">below_floor</span>, <span class="mono">held</span>, <span class="mono">stale</span>, and <span class="mono">out_of_panel</span>. Unavailable scores carry null values; known latest counts and point counts remain visible. Incumbents anchor their cohorts and are never eligible for a Rising badge.</p>
+
+<h2>Momentum, percentile and confidence</h2>
+<pre class="formula">momentum = clamp(50 + 12.5 × mean(z_present), 0, 100)</pre>
+<p class="prose">Momentum is rounded to one decimal place. Percentile uses ascending momentum within the cohort, retaining input order for ties. Confidence is high for Rising with at least two present axes, medium for other records with at least two present axes, and low otherwise. The existing status rules carry forward: incumbent, Rising, exactly one rising axis, at least two present axes, then remaining coverage.</p>
+
+<h2>Timing</h2>
+<p class="prose">Axis 3 uses the newest confirmed-clean weekly partition, which trails the snapshot by about two to three weeks. Each record states its as-of partition. An axis older than 28 days is not scored. Partition dates cannot exceed the snapshot date, observation capture times cannot exceed the snapshot's capture time, and the confirming sanity artifact must already be committed at that capture time. Provisional partitions are never scored.</p>
+
+<h2>Coverage and estimand</h2>
+<p class="prose">{AXIS3_ESTIMAND}</p>
+
+<h2>History origin</h2>
+<p class="prose">The earliest weekly points of each series were read from deps.dev's BigQuery history on 2026-07-21; later points are weekly captures. Each record reports how many of its points are reconstructed history.</p>
+
+<h2>Known limits</h2>
+<ul class="prose">
+  <li>Axis 3 standardizes after size adjustment while axes 1 and 2 adjust after standardizing. This difference is to be revisited in a future version.</li>
+  <li>Dependents can be inflated by packages published outside the panel.</li>
+  <li>Package-level counts are not published.</li>
+  <li>Momentum averages the axes present, so systems with two and three axes are not strictly comparable.</li>
+</ul>
+
+<h2>Independence monitor</h2>
+<p class="prose">Each m3 snapshot publishes <span class="mono">diagnostics.axis_correlations</span>: pooled within-cohort Pearson correlations for all three axis pairs, their pair counts, and per-cohort correlations where at least five pairs exist. Undefined correlations are null. The pre-registered bound is |r| &lt; 0.5. The <a href="/snapshots/#axis-correlations">snapshot diagnostics index</a> links to this field in each published m3 snapshot.</p>
+
+<h2 id="derived">Derived signals</h2>
+<p class="prose">These separate reads use the existing commit series and remain unchanged from m2. A value is published only when its source history is sufficient.</p>
+<ul class="prose">
+  <li id="derived-swing">Recency swing compares recent and prior commit slopes.</li>
+  <li id="derived-sharpe">Signal-to-noise compares mean weekly commits with residual volatility.</li>
+  <li id="derived-changepoint">Changepoint identifies a slope break when history is sufficient.</li>
+  <li id="derived-lag">Citation lag remains reserved until paired history is sufficient.</li>
+  <li id="derived-alpha">Alpha remains reserved for residual momentum against cohort peers.</li>
+  <li id="derived-gate-eta">Gate ETA remains reserved for a supported time-to-convergence estimate.</li>
+</ul>
+
+<h2>Attribution</h2>
+<p class="prose">{AXIS3_ATTRIBUTION}</p>
+
+<h2>Records and reproducibility</h2>
+<p class="prose">The canonical specification is <a href="https://github.com/evidaxis/evidaxis/blob/main/methodology/m3.json">methodology/m3.json</a>; its canonical JSON SHA256 is pinned in the <a href="/methodology-registry.json">version registry</a>. Published snapshots keep their own methodology version and scores.</p>
+<ul class="prose">
+  <li><a href="https://github.com/evidaxis/evidaxis/blob/main/governance/AXIS3-DEPS-V2H2-VERDICT-2026-09-14.md">Axis 3 promotion record, 2026-09-14</a></li>
+  <li><a href="https://github.com/evidaxis/evidaxis/blob/main/governance/METHODOLOGY-M3-2026-09-14.md">Methodology m3 implementation record, 2026-09-14</a></li>
+</ul>

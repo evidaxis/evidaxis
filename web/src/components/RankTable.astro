@@ -12,6 +12,7 @@ import type { Entity } from '../lib/data';
 import { cohortColor, cohortLabel, COHORT_ORDER, fmtZsafe } from '../lib/cohorts';
 import Sparkline from './Sparkline.astro';
 import { measurementPhrases, measurementStateFor } from '../lib/measurement';
+import { DEPENDENTS_AXIS, methodologyAxes } from '../lib/methodology';
 
 export interface Props {
   entities?: Entity[];
@@ -21,6 +22,7 @@ export interface Props {
   showSparks?: boolean;
 }
 const { entities = allEntities, title = 'Catalog', limit, showSparks = true } = Astro.props;
+const hasThirdAxis = methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS);
 
 const cohortIdx = (key: string) => {
   const i = COHORT_ORDER.indexOf(key);
@@ -41,6 +43,8 @@ const zClass = (z: number | null, cit = false) =>
 const sparkColor = (e: Entity) => {
   const vz = e.axes.github_commit_velocity.cohort_z;
   const cz = e.axes.openalex_citation_momentum.cohort_z;
+  const dz = e.axes.deps_direct_dependents_momentum?.cohort_z;
+  if (hasThirdAxis && dz != null && dz > Math.max(vz ?? -Infinity, cz ?? -Infinity)) return 'var(--ink-soft)';
   return cz != null && vz != null && cz > vz ? 'var(--citation)' : 'var(--velocity)';
 };
 ---
@@ -61,6 +65,7 @@ const sparkColor = (e: Entity) => {
           <th scope="col">Cohort</th>
           <th scope="col" class="num">Velocity z</th>
           <th scope="col" class="num">Citation z</th>
+          {hasThirdAxis && <th scope="col" class="num">Direct-dependents z</th>}
           <th scope="col" class="num">Momentum</th>
           <th scope="col">Status</th>
           {showSparks && <th scope="col" class="sp">Commits</th>}
@@ -82,6 +87,7 @@ const sparkColor = (e: Entity) => {
               <td class="coh"><span class="cdot" style={`background:${cohortColor(e.cohort)}`}></span>{cohortLabel(e.cohort)}</td>
               <td class={`z num ${zClass(vz)}`}><data value={String(vz ?? '')}>{fmtZsafe(vz)}</data></td>
               <td class={`z num ${zClass(cz, true)}`}><data value={String(cz ?? '')}>{fmtZsafe(cz)}</data></td>
+              {hasThirdAxis && <td class="z num" title={phrases.dependents_axis}>{fmtZsafe(e.axes.deps_direct_dependents_momentum?.cohort_z ?? null)}</td>}
               <td class="mo num">{e.momentum != null ? <data value={String(e.momentum)}>{e.momentum}</data> : <span class="muted">n/a</span>}</td>
               <td>{state.positive_signal.state === 'published'
                 ? <span class="badge rising">Rising</span>
@@ -93,7 +99,7 @@ const sparkColor = (e: Entity) => {
       </tbody>
     </table>
   </div>
-  <div class="rank-foot">Default order: cohort, then alphabetical. Momentum is a within-pilot percentile of the combined signal (a measurement, not a placement). Cohort-normalized z-scores · measurement states are derived from source coverage and weekly history · "no axis" = no measurable citation series yet. Sort-by-momentum is optional client-side only.</div>
+  <div class="rank-foot">Default order: cohort, then alphabetical. Momentum maps the mean of present-axis z-scores to 0-100. Cohort-normalized z-scores · measurement states are derived from source coverage and weekly history · "no axis" = that axis is not measurable. Sort-by-momentum is optional client-side only.{hasThirdAxis && ' Two- and three-axis momentum scores are not strictly comparable.'}</div>
 </div>
 
 <script>

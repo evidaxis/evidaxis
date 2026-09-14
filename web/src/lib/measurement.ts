@@ -5,18 +5,15 @@
  * and machine serialization is derived here from explicit mechanical states.
  */
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
+import { REPO_ROOT as ROOT, dataPath, repoDataPath } from './data-path';
+import { CITATION_AXIS, DEVELOPMENT_AXIS, DEPENDENTS_AXIS, methodologyAxes, type AxisKey, type VersionedAxes } from './methodology';
+export { CITATION_AXIS, DEVELOPMENT_AXIS, DEPENDENTS_AXIS, type AxisKey } from './methodology';
 
 export const HISTORY_REQUIRED = 4;
-export const DEVELOPMENT_AXIS = 'github_commit_velocity' as const;
-export const CITATION_AXIS = 'openalex_citation_momentum' as const;
-export type AxisKey = typeof DEVELOPMENT_AXIS | typeof CITATION_AXIS;
 
 export type ObservationAvailability = 'observed' | 'source_not_measured' | 'no_data';
-export type AxisCoverageState = 'measurable' | 'insufficient_source_coverage' | 'source_not_measured' | 'no_data';
+export type AxisCoverageState = 'measurable' | 'insufficient_source_coverage' | 'source_not_measured' | 'no_data'
+  | 'below_floor' | 'held' | 'stale' | 'out_of_panel';
 export type AxisCoverageReason =
   | 'cohort_z_unavailable'
   | 'source_returned_too_few'
@@ -47,19 +44,19 @@ export type MeasurementState = {
   entity_id: string;
   snapshot_date: string;
   period: string;
-  observation_availability: Record<AxisKey, ObservationAvailability>;
+  observation_availability: VersionedAxes<ObservationAvailability>;
   history_sufficiency: {
     state: HistorySufficiencyState;
     weekly_observations: number;
     required: number;
   };
   axis_coverage: {
-    axes: Record<AxisKey, AxisCoverageState>;
-    coverage_reasons: Record<AxisKey, AxisCoverageReason>;
+    axes: VersionedAxes<AxisCoverageState>;
+    coverage_reasons: VersionedAxes<AxisCoverageReason>;
     measurable_axes: AxisKey[];
     measurable_axis_count: number;
   };
-  axes: Record<AxisKey, AxisMeasurementState>;
+  axes: VersionedAxes<AxisMeasurementState>;
   gate_eligibility: {
     state: GateEligibilityState;
     evaluated_weekly: true;
@@ -78,6 +75,10 @@ type EntityLike = {
   axes?: {
     github_commit_velocity?: { slope?: number | null; cohort_z?: number | null };
     openalex_citation_momentum?: { status?: string; slope?: number | null; cohort_z?: number | null };
+    deps_direct_dependents_momentum?: {
+      status?: string; slope?: number | null; cohort_z?: number | null;
+      latest?: number | null; points?: number | null; rising_vote?: boolean; unstable?: boolean | null;
+    };
   };
   axes_present?: string[];
   convergent_axes?: string[];
@@ -109,6 +110,24 @@ function axisObservationAndCoverage(entity: EntityLike, axis: AxisKey): {
   coverage: AxisCoverageState;
   reason: AxisCoverageReason;
 } {
+  if (axis === DEPENDENTS_AXIS) {
+    const record = entity.axes?.deps_direct_dependents_momentum;
+    if (!record) return { observation: 'no_data', coverage: 'no_data', reason: null };
+    if (!['scored', 'below_floor', 'held', 'stale', 'out_of_panel'].includes(String(record.status))) {
+      throw new Error(`unknown_dependents_status: ${String(record.status)}`);
+    }
+    if (record.status === 'out_of_panel') {
+      return { observation: 'source_not_measured', coverage: 'out_of_panel', reason: null };
+    }
+    const observation = record.latest != null ? 'observed' as const : 'no_data' as const;
+    if (record.status !== 'scored') return { observation, coverage: record.status as AxisCoverageState, reason: null };
+    if (record.slope == null || record.cohort_z == null) {
+      throw new Error('scored_dependents_axis_missing_values');
+    }
+    return entity.axes_present?.includes(DEPENDENTS_AXIS)
+      ? { observation, coverage: 'measurable', reason: null }
+      : { observation, coverage: 'insufficient_source_coverage', reason: 'axis_not_declared_measurable' };
+  }
   if (axis === DEVELOPMENT_AXIS) {
     const record = entity.axes?.github_commit_velocity;
     if (!record || record.slope == null) return { observation: 'no_data', coverage: 'no_data', reason: null };
@@ -168,18 +187,12 @@ export function deriveMeasurementState(
   snapshot: SnapshotLike,
   weeklyObservations: number,
 ): MeasurementState {
-  const development = axisObservationAndCoverage(entity, DEVELOPMENT_AXIS);
-  const citation = axisObservationAndCoverage(entity, CITATION_AXIS);
+  const axisKeys = methodologyAxes(snapshot.methodology_version);
+  const projected = Object.fromEntries(axisKeys.map((axis) => [axis, axisObservationAndCoverage(entity, axis)])) as VersionedAxes<ReturnType<typeof axisObservationAndCoverage>>;
   const history = historyState(weeklyObservations);
-  const coverage = {
-    [DEVELOPMENT_AXIS]: development.coverage,
-    [CITATION_AXIS]: citation.coverage,
-  };
-  const coverageReasons = {
-    [DEVELOPMENT_AXIS]: development.reason,
-    [CITATION_AXIS]: citation.reason,
-  };
-  const measurableAxes = ([DEVELOPMENT_AXIS, CITATION_AXIS] as AxisKey[])
+  const coverage = Object.fromEntries(axisKeys.map((axis) => [axis, projected[axis]!.coverage])) as VersionedAxes<AxisCoverageState>;
+  const coverageReasons = Object.fromEntries(axisKeys.map((axis) => [axis, projected[axis]!.reason])) as VersionedAxes<AxisCoverageReason>;
+  const measurableAxes = axisKeys
     .filter((axis) => coverage[axis] === 'measurable')
     .sort((a, b) => a.localeCompare(b));
   const cohortSize = snapshot.entities.filter((candidate) => candidate.cohort === entity.cohort).length;
@@ -193,18 +206,18 @@ export function deriveMeasurementState(
   else gateState = 'eligible';
 
   if (entity.rising === true) {
-    const convergentAxes = entity.convergent_axes ?? [];
+    const convergentAxes = [...new Set(entity.convergent_axes ?? [])];
     const allConvergentAxesMeasurable = convergentAxes.every((axis) =>
       measurableAxes.includes(axis as AxisKey));
-    if (convergentAxes.length < 2 || !allConvergentAxesMeasurable) {
+    const dependents = entity.axes?.deps_direct_dependents_momentum;
+    const validDependentsVote = !convergentAxes.includes(DEPENDENTS_AXIS)
+      || (dependents?.rising_vote === true && dependents.unstable === false);
+    if (convergentAxes.length < 2 || !allConvergentAxesMeasurable || !validDependentsVote) {
       throw new Error(`inconsistent_positive_signal: ${entity.entity_id}`);
     }
   }
   const positivePublished = entity.rising === true && gateState === 'eligible';
-  const observationAvailability = {
-    [DEVELOPMENT_AXIS]: development.observation,
-    [CITATION_AXIS]: citation.observation,
-  };
+  const observationAvailability = Object.fromEntries(axisKeys.map((axis) => [axis, projected[axis]!.observation])) as VersionedAxes<ObservationAvailability>;
 
   return {
     schema_version: 'measurement_state_1',
@@ -219,20 +232,16 @@ export function deriveMeasurementState(
       measurable_axes: measurableAxes,
       measurable_axis_count: measurableAxes.length,
     },
-    axes: {
-      [DEVELOPMENT_AXIS]: {
-        observation_availability: development.observation,
-        history_sufficiency: history,
-        axis_coverage: development.coverage,
-        coverage_reason: development.reason,
-      },
-      [CITATION_AXIS]: {
-        observation_availability: citation.observation,
-        history_sufficiency: history,
-        axis_coverage: citation.coverage,
-        coverage_reason: citation.reason,
-      },
-    },
+    axes: Object.fromEntries(axisKeys.map((axis) => [axis, {
+      observation_availability: projected[axis]!.observation,
+      history_sufficiency: axis === DEPENDENTS_AXIS ? {
+        state: (entity.axes?.deps_direct_dependents_momentum?.points ?? 0) >= 14 ? 'sufficient' : 'insufficient',
+        weekly_observations: entity.axes?.deps_direct_dependents_momentum?.points ?? 0,
+        required: 14,
+      } : history,
+      axis_coverage: projected[axis]!.coverage,
+      coverage_reason: projected[axis]!.reason,
+    }])) as VersionedAxes<AxisMeasurementState>,
     gate_eligibility: { state: gateState, evaluated_weekly: true },
     positive_signal: {
       state: positivePublished ? 'published' : 'not_published',
@@ -287,7 +296,7 @@ export function inspectObservationHistory(
   const rejected = emptyHistoryRejections();
   let raw = '';
   try {
-    raw = readFileSync(join(options.repoRoot ?? ROOT, 'data', 'history', `${entityId}.jsonl`), 'utf8');
+    raw = readFileSync(repoDataPath(options.repoRoot ?? ROOT, 'history', `${entityId}.jsonl`), 'utf8');
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { periods: [], rejected };
     throw error;
@@ -345,9 +354,9 @@ let archivedCaptures: ArchivedCapture[] | undefined;
 
 function canonicalCapturesAsOf(cutoff: string): Map<string, string> {
   if (!archivedCaptures) {
-    archivedCaptures = readdirSync(join(ROOT, 'data', 'snapshots'), { withFileTypes: true })
+    archivedCaptures = readdirSync(dataPath('snapshots'), { withFileTypes: true })
       .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(entry.name))
-      .map((entry) => JSON.parse(readFileSync(join(ROOT, 'data', 'snapshots', entry.name, 'snapshot.json'), 'utf8')))
+      .map((entry) => JSON.parse(readFileSync(dataPath('snapshots', entry.name, 'snapshot.json'), 'utf8')))
       .map((snapshot) => ({ period: String(snapshot.period), captured_at: String(snapshot.captured_at) }));
   }
   const cutoffMs = Date.parse(cutoff);
@@ -387,6 +396,7 @@ export type MeasurementPhrases = {
   history: string;
   development_axis: string;
   citation_axis: string;
+  dependents_axis?: string;
   axis_coverage: string;
   gate: string;
   signal: string;
@@ -401,10 +411,14 @@ function coverageReasonPhrase(reason: AxisCoverageReason): string | null {
 }
 
 function axisPhrase(
-  axis: 'Development velocity' | 'Citation',
+  axis: string,
   state: AxisCoverageState,
   reason: AxisCoverageReason,
 ): string {
+  if (state === 'out_of_panel') return `${axis} axis: outside the frozen panel; not measured.`;
+  if (state === 'below_floor') return `${axis} axis: minimum of 14 clean points and 5 latest dependents not met.`;
+  if (state === 'held') return `${axis} axis: cohort source agreement insufficient; score withheld.`;
+  if (state === 'stale') return `${axis} axis: confirmed-clean partition older than 28 days; score withheld.`;
   if (state === 'measurable') return `${axis} axis: measured.`;
   if (state === 'insufficient_source_coverage') {
     const detail = coverageReasonPhrase(reason);
@@ -415,12 +429,12 @@ function axisPhrase(
 }
 
 function unavailableAxisReason(state: MeasurementState): string | null {
-  const unavailable = ([DEVELOPMENT_AXIS, CITATION_AXIS] as AxisKey[])
+  const unavailable = (Object.keys(state.axes) as AxisKey[])
     .filter((axis) => state.axis_coverage.axes[axis] !== 'measurable');
   if (unavailable.length !== 1) return null;
   const coverage = state.axis_coverage.axes[unavailable[0]];
   if (coverage === 'insufficient_source_coverage') {
-    return coverageReasonPhrase(state.axis_coverage.coverage_reasons[unavailable[0]]) ?? 'coverage';
+    return coverageReasonPhrase(state.axis_coverage.coverage_reasons[unavailable[0]] ?? null) ?? 'coverage';
   }
   if (coverage === 'source_not_measured') return 'unmeasured';
   if (coverage === 'no_data') return 'missing';
@@ -439,7 +453,7 @@ function gatePhrase(state: MeasurementState): string {
       return `Gate: not computable — history ${history.weekly_observations} of ${history.required} weekly observations`;
     case 'awaiting_axis_coverage': {
       const reason = unavailableAxisReason(state);
-      return `Gate: not computable — ${measurable} of 2 axes measurable${reason ? ` (${reason})` : ''}`;
+      return `Gate: not computable — ${measurable} of ${Object.keys(state.axes).length} axes measurable${reason ? ` (${reason})` : ''}`;
     }
     case 'awaiting_cohort_floor':
       return 'Gate: not computable — cohort below comparison floor';
@@ -466,7 +480,9 @@ export function measurementPhrases(state: MeasurementState): MeasurementPhrases 
     state.axis_coverage.coverage_reasons[CITATION_AXIS],
   );
   const n = state.axis_coverage.measurable_axis_count;
-  const axisCoveragePhrase = `Axis coverage: ${n} measurable ${n === 1 ? 'axis' : 'axes'}.`;
+  const axisCount = Object.keys(state.axes).length;
+  const coverageReadout = axisCount === 3 ? `${n} of ${axisCount} axes measurable` : `${n} measurable ${n === 1 ? 'axis' : 'axes'}`;
+  const axisCoveragePhrase = `Axis coverage: ${coverageReadout}.`;
   const gate = gatePhrase(state);
   const signalPhrase = state.positive_signal.state === 'published'
     ? `Rising signal published for ${state.positive_signal.period}.`
@@ -475,12 +491,15 @@ export function measurementPhrases(state: MeasurementState): MeasurementPhrases 
     history: historyPhrase,
     development_axis: developmentPhrase,
     citation_axis: citationPhrase,
+    ...(state.axes[DEPENDENTS_AXIS] ? { dependents_axis: axisPhrase(
+      'Direct-dependents', state.axes[DEPENDENTS_AXIS]!.axis_coverage, state.axes[DEPENDENTS_AXIS]!.coverage_reason,
+    ) } : {}),
     axis_coverage: axisCoveragePhrase,
     gate,
     signal: signalPhrase,
     compact: state.positive_signal.state === 'published'
       ? 'Rising'
-      : `${n} measurable ${n === 1 ? 'axis' : 'axes'}`,
+      : coverageReadout,
   };
 }
 

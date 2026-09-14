@@ -1,7 +1,7 @@
 import type { Entity, Snapshot } from './data';
 import { snapshots } from './archive';
 import { diffFeedEntries, type FeedEntry } from './feed';
-import { CITATION_AXIS, DEVELOPMENT_AXIS, measurementStateFor, type MeasurementState } from './measurement';
+import { CITATION_AXIS, DEVELOPMENT_AXIS, DEPENDENTS_AXIS, measurementStateFor, type MeasurementState } from './measurement';
 
 export type MinuteSentence = {
   event_kind: string;
@@ -75,6 +75,7 @@ function nameForEntry(entry: FeedEntry, previousById: Map<string, Entity>, curre
 function axisName(entry: FeedEntry): string {
   if (entry.source_fields.some((field) => field.includes(DEVELOPMENT_AXIS))) return 'Development velocity';
   if (entry.source_fields.some((field) => field.includes(CITATION_AXIS))) return 'Citation';
+  if (entry.source_fields.some((field) => field.includes(DEPENDENTS_AXIS))) return 'Direct-dependents';
   throw new Error(`minute_axis_missing: ${entry.id}`);
 }
 

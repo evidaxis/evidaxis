@@ -21,6 +21,8 @@ on:
       - "etl/**"
       - "tests/**"
       - "collectors/**"
+      - "methodology/**"
+      - "web/src/lib/methodology-registry.json"
       - "data/observations/**"
       - "genesis-deposit/code/**"
       - "pyproject.toml"
@@ -32,6 +34,8 @@ on:
       - "etl/**"
       - "tests/**"
       - "collectors/**"
+      - "methodology/**"
+      - "web/src/lib/methodology-registry.json"
       - "data/observations/**"
       - "genesis-deposit/code/**"
       - "pyproject.toml"
@@ -49,6 +53,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
+          fetch-depth: 0   # axis3 forward-count tests need first-add commit timestamps
           # workflow_run hands over the SHA the producer STARTED from, i.e. the
           # tree before the data it just committed; gating that proves nothing.
           ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}

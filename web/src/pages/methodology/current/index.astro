@@ -2,21 +2,24 @@
 import Base from '../../../layouts/Base.astro';
 import MethodologyBody from '../../../components/MethodologyBody.astro';
 import { methodologyGraph } from '../../../lib/jsonld';
+import { latest } from '../../../lib/archive';
+import { methodologyEntry, methodologyAxes } from '../../../lib/methodology';
 // Stable alias to the active version. Canonical points at the versioned permalink
-// so citations of /current collapse onto the active version (currently m2). This
+// so citations of /current collapse onto the latest snapshot's version. This
 // is the ONLY methodology URL whose target moves (METHODOLOGY-VERSIONING.md rule 5).
-const desc = 'Evidaxis methodology: two momentum axes, within-cohort normalization, and a convergence gate requiring z at least 1 in a cohort of 5 or more. Versioned.';
+const current = methodologyEntry(latest.methodology_version);
+const desc = `Evidaxis methodology ${current.version}: ${methodologyAxes(current.version).length} momentum axes, within-cohort normalization, and a convergence gate. The version of the latest published snapshot.`;
 ---
-<Base title="Methodology | Evidaxis" description={desc} canonical="/methodology/m2/" jsonLd={methodologyGraph('m2', '/methodology/m2/')}>
+<Base title="Methodology | Evidaxis" description={desc} canonical={current.page} jsonLd={methodologyGraph(current.version, current.page)}>
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Methodology · current = m2</p>
+      <p class="eyebrow">Methodology · current = {current.version}</p>
       <h1>How Evidaxis measures momentum</h1>
-      <MethodologyBody version="m2" />
+      <MethodologyBody version={current.version} />
       <p class="mono muted" style="font-size:.74rem;margin-top:2rem;border-top:1px solid var(--hairline);padding-top:1rem">
-        The current active methodology is <b>m2</b>. Its frozen, permalinked version lives at
-        <a href="/methodology/m2/">/methodology/m2</a>; the earlier <a href="/methodology/v1/">m1</a> stays
-        frozen and its scores are never recomputed. Cite the version you used; see the
+        The latest published snapshot uses <b>{current.version}</b>. Its permalink is
+        <a href={current.page}>{current.page}</a>. Earlier versions keep their scores.
+        Cite the version you used; see the
         <a href="/methodology-registry.json">version registry</a>.
       </p>
     </div>

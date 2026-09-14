@@ -3,7 +3,9 @@
  * the site is a pure derived view of these files. No DB, no runtime fetch.
  */
 import { readFileSync, readdirSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { REPO_ROOT, dataPath } from './data-path';
+import { methodologyEntry } from './methodology';
+export { methodologyAxes } from './methodology';
 import {
   archiveEntityById, entityUniverse, latest, manifestForSnapshot,
   snapshotByDate, snapshots,
@@ -20,10 +22,11 @@ import {
 
 export { archiveEntityById, entityUniverse, latest, manifestForSnapshot, snapshotByDate, snapshots };
 
-const ROOT = fileURLToPath(new URL('../../../', import.meta.url)); // repo root (Evidaxis/)
+const ROOT = REPO_ROOT;
+const sourcePath = (rel: string) => rel.startsWith('data/') ? dataPath(rel.slice(5)) : ROOT + rel;
 
 function readJson(rel: string): any {
-  return JSON.parse(readFileSync(ROOT + rel, 'utf8'));
+  return JSON.parse(readFileSync(sourcePath(rel), 'utf8'));
 }
 
 // JSONL reader (one JSON object per non-blank line). Tolerant of a missing file:
@@ -31,7 +34,7 @@ function readJson(rel: string): any {
 function readJsonl(rel: string): any[] {
   let txt: string;
   try {
-    txt = readFileSync(ROOT + rel, 'utf8');
+    txt = readFileSync(sourcePath(rel), 'utf8');
   } catch {
     return [];
   }
@@ -56,17 +59,25 @@ export type Entity = {
   entity_id: string; name: string; slug: string; entity_type: string;
   homepage: string | null; github_repo: string; openalex_work_ids: string[];
   industry: string; sub_niche: string; cohort: string;
-  axes: { github_commit_velocity: AxisGithub; openalex_citation_momentum: AxisOpenAlex };
+  axes: { github_commit_velocity: AxisGithub; openalex_citation_momentum: AxisOpenAlex; deps_direct_dependents_momentum?: AxisDependents };
   momentum: number | null; percentile: number | null; confidence: string;
   axes_present: string[]; convergent_axes: string[]; rising: boolean;
   status: 'rising' | 'watch' | 'tracked' | 'single-axis' | 'calibration';
   incumbent: boolean; note: string | null;
+};
+export type AxisDependents = {
+  status: 'scored' | 'below_floor' | 'held' | 'stale' | 'out_of_panel';
+  slope: number | null; theil_sen: number | null; cohort_z: number | null;
+  latest: number | null; points: number | null; points_reconstructable: number | null;
+  as_of_partition: string | null; unstable: boolean | null; rising_vote: boolean;
 };
 export type Snapshot = {
   schema_version: string; snapshot_date: string; period: string; captured_at: string;
   methodology_version: string; snapshot_id: string; fetcher_version: string; license: string;
   domain: { slug: string; label: string };
   axes: Record<string, string>; gate: string;
+  axis3_cutoff?: string | null;
+  diagnostics?: { axis_correlations: Record<string, { axes: string[]; r: number | null; pairs: number; per_cohort: Record<string, { r: number | null; pairs: number }> }> };
   cohorts: Record<string, { label: string; industry: string; sub_niche: string }>;
   entities: Entity[];
   // D4 status enum. Legacy frozen snapshots fold single-axis into `tracked`
@@ -105,6 +116,7 @@ export function isCapturedAsOf(capturedAt: unknown, cutoff: string): boolean {
  * Chart washes/labels must use this, not a hard-coded median (z=0).
  */
 export function risingZFloor(methodologyVersion: string): number {
+  methodologyEntry(methodologyVersion);
   return methodologyVersion === 'm1' ? 0 : 1;
 }
 
@@ -157,15 +169,14 @@ export const entitiesInCohort = (cohortKey: string) =>
 export const AXIS_LABEL: Record<string, string> = {
   github_commit_velocity: 'Development velocity',
   openalex_citation_momentum: 'Citation momentum',
+  deps_direct_dependents_momentum: 'Direct-dependents momentum (deps.dev)',
 };
 
 export const fmtZ = (z: number | null) => (z == null ? 'no axis' : (z >= 0 ? '+' : '') + z.toFixed(2));
 export const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
 
-// deps.dev "dependents"  -  an R0 adoption signal ("who builds on it"), captured
-// point-in-time. It is DISPLAYED, never folded into the momentum score: the
-// scoring methodology is frozen (byte-frozen genesis), and this is a partial-
-// coverage side signal, not a scored axis. Honesty about that is the moat.
+// The daily REST count remains unscored. m3 uses a separate weekly package-union
+// series, with its own floors and custody, for direct-dependents momentum.
 export type DepsSignal = {
   value: number; direct: number; indirect: number; system: string; package: string;
 };
@@ -257,7 +268,7 @@ export const deps: Map<string, DepsSignal> = buildDepsMap(snapshot, entities);
 // first anchor. See METHODOLOGY-VERSIONING.md sibling contract on integrity.
 export function latestArchiveRoot(): { date: string; root: string; n_files: number } | null {
   try {
-    const files = readdirSync(ROOT + 'data/integrity/')
+    const files = readdirSync(dataPath('integrity'))
       .filter((f) => /^archive-root-.*\.json$/.test(f)).sort();
     if (!files.length) return null;
     const j = readJson('data/integrity/' + files[files.length - 1]);

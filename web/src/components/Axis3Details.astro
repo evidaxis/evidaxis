@@ -1,0 +1,30 @@
+---
+import type { AxisDependents } from '../lib/data';
+import { AXIS_LABEL, fmtZ, fmtSlope } from '../lib/data';
+import { AXIS3_ATTRIBUTION, AXIS3_ESTIMAND, DEPENDENTS_AXIS } from '../lib/methodology';
+
+export interface Props { axis?: AxisDependents; snapshotDate: string; phrase?: string }
+const { axis, snapshotDate, phrase } = Astro.props;
+---
+<section class="panel" style="padding:20px;margin-top:18px" aria-label="Weekly direct-dependents axis">
+  <h2 class="eyebrow">{AXIS_LABEL[DEPENDENTS_AXIS]}</h2>
+  <p>{phrase ?? 'Direct-dependents axis: no observation data.'}</p>
+  <dl class="mono" style="display:flex;flex-wrap:wrap;gap:12px 24px;font-size:.78rem">
+    <div><dt>Coverage state</dt><dd>{axis?.status ?? 'no_data'}</dd></div>
+    <div><dt>Cohort z</dt><dd>{fmtZ(axis?.cohort_z ?? null)}</dd></div>
+    <div><dt>OLS slope</dt><dd>{fmtSlope(axis?.slope ?? null)}</dd></div>
+    <div><dt>Theil-Sen slope</dt><dd>{fmtSlope(axis?.theil_sen ?? null)}</dd></div>
+    <div><dt>Latest direct dependents</dt><dd>{axis?.latest?.toLocaleString() ?? 'n/a'}</dd></div>
+    <div><dt>Confirmed-clean points</dt><dd>{axis?.points ?? 'n/a'}</dd></div>
+    <div><dt>Reconstructed history points</dt><dd>{axis?.points_reconstructable ?? 'n/a'}</dd></div>
+    <div><dt>As-of partition</dt><dd>{axis?.as_of_partition ?? 'n/a'}</dd></div>
+    <div><dt>Fragility veto</dt><dd>{axis?.unstable == null ? 'n/a' : axis.unstable ? 'active' : 'inactive'}</dd></div>
+    <div><dt>Rising vote</dt><dd>{axis?.rising_vote ? 'yes' : 'no'}</dd></div>
+  </dl>
+  {axis?.status === 'scored' && <>
+    <p>{AXIS3_ESTIMAND}</p>
+    <p>The earliest weekly points of each series were read from deps.dev's BigQuery history on 2026-07-21; later points are weekly captures. Each record reports how many of its points are reconstructed history.</p>
+  </>}
+  <p class="mono muted" style="font-size:.74rem">{AXIS3_ATTRIBUTION}</p>
+  <p><a href="/methodology/m3/#dependents">Axis definition</a> · <a href={`/snapshots/${snapshotDate}/snapshot.json#diagnostics.axis_correlations`}>Snapshot axis correlations</a></p>
+</section>

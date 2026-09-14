@@ -1,0 +1,16 @@
+---
+import Base from '../../../layouts/Base.astro';
+import MethodologyBody from '../../../components/MethodologyBody.astro';
+import { methodologyGraph } from '../../../lib/jsonld';
+const desc = 'Evidaxis Methodology m3: any two of three axes converge. Weekly direct dependents join development velocity and citation momentum from 2026-09-19.';
+---
+<Base title="Methodology m3 | Evidaxis" description={desc} canonical="/methodology/m3/" jsonLd={methodologyGraph('m3', '/methodology/m3/')}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Methodology · m3 · effective 2026-09-19</p>
+      <h1>How Evidaxis measures momentum</h1>
+      <MethodologyBody version="m3" />
+      <p class="mono muted" style="font-size:.74rem;margin-top:2rem">This is the m3 permalink. It supersedes <a href="/methodology/m2/">m2</a> for new snapshots from 2026-09-19. Methodology prose is licensed CC-BY-4.0.</p>
+    </div>
+  </section>
+</Base>

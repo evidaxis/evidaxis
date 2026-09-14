@@ -69,6 +69,14 @@ def rewrite_snapshot(path: Path) -> tuple[str, str, bool]:
     snap = json.loads(path.read_text(encoding="utf-8"))
     old = snap.get("snapshot_id", "")
     new = content_snapshot_id(snap)
+    # The site resolves by date, but other consumers use latest.snapshot_id.
+    # Keep that pointer aligned after methodology post-steps change the payload.
+    pointer = path.parent.parent.parent / "latest.json"
+    if path.parent.parent.name == "snapshots" and pointer.is_file():
+        latest = json.loads(pointer.read_text(encoding="utf-8"))
+        if latest.get("snapshot_date") == snap.get("snapshot_date") and latest.get("snapshot_id") != new:
+            latest["snapshot_id"] = new
+            pointer.write_text(json.dumps(latest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     if old == new:
         return old, new, False
     snap["snapshot_id"] = new

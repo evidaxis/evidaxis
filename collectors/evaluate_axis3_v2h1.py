@@ -36,6 +36,7 @@ import json
 import math
 import sys
 from collections import defaultdict
+from datetime import datetime
 from itertools import combinations, pairwise
 from pathlib import Path
 
@@ -61,11 +62,18 @@ CRIT = {"coverage_min": 30, "independence_max_abs_r": 0.5,
 
 # ---------- loading ----------
 
-def load_series(as_of: str) -> dict:
-    series = defaultdict(dict)
-    files = sorted((OBS / "backfill" / "axis3-deps-v2h1").glob("deps_v2h1-????-??-??.jsonl")) + \
-        sorted(OBS.glob("*/deps_v2h1-????-??-??.jsonl"))
-    for f in files:
+def observation_files(observations: Path) -> list[Path]:
+    return sorted((observations / "backfill" / "axis3-deps-v2h1").glob("deps_v2h1-????-??-??.jsonl")) + \
+        sorted(observations.glob("*/deps_v2h1-????-??-??.jsonl"))
+
+
+def observation_rows(as_of: str, *, observations: Path | None = None,
+                     captured_at: str | None = None):
+    """Keep historical evaluator calls unchanged; m3 also gates row custody time."""
+    cutoff = datetime.fromisoformat(captured_at.replace("Z", "+00:00")) if captured_at else None
+    if cutoff is not None and cutoff.tzinfo is None:
+        raise ValueError("captured_at must include a timezone")
+    for f in observation_files(observations if observations is not None else OBS):
         for line in f.read_text().splitlines():
             if not line.strip():
                 continue
@@ -73,12 +81,26 @@ def load_series(as_of: str) -> dict:
             snap = (row.get("snapshot_at") or "")[:10]
             if not snap or snap > as_of[:10]:
                 continue
+            if cutoff is not None:
+                try:
+                    captured = datetime.fromisoformat(row["captured_at"].replace("Z", "+00:00"))
+                    if captured.tzinfo is None or captured > cutoff:
+                        continue
+                except (KeyError, ValueError, TypeError, AttributeError):
+                    continue
             if row.get("coverage") != "matched":
                 continue
             sig = (row.get("signals") or {}).get("deps_v2h1_unique_direct")
             if sig is None or sig.get("value") is None:
                 continue
-            series[row["entity_id"]][snap] = int(sig["value"])
+            yield f, row
+
+
+def load_series(as_of: str, *, observations: Path | None = None,
+                captured_at: str | None = None) -> dict:
+    series = defaultdict(dict)
+    for _path, row in observation_rows(as_of, observations=observations, captured_at=captured_at):
+        series[row["entity_id"]][row["snapshot_at"][:10]] = int(row["signals"]["deps_v2h1_unique_direct"]["value"])
     return {eid: sorted(pts.items()) for eid, pts in series.items()}
 
 

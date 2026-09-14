@@ -16,7 +16,7 @@
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { controlShellHash } from './canary-shell.mjs';
 import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
@@ -85,38 +85,6 @@ if (existsSync(new URL('../../canary-assignment.input.json', import.meta.url))) 
 const decodeTitle = (value) => value
   .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 const canaryId = (url) => new URL(url).pathname.match(/^\/e\/(e_[A-Z0-9]+)\/$/)?.[1];
-// Byte-pinned control shell from the pre-canary render. Task 1 intentionally
-// changes descriptions, typed status bodies, JSON-LD, and component CSS; this
-// shell selects the remaining byte-stable title, identity, navigation,
-// breadcrumb, receipt, and citation regions. Treatment-marker checks below
-// cover the intentionally excluded body regions.
-const controlShellPatterns = [
-  /<title>[\s\S]*?<\/title>/,
-  /<link rel="canonical"[^>]*>/,
-  /<meta property="og:title"[^>]*>/,
-  /<meta property="og:url"[^>]*>/,
-  /<link rel="alternate" type="application\/json"[^>]*>/,
-  /<link rel="cite-as"[^>]*>/,
-  /<nav class="nav">[\s\S]*?<\/nav>/,
-  /<nav class="crumb mono"[\s\S]*?<\/nav>/,
-  /<div class="receipt mono"[\s\S]*?<\/div>/,
-  /<p class="cite mono muted"[\s\S]*?<\/p>/,
-  /<p class="cite-urn mono muted"[\s\S]*?<\/p>/,
-];
-// Weekly snapshot motion legitimately rewrites date-bearing shell tokens on
-// control and treatment alike: the receipt's snapshot id and period, the nav
-// snapshot link, and the claim-URN date in cite-as and the citation footer.
-// The 2026-08-22 snapshot proved the unmasked pin fails closed on ordinary
-// data motion (publication stalled >31 h on 24 false positives). Masking pins
-// every remaining byte - methodology version included, so a methodology bump
-// still demands a conscious baseline regeneration.
-const maskWeeklyTokens = (shell) => shell
-  .replace(/(snapshot <b[^>]*>)[0-9a-f]+(<\/b>)/g, '$1SNAPSHOT_ID$2')
-  .replace(/\b\d{4}-\d{2}-\d{2}\b/g, 'DATE')
-  .replace(/\b\d{4}-w\d{2}\b/g, 'PERIOD');
-const controlShellHash = (html) => createHash('sha256')
-  .update(maskWeeklyTokens(controlShellPatterns.map((pattern) => html.match(pattern)?.[0] ?? 'MISSING').join('\n')))
-  .digest('hex');
 for (const pair of CANARY.pairs ?? []) {
   for (const group of ['treatment', 'control']) {
     const id = canaryId(pair[group]);
@@ -133,7 +101,7 @@ for (const pair of CANARY.pairs ?? []) {
     const title = decodeTitle(html.match(/<title>([^<]+)<\/title>/)?.[1] ?? '');
     if (group === 'control') {
       if (title !== `${name}, Evidaxis measurement`) errors.push(`e/${id}/index.html: control title changed`);
-      if (controlShellHash(html) !== CONTROL_BASELINE.controls?.[id]) {
+      if (controlShellHash(html) !== CONTROL_BASELINE.versions?.[record.score_receipt?.methodology_version]?.controls?.[id]) {
         errors.push(`e/${id}/index.html: control byte shell changed from pre-canary baseline`);
       }
       for (const marker of ['data-canary-treatment', 'data-canary-citation', 'data-canary-event', 'weekly open data', '/feed.atom']) {
@@ -287,7 +255,7 @@ for (const file of htmlFiles) {
   // of their canonical schema copy: canary titles and gate non-computability.
   const htmlWithoutCanonicalDashes = html
     .replace(/ momentum: development velocity(?: &(?:amp;|#38;) citation)? signals — weekly open data/g, '')
-    .replace(/Gate: not computable — (?:history \d+ of \d+ weekly observations|\d+ of 2 axes measurable(?: \((?:coverage|unmeasured|missing|cohort comparison unavailable|source returned too few observations|axis was not declared measurable)\))?|cohort below comparison floor|reference measurement)/g, '');
+    .replace(/Gate: not computable — (?:history \d+ of \d+ weekly observations|\d+ of [23] axes measurable(?: \((?:coverage|unmeasured|missing|cohort comparison unavailable|source returned too few observations|axis was not declared measurable)\))?|cohort below comparison floor|reference measurement)/g, '');
   const emdash = (htmlWithoutCanonicalDashes.match(/—/g) || []).length;
   if (emdash > 0) errors.push(`${r}: ${emdash} em-dash (U+2014) in rendered HTML`);
 
@@ -364,7 +332,8 @@ for (const file of htmlFiles) {
 
 // 6. Archive permanence: every published snapshot and every entity ever present
 // must retain both its human and machine-readable static routes.
-const SNAPSHOTS = new URL('../../data/snapshots/', import.meta.url).pathname;
+const DATA_DIR = process.env.EVIDAXIS_DATA_DIR ? resolve(process.env.EVIDAXIS_DATA_DIR) : new URL('../../data/', import.meta.url).pathname;
+const SNAPSHOTS = join(DATA_DIR, 'snapshots');
 const archiveSnapshots = readdirSync(SNAPSHOTS, { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(entry.name))
   .map((entry) => ({
@@ -372,7 +341,7 @@ const archiveSnapshots = readdirSync(SNAPSHOTS, { withFileTypes: true })
     snapshot: JSON.parse(readFileSync(join(SNAPSHOTS, entry.name, 'snapshot.json'), 'utf8')),
   }))
   .sort((a, b) => a.date.localeCompare(b.date));
-const latestDate = JSON.parse(readFileSync(new URL('../../data/latest.json', import.meta.url), 'utf8')).snapshot_date;
+const latestDate = JSON.parse(readFileSync(join(DATA_DIR, 'latest.json'), 'utf8')).snapshot_date;
 const latestSnapshot = archiveSnapshots.find((entry) => entry.date === latestDate)?.snapshot;
 if (!latestSnapshot) errors.push(`data/latest.json points to missing snapshot ${latestDate}`);
 

@@ -18,11 +18,14 @@ import PercentileStrip from './charts/PercentileStrip.astro';
 import Gauge from './charts/Gauge.astro';
 import CommitHeatmap from './charts/CommitHeatmap.astro';
 import CitBars from './charts/CitBars.astro';
+import { methodologyAxes, DEPENDENTS_AXIS } from '../lib/methodology';
 
 export interface Props { entity: Entity; }
 const { entity: e } = Astro.props;
 const a1 = e.axes.github_commit_velocity;
 const a2 = e.axes.openalex_citation_momentum;
+const a3 = e.axes.deps_direct_dependents_momentum;
+const hasThirdAxis = methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS);
 const cs = commitSeries(e.entity_id);
 
 const cohortRanked = entitiesInCohort(e.cohort);
@@ -71,12 +74,12 @@ const repoUrl = publicRepoUrl(e);
           <span class="rk">one of {cohortN} in cohort</span>
         </div>
         <PercentileStrip percentile={e.percentile} color={color} />
-        <span class="lbl" style="margin-top:2px">momentum is the combined velocity and citation signal, percentile within cohort</span>
+        <span class="lbl" style="margin-top:2px">{hasThirdAxis ? 'momentum averages present-axis z-scores; two- and three-axis scores are not strictly comparable' : 'momentum is the combined velocity and citation signal, percentile within cohort'}</span>
       </div>
     </div>
 
     <!-- DIAL row -->
-    <div class="dialrow">
+    <div class="dialrow" style={hasThirdAxis ? 'grid-template-columns:repeat(auto-fit,minmax(180px,1fr))' : undefined}>
       <div class="dialwrap">
         <span class="dlab">velocity z</span>
         <Gauge z={a1.cohort_z} slope={a1.slope} axisLabel="velocity z" slopeUnit="/wk" color="var(--velocity)" />
@@ -87,6 +90,11 @@ const repoUrl = publicRepoUrl(e);
         <Gauge z={a2.cohort_z} slope={a2.slope} axisLabel="citation z" slopeUnit="/yr" color="var(--citation)" />
         <span class="dval">{a2.status === 'present' ? `log-slope ${fmtSlope(a2.slope)}/yr` : phrases.citation_axis}</span>
       </div>
+      {hasThirdAxis && <div class="dialwrap">
+        <span class="dlab">direct-dependents z</span>
+        <Gauge z={a3?.cohort_z ?? null} slope={a3?.slope ?? null} axisLabel="direct-dependents z" slopeUnit="/point" color="var(--ink-soft)" />
+        <span class="dval">{phrases.dependents_axis}</span>
+      </div>}
     </div>
 
     <!-- 4-cell readout -->
@@ -112,9 +120,9 @@ const repoUrl = publicRepoUrl(e);
     {dep && (
       <!-- ADOPTION (R0): who builds on it. Displayed, never scored. -->
       <div class="adoption">
-        <span class="ad-lab mono">adoption</span>
+        <span class="ad-lab mono">Daily dependents count (unscored)</span>
         <span class="ad-val"><data value={String(dep.value)}>{dep.value.toLocaleString()}</data> dependents</span>
-        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {dep.system}/{dep.package} · deps.dev · adoption signal, not part of the momentum score</span>
+        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {dep.system}/{dep.package} · deps.dev{hasThirdAxis && <> · <a href="/methodology/m3/#dependents">the scored m3 axis uses weekly partitions</a></>}</span>
       </div>
     )}
   </div>

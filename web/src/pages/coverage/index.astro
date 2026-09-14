@@ -7,9 +7,11 @@ import { snapshot, industries, entitiesInCohort, SNAP_DATE } from '../../lib/dat
 import { itemListDataset, breadcrumb } from '../../lib/jsonld';
 import { measurementStateFor } from '../../lib/measurement';
 import { computePowerFunnel } from '../../lib/power';
+import { AXIS3_ESTIMAND, DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS, methodologyAxes } from '../../lib/methodology';
 const inds = [...industries().values()];
 const allCohorts = inds.flatMap((ind) => [...ind.subniches.values()].map((sn) => ({ ind, sn })));
 const power = computePowerFunnel(snapshot);
+const isM3 = methodologyAxes(snapshot.methodology_version).length === 3;
 const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts, plus an explicit map of what is not yet measured.`;
 const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: snapshot.entities });
 ---
@@ -32,6 +34,10 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
             <div class="wall-ttl mono">Momentum by cohort</div>
             <Beeswarm />
           </div>
+          {isM3 && <>
+            <div class="wall-panel"><div class="wall-ttl mono">Development and direct dependents</div><Scatter xAxis={DEVELOPMENT_AXIS} yAxis={DEPENDENTS_AXIS} /></div>
+            <div class="wall-panel"><div class="wall-ttl mono">Citations and direct dependents</div><Scatter xAxis={CITATION_AXIS} yAxis={DEPENDENTS_AXIS} /></div>
+          </>}
         </div>
         <div class="donut-pair" style="margin-top:1.4rem">
           <div class="donut-card">
@@ -40,7 +46,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
           </div>
           <div class="donut-card">
             <Donut numerator={power.two_axis_measurable} denominator={power.history_sufficient} label="axis coverage" color="var(--citation)" />
-            <div class="cap mono">have a measurable<br />citation axis</div>
+            <div class="cap mono">have at least two<br />measurable axes{isM3 && <> · {power.three_axis_measurable} have three</>}</div>
           </div>
         </div>
       </div>
@@ -53,7 +59,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
             <div class="panel" style="padding:20px 22px">
               <div class="row" style="justify-content:space-between;align-items:baseline">
                 <h2 style="margin:0;font-size:1.12rem"><a href={`/ai/cohorts/${sn.slug}/`} style="border:none">{sn.label}</a></h2>
-                <span class="mono muted" style="font-size:.74rem">{ind.label} · {es.length} systems · {withCite} with citation axis</span>
+                <span class="mono muted" style="font-size:.74rem">{ind.label} · {es.length} systems · {withCite} with citation axis{isM3 && <> · {es.filter(e => e.axes.deps_direct_dependents_momentum?.status === 'scored').length} with direct-dependents axis</>}</span>
               </div>
               <div class="row" style="margin-top:.9rem;gap:8px">
                 {es.map((e) => (
@@ -70,6 +76,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
         <ul class="prose" style="margin-top:.7rem;margin-bottom:0">
           <li><strong>Closed-source systems.</strong> Private SaaS leaves few public, hard-to-game signals; this pilot tracks OSS / research-native systems where the data is rich and tamper-resistant.</li>
           <li><strong>Systems without a paper.</strong> Where no academic source is configured, citation-source availability is recorded as <span class="mono">source_not_measured</span>.</li>
+          {isM3 && <li><strong>Frozen package panel.</strong> {AXIS3_ESTIMAND}</li>}
           <li><strong>New systems.</strong> Weekly history is reported as an exact count against the four-observation minimum. Each weekly snapshot adds one observation.</li>
           <li><strong>Beyond AI.</strong> The taxonomy reserves room beyond AI; this pilot measures three AI frontiers only.</li>
         </ul>

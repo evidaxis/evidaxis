@@ -7,8 +7,10 @@ import { cohortColor, cohortLabel, COHORT_ORDER } from '../lib/cohorts';
 import { CITATION_AXIS, measurementStateFor } from '../lib/measurement';
 import { computePowerFunnel } from '../lib/power';
 import { orgGraph, snapshotDataset } from '../lib/jsonld';
+import { AXIS3_ESTIMAND, methodologyAxes } from '../lib/methodology';
 
 const power = computePowerFunnel(snapshot);
+const isM3 = methodologyAxes(snapshot.methodology_version).length === 3;
 const nCohorts = Object.keys(snapshot.cohorts).length;
 const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
 const hero = byMom.find((e) => measurementStateFor(e, snapshot).axis_coverage.axes[CITATION_AXIS] === 'measurable') ?? byMom[0];
@@ -39,7 +41,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow rv">Evidaxis · Pilot 2026</span>
-        <h1 class="rv">We measure open AI systems by momentum, <span class="em">week by week</span>.</h1>
+        <h1 class="rv">{isM3 ? 'Three axes. One gate: any two converge.' : <>We measure open AI systems by momentum, <span class="em">week by week</span>.</>}</h1>
         <p class="lead rv">We hold a longitudinal record of open AI momentum: every system in the census, every week, each input hash-pinned with raw provenance published. Size is never scored. We measure the rate of change of public signals, and publish Rising only when two independent axes converge. Open data, CC0.</p>
         <div class="metastrip mono rv">
           <span><b>{power.registry_members}</b> systems</span><span class="dot">·</span>
@@ -91,7 +93,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
   <section id="methodology">
     <div class="wrap">
       <div class="sec-head"><span class="sec-num rv">1.0, The instrument</span></div>
-      <h2 class="rv">Two axes. One gate.</h2>
+      <h2 class="rv">{isM3 ? 'Development, citations and direct dependents.' : 'Two axes. One gate.'}</h2>
       <p class="sec-sub rv">Each axis is normalized within its cohort, so &ldquo;rising&rdquo; means rising relative to its peers. Stars and raw size are never scored. The gate publishes recognition only, and recognition only ever points up.</p>
 
       <div class="axis-list">
@@ -103,12 +105,16 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
           <span class="axis-chip cit">citation</span>
           <div><h3>Citation momentum</h3><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
         </div>
+        {isM3 && <div class="axis-item rv">
+          <span class="axis-chip">dependents</span>
+          <div><h3>Direct-dependents momentum (deps.dev)</h3><p>Confirmed-clean weekly package-union counts, measured as a size-adjusted log-slope within the frozen panel.</p></div>
+        </div>}
         <div class="axis-item rv">
           <span class="axis-chip gate">gate</span>
-          <div><h3>The convergence gate</h3><p>A system receives a Rising badge only when both measurable axes converge. History, axis coverage, cohort floor, and reference-measurement rules are evaluated mechanically each week.</p></div>
+          <div><h3>The convergence gate</h3><p>A system receives a Rising badge only when {isM3 ? 'any two of three measurable axes' : 'both measurable axes'} converge. History, axis coverage, cohort floor, and reference-measurement rules are evaluated mechanically each week.</p></div>
         </div>
       </div>
-      <div class="gate-note rv"><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. <a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
+      <div class="gate-note rv">{isM3 ? <><b>Why convergence?</b> At least two axes must independently meet their rising rules. The third axis expands coverage; thresholds stay fixed. {AXIS3_ESTIMAND} </> : <><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. </>}<a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
     </div>
   </section>
 
@@ -121,7 +127,7 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
 
       <div class="stat-row">
         <div class="stat rising rv">
-          <div class="top"><span class="label">Rising</span><span class="badge rising">both axes</span></div>
+          <div class="top"><span class="label">Rising</span><span class="badge rising">{isM3 ? 'any two axes' : 'both axes'}</span></div>
           <div class="num">{power.rising_published}</div>
           <div class="delta">published positive signals</div>
         </div>
@@ -131,9 +137,9 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
           <div class="delta">distinct weekly observations</div>
         </div>
         <div class="stat axes rv">
-          <div class="top"><span class="label">Two axes measurable</span><span class="mechanical-label mono">coverage</span></div>
+          <div class="top"><span class="label">{isM3 ? 'At least two of three axes measurable' : 'Two axes measurable'}</span><span class="mechanical-label mono">coverage</span></div>
           <div class="num">{power.two_axis_measurable}</div>
-          <div class="delta">development and citation axes</div>
+          <div class="delta">{isM3 ? `${power.three_axis_measurable} with all three axes` : 'development and citation axes'}</div>
         </div>
       </div>
 

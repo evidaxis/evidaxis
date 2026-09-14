@@ -1,0 +1,57 @@
+{
+  "methodology_version": "m3",
+  "parent_version": "m2",
+  "activation_date": "2026-09-19",
+  "axes": [
+    {
+      "id": "github_commit_velocity",
+      "source": "GitHub REST stats/commit_activity",
+      "estimator": "OLS slope of log(1 + weekly commits), last 26 equally spaced observations",
+      "normalization": "Within-cohort median/MAD robust z (scale 1.4826, clamp +/-3), then residualize against robust z of log(1 + stars); residualization skipped for n < 4. Existing m2 values are preserved.",
+      "floors": {"observations": 3, "cohort_for_z": 3, "rising_average_weekly_commits": 5},
+      "present": "slope is not null",
+      "rising": "slope > 0 and cohort_z >= 1 and recent_weekly_commits >= 5"
+    },
+    {
+      "id": "openalex_citation_momentum",
+      "source": "OpenAlex Works counts_by_year, summed over canonical work ids",
+      "estimator": "OLS slope of log(1 + citations/year); drop partial current year, drop birth year when at least four completed years exist",
+      "normalization": "Within-cohort median/MAD robust z (scale 1.4826, clamp +/-3), then residualize against robust z of log(1 + total citations); residualization skipped for n < 4. Existing m2 values are preserved.",
+      "floors": {"completed_years": 3, "cohort_for_z": 3},
+      "present": "status is present and cohort_z is not null",
+      "rising": "slope > 0 and cohort_z >= 1"
+    },
+    {
+      "id": "deps_direct_dependents_momentum",
+      "source": "deps.dev BigQuery bigquery-public-data.deps_dev_v1.Dependents, weekly partitions",
+      "measurand": "Unique direct dependents over the union of linkage-verified packages per frozen-panel system; highest-release dependents with resolution only; intra-panel self-dependents excluded",
+      "panel": "t2_deps_v2h1_collect.load_panel(): expansion manifest plus pins admitted at or before the first v2h.1 capture; frozen as of 2026-07-21",
+      "estimator": "evaluate_axis3_v2h1.votes_at_cutoff: OLS slope of log(1 + dependents) over confirmed-clean points in partition order, using equally spaced point indices",
+      "normalization": "Residualize slope on log(1 + latest), then within-cohort robust z using upper-middle median and MAD, scale 1.4826, clamp +/-3; zero MAD or fewer than two eligible cohort entities gives z = 0. Reuses the frozen evaluator.",
+      "floors": {"confirmed_clean_points": 14, "latest_dependents": 5, "rising_z": 1},
+      "veto": "One-way fragility veto: leave-one-point-out OLS sign flip or Theil-Sen sign disagreement withholds a rising vote",
+      "canary": {"agreement_floor": 0.8, "minimum_n": 3, "rule": "Hold a cohort when agreement between slope sign and endpoint direction is below the floor", "confirmation": "Baseline minimum per-cohort agreement p among n >= 3, minus sqrt(p*(1-p)/n), must be >= 0.80"},
+      "present": "status is scored",
+      "rising": "scored and evaluator rising vote and reported slope > 0 and reported z >= 1 and not unstable; rounding cannot publish a rising vote with a zero reported slope",
+      "coverage_states": ["scored", "below_floor", "held", "stale", "out_of_panel"]
+    }
+  ],
+  "gate": {"axes_available": 3, "minimum_present": 2, "minimum_rising": 2, "cohort_minimum": 5, "incumbents_eligible": false, "predicate": "not incumbent and cohort_n >= 5 and len(axes_present) >= 2 and len(axes_rising) >= 2"},
+  "momentum": "round(clamp(50 + 12.5 * mean(non-null z of axes 1-2 and scored axis 3), 0, 100), 1); null with no z",
+  "percentile": "Within-cohort ascending momentum, stable input order for ties; round(100*i/max(1,n-1)), singleton 50, unscored null",
+  "confidence": "high if rising and at least two axes present; medium if at least two axes present; otherwise low",
+  "status": "In order: incumbent -> calibration; rising -> rising; exactly one rising axis -> watch; at least two present -> tracked; otherwise single-axis",
+  "asynchrony": {
+    "observation_cutoff": "partition date <= snapshot_date and observation captured_at <= snapshot captured_at; missing or invalid custody timestamps excluded",
+    "sanity": "Newest committed sanity-check artifact from calibration 3e51319d9817 available at snapshot captured_at; only CLEAN partitions, never PROVISIONAL",
+    "axis3_cutoff": "Newest eligible CLEAN partition with available frozen-panel observations",
+    "staleness_days": 28,
+    "staleness_rule": "If snapshot_date minus axis3_cutoff > 28 days, axis 3 is stale and does not score",
+    "disclosure": "Every scored record reports its as_of_partition and points_reconstructable from observation provenance; typical lag two to three weeks"
+  },
+  "estimand": "This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.",
+  "history_origin": "The earliest weekly points of each series were read from deps.dev's BigQuery history on 2026-07-21; later points are weekly captures. Each record reports how many of its points are reconstructed history.",
+  "independence_monitor": {"pairs": [["deps_direct_dependents_momentum", "github_commit_velocity"], ["deps_direct_dependents_momentum", "openalex_citation_momentum"], ["github_commit_velocity", "openalex_citation_momentum"]], "estimator": "Pooled within-cohort Pearson after centering each pair within cohorts with at least five pairs; per-cohort Pearson for n >= 5; null when undefined", "pre_registered_max_abs_r": 0.5},
+  "attribution": "Source: deps.dev (Google), CC-BY 4.0. Modified: aggregated to system-level counts and momentum scores.",
+  "known_limits": ["Axis 3 adjusts size before standardizing while axes 1-2 do so after standardizing", "Dependents can be inflated by packages outside the panel", "Package-level counts are not published", "Momentum averages present axes, so two-axis and three-axis records are not strictly comparable"]
+}

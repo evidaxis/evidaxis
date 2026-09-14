@@ -2,11 +2,11 @@
 /**
  * Compact list-row variant of the entity card: a dense, clickable list item
  * with the mini axis-dials (the "clock" gauges). Server-rendered.
- * name + cohort | status | momentum + percentile | axis z (vel/cit) |
- * 26-week commit heatmap | the two mini axis dials (velocity, citation).
+ * name + cohort | status | momentum + percentile | axis z |
+ * 26-week commit heatmap | the methodology version's mini axis dials.
  * No ordinal rank column (constitution: no ranking of winners).
  * Reserved derived signals (lag/alpha) are NOT shown here as numbers; the dials
- * read straight off the published z-scores. Null citation axis -> dial null state.
+ * read straight off the published z-scores. Unavailable axes retain a null dial.
  */
 import type { Entity } from '../lib/data';
 import { commitSeries, snapshot } from '../lib/data';
@@ -15,18 +15,21 @@ import { measurementPhrases, measurementStateFor } from '../lib/measurement';
 import CommitHeatmapMini from './charts/CommitHeatmapMini.astro';
 import PercentileStripMini from './charts/PercentileStripMini.astro';
 import GaugeMini from './charts/GaugeMini.astro';
+import { methodologyAxes, DEPENDENTS_AXIS } from '../lib/methodology';
 
 export interface Props { entity: Entity; }
 const { entity: e } = Astro.props;
 const a1 = e.axes.github_commit_velocity;
 const a2 = e.axes.openalex_citation_momentum;
+const hasThirdAxis = methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS);
+const a3 = e.axes.deps_direct_dependents_momentum;
 const color = cohortColor(e.cohort);
 const state = measurementStateFor(e, snapshot);
 const phrases = measurementPhrases(state);
 const accent = state.positive_signal.state === 'published' ? 'rising' : 'measurement';
 const zc = (z: number | null, cit = false) => (z == null ? 'zn' : z >= 0 ? (cit ? 'za' : 'zt') : 'zn');
 ---
-<a class={`erow ${accent}`} href={`/e/${e.entity_id}/`}>
+<a class={`erow ${accent}${hasThirdAxis ? ' m3' : ''}`} href={`/e/${e.entity_id}/`}>
   <div class="nm">
     <span class="n">{e.name}</span>
     <span class="c mono"><span class="cdot" style={`background:${color}`}></span>{cohortLabel(e.cohort)}</span>
@@ -44,6 +47,7 @@ const zc = (z: number | null, cit = false) => (z == null ? 'zn' : z >= 0 ? (cit 
   <div class="z mono">
     <span class={zc(a1.cohort_z)}>vel {fmtZsafe(a1.cohort_z)}</span>
     <span class={zc(a2.cohort_z, true)}>cit {fmtZsafe(a2.cohort_z)}</span>
+    {hasThirdAxis && <span class="zn" title={phrases.dependents_axis}>deps {fmtZsafe(a3?.cohort_z ?? null)}</span>}
   </div>
   <div class="heat"><CommitHeatmapMini series={commitSeries(e.entity_id)} /></div>
   <div class="dials">
@@ -51,12 +55,14 @@ const zc = (z: number | null, cit = false) => (z == null ? 'zn' : z >= 0 ? (cit 
     <div class="dialpair">
       <GaugeMini z={a1.cohort_z} color="var(--velocity)" axisLabel="velocity z" />
       <GaugeMini z={a2.cohort_z} color="var(--citation)" axisLabel="citation z" />
+      {hasThirdAxis && <GaugeMini z={a3?.cohort_z ?? null} color="var(--ink-soft)" axisLabel="direct-dependents z" />}
     </div>
   </div>
 </a>
 
 <style>
   .erow { display: grid; grid-template-columns: minmax(120px,1.2fr) 92px 120px 96px minmax(90px,1fr) 104px; gap: 14px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--hairline); transition: background .14s; color: inherit; }
+  .erow.m3 { grid-template-columns: minmax(120px,1.2fr) 92px 120px 96px minmax(90px,1fr) 154px; }
   .erow:last-child { border-bottom: none; }
   .erow:hover { background: var(--rise-wash); }
   .erow .nm { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
@@ -79,7 +85,7 @@ const zc = (z: number | null, cit = false) => (z == null ? 'zn' : z >= 0 ? (cit 
   .erow .dials .dlbl { font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
   .erow .dials .dialpair { display: flex; gap: 6px; align-items: center; }
   @media (max-width: 860px) {
-    .erow { grid-template-columns: 1fr auto; gap: 10px; }
+    .erow, .erow.m3 { grid-template-columns: 1fr auto; gap: 10px; }
     .erow .z, .erow .heat, .erow .dials { display: none; }
   }
 </style>

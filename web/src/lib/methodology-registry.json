@@ -16,13 +16,24 @@
     },
     {
       "version": "m2",
-      "status": "current",
+      "status": "superseded",
       "formula_fingerprint": "sha256:3f16530802afcbffde1110ca82b9600f57b596c294065a3d2b1003033208439f",
       "code_commit": "24e0fd45428fd000e84ccb911614f6d72cb5f0f7",
       "effective_at": "2026-06-30",
+      "superseded_at": "2026-09-19",
       "parent_version": "m1",
       "page": "/methodology/m2/",
       "changelog": "D10a gate hardening. An axis now counts as rising only when its within-cohort z >= 1 (was >= 0), and the convergence gate additionally requires a cohort of >= 5 members before any system is eligible to be Rising. Raises the bar against small-cohort and marginal-z false positives. Axis definitions, normalization, and the momentum readout are unchanged from m1; only the rising/gate thresholds moved. m1 scores are NOT recomputed; they remain valid under m1."
+    },
+    {
+      "version": "m3",
+      "status": "current",
+      "formula_fingerprint": "sha256:1aaae89952f8cea163e22caf25c17668a4d13ec8f60699e0b85bd3841d60d324",
+      "code_commit": "PENDING_CONDUCTOR",
+      "effective_at": "2026-09-19",
+      "parent_version": "m2",
+      "page": "/methodology/m3/",
+      "changelog": "MAJOR: adds frozen-panel direct-dependents momentum from confirmed-clean deps.dev weekly partitions. Any two of three axes may converge; no threshold changed. Axis 3 residualizes before robust z, uses a one-way fragility veto and the confirmed 0.80 cohort canary floor, and expires after 28 days. Existing m1 and m2 snapshots are never recomputed. Canonical specification: methodology/m3.json."
     }
   ]
 }
