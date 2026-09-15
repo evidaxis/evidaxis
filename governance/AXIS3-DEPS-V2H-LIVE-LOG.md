@@ -522,3 +522,12 @@ append to `RIGHTS-BASIS.md`. Canary: `CANARY-PROTOCOL-AMENDMENT-2026-09-14.md`.
   write the first-Rising disclosure record (per riser: points, reconstructed points, latest
   dependents, slope, z, veto checks, dependent-ecosystem composition from `eco_top`).
 - **Every tact:** `python3 collectors/score_m3.py --verify` must pass on the latest snapshot.
+
+**Addendum 2026-09-15 (chat audit): the canary analytic set has no code yet.**
+`CANARY-PROTOCOL-AMENDMENT-2026-09-14.md` fixes the rule and says the list "is computed by
+code at the reset and committed"; no such script exists. At the first production deploy that
+renders the 2026-09-19 snapshot: pull weekly Google Search Console impressions per page for the
+48 canary URLs over 2026-08-20 … the day before that deploy, keep the pairs in which both pages
+averaged at least one impression per week, and commit the list with its query window (for
+example `web/src/data/canary-analytic-set-2026-09-19.json`) in the same tact, before any
+post-reset impressions are read.
