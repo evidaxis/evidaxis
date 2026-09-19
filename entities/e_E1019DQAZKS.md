@@ -13,22 +13,23 @@ classification:
   industry: developer-tools
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 22.9
-  percentile: 11
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 36.0
+  percentile: 6
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.07073782680917001, "cohort_z": -2.171, "recent_weekly_commits": 0.1, "stars_not_scored": 34276}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 348, "by_year": {"2026": 179, "2025": 144, "2024": 25}, "proxy": null}
+    github_commit_velocity: {"slope": -0.05553302374520149, "cohort_z": -1.117, "recent_weekly_commits": 0.1, "stars_not_scored": 34340}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 362, "by_year": {"2026": 191, "2025": 146, "2024": 25}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # ChatDev
 
-Evidaxis tracks **ChatDev**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
+Evidaxis measures **ChatDev** on methodology m3. Momentum 36.0/100; 1 axes present, 0 axes converging.

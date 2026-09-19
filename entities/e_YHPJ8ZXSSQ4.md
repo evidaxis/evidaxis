@@ -13,23 +13,24 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 69.2
-  percentile: 85
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 62.5
+  percentile: 74
   confidence: low
-  rising: false
-  status: watch
   axes_present: ["github_commit_velocity"]
   convergent_axes: ["github_commit_velocity"]
+  rising: false
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.0906343557622188, "cohort_z": 1.534, "recent_weekly_commits": 15.0, "stars_not_scored": 8278}
+    github_commit_velocity: {"slope": 0.09361447437175517, "cohort_z": 1.004, "recent_weekly_commits": 14.9, "stars_not_scored": 8409}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 ---
 
 # OBLITERATUS
 
-Evidaxis tracks **OBLITERATUS** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **OBLITERATUS** on methodology m3. Momentum 62.5/100; 1 axes present, 1 axes converging.

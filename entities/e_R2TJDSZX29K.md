@@ -13,22 +13,23 @@ classification:
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 70.7
-  percentile: 89
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 71.0
+  percentile: 94
   confidence: medium
-  rising: false
-  status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
+  rising: false
+  status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.03609743957405806, "cohort_z": 2.662, "recent_weekly_commits": 2.8, "stars_not_scored": 1291}
-    openalex_citation_momentum: {"status": "present", "slope": 1.570503656268336, "cohort_z": 0.657, "total_citations": 2577, "by_year": {"2026": 691, "2025": 980, "2024": 659, "2023": 222, "2022": 23, "2021": 1, "2012": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.03555233357298316, "cohort_z": 2.709, "recent_weekly_commits": 2.6, "stars_not_scored": 1296}
+    openalex_citation_momentum: {"status": "present", "slope": 1.5707074260261567, "cohort_z": 0.657, "total_citations": 2599, "by_year": {"2026": 712, "2025": 981, "2024": 659, "2023": 222, "2022": 23, "2021": 1, "2012": 1}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Foldseek
 
-Evidaxis measures **Foldseek** in the drug-discovery cohort.
+Evidaxis measures **Foldseek** on methodology m3. Momentum 71.0/100; 2 axes present, 0 axes converging.

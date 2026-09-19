@@ -13,23 +13,24 @@ classification:
   industry: ml-infrastructure
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 57.6
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 61.4
   percentile: 80
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.0009673284821392056, "cohort_z": 0.608, "recent_weekly_commits": 29.7, "stars_not_scored": 2034}
+    github_commit_velocity: {"slope": 0.0010142626712834337, "cohort_z": 0.912, "recent_weekly_commits": 30.2, "stars_not_scored": 2053}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---
 
 # prime-rl
 
-Evidaxis tracks **prime-rl** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **prime-rl** on methodology m3. Momentum 61.4/100; 1 axes present, 0 axes converging.

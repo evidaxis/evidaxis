@@ -13,23 +13,24 @@ classification:
   industry: developer-tools
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 48.0
-  percentile: 58
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 53.0
+  percentile: 56
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.033527250900208666, "cohort_z": -0.162, "recent_weekly_commits": 48.1, "stars_not_scored": 87597}
+    github_commit_velocity: {"slope": -0.028887880946303193, "cohort_z": 0.244, "recent_weekly_commits": 50.8, "stars_not_scored": 88495}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 11, "by_year": {"2026": 5, "2025": 6}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 2, "points": 15, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Paper young (2024); citation slope insufficient (<2 completed years)."
 ---
 
 # OpenHands
 
-Evidaxis tracks **OpenHands**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
+Evidaxis measures **OpenHands** on methodology m3. Momentum 53.0/100; 1 axes present, 0 axes converging.

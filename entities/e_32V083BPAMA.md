@@ -13,23 +13,24 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 54.0
-  percentile: 61
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 47.9
+  percentile: 30
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.03054108682242748, "cohort_z": 0.321, "recent_weekly_commits": 40.2, "stars_not_scored": 6661}
+    github_commit_velocity: {"slope": 0.032553106292487685, "cohort_z": -0.166, "recent_weekly_commits": 44.7, "stars_not_scored": 6683}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 ---
 
 # greptimedb
 
-Evidaxis tracks **greptimedb** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **greptimedb** on methodology m3. Momentum 47.9/100; 1 axes present, 0 axes converging.

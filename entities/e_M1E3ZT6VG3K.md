@@ -13,23 +13,24 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 60.3
-  percentile: 71
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 62.7
+  percentile: 75
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
-  convergent_axes: []
+  convergent_axes: ["github_commit_velocity"]
+  rising: false
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.04507913947815312, "cohort_z": 0.826, "recent_weekly_commits": 21.2, "stars_not_scored": 66683}
+    github_commit_velocity: {"slope": 0.056808999621064143, "cohort_z": 1.014, "recent_weekly_commits": 22.8, "stars_not_scored": 66699}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-08; axis-2 unresolved."
 ---
 
 # gpt4free
 
-Evidaxis tracks **gpt4free** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **gpt4free** on methodology m3. Momentum 62.7/100; 1 axes present, 1 axes converging.

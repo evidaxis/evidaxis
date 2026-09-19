@@ -13,23 +13,26 @@ classification:
   industry: ai-agents
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 49.2
-  percentile: 50
-  confidence: low
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 70.3
+  percentile: 94
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
+  convergent_axes: ["deps_direct_dependents_momentum"]
   rising: false
-  status: single-axis
-  axes_present: ["github_commit_velocity"]
-  convergent_axes: []
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.015743292839829275, "cohort_z": -0.067, "recent_weekly_commits": 60.7, "stars_not_scored": 13491}
+    github_commit_velocity: {"slope": 0.022493224620305088, "cohort_z": 0.241, "recent_weekly_commits": 66.2, "stars_not_scored": 13595}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.082349, "theil_sen": 0.082437, "cohort_z": 3.0, "latest": 21, "points": 22, "points_reconstructable": 15, "as_of_partition": "2026-08-31", "unstable": false, "rising_vote": true}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---
 
 # Microsoft Agent Framework
 
-Evidaxis tracks **Microsoft Agent Framework** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Microsoft Agent Framework** on methodology m3. Momentum 70.3/100; 2 axes present, 1 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.

@@ -13,23 +13,26 @@ classification:
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 49.4
-  percentile: 42
-  confidence: low
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 52.0
+  percentile: 62
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
+  convergent_axes: []
   rising: false
   status: calibration
-  axes_present: ["github_commit_velocity"]
-  convergent_axes: []
   axes:
-    github_commit_velocity: {"slope": 0.004488911330245289, "cohort_z": -0.051, "recent_weekly_commits": 120.1, "stars_not_scored": 127953}
+    github_commit_velocity: {"slope": 0.007718684265359026, "cohort_z": -0.304, "recent_weekly_commits": 123.3, "stars_not_scored": 128788}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.028861, "theil_sen": 0.027457, "cohort_z": 0.62, "latest": 66, "points": 22, "points_reconstructable": 15, "as_of_partition": "2026-08-31", "unstable": false, "rising_vote": false}
 note: "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # llama.cpp
 
-Evidaxis tracks **llama.cpp** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **llama.cpp** on methodology m3. Momentum 52.0/100; 2 axes present, 0 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.

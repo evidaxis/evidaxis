@@ -13,23 +13,24 @@ classification:
   industry: developer-tools
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 47.9
-  percentile: 47
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 49.5
+  percentile: 39
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.013940736954341764, "cohort_z": -0.165, "recent_weekly_commits": 43.3, "stars_not_scored": 28029}
+    github_commit_velocity: {"slope": -0.017851663750053162, "cohort_z": -0.041, "recent_weekly_commits": 42.4, "stars_not_scored": 28186}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Crush
 
-Evidaxis tracks **Crush** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Crush** on methodology m3. Momentum 49.5/100; 1 axes present, 0 axes converging.

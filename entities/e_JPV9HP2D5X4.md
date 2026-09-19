@@ -13,22 +13,23 @@ classification:
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 78.8
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 80.0
   percentile: 100
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.027671987109005147, "cohort_z": 2.303, "recent_weekly_commits": 2.0, "stars_not_scored": 875}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 280, "by_year": {"2026": 214, "2025": 66}, "proxy": null}
+    github_commit_velocity: {"slope": 0.027123547559647732, "cohort_z": 2.398, "recent_weekly_commits": 2.2, "stars_not_scored": 878}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 285, "by_year": {"2026": 219, "2025": 66}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # BioEmu
 
-Evidaxis tracks **BioEmu**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
+Evidaxis measures **BioEmu** on methodology m3. Momentum 80.0/100; 1 axes present, 0 axes converging.

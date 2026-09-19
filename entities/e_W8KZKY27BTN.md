@@ -13,23 +13,24 @@ classification:
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 57.7
-  percentile: 78
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 57.0
+  percentile: 83
   confidence: medium
-  rising: false
-  status: calibration
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
+  rising: false
+  status: calibration
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.742, "recent_weekly_commits": 0.0, "stars_not_scored": 4170}
-    openalex_citation_momentum: {"status": "present", "slope": 1.6327453573056436, "cohort_z": 0.486, "total_citations": 6039, "by_year": {"2026": 1700, "2025": 2040, "2024": 1505, "2023": 737, "2022": 52, "2020": 1, "2013": 1, "2012": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.64, "recent_weekly_commits": 0.0, "stars_not_scored": 4170}
+    openalex_citation_momentum: {"status": "present", "slope": 1.6322812729216913, "cohort_z": 0.485, "total_citations": 6103, "by_year": {"2026": 1762, "2025": 2041, "2024": 1505, "2023": 737, "2022": 53, "2020": 1, "2013": 1, "2012": 3}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
 ---
 
 # ESM / ESMFold
 
-Evidaxis measures **ESM / ESMFold** in the drug-discovery cohort.
+Evidaxis measures **ESM / ESMFold** on methodology m3. Momentum 57.0/100; 2 axes present, 0 axes converging.

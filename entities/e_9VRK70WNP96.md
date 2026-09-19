@@ -13,23 +13,26 @@ classification:
   industry: generative-media
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 84.0
-  percentile: 79
-  confidence: low
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 68.2
+  percentile: 71
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
+  convergent_axes: ["github_commit_velocity"]
   rising: false
   status: calibration
-  axes_present: ["github_commit_velocity"]
-  convergent_axes: ["github_commit_velocity"]
   axes:
-    github_commit_velocity: {"slope": 0.007673934497409614, "cohort_z": 2.721, "recent_weekly_commits": 24.1, "stars_not_scored": 34499}
+    github_commit_velocity: {"slope": 0.0023041300151502736, "cohort_z": 2.911, "recent_weekly_commits": 23.9, "stars_not_scored": 34545}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.009106, "theil_sen": 0.008995, "cohort_z": 0.0, "latest": 376, "points": 22, "points_reconstructable": 15, "as_of_partition": "2026-08-31", "unstable": false, "rising_vote": false}
 note: "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Diffusers
 
-Evidaxis tracks **Diffusers** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Diffusers** on methodology m3. Momentum 68.2/100; 2 axes present, 1 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.

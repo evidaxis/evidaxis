@@ -13,23 +13,24 @@ classification:
   industry: ml-infrastructure
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 54.1
-  percentile: 67
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 55.4
+  percentile: 73
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.329, "recent_weekly_commits": 0.0, "stars_not_scored": 5410}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.429, "recent_weekly_commits": 0.0, "stars_not_scored": 5430}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 12, "by_year": {"2026": 11, "2025": 1}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: 2503.09516; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Search-R1
 
-Evidaxis tracks **Search-R1**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
+Evidaxis measures **Search-R1** on methodology m3. Momentum 55.4/100; 1 axes present, 0 axes converging.

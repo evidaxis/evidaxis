@@ -13,23 +13,24 @@ classification:
   industry: robotics
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 49.1
-  percentile: 33
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 50.9
+  percentile: 43
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0049848172382168645, "cohort_z": -0.074, "recent_weekly_commits": 17.8, "stars_not_scored": 29934}
+    github_commit_velocity: {"slope": 0.010939376439606956, "cohort_z": 0.068, "recent_weekly_commits": 18.4, "stars_not_scored": 29967}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 4, "points": 22, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "No canonical peer paper in OpenAlex; axis-2 absent."
 ---
 
 # Genesis
 
-Evidaxis tracks **Genesis** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Genesis** on methodology m3. Momentum 50.9/100; 1 axes present, 0 axes converging.

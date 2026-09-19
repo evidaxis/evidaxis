@@ -13,23 +13,26 @@ classification:
   industry: ai-agents
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 43.8
-  percentile: 33
-  confidence: low
-  rising: false
-  status: single-axis
-  axes_present: ["github_commit_velocity"]
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 46.8
+  percentile: 50
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
+  rising: false
+  status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.001060024751250881, "cohort_z": -0.493, "recent_weekly_commits": 46.0, "stars_not_scored": 114294}
+    github_commit_velocity: {"slope": 0.0005284666436694315, "cohort_z": -0.511, "recent_weekly_commits": 46.7, "stars_not_scored": 115248}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.009193, "theil_sen": 0.009168, "cohort_z": 0.0, "latest": 92, "points": 22, "points_reconstructable": 15, "as_of_partition": "2026-08-31", "unstable": false, "rising_vote": false}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---
 
 # Browser Use
 
-Evidaxis tracks **Browser Use** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Browser Use** on methodology m3. Momentum 46.8/100; 2 axes present, 0 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.

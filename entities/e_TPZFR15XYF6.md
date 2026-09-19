@@ -13,23 +13,24 @@ classification:
   industry: multimodal-ai
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 68.9
-  percentile: 83
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 78.5
+  percentile: 92
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0021327605555690626, "cohort_z": 1.513, "recent_weekly_commits": 0.1, "stars_not_scored": 1516}
+    github_commit_velocity: {"slope": 0.0016588137654426041, "cohort_z": 2.281, "recent_weekly_commits": 0.1, "stars_not_scored": 1522}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2508.11737; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Ovis2.5
 
-Evidaxis tracks **Ovis2.5** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Ovis2.5** on methodology m3. Momentum 78.5/100; 1 axes present, 0 axes converging.

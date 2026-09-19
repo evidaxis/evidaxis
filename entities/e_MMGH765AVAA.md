@@ -13,23 +13,24 @@ classification:
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 39.4
-  percentile: 17
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 36.2
+  percentile: 15
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.005606790895636907, "cohort_z": -0.846, "recent_weekly_commits": 4.2, "stars_not_scored": 19501}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 8, "by_year": {"2026": 8}, "proxy": null}
+    github_commit_velocity: {"slope": -0.006820577025032037, "cohort_z": -1.107, "recent_weekly_commits": 4.2, "stars_not_scored": 19520}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 9, "by_year": {"2026": 9}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 1, "points": 1, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # KTransformers
 
-Evidaxis tracks **KTransformers**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
+Evidaxis measures **KTransformers** on methodology m3. Momentum 36.2/100; 1 axes present, 0 axes converging.

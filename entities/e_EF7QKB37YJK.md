@@ -13,23 +13,26 @@ classification:
   industry: developer-tools
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 72.7
-  percentile: 95
-  confidence: low
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 61.1
+  percentile: 83
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
+  convergent_axes: ["github_commit_velocity"]
   rising: false
   status: calibration
-  axes_present: ["github_commit_velocity"]
-  convergent_axes: ["github_commit_velocity"]
   axes:
-    github_commit_velocity: {"slope": 0.07046399133747519, "cohort_z": 1.816, "recent_weekly_commits": 8.2, "stars_not_scored": 5828}
+    github_commit_velocity: {"slope": 0.07408250701317529, "cohort_z": 1.979, "recent_weekly_commits": 8.2, "stars_not_scored": 5873}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.019855, "theil_sen": 0.018232, "cohort_z": -0.196, "latest": 6, "points": 22, "points_reconstructable": 15, "as_of_partition": "2026-08-31", "unstable": false, "rising_vote": false}
 note: "paper_ref: 2310.06770; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # SWE-bench
 
-Evidaxis tracks **SWE-bench** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **SWE-bench** on methodology m3. Momentum 61.1/100; 2 axes present, 1 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.

@@ -13,23 +13,24 @@ classification:
   industry: multimodal-ai
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 51.6
-  percentile: 67
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 50.4
+  percentile: 75
   confidence: low
-  rising: false
-  status: single-axis
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
+  rising: false
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.13, "recent_weekly_commits": 0.0, "stars_not_scored": 5373}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 25, "by_year": {"2026": 5, "2025": 20}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.035, "recent_weekly_commits": 0.0, "stars_not_scored": 5375}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 27, "by_year": {"2026": 7, "2025": 20}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2412.10302; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # DeepSeek-VL2
 
-Evidaxis tracks **DeepSeek-VL2**; its citation history is too young (<2 completed years) to compute a citation-momentum axis yet — measured on one axis.
+Evidaxis measures **DeepSeek-VL2** on methodology m3. Momentum 50.4/100; 1 axes present, 0 axes converging.

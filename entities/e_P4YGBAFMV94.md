@@ -13,23 +13,26 @@ classification:
   industry: developer-tools
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 59.5
-  percentile: 79
-  confidence: low
+  methodology_version: m3
+  snapshot_id: fcfd3a7ccdcb
+  captured_at: 2026-09-19T11:17:34+00:00
+  period: 2026-w38
+  momentum: 52.0
+  percentile: 50
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
+  convergent_axes: ["github_commit_velocity"]
   rising: false
-  status: single-axis
-  axes_present: ["github_commit_velocity"]
-  convergent_axes: []
+  status: watch
   axes:
-    github_commit_velocity: {"slope": -0.004676269192525963, "cohort_z": 0.757, "recent_weekly_commits": 84.8, "stars_not_scored": 67874}
+    github_commit_velocity: {"slope": 4.089354292717479e-06, "cohort_z": 1.013, "recent_weekly_commits": 80.1, "stars_not_scored": 68739}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.003457, "theil_sen": 0.003817, "cohort_z": -0.687, "latest": 65, "points": 22, "points_reconstructable": 15, "as_of_partition": "2026-08-31", "unstable": false, "rising_vote": false}
 note: "No academic paper; axis-2 absent."
 ---
 
 # Cline
 
-Evidaxis tracks **Cline** on development-velocity only — no academic citation axis exists for it, so it cannot satisfy the >=2-axis convergence gate (measured, not badged).
+Evidaxis measures **Cline** on methodology m3. Momentum 52.0/100; 2 axes present, 1 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.
