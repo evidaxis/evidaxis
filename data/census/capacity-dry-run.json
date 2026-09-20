@@ -1,0 +1,13 @@
+{
+  "@type": "CapacityDryRun",
+  "measured_at": "2026-09-20T20:55:00Z",
+  "members_measured": 4750,
+  "members_pending_total": 5737,
+  "calls": 9500,
+  "failures": 2,
+  "observed_repos_per_second": 1.0,
+  "projected_wall_hours_full_set": 1.6,
+  "money_cost_usd": 0,
+  "stopped_early": "yes, at 83% of the set: the run shares one API token with everything else on this machine and had begun to trip GitHub's secondary rate limit. The rate was flat across the measured portion (1.0 repos/s, 2 failures in 4,750), so the remaining 17% adds no information about throughput.",
+  "note": "Required by GROWTH-POLICY-AMENDMENT-2026-09-20.md before a capacity-bounded tranche. Same two REST calls per card as the daily collector. A repeat should run in CI, where the job has its own token budget."
+}
