@@ -1,0 +1,1 @@
+{"v": "backfill_1", "entity_id": "e_XTYDTXK7PNY", "period": "2026-w14", "signal": "github_commit_velocity_weekly", "value": 1, "reconstructable": true, "method": "GitHub commit_activity (weekly commits); reconstructed from git history, NOT a point-in-time capture", "source": "github.com/repos/{repo}/stats/commit_activity", "computed_at": "2026-09-20T19:13:47Z"}

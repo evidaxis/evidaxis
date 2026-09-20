@@ -1,0 +1,991 @@
+{
+  "v": "backfill_manifest_1",
+  "computed_at": "2026-09-20T19:13:47Z",
+  "signal": "github_commit_velocity_weekly",
+  "reconstructable": true,
+  "note": "Reconstructed history, NOT point-in-time capture. Type-2 signals (watchers/issues/deps) are never backfilled.",
+  "n_reconstructed": 121,
+  "n_skipped": 93,
+  "n_dropped_by_limit": 0,
+  "reconstructed": [
+    {
+      "repo": "huggingface/lerobot",
+      "entity_id": "e_H6PPP8CA9RR",
+      "weeks": 51
+    },
+    {
+      "repo": "Genesis-Embodied-AI/Genesis",
+      "entity_id": "e_J4DR3YCQCAN",
+      "weeks": 51
+    },
+    {
+      "repo": "Physical-Intelligence/openpi",
+      "entity_id": "e_7ZJR0NT1B6H",
+      "weeks": 18
+    },
+    {
+      "repo": "NVIDIA/Isaac-GR00T",
+      "entity_id": "e_75QG3RMAHC9",
+      "weeks": 28
+    },
+    {
+      "repo": "NVIDIA/cosmos",
+      "entity_id": "e_Y92940K5ESN",
+      "weeks": 16
+    },
+    {
+      "repo": "Farama-Foundation/Gymnasium",
+      "entity_id": "e_8N97348DQ66",
+      "weeks": 42
+    },
+    {
+      "repo": "bytedance/Protenix",
+      "entity_id": "e_ZTAQY2693CR",
+      "weeks": 19
+    },
+    {
+      "repo": "google-deepmind/alphafold3",
+      "entity_id": "e_88YAM3PXK4S",
+      "weeks": 37
+    },
+    {
+      "repo": "All-Hands-AI/OpenHands",
+      "entity_id": "e_ADRWZ5YBESZ",
+      "weeks": 51
+    },
+    {
+      "repo": "princeton-nlp/SWE-agent",
+      "entity_id": "e_D029GAZTH3Z",
+      "weeks": 18
+    },
+    {
+      "repo": "cline/cline",
+      "entity_id": "e_P4YGBAFMV94",
+      "weeks": 51
+    },
+    {
+      "repo": "block/goose",
+      "entity_id": "e_FTD4XD7DVG3",
+      "weeks": 51
+    },
+    {
+      "repo": "google-gemini/gemini-cli",
+      "entity_id": "e_4A9TG2M8403",
+      "weeks": 51
+    },
+    {
+      "repo": "TabbyML/tabby",
+      "entity_id": "e_GQ2E6K86NWF",
+      "weeks": 14
+    },
+    {
+      "repo": "voideditor/void",
+      "entity_id": "e_MX90J81EYDE",
+      "weeks": 2
+    },
+    {
+      "repo": "charmbracelet/crush",
+      "entity_id": "e_1TMQEKAN7S6",
+      "weeks": 52
+    },
+    {
+      "repo": "QwenLM/qwen-code",
+      "entity_id": "e_X33782S1M13",
+      "weeks": 52
+    },
+    {
+      "repo": "SWE-agent/mini-swe-agent",
+      "entity_id": "e_DAFJYGYBDKF",
+      "weeks": 37
+    },
+    {
+      "repo": "OpenBMB/ChatDev",
+      "entity_id": "e_E1019DQAZKS",
+      "weeks": 20
+    },
+    {
+      "repo": "ollama/ollama",
+      "entity_id": "e_TRJN6D7V12H",
+      "weeks": 51
+    },
+    {
+      "repo": "InternLM/lmdeploy",
+      "entity_id": "e_1ER3NPA3Y77",
+      "weeks": 50
+    },
+    {
+      "repo": "kvcache-ai/ktransformers",
+      "entity_id": "e_MMGH765AVAA",
+      "weeks": 47
+    },
+    {
+      "repo": "LMCache/LMCache",
+      "entity_id": "e_V05C8HCBBV2",
+      "weeks": 52
+    },
+    {
+      "repo": "llm-d/llm-d",
+      "entity_id": "e_KR3M8ESKAEW",
+      "weeks": 49
+    },
+    {
+      "repo": "GeeeekExplorer/nano-vllm",
+      "entity_id": "e_D5HEA3Z5ZYZ",
+      "weeks": 8
+    },
+    {
+      "repo": "flashinfer-ai/flashinfer",
+      "entity_id": "e_VMQ8QRRDWVS",
+      "weeks": 51
+    },
+    {
+      "repo": "kvcache-ai/Mooncake",
+      "entity_id": "e_N2RFM19TP1D",
+      "weeks": 52
+    },
+    {
+      "repo": "xorbitsai/inference",
+      "entity_id": "e_8A2A58V55P6",
+      "weeks": 52
+    },
+    {
+      "repo": "langchain-ai/langgraph",
+      "entity_id": "e_13NVVKJA2MM",
+      "weeks": 50
+    },
+    {
+      "repo": "crewAIInc/crewAI",
+      "entity_id": "e_SV60T2QMXGE",
+      "weeks": 51
+    },
+    {
+      "repo": "microsoft/autogen",
+      "entity_id": "e_EDX1R1KVT3X",
+      "weeks": 4
+    },
+    {
+      "repo": "openai/openai-agents-python",
+      "entity_id": "e_3HZS2JPM2CR",
+      "weeks": 51
+    },
+    {
+      "repo": "agno-agi/agno",
+      "entity_id": "e_EY620A0EAK9",
+      "weeks": 51
+    },
+    {
+      "repo": "pydantic/pydantic-ai",
+      "entity_id": "e_2CS7SM2993J",
+      "weeks": 51
+    },
+    {
+      "repo": "google/adk-python",
+      "entity_id": "e_ADT3TJHK8W8",
+      "weeks": 51
+    },
+    {
+      "repo": "huggingface/smolagents",
+      "entity_id": "e_4P7EDPAWCY2",
+      "weeks": 26
+    },
+    {
+      "repo": "letta-ai/letta",
+      "entity_id": "e_15264R968MN",
+      "weeks": 35
+    },
+    {
+      "repo": "stanfordnlp/dspy",
+      "entity_id": "e_X9JA7ZTD6TF",
+      "weeks": 49
+    },
+    {
+      "repo": "agentscope-ai/agentscope",
+      "entity_id": "e_97SYW64PA3G",
+      "weeks": 48
+    },
+    {
+      "repo": "camel-ai/camel",
+      "entity_id": "e_VBBNJDDB0DA",
+      "weeks": 50
+    },
+    {
+      "repo": "strands-agents/harness-sdk",
+      "entity_id": "e_3K17NV4B0JF",
+      "weeks": 51
+    },
+    {
+      "repo": "QwenLM/Qwen-Agent",
+      "entity_id": "e_HTQD84GES1K",
+      "weeks": 4
+    },
+    {
+      "repo": "FoundationAgents/MetaGPT",
+      "entity_id": "e_QTVWFV6FJ2V",
+      "weeks": 2
+    },
+    {
+      "repo": "microsoft/agent-framework",
+      "entity_id": "e_M5SCCQPBZ89",
+      "weeks": 51
+    },
+    {
+      "repo": "verl-project/verl",
+      "entity_id": "e_607VJ9XWYRJ",
+      "weeks": 52
+    },
+    {
+      "repo": "hiyouga/LLaMA-Factory",
+      "entity_id": "e_8V2DZWR8HPM",
+      "weeks": 51
+    },
+    {
+      "repo": "unslothai/unsloth",
+      "entity_id": "e_J16JY8N155H",
+      "weeks": 52
+    },
+    {
+      "repo": "modelscope/ms-swift",
+      "entity_id": "e_FJPV9XH9GPR",
+      "weeks": 52
+    },
+    {
+      "repo": "axolotl-ai-cloud/axolotl",
+      "entity_id": "e_B10ZF25BFZT",
+      "weeks": 50
+    },
+    {
+      "repo": "OpenRLHF/OpenRLHF",
+      "entity_id": "e_MDD4QDWH205",
+      "weeks": 29
+    },
+    {
+      "repo": "inclusionAI/AReaL",
+      "entity_id": "e_PCV8H6P7B04",
+      "weeks": 52
+    },
+    {
+      "repo": "PeterGriffinJin/Search-R1",
+      "entity_id": "e_Y3CPRHKVF8H",
+      "weeks": 3
+    },
+    {
+      "repo": "NVIDIA-NeMo/RL",
+      "entity_id": "e_QHYA574DXDQ",
+      "weeks": 52
+    },
+    {
+      "repo": "huggingface/trl",
+      "entity_id": "e_B1Q69HZTTMA",
+      "weeks": 50
+    },
+    {
+      "repo": "alibaba/ROLL",
+      "entity_id": "e_357KR6Z8TFG",
+      "weeks": 39
+    },
+    {
+      "repo": "PrimeIntellect-ai/prime-rl",
+      "entity_id": "e_H6EVSN8Q85T",
+      "weeks": 51
+    },
+    {
+      "repo": "OpenPipe/ART",
+      "entity_id": "e_2S60RGNZHBS",
+      "weeks": 49
+    },
+    {
+      "repo": "huggingface/open-r1",
+      "entity_id": "e_Y0KW8KTAF72",
+      "weeks": 1
+    },
+    {
+      "repo": "QwenLM/Qwen-Image",
+      "entity_id": "e_5R5PKZN9WTY",
+      "weeks": 7
+    },
+    {
+      "repo": "Tencent-Hunyuan/HunyuanVideo",
+      "entity_id": "e_W4SFE6Q23VK",
+      "weeks": 2
+    },
+    {
+      "repo": "Lightricks/LTX-Video",
+      "entity_id": "e_QFECGB8X9W5",
+      "weeks": 2
+    },
+    {
+      "repo": "hpcaitech/Open-Sora",
+      "entity_id": "e_XTYDTXK7PNY",
+      "weeks": 1
+    },
+    {
+      "repo": "ace-step/ACE-Step",
+      "entity_id": "e_ZQ2MJNFAEZS",
+      "weeks": 2
+    },
+    {
+      "repo": "fishaudio/fish-speech",
+      "entity_id": "e_V9ERGE3E0B4",
+      "weeks": 15
+    },
+    {
+      "repo": "multimodal-art-projection/YuE",
+      "entity_id": "e_R2623KSCANW",
+      "weeks": 3
+    },
+    {
+      "repo": "comfyanonymous/ComfyUI",
+      "entity_id": "e_126THNX952P",
+      "weeks": 52
+    },
+    {
+      "repo": "huggingface/diffusers",
+      "entity_id": "e_9VRK70WNP96",
+      "weeks": 52
+    },
+    {
+      "repo": "QwenLM/Qwen3-VL",
+      "entity_id": "e_VVAJB7D0NQX",
+      "weeks": 12
+    },
+    {
+      "repo": "OpenBMB/MiniCPM-V",
+      "entity_id": "e_3JZ11S1QS33",
+      "weeks": 18
+    },
+    {
+      "repo": "deepseek-ai/DeepSeek-OCR",
+      "entity_id": "e_V5N4GT09S49",
+      "weeks": 2
+    },
+    {
+      "repo": "apple/ml-fastvlm",
+      "entity_id": "e_JN83HWXP85Z",
+      "weeks": 1
+    },
+    {
+      "repo": "bytedance/UI-TARS-desktop",
+      "entity_id": "e_A4CCB1NFPZB",
+      "weeks": 17
+    },
+    {
+      "repo": "microsoft/OmniParser",
+      "entity_id": "e_Y8674BRJCH9",
+      "weeks": 1
+    },
+    {
+      "repo": "simular-ai/Agent-S",
+      "entity_id": "e_Z5PD7ZHKYWB",
+      "weeks": 13
+    },
+    {
+      "repo": "obra/superpowers",
+      "entity_id": "e_7JW04Q252D6",
+      "weeks": 41
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "entity_id": "e_3BYERQ8ZQ6D",
+      "weeks": 36
+    },
+    {
+      "repo": "firecrawl/firecrawl",
+      "entity_id": "e_ZV3H84Q13C1",
+      "weeks": 52
+    },
+    {
+      "repo": "Graphify-Labs/graphify",
+      "entity_id": "e_JYS5BHD9SQG",
+      "weeks": 26
+    },
+    {
+      "repo": "harry0703/MoneyPrinterTurbo",
+      "entity_id": "e_01E6T51Z5NE",
+      "weeks": 30
+    },
+    {
+      "repo": "DietrichGebert/ponytail",
+      "entity_id": "e_9CDJXKFG3CJ",
+      "weeks": 10
+    },
+    {
+      "repo": "TauricResearch/TradingAgents",
+      "entity_id": "e_10DHTZ75A5K",
+      "weeks": 24
+    },
+    {
+      "repo": "hacksider/Deep-Live-Cam",
+      "entity_id": "e_JJMQ9HG9Y99",
+      "weeks": 34
+    },
+    {
+      "repo": "thedotmack/claude-mem",
+      "entity_id": "e_4VBT50A7VD2",
+      "weeks": 51
+    },
+    {
+      "repo": "ChatGPTNextWeb/NextChat",
+      "entity_id": "e_44E0GZ3MAKS",
+      "weeks": 3
+    },
+    {
+      "repo": "PaddlePaddle/PaddleOCR",
+      "entity_id": "e_5VB3GYJAWRC",
+      "weeks": 37
+    },
+    {
+      "repo": "infiniflow/ragflow",
+      "entity_id": "e_0HWS8572QP9",
+      "weeks": 51
+    },
+    {
+      "repo": "earendil-works/pi",
+      "entity_id": "e_3N3Q3YAWBCG",
+      "weeks": 51
+    },
+    {
+      "repo": "nexu-io/open-design",
+      "entity_id": "e_ZRK10CYRA5W",
+      "weeks": 22
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "entity_id": "e_B42PV7X9SGR",
+      "weeks": 29
+    },
+    {
+      "repo": "bytedance/deer-flow",
+      "entity_id": "e_HAQNA853Q80",
+      "weeks": 51
+    },
+    {
+      "repo": "Egonex-AI/Understand-Anything",
+      "entity_id": "e_15DZEMC0CJY",
+      "weeks": 24
+    },
+    {
+      "repo": "unclecode/crawl4ai",
+      "entity_id": "e_291FVHEKPA8",
+      "weeks": 48
+    },
+    {
+      "repo": "rtk-ai/rtk",
+      "entity_id": "e_GP8J1E7TFDC",
+      "weeks": 35
+    },
+    {
+      "repo": "Panniantong/Agent-Reach",
+      "entity_id": "e_AH0SJKJD25Z",
+      "weeks": 19
+    },
+    {
+      "repo": "tesseract-ocr/tesseract",
+      "entity_id": "e_52RJ4AYNG35",
+      "weeks": 30
+    },
+    {
+      "repo": "openai/openai-cookbook",
+      "entity_id": "e_V42GXYWY24C",
+      "weeks": 45
+    },
+    {
+      "repo": "shareAI-lab/learn-claude-code",
+      "entity_id": "e_38NTPKDPKHA",
+      "weeks": 21
+    },
+    {
+      "repo": "666ghj/MiroFish",
+      "entity_id": "e_NEH0J3ZF9KK",
+      "weeks": 28
+    },
+    {
+      "repo": "binary-husky/gpt_academic",
+      "entity_id": "e_AZADD2TBHKR",
+      "weeks": 1
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "entity_id": "e_JYFZ2CANJXT",
+      "weeks": 45
+    },
+    {
+      "repo": "headroomlabs-ai/headroom",
+      "entity_id": "e_TP1WNE77VC5",
+      "weeks": 37
+    },
+    {
+      "repo": "xtekky/gpt4free",
+      "entity_id": "e_M1E3ZT6VG3K",
+      "weeks": 50
+    },
+    {
+      "repo": "Fission-AI/OpenSpec",
+      "entity_id": "e_VYZ3F276TRB",
+      "weeks": 43
+    },
+    {
+      "repo": "Mintplex-Labs/anything-llm",
+      "entity_id": "e_Q4X4XZ13Y2W",
+      "weeks": 48
+    },
+    {
+      "repo": "warpdotdev/warp",
+      "entity_id": "e_2JCAQ45XCSC",
+      "weeks": 22
+    },
+    {
+      "repo": "mem0ai/mem0",
+      "entity_id": "e_TEVNVWBZ8HJ",
+      "weeks": 47
+    },
+    {
+      "repo": "ZhuLinsen/daily_stock_analysis",
+      "entity_id": "e_PJKJBCHCEFY",
+      "weeks": 37
+    },
+    {
+      "repo": "asgeirtj/system_prompts_leaks",
+      "entity_id": "e_Y1AFX93KTS7",
+      "weeks": 47
+    },
+    {
+      "repo": "sansan0/TrendRadar",
+      "entity_id": "e_PRCZN95ZV2R",
+      "weeks": 40
+    },
+    {
+      "repo": "upstash/context7",
+      "entity_id": "e_0MXZ4HGH09F",
+      "weeks": 52
+    },
+    {
+      "repo": "RVC-Boss/GPT-SoVITS",
+      "entity_id": "e_N629H7DQD4K",
+      "weeks": 14
+    },
+    {
+      "repo": "mvanhorn/last30days-skill",
+      "entity_id": "e_1VQN3TQ2Z74",
+      "weeks": 35
+    },
+    {
+      "repo": "openai/whisper",
+      "entity_id": "e_V7MSNX3WC6J",
+      "weeks": 4
+    },
+    {
+      "repo": "colbymchenry/codegraph",
+      "entity_id": "e_KAKRS8DB7PY",
+      "weeks": 28
+    },
+    {
+      "repo": "CherryHQ/cherry-studio",
+      "entity_id": "e_BRB68FCWQQ1",
+      "weeks": 52
+    },
+    {
+      "repo": "titanwings/distilly",
+      "entity_id": "e_9KAX3YVBMVS",
+      "weeks": 13
+    },
+    {
+      "repo": "FlashML-org/FreeToken",
+      "entity_id": "e_VECQ6B2X7TX",
+      "weeks": 6
+    },
+    {
+      "repo": "CodebuffAI/freebuff",
+      "entity_id": "e_F7RJ7VXWPJ3",
+      "weeks": 52
+    },
+    {
+      "repo": "elder-plinius/OBLITERATUS",
+      "entity_id": "e_YHPJ8ZXSSQ4",
+      "weeks": 14
+    },
+    {
+      "repo": "yjh051108/dsh-routing-suite",
+      "entity_id": "e_HPF1QZV0ZPX",
+      "weeks": 5
+    },
+    {
+      "repo": "genspark-ai/genoffice",
+      "entity_id": "e_J6GFPWGCTED",
+      "weeks": 8
+    }
+  ],
+  "skipped": [
+    {
+      "repo": "openvla/openvla",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "dora-rs/dora",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "isaac-sim/IsaacLab",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "facebookresearch/habitat-lab",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "google-deepmind/mujoco",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "thu-ml/RoboticsDiffusionTransformer",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "mani-skill/ManiSkill",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "robocasa/robocasa",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "ARISE-Initiative/robosuite",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "Lifelong-Robot-Learning/LIBERO",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "jwohlwend/boltz",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "aqlaboratory/openfold",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "deepchem/deepchem",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "DeepGraphLearning/torchdrug",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "microsoft/Graphormer",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "facebookresearch/esm",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "chaidiscovery/chai-lab",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "RosettaCommons/RFdiffusion",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "dauparas/ProteinMPNN",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "dauparas/LigandMPNN",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "gcorso/DiffDock",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "deepmodeling/Uni-Mol",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "microsoft/bioemu",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "westlake-repl/SaProt",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "arneschneuing/DiffSBDD",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "steineggerlab/foldseek",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "gnina/gnina",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "paul-gauthier/aider",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "continuedev/continue",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "anomalyco/opencode",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "openai/codex",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "Kilo-Org/kilocode",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "zed-industries/zed",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "SWE-bench/SWE-bench",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "OpenAutoCoder/Agentless",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "openinterpreter/openinterpreter",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "vllm-project/vllm",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "sgl-project/sglang",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "ggml-org/llama.cpp",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "NVIDIA/TensorRT-LLM",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "vllm-project/aibrix",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "mastra-ai/mastra",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "allenai/open-instruct",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "agentscope-ai/Trinity-RFT",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "black-forest-labs/flux",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "Stability-AI/sd3.5",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "Wan-Video/Wan2.2",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "SkyworkAI/SkyReels-V2",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "hexgrad/kokoro",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "NVlabs/Sana",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "OpenGVLab/InternVL",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "zai-org/GLM-V",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "MoonshotAI/Kimi-VL",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "deepseek-ai/DeepSeek-VL2",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "ATH-MaaS/Ovis",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "NVlabs/Eagle",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "m87-labs/moondream",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "huggingface/smollm",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "haotian-liu/LLaVA",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "browser-use/browser-use",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "xlang-ai/OSWorld",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "showlab/ShowUI",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "EmergenceAI/Agent-E",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "tensorflow/tensorflow",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "AUTOMATIC1111/stable-diffusion-webui",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "huggingface/transformers",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "langflow-ai/langflow",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "langchain-ai/langchain",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "JuliusBrussee/caveman",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "opencv/opencv",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "netdata/netdata",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "d2l-ai/d2l-zh",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "nomic-ai/gpt4all",
+      "reason": "no nonzero weeks"
+    },
+    {
+      "repo": "scikit-learn/scikit-learn",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "keras-team/keras",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "ultralytics/ultralytics",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "deepseek-ai/deepseek-harness",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "MIC-DKFZ/nnUNet",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "GreptimeTeam/greptimedb",
+      "reason": "no commit_activity (202/rate/absent)"
+    },
+    {
+      "repo": "deeplethe/utopia",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "MakazhanAlpamys/Soup",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "arcboxlabs/arcbox",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "epoko77-ai/im-not-ai",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "bbycroft/llm-viz",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "truefoundry/trueforge",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "apache/maka",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "QLHazyCoder/FlowPilot",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "CopilotKit/OpenBot",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "Awarexone/Agentic-Bug-Hunter",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "Waishnav/devspace",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "magnitudedev/magnitude",
+      "reason": "no entity_id"
+    },
+    {
+      "repo": "slvDev/esp32-ai",
+      "reason": "no entity_id"
+    }
+  ]
+}

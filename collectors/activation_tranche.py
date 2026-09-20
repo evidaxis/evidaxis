@@ -141,6 +141,7 @@ def main() -> int:
     month = (args[args.index("--month") + 1] if "--month" in args
              else datetime.now(timezone.utc).strftime("%Y-%m"))
     apply = "--apply" in args
+    size_arg = int(args[args.index("--size") + 1]) if "--size" in args else None
     month_dir = REPO / "data" / "census" / month
     mp = month_dir / "pending-manifest.json"
     if not mp.exists():
@@ -149,9 +150,19 @@ def main() -> int:
     manifest = json.loads(mp.read_text())
     pending = [m for m in manifest["members"] if m.get("status") == "pending"]
     live = live_card_count()
-    size = min(max(10, math.ceil(0.06 * live)), len(pending))
-    print(f"live cards={live} · pending={len(pending)} · "
-          f"tranche size={size} (max(10, ceil(0.06*{live})))")
+    # The geometric +6%/week rate was revoked by
+    # governance/GROWTH-POLICY-AMENDMENT-2026-09-20.md: it was a precautionary
+    # hypothesis, not a measured limit. A tranche is now sized by what the
+    # registry can service, which is a measurement, so the size must be given
+    # explicitly and reported with the tranche.
+    if size_arg is None:
+        print("tranche size is required since the 2026-09-20 amendment: pass --size N "
+              "with the figure the capacity dry run supports "
+              "(see governance/GROWTH-POLICY-AMENDMENT-2026-09-20.md)")
+        return 2
+    size = min(size_arg, len(pending))
+    print(f"live cards={live} · pending={len(pending)} · tranche size={size} "
+          f"(explicit, capacity-bounded; the +6% rate was revoked 2026-09-20)")
     if not pending:
         print("pending queue empty - nothing to activate")
         return 0
@@ -190,7 +201,8 @@ def main() -> int:
     rec = {
         "@type": "ActivationTranche",
         "date": today,
-        "formula": "max(10, ceil(0.06 * live_cards)), capped by pending queue",
+        "formula": "explicit capacity-bounded size, capped by pending queue "
+                   "(the +6%/week rate was revoked 2026-09-20)",
         "live_cards_before": live,
         "pending_before": len(pending),
         "order": "current stars desc, tie repository id asc",
