@@ -1,0 +1,150 @@
+{
+ "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+ "sources": [
+  "github-search-api",
+  "github-graphql"
+ ],
+ "examined_estimate": 5737,
+ "candidates": [
+  {
+   "repo": "XiaoDuoYa/codex-with-chatgpt",
+   "cohort": "unassigned-v1",
+   "stars": 5692,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "alphaXiv/OpenResearch",
+   "cohort": "unassigned-v1",
+   "stars": 5451,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "pacifio/atlas",
+   "cohort": "unassigned-v1",
+   "stars": 4729,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "ApodexAI/FrontierAgent",
+   "cohort": "unassigned-v1",
+   "stars": 4196,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "microfeed/microfeed",
+   "cohort": "unassigned-v1",
+   "stars": 4084,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "kirodotdev/KiroCrew",
+   "cohort": "unassigned-v1",
+   "stars": 4054,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "liustack/modlens",
+   "cohort": "unassigned-v1",
+   "stars": 4001,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "nowork-studio/notfair-plugin",
+   "cohort": "unassigned-v1",
+   "stars": 3835,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "yetone/cumora",
+   "cohort": "unassigned-v1",
+   "stars": 3805,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "wang2122/sprix-sage-router",
+   "cohort": "unassigned-v1",
+   "stars": 3802,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "tutti-os/tutti",
+   "cohort": "unassigned-v1",
+   "stars": 3779,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "HiThink-Tech/Financial-API",
+   "cohort": "unassigned-v1",
+   "stars": 3677,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "JetBrains/go-modern-guidelines",
+   "cohort": "unassigned-v1",
+   "stars": 3634,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "Soul-AILab/SoulX-Podcast",
+   "cohort": "unassigned-v1",
+   "stars": 3556,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "Leonxlnx/unlazy",
+   "cohort": "unassigned-v1",
+   "stars": 3483,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "AminBlg/SimpleEnglish",
+   "cohort": "unassigned-v1",
+   "stars": 3449,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "skyhook-io/radar",
+   "cohort": "unassigned-v1",
+   "stars": 3402,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "melgarafael/DeskcommCRM",
+   "cohort": "unassigned-v1",
+   "stars": 3361,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "llm-as-a-verifier/llm-as-a-verifier",
+   "cohort": "unassigned-v1",
+   "stars": 3251,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  },
+  {
+   "repo": "miqdadbadjuber/anti-slop",
+   "cohort": "unassigned-v1",
+   "stars": 3251,
+   "axes_observed": "github",
+   "note": "activated from pending manifest"
+  }
+ ]
+}

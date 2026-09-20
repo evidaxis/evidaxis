@@ -5,7 +5,7 @@
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
   "census_2026-08": "2026-09-01: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)",
-  "census_2026-09": "2026-09-14: activation tranche of 13 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-09": "2026-09-20: activation tranche of 20 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -1994,6 +1994,186 @@
      "repo_id": 1310057619,
      "name": "esp32-ai",
      "homepage": "https://github.com/slvDev/esp32-ai",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "XiaoDuoYa/codex-with-chatgpt",
+     "entity_type": "repo",
+     "repo_id": 1349601607,
+     "name": "codex-with-chatgpt",
+     "homepage": "https://github.com/XiaoDuoYa/codex-with-chatgpt",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "alphaXiv/OpenResearch",
+     "entity_type": "repo",
+     "repo_id": 1261663145,
+     "name": "OpenResearch",
+     "homepage": "https://github.com/alphaXiv/OpenResearch",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "pacifio/atlas",
+     "entity_type": "repo",
+     "repo_id": 1238992253,
+     "name": "atlas",
+     "homepage": "https://github.com/pacifio/atlas",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ApodexAI/FrontierAgent",
+     "entity_type": "repo",
+     "repo_id": 1342461518,
+     "name": "FrontierAgent",
+     "homepage": "https://github.com/ApodexAI/FrontierAgent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "microfeed/microfeed",
+     "entity_type": "repo",
+     "repo_id": 266677657,
+     "name": "microfeed",
+     "homepage": "https://github.com/microfeed/microfeed",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "kirodotdev/KiroCrew",
+     "entity_type": "repo",
+     "repo_id": 1303258850,
+     "name": "KiroCrew",
+     "homepage": "https://github.com/kirodotdev/KiroCrew",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "liustack/modlens",
+     "entity_type": "repo",
+     "repo_id": 1163808211,
+     "name": "modlens",
+     "homepage": "https://github.com/liustack/modlens",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nowork-studio/notfair-plugin",
+     "entity_type": "repo",
+     "repo_id": 1193374549,
+     "name": "notfair-plugin",
+     "homepage": "https://github.com/nowork-studio/notfair-plugin",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "yetone/cumora",
+     "entity_type": "repo",
+     "repo_id": 1336933337,
+     "name": "cumora",
+     "homepage": "https://github.com/yetone/cumora",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "wang2122/sprix-sage-router",
+     "entity_type": "repo",
+     "repo_id": 1337955304,
+     "name": "sprix-sage-router",
+     "homepage": "https://github.com/wang2122/sprix-sage-router",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tutti-os/tutti",
+     "entity_type": "repo",
+     "repo_id": 1267314128,
+     "name": "tutti",
+     "homepage": "https://github.com/tutti-os/tutti",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "HiThink-Tech/Financial-API",
+     "entity_type": "repo",
+     "repo_id": 1263497845,
+     "name": "Financial-API",
+     "homepage": "https://github.com/HiThink-Tech/Financial-API",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "JetBrains/go-modern-guidelines",
+     "entity_type": "repo",
+     "repo_id": 1103108740,
+     "name": "go-modern-guidelines",
+     "homepage": "https://github.com/JetBrains/go-modern-guidelines",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Soul-AILab/SoulX-Podcast",
+     "entity_type": "repo",
+     "repo_id": 1061527529,
+     "name": "SoulX-Podcast",
+     "homepage": "https://github.com/Soul-AILab/SoulX-Podcast",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Leonxlnx/unlazy",
+     "entity_type": "repo",
+     "repo_id": 1329272295,
+     "name": "unlazy",
+     "homepage": "https://github.com/Leonxlnx/unlazy",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "AminBlg/SimpleEnglish",
+     "entity_type": "repo",
+     "repo_id": 1307568662,
+     "name": "SimpleEnglish",
+     "homepage": "https://github.com/AminBlg/SimpleEnglish",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "skyhook-io/radar",
+     "entity_type": "repo",
+     "repo_id": 1137865761,
+     "name": "radar",
+     "homepage": "https://github.com/skyhook-io/radar",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "melgarafael/DeskcommCRM",
+     "entity_type": "repo",
+     "repo_id": 1223939135,
+     "name": "DeskcommCRM",
+     "homepage": "https://github.com/melgarafael/DeskcommCRM",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "llm-as-a-verifier/llm-as-a-verifier",
+     "entity_type": "repo",
+     "repo_id": 1206210502,
+     "name": "llm-as-a-verifier",
+     "homepage": "https://github.com/llm-as-a-verifier/llm-as-a-verifier",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "miqdadbadjuber/anti-slop",
+     "entity_type": "repo",
+     "repo_id": 1326531152,
+     "name": "anti-slop",
+     "homepage": "https://github.com/miqdadbadjuber/anti-slop",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
     }
