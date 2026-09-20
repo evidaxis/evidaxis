@@ -37,7 +37,9 @@ def _write_inputs(tmp_path, monkeypatch, members, entities, registry=None):
     monkeypatch.setattr(activation, "REPO", tmp_path)
     monkeypatch.setattr(activation, "SEEDS", seeds_path)
     monkeypatch.setattr(
-        sys, "argv", ["activation_tranche.py", "--month", "2026-09", "--apply"]
+        # Since GROWTH-POLICY-AMENDMENT-2026-09-20 the tranche size is explicit:
+        # it follows a capacity measurement instead of a percentage of live cards.
+        sys, "argv", ["activation_tranche.py", "--month", "2026-09", "--apply", "--size", "50"]
     )
     return manifest_path, seeds_path
 
@@ -129,3 +131,14 @@ def test_apply_deduplicates_renamed_seed_by_repository_id(tmp_path, monkeypatch)
     assert repos == ["old-group/project"]
     manifest = json.loads(manifest_path.read_text())
     assert manifest["members"][0]["status"] == "activated"
+
+
+def test_missing_size_is_refused_and_names_the_amendment(tmp_path, monkeypatch, capsys):
+    """A tranche without an explicit size cannot run: the rate that used to supply
+    one was revoked, and silently picking a number would reinstate it."""
+    _write_inputs(tmp_path, monkeypatch, [], [])
+    monkeypatch.setattr(
+        sys, "argv", ["activation_tranche.py", "--month", "2026-09", "--apply"]
+    )
+    assert activation.main() == 2
+    assert "GROWTH-POLICY-AMENDMENT-2026-09-20" in capsys.readouterr().out
