@@ -531,3 +531,17 @@ renders the 2026-09-19 snapshot: pull weekly Google Search Console impressions p
 averaged at least one impression per week, and commit the list with its query window (for
 example `web/src/data/canary-analytic-set-2026-09-19.json`) in the same tact, before any
 post-reset impressions are read.
+
+## 2026-09-21 — canary clock start recorded; analytic set filed
+
+**Clock start: 2026-09-19T11:23:39Z**, `deploy-web` on commit `17a3513b`, conclusion success.
+That is the first production deploy rendering the 2026-09-19 m3 snapshot, so it closes the
+standing instruction above ("record the deploy time in this log"). Verdict date: 2026-10-31.
+
+**Analytic set filed:** `web/src/data/canary-analytic-set-2026-09-19.json`, 6 analytic pairs of
+24, computed by the fixed rule over the closed baseline window 2026-08-20 to 2026-09-18 with no
+post-clock data read. This closes the 2026-09-15 addendum. The pull also surfaced a collapse in
+qualifying pairs (24 would have qualified at assignment) and a downward drift of the treatment
+arm that these data cannot separate from regression to the mean. Both, plus a structural defect
+in the normalisation window and a dated limit on what the verdict may claim, are recorded in
+`CANARY-ANALYTIC-SET-2026-09-19.md`. The protocol itself is unchanged.

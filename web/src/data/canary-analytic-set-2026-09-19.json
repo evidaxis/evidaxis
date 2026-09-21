@@ -1,0 +1,271 @@
+{
+  "generated": "2026-09-21",
+  "rule": "pairs in which both pages averaged at least one impression per week over the baseline window (CANARY-PROTOCOL-AMENDMENT-2026-09-14)",
+  "baseline_window": {
+    "start": "2026-08-20",
+    "end": "2026-09-18",
+    "days": 30,
+    "weeks": 4.2857,
+    "threshold_impressions_per_page": 4.2857,
+    "note": "end date is the day before the clock start; no post-clock-start data was read to build this list"
+  },
+  "clock_start": {
+    "utc": "2026-09-19T11:23:39Z",
+    "commit": "17a3513b",
+    "evidence": "deploy-web run on 17a3513b, conclusion success; first production deploy rendering the 2026-09-19 m3 snapshot"
+  },
+  "source": "Google Search Console, property sc-domain:evidaxis.org, searchAnalytics dimensions=[page], type=web",
+  "filed_late": "the amendment asked for this list at the clock start (2026-09-19); it was computed and committed 2026-09-21, from the same closed window, before any post-clock data was read",
+  "analytic_pairs": [
+    0,
+    2,
+    7,
+    10,
+    11,
+    19
+  ],
+  "analytic_pair_count": 6,
+  "total_pairs": 24,
+  "pairs": [
+    {
+      "pair": 0,
+      "treatment": "https://evidaxis.org/e/e_S7DQ1QJCCMT/",
+      "control": "https://evidaxis.org/e/e_QHYA574DXDQ/",
+      "treatment_impressions": 99,
+      "control_impressions": 51,
+      "treatment_weekly_mean": 23.1,
+      "control_weekly_mean": 11.9,
+      "analytic": true
+    },
+    {
+      "pair": 1,
+      "treatment": "https://evidaxis.org/e/e_0E3Q2DQH0BA/",
+      "control": "https://evidaxis.org/e/e_92WR5N03859/",
+      "treatment_impressions": 2,
+      "control_impressions": 11,
+      "treatment_weekly_mean": 0.4667,
+      "control_weekly_mean": 2.5667,
+      "analytic": false
+    },
+    {
+      "pair": 2,
+      "treatment": "https://evidaxis.org/e/e_03QFRGK7VQX/",
+      "control": "https://evidaxis.org/e/e_J4DR3YCQCAN/",
+      "treatment_impressions": 29,
+      "control_impressions": 8,
+      "treatment_weekly_mean": 6.7667,
+      "control_weekly_mean": 1.8667,
+      "analytic": true
+    },
+    {
+      "pair": 3,
+      "treatment": "https://evidaxis.org/e/e_N73RT0QZ0X4/",
+      "control": "https://evidaxis.org/e/e_BQ6HA5A661Z/",
+      "treatment_impressions": 3,
+      "control_impressions": 9,
+      "treatment_weekly_mean": 0.7,
+      "control_weekly_mean": 2.1,
+      "analytic": false
+    },
+    {
+      "pair": 4,
+      "treatment": "https://evidaxis.org/e/e_Y3HMWAG1BQZ/",
+      "control": "https://evidaxis.org/e/e_JA1TAYFFAHR/",
+      "treatment_impressions": 1,
+      "control_impressions": 18,
+      "treatment_weekly_mean": 0.2333,
+      "control_weekly_mean": 4.2,
+      "analytic": false
+    },
+    {
+      "pair": 5,
+      "treatment": "https://evidaxis.org/e/e_1GSH6ZQHW7B/",
+      "control": "https://evidaxis.org/e/e_R2KZCZM6TGV/",
+      "treatment_impressions": 2,
+      "control_impressions": 13,
+      "treatment_weekly_mean": 0.4667,
+      "control_weekly_mean": 3.0333,
+      "analytic": false
+    },
+    {
+      "pair": 6,
+      "treatment": "https://evidaxis.org/e/e_Y31RBTP1VWD/",
+      "control": "https://evidaxis.org/e/e_FJPV9XH9GPR/",
+      "treatment_impressions": 9,
+      "control_impressions": 3,
+      "treatment_weekly_mean": 2.1,
+      "control_weekly_mean": 0.7,
+      "analytic": false
+    },
+    {
+      "pair": 7,
+      "treatment": "https://evidaxis.org/e/e_7X1NF3PMZZM/",
+      "control": "https://evidaxis.org/e/e_KRDEF79H7GD/",
+      "treatment_impressions": 8,
+      "control_impressions": 22,
+      "treatment_weekly_mean": 1.8667,
+      "control_weekly_mean": 5.1333,
+      "analytic": true
+    },
+    {
+      "pair": 8,
+      "treatment": "https://evidaxis.org/e/e_1ER3NPA3Y77/",
+      "control": "https://evidaxis.org/e/e_DHESXAYAQHW/",
+      "treatment_impressions": 9,
+      "control_impressions": 3,
+      "treatment_weekly_mean": 2.1,
+      "control_weekly_mean": 0.7,
+      "analytic": false
+    },
+    {
+      "pair": 9,
+      "treatment": "https://evidaxis.org/e/e_9VRK70WNP96/",
+      "control": "https://evidaxis.org/e/e_W4SFE6Q23VK/",
+      "treatment_impressions": 1,
+      "control_impressions": 11,
+      "treatment_weekly_mean": 0.2333,
+      "control_weekly_mean": 2.5667,
+      "analytic": false
+    },
+    {
+      "pair": 10,
+      "treatment": "https://evidaxis.org/e/e_M6GFCMQK7DQ/",
+      "control": "https://evidaxis.org/e/e_EY620A0EAK9/",
+      "treatment_impressions": 14,
+      "control_impressions": 6,
+      "treatment_weekly_mean": 3.2667,
+      "control_weekly_mean": 1.4,
+      "analytic": true
+    },
+    {
+      "pair": 11,
+      "treatment": "https://evidaxis.org/e/e_MMGH765AVAA/",
+      "control": "https://evidaxis.org/e/e_Z5PD7ZHKYWB/",
+      "treatment_impressions": 9,
+      "control_impressions": 9,
+      "treatment_weekly_mean": 2.1,
+      "control_weekly_mean": 2.1,
+      "analytic": true
+    },
+    {
+      "pair": 12,
+      "treatment": "https://evidaxis.org/e/e_ZTAQY2693CR/",
+      "control": "https://evidaxis.org/e/e_26C836YXKF2/",
+      "treatment_impressions": 2,
+      "control_impressions": 4,
+      "treatment_weekly_mean": 0.4667,
+      "control_weekly_mean": 0.9333,
+      "analytic": false
+    },
+    {
+      "pair": 13,
+      "treatment": "https://evidaxis.org/e/e_QF7Y4CJ00Q4/",
+      "control": "https://evidaxis.org/e/e_D81ZQF8BMQS/",
+      "treatment_impressions": 0,
+      "control_impressions": 9,
+      "treatment_weekly_mean": 0.0,
+      "control_weekly_mean": 2.1,
+      "analytic": false
+    },
+    {
+      "pair": 14,
+      "treatment": "https://evidaxis.org/e/e_9VD4D2XPK7H/",
+      "control": "https://evidaxis.org/e/e_P6TVM7W57M8/",
+      "treatment_impressions": 4,
+      "control_impressions": 3,
+      "treatment_weekly_mean": 0.9333,
+      "control_weekly_mean": 0.7,
+      "analytic": false
+    },
+    {
+      "pair": 15,
+      "treatment": "https://evidaxis.org/e/e_4249BQNHNVB/",
+      "control": "https://evidaxis.org/e/e_N0ZEZQYXT6K/",
+      "treatment_impressions": 2,
+      "control_impressions": 3,
+      "treatment_weekly_mean": 0.4667,
+      "control_weekly_mean": 0.7,
+      "analytic": false
+    },
+    {
+      "pair": 16,
+      "treatment": "https://evidaxis.org/e/e_5WYRYN5H1XY/",
+      "control": "https://evidaxis.org/e/e_607VJ9XWYRJ/",
+      "treatment_impressions": 1,
+      "control_impressions": 2,
+      "treatment_weekly_mean": 0.2333,
+      "control_weekly_mean": 0.4667,
+      "analytic": false
+    },
+    {
+      "pair": 17,
+      "treatment": "https://evidaxis.org/e/e_9SWWW2SWASG/",
+      "control": "https://evidaxis.org/e/e_AZ9YNR6FPQZ/",
+      "treatment_impressions": 0,
+      "control_impressions": 12,
+      "treatment_weekly_mean": 0.0,
+      "control_weekly_mean": 2.8,
+      "analytic": false
+    },
+    {
+      "pair": 18,
+      "treatment": "https://evidaxis.org/e/e_JPV9HP2D5X4/",
+      "control": "https://evidaxis.org/e/e_P4YGBAFMV94/",
+      "treatment_impressions": 4,
+      "control_impressions": 17,
+      "treatment_weekly_mean": 0.9333,
+      "control_weekly_mean": 3.9667,
+      "analytic": false
+    },
+    {
+      "pair": 19,
+      "treatment": "https://evidaxis.org/e/e_77AC6K7XEWB/",
+      "control": "https://evidaxis.org/e/e_97SYW64PA3G/",
+      "treatment_impressions": 8,
+      "control_impressions": 9,
+      "treatment_weekly_mean": 1.8667,
+      "control_weekly_mean": 2.1,
+      "analytic": true
+    },
+    {
+      "pair": 20,
+      "treatment": "https://evidaxis.org/e/e_B1Q69HZTTMA/",
+      "control": "https://evidaxis.org/e/e_YTYXW2BB5AP/",
+      "treatment_impressions": 3,
+      "control_impressions": 5,
+      "treatment_weekly_mean": 0.7,
+      "control_weekly_mean": 1.1667,
+      "analytic": false
+    },
+    {
+      "pair": 21,
+      "treatment": "https://evidaxis.org/e/e_KZ3W52ZYP6H/",
+      "control": "https://evidaxis.org/e/e_2XFTYTGJT3Z/",
+      "treatment_impressions": 3,
+      "control_impressions": 28,
+      "treatment_weekly_mean": 0.7,
+      "control_weekly_mean": 6.5333,
+      "analytic": false
+    },
+    {
+      "pair": 22,
+      "treatment": "https://evidaxis.org/e/e_R2623KSCANW/",
+      "control": "https://evidaxis.org/e/e_SV60T2QMXGE/",
+      "treatment_impressions": 16,
+      "control_impressions": 0,
+      "treatment_weekly_mean": 3.7333,
+      "control_weekly_mean": 0.0,
+      "analytic": false
+    },
+    {
+      "pair": 23,
+      "treatment": "https://evidaxis.org/e/e_EDX1R1KVT3X/",
+      "control": "https://evidaxis.org/e/e_8N97348DQ66/",
+      "treatment_impressions": 0,
+      "control_impressions": 1,
+      "treatment_weekly_mean": 0.0,
+      "control_weekly_mean": 0.2333,
+      "analytic": false
+    }
+  ]
+}
