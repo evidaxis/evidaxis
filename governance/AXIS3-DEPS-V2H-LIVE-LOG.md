@@ -545,3 +545,37 @@ qualifying pairs (24 would have qualified at assignment) and a downward drift of
 arm that these data cannot separate from regression to the mean. Both, plus a structural defect
 in the normalisation window and a dated limit on what the verdict may claim, are recorded in
 `CANARY-ANALYTIC-SET-2026-09-19.md`. The protocol itself is unchanged.
+
+## 2026-09-21 — tact: partition 2026-09-14, first m3 tact, 6/6
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-09-14` ran at 06:51 UTC and its three
+artifacts sat uncommitted on the working copy until this session found them. Panel **90 systems /
+628 packages** again, **64/90 matched**, 12 canaries, manifest `026eaa45377a…`, job
+`bqjob_r6f6c4b631fb00cb7…`. That is exactly what the 2026-09-14 verdict predicted for this tact
+after the collector panel-drift fix: the panel is the frozen 90 and the lower match count is the
+post-freeze systems leaving, not a coverage drop.
+
+**Sidecar** (`--sidecar 2026-09-14`): PV2P 1148 rows, Projects 199 rows, retention tripwire
+{earliest 20230410 · latest 20260914 · n 178 · rows_total 1,052,374,340,722}.
+
+**Sanity gate** (`--check data/quarantine/axis3-deps-v2/sanity-calibration-3e51319d9817.json
+--series v2h1`): 26 partitions checked; **2026-09-07 promoted CLEAN** (cov=74); 2026-09-14
+PROVISIONAL per the necessarily-provisional rule (cov=64). KILL-BAR PASS, flagged exactly the two
+known-bad partitions. Artifact `data/quarantine/axis3-deps-v2/sanity-check-59e0898aa91a.json`.
+
+**Evaluation** (`--as-of 2026-09-07 --label live --gate-check sanity-check-59e0898aa91a.json`,
+evaluator `axis3_v2h1_eval_2`): status EVALUATED, official cutoff **2026-09-07**, 47 voting /
+6 rising, 0 unstable-vetoed. **c1 PASS · c2 PASS · c3 PASS · c4 PASS · c5 PASS · c6 PASS — 6/6.**
+Artifact `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-09-07-e31a124a6157.json`.
+
+**`score_m3.py --verify`:** files match recomputation.
+
+**First Rising disclosure filed.** The 2026-09-19 snapshot carries two Rising systems, Qwen Code
+and AgentScope, the same two the 2026-09-12 dry run named. Evidence per system, with the small
+counts, the single-ecosystem dependent base and the missing citation axis stated as limits:
+`FIRST-RISING-UNDER-M3-2026-09-19.md`.
+
+**Note for the next tact.** The capture-then-leave-uncommitted pattern has now happened twice
+(2026-08-17, 2026-09-21). Both times the artifacts were intact and the recovery was cheap, and
+both times the tact was only finished because someone went looking. Cost this tact: capture was
+already paid at 06:51, sidecar ~$0.08.
