@@ -34,6 +34,7 @@ export const COPY = {
   capture_short: 'Measured {date} for {name}; sources linked below.',
   answer_context: 'Source definitions and captured readings accompany these measurements.',
   code_last: 'Last commit week {last_commit_week}; {zero_weeks} consecutive zero weeks in the captured series.',
+  code_last_active: 'Last commit week {last_commit_week}.',
   code_none: 'No commits observed since {first_week}.',
   code_average: 'GitHub averaged {rwc} per week over the trailing window; raw weekly counts below are individual weeks.',
   repository_free: '{value} {unit} as of {date} (niche median {median}, n = {n}).',

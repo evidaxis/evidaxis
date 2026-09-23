@@ -7,7 +7,7 @@ import { TEMPLATE_VERSION } from './config';
 import { assertPublicText, copy, facet, selectClasses } from './facets';
 
 export const numeric = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
-export const fmt = (n: number | null): string => n === null ? 'no reading' : String(Number(n.toFixed(3)));
+export const fmt = (n: number | null): string => n === null ? 'no reading' : Number(n.toFixed(3)).toLocaleString('en-US', { maximumFractionDigits: 3 });
 export function quantile(values: number[], q: number): number | null {
   if (!values.length) return null;
   const sorted = [...values].sort((a, b) => a - b), i = (sorted.length - 1) * q;
@@ -198,7 +198,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     paper_ref: paper, paper_works: ctx.paperWorks ?? [], cohort: cohortLabel, cohort_n: cohort.length, date, urn,
   };
   const texts = {
-    average: text('code_average'), code: text(ruler.lastCommitWeek ? 'code_last' : 'code_none'),
+    average: text('code_average'), code: text(ruler.lastCommitWeek ? (ruler.zeroWeeks > 0 ? 'code_last' : 'code_last_active') : 'code_none'),
     citations_difference: text('citations_difference'), citations_report: text('citations_report'), citation_scope: text('citation_scope'),
     readings: text('readings'), niche: text('niche', { median: fmt(medians.commits.value) }),
     changes: previous ? text('changes', { count: changes.filter(c => c.previous !== c.current).length, previous: previous.snapshot.snapshot_id, current: snap.snapshot_id }) : text('no_previous'),

@@ -65,7 +65,7 @@ if (new TextEncoder().encode(CARD_B_CLIENT).length > 1024) throw new Error('Card
       <p class="answer"><Sentence text={m.facets.code.text} /></p>
       <p data-claim={m.texts.average.claim_id}><Sentence text={m.texts.average.text} /></p>
       <p data-claim={m.texts.code.claim_id}><Sentence text={m.texts.code.text} /></p>
-      <p class="card-b-ruler">Δ 4 weeks: <Number value={m.ruler.delta4} /> · Δ 26 weeks: <Number value={m.ruler.delta26} /> · 52-week range: <Number value={m.ruler.range?.[0] ?? null} /> to <Number value={m.ruler.range?.[1] ?? null} /> commits in an individual week.</p>
+      <p class="card-b-ruler">Commits in the latest captured week vs 4 weeks earlier: <Number value={m.ruler.delta4} /> · vs 26 weeks earlier: <Number value={m.ruler.delta26} /> · 52-week range: <Number value={m.ruler.range?.[0] ?? null} /> to <Number value={m.ruler.range?.[1] ?? null} /> commits in an individual week.</p>
       <Chart chart={charts.commits} />
       <div class="card-b-scroll"><table><caption>Latest eight captured weeks; niche P25-P75 uses the same weekly positions</caption><thead><tr><th>Week starting</th><th>Commits</th><th>Niche P25</th><th>Niche P75</th></tr></thead><tbody>
         {m.ruler.weeks.slice(-8).map((p, i) => { const b = m.commitBand[m.ruler.weeks.length - Math.min(8, m.ruler.weeks.length) + i]; return <tr><th>{p.date}</th><td><Number value={p.value} /></td><td><Number value={b?.p25 ?? null} /></td><td><Number value={b?.p75 ?? null} /></td></tr>; })}
@@ -77,7 +77,7 @@ if (new TextEncoder().encode(CARD_B_CLIENT).length > 1024) throw new Error('Card
 
     <section class="card-b-section card-b-readings" id="readings" data-block="readings" data-claim={m.texts.readings.claim_id} data-class="READINGS" data-release={m.release}>
       <h2>Readings, definitions and dates</h2>
-      <div class="card-b-scroll"><table><caption>{m.texts.readings.text}</caption><thead><tr><th>Reading</th><th>Value</th><th>Δ 4 weeks</th><th>Δ 26 weeks</th><th>52-week range</th><th>Instrument and definition</th><th>Date</th><th>Reproduce</th><th>Previous reading</th></tr></thead><tbody>
+      <p class="provenance">{m.texts.readings.text}</p><div class="card-b-scroll"><table><caption>Readings with instrument, definition, date and a reproduce link</caption><thead><tr><th>Reading</th><th>Value</th><th>Δ 4 weeks</th><th>Δ 26 weeks</th><th>52-week range</th><th>Instrument and definition</th><th>Date</th><th>Reproduce</th><th>Previous reading</th></tr></thead><tbody>
         {readings.map(r => <tr><th>{r.label}</th><td><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></td><td><Number value={r.delta4} /></td><td><Number value={r.delta26} /></td><td>{r.range ? <><Number value={r.range[0]} /> to <Number value={r.range[1]} /></> : 'no reading'}</td><td>{r.definition}</td><td>{r.date}</td><td>{r.source ? <a href={r.source}>Public query</a> : 'not linked'}</td><td><Number value={r.previous} /></td></tr>)}
       </tbody></table></div>
       <p class="provenance">Sources and dates are attached to every measured value. Comparisons without a prior captured reading remain missing.</p>
