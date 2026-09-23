@@ -70,6 +70,16 @@ jobs:
           node-version: "22"
 
       - name: Build the static site from the committed tree
+        # Analytics keys are client-side publishable IDs (ANALYTICS.md), kept as
+        # repo variables, not secrets. Without them Analytics.astro renders
+        # nothing, which is how prod ran from the CI switch (07-11) to 09-23 with
+        # no GA4 / PostHog / Clarity at all: the keys lived only in web/.env on
+        # the keeper's laptop.
+        env:
+          PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
+          PUBLIC_CLARITY_ID: ${{ vars.PUBLIC_CLARITY_ID }}
+          PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
+          PUBLIC_POSTHOG_HOST: ${{ vars.PUBLIC_POSTHOG_HOST }}
         run: |
           cd web
           npm ci
