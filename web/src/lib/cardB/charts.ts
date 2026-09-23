@@ -4,7 +4,15 @@ import { xml } from './exports';
 export type Chart = { block: string; title: string; description: string; svg: string; url: string };
 export function chartsFor(m: CardBModel): Record<string, Chart> {
   const charts: Record<string, Chart> = {};
-  const make = (block: string, title: string, description: string, body: string) => {
+  const rd = (key: string) => (m.readings as Array<{ key: string; value: unknown; median: number | null }>).find(r => r.key === key);
+  const vs = (key: string, unit: string): string => {
+    const r = rd(key);
+    if (!r || typeof r.value !== 'number') return '';
+    return `Latest ${fmt(r.value)} ${unit}${r.median === null ? '' : `, niche median ${fmt(r.median)}`}. `;
+  };
+  const lead: Record<string, string> = { commits: vs('commits', 'commits per week averaged'), citations: vs('citations', 'citing works'), dependents: vs('dependents', 'direct dependents') };
+  const make = (block: string, title: string, description0: string, body: string) => {
+    const description = `${lead[block] ?? ''}${description0}`;
     const label = `${m.entity.name}: ${title}`;
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" width="640" height="200" role="img" aria-labelledby="${block}-title ${block}-desc"><title id="${block}-title">${xml(label)}</title><desc id="${block}-desc">${xml(description)}</desc><rect width="640" height="200" fill="#fbfcfa"/>${body}</svg>`;
     charts[block] = { block, title: label, description, svg, url: `/charts/e/${m.entity.id}/${block}-${m.release}.svg` };

@@ -5,6 +5,6 @@ export interface Props { chart?: Chart }
 const { chart } = Astro.props;
 ---
 {chart && <figure class="card-b-chart">
-  {CHARTS_INLINE ? <Fragment set:html={chart.svg} /> : <img src={chart.url} alt={chart.description} width="640" height="200" loading="lazy" />}
+  {CHARTS_INLINE ? <Fragment set:html={chart.svg} /> : <img src={chart.url} alt={`${chart.title}. ${chart.description}`} width="640" height="200" loading="lazy" />}
   <figcaption>{chart.title}. {chart.description}</figcaption>
 </figure>}
