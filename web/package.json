@@ -22,7 +22,8 @@
     "@fontsource/ibm-plex-sans": "^5.1.0",
     "@fontsource/spectral": "^5.1.0",
     "@sentry/astro": "^10.63.0",
-    "astro": "^5.6.1"
+    "astro": "^5.6.1",
+    "badge-maker": "6.0.0"
   },
   "devDependencies": {
     "vitest": "^3.0.0"
