@@ -1,0 +1,90 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { badgeData, badgeRecords, type BadgeKey } from '../../../lib/badges';
+
+export function getStaticPaths() {
+  return badgeRecords.map(record => ({ params: { id: record.entity.entity_id }, props: { record } }));
+}
+const { record } = Astro.props;
+const id = record.entity.entity_id;
+const cardUrl = `https://evidaxis.org/e/${id}/`;
+const kinds: BadgeKey[] = ['citations', 'dependents', 'rising'];
+const badges = kinds.map(key => ({ key, ...badgeData(record, key) }));
+const endpoint = (key: string) => `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://evidaxis.org/badge/${id}/${key}.json`)}`;
+const image = (key: string) => `https://evidaxis.org/badge/${id}/${key}.svg`;
+const snippets = (key: string) => ({
+  Markdown: `[![${key}](${image(key)})](${cardUrl})`,
+  HTML: `<a href="${cardUrl}"><img alt="${key} badge for ${record.entity.name}" src="${image(key)}"></a>`,
+  reStructuredText: `.. image:: ${image(key)}\n   :target: ${cardUrl}\n   :alt: ${key} badge for ${record.entity.name}`,
+  'Shields endpoint': endpoint(key),
+});
+const missing = (key: BadgeKey) => {
+  const e = record.entity;
+  if (key === 'rising') return 'No Rising badge: no Rising signal has been published for this system.';
+  if (key === 'citations' && !e.openalex_work_ids.length) return 'No citations badge: no paper linked in OpenAlex for this system.';
+  if (key === 'dependents' && e.axes?.deps_direct_dependents_momentum?.status === 'out_of_panel') return 'No dependents badge: this system is outside the deps.dev panel.';
+  if (badgeData(record, key).count === 0) return `No ${key} badge: the latest reading is 0.`;
+  return `No ${key} badge: no reading in the latest weekly record.`;
+};
+---
+<Base title={`README badges for ${record.entity.name} | Evidaxis`} description={`README badges from the weekly record for ${record.entity.name}.`} canonical={`/badge/${id}/`} noindex={true}>
+  <div class="wrap badge-builder" data-entity={id}>
+    <p class="eyebrow">README badges</p>
+    <h1>README badges for {record.entity.name}</h1>
+    <p class="lead">Each badge shows one number from this system's weekly record and links to its <a href={`/e/${id}/`}>card</a>, where the number has a source and a date.</p>
+    <fieldset class="styles"><legend>Badge style</legend>
+      <label><input type="radio" name="badge-style" value="flat" checked /> flat</label>
+      <label><input type="radio" name="badge-style" value="flat-square" /> flat-square</label>
+      <label><input type="radio" name="badge-style" value="for-the-badge" /> for-the-badge</label>
+    </fieldset>
+    {badges.map(b => b.offered ? <section class="badge-section" data-badge={b.key}>
+      <h2>{b.key === 'rising' ? 'Rising' : b.key === 'citations' ? 'Citations' : 'Dependents'}</h2>
+      <div class="previews">
+        <div class="preview light"><span>Light</span><img src={`/badge/${id}/${b.key}.svg`} alt={`${b.key}: ${b.message}`} /></div>
+        <div class="preview dark"><span>Dark</span><img src={`/badge/${id}/${b.key}.svg`} alt={`${b.key}: ${b.message}`} /></div>
+      </div>
+      {Object.entries(snippets(b.key)).map(([format, value]) => <div class="snippet" data-format={format}>
+        <label>{format}<code>{value}</code></label><button type="button" data-copy={value} data-format={format}>Copy</button>
+      </div>)}
+    </section> : <p class="unavailable">{missing(b.key)}</p>)}
+    {badges.find(b => b.key === 'rising')?.offered && <section class="badge-section" data-badge="rising-card">
+      <h2>Rising card</h2>
+      <div class="previews"><div class="preview light"><span>Light</span><img src={`/badge/${id}/rising-card.svg`} alt={`Rising: ${badges.find(b => b.key === 'rising')?.message}`} /></div><div class="preview dark"><span>Dark</span><img src={`/badge/${id}/rising-card.svg`} alt={`Rising: ${badges.find(b => b.key === 'rising')?.message}`} /></div></div>
+      {Object.entries(snippets('rising-card')).map(([format, value]) => format === 'Shields endpoint' ? null : <div class="snippet" data-format={format}><label>{format}<code>{value}</code></label><button type="button" data-copy={value} data-format={format}>Copy</button></div>)}
+    </section>}
+    <p class="note">Data CC0. Updated weekly. A badge never shows a number that was not measured.</p>
+  </div>
+<script is:inline>
+  const root = document.querySelector('.badge-builder');
+  const base = `https://evidaxis.org/badge/${root.dataset.entity}/`;
+  const stylePath = (badge, style) => `${base}${badge}${style === 'flat' || badge === 'rising-card' ? '' : `-${style}`}.svg`;
+  root.addEventListener('change', event => {
+    if (event.target.name !== 'badge-style') return;
+    const style = event.target.value;
+    root.querySelectorAll('.badge-section').forEach(section => {
+      const badge = section.dataset.badge;
+      section.querySelectorAll('.preview img').forEach(img => { img.src = stylePath(badge, style); });
+      section.querySelectorAll('.snippet').forEach(row => {
+        if (row.dataset.format === 'Shields endpoint') return;
+        const code = row.querySelector('code'), button = row.querySelector('button');
+        const value = button.dataset.copy.replace(/https:\/\/evidaxis\.org\/badge\/[^\s"\])]+\.svg/g, stylePath(badge, style));
+        code.textContent = value;
+        button.dataset.copy = value;
+      });
+    });
+  });
+  root.addEventListener('click', async event => {
+    const button = event.target.closest('button[data-copy]');
+    if (!button) return;
+    try { await navigator.clipboard.writeText(button.dataset.copy); button.textContent = 'Copied'; }
+    catch { button.textContent = 'Copy unavailable'; }
+    const section = button.closest('[data-badge]');
+    const params = { entity_id: root.dataset.entity, badge: section.dataset.badge, style: root.querySelector('input[name="badge-style"]:checked').value, format: button.dataset.format };
+    try { window.gtag?.('event', 'fnd_badge_copy', params); } catch {}
+    try { window.posthog?.capture('fnd_badge_copy', params); } catch {}
+  });
+</script>
+<style is:inline>
+  .badge-builder{padding:36px 0 72px;min-width:0}.badge-builder h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:8px 0 12px;overflow-wrap:anywhere}.badge-builder .lead{max-width:70ch;line-height:1.5}.styles{display:flex;flex-wrap:wrap;gap:8px 20px;border:1px solid #d0d7de;border-radius:6px;padding:12px;margin:24px 0}.styles legend{font-weight:600}.styles label{white-space:nowrap}.badge-section{border-top:1px solid #d0d7de;padding:22px 0;min-width:0}.badge-section h2{font-size:20px;margin:0 0 12px;text-transform:capitalize}.previews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}.preview{min-width:0;min-height:70px;padding:12px;border:1px solid #d0d7de;border-radius:6px;display:flex;align-items:center;gap:16px;overflow:hidden}.preview img{max-width:100%;height:auto}.preview span{font-size:12px;min-width:32px}.light{background:#fff;color:#1f2328}.dark{background:#0d1117;color:#f0f6fc}.snippet{display:flex;align-items:end;gap:10px;margin:12px 0;min-width:0}.snippet label{display:block;font-weight:600;font-size:13px;min-width:0;flex:1}.snippet code{display:block;margin-top:4px;padding:10px;background:#f1f3f5;border-radius:5px;font-size:12px;font-weight:400;white-space:pre-wrap;overflow-wrap:anywhere;user-select:all}.snippet button{border:1px solid #8c959f;border-radius:5px;padding:8px 12px;background:#fff;cursor:pointer}.unavailable{border-top:1px solid #d0d7de;padding-top:18px;color:#59636e}.note{font-size:13px;color:#59636e;margin-top:24px}@media(max-width:600px){.badge-builder{padding-top:22px}.previews{grid-template-columns:minmax(0,1fr)}.snippet{align-items:stretch;flex-direction:column}.snippet button{align-self:start}}
+</style>
+</Base>

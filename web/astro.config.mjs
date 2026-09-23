@@ -62,6 +62,7 @@ export default defineConfig({
         && !page.includes('/_charttest')
         && !page.includes('/methodology/current/')
         && !new URL(page).pathname.startsWith('/signals/')
+        && !new URL(page).pathname.startsWith('/badge/')
         && entityPageIsIndexable(page),
       serialize(item) {
         const path = new URL(item.url).pathname;

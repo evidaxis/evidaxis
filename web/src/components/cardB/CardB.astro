@@ -4,6 +4,8 @@ import { fmt } from '../../lib/cardB/build';
 import { chartsFor } from '../../lib/cardB/charts';
 import { assertPublicText } from '../../lib/cardB/facets';
 import { CARD_B_CLIENT } from '../../lib/cardB/client';
+import { archiveEntityById } from '../../lib/archive';
+import { badgeData } from '../../lib/badges';
 import Chart from './Chart.astro';
 import Number from './Number.astro';
 import Sentence from './Sentence.astro';
@@ -18,6 +20,8 @@ const claim = (key: string) => `urn:evidaxis:claim:class:${key}:b1`;
 const annualSource = m.readings.find(r => r.key === 'citations')!.source;
 const codeSource = m.readings.find(r => r.key === 'commits')!.source;
 const citationCount = m.readings.find(r => r.key === 'citations')!.value as number | null;
+const badgeRecord = archiveEntityById.get(m.entity.id);
+const hasBadge = badgeRecord && (badgeData(badgeRecord, 'citations').offered || badgeData(badgeRecord, 'dependents').offered || badgeData(badgeRecord, 'rising').offered);
 const workSearch = (id: string) => encodeURIComponent(m.display.paper_works.find(p => p.id === id)?.title ?? (m.workIds.length === 1 && m.paper ? `arXiv:${m.paper}` : `https://openalex.org/${id}`));
 // Existing instruments remain intact in Measurement detail. The B projection
 // replaces only missing-value typography, heading depth and canonical dashes.
@@ -60,7 +64,7 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
       <button data-fnd="fnd_cite_copy" data-copy={m.texts.citation.text}>Copy citation</button>
       <a href={m.feedUrl} data-fnd="fnd_follow">Follow this system (feed)</a>
       <a href={report} data-fnd="fnd_report_error">Report an error</a>
-      {m.state.positive_signal.state === 'published' && <button data-fnd="fnd_cite_copy" data-copy={`[![Evidaxis: ${m.entity.name}](https://evidaxis.org/badge/${m.entity.id}/${m.state.period}.svg)](${m.url})`}>Copy Rising badge</button>}
+      {hasBadge && <a href={`/badge/${m.entity.id}/`} data-fnd="fnd_badge_open">README badge</a>}
     </div>
   </header>
   <div class="card-b-body">
@@ -157,7 +161,6 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
         <Fragment set:html={legacy} />
         {m.backfill.length > 0 && <div data-backfill="1"><h3>Reconstructed history</h3><p>{m.texts.reconstructed.text}</p><Chart chart={charts.backfill} /><table><caption>Reconstructed weekly commits</caption><thead><tr><th>Period</th><th>Commits</th></tr></thead><tbody>{m.backfill.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></div>}
         <table><caption>Peer signals</caption><thead><tr><th>System</th><th>Momentum</th><th>Percentile</th></tr></thead><tbody>{m.peers.map(p => <tr><th>{p.name}</th><td><Number value={p.momentum} /></td><td><Number value={p.percentile} /></td></tr>)}</tbody></table>
-        {m.state.positive_signal.state === 'published' && <img src={`/badge/${m.entity.id}/${m.state.period}.svg`} alt={`Evidaxis Rising, ${m.entity.name}`} width="232" height="56" loading="lazy" />}
         <Provenance model={m} method="measurement detail"> · <a href={m.jsonUrl} data-fnd="fnd_download">record JSON</a> · <a href={`/snapshots/${m.date}/manifest.json`} data-fnd="fnd_download">snapshot receipt</a></Provenance>
       </details>
     </section>
