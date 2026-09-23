@@ -7,6 +7,7 @@ import { CARD_B_CLIENT } from '../../lib/cardB/client';
 import Chart from './Chart.astro';
 import Number from './Number.astro';
 import Sentence from './Sentence.astro';
+import Provenance from './Provenance.astro';
 
 export interface Props { model: CardBModel; industry: string; industryLabel: string; subNiche: string }
 const { model: m, industry, industryLabel, subNiche } = Astro.props;
@@ -23,6 +24,8 @@ const workSearch = (id: string) => encodeURIComponent(m.display.paper_works.find
 let legacy = (await Astro.slots.render('measurement')).replace(/\u2014/g, '-')
   .replace(/\bn\/a\b/g, 'no reading').replace(/<h1\b/g, '<h3').replace(/<\/h1>/g, '</h3>')
   .replace(/\bstale\b/g, 'outside freshness window');
+legacy = legacy.replace(/(<figcaption\b[^>]*>)([\s\S]*?)(<\/figcaption>)/g, (_, open, content, close) =>
+  `${open}${content}${content.includes(m.date) ? '' : ` · Evidaxis snapshot · ${m.date}`}${close}`);
 // A missing citation trend must not hide a measured total in the retained
 // instruments either. This projection never changes the A component's output.
 if (citationCount !== null) legacy = legacy.replace(/(<div class="k"[^>]*>total citations<\/div>\s*<div class="v amber"[^>]*>)[\s\S]*?(<\/div>)/, `$1<data value="${citationCount}">${fmt(citationCount)}</data>$2`);
@@ -36,7 +39,7 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
   </nav>
   {m.superseded && <p>Preserved historical record; record status: superseded; last measured {m.date}.</p>}
   <header class="card-b-hero">
-    <div class="card-b-eyebrow">A dated record, with sources</div>
+    <div class="card-b-eyebrow">Dated record</div>
     <h1>{m.entity.name}</h1>
     <div class="card-b-identity">{m.entity.type} · {m.cohortLabel}, n = <data value={m.peers.length}>{m.peers.length}</data> · {m.repoUrl ? <a href={m.repoUrl}>{m.repoLabel}</a> : m.repoLabel} · paper: {m.workIds.length ? m.workIds.join(', ') : m.paper ? `arXiv:${m.paper} (on file; not matched in OpenAlex)` : 'not linked'} · as of <time datetime={m.date}>{m.date}</time></div>
     <p class="answer card-b-answer" data-b-answer data-claim={m.display.answer_claims.join(' ')}><Sentence text={m.display.answer} /></p>
@@ -68,20 +71,20 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
       <p data-claim={m.texts.code.claim_id}><Sentence text={m.texts.code.text} /></p>
       <p class="card-b-ruler">Commits in the latest captured week vs 4 weeks earlier: <Number value={m.ruler.delta4} /> · vs 26 weeks earlier: <Number value={m.ruler.delta26} /> · 52-week range: <Number value={m.ruler.range?.[0] ?? null} /> to <Number value={m.ruler.range?.[1] ?? null} /> commits in an individual week.</p>
       <Chart chart={charts.commits} />
-      <div class="card-b-scroll"><table><caption>Latest eight captured weeks; niche P25-P75 uses the same weekly positions</caption><thead><tr><th>Week starting</th><th>Commits</th><th>Niche P25</th><th>Niche P75</th></tr></thead><tbody>
+      <div class="card-b-scroll"><table><caption>Latest eight weeks</caption><thead><tr><th>Week starting</th><th>Commits</th><th>Niche P25</th><th>Niche P75</th></tr></thead><tbody>
         {m.ruler.weeks.slice(-8).map((p, i) => { const b = m.commitBand[m.ruler.weeks.length - Math.min(8, m.ruler.weeks.length) + i]; return <tr><th>{p.date}</th><td><Number value={p.value} /></td><td><Number value={b?.p25 ?? null} /></td><td><Number value={b?.p75 ?? null} /></td></tr>; })}
       </tbody></table></div>
       <Chart chart={charts.heatmap} />
-      <details><summary>All {m.ruler.weeks.length} weekly readings</summary><table><caption>Complete captured commit series</caption><thead><tr><th>Week starting</th><th>Commits</th></tr></thead><tbody>{m.ruler.weeks.map(p => <tr><th>{p.date}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>
-      <p class="provenance"><a href={codeSource}>GitHub commit_activity</a> · captured {m.date} · n = <data value={m.ruler.weeks.length}>{m.ruler.weeks.length}</data> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a> · <a href={report} data-fnd="fnd_report_error">Report an error</a>. Week starts reconstructed from capture Sunday; raw provenance retains counts, not original week timestamps.</p>
+      <details><summary>All {m.ruler.weeks.length} weeks</summary><table><caption>Weekly commits</caption><thead><tr><th>Week starting</th><th>Commits</th></tr></thead><tbody>{m.ruler.weeks.map(p => <tr><th>{p.date}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>
+      <Provenance model={m} source="GitHub commit_activity" href={codeSource} period={`${m.ruler.firstWeek} to ${m.ruler.weeks.at(-1)!.date}`} n={m.ruler.weeks.length} unit="weeks" method="weekly totals; reconstructed dates"> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></Provenance>
     </section>}
 
     <section class="card-b-section card-b-readings" id="readings" data-block="readings" data-claim={m.texts.readings.claim_id} data-class="READINGS" data-release={m.release}>
-      <h2>Readings, definitions and dates</h2>
-      <p class="provenance">{m.texts.readings.text}</p><div class="card-b-scroll"><table><caption>Readings with instrument, definition, date and a reproduce link</caption><thead><tr><th>Reading</th><th>Value</th><th>Δ 4 weeks</th><th>Δ 26 weeks</th><th>52-week range</th><th>Instrument and definition</th><th>Date</th><th>Reproduce</th><th>Previous reading</th></tr></thead><tbody>
-        {readings.map(r => <tr><th>{r.label}</th><td><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></td><td><Number value={r.delta4} /></td><td><Number value={r.delta26} /></td><td>{r.range ? <><Number value={r.range[0]} /> to <Number value={r.range[1]} /></> : 'no reading'}</td><td>{r.definition}</td><td>{r.date}</td><td>{r.source ? <a href={r.source}>Public query</a> : 'not linked'}</td><td><Number value={r.previous} /></td></tr>)}
+      <h2>Readings</h2>
+      <div class="card-b-scroll"><table><caption>Recorded values and sources</caption><thead><tr><th>Reading</th><th>Value</th><th>Δ 4 weeks</th><th>Δ 26 weeks</th><th>52-week range</th><th>Instrument</th><th>Date</th><th>Reproduce</th><th>Previous reading</th></tr></thead><tbody>
+        {readings.map(r => <tr><th>{r.label}</th><td><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></td><td><Number value={r.delta4} /></td><td><Number value={r.delta26} /></td><td>{r.range ? <><Number value={r.range[0]} /> to <Number value={r.range[1]} /></> : 'no reading'}</td><td><a href={r.key === 'dependents' || r.key === 'daily' ? '/methodology/m3/#dependents' : `/methodology/${m.methodology}/`}>{r.key === 'daily' ? 'deps.dev REST, unscored' : r.key === 'citations' ? 'OpenAlex, completed years' : r.key === 'commits' ? 'GitHub, trailing 12 weeks' : r.key === 'stars' ? 'GitHub stars, unscored' : r.label}</a></td><td>{r.date}</td><td>{r.source ? <a href={r.source}>Public query</a> : 'not linked'}</td><td><Number value={r.previous} /></td></tr>)}
       </tbody></table></div>
-      <p class="provenance">Sources and dates are attached to every measured value. Comparisons without a prior captured reading remain missing.</p>
+      <Provenance model={m} source="Evidaxis snapshot" n={1} unit="systems" method="source linked readings" />
     </section>
 
     {m.workIds.length > 0 && <section class="card-b-section" id="citations" data-block="2" data-claim={m.facets.citations.claim_id} data-class={m.facets.citations.id} data-release={m.release}>
@@ -89,24 +92,24 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
       <p class="answer"><Sentence text={m.facets.citations.text} /></p>
       <Chart chart={charts.citations} />
       <table><caption>OpenAlex citing works by completed calendar year</caption><thead><tr><th>Year</th><th>Citing works</th></tr></thead><tbody>{m.years.map(p => <tr><th>{p.year}</th><td><Number value={p.value} source={annualSource} date={m.date} entity={m.entity.id} /></td></tr>)}<tr><th>Total in completed years</th><td><Number value={m.readings.find(r => r.key === 'citations')!.value as number} /></td></tr></tbody></table>
-      <p class="provenance">{m.workIds.join(', ')} · {m.date} · {m.texts.citation_scope.text} <a href={m.valuesUrl} download data-fnd="fnd_download">CSV by year</a></p>
+      <Provenance model={m} source="OpenAlex" href={annualSource} period={`${m.years[0]?.year ?? m.date} to ${m.years.at(-1)?.year ?? m.date}`} n={m.years.length} unit="years" method="completed calendar years"> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV by year</a></Provenance>
       <p class="card-b-indexes" data-claim={m.texts.citations_difference.claim_id}>{m.texts.citations_difference.text} Check the same work: {m.workIds.map(id => <span><a href={`https://openalex.org/${id}`} data-fnd="fnd_outbound">OpenAlex {id}</a> · <a href={`https://www.semanticscholar.org/search?q=${workSearch(id)}`} data-fnd="fnd_outbound">Semantic Scholar search</a> · <a href={`https://scholar.google.com/scholar?q=${workSearch(id)}`} data-fnd="fnd_outbound">Google Scholar search</a>. </span>)} <a href={report} data-fnd="fnd_report_error">{m.texts.citations_report.text}</a></p>
     </section>}
 
     <section class="card-b-section card-b-citation" id="cite" data-b-citation data-block="2a" data-claim={m.urn} data-class="CITE" data-release={m.release}>
       <h2>How to cite {m.entity.name}'s record?</h2>
       <p>{m.texts.citation.text}</p><button data-fnd="fnd_cite_copy" data-copy={m.texts.citation.text}>Copy citation</button>
-      <p class="provenance">Claim URN: <code>{m.urn}</code></p>
+      <Provenance model={m} method="claim URN" />
     </section>
 
     {(m.deps?.latest != null || m.daily) && <section class="card-b-section" id="dependents" data-block="3" data-claim={m.facets.dependents.claim_id} data-class={m.facets.dependents.id} data-release={m.release}>
       <h2>Is anyone using {m.entity.name}?</h2><p class="answer"><Sentence text={m.facets.dependents.text} /></p>
       <Chart chart={charts.dependents} />
-      <table><caption>Weekly deps.dev partitions, distinct from the daily unscored reading</caption><thead><tr><th>Partition</th><th>Direct dependents</th><th>Weekly points</th><th>Method</th></tr></thead><tbody><tr><td>{m.deps?.as_of_partition ?? 'no partition'}</td><td><Number value={m.deps?.latest ?? null} /></td><td><Number value={m.deps?.points ?? null} /></td><td>m3 package union</td></tr></tbody></table>
+      <table><caption>Weekly dependents</caption><thead><tr><th>Partition</th><th>Direct dependents</th><th>Weekly points</th><th>Method</th></tr></thead><tbody><tr><td>{m.deps?.as_of_partition ?? 'no partition'}</td><td><Number value={m.deps?.latest ?? null} /></td><td><Number value={m.deps?.points ?? null} /></td><td>m3 package union</td></tr></tbody></table>
       <p>Daily dependents (unscored): <Number value={m.daily?.value ?? null} />. {m.facets.stars?.text}</p>
       <Chart chart={charts.daily} />
       {m.dailySeries.length > 0 && <details><summary>Captured daily series</summary><table><caption>Unscored daily dependents, as captured</caption><thead><tr><th>Period</th><th>Dependents</th></tr></thead><tbody>{m.dailySeries.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>}
-      <p class="provenance">deps.dev · partition {m.deps?.as_of_partition ?? 'not captured'} · points {m.deps?.points ?? 'no reading'} · <a href="/methodology/m3/#dependents">m3 definition</a> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></p>
+      <Provenance model={m} source="deps.dev" href={`/snapshots/${m.date}/snapshot.json`} period={m.deps?.as_of_partition ?? m.date} n={m.deps?.points ?? 0} unit="partitions" method="m3 package union"> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></Provenance>
     </section>}
 
     <section class="card-b-section" id="niche" data-block="4" data-claim={m.texts.niche.claim_id} data-class="NICHE" data-release={m.release}>
@@ -115,20 +118,20 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
       <div class="card-b-scroll"><table class="card-b-neighbours"><caption>All {m.peers.length} systems, alphabetical; choose a heading to sort</caption><thead><tr>{['System', 'Commits/wk', 'Citations', 'Direct dependents', 'Stars'].map((label, i) => <th scope="col"><button data-sort={i + 1} data-fnd="fnd_tool_run">{label} ↕</button></th>)}</tr></thead><tbody>
         {m.peers.map(p => <tr class:list={{ 'card-b-focus': p.id === m.entity.id }}><th scope="row" data-value={p.name}><a href={`/e/${p.id}/`}>{p.name}</a></th>{[p.commits, p.citations, p.dependents, p.stars].map(v => <td data-value={v ?? ''}><Number value={v} /></td>)}</tr>)}
       </tbody></table></div>
-      <p class="provenance">Snapshot {m.snapshot_id} · n = {m.peers.length} · {m.methodology} · medians use measured values only · <a href={m.nicheCsv} download data-fnd="fnd_download">CSV for this niche</a></p>
+      <Provenance model={m} source="Evidaxis snapshot" n={m.peers.length} unit="systems" method="medians of measured values"> · <a href={m.nicheCsv} download data-fnd="fnd_download">CSV for this niche</a></Provenance>
     </section>
 
     <section class="card-b-section" id="changes" data-block="5" data-claim={m.texts.changes.claim_id} data-class="CHANGES" data-release={m.release}>
       <h2>What changed since the last snapshot?</h2><p class="answer"><Sentence text={m.texts.changes.text} /></p>
       <Chart chart={charts.changes} />
-      <table><caption>Published values at two snapshot dates; each metric keeps its own unit</caption><thead><tr><th>Metric</th><th>Previous</th><th>Current</th><th>Delta</th></tr></thead><tbody>{m.changes.map(c => <tr><th>{c.label}</th><td><Number value={c.previous} /></td><td><Number value={c.current} /></td><td><Number value={c.delta} /></td></tr>)}</tbody></table>
-      <p class="provenance">{m.changes[0].previous_snapshot_id ?? 'no previous snapshot'} → {m.snapshot_id} · <a href={m.historyUrl} download data-fnd="fnd_download">History CSV</a> · <a href={m.feedUrl} data-fnd="fnd_follow">Follow changes</a></p>
+      <table><caption>Snapshot values</caption><thead><tr><th>Metric</th><th>Previous</th><th>Current</th><th>Delta</th></tr></thead><tbody>{m.changes.map(c => <tr><th>{c.label}</th><td><Number value={c.previous} /></td><td><Number value={c.current} /></td><td><Number value={c.delta} /></td></tr>)}</tbody></table>
+      <Provenance model={m} source="Evidaxis snapshots" period={`${m.history.filter(p => p.snapshot.snapshot_date < m.date).at(-1)?.snapshot.snapshot_date ?? m.date} to ${m.date}`} n={m.history.length} unit="partitions" method="paired snapshot values"> · <a href={m.historyUrl} download data-fnd="fnd_download">History CSV</a></Provenance>
     </section>
 
     <section class="card-b-section" id="data" data-block="6" data-claim={m.texts.exports.claim_id} data-class="EXPORTS" data-release={m.release}>
       <h2>Take the data or follow changes</h2><p class="answer">{m.texts.exports.text}</p>
-      <div class="card-b-actions"><a href={m.valuesUrl} download data-fnd="fnd_download">Values CSV</a><a href={m.historyUrl} download data-fnd="fnd_download">History CSV</a><a href={m.jsonUrl} data-fnd="fnd_download">JSON record</a><a href={m.feedUrl} data-fnd="fnd_follow">Atom feed</a><a href={`${m.path}feed.json`} data-fnd="fnd_follow">JSON Feed</a><button data-copy={`https://evidaxis.org${m.feedUrl}`} data-fnd="fnd_follow">Copy feed URL</button><a href={report} data-fnd="fnd_report_error">Report an error</a></div>
-      <p class="provenance">CC0-1.0 · <code>{m.urn}</code></p>
+      <div class="card-b-actions"><a href={m.valuesUrl} download data-fnd="fnd_download">Values CSV</a><a href={m.historyUrl} download data-fnd="fnd_download">History CSV</a><a href={m.jsonUrl} data-fnd="fnd_download">JSON record</a><a href={m.feedUrl} data-fnd="fnd_follow">Atom feed</a><a href={`${m.path}feed.json`} data-fnd="fnd_follow">JSON Feed</a><button data-copy={`https://evidaxis.org${m.feedUrl}`} data-fnd="fnd_follow">Copy feed URL</button><a href="https://www.google.com/preferences/source?q=evidaxis.org" data-fnd="fnd_follow">Add Evidaxis as a preferred source on Google</a><a href={report} data-fnd="fnd_report_error">Report an error</a></div>
+      <Provenance model={m} method="CC0-1.0 open export" />
     </section>
     <section class="card-b-section" data-block="7" data-claim={m.texts.teams.claim_id} data-class="TEAMS" data-release={m.release}>
       <h2>For teams tracking many systems</h2><p class="answer">{m.texts.teams.text}</p>
@@ -145,7 +148,7 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
       {['C11', 'C13b'].includes(m.facets.dependents.id) && <p data-claim={m.facets.dependents.claim_id}>{m.facets.dependents.text}</p>}
       <p data-claim={m.texts.gate_eta.claim_id}>{m.texts.gate_eta.text}</p>
       <p>Dependents ecosystem composition: no reading; this field is not present in the snapshot.</p>
-      <p class="provenance"><a href={`/methodology/${m.methodology}/`}>Methodology</a> · <a href={m.feedUrl} data-fnd="fnd_follow">Follow to be notified when this is measured</a></p>
+      <Provenance model={m} method="measurement coverage" />
     </section>
     <section class="card-b-section" data-block="10" data-claim={m.facets.standing.claim_id} data-class={m.facets.standing.id} data-release={m.release}>
       <h2>Measurement detail</h2><details><summary>Gate, gauges, percentile, derived signals and snapshot receipt</summary>
@@ -153,9 +156,9 @@ const EMPTY_LABEL: Record<string, string> = { 'not linked': 'no paper linked', '
         <p data-claim={m.facets.standing.claim_id}>{m.facets.standing.text}</p>
         <Fragment set:html={legacy} />
         {m.backfill.length > 0 && <div data-backfill="1"><h3>Reconstructed history</h3><p>{m.texts.reconstructed.text}</p><Chart chart={charts.backfill} /><table><caption>Reconstructed weekly commits</caption><thead><tr><th>Period</th><th>Commits</th></tr></thead><tbody>{m.backfill.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></div>}
-        <table><caption>Published peer momentum and percentile; alphabetical, separate from the first-screen readings</caption><thead><tr><th>System</th><th>Momentum</th><th>Percentile</th></tr></thead><tbody>{m.peers.map(p => <tr><th>{p.name}</th><td><Number value={p.momentum} /></td><td><Number value={p.percentile} /></td></tr>)}</tbody></table>
+        <table><caption>Peer signals</caption><thead><tr><th>System</th><th>Momentum</th><th>Percentile</th></tr></thead><tbody>{m.peers.map(p => <tr><th>{p.name}</th><td><Number value={p.momentum} /></td><td><Number value={p.percentile} /></td></tr>)}</tbody></table>
         {m.state.positive_signal.state === 'published' && <img src={`/badge/${m.entity.id}/${m.state.period}.svg`} alt={`Evidaxis Rising, ${m.entity.name}`} width="232" height="56" loading="lazy" />}
-        <p class="provenance">entity_id {m.entity.id} · methodology {m.methodology} · snapshot {m.snapshot_id} · release {m.release} · <a href={m.jsonUrl} data-fnd="fnd_download">record JSON</a> · <a href={`/snapshots/${m.date}/manifest.json`} data-fnd="fnd_download">snapshot receipt</a> · <a href={`/snapshots/${m.date}/`}>source snapshot</a> · {m.urn}</p>
+        <Provenance model={m} method="measurement detail"> · <a href={m.jsonUrl} data-fnd="fnd_download">record JSON</a> · <a href={`/snapshots/${m.date}/manifest.json`} data-fnd="fnd_download">snapshot receipt</a></Provenance>
       </details>
     </section>
   </div>

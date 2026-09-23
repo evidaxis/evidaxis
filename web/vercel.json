@@ -6,6 +6,14 @@
     {
       "source": "/e/:entity_id/feed.:format(atom|json)",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/charts/e/:entity_id/:chart([^/]+-b1\\.svg)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/e/:entity_id/:file((?:values|history)-[^/]+-b1\\.csv)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ],
   "redirects": [

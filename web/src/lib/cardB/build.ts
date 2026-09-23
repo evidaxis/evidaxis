@@ -43,7 +43,7 @@ export function summarizeCohort(cohort: Entity[], raw: Record<string, number[]>)
   const length = Math.max(0, ...cohort.map(peer => (raw[peer.entity_id] ?? []).length));
   const commitBand = Array.from({ length }, (_, i) => {
     const v = cohort.map(peer => (raw[peer.entity_id] ?? [])[i]).filter(numeric);
-    return { p25: quantile(v, .25), p75: quantile(v, .75), n: v.length };
+    return { p25: quantile(v, .25), median: median(v), p75: quantile(v, .75), n: v.length };
   });
   return { cohort, peers, medians, commitBand };
 }
@@ -193,6 +193,8 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const peers = summary.peers;
   const commitBand = summary.commitBand.slice(0, ctx.commits.length);
   const display = { template: 'B', release_id: release, entity_id: e.entity_id, answer,
+    tiles: readings.filter(r => ['commits', 'citations', 'dependents', 'stars'].includes(r.key))
+      .map(r => ({ key: r.key, value: r.value, unit: r.unit, median: r.median, n: r.n, source: r.source, date: r.date })),
     answer_claims: [facets.code.claim_id, facets.citations.claim_id, facets.dependents.claim_id, facets.standing.claim_id],
     answer_comparison: primaryKey ? { key: primaryKey, median: medians[primaryKey].value, n: medians[primaryKey].n, rendered_value: fmt(own[primaryKey]) } : null,
     paper_ref: paper, paper_works: ctx.paperWorks ?? [], cohort: cohortLabel, cohort_n: cohort.length, date, urn,

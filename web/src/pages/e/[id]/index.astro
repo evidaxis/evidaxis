@@ -24,6 +24,7 @@ import Axis3Details from '../../../components/Axis3Details.astro';
 import { DEPENDENTS_AXIS, methodologyAxes } from '../../../lib/methodology';
 import CardB from '../../../components/cardB/CardB.astro';
 import { cardBFor } from '../../../lib/cardB/context';
+import { cardBGraphs } from '../../../lib/cardB/jsonld';
 import { isTemplateB, isIndexable } from '../../../lib/cardB/policy.mjs';
 
 export function getStaticPaths() {
@@ -83,7 +84,7 @@ const templateB = isTemplateB(e.entity_id, `/e/${e.entity_id}/`);
 const card = templateB ? cardBFor(record) : null;
 const indexRecord = { entity: e, measurement_state: measurementState, ...(card ? { display: card.display, readings: card.readings } : {}) };
 const graphs = [entityGraph(e, snapshot, urn, dep), crumbs];
-const pageGraphs = templateB ? JSON.parse(JSON.stringify(graphs).replace(/\u2014/g, '-').replace(/\bn\/a\b/g, 'no reading')) : graphs;
+const pageGraphs = card ? cardBGraphs(graphs, card) : graphs;
 ---
 <Base title={pageTitle} description={templateB ? `Dated measurements for ${e.name}: commits, OpenAlex citing works, direct dependents and stars, with niche medians and source records.` : desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={pageGraphs} noindex={!isIndexable(indexRecord)} feedLinks={canary !== 'control'}>
   {card ? <CardB model={card} industry={e.industry} industryLabel={indLabel} subNiche={e.sub_niche}>

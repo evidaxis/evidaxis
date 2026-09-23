@@ -14,7 +14,7 @@ export function valuesCSV(m: CardBModel) {
   return csv([
     ['entity_id', 'release_id', 'metric', 'period', 'value', 'unit', 'source', 'captured_date', 'definition', 'niche_median', 'n', 'delta_4w', 'delta_26w', 'range_52w_min', 'range_52w_max', 'previous_reading', 'niche_p25', 'niche_p75'],
     ...m.readings.filter(r => !Array.isArray(r.value)).map(r => [m.entity.id, m.release, r.key, r.date, r.value, r.unit, r.source, m.date, r.definition, r.median, r.n, r.delta4, r.delta26, r.range?.[0], r.range?.[1], r.previous, '', '']),
-    ...m.ruler.weeks.map((p, i) => [m.entity.id, m.release, 'weekly_commits', p.date, p.value, 'commits', m.readings.find(r => r.key === 'commit_series')!.source, m.date, 'Week start reconstructed from capture Sunday; original timestamps not retained', '', m.commitBand[i]?.n, '', '', '', '', '', m.commitBand[i]?.p25, m.commitBand[i]?.p75]),
+    ...m.ruler.weeks.map((p, i) => [m.entity.id, m.release, 'weekly_commits', p.date, p.value, 'commits', m.readings.find(r => r.key === 'commit_series')!.source, m.date, 'Week start reconstructed from capture Sunday; original timestamps not retained', m.commitBand[i]?.median, m.commitBand[i]?.n, '', '', '', '', '', m.commitBand[i]?.p25, m.commitBand[i]?.p75]),
     ...m.years.map(p => [m.entity.id, m.release, 'yearly_citing_works', p.year, p.value, 'citing works', m.readings.find(r => r.key === 'citation_series')!.source, m.date, 'Completed calendar year', '', '', '', '', '', '', '', '', '']),
   ]);
 }

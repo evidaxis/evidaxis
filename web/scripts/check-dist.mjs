@@ -21,6 +21,7 @@ import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
+import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -170,6 +171,39 @@ for (const htmlPath of htmlFiles.filter((file) => /\/e\/e_[^/]+\/index\.html$/.t
     for (const match of html.matchAll(/(?:href|src)="(\/(?:charts\/e\/[^"<]+\.svg|e\/[^"<]+\.(?:csv|atom)|ai\/cohorts\/[^"<]+\.csv))"/g)) {
       if (!existsSync(join(DIST, match[1]))) errors.push(`e/${id}/: missing B artifact ${match[1]}`);
     }
+    const tree = parseHTML(html), card = cardArticle(tree);
+    if (card) {
+      for (const caption of elements(card, node => node.tag === 'figcaption')) {
+        const content = plainText(caption);
+        if (!/\d/.test(content) || !/\b\d{4}-\d{2}-\d{2}\b/.test(content)) errors.push(`e/${id}/: chart caption needs a number and date`);
+      }
+      for (const figure of elements(card, node => hasClass(node, 'card-b-chart'))) {
+        const image = elements(figure, node => node.tag === 'img')[0];
+        const caption = elements(figure, node => node.tag === 'figcaption')[0];
+        if (image?.attrs.alt?.includes('vs niche median') && (!caption || !/\bmedian\b/i.test(plainText(caption)))) {
+          errors.push(`e/${id}/: chart with niche comparator needs median in figcaption`);
+        }
+      }
+      for (const image of elements(card, node => node.tag === 'img' && /^\/charts\/e\//.test(node.attrs.src ?? ''))) {
+        const alt = image.attrs.alt ?? '';
+        const prefix = alt.match(/^(line|heatmap|bar|dot plot|slope|sparkline) chart: /)?.[0] ?? '';
+        const rest = prefix && alt.startsWith(`${prefix}${record.entity.name}, `) ? alt.slice(prefix.length + record.entity.name.length + 2) : '';
+        const firstComma = rest.indexOf(', '), lastComma = rest.lastIndexOf(', ');
+        const metric = firstComma > 0 ? rest.slice(0, firstComma) : '';
+        const period = lastComma > firstComma ? rest.slice(lastComma + 2) : '';
+        if (!prefix || !metric || !/\b\d{4}\b/.test(period) || !/\d/.test(rest)) errors.push(`e/${id}/: chart alt needs type, system, metric, value and period`);
+      }
+      for (const provenance of elements(card, node => hasClass(node, 'provenance'))) {
+        const fields = elements(provenance, node => 'data-provenance' in node.attrs).map(node => node.attrs['data-provenance']);
+        if (fields.join(',') !== 'source,period,n,method,updated,version') errors.push(`e/${id}/: provenance needs source, period, n, method, updated, version`);
+      }
+    }
+    const graphScripts = elements(tree, node => node.tag === 'script' && node.attrs.type === 'application/ld+json');
+    const graphNodes = graphScripts.flatMap(script => { try { const value = JSON.parse(script.children.join('')); return Array.isArray(value) ? value : [value]; } catch { return []; } })
+      .flatMap(value => Array.isArray(value['@graph']) ? value['@graph'] : [value]);
+    if (!graphNodes.some(node => node['@type'] === 'Dataset' && (Array.isArray(node.distribution) ? node.distribution : [node.distribution]).some(d => d?.['@type'] === 'DataDownload' && d.encodingFormat === 'text/csv')))
+      errors.push(`e/${id}/: Dataset CSV DataDownload missing`);
+    if (!graphNodes.some(node => node['@type'] === 'WebPage' && node.primaryImageOfPage?.['@type'] === 'ImageObject')) errors.push(`e/${id}/: WebPage primaryImageOfPage missing`);
   } else if (record.display || record.facets || record.readings || record.changes || html.includes('data-card-b')) {
     errors.push(`e/${id}/: A/protected record contains B additions`);
   }

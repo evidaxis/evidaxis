@@ -13,7 +13,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "check": "node scripts/check-dist.mjs",
-    "verify": "npm run test:run && npm run build && npm run check"
+    "verify": "npm run test:run && npm run build && npm run check && node scripts/card-b-consistency.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",

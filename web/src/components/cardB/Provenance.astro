@@ -1,0 +1,9 @@
+---
+import type { CardBModel } from '../../lib/cardB/build';
+import { assertPublicText } from '../../lib/cardB/facets';
+export interface Props { model: CardBModel; source?: string; href?: string; period?: string; n?: number; unit?: 'weeks' | 'years' | 'partitions' | 'systems'; method?: string }
+const { model: m, source = 'Evidaxis', href = `/snapshots/${m.date}/`, period = m.date, n = 1, unit = 'systems', method = m.methodology } = Astro.props;
+const unitLabel = n === 1 ? { systems: 'system', weeks: 'week', years: 'year', partitions: 'partition' }[unit] : unit;
+assertPublicText(`${source} ${period} ${n} ${unit} ${method} ${m.date} ${m.release}`, m.entity.name);
+---
+<p class="provenance"><span data-provenance="source"><a href={href}>{source}</a></span> · <span data-provenance="period">period {period}</span> · <span data-provenance="n">n = <data value={n}>{n}</data> {unitLabel}</span> · <span data-provenance="method">method <a href={`/methodology/${m.methodology}/`}>{method}</a></span> · <span data-provenance="updated">updated <time datetime={m.date}>{m.date}</time></span> · <span data-provenance="version">version <code>{m.release}</code></span><slot /></p>
