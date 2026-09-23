@@ -1,0 +1,7 @@
+---
+import { xml } from '../../lib/cardB/exports';
+export interface Props { text: string }
+const { text } = Astro.props;
+const html = xml(text).replace(/(?<![\w.\/-])(\d+(?:\.\d+)?)(?![\w.\/-])/g, '<data value="$1">$1</data>');
+---
+<Fragment set:html={html} />

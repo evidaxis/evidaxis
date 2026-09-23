@@ -1,0 +1,40 @@
+✔ prod serves the newest committed snapshot → ok, no alert (0.750834ms)
+✔ snapshot missing on prod, publication window still open → quiet (0.059959ms)
+✔ snapshot missing on prod past the window → stale, ALERT (0.094167ms)
+✔ site unreachable → unknown, no alert (that is the liveness sensor fact) (0.047792ms)
+✔ unparseable snapshot date cannot buy silence (0.060083ms)
+✔ grace window is configurable and respected (0.054125ms)
+✔ feed entry age at eight days is accepted (0.091375ms)
+✔ feed entry older than eight days alerts (0.045125ms)
+✔ feed with an invalid latest-entry date cannot report fresh (0.05675ms)
+✔ archive snapshot younger than the capture budget is fresh (0.555292ms)
+✔ archive snapshot older than the capture budget alerts (0.115166ms)
+✔ archive age exactly at the budget boundary is fresh (0.069583ms)
+✔ malformed archive snapshot date alerts fail-closed (0.048709ms)
+✔ 200 + marker → ok, no alert (0.665125ms)
+✔ 200 but marker missing → degraded, ALERT (0.063875ms)
+✔ non-200 (503) → down, ALERT (0.056083ms)
+✔ unreachable (no response) → down, ALERT (0.052583ms)
+✔ red latest run alerts and keeps the actions link at the end (0.825459ms)
+✔ scheduled workflow alerts when the latest success exceeds its budget (0.090333ms)
+✔ recent successful scheduled workflow is quiet (0.053833ms)
+✔ event-driven workflow ignores the age of its latest completed run (0.051458ms)
+✔ roster entry without a completed run fails closed (0.102667ms)
+✔ the watchdog stays quiet about its own red run (no self-latch) (0.070958ms)
+✔ the watchdog stays quiet about its own missed cron slots (0.05275ms)
+✔ a red run of a NON-self workflow still alerts (0.051542ms)
+✔ a stale sensor goes quiet when the site itself is verified up (0.091375ms)
+✔ a stale sensor stays loud when the site is actually down (0.097875ms)
+✔ an unobtainable fact keeps the alert loud (fail closed) (0.060833ms)
+✔ drought quiets schedule-only staleness and adds one platform line (0.669917ms)
+✔ drought never quiets a workflow whose miss costs un-backfillable capture (0.082375ms)
+✔ drought never quiets a row whose fact check came back bad (0.054333ms)
+✔ one stale workflow while the scheduler keeps dispatching is NOT a drought (0.041042ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.070208

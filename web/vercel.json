@@ -2,6 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
   "cleanUrls": false,
+  "headers": [
+    {
+      "source": "/e/:entity_id/feed.:format(atom|json)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    }
+  ],
   "redirects": [
     {
       "source": "/sitemap.xml",
@@ -9,7 +15,7 @@
       "permanent": true
     },
     {
-      "source": "/e/:entity_id/:slug",
+      "source": "/e/:entity_id/:slug((?!feed\\.(?:atom|json)$|(?:values|history)-[^/]+\\.csv$)[^/]+)",
       "destination": "/e/:entity_id/",
       "permanent": true
     },

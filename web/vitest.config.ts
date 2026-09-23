@@ -1,10 +1,10 @@
-import { defineConfig } from 'vitest/config';
+import { getViteConfig } from 'astro/config';
 
-// Minimal Vitest config for the pure lib layer (charts.ts, derived.ts).
-// Node environment: these modules are DOM-free by design.
-export default defineConfig({
+// Astro's renderer tests the actual B component without a browser or listener.
+export default getViteConfig({
+  server: { hmr: false },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
   },
-});
+}, { configFile: false, integrations: [] });

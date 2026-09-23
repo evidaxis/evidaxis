@@ -1,0 +1,71 @@
+astro.config.mjs(35,32): error TS7006: Parameter 'page' implicitly has an 'any' type.
+astro.config.mjs(72,111): error TS2322: Type '"weekly"' is not assignable to type 'EnumChangefreq | undefined'.
+src/lib/jsonld.test.ts(16,12): error TS18048: 'org' is possibly 'undefined'.
+src/lib/jsonld.test.ts(17,26): error TS18048: 'org' is possibly 'undefined'.
+src/lib/jsonld.test.ts(18,12): error TS18048: 'org' is possibly 'undefined'.
+src/lib/jsonld.test.ts(25,12): error TS18048: 'org' is possibly 'undefined'.
+src/lib/jsonld.test.ts(25,12): error TS18048: 'org.sameAs' is possibly 'undefined'.
+src/lib/jsonld.test.ts(26,12): error TS18048: 'org' is possibly 'undefined'.
+src/lib/jsonld.test.ts(33,27): error TS18048: 'org' is possibly 'undefined'.
+src/lib/jsonld.test.ts(39,12): error TS18048: 'catalog' is possibly 'undefined'.
+src/lib/jsonld.test.ts(39,12): error TS18048: 'catalog.identifier' is possibly 'undefined'.
+src/lib/jsonld.test.ts(40,26): error TS18048: 'catalog' is possibly 'undefined'.
+src/lib/jsonld.test.ts(41,12): error TS18048: 'catalog' is possibly 'undefined'.
+src/lib/jsonld.test.ts(43,21): error TS18048: 'catalog' is possibly 'undefined'.
+src/lib/jsonld.test.ts(43,21): error TS18048: 'catalog.dataset' is possibly 'undefined'.
+src/lib/jsonld.test.ts(45,14): error TS18048: 'entry' is possibly 'undefined'.
+src/lib/jsonld.test.ts(119,12): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(119,15): error TS2339: Property 'identifier' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'identifier' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(120,12): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(120,15): error TS2339: Property 'sameAs' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'sameAs' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(125,12): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(125,15): error TS2339: Property 'identifier' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'identifier' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(126,12): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(126,15): error TS2339: Property 'sameAs' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'sameAs' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(131,26): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(131,29): error TS2339: Property 'distribution' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'distribution' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(132,19): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(132,22): error TS2339: Property 'distribution' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'distribution' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(139,18): error TS18048: 'ds' is possibly 'undefined'.
+src/lib/jsonld.test.ts(139,21): error TS2339: Property 'distribution' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { license: string; isAccessibleForFree: boolean; creator: { '@id': string; }; publisher: { '@id': string; }; includedInDataCatalog: { '@type': string; '@id': string; name: string; url: string; }; ... 14 more ...; identifier: string | { ...; }; }'.
+  Property 'distribution' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(149,12): error TS18048: 'list' is possibly 'undefined'.
+src/lib/jsonld.test.ts(149,17): error TS2339: Property 'numberOfItems' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { isBasedOn: string; citation: { '@type': string; '@id': string; name: string; url: string; version: string; }; mainEntity: { '@id': string; }; temporalCoverage?: string | undefined; ... 14 more ...; itemListElement?: undefined; } | { ...; }'.
+  Property 'numberOfItems' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(150,12): error TS18048: 'list' is possibly 'undefined'.
+src/lib/jsonld.test.ts(150,17): error TS2339: Property 'itemListElement' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { isBasedOn: string; citation: { '@type': string; '@id': string; name: string; url: string; version: string; }; mainEntity: { '@id': string; }; temporalCoverage?: string | undefined; ... 14 more ...; itemListElement?: undefined; } | { ...; }'.
+  Property 'itemListElement' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(151,12): error TS18048: 'list' is possibly 'undefined'.
+src/lib/jsonld.test.ts(151,17): error TS2339: Property 'itemListElement' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { isBasedOn: string; citation: { '@type': string; '@id': string; name: string; url: string; version: string; }; mainEntity: { '@id': string; }; temporalCoverage?: string | undefined; ... 14 more ...; itemListElement?: undefined; } | { ...; }'.
+  Property 'itemListElement' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(168,12): error TS18048: 'doc' is possibly 'undefined'.
+src/lib/jsonld.test.ts(168,16): error TS2339: Property 'version' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { '@type': string[]; '@id': string; name: string; headline: string; description: string; url: string; version: string; datePublished: string; dateModified: string; ... 6 more ...; hasDefinedTerm?: undefined; } | { ...; }'.
+  Property 'version' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(175,12): error TS18048: 'doc' is possibly 'undefined'.
+src/lib/jsonld.test.ts(175,16): error TS2339: Property 'hasDefinedTerm' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { '@type': string[]; '@id': string; name: string; headline: string; description: string; url: string; version: string; datePublished: string; dateModified: string; ... 6 more ...; hasDefinedTerm?: undefined; } | { ...; }'.
+  Property 'hasDefinedTerm' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(176,12): error TS18048: 'doc' is possibly 'undefined'.
+src/lib/jsonld.test.ts(176,16): error TS2339: Property 'about' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { '@type': string[]; '@id': string; name: string; headline: string; description: string; url: string; version: string; datePublished: string; dateModified: string; ... 6 more ...; hasDefinedTerm?: undefined; } | { ...; }'.
+  Property 'about' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(176,35): error TS18048: 'terms' is possibly 'undefined'.
+src/lib/jsonld.test.ts(177,12): error TS18048: 'doc' is possibly 'undefined'.
+src/lib/jsonld.test.ts(177,16): error TS2339: Property 'mentions' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { '@type': string[]; '@id': string; name: string; headline: string; description: string; url: string; version: string; datePublished: string; dateModified: string; ... 6 more ...; hasDefinedTerm?: undefined; } | { ...; }'.
+  Property 'mentions' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/lib/jsonld.test.ts(177,38): error TS18048: 'terms' is possibly 'undefined'.
+src/lib/jsonld.test.ts(178,12): error TS18048: 'terms' is possibly 'undefined'.
+src/lib/jsonld.test.ts(178,18): error TS2339: Property 'hasDefinedTerm' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; } | { '@type': string[]; '@id': string; name: string; headline: string; description: string; url: string; version: string; datePublished: string; dateModified: string; ... 6 more ...; hasDefinedTerm?: undefined; } | { ...; }'.
+  Property 'hasDefinedTerm' does not exist on type '{ '@type': string; '@id': string; name: string; url: string; }'.
+src/pages/snapshots/[date]/dropped.json.ts(20,23): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
+  Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.
+src/pages/snapshots/[date]/manifest.json.ts(19,23): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
+  Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.
+src/pages/snapshots/[date]/provenance.json.ts(19,23): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
+  Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.
+src/pages/snapshots/[date]/SHA256SUMS.ts(19,23): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'BodyInit | null | undefined'.
+  Type 'Buffer<ArrayBufferLike>' is missing the following properties from type 'URLSearchParams': size, append, delete, get, and 2 more.

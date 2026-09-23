@@ -5,6 +5,7 @@ import sentry from '@sentry/astro';
 import { loadEnv } from 'vite';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { isIndexable } from './src/lib/cardB/policy.mjs';
 
 // Sentry DSN читаем на сборке (loadEnv видит .env файлы + реальный process.env).
 // Сайт статический → Sentry ловит только клиентские (браузерные) ошибки; DSN публичный.
@@ -40,7 +41,7 @@ const entityPageIsIndexable = (page) => {
   let indexable = false;
   try {
     const twin = JSON.parse(readFileSync(join(DIST, 'e', `${id}.json`), 'utf8'));
-    indexable = twin?.measurement_state?.history_sufficiency?.state === 'sufficient';
+    indexable = isIndexable(twin);
   } catch {}
   entityIndexability.set(id, indexable);
   return indexable;
@@ -54,6 +55,7 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
+      customSitemaps: ['https://evidaxis.org/sitemap-card-b-images.xml'],
       // _charttest is an underscore private route (not built); filter is belt-and-suspenders.
       filter: (page) =>
         !page.includes('/charttest')

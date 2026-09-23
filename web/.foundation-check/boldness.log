@@ -1,0 +1,11 @@
+boldness-lint · периметр 1 · находок 6 (код 6 / док 0)
+
+== . · 6
+  [РЕЖЕТ-ДЕНЬГИ·NOINDEX] web/src/layouts/Base.astro:65 · <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-image-preview:l
+  [РЕЖЕТ-ДЕНЬГИ·NOINDEX] web/src/lib/minutes.ts:23 · noindex: boolean;
+  [РЕЖЕТ-ДЕНЬГИ·NOINDEX] web/src/lib/minutes.ts:197 · noindex: false,
+  [РЕЖЕТ-ДЕНЬГИ·NOINDEX] web/src/pages/_charttest/index.astro:64 · <meta name="robots" content="noindex, nofollow" />
+  [РЕЖЕТ-ДЕНЬГИ·NOINDEX] web/src/pages/_charttest/index.astro:65 · <meta name="googlebot" content="noindex, nofollow" />
+  [РЕЖЕТ-ДЕНЬГИ·NOINDEX] web/vercel.json:8 · "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+
+Легитимное употребление — пометь в строке `boldness-ok`. Подсказки по классам: --json → hint.

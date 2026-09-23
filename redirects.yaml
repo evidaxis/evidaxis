@@ -5,7 +5,7 @@ rules:
   - from: '/sitemap.xml'
     to: '/sitemap-index.xml'
     status: 301
-  - from: '/e/:entity_id/:slug'
+  - from: '/e/:entity_id/:slug((?!feed\.(?:atom|json)$|(?:values|history)-[^/]+\.csv$)[^/]+)'
     to: '/e/:entity_id/'
     status: 301
   - from: '/methodology'

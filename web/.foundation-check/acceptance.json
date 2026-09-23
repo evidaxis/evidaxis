@@ -1,0 +1,21 @@
+{
+  "snapshot": "2026-09-19",
+  "html_pages": 917,
+  "b_pages": 80,
+  "b_indexable": 80,
+  "b_citation_blocks": 80,
+  "b_numeric_comparator_first_paragraphs": 80,
+  "b_em_dashes": 0,
+  "b_na_placeholders": 0,
+  "all_html_em_dashes": 2879,
+  "csv_files": 1493,
+  "chart_svg_files": 3337,
+  "feed_pairs": 80,
+  "largest_answer_pattern_share": 0.2875,
+  "problems": [],
+  "subtraction_diagnostic": {
+    "method": "Remove script/style/SVG, data nodes, and answer or claim paragraphs from Card B article, then count whitespace-delimited text words. This does not assert visual word density.",
+    "min_residual_share": 0.6799,
+    "max_residual_share": 0.7334
+  }
+}

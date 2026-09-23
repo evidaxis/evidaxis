@@ -1,0 +1,6 @@
+---
+import { fmt } from '../../lib/cardB/build';
+export interface Props { value: number | null; source?: string; date?: string; entity?: string }
+const { value, source, date, entity } = Astro.props;
+---
+{value === null ? <span class="no-reading">no reading</span> : <data value={String(value)} data-source={source} data-date={date} data-entity={entity}>{fmt(value)}</data>}

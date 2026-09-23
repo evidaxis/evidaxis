@@ -20,6 +20,7 @@ import { controlShellHash } from './canary-shell.mjs';
 import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
+import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -120,9 +121,7 @@ for (const pair of CANARY.pairs ?? []) {
   }
 }
 
-// Registry growth policy: entity indexability comes only from the measurement
-// state serialized in the JSON twin. Current sufficient records must be in a
-// sitemap; insufficient records must be absent from every sitemap.
+// FR-1: the same content evidence drives Base robots and sitemap generation.
 const sitemapFiles = distFiles.filter((file) => /(^|\/)sitemap-.*\.xml$/.test(rel(file)));
 const sitemaps = sitemapFiles.map((file) => readFileSync(file, 'utf8'));
 for (const htmlPath of htmlFiles.filter((file) => /\/e\/e_[^/]+\/index\.html$/.test(file))) {
@@ -143,18 +142,36 @@ for (const htmlPath of htmlFiles.filter((file) => /\/e\/e_[^/]+\/index\.html$/.t
   const directives = new Set(robots.split(',').map((value) => value.trim()));
   const canonical = `https://evidaxis.org/e/${id}/`;
   const inSitemap = sitemaps.some((body) => body.includes(`<loc>${canonical}</loc>`));
-  const historyState = record?.measurement_state?.history_sufficiency?.state;
+  const indexable = isIndexable(record);
 
-  if (historyState !== 'sufficient') {
-    if (!directives.has('noindex')) errors.push(`e/${id}/index.html: insufficient history must set robots noindex`);
-    if (inSitemap) errors.push(`e/${id}/: insufficient history must be absent from every sitemap`);
+  if (!indexable) {
+    if (!directives.has('noindex') || !directives.has('follow')) errors.push(`e/${id}/index.html: non-indexable record must set robots noindex, follow`);
+    if (inSitemap) errors.push(`e/${id}/: non-indexable record must be absent from every sitemap`);
   } else {
-    if (!directives.has('index') || !directives.has('follow')) {
-      errors.push(`e/${id}/index.html: sufficient history must set robots index, follow`);
+    if (!directives.has('index') || !directives.has('follow') || directives.has('noindex')) { // boldness-ok: detects unintended index suppression, does not impose it.
+      errors.push(`e/${id}/index.html: indexable record must set robots index, follow`);
     }
-    if (record.record_status === 'current' && !inSitemap) {
-      errors.push(`e/${id}/: current entity with sufficient history must be present in a sitemap`);
+    if (!inSitemap) {
+      errors.push(`e/${id}/: indexable entity must be present in a sitemap`);
     }
+  }
+  if (isTemplateB(id)) {
+    if (record.display?.template !== 'B' || !html.includes('data-card-b')) errors.push(`e/${id}/: B assignment missing its projection`);
+    if (!/data-b-citation/.test(html)) errors.push(`e/${id}/: B citation block missing`);
+    const answer = html.match(/<p[^>]*data-b-answer[^>]*>([\s\S]*?)<\/p>/)?.[1]?.replace(/<[^>]+>/g, '') ?? '';
+    if (!/\d/.test(answer) || !/\bmedian\b/.test(answer)) errors.push(`e/${id}/: B answer needs a number and median comparator`);
+    const words = answer.trim().split(/\s+/).length;
+    if (words < 40 || words > 60) errors.push(`e/${id}/: B answer has ${words} words, expected 40-60`);
+    if (/\bn\/a\b/i.test(html)) errors.push(`e/${id}/: B contains n/a`);
+    if (/\u2014/.test(html)) errors.push(`e/${id}/: B contains U+2014`);
+    if (/\b(?:dead|abandoned|dormant|stale|unmaintained|declining|suspended)\b/i.test(html.replace(/<script[\s\S]*?<\/script>/g, ''))) errors.push(`e/${id}/: B contains a forbidden system judgement`);
+    const scripts = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map(m => m[1]).filter(s => s.includes("querySelector('[data-card-b]')"));
+    if (scripts.length !== 1 || Buffer.byteLength(scripts[0]) > 1024) errors.push(`e/${id}/: B interaction script missing or over 1 KB`);
+    for (const match of html.matchAll(/(?:href|src)="(\/(?:charts\/e\/[^"<]+\.svg|e\/[^"<]+\.(?:csv|atom)|ai\/cohorts\/[^"<]+\.csv))"/g)) {
+      if (!existsSync(join(DIST, match[1]))) errors.push(`e/${id}/: missing B artifact ${match[1]}`);
+    }
+  } else if (record.display || record.facets || record.readings || record.changes || html.includes('data-card-b')) {
+    errors.push(`e/${id}/: A/protected record contains B additions`);
   }
 }
 

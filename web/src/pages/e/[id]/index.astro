@@ -22,6 +22,9 @@ import { canaryGroup, treatmentAnswerFirst, treatmentTitle } from '../../../lib/
 import CitationBlock from '../../../components/CitationBlock.astro';
 import Axis3Details from '../../../components/Axis3Details.astro';
 import { DEPENDENTS_AXIS, methodologyAxes } from '../../../lib/methodology';
+import CardB from '../../../components/cardB/CardB.astro';
+import { cardBFor } from '../../../lib/cardB/context';
+import { isTemplateB, isIndexable } from '../../../lib/cardB/policy.mjs';
 
 export function getStaticPaths() {
   return entityUniverse.map((record) => ({ params: { id: record.entity.entity_id }, props: { record } }));
@@ -76,9 +79,22 @@ const momStr = e.momentum != null ? `${e.momentum.toFixed(1)} of 100` : 'not yet
 const bluf = `${e.name} holds an Evidaxis momentum score of ${momStr} on methodology ${snapshot.methodology_version}, snapshot ${snapshot.snapshot_date}, measured within the ${cohortName} cohort (n = ${cohortN}). ${statePhrases.axis_coverage} ${statePhrases.gate}`;
 const answerFirst = treatmentAnswerFirst(e.name, cohortName, measurementState);
 const pageTitle = isTreatment ? treatmentTitle(e.name, measurementState) : `${e.name}, Evidaxis measurement`;
+const templateB = isTemplateB(e.entity_id, `/e/${e.entity_id}/`);
+const card = templateB ? cardBFor(record) : null;
+const indexRecord = { entity: e, measurement_state: measurementState, ...(card ? { display: card.display, readings: card.readings } : {}) };
+const graphs = [entityGraph(e, snapshot, urn, dep), crumbs];
+const pageGraphs = templateB ? JSON.parse(JSON.stringify(graphs).replace(/\u2014/g, '-').replace(/\bn\/a\b/g, 'no reading')) : graphs;
 ---
-<Base title={pageTitle} description={desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={[entityGraph(e, snapshot, urn, dep), crumbs]} noindex={measurementState.history_sufficiency.state !== 'sufficient'} feedLinks={canary !== 'control'}>
-  <section class="section ent-wrap">
+<Base title={pageTitle} description={templateB ? `Dated measurements for ${e.name}: commits, OpenAlex citing works, direct dependents and stars, with niche medians and source records.` : desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={pageGraphs} noindex={!isIndexable(indexRecord)} feedLinks={canary !== 'control'}>
+  {card ? <CardB model={card} industry={e.industry} industryLabel={indLabel} subNiche={e.sub_niche}>
+    <Fragment slot="measurement">
+      {!isSuperseded && <EntityCard entity={e} />}
+      <div class="db-grid"><SwingSignal series={cs} /><SharpeSignal series={cs} /><ChangepointSignal series={cs} /><LagSignal /><AlphaSignal /></div>
+      <SignalQuality entity={e} series={cs} />
+      <SnapshotProvenance total={card.history.length} index={card.history.length} />
+      {methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS) && <Axis3Details axis={e.axes.deps_direct_dependents_momentum} snapshotDate={snapshot.snapshot_date} phrase={statePhrases.dependents_axis} />}
+    </Fragment>
+  </CardB> : (<>{' '}<section class="section ent-wrap">
     <div class="wrap">
       <nav class="crumb mono" aria-label="Breadcrumb">
         <a href="/coverage/">coverage</a> /
@@ -231,7 +247,7 @@ const pageTitle = isTreatment ? treatmentTitle(e.name, measurementState) : `${e.
         Durable reference (format-independent): <b>{urn}</b>
       </p>
     </div>
-  </section>
+  </section>{' '}</>)}
 </Base>
 
 <style>

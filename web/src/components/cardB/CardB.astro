@@ -1,0 +1,166 @@
+---
+import type { CardBModel } from '../../lib/cardB/build';
+import { fmt } from '../../lib/cardB/build';
+import { chartsFor } from '../../lib/cardB/charts';
+import { assertPublicText } from '../../lib/cardB/facets';
+import { CARD_B_CLIENT } from '../../lib/cardB/client';
+import Chart from './Chart.astro';
+import Number from './Number.astro';
+import Sentence from './Sentence.astro';
+
+export interface Props { model: CardBModel; industry: string; industryLabel: string; subNiche: string }
+const { model: m, industry, industryLabel, subNiche } = Astro.props;
+const charts = chartsFor(m), readings = m.readings.filter(r => !r.key.endsWith('_series'));
+const tileKeys = ['commits', 'citations', 'dependents', 'stars'];
+const report = `mailto:hello@evidaxis.org?subject=${encodeURIComponent(`Measurement correction: ${m.entity.id} / ${m.release}`)}`;
+const claim = (key: string) => `urn:evidaxis:claim:class:${key}:b1`;
+const annualSource = m.readings.find(r => r.key === 'citations')!.source;
+const codeSource = m.readings.find(r => r.key === 'commits')!.source;
+const citationCount = m.readings.find(r => r.key === 'citations')!.value as number | null;
+const workSearch = (id: string) => encodeURIComponent(m.display.paper_works.find(p => p.id === id)?.title ?? (m.workIds.length === 1 && m.paper ? `arXiv:${m.paper}` : `https://openalex.org/${id}`));
+// Existing instruments remain intact in Measurement detail. The B projection
+// replaces only missing-value typography, heading depth and canonical dashes.
+let legacy = (await Astro.slots.render('measurement')).replace(/\u2014/g, '-')
+  .replace(/\bn\/a\b/g, 'no reading').replace(/<h1\b/g, '<h3').replace(/<\/h1>/g, '</h3>')
+  .replace(/\bstale\b/g, 'outside freshness window');
+// A missing citation trend must not hide a measured total in the retained
+// instruments either. This projection never changes the A component's output.
+if (citationCount !== null) legacy = legacy.replace(/(<div class="k"[^>]*>total citations<\/div>\s*<div class="v amber"[^>]*>)[\s\S]*?(<\/div>)/, `$1<data value="${citationCount}">${fmt(citationCount)}</data>$2`);
+assertPublicText(legacy, m.entity.name);
+if (new TextEncoder().encode(CARD_B_CLIENT).length > 1024) throw new Error('Card B client exceeds 1 KB');
+---
+<article class="card-b wrap" data-card-b data-entity={m.entity.id} data-release={m.release}>
+  <nav class="crumb mono" aria-label="Breadcrumb">
+    <a href="/coverage/">coverage</a> / <a href={`/ai/fields/${industry}/`}>{industryLabel.toLowerCase()}</a> / <a href={`/ai/cohorts/${subNiche}/`}>{m.cohortLabel}</a> / <span>{m.entity.name}</span>
+  </nav>
+  {m.superseded && <p>Preserved historical record; record status: superseded; last measured {m.date}.</p>}
+  <header class="card-b-hero">
+    <div class="card-b-eyebrow">A dated record, with sources</div>
+    <h1>{m.entity.name}</h1>
+    <div class="card-b-identity">{m.entity.type} · {m.cohortLabel}, n = <data value={m.peers.length}>{m.peers.length}</data> · {m.repoUrl ? <a href={m.repoUrl}>{m.repoLabel}</a> : m.repoLabel} · paper: {m.workIds.length ? m.workIds.join(', ') : m.paper ? `arXiv:${m.paper} (on file; not matched in OpenAlex)` : 'not linked'} · as of <time datetime={m.date}>{m.date}</time></div>
+    <p class="answer card-b-answer" data-b-answer data-claim={m.display.answer_claims.join(' ')}><Sentence text={m.display.answer} /></p>
+    <div class="card-b-tiles">
+      {tileKeys.map(key => { const r = readings.find(r => r.key === key)!; return <div class:list={['card-b-tile', { 'card-b-stars': key === 'stars' }]}>
+        <span class="card-b-tile-label">{key === 'commits' ? 'commits/wk' : key === 'dependents' ? 'direct dependents' : key}</span>
+        <strong><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></strong>
+        <span>{key === 'commits' ? 'averaged, trailing window' : key === 'citations' ? 'completed calendar years' : key === 'dependents' ? `partition ${r.date}` : 'recorded, not scored'}</span>
+        <span>niche median <Number value={r.median} /> (n = <data value={r.n}>{r.n}</data>)</span>
+        {key === 'commits' && <span>{m.ruler.lastCommitWeek ? <>last commit week {m.ruler.lastCommitWeek}</> : <>Δ vs 26 weeks ago: <Number value={m.ruler.delta26} /></>}</span>}
+        {r.value === null && <span>{m.missing.find(x => x.key === key)?.reason}</span>}
+        <small>{r.value === null ? 'no reading' : 'measured'} · {r.source ? <a href={r.source}>{key === 'citations' ? 'OpenAlex' : key === 'dependents' ? 'deps.dev snapshot' : 'GitHub'}</a> : 'no source reading'} · <time datetime={r.date}>{r.date}</time></small>
+      </div>; })}
+    </div>
+    <div class="card-b-actions">
+      <a class="card-b-primary" href={m.valuesUrl} download data-fnd="fnd_download">Download values (CSV)</a>
+      <a href={m.jsonUrl} data-fnd="fnd_download">JSON record</a>
+      <button data-fnd="fnd_cite_copy" data-copy={m.texts.citation.text}>Copy citation</button>
+      <a href={m.feedUrl} data-fnd="fnd_follow">Follow this system (feed)</a>
+      <a href={report} data-fnd="fnd_report_error">Report an error</a>
+      {m.state.positive_signal.state === 'published' && <button data-fnd="fnd_cite_copy" data-copy={`[![Evidaxis: ${m.entity.name}](https://evidaxis.org/badge/${m.entity.id}/${m.state.period}.svg)](${m.url})`}>Copy Rising badge</button>}
+    </div>
+  </header>
+  <div class="card-b-body">
+    {m.ruler.weeks.length > 0 && <section class="card-b-section card-b-code" id="code" data-block="1" data-claim={m.facets.code.claim_id} data-class={m.facets.code.id} data-release={m.release}>
+      <h2>Is {m.entity.name} still maintained?</h2>
+      <p class="answer"><Sentence text={m.facets.code.text} /></p>
+      <p data-claim={m.texts.average.claim_id}><Sentence text={m.texts.average.text} /></p>
+      <p data-claim={m.texts.code.claim_id}><Sentence text={m.texts.code.text} /></p>
+      <p class="card-b-ruler">Δ 4 weeks: <Number value={m.ruler.delta4} /> · Δ 26 weeks: <Number value={m.ruler.delta26} /> · 52-week range: <Number value={m.ruler.range?.[0] ?? null} /> to <Number value={m.ruler.range?.[1] ?? null} /> commits in an individual week.</p>
+      <Chart chart={charts.commits} />
+      <div class="card-b-scroll"><table><caption>Latest eight captured weeks; niche P25-P75 uses the same weekly positions</caption><thead><tr><th>Week starting</th><th>Commits</th><th>Niche P25</th><th>Niche P75</th></tr></thead><tbody>
+        {m.ruler.weeks.slice(-8).map((p, i) => { const b = m.commitBand[m.ruler.weeks.length - Math.min(8, m.ruler.weeks.length) + i]; return <tr><th>{p.date}</th><td><Number value={p.value} /></td><td><Number value={b?.p25 ?? null} /></td><td><Number value={b?.p75 ?? null} /></td></tr>; })}
+      </tbody></table></div>
+      <Chart chart={charts.heatmap} />
+      <details><summary>All {m.ruler.weeks.length} weekly readings</summary><table><caption>Complete captured commit series</caption><thead><tr><th>Week starting</th><th>Commits</th></tr></thead><tbody>{m.ruler.weeks.map(p => <tr><th>{p.date}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>
+      <p class="provenance"><a href={codeSource}>GitHub commit_activity</a> · captured {m.date} · n = <data value={m.ruler.weeks.length}>{m.ruler.weeks.length}</data> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a> · <a href={report} data-fnd="fnd_report_error">Report an error</a>. Week starts reconstructed from capture Sunday; raw provenance retains counts, not original week timestamps.</p>
+    </section>}
+
+    <section class="card-b-section card-b-readings" id="readings" data-block="readings" data-claim={m.texts.readings.claim_id} data-class="READINGS" data-release={m.release}>
+      <h2>Readings, definitions and dates</h2>
+      <div class="card-b-scroll"><table><caption>{m.texts.readings.text}</caption><thead><tr><th>Reading</th><th>Value</th><th>Δ 4 weeks</th><th>Δ 26 weeks</th><th>52-week range</th><th>Instrument and definition</th><th>Date</th><th>Reproduce</th><th>Previous reading</th></tr></thead><tbody>
+        {readings.map(r => <tr><th>{r.label}</th><td><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></td><td><Number value={r.delta4} /></td><td><Number value={r.delta26} /></td><td>{r.range ? <><Number value={r.range[0]} /> to <Number value={r.range[1]} /></> : 'no reading'}</td><td>{r.definition}</td><td>{r.date}</td><td>{r.source ? <a href={r.source}>Public query</a> : 'not linked'}</td><td><Number value={r.previous} /></td></tr>)}
+      </tbody></table></div>
+      <p class="provenance">Sources and dates are attached to every measured value. Comparisons without a prior captured reading remain missing.</p>
+    </section>
+
+    {m.workIds.length > 0 && <section class="card-b-section" id="citations" data-block="2" data-claim={m.facets.citations.claim_id} data-class={m.facets.citations.id} data-release={m.release}>
+      <h2>How many citations does {m.entity.name} have?</h2>
+      <p class="answer"><Sentence text={m.facets.citations.text} /></p>
+      <Chart chart={charts.citations} />
+      <table><caption>OpenAlex citing works by completed calendar year</caption><thead><tr><th>Year</th><th>Citing works</th></tr></thead><tbody>{m.years.map(p => <tr><th>{p.year}</th><td><Number value={p.value} source={annualSource} date={m.date} entity={m.entity.id} /></td></tr>)}<tr><th>Total in completed years</th><td><Number value={m.readings.find(r => r.key === 'citations')!.value as number} /></td></tr></tbody></table>
+      <p class="provenance">{m.workIds.join(', ')} · {m.date} · {m.texts.citation_scope.text} <a href={m.valuesUrl} download data-fnd="fnd_download">CSV by year</a></p>
+      <p class="card-b-indexes" data-claim={m.texts.citations_difference.claim_id}>{m.texts.citations_difference.text} Check the same work: {m.workIds.map(id => <span><a href={`https://openalex.org/${id}`} data-fnd="fnd_outbound">OpenAlex {id}</a> · <a href={`https://www.semanticscholar.org/search?q=${workSearch(id)}`} data-fnd="fnd_outbound">Semantic Scholar search</a> · <a href={`https://scholar.google.com/scholar?q=${workSearch(id)}`} data-fnd="fnd_outbound">Google Scholar search</a>. </span>)} <a href={report} data-fnd="fnd_report_error">{m.texts.citations_report.text}</a></p>
+    </section>}
+
+    <section class="card-b-section card-b-citation" id="cite" data-b-citation data-block="2a" data-claim={m.urn} data-class="CITE" data-release={m.release}>
+      <h2>How to cite {m.entity.name}'s record?</h2>
+      <p>{m.texts.citation.text}</p><button data-fnd="fnd_cite_copy" data-copy={m.texts.citation.text}>Copy citation</button>
+      <p class="provenance">Claim URN: <code>{m.urn}</code></p>
+    </section>
+
+    {(m.deps?.latest != null || m.daily) && <section class="card-b-section" id="dependents" data-block="3" data-claim={m.facets.dependents.claim_id} data-class={m.facets.dependents.id} data-release={m.release}>
+      <h2>Is anyone using {m.entity.name}?</h2><p class="answer"><Sentence text={m.facets.dependents.text} /></p>
+      <Chart chart={charts.dependents} />
+      <table><caption>Weekly deps.dev partitions, distinct from the daily unscored reading</caption><thead><tr><th>Partition</th><th>Direct dependents</th><th>Weekly points</th><th>Method</th></tr></thead><tbody><tr><td>{m.deps?.as_of_partition ?? 'no partition'}</td><td><Number value={m.deps?.latest ?? null} /></td><td><Number value={m.deps?.points ?? null} /></td><td>m3 package union</td></tr></tbody></table>
+      <p>Daily dependents (unscored): <Number value={m.daily?.value ?? null} />. {m.facets.stars?.text}</p>
+      <Chart chart={charts.daily} />
+      {m.dailySeries.length > 0 && <details><summary>Captured daily series</summary><table><caption>Unscored daily dependents, as captured</caption><thead><tr><th>Period</th><th>Dependents</th></tr></thead><tbody>{m.dailySeries.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>}
+      <p class="provenance">deps.dev · partition {m.deps?.as_of_partition ?? 'not captured'} · points {m.deps?.points ?? 'no reading'} · <a href="/methodology/m3/#dependents">m3 definition</a> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></p>
+    </section>}
+
+    <section class="card-b-section" id="niche" data-block="4" data-claim={m.texts.niche.claim_id} data-class="NICHE" data-release={m.release}>
+      <h2>How does {m.entity.name} compare with its niche?</h2><p class="answer"><Sentence text={m.texts.niche.text} /></p>
+      <Chart chart={charts.niche} />
+      <div class="card-b-scroll"><table class="card-b-neighbours"><caption>All {m.peers.length} systems, alphabetical; choose a heading to sort</caption><thead><tr>{['System', 'Commits/wk', 'Citations', 'Direct dependents', 'Stars'].map((label, i) => <th scope="col"><button data-sort={i + 1} data-fnd="fnd_tool_run">{label} ↕</button></th>)}</tr></thead><tbody>
+        {m.peers.map(p => <tr class:list={{ 'card-b-focus': p.id === m.entity.id }}><th scope="row" data-value={p.name}><a href={`/e/${p.id}/`}>{p.name}</a></th>{[p.commits, p.citations, p.dependents, p.stars].map(v => <td data-value={v ?? ''}><Number value={v} /></td>)}</tr>)}
+      </tbody></table></div>
+      <p class="provenance">Snapshot {m.snapshot_id} · n = {m.peers.length} · {m.methodology} · medians use measured values only · <a href={m.nicheCsv} download data-fnd="fnd_download">CSV for this niche</a></p>
+    </section>
+
+    <section class="card-b-section" id="changes" data-block="5" data-claim={m.texts.changes.claim_id} data-class="CHANGES" data-release={m.release}>
+      <h2>What changed since the last snapshot?</h2><p class="answer"><Sentence text={m.texts.changes.text} /></p>
+      <Chart chart={charts.changes} />
+      <table><caption>Published values at two snapshot dates; each metric keeps its own unit</caption><thead><tr><th>Metric</th><th>Previous</th><th>Current</th><th>Delta</th></tr></thead><tbody>{m.changes.map(c => <tr><th>{c.label}</th><td><Number value={c.previous} /></td><td><Number value={c.current} /></td><td><Number value={c.delta} /></td></tr>)}</tbody></table>
+      <p class="provenance">{m.changes[0].previous_snapshot_id ?? 'no previous snapshot'} → {m.snapshot_id} · <a href={m.historyUrl} download data-fnd="fnd_download">History CSV</a> · <a href={m.feedUrl} data-fnd="fnd_follow">Follow changes</a></p>
+    </section>
+
+    <section class="card-b-section" id="data" data-block="6" data-claim={m.texts.exports.claim_id} data-class="EXPORTS" data-release={m.release}>
+      <h2>Take the data or follow changes</h2><p class="answer">{m.texts.exports.text}</p>
+      <div class="card-b-actions"><a href={m.valuesUrl} download data-fnd="fnd_download">Values CSV</a><a href={m.historyUrl} download data-fnd="fnd_download">History CSV</a><a href={m.jsonUrl} data-fnd="fnd_download">JSON record</a><a href={m.feedUrl} data-fnd="fnd_follow">Atom feed</a><a href={`${m.path}feed.json`} data-fnd="fnd_follow">JSON Feed</a><button data-copy={`https://evidaxis.org${m.feedUrl}`} data-fnd="fnd_follow">Copy feed URL</button><a href={report} data-fnd="fnd_report_error">Report an error</a></div>
+      <p class="provenance">CC0-1.0 · <code>{m.urn}</code></p>
+    </section>
+    <section class="card-b-section" data-block="7" data-claim={m.texts.teams.claim_id} data-class="TEAMS" data-release={m.release}>
+      <h2>For teams tracking many systems</h2><p class="answer">{m.texts.teams.text}</p>
+      <p><a href={m.nicheCsv} download data-fnd="fnd_download">Cohort CSV</a> · <a href="/snapshots/">Snapshot archive</a> · <a href={`/snapshots/${m.date}/manifest.json`} data-fnd="fnd_download">Membership manifest</a></p>
+    </section>
+    <section class="card-b-section" data-block="8" data-claim={m.texts.links.claim_id} data-class="LINKS" data-release={m.release}>
+      <h2>Paper and links</h2><p class="answer">{m.texts.links.text}</p>
+      {m.facets.paper_ref && <p data-claim={m.facets.paper_ref.claim_id}>{m.facets.paper_ref.text}</p>}
+      <ul>{m.workIds.map(id => <li><a href={`https://openalex.org/${id}`} data-fnd="fnd_outbound">OpenAlex {id}</a></li>)}{m.paper && <li><a href={`https://arxiv.org/abs/${m.paper}`} data-fnd="fnd_outbound">arXiv:{m.paper}</a></li>}{m.repoUrl && <li><a href={m.repoUrl} data-fnd="fnd_outbound">{m.repoLabel}</a></li>}{m.homepage && m.homepage !== m.repoUrl && <li><a href={m.homepage} data-fnd="fnd_outbound">Project homepage</a></li>}</ul>
+    </section>
+    <section class="card-b-section" id="coverage" data-block="9" data-claim={m.texts.missing.claim_id} data-class="COVERAGE" data-release={m.release}>
+      <h2>What is not measured for {m.entity.name}, and why</h2><p class="answer">{m.texts.missing.text}</p>
+      {m.missing.length > 0 && <table><caption>Unmeasured slots</caption><thead><tr><th>Reading</th><th>Reason</th></tr></thead><tbody>{m.missing.map(p => <tr><th>{p.label}</th><td>{p.reason}</td></tr>)}</tbody></table>}
+      {['C11', 'C13b'].includes(m.facets.dependents.id) && <p data-claim={m.facets.dependents.claim_id}>{m.facets.dependents.text}</p>}
+      <p data-claim={m.texts.gate_eta.claim_id}>{m.texts.gate_eta.text}</p>
+      <p>Dependents ecosystem composition: no reading; this field is not present in the snapshot.</p>
+      <p class="provenance"><a href={`/methodology/${m.methodology}/`}>Methodology</a> · <a href={m.feedUrl} data-fnd="fnd_follow">Follow to be notified when this is measured</a></p>
+    </section>
+    <section class="card-b-section" data-block="10" data-claim={m.facets.standing.claim_id} data-class={m.facets.standing.id} data-release={m.release}>
+      <h2>Measurement detail</h2><details><summary>Gate, gauges, percentile, derived signals and snapshot receipt</summary>
+        <p class="answer"><Sentence text={m.texts.detail.text} /></p>
+        <p data-claim={m.facets.standing.claim_id}>{m.facets.standing.text}</p>
+        <Fragment set:html={legacy} />
+        {m.backfill.length > 0 && <div data-backfill="1"><h3>Reconstructed history</h3><p>{m.texts.reconstructed.text}</p><Chart chart={charts.backfill} /><table><caption>Reconstructed weekly commits</caption><thead><tr><th>Period</th><th>Commits</th></tr></thead><tbody>{m.backfill.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></div>}
+        <table><caption>Published peer momentum and percentile; alphabetical, separate from the first-screen readings</caption><thead><tr><th>System</th><th>Momentum</th><th>Percentile</th></tr></thead><tbody>{m.peers.map(p => <tr><th>{p.name}</th><td><Number value={p.momentum} /></td><td><Number value={p.percentile} /></td></tr>)}</tbody></table>
+        {m.state.positive_signal.state === 'published' && <img src={`/badge/${m.entity.id}/${m.state.period}.svg`} alt={`Evidaxis Rising, ${m.entity.name}`} width="232" height="56" loading="lazy" />}
+        <p class="provenance">entity_id {m.entity.id} · methodology {m.methodology} · snapshot {m.snapshot_id} · release {m.release} · <a href={m.jsonUrl} data-fnd="fnd_download">record JSON</a> · <a href={`/snapshots/${m.date}/manifest.json`} data-fnd="fnd_download">snapshot receipt</a> · <a href={`/snapshots/${m.date}/`}>source snapshot</a> · {m.urn}</p>
+      </details>
+    </section>
+  </div>
+</article>
+<script is:inline set:html={CARD_B_CLIENT} />
+<style is:inline>
+  .card-b{padding-top:24px;padding-bottom:64px;color:var(--ink);max-width:1160px}.card-b .crumb{font-size:12px;margin-bottom:20px}.card-b-hero{border-top:3px solid var(--velocity);padding-top:18px}.card-b-eyebrow{font:11px var(--font-mono);text-transform:uppercase;letter-spacing:.09em;color:var(--velocity);margin:0 0 9px}.card-b h1{font:600 clamp(28px,4vw,46px)/1.05 var(--font-display);margin:0 0 10px;letter-spacing:-.025em}.card-b-identity{font-size:12px;color:var(--ink-soft);max-width:100ch;line-height:1.5;margin:0}.card-b-answer{font-size:clamp(16px,1.7vw,21px);line-height:1.5;max-width:91ch;margin:18px 0}.card-b-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--hairline);border-radius:10px;overflow:hidden}.card-b-tile{padding:14px;display:flex;flex-direction:column;gap:5px;background:var(--surface);border-right:1px solid var(--hairline);font-size:12px}.card-b-tile:last-child{border:0}.card-b-tile strong{font:600 30px/1.1 var(--font-display);font-variant-numeric:tabular-nums;color:var(--velocity)}.card-b-tile-label{font:11px var(--font-mono);text-transform:uppercase}.card-b-tile small{font-size:10px;color:var(--ink-soft)}.card-b-stars{background:var(--paper)}.card-b-stars strong{color:var(--ink-soft)}.card-b .no-reading{font-size:.7em;color:var(--ink-soft)}.card-b-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:16px 0}.card-b a{color:var(--velocity)}.card-b button{font:inherit;cursor:pointer;background:var(--surface);color:var(--velocity);border:1px solid var(--hairline);border-radius:5px;padding:6px 10px}.card-b-primary{padding:9px 13px;background:var(--velocity);color:white!important;border-radius:5px;text-decoration:none}.card-b-body{display:flex;flex-direction:column}.card-b-section{border-top:1px solid var(--hairline);padding:28px 0;min-width:0}.card-b-section h2{font:600 25px/1.2 var(--font-display);margin:0 0 14px;letter-spacing:-.02em}.card-b-section .answer{font-size:17px;line-height:1.5;max-width:90ch}.card-b-chart{margin:20px 0 10px}.card-b-chart img,.card-b-chart svg{display:block;width:100%;max-width:800px;height:auto}.card-b-chart figcaption,.card-b .provenance{font-size:12px;color:var(--ink-soft);line-height:1.6;margin-top:10px}.card-b table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}.card-b th,.card-b td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--hairline);vertical-align:top}.card-b th{font-weight:500}.card-b thead{background:var(--paper)}.card-b caption{text-align:left;font-size:12px;color:var(--ink-soft);padding:10px 0}.card-b-scroll{overflow-x:auto;max-width:100%}.card-b-readings table{min-width:1080px}.card-b-readings td:nth-child(6){min-width:220px}.card-b details{margin:16px 0}.card-b summary{cursor:pointer;font-weight:500}.card-b-focus{background:#e6f0e9}.card-b-citation{border-left:3px solid var(--velocity);padding-left:20px;background:var(--surface)}.card-b code,.card-b-citation p{overflow-wrap:anywhere}.card-b-indexes{font-size:14px;line-height:1.7}.card-b-ruler{font:12px/1.6 var(--font-mono)}
+  @media(max-width:600px){.card-b{padding-top:16px}.card-b .crumb{font-size:10px;margin-bottom:12px}.card-b-hero{padding-top:12px}.card-b-eyebrow{font-size:9px;margin-bottom:6px}.card-b h1{font-size:29px}.card-b-identity{font-size:10px;line-height:1.35}.card-b-answer{font-size:15px;line-height:1.4;margin:12px 0}.card-b-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.card-b-tile{padding:9px;gap:3px;font-size:10px;border-bottom:1px solid var(--hairline)}.card-b-tile strong{font-size:25px}.card-b-tile-label{font-size:9px}.card-b-tile small{font-size:9px}.card-b-actions{font-size:12px;gap:8px 12px}.card-b-section h2{font-size:23px}.card-b-readings{order:-1}.card-b th,.card-b td{padding:8px}.card-b-section{padding:22px 0}}
+</style>

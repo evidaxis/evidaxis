@@ -3,6 +3,8 @@ import { entityUniverse, publicEntity, publicHomepage, publicRepoUrl } from '../
 import type { ArchivedEntity } from '../../lib/archive';
 import { claimUrnForEntity } from '../../lib/claim_urn';
 import { measurementStateFor, serializeMeasurementState } from '../../lib/measurement';
+import { isTemplateB } from '../../lib/cardB/policy.mjs';
+import { cardBFor } from '../../lib/cardB/context';
 
 export function getStaticPaths() {
   return entityUniverse.map((record) => ({ params: { id: record.entity.entity_id }, props: { record } }));
@@ -45,7 +47,9 @@ export const GET: APIRoute = ({ props }) => {
       ...(e.openalex_work_ids?.length ? [`https://openalex.org/${e.openalex_work_ids[0]}`] : []),
     ],
   };
-  return new Response(JSON.stringify(body, null, 2), {
+  const card = isTemplateB(e.entity_id) ? cardBFor(record) : null;
+  const result = card ? { ...body, display: card.display, facets: card.facets, readings: card.readings, changes: card.changes } : body;
+  return new Response(JSON.stringify(result, null, 2), {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
   });
 };
