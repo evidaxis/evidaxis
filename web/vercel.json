@@ -16,7 +16,7 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
     {
-      "source": "/badge/:entity_id/:asset((?:citations|dependents|rising)(?:-flat-square|-for-the-badge)?\\.svg|rising-card\\.svg|(?:citations|dependents|rising)\\.json)",
+      "source": "/badge/:entity_id/:asset((?:medal|growth|citations|dependents|rising)(?:-flat-square|-for-the-badge)?\\.svg|rising-card\\.svg|(?:medal|growth|citations|dependents|rising)\\.json)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
     }
   ],

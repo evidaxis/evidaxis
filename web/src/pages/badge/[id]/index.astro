@@ -1,6 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { badgeData, badgeRecords, type BadgeKey } from '../../../lib/badges';
+import { badgeData, badgeRecords, builderSelection, type BadgeKey } from '../../../lib/badges';
 
 export function getStaticPaths() {
   return badgeRecords.map(record => ({ params: { id: record.entity.entity_id }, props: { record } }));
@@ -8,8 +8,8 @@ export function getStaticPaths() {
 const { record } = Astro.props;
 const id = record.entity.entity_id;
 const cardUrl = `https://evidaxis.org/e/${id}/`;
-const kinds: BadgeKey[] = ['citations', 'dependents', 'rising'];
-const badges = kinds.map(key => ({ key, ...badgeData(record, key) }));
+const selection = builderSelection(record);
+const selected = [selection.main, ...selection.extras].filter((key): key is BadgeKey => key !== null);
 const endpoint = (key: string) => `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://evidaxis.org/badge/${id}/${key}.json`)}`;
 const image = (key: string) => `https://evidaxis.org/badge/${id}/${key}.svg`;
 const snippets = (key: string) => ({
@@ -18,40 +18,36 @@ const snippets = (key: string) => ({
   reStructuredText: `.. image:: ${image(key)}\n   :target: ${cardUrl}\n   :alt: ${key} badge for ${record.entity.name}`,
   'Shields endpoint': endpoint(key),
 });
-const missing = (key: BadgeKey) => {
-  const e = record.entity;
-  if (key === 'rising') return 'No Rising badge: no Rising signal has been published for this system.';
-  if (key === 'citations' && !e.openalex_work_ids.length) return 'No citations badge: no paper linked in OpenAlex for this system.';
-  if (key === 'dependents' && e.axes?.deps_direct_dependents_momentum?.status === 'out_of_panel') return 'No dependents badge: this system is outside the deps.dev panel.';
-  if (badgeData(record, key).count === 0) return `No ${key} badge: the latest reading is 0.`;
-  return `No ${key} badge: no reading in the latest weekly record.`;
-};
+const medal = badgeData(record, 'medal');
+const nextTier = medal.tier === 'bronze' ? 'Silver' : medal.tier === 'silver' ? 'Gold' : null;
+const nextRatio = medal.tier === 'bronze' ? 10 : medal.tier === 'silver' ? 100 : null;
 ---
 <Base title={`README badges for ${record.entity.name} | Evidaxis`} description={`README badges from the weekly record for ${record.entity.name}.`} canonical={`/badge/${id}/`} noindex={true}>
   <div class="wrap badge-builder" data-entity={id}>
     <p class="eyebrow">README badges</p>
     <h1>README badges for {record.entity.name}</h1>
-    <p class="lead">Each badge shows one number from this system's weekly record and links to its <a href={`/e/${id}/`}>card</a>, where the number has a source and a date.</p>
+    <p class="lead">Choose a measured badge for your README. Each badge links to the <a href={`/e/${id}/`}>system card</a> with its source and date.</p>
     <fieldset class="styles"><legend>Badge style</legend>
       <label><input type="radio" name="badge-style" value="flat" checked /> flat</label>
       <label><input type="radio" name="badge-style" value="flat-square" /> flat-square</label>
       <label><input type="radio" name="badge-style" value="for-the-badge" /> for-the-badge</label>
     </fieldset>
-    {badges.map(b => b.offered ? <section class="badge-section" data-badge={b.key}>
-      <h2>{b.key === 'rising' ? 'Rising' : b.key === 'citations' ? 'Citations' : 'Dependents'}</h2>
-      <div class="previews">
-        <div class="preview light"><span>Light</span><img src={`/badge/${id}/${b.key}.svg`} alt={`${b.key}: ${b.message}`} /></div>
-        <div class="preview dark"><span>Dark</span><img src={`/badge/${id}/${b.key}.svg`} alt={`${b.key}: ${b.message}`} /></div>
-      </div>
-      {Object.entries(snippets(b.key)).map(([format, value]) => <div class="snippet" data-format={format}>
-        <label>{format}<code>{value}</code></label><button type="button" data-copy={value} data-format={format}>Copy</button>
-      </div>)}
-    </section> : <p class="unavailable">{missing(b.key)}</p>)}
-    {badges.find(b => b.key === 'rising')?.offered && <section class="badge-section" data-badge="rising-card">
-      <h2>Rising card</h2>
-      <div class="previews"><div class="preview light"><span>Light</span><img src={`/badge/${id}/rising-card.svg`} alt={`Rising: ${badges.find(b => b.key === 'rising')?.message}`} /></div><div class="preview dark"><span>Dark</span><img src={`/badge/${id}/rising-card.svg`} alt={`Rising: ${badges.find(b => b.key === 'rising')?.message}`} /></div></div>
-      {Object.entries(snippets('rising-card')).map(([format, value]) => format === 'Shields endpoint' ? null : <div class="snippet" data-format={format}><label>{format}<code>{value}</code></label><button type="button" data-copy={value} data-format={format}>Copy</button></div>)}
-    </section>}
+    {selection.main === null && <section class="badge-section"><h2>No medal yet</h2><p>Bronze starts at 2× the niche median. Silver starts at 10× the niche median. Gold starts at 100× the niche median.</p></section>}
+    {selected.map((key, index) => {
+      const data = badgeData(record, key);
+      return <section class="badge-section" data-badge={key}>
+        <h2>{index === 0 ? 'Main medal' : index === 1 ? 'Add one more (optional)' : 'Another option'}: {key === 'medal' ? data.label : key === 'growth' ? 'Citation growth' : key === 'rising' ? 'Rising' : data.label}</h2>
+        <div class="previews">
+          <div class="preview light"><span>Light</span><img src={`/badge/${id}/${key}.svg`} alt={`${data.label}: ${data.message}`} /></div>
+          <div class="preview dark"><span>Dark</span><img src={`/badge/${id}/${key}.svg`} alt={`${data.label}: ${data.message}`} /></div>
+        </div>
+        {index === 0 && key === 'medal' && nextTier && <p class="next-tier">{nextTier} at {nextRatio}× the niche median. Now {medal.ratio! >= 10 ? Math.floor(medal.ratio!).toLocaleString('en-US') : medal.ratio!.toFixed(1)}×.</p>}
+        {index === 0 && record.entity.openalex_work_ids.length > 0 && <p class="note">Tip: many READMEs have a Citation section; this badge fits right under your BibTeX.</p>}
+        {Object.entries(snippets(key)).map(([format, value]) => <div class="snippet" data-format={format}>
+          <label>{format}<code>{value}</code></label><button type="button" data-copy={value} data-format={format}>Copy</button>
+        </div>)}
+      </section>;
+    })}
     <p class="note">Data CC0. Updated weekly. A badge never shows a number that was not measured.</p>
   </div>
 <script is:inline>

@@ -10,8 +10,8 @@ export const FACETS = {
   C15b: claim('C15b', '{rwc} commits per week averaged over the trailing window, under the 5-per-week vote threshold (niche median {med}/wk).', '{rwc} commits/week averaged over the trailing window (niche median {med}).'),
   C16: claim('C16', '{rwc} commits per week averaged over the trailing window (niche median {med}/wk, n = {n}).', '{rwc} commits/week averaged over the trailing window (niche median {med}).'),
   C07: claim('C07', 'OpenAlex records {total} citing works as of {date} ({by_year}); fewer than 3 completed years, so no trend is computed.', 'OpenAlex: {total} citing works; fewer than 3 completed years.'),
-  C08: claim('C08', '{total} citing works over {n_years} completed years (registry median {reg_med} among systems with a scored citation axis); yearly slope {slope}/yr.', 'OpenAlex: {total} citing works over {n_years} completed years.'),
-  C09: claim('C09', '{total} citing works over {n_years} completed years (registry median {reg_med} among systems with a scored citation axis); yearly slope {slope}/yr.', 'OpenAlex: {total} citing works over {n_years} completed years.'),
+  C08: claim('C08', '{total} citing works indexed to date, including the current year (registry median {reg_med} among systems with a scored citation axis); yearly slope over {n_years} completed years {slope}/yr.', 'OpenAlex: {total} citing works indexed to date, including the current year.'),
+  C09: claim('C09', '{total} citing works indexed to date, including the current year (registry median {reg_med} among systems with a scored citation axis); yearly slope over {n_years} completed years {slope}/yr.', 'OpenAlex: {total} citing works indexed to date, including the current year.'),
   C_NO_PAPER: claim('C_NO_PAPER', 'No paper is linked in OpenAlex.'),
   C_NO_CITATION: claim('C_NO_CITATION', 'A paper is linked in OpenAlex, but no citation reading was captured.', 'OpenAlex paper linked; citation reading not captured.'),
   PAPERREF: claim('PAPERREF', 'Paper reference on file: arXiv:{paper_ref}.'),
@@ -52,5 +52,5 @@ export const COPY = {
   gate_eta: 'Gate ETA: never published; Evidaxis makes no public actionable prediction.',
   detail: '{history} {coverage} {gate}',
   reconstructed: 'Reconstructed from git history, not a point-in-time capture. This series is separate from captured observations.',
-  citation_scope: 'OpenAlex citing works, completed calendar years; the total is the sum over the published completed years.',
+  citation_scope: 'OpenAlex citing works indexed to date, all years including the current one; the yearly chart shows completed calendar years.',
 };

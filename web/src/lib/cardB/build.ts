@@ -159,7 +159,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     : ctx.repoApi ? `${ctx.repoApi}${key === 'stars' ? '' : '/stats/commit_activity'}` : '';
   const definitions = {
     commits: 'GitHub averaged commits per week over the trailing window (12 weeks); deltas compare trailing averages, range spans rolling averages within 52 weeks.',
-    citations: 'OpenAlex citing works in the published completed calendar years.',
+    citations: 'OpenAlex citing works indexed to date, all years including the current one.',
     dependents: 'deps.dev weekly package-union direct dependents, frozen m3 panel; partition dates can repeat across snapshots.',
     stars: 'GitHub stargazers count; recorded, not scored.',
   };
