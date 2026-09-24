@@ -97,7 +97,10 @@ jobs:
           mkdir -p dist/.vercel
           printf '{"projectId":"%s","orgId":"%s"}\n' "$VERCEL_PROJECT_ID" "$VERCEL_ORG_ID" > dist/.vercel/project.json
           cd dist
-          npx vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"
+          # --archive=tgz: Vercel rejects CLI uploads above 15,000 files ("files should NOT have more than
+          # 15000 items"; probed 2026-09-24 with 20,002 files). The 2026-09-26 snapshot grows the site from
+          # ~10k to ~290k files; one archive upload keeps the deploy inside the limit (same probe passed).
+          npx vercel@latest deploy --prod --yes --archive=tgz --token "$VERCEL_TOKEN"
 
       - name: Verify prod serves the snapshot this tree holds
         # A deploy whose CLI exited 0 while the live host keeps serving last
