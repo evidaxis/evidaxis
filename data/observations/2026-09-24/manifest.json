@@ -1,0 +1,272 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-09-24T11:58:51Z",
+  "date": "2026-09-24",
+  "period": "2026-w39",
+  "entity_count": 5884,
+  "error_count": 55,
+  "error_rate": 0.0093,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "mrslimslim/gpt-image-canvas",
+      "http_status": 403
+    },
+    {
+      "repo": "lucidrains/TimeSformer-pytorch",
+      "http_status": 403
+    },
+    {
+      "repo": "togatoga/karukan",
+      "http_status": 403
+    },
+    {
+      "repo": "dongshuyan/compass-skills",
+      "http_status": 403
+    },
+    {
+      "repo": "ZigRazor/CXXGraph",
+      "http_status": 403
+    },
+    {
+      "repo": "opendr-eu/opendr",
+      "http_status": 403
+    },
+    {
+      "repo": "dylanshine/openai-kit",
+      "http_status": 403
+    },
+    {
+      "repo": "mit-han-lab/distrifuser",
+      "http_status": 403
+    },
+    {
+      "repo": "agno-agi/scout",
+      "http_status": 403
+    },
+    {
+      "repo": "StatMixedML/XGBoostLSS",
+      "http_status": 403
+    },
+    {
+      "repo": "EricLBuehler/candle-vllm",
+      "http_status": 403
+    },
+    {
+      "repo": "kyegomez/LongNet",
+      "http_status": 403
+    },
+    {
+      "repo": "symgraph/GhidrAssist",
+      "http_status": 403
+    },
+    {
+      "repo": "mensfeld/code-on-incus",
+      "http_status": 403
+    },
+    {
+      "repo": "Accio-Lab/Dressage",
+      "http_status": 403
+    },
+    {
+      "repo": "moein-shariatnia/OpenAI-CLIP",
+      "http_status": 403
+    },
+    {
+      "repo": "mmpneo/curses",
+      "http_status": 403
+    },
+    {
+      "repo": "melMass/comfy_mtb",
+      "http_status": 403
+    },
+    {
+      "repo": "AdityaNG/kan-gpt",
+      "http_status": 403
+    },
+    {
+      "repo": "homanp/infinite-monitor",
+      "http_status": 403
+    },
+    {
+      "repo": "neo4j-labs/create-context-graph",
+      "http_status": 403
+    },
+    {
+      "repo": "comet-ml/opik-openclaw",
+      "http_status": 403
+    },
+    {
+      "repo": "modiqo/skillspec",
+      "http_status": 403
+    },
+    {
+      "repo": "ThibaultGROUEIX/AtlasNet",
+      "http_status": 403
+    },
+    {
+      "repo": "lucidrains/x-clip",
+      "http_status": 403
+    },
+    {
+      "repo": "kharvd/gpt-cli",
+      "http_status": 403
+    },
+    {
+      "repo": "Graylab/DL4Proteins-notebooks",
+      "http_status": 403
+    },
+    {
+      "repo": "416rehman/DeepZero",
+      "http_status": 403
+    },
+    {
+      "repo": "ishikota/PyPokerEngine",
+      "http_status": 403
+    },
+    {
+      "repo": "PaddlePaddle/PaddleMIX",
+      "http_status": 403
+    },
+    {
+      "repo": "ceccocats/tkDNN",
+      "http_status": 403
+    },
+    {
+      "repo": "kentaroy47/vision-transformers-cifar10",
+      "http_status": 403
+    },
+    {
+      "repo": "aledipa/Free-GPT4-WEB-API",
+      "http_status": 403
+    },
+    {
+      "repo": "mosaicml/diffusion",
+      "http_status": 403
+    },
+    {
+      "repo": "AkshitIreddy/Interactive-LLM-Powered-NPCs",
+      "http_status": 403
+    },
+    {
+      "repo": "Snowflake-Labs/cocoplus",
+      "http_status": 403
+    },
+    {
+      "repo": "smallmain/vscode-unify-chat-provider",
+      "http_status": 403
+    },
+    {
+      "repo": "symgraph/IDAssist",
+      "http_status": 403
+    },
+    {
+      "repo": "MycroftAI/adapt",
+      "http_status": 403
+    },
+    {
+      "repo": "IndicoDataSolutions/finetune",
+      "http_status": 403
+    },
+    {
+      "repo": "ethanhe42/KL-Loss",
+      "http_status": 403
+    },
+    {
+      "repo": "google/pyglove",
+      "http_status": 403
+    },
+    {
+      "repo": "Skylark0924/Rofunc",
+      "http_status": 403
+    },
+    {
+      "repo": "louisgv/local.ai",
+      "http_status": 403
+    },
+    {
+      "repo": "Lex-au/Orpheus-FastAPI",
+      "http_status": 403
+    },
+    {
+      "repo": "afshinm/zerobox",
+      "http_status": 403
+    },
+    {
+      "repo": "torchmd/torchmd",
+      "http_status": 403
+    },
+    {
+      "repo": "CSML-by-Clevy/csml-engine",
+      "http_status": 403
+    },
+    {
+      "repo": "WebDevsCom/webDevsCom",
+      "http_status": 403
+    },
+    {
+      "repo": "crowsonkb/v-diffusion-pytorch",
+      "http_status": 403
+    },
+    {
+      "repo": "staruhub/ClaudeSkills",
+      "http_status": 403
+    },
+    {
+      "repo": "oil-oil/wolfcha",
+      "http_status": 403
+    },
+    {
+      "repo": "dbt-labs/dbt-agent-skills",
+      "http_status": 403
+    },
+    {
+      "repo": "meta-toolkit/meta",
+      "http_status": 403
+    },
+    {
+      "repo": "Saganaki22/ComfyUI-OmniVoice-TTS",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "cfdbeada1e4dcd9267f3ba509025faf3de73972e8f568e4c8472f456e99c27c8",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}
