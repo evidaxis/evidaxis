@@ -74,7 +74,7 @@ for (const id of ids) {
       const best = candidates[0];
       const medal = JSON.parse(readFileSync(join(dir, 'medal.json'), 'utf8'));
       if (best && best.ratio >= 1) {
-        check(medal.label === best.key && medal.message.includes(best.ratio >= 10 ? `${Math.floor(best.ratio).toLocaleString('en-US')}×` : `${best.ratio.toFixed(1)}×`), `${id}: medal ratio differs from card B`);
+        check(medal.label === best.key && medal.message.includes(best.ratio >= 10 ? `${Math.floor(best.ratio).toLocaleString('en-US')}×` : `${(Math.floor(best.ratio * 10) / 10).toFixed(1)}×`), `${id}: medal ratio differs from card B`);
         const svg = readFileSync(join(dir, 'medal.svg'), 'utf8');
         check(svg.includes(medal.message), `${id}: medal SVG differs from endpoint`);
       } else check(!medal.message.includes('niche median'), `${id}: unsupported medal comparison`);

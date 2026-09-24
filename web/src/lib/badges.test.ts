@@ -101,3 +101,13 @@ describe('README badges', () => {
     }
   });
 });
+
+describe('ratio text never overstates the tier', () => {
+  it('rounds down at tier edges', async () => {
+    const { ratioText, tierFor } = await import('./badges');
+    expect(ratioText(1.96)).toBe('1.9×'); expect(tierFor(1.96)).toBe(null);
+    expect(ratioText(9.96)).toBe('9.9×'); expect(tierFor(9.96)).toBe('bronze');
+    expect(ratioText(99.9)).toBe('99×'); expect(tierFor(99.9)).toBe('silver');
+    expect(ratioText(140.6)).toBe('140×'); expect(tierFor(140.6)).toBe('gold');
+  });
+});

@@ -25,7 +25,8 @@ const dateForPeriod = new Map(snapshots.map(s => [s.period, s.snapshot_date]));
 const pins = (JSON.parse(readFileSync(dataPath('deps_id_map.json'), 'utf8')) as { pins: Record<string, { linkage?: string }> }).pins;
 export const verifiedPin = (record: ArchivedEntity) => pins[record.entity.github_repo]?.linkage === 'verified';
 export const tierFor = (ratio: number): Tier => ratio >= 100 ? 'gold' : ratio >= 10 ? 'silver' : ratio >= 2 ? 'bronze' : null;
-export const ratioText = (ratio: number) => ratio >= 10 ? `${Math.floor(ratio).toLocaleString('en-US')}×` : `${ratio.toFixed(1)}×`;
+// Round DOWN so the printed multiple never reaches a tier the ratio has not reached (1.96 -> 1.9, 9.96 -> 9.9).
+export const ratioText = (ratio: number) => ratio >= 10 ? `${Math.floor(ratio).toLocaleString('en-US')}×` : `${(Math.floor(ratio * 10) / 10).toFixed(1)}×`;
 export const growthPercent = (a: number | undefined, b: number | undefined): number | null =>
   a !== undefined && b !== undefined && a >= 1 && b >= 10 && b / a - 1 >= .25 ? Math.round((b / a - 1) * 100) : null;
 export function nicheCandidates(own: { citations: number | null; dependents: number | null },
