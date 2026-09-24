@@ -17,6 +17,11 @@ const icons = {
   count: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#fff" d="M8.5 4L7.8 8H4v2h3.4l-.9 4H3v2h3.1l-.7 4h2.4l.7-4h4l-.7 4h2.4l.7-4H20v-2h-3.5l.9-4H21V8h-4l.7-4h-2.4l-.7 4h-4l.7-4H8.5zm1.5 8h4l-.9 4h-4l.9-4z"/></svg>',
 } as const;
 export const LOGO_SVG = icons.count;
+
+// Variant B (owner's choice 2026-09-24): a small medal in the tier's metal on a white ribbon.
+const METAL = { gold: ['#f2c230', '#8a6508'], silver: ['#c9d1d9', '#6e7781'], bronze: ['#cd8a4f', '#7a4a24'] } as const;
+export const medalIcon = (tier: Exclude<Tier, null>) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 1h4.2l1.8 6.2H8.3z" fill="#e8e8e8"/><path d="M17.5 1h-4.2l-1.8 6.2h4.2z" fill="#ffffff"/><circle cx="12" cy="15.6" r="7.4" fill="${METAL[tier][0]}"/><circle cx="12" cy="15.6" r="7.4" fill="none" stroke="${METAL[tier][1]}" stroke-width="1.2"/><circle cx="12" cy="15.6" r="4.4" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.1"/></svg>`;
+
 const xml = (s: string) => s.replace(/[<>&'"]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[c]!));
 const integer = (n: number) => Math.round(n).toLocaleString('en-US');
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -86,11 +91,11 @@ export function badgeData(record: ArchivedEntity, key: BadgeKey): BadgeData {
     const comparison = best && ratio !== undefined;
     const tier = comparison ? tierFor(ratio) : null;
     const color = tier === 'gold' ? '#b8860b' : tier === 'silver' ? '#8a9299' : tier === 'bronze' ? '#a86b3c' : '#57606a';
-    const message = comparison ? `${tier === 'gold' ? 'gold · ' : ''}${ratioText(ratio)} niche median` : count === null ? 'not measured' : integer(count);
+    const message = comparison ? `${ratioText(ratio)} niche median` : count === null ? 'not measured' : integer(count);
     const title = comparison
       ? `${e.name} has ${ratioText(ratio).replace('×', ' times more')} ${metric === 'citations' ? 'OpenAlex citations' : 'direct dependents'} (${integer(best.value)}) than the median system in its niche, ${niche} (${integer(best.median)}; n = ${best.n}). ${tier ? `${tier[0].toUpperCase()}${tier.slice(1)} tier. ` : ''}Gold is awarded at 100× or more, silver at 10×, bronze at 2×. ${measured}`
       : `${e.name}: ${count === null ? `no ${metric} reading` : `${integer(count)} ${metric}`} in the latest weekly record (${snap.snapshot_date}). ${measured}`;
-    data = { label: metric, message, color: count === null ? '#9f9f9f' : color, title, count, offered: !!tier, tier, ratio, metric, niche, logoSvg: icons.medal.replace('#C9A227', color) };
+    data = { label: metric, message, color: count === null ? '#9f9f9f' : color, title, count, offered: !!tier, tier, ratio, metric, niche, logoSvg: tier ? medalIcon(tier) : icons.medal.replace('#C9A227', color) };
   } else if (key === 'growth') {
     const year = +snap.snapshot_date.slice(0, 4) - 1;
     const years = e.axes.openalex_citation_momentum.by_year ?? {};

@@ -68,7 +68,7 @@ describe('README badges', () => {
 
   it('chooses one main medal and at most two relevant extras', () => {
     const vllm = named('vLLM');
-    expect(badgeData(vllm, 'medal')).toMatchObject({ metric: 'citations', tier: 'gold', message: 'gold · 140× niche median' });
+    expect(badgeData(vllm, 'medal')).toMatchObject({ metric: 'citations', tier: 'gold', message: '140× niche median' });
     expect(badgeData(named('SGLang'), 'medal')).toMatchObject({ metric: 'citations', tier: 'bronze', message: '8.8× niche median' });
     expect(badgeData(named('MuJoCo'), 'medal').tier).toBe('gold');
     expect(builderSelection(vllm).main).toBe('medal');
@@ -109,5 +109,12 @@ describe('ratio text never overstates the tier', () => {
     expect(ratioText(9.96)).toBe('9.9×'); expect(tierFor(9.96)).toBe('bronze');
     expect(ratioText(99.9)).toBe('99×'); expect(tierFor(99.9)).toBe('silver');
     expect(ratioText(140.6)).toBe('140×'); expect(tierFor(140.6)).toBe('gold');
+  });
+});
+
+describe('owner choice B: no tier word, coloured medal icon', () => {
+  it('never prints a tier word and colours the medal by tier', async () => {
+    const { medalIcon } = await import('./badges');
+    expect(medalIcon('gold')).toContain('#f2c230'); expect(medalIcon('silver')).toContain('#c9d1d9'); expect(medalIcon('bronze')).toContain('#cd8a4f');
   });
 });
