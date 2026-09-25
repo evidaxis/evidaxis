@@ -178,8 +178,8 @@ export function nicheAnswer(s: NicheSummary): string {
     : `${medianText(m.dependents.value)} direct dependents (on the ${plural(m.dependents.n, 'system with a dependents reading', 'systems with a dependents reading')})`;
   const floors = s.comparable.length === 2 ? ''
     : s.comparable.length === 1
-      ? ` Medal comparisons need at least 5 systems with the measure and a median of 3 or more, so in this niche they run on ${s.comparable[0] === 'citations' ? 'citations' : 'verified dependents'} only.`
-      : ' Medal comparisons need at least 5 systems with the measure and a median of 3 or more, so this niche has none this week.';
+      ? ` Medals here compare ${s.comparable[0] === 'citations' ? 'citations' : 'verified dependents'} only: a medal needs at least 5 systems in the niche with that figure and a median of 3 or more.`
+      : ' No medals this week: a medal needs at least 5 systems in the niche with the figure and a median of 3 or more.';
   // "19 systems in Coding Agents" reads right for every niche label ("coding agents systems" did not).
   return `Evidaxis measures ${plural(s.n, 'system', 'systems')} in ${s.label} every week. `
     + `In snapshot ${snapshot.period} (${snapshot.snapshot_date}) the niche median is ${commits}, ${citations} and ${dependents}. `

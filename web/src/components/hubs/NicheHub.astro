@@ -71,6 +71,7 @@ const graph = {
 
       <h2 class="hub-h2">Systems</h2>
       <p class="hub-order">Default order: system name, A to Z. Click a column to reorder. Order is not a rank.{totalPages > 1 && ` Sorting reorders this page; the CSV holds all ${s.n.toLocaleString('en-US')} rows.`}</p>
+      <p class="hub-terms">What the columns mean: <a href="/glossary/#commits-per-week">commits per week</a> · <a href="/glossary/#citation">citations to date</a> · <a href="/glossary/#verified-direct-dependent">verified dependents</a> · <a href="/glossary/#not-measured-count-only">not measured, count only</a> · <a href="/glossary/#niche-medal">medals</a> · <a href="/glossary/#niche-rising">Rising</a></p>
       <HubTable rows={rows} caption={caption} showStatus={s.assigned} />
       {s.assigned && <div class="hub-legend">
         <p>2×, 10× and 100× are that multiple of this niche median, on citations or verified dependents (bronze, silver, gold).</p>
@@ -94,6 +95,7 @@ const graph = {
 </Base>
 
 <style>
+  .hub-terms { font-size: .82rem; color: var(--muted, #6b6b6b); margin: .2rem 0 .9rem; }
   .hub .crumb { font-size: .74rem; margin-bottom: .8rem; }
   .hub .crumb a { color: inherit; border: none; }
   .hub h1 { max-width: 30ch; }
