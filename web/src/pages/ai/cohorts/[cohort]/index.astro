@@ -1,59 +1,14 @@
 ---
-import Base from '../../../../layouts/Base.astro';
-import EntityTable from '../../../../components/EntityTable.astro';
-import { industries, entitiesInCohort, snapshot } from '../../../../lib/data';
-import { itemListDataset, breadcrumb } from '../../../../lib/jsonld';
-import { cohortMinutes } from '../../../../lib/minutes';
-import { pageCount, pageItems } from '../../../../lib/pagination';
-import Pagination from '../../../../components/Pagination.astro';
+import NicheHub from '../../../../components/hubs/NicheHub.astro';
+import { industries } from '../../../../lib/data';
 
 export function getStaticPaths() {
   const out: any[] = [];
   for (const f of industries().values())
     for (const c of f.subniches.values())
-      out.push({ params: { cohort: c.slug },
-        props: { field: { slug: f.slug, label: f.label }, cohort: c } });
+      out.push({ params: { cohort: c.slug }, props: { cohortKey: c.cohortKey } });
   return out;
 }
-const { field, cohort } = Astro.props;
-const es = entitiesInCohort(cohort.cohortKey);
-const path = `/ai/cohorts/${cohort.slug}/`;
-const totalPages = pageCount(es.length);
-const visible = pageItems(es, 1);
-const pageName = `${cohort.label} - cohort momentum`;
-const desc = `Evidaxis momentum for ${cohort.label}: ${es.length} open AI systems scored on development velocity and citation momentum.`;
-const listJson = itemListDataset({ path, name: pageName, description: desc, period: snapshot.period, snap: snapshot, entities: visible });
-const minutesHistory = cohortMinutes()
-  .filter((minutes) => minutes.slug === cohort.slug)
-  .sort((a, b) => b.week.localeCompare(a.week));
+const { cohortKey } = Astro.props;
 ---
-<Base title={`${pageName} | Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Field: ${field.label}`, path: `/ai/fields/${field.slug}/` }, { name: `Cohort: ${cohort.label}`, path }])]}>
-  <section class="section">
-    <div class="wrap">
-      <div class="mono muted" style="font-size:.74rem;margin-bottom:.6rem">
-        <a href="/coverage/" style="border:none;color:inherit">coverage</a> /
-        <a href={`/ai/fields/${field.slug}/`} style="border:none;color:inherit">Field: {field.label}</a> / <span>Cohort: {cohort.label}</span>
-      </div>
-      <p class="eyebrow">Cohort</p>
-      <h1>{cohort.label}</h1>
-      <p class="lead" style="max-width:60ch">{es.length} systems measured in this cohort at period {snapshot.period}; each carries its momentum value. Sort as you wish - the archive does not rank.</p>
-      {minutesHistory.length > 0 && (
-        <nav class="minutes-history" aria-labelledby="minutes-history-heading">
-          <h2 id="minutes-history-heading">Weekly cohort minutes</h2>
-          <ul class="mono">
-            {minutesHistory.map((minutes) => (
-              <li><a href={`/ai/cohorts/${cohort.slug}/minutes/${minutes.week}/`}>{minutes.week}</a></li>
-            ))}
-          </ul>
-        </nav>
-      )}
-      <EntityTable entities={visible} />{totalPages > 1 && <Pagination page={1} totalPages={totalPages} basePath={path} />}
-    </div>
-  </section>
-</Base>
-
-<style>
-  .minutes-history { margin: 1.2rem 0 1.8rem; }
-  .minutes-history h2 { margin: 0 0 .55rem; font-size: 1rem; }
-  .minutes-history ul { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin: 0; padding: 0; list-style: none; font-size: .78rem; }
-</style>
+<NicheHub cohortKey={cohortKey} page={1} />

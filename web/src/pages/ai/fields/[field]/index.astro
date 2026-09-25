@@ -1,50 +1,66 @@
 ---
 import Base from '../../../../layouts/Base.astro';
-import { industries, entitiesInCohort } from '../../../../lib/data';
+import NicheCard from '../../../../components/hubs/NicheCard.astro';
+import { industries } from '../../../../lib/data';
 import { breadcrumb } from '../../../../lib/jsonld';
-import { measurementStateFor } from '../../../../lib/measurement';
-import { snapshot } from '../../../../lib/data';
+import { SITE, UNASSIGNED, nicheSummary } from '../../../../lib/hubs';
 
 export function getStaticPaths() {
   return [...industries().values()].map((f) => ({
     params: { field: f.slug },
-    props: { slug: f.slug, label: f.label, cohorts: [...f.subniches.values()] },
+    props: { slug: f.slug, label: f.label, cohortKeys: [...f.subniches.values()].map((c) => c.cohortKey) },
   }));
 }
-const { slug, label, cohorts } = Astro.props;
-const pageName = `${label} - field coverage`;
-const desc = `Evidaxis coverage of ${label}: ${cohorts.length} cohort(s) of open AI systems, measured by momentum.`;
-const SITE = 'https://evidaxis.org';
-const listJson = {
-  '@context': 'https://schema.org', '@type': 'CollectionPage',
-  '@id': `${SITE}/ai/fields/${slug}/#page`, url: `${SITE}/ai/fields/${slug}/`,
-  name: pageName, isPartOf: { '@id': `${SITE}/#website` },
-  about: { '@type': 'ItemList', name: `${label} cohorts`, numberOfItems: cohorts.length,
-    itemListElement: cohorts.map((c: any, i: number) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/ai/cohorts/${c.slug}/`, name: c.label })) },
+const { slug, label, cohortKeys } = Astro.props;
+const niches = cohortKeys.map((key: string) => nicheSummary(key))
+  .sort((a, b) => a.label.localeCompare(b.label, 'en', { sensitivity: 'base' }));
+const unassignedOnly = niches.length > 0 && niches.every((s) => s.key === UNASSIGNED);
+const systems = niches.reduce((sum, s) => sum + s.n, 0);
+const count = (n: number, one: string, many: string) => `${n.toLocaleString('en-US')} ${n === 1 ? one : many}`;
+const heading = unassignedOnly ? 'Not yet assigned' : label;
+const answer = unassignedOnly
+  ? `${count(systems, 'system is', 'systems are')} measured every week but ${systems === 1 ? 'has' : 'have'} no niche yet, so there is no niche median, no medal and no niche Rising comparison.`
+  : `${label} is ${count(niches.length, 'niche', 'niches')} and ${count(systems, 'system', 'systems')}. Each niche keeps its own median; medals and Rising are computed inside a niche, so this page does not merge systems into one list.`;
+const title = unassignedOnly
+  ? `Not yet assigned: ${systems.toLocaleString('en-US')} open AI systems measured weekly | Evidaxis`
+  : `${label}: ${count(niches.length, 'niche', 'niches')} and ${count(systems, 'open-source AI system', 'open-source AI systems')} measured weekly | Evidaxis`;
+const desc = unassignedOnly
+  ? `${count(systems, 'open AI system', 'open AI systems')} measured weekly with no niche yet: commits, citations and dependents per system. CC0 open data.`
+  : `${label}: ${count(niches.length, 'niche', 'niches')} and ${count(systems, 'system', 'systems')}. Niche medians for commits, citations and dependents, medals and Rising, per niche. CC0.`;
+const path = `/ai/fields/${slug}/`;
+const crumbs = [{ name: 'Home', path: '/' }, { name: heading, path }];
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'CollectionPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: heading, description: answer,
+      inLanguage: 'en', isPartOf: { '@id': `${SITE}/#website` }, mainEntity: { '@id': `${SITE}${path}#niches` } },
+    { '@type': 'ItemList', '@id': `${SITE}${path}#niches`, name: `${heading}: niches, name A to Z`, itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      numberOfItems: niches.length, itemListElement: niches.map((s) => ({ '@type': 'ListItem', name: s.label, url: `${SITE}/ai/cohorts/${s.slug}/` })) },
+  ],
 };
-const crumbs = breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Field: ${label}`, path: `/ai/fields/${slug}/` }]);
 ---
-<Base title={`${pageName} | Evidaxis`} description={desc} canonical={`/ai/fields/${slug}/`} jsonLd={[listJson, crumbs]}>
-  <nav class="wrap mono muted" style="font-size:.74rem;padding-top:1rem"><a href="/coverage/" style="border:none;color:inherit">coverage</a> / <span>Field: {label}</span></nav>
-  <section class="section">
+<Base title={title} description={desc} canonical={path} jsonLd={[graph, breadcrumb(crumbs)]}>
+  <section class="section field">
     <div class="wrap">
+      <nav class="crumb mono muted" aria-label="Breadcrumb"><a href="/">Home</a> / <span>{heading}</span></nav>
       <p class="eyebrow">Field</p>
-      <h1>{label}</h1>
-      <div class="stack" style="margin-top:1.6rem">
-        {cohorts.map((c) => {
-          const es = entitiesInCohort(c.cohortKey);
-          const top = es.filter((e) => measurementStateFor(e, snapshot).positive_signal.state === 'published').slice(0, 3);
-          return (
-            <a class="card" href={`/ai/cohorts/${c.slug}/`}>
-              <div class="row" style="justify-content:space-between;align-items:baseline">
-                <h2 style="margin:0;font-size:1.12rem">{c.label}</h2>
-                <span class="mono muted" style="font-size:.74rem">{es.length} systems</span>
-              </div>
-              {top.length>0 && <p class="muted" style="font-size:.86rem;margin:.5rem 0 0">Signals: {top.map((e)=>e.name).join(', ')}</p>}
-            </a>
-          );
-        })}
+      <h1>{heading}</h1>
+      <p class="field-answer">{answer}</p>
+      {!unassignedOnly && <p class="field-order mono">Niche name, A to Z</p>}
+      <div class="field-grid">
+        {niches.map((s) => <NicheCard summary={s} />)}
       </div>
+      <p class="field-how"><a href="/glossary/#terms-on-every-page">How each figure is computed →</a></p>
     </div>
   </section>
 </Base>
+
+<style>
+  .field .crumb { font-size: .74rem; margin-bottom: .8rem; }
+  .field .crumb a { color: inherit; border: none; }
+  .field-answer { font-size: 1.08rem; line-height: 1.6; color: var(--ink-soft); max-width: 72ch; margin: 1rem 0 0; }
+  .field-order { margin: 1.8rem 0 .7rem; font-size: .76rem; color: var(--ink-mute); }
+  .field-answer + .field-grid { margin-top: 1.8rem; }
+  .field-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .field-how { margin-top: 1.6rem; font-size: .92rem; }
+</style>

@@ -1,0 +1,40 @@
+---
+import type { MedianValue, NicheSummary } from '../../lib/hubs';
+import { medianText } from '../../lib/hubs';
+
+export interface Props { summary: NicheSummary; compact?: boolean; headingLevel?: 2 | 3 }
+const { summary: s, compact = false, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const href = `/ai/cohorts/${s.slug}/`;
+const median = (m: MedianValue | undefined) => !m || m.value === null ? 'none' : medianText(m.value);
+---
+<article class:list={['niche-card', { compact }]}>
+  <Heading class="niche-name"><a href={href}>{s.label}</a></Heading>
+  <p class="niche-count mono"><data value={s.n}>{s.n.toLocaleString('en-US')}</data> {s.n === 1 ? 'system' : 'systems'}</p>
+  {s.assigned && s.medians ? <>
+    <dl class="niche-facts">
+      <div><dt>Median commits/wk</dt><dd class="mono">{median(s.medians.commits)}</dd></div>
+      <div><dt>Median citations</dt><dd class="mono">{median(s.medians.citations)} <span>(n = {s.medians.citations.n})</span></dd></div>
+      <div><dt>Median direct dependents</dt><dd class="mono">{median(s.medians.dependents)} <span>(n = {s.medians.dependents.n})</span></dd></div>
+      <div><dt>At 2× the niche median or more</dt><dd class="mono">{s.atTwoX}</dd></div>
+    </dl>
+    <p class="niche-rising">Rising: {s.rising.length ? s.rising.map((r, i) => <>{i > 0 && ', '}<a href={`/e/${r.id}/`}>{r.name}</a></>) : 'none'}</p>
+  </> : <p class="niche-note">No niche median, so no medals.</p>}
+</article>
+
+<style>
+  .niche-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .niche-name { margin: 0; font-size: 1.14rem; letter-spacing: -.01em; }
+  .niche-name a { color: var(--ink); border-bottom: 1px solid var(--hairline-2); }
+  .niche-name a:hover { color: var(--velocity); }
+  .niche-count { margin: 0; font-size: .8rem; color: var(--ink-mute); }
+  .niche-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; margin: 4px 0 0; }
+  .niche-facts dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-mute); }
+  .niche-facts dd { margin: 2px 0 0; font-size: .98rem; color: var(--ink); }
+  .niche-facts dd span { font-size: .78rem; color: var(--ink-mute); }
+  .niche-rising, .niche-note { margin: 2px 0 0; font-size: .88rem; color: var(--ink-soft); }
+  .compact { padding: 14px 16px; gap: 6px; }
+  .compact .niche-name { font-size: 1.02rem; }
+  .compact .niche-facts { gap: 4px 12px; }
+  .compact .niche-facts dd { font-size: .9rem; }
+</style>

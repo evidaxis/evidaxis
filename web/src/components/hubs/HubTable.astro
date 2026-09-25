@@ -1,0 +1,69 @@
+---
+import type { HubRow } from '../../lib/hubs';
+import { fmt } from '../../lib/cardB/build';
+import { medalIcon } from '../../lib/badges';
+import { HUB_TABLE_CLIENT } from '../../lib/hubClient';
+
+export interface Props { rows: HubRow[]; caption: string; showStatus: boolean }
+const { rows, caption, showStatus } = Astro.props;
+const int = (n: number) => Math.round(n).toLocaleString('en-US');
+const columns = [
+  { label: 'System', type: 'text', sort: true },
+  { label: 'Measured line', type: 'text', sort: false },
+  { label: 'Commits/wk', type: 'num', sort: true },
+  { label: 'Citations to date', type: 'num', sort: true },
+  { label: 'Verified dependents', type: 'num', sort: true },
+  { label: 'Stars, recorded, not scored', type: 'num', sort: true },
+  ...(showStatus ? [{ label: 'Status', type: 'num', sort: true }] : []),
+];
+---
+<div class="hub-scroll">
+  <table class="hub-table" data-hub-table>
+    <caption>{caption}</caption>
+    <thead><tr>
+      {columns.map((c, i) => <th scope="col" class:list={{ num: c.type === 'num' && i > 1 && c.label !== 'Status' }}>
+        {c.sort ? <button type="button" data-sort={i} data-type={c.type}>{c.label} <span aria-hidden="true">↕</span></button> : c.label}
+      </th>)}
+    </tr></thead>
+    <tbody>
+      {rows.map((r) => <tr>
+        <th scope="row" data-value={r.name}><a href={r.url}>{r.name}</a></th>
+        <td class="line">{r.measuredLine}</td>
+        <td class="num" data-value={r.commits ?? ''}>{r.commits === null ? <span class="nm">not measured</span> : <data value={r.commits}>{fmt(r.commits)}</data>}</td>
+        <td class="num" data-value={r.citations ?? ''}>{r.citations === null ? <span class="nm">not measured</span> : <><data value={r.citations}>{int(r.citations)}</data>{r.citationState === 'count_only' && <small>count only</small>}</>}</td>
+        <td class="num" data-value={r.dependents ?? ''}>{r.dependents === null ? <span class="nm">not measured</span> : <><data value={r.dependents}>{int(r.dependents)}</data>{r.dependentsState === 'count_only' && <small>count only</small>}</>}</td>
+        <td class="num stars" data-value={r.stars ?? ''}>{r.stars === null ? <span class="nm">not measured</span> : <data value={r.stars}>{int(r.stars)}</data>}</td>
+        {showStatus && <td class="status" data-value={r.medal ? r.medal.ratio : r.rising ? 0 : ''}>
+          {r.medal && <span class="medal"><span class="medal-icon" aria-hidden="true" set:html={medalIcon(r.medal.tier)} />{r.status.split(' · ')[0]}</span>}
+          {r.rising && <span class="rising">Rising</span>}
+        </td>}
+      </tr>)}
+    </tbody>
+  </table>
+</div>
+<script is:inline set:html={HUB_TABLE_CLIENT} />
+
+<style>
+  .hub-scroll { overflow-x: auto; max-width: 100%; border: 1px solid var(--hairline); border-radius: 10px; background: var(--surface); }
+  .hub-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; min-width: 900px; }
+  .hub-table caption { caption-side: top; text-align: left; padding: 10px 14px; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-mute); }
+  .hub-table thead { background: var(--paper); }
+  .hub-table thead th { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .03em; color: var(--ink-soft); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--hairline); vertical-align: bottom; }
+  .hub-table thead th.num { text-align: right; }
+  .hub-table button { font: inherit; color: var(--velocity-ink); background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+  .hub-table button:hover { color: var(--velocity); }
+  .hub-table td, .hub-table tbody th { padding: 10px 12px; border-bottom: 1px solid var(--hairline); vertical-align: top; text-align: left; }
+  .hub-table tbody tr:last-child td, .hub-table tbody tr:last-child th { border-bottom: 0; }
+  .hub-table tbody th { font-family: var(--font-display); font-weight: 600; font-size: 14.5px; white-space: nowrap; }
+  .hub-table td.num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+  .hub-table td.num small { display: block; font-size: 10px; color: var(--ink-mute); }
+  .hub-table td.line { color: var(--ink-soft); min-width: 260px; max-width: 360px; }
+  .hub-table td.stars { color: var(--ink-mute); }
+  .hub-table .nm { font-family: var(--font-body); font-size: 11.5px; color: var(--ink-mute); }
+  .hub-table td.status { white-space: nowrap; font-family: var(--font-mono); font-size: 12.5px; }
+  .hub-table .medal { display: inline-flex; align-items: center; gap: 5px; }
+  .hub-table .medal-icon { display: inline-flex; width: 18px; height: 18px; }
+  .hub-table .medal-icon :global(svg) { width: 18px; height: 18px; }
+  .hub-table .rising { display: inline-block; color: var(--velocity-ink); border: 1px solid var(--velocity); border-radius: 100px; padding: 0 7px; font-size: 11px; }
+  .hub-table .medal + .rising { margin-left: 8px; }
+</style>

@@ -1,0 +1,113 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pagination from '../Pagination.astro';
+import HubTable from './HubTable.astro';
+import { snapshot } from '../../lib/data';
+import { breadcrumb } from '../../lib/jsonld';
+import { cohortMinutes } from '../../lib/minutes';
+import { LIST_PAGE_SIZE, pageCount, pageItems, pagePath } from '../../lib/pagination';
+import { CC0_URL, SITE, nicheAnswer, nicheCsvPath, nicheDescription, nicheJsonPath, nicheReportHref, nicheSummary } from '../../lib/hubs';
+
+export interface Props { cohortKey: string; page: number }
+const { cohortKey, page } = Astro.props;
+const s = nicheSummary(cohortKey);
+const basePath = `/ai/cohorts/${s.slug}/`;
+const path = pagePath(basePath, page);
+const totalPages = pageCount(s.rows.length);
+const rows = pageItems(s.rows, page);
+const pageSuffix = page > 1 ? `, page ${page}` : '';
+const h1 = s.assigned ? `${s.label}: ${s.n.toLocaleString('en-US')} open-source systems measured weekly` : `Not yet assigned: ${s.n.toLocaleString('en-US')} open AI systems measured weekly`;
+const title = s.assigned
+  ? `Open-source ${s.label}: ${s.n.toLocaleString('en-US')} systems, commits, citations and dependents${pageSuffix} | Evidaxis`
+  : `Not yet assigned: ${s.n.toLocaleString('en-US')} open AI systems, commits, citations and dependents${pageSuffix} | Evidaxis`;
+const answer = nicheAnswer(s);
+const desc = page > 1 ? `Page ${page}: ${nicheDescription(s)}` : nicheDescription(s);
+const firstRow = (page - 1) * LIST_PAGE_SIZE + 1;
+const caption = totalPages > 1
+  ? `${s.label}: systems ${firstRow.toLocaleString('en-US')} to ${(firstRow + rows.length - 1).toLocaleString('en-US')} of ${s.n.toLocaleString('en-US')}, snapshot ${snapshot.snapshot_date}`
+  : `${s.label}: all ${s.n.toLocaleString('en-US')} systems, snapshot ${snapshot.snapshot_date}`;
+const minutesHistory = page === 1 ? cohortMinutes().filter((m) => m.slug === s.slug).sort((a, b) => b.week.localeCompare(a.week)) : [];
+const crumbs = s.assigned
+  ? [{ name: 'Home', path: '/' }, { name: s.field.label, path: `/ai/fields/${s.field.slug}/` }, { name: s.label, path: basePath }]
+  : [{ name: 'Home', path: '/' }, { name: 'Not yet assigned', path: basePath }];
+const pageCrumbs = page > 1 ? [...crumbs, { name: `Page ${page}`, path }] : crumbs;
+const ORG = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Evidaxis', url: `${SITE}/` };
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    ORG,
+    { '@type': 'CollectionPage', '@id': `${SITE}${path}#page`, url: `${SITE}${path}`, name: h1 + pageSuffix, description: answer,
+      inLanguage: 'en', isPartOf: { '@id': `${SITE}/#website` }, dateModified: snapshot.snapshot_date,
+      mainEntity: { '@id': `${SITE}${path}#list` }, about: { '@id': `${SITE}${basePath}#dataset` } },
+    { '@type': 'Dataset', '@id': `${SITE}${basePath}#dataset`, name: `${s.label}: systems table, Evidaxis snapshot ${snapshot.snapshot_date}`,
+      description: `${answer} One row per system with commits per week, citations to date, verified direct dependents, stars (recorded, not scored), medal multiple and Rising. Released under CC0.`,
+      url: `${SITE}${basePath}`, license: CC0_URL, isAccessibleForFree: true, creator: { '@id': ORG['@id'] }, publisher: { '@id': ORG['@id'] },
+      includedInDataCatalog: { '@type': 'DataCatalog', '@id': `${SITE}/#catalog`, name: 'Evidaxis Open Measurements', url: `${SITE}/` },
+      datePublished: snapshot.snapshot_date, dateModified: snapshot.snapshot_date, temporalCoverage: snapshot.snapshot_date,
+      isBasedOn: `${SITE}/snapshots/${snapshot.snapshot_date}/`,
+      distribution: [
+        { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${SITE}${nicheCsvPath(s)}` },
+        { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE}${nicheJsonPath(s)}` },
+      ] },
+    { '@type': 'ItemList', '@id': `${SITE}${path}#list`, name: `${s.label}: systems, name A to Z`, itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      numberOfItems: rows.length, itemListElement: rows.map((r) => ({ '@type': 'ListItem', name: r.name, url: `${SITE}${r.url}` })) },
+  ],
+};
+---
+<Base title={title} description={desc} canonical={path} jsonLd={[graph, breadcrumb(pageCrumbs)]}>
+  <section class="section hub">
+    <div class="wrap">
+      <nav class="crumb mono muted" aria-label="Breadcrumb">
+        {pageCrumbs.map((c, i) => <>{i > 0 && ' / '}{i < pageCrumbs.length - 1 ? <a href={c.path}>{c.name}</a> : <span>{c.name}</span>}</>)}
+      </nav>
+      <p class="eyebrow">{s.assigned ? 'Niche' : 'Systems without a niche'}</p>
+      <h1>{h1}{page > 1 && <span class="pg">, page {page}</span>}</h1>
+      <p class="hub-answer">{answer}</p>
+      <div class="hub-actions">
+        <a class="primary" href={nicheCsvPath(s)} download>{s.assigned ? 'Download niche table (CSV)' : 'Download table (CSV)'}</a>
+        <a href={nicheJsonPath(s)}>JSON</a>
+        <a href={nicheReportHref(s)}>Report an error</a>
+      </div>
+
+      <h2 class="hub-h2">Systems</h2>
+      <p class="hub-order">Default order: system name, A to Z. Click a column to reorder. Order is not a rank.{totalPages > 1 && ` Sorting reorders this page; the CSV holds all ${s.n.toLocaleString('en-US')} rows.`}</p>
+      <HubTable rows={rows} caption={caption} showStatus={s.assigned} />
+      {s.assigned && <div class="hub-legend">
+        <p>2×, 10× and 100× are that multiple of this niche median, on citations or verified dependents (bronze, silver, gold).</p>
+        <p>Rising means at least two of the three measures are rising together in this niche on this snapshot; it describes the recorded series, not a forecast.</p>
+      </div>}
+      {totalPages > 1 && <Pagination page={page} totalPages={totalPages} basePath={basePath} />}
+
+      {minutesHistory.length > 0 && (
+        <nav class="minutes-history" aria-labelledby="minutes-history-heading">
+          <h2 id="minutes-history-heading">Weekly cohort minutes</h2>
+          <ul class="mono">
+            {minutesHistory.map((minutes) => (
+              <li><a href={`/ai/cohorts/${s.slug}/minutes/${minutes.week}/`}>{minutes.week}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      <p class="hub-how"><a href="/glossary/#terms-on-every-page">How each figure is computed →</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hub .crumb { font-size: .74rem; margin-bottom: .8rem; }
+  .hub .crumb a { color: inherit; border: none; }
+  .hub h1 { max-width: 30ch; }
+  .hub h1 .pg { font-weight: 400; color: var(--ink-mute); }
+  .hub-answer { font-size: 1.08rem; line-height: 1.6; color: var(--ink-soft); max-width: 78ch; margin: 1rem 0 0; }
+  .hub-actions { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 1.3rem 0 0; font-size: .92rem; }
+  .hub-actions .primary { padding: 9px 13px; background: var(--velocity); color: #fff; border-radius: 5px; border: 0; }
+  .hub-actions .primary:hover { background: var(--velocity-ink); color: #fff; }
+  .hub-h2 { margin: 2.4rem 0 .4rem; font-size: 1.35rem; }
+  .hub-order { font-size: .88rem; color: var(--ink-mute); margin: 0 0 .8rem; max-width: none; }
+  .hub-legend { margin-top: .9rem; font-size: .84rem; color: var(--ink-mute); }
+  .hub-legend p { margin: 0 0 .3rem; max-width: 90ch; }
+  .minutes-history { margin: 2.2rem 0 1rem; }
+  .minutes-history h2 { margin: 0 0 .55rem; font-size: 1rem; }
+  .minutes-history ul { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin: 0; padding: 0; list-style: none; font-size: .78rem; }
+  .hub-how { margin-top: 1.6rem; font-size: .92rem; }
+</style>

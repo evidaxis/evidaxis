@@ -1,44 +1,46 @@
 ---
 import Base from '../layouts/Base.astro';
-import CitBars from '../components/charts/CitBars.astro';
 import RankTable from '../components/RankTable.astro';
-import { snapshot, entities, industries, entitiesInCohort, SNAP_DATE } from '../lib/data';
-import { cohortColor, cohortLabel, COHORT_ORDER } from '../lib/cohorts';
-import { CITATION_AXIS, measurementStateFor } from '../lib/measurement';
+import NicheCard from '../components/hubs/NicheCard.astro';
+import { snapshot, entities, SNAP_DATE } from '../lib/data';
+import { COHORT_ORDER } from '../lib/cohorts';
 import { computePowerFunnel } from '../lib/power';
 import { orgGraph, snapshotDataset } from '../lib/jsonld';
 import { AXIS3_ESTIMAND, methodologyAxes } from '../lib/methodology';
 import { pageCount, pageItems } from '../lib/pagination';
+import { glossaryHref } from '../lib/glossary';
+import { assignedNiches, snapshotMedals, unassignedSummary, UNASSIGNED } from '../lib/hubs';
+import { HOME_SEARCH_CLIENT } from '../lib/hubClient';
 import Pagination from '../components/Pagination.astro';
 
 const power = computePowerFunnel(snapshot);
 const isM3 = methodologyAxes(snapshot.methodology_version).length === 3;
-const nCohorts = Object.keys(snapshot.cohorts).length;
-const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
-const hero = byMom.find((e) => measurementStateFor(e, snapshot).axis_coverage.axes[CITATION_AXIS] === 'measurable') ?? byMom[0];
 const cohortIndex = (key: string) => {
   const index = COHORT_ORDER.indexOf(key);
   return index < 0 ? Number.MAX_SAFE_INTEGER : index;
 };
-const assigned = entities.filter((entity) => entity.cohort !== 'unassigned-v1').sort((a, b) =>
+const assigned = entities.filter((entity) => entity.cohort !== UNASSIGNED).sort((a, b) =>
   cohortIndex(a.cohort) - cohortIndex(b.cohort) || a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 const awaitingNiche = entities.length - assigned.length;
 const catalogPages = pageCount(assigned.length);
 const visibleCatalog = pageItems(assigned, 1);
 
-const cohortDesc: Record<string, string> = {
-  'robotics-embodied': 'Policies, simulators and embodied agents.',
-  'ai-drug-discovery': 'Structure prediction and molecular modeling.',
-  'ai-coding-agents': 'Autonomous coding and software-engineering agents.',
-};
-const cohortSlug = (key: string) => {
-  for (const ind of industries().values())
-    for (const sn of ind.subniches.values())
-      if (sn.cohortKey === key) return `/ai/cohorts/${sn.slug}/`;
-  return '/coverage/';
-};
+const niches = assignedNiches();
+const unassigned = unassignedSummary();
+const { medals, rising } = snapshotMedals();
+const RISING_SHOWN = 20;
+const week = snapshot.period.match(/^(\d{4})-w(\d{1,2})$/i);
+const weekText = week ? `week ${Number(week[2])} of ${week[1]}` : snapshot.period;
+const n = (v: number) => v.toLocaleString('en-US');
 
-const desc = `Evidaxis: a weekly record of momentum across ${power.registry_members} open AI systems, scored by the rate of change of their signals. Rising means two axes converging. Open data, CC0.`;
+const desc = `A free weekly CC0 archive of measured facts about ${n(entities.length)} open AI systems: commits per week, citations to date and verified dependents, each with its source and date.`;
+const terms = [
+  ['commits-per-week', 'Commits per week'],
+  ['citation', 'Citation'],
+  ['verified-direct-dependent', 'Verified direct dependent'],
+  ['niche-medal', 'Niche medal'],
+  ['niche-rising', 'Rising'],
+] as const;
 ---
 <Base
   title="Evidaxis, the longitudinal map of open AI momentum"
@@ -47,95 +49,84 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
   jsonLd={[orgGraph(), snapshotDataset(snapshot)]}
   jsonTwin={`/snapshots/${SNAP_DATE}/snapshot.json`}
 >
-  <!-- ================= HERO ================= -->
+  <!-- ================= FIRST SCREEN ================= -->
   <section class="hero" style="border-top:none">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow rv">Evidaxis · Pilot 2026</span>
-        <h1 class="rv">{isM3 ? 'Three axes. One gate: any two converge.' : <>We measure open AI systems by momentum, <span class="em">week by week</span>.</>}</h1>
-        <p class="lead rv">We hold a longitudinal record of open AI momentum: every system in the census, every week, each input hash-pinned with raw provenance published. Size is never scored. We measure the rate of change of public signals, and publish Rising only when two independent axes converge. Open data, CC0.</p>
-        <div class="metastrip mono rv">
-          <span><b>{power.registry_members}</b> systems</span><span class="dot">·</span>
-          <span><b>{nCohorts}</b> cohorts</span><span class="dot">·</span>
-          <span>snapshot <b>{snapshot.snapshot_id}</b></span><span class="dot">·</span>
-          <span>period <b>{snapshot.period}</b></span><span class="dot">·</span>
-          <span>methodology <b>{snapshot.methodology_version}</b></span>
-        </div>
-        <div class="hero-cta rv">
-          <a class="ghost" href="/methodology/current/">Read the methodology <span aria-hidden="true">&rarr;</span></a>
-          <a class="textlink" href="/coverage/">Coverage atlas <span class="arr" aria-hidden="true">&rarr;</span></a>
-          <a class="textlink" href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Download snapshot (JSON) <span aria-hidden="true">&darr;</span></a>
-          <a class="textlink" href="https://doi.org/10.5281/zenodo.21076012">genesis seed deposit (m1, 19 systems) <span class="arr" aria-hidden="true">&rarr;</span></a>
-        </div>
+    <div class="wrap">
+      <span class="eyebrow">Open data · CC0 · weekly</span>
+      <h1>Evidaxis</h1>
+      <p class="lead">A free weekly CC0 archive of measured facts about open AI systems: commits per week, citations to date and verified dependents, each with its source and date.</p>
+      <div class="metastrip mono">
+        <span><b>{n(entities.length)}</b> systems in this snapshot</span><span class="dot">·</span>
+        <span><b>{n(niches.length)}</b> niches + not yet assigned (<b>{n(awaitingNiche)}</b> systems)</span><span class="dot">·</span>
+        <span>snapshot <b>{weekText}</b> ({snapshot.period}), dated <b>{snapshot.snapshot_date}</b></span>
       </div>
-
-      <div class="stage rv">
-        <div class="mock-main">
-          <div class="panel float">
-            <div class="panel-bar">
-              <div class="tl"><i></i><i></i><i></i></div>
-              <span class="addr">evidaxis.org / snapshot / {snapshot.snapshot_id} / {hero.name}</span>
-              <span class="tag">LIVE</span>
-            </div>
-            <div class="panel-body">
-              <div class="mock-head">
-                <span class="mono mock-sys">{hero.name} · citations / year</span>
-                <span class="mono mock-axis">cohort {cohortLabel(hero.cohort)}</span>
-              </div>
-              <CitBars entity={hero} />
-            </div>
-          </div>
-          <div class="statcard sc-1">
-            <div class="k">momentum</div>
-            <div class="v teal">{hero.momentum ?? 'n/a'}</div>
-            <div class="sub">{hero.name} · illustration</div>
-          </div>
-          <div class="statcard sc-2">
-            <div class="k">rising this snapshot</div>
-            <div class="v">{power.rising_published}<span style="font-size:14px;color:var(--ink-mute)"> / {power.gate_eligible}</span></div>
-            <div class="sub">published / gate eligible</div>
-          </div>
+      <form class="find" data-find role="search" action="/" autocomplete="off">
+        <label for="find-system">Find a system</label>
+        <div class="find-row">
+          <input id="find-system" type="search" name="q" placeholder="Type a system name, for example vLLM" spellcheck="false" />
+          <button type="submit">Open card</button>
         </div>
+        <p class="find-note mono" data-find-note aria-live="polite"></p>
+        <ul class="find-results" data-find-results></ul>
+        <noscript><p class="find-note mono">Search needs JavaScript. Every system is listed on its niche page below and in the <a href={`/snapshots/${SNAP_DATE}/`}>snapshot</a>.</p></noscript>
+      </form>
+      <script is:inline set:html={HOME_SEARCH_CLIENT} />
+      <div class="hero-cta">
+        <a class="textlink" href={`/snapshots/${SNAP_DATE}/snapshot.json`}>Snapshot JSON <span aria-hidden="true">&darr;</span></a>
+        <a class="textlink" href="/feed.atom">Atom feed <span class="arr" aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ================= 1.0 THE INSTRUMENT (text summary; charts on /coverage) ================= -->
-  <section id="methodology">
+  <!-- ================= NICHES ================= -->
+  <section id="niches" class="section">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num rv">1.0, The instrument</span></div>
-      <h2 class="rv">{isM3 ? 'Development, citations and direct dependents.' : 'Two axes. One gate.'}</h2>
+      <h2>Niches</h2>
+      <p class="sec-sub">Niche name, A to Z. Each niche keeps its own median; medals and Rising are computed inside a niche.</p>
+      <div class="niche-grid">
+        {niches.map((s) => <NicheCard summary={s} compact headingLevel={3} />)}
+        {unassigned && <NicheCard summary={unassigned} compact headingLevel={3} />}
+      </div>
+      <p class="medal-strip mono">
+        <a href={glossaryHref('niche-medal')}>Medals this week</a>: <b>{n(medals.gold)}</b> gold, <b>{n(medals.silver)}</b> silver, <b>{n(medals.bronze)}</b> bronze
+        <span class="dot">·</span> <a href={glossaryHref('niche-rising')}>Rising</a>: {rising.length ? <>{rising.slice(0, RISING_SHOWN).map((r, i) => <>{i > 0 && ', '}<a href={`/e/${r.id}/`}>{r.name}</a></>)}{rising.length > RISING_SHOWN && ` and ${n(rising.length - RISING_SHOWN)} more (see each niche)`}</> : 'none'}
+      </p>
+      <p class="term-line">What the figures mean: {terms.map(([id, label], i) => <>{i > 0 && ' · '}<a href={glossaryHref(id)}>{label}</a></>)}</p>
+    </div>
+  </section>
+
+  <!-- ================= HOW A FIGURE IS COMPUTED ================= -->
+  <section id="methodology" class="section">
+    <div class="wrap">
+      <h2>How a figure is computed</h2>
+      <h3 class="method-h rv">{isM3 ? 'Three axes. One gate: any two converge.' : 'We measure open AI systems by momentum, week by week.'}</h3>
+      <p class="sec-sub rv">We hold a longitudinal record of open AI momentum: every system in the census, every week, each input hash-pinned with raw provenance published. Size is never scored. We measure the rate of change of public signals, and publish Rising only when two independent axes converge. Open data, CC0.</p>
+
+      <h3 class="method-h rv">{isM3 ? 'Development, citations and direct dependents.' : 'Two axes. One gate.'}</h3>
       <p class="sec-sub rv">Each axis is normalized within its cohort, so &ldquo;rising&rdquo; means rising relative to its peers. Stars and raw size are never scored. The gate publishes recognition only, and recognition only ever points up.</p>
 
       <div class="axis-list">
         <div class="axis-item rv">
           <span class="axis-chip vel">velocity</span>
-          <div><h3>Development velocity</h3><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
+          <div><h4>Development velocity</h4><p>The log-slope of commit activity, a fast, leading signal of where work is accelerating.</p></div>
         </div>
         <div class="axis-item rv">
           <span class="axis-chip cit">citation</span>
-          <div><h3>Citation momentum</h3><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
+          <div><h4>Citation momentum</h4><p>The log-slope of yearly citations, a slow, confirming signal that the work is taking hold.</p></div>
         </div>
         {isM3 && <div class="axis-item rv">
           <span class="axis-chip">dependents</span>
-          <div><h3>Direct-dependents momentum (deps.dev)</h3><p>Confirmed-clean weekly package-union counts, measured as a size-adjusted log-slope within the frozen panel.</p></div>
+          <div><h4>Direct-dependents momentum (deps.dev)</h4><p>Confirmed-clean weekly package-union counts, measured as a size-adjusted log-slope within the frozen panel.</p></div>
         </div>}
         <div class="axis-item rv">
           <span class="axis-chip gate">gate</span>
-          <div><h3>The convergence gate</h3><p>A system receives a Rising badge only when {isM3 ? 'any two of three measurable axes' : 'both measurable axes'} converge. History, axis coverage, cohort floor, and reference-measurement rules are evaluated mechanically each week.</p></div>
+          <div><h4>The convergence gate</h4><p>A system receives a Rising badge only when {isM3 ? 'any two of three measurable axes' : 'both measurable axes'} converge. History, axis coverage, cohort floor, and reference-measurement rules are evaluated mechanically each week.</p></div>
         </div>
       </div>
       <div class="gate-note rv">{isM3 ? <><b>Why convergence?</b> At least two axes must independently meet their rising rules. The third axis expands coverage; thresholds stay fixed. {AXIS3_ESTIMAND} </> : <><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. </>}<a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
-    </div>
-  </section>
 
-  <!-- ================= 2.0 STATE OF SNAPSHOT + ONE COMPACT TABLE ================= -->
-  <section id="snapshot">
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-num rv">2.0, State of snapshot {snapshot.snapshot_id}</span></div>
-      <h2 class="rv">Convergence is rare, and that is the point.</h2>
-      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {power.registry_members} systems across {nCohorts} frontiers in period {snapshot.period}, measured every week, each input hash-pinned. Published Rising signals: {power.rising_published}. Every weekly snapshot extends the observation history used by the next evaluation.</p>
-
+      <h3 class="method-h rv">Convergence is rare, and that is the point.</h3>
+      <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {power.registry_members} systems in period {snapshot.period}, measured every week, each input hash-pinned. Published Rising signals: {power.rising_published}. Every weekly snapshot extends the observation history used by the next evaluation.</p>
       <div class="stat-row">
         <div class="stat rising rv">
           <div class="top"><span class="label">Rising</span><span class="badge rising">{isM3 ? 'any two axes' : 'both axes'}</span></div>
@@ -153,90 +144,74 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
           <div class="delta">{isM3 ? `${power.three_axis_measurable} with all three axes` : 'development and citation axes'}</div>
         </div>
       </div>
+      <div class="hero-cta method-links">
+        <a class="ghost" href="/methodology/current/">Read the methodology <span aria-hidden="true">&rarr;</span></a>
+        <a class="textlink" href="/glossary/">Glossary <span class="arr" aria-hidden="true">&rarr;</span></a>
+        <a class="textlink" href="/coverage/">Coverage atlas <span class="arr" aria-hidden="true">&rarr;</span></a>
+        <a class="textlink" href="/coverage/power/">Measurement power funnel <span class="arr" aria-hidden="true">&rarr;</span></a>
+        <a class="textlink" href="https://doi.org/10.5281/zenodo.21076012">genesis seed deposit (m1, 19 systems) <span class="arr" aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
 
-      <!-- Single compact catalog table (no per-row sparklines  -  see /coverage for the chart wall). -->
+  <!-- ================= CATALOG (scale guard: assigned systems, paginated) ================= -->
+  <section id="snapshot" class="section below-fold">
+    <div class="wrap">
+      <h2>Catalog</h2>
+      <p class="sec-sub">Systems with an assigned niche in snapshot {snapshot.snapshot_id}, in niche and name order.</p>
       <RankTable title="Catalog" showSparks={false} entities={visibleCatalog} />
       {awaitingNiche > 0 && <p class="muted" style="margin-top:1rem"><a href="/ai/cohorts/unassigned-v1/">{awaitingNiche} more systems are measured weekly and await a niche</a></p>}
       <Pagination page={1} totalPages={catalogPages} basePath="/" />
     </div>
   </section>
-
-  <!-- ================= 3.0 COVERAGE (compact; full charts on /coverage) ================= -->
-  <section id="coverage" class="below-fold">
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-num rv">3.0, Coverage</span></div>
-      <h2 class="rv">{nCohorts} frontiers under weekly measurement.</h2>
-      <p class="sec-sub rv">Across {nCohorts} cohorts, every score is checkable against its hash-pinned inputs. Each system is normalized only against its own cohort.</p>
-
-      <div class="cohort-cards">
-        {COHORT_ORDER.map((k) => {
-          const es = entitiesInCohort(k);
-          return (
-            <a class="cohort rv" href={cohortSlug(k)}>
-              <span class="swatch" style={`background:${cohortColor(k)}`}></span>
-              <div class="meta">
-                <div class="name">{cohortLabel(k)}</div>
-                <div class="desc">{cohortDesc[k] ?? ''}</div>
-              </div>
-              <div class="count">{es.length}<span>SYSTEMS</span></div>
-            </a>
-          );
-        })}
-      </div>
-
-      <p style="margin-top:22px"><a class="textlink rv" href="/coverage/">Full coverage atlas, chart wall, and the frontier we are still extending <span class="arr" aria-hidden="true">&rarr;</span></a></p>
-      <p style="margin-top:12px"><a class="textlink rv" href="/coverage/power/">Measurement power funnel <span class="arr" aria-hidden="true">&rarr;</span></a></p>
-    </div>
-  </section>
 </Base>
 
 <style>
-  /* ---- hero ---- */
-  .hero { padding: 84px 0 60px; position: relative; overflow: hidden; }
-  .hero-grid { display: grid; grid-template-columns: minmax(0,1.02fr) minmax(0,1.18fr); gap: 54px; align-items: center; }
-  .hero h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.6rem,5.4vw,4.15rem); line-height: 1.02; letter-spacing: -.03em; margin: 20px 0 0; max-width: 13ch; }
-  .hero h1 .em { font-style: italic; font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em; }
-  .lead { font-size: clamp(1rem,1.5vw,1.16rem); color: var(--ink-soft); margin: 24px 0 0; max-width: 46ch; line-height: 1.62; }
-  .metastrip { margin-top: 28px; font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-mute); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+  /* ---- first screen ---- */
+  .hero { padding: 72px 0 44px; position: relative; overflow: hidden; }
+  .hero h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.6rem,5.4vw,4.15rem); line-height: 1.02; letter-spacing: -.03em; margin: 18px 0 0; }
+  .lead { font-size: clamp(1.02rem,1.6vw,1.22rem); color: var(--ink-soft); margin: 20px 0 0; max-width: 58ch; line-height: 1.55; }
+  .metastrip { margin-top: 22px; font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-mute); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
   .metastrip b { color: var(--velocity); font-weight: 500; }
-  .metastrip .dot { opacity: .4; }
-  .hero-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+  .metastrip .dot, .medal-strip .dot { opacity: .4; }
+  .find { margin-top: 26px; max-width: 560px; }
+  .find label { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 6px; }
+  .find-row { display: flex; gap: 8px; }
+  .find input { flex: 1; min-width: 0; font: inherit; font-size: 1rem; padding: 11px 14px; border: 1px solid var(--hairline-2); border-radius: 8px; background: var(--surface); color: var(--ink); }
+  .find input:focus { outline: 2px solid var(--velocity); outline-offset: 1px; }
+  .find button { font-family: var(--font-mono); font-size: 13px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; }
+  .find-note { margin: 6px 0 0; font-size: 11.5px; color: var(--ink-mute); min-height: 1em; }
+  .find-results { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; }
+  .find-results :global(li a) { display: block; padding: 7px 2px; border-bottom: 1px solid var(--hairline); }
+  .hero-cta { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; }
   .ghost { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink); border: 1px solid var(--ink); border-radius: 100px; padding: 11px 19px; display: inline-flex; align-items: center; gap: 7px; transition: all .2s; }
   .ghost:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
   .textlink { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink-soft); display: inline-flex; gap: 6px; align-items: center; transition: color .18s; }
   .textlink:hover { color: var(--velocity); }
-  .textlink .arr { transition: transform .2s; }
-  .textlink:hover .arr { transform: translateX(3px); }
-  .stage { position: relative; perspective: 1600px; }
-  .mock-main { transform: rotateY(-7deg) rotateX(2deg) rotate(-.6deg); transform-origin: 60% 50%; }
-  .mock-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 10px; }
-  .mock-sys { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
-  .mock-axis { font-size: 11px; color: var(--velocity); }
-  .statcard { position: absolute; background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; box-shadow: var(--shadow-float); padding: 12px 14px; }
-  .statcard .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
-  .statcard .v { font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.05; margin-top: 3px; letter-spacing: -.02em; }
-  .statcard .v.teal { color: var(--velocity); }
-  .statcard .sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft); margin-top: 3px; }
-  .sc-1 { top: -26px; left: -30px; animation: floaty 7s ease-in-out infinite; }
-  .sc-2 { bottom: -22px; right: -26px; animation: floaty 8s ease-in-out infinite .8s; }
-  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-  @media (prefers-reduced-motion: reduce) { .sc-1, .sc-2 { animation: none; } }
 
-  /* ---- instrument ---- */
-  .axis-list { display: flex; flex-direction: column; margin-top: 34px; }
+  /* ---- niches ---- */
+  .niche-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; margin-top: 22px; }
+  .medal-strip { margin-top: 22px; font-size: 13px; color: var(--ink-soft); max-width: none; }
+  .medal-strip b { color: var(--ink); font-weight: 500; }
+  .term-line { margin-top: 10px; font-size: .92rem; color: var(--ink-soft); max-width: none; }
+
+  /* ---- how a figure is computed ---- */
+  .method-h { margin: 30px 0 0; font-size: 1.3rem; letter-spacing: -.01em; }
+  .axis-list { display: flex; flex-direction: column; margin-top: 26px; }
   .axis-item { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; padding: 20px 0; border-top: 1px solid var(--hairline); }
   .axis-item:first-child { border-top: 0; padding-top: 0; }
   .axis-chip { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: 6px 11px; border-radius: 7px; white-space: nowrap; font-weight: 500; align-self: start; }
   .axis-chip.vel { color: var(--velocity); background: var(--rise-wash); border: 1px solid rgba(12,110,99,.25); }
   .axis-chip.cit { color: var(--citation-ink); background: rgba(176,100,28,.08); border: 1px solid rgba(176,100,28,.25); }
   .axis-chip.gate { color: var(--ink-mute); background: var(--paper-2); border: 1px solid var(--hairline); }
-  .axis-item h3 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -.01em; }
+  .axis-item h4 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.06rem; letter-spacing: -.01em; }
   .axis-item p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
   .gate-note { margin-top: 26px; font-size: .95rem; color: var(--ink-soft); background: var(--paper-2); border: 1px solid var(--hairline); border-left: 2px solid var(--velocity); border-radius: 0 10px 10px 0; padding: 16px 18px; }
   .gate-note b { color: var(--ink); }
+  .method-links { margin-top: 30px; }
 
   /* ---- stat cards ---- */
-  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 36px; }
+  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 26px; }
   .stat { background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 22px; box-shadow: var(--shadow-card); position: relative; }
   .stat .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
   .stat .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
@@ -247,30 +222,18 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
   .stat.axes .num { color: var(--ink-soft); }
   .mechanical-label { color: var(--ink-mute); font-size: 10px; }
 
-  /* ---- coverage ---- */
   .below-fold { content-visibility: auto; contain-intrinsic-size: auto 600px; }
-  .cohort-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
-  .cohort { display: flex; align-items: center; gap: 18px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; padding: 18px 22px; box-shadow: var(--shadow-card); transition: transform .2s, box-shadow .2s; }
-  .cohort:hover { transform: translateY(-2px); box-shadow: var(--shadow-float); }
-  .cohort .swatch { width: 13px; height: 13px; border-radius: 50%; flex: none; }
-  .cohort .meta { flex: 1; }
-  .cohort .name { font-family: var(--font-display); font-weight: 600; font-size: 1.18rem; letter-spacing: -.01em; }
-  .cohort .desc { font-size: .9rem; color: var(--ink-soft); margin-top: 2px; }
-  .cohort .count { font-family: var(--font-display); font-weight: 600; font-size: 1.7rem; color: var(--ink); line-height: 1; letter-spacing: -.02em; text-align: right; }
-  .cohort .count span { font-family: var(--font-mono); font-size: .62rem; font-weight: 400; color: var(--ink-mute); letter-spacing: .08em; display: block; margin-top: 3px; }
 
   /* ---- reveal ---- */
   :global(html.js) .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
   :global(html.js) .rv.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { :global(html.js) .rv { opacity: 1; transform: none; transition: none; } }
 
-  /* ---- responsive ---- */
   @media (max-width: 760px) {
-    .hero { padding: 40px 0 30px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 46px; }
+    .hero { padding: 36px 0 26px; }
     .stat-row { grid-template-columns: 1fr; }
-    .statcard { position: static; margin: 12px 0 0; display: inline-block; animation: none; }
-    .mock-main { transform: none; }
+    .find-row { flex-direction: column; }
+    .find button { padding: 10px 16px; }
   }
 </style>
 
