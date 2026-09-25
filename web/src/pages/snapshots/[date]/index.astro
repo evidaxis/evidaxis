@@ -7,6 +7,8 @@ import { snapshotDataset, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
 import { measurementPhrases, measurementStateFor } from '../../../lib/measurement';
 import { AXIS3_ESTIMAND, DEPENDENTS_AXIS, methodologyAxes, methodologyEntry } from '../../../lib/methodology';
+import { pageCount, pageItems } from '../../../lib/pagination';
+import Pagination from '../../../components/Pagination.astro';
 
 export function getStaticPaths() {
   return snapshots.map((snapshot) => ({
@@ -17,7 +19,9 @@ export function getStaticPaths() {
 const { snapshot, manifest } = Astro.props as { snapshot: Snapshot; manifest: any | null };
 const date = snapshot.snapshot_date;
 const hasThirdAxis = methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS);
-const all = [...snapshot.entities].sort((a, b) => a.name.localeCompare(b.name));  // D1: reader sorts
+const ordered = [...snapshot.entities].sort((a, b) => a.name.localeCompare(b.name));  // D1: reader sorts
+const totalPages = pageCount(ordered.length);
+const all = pageItems(ordered, 1);
 const hasDropped = hasSnapshotArtifact(date, 'dropped.json');
 const desc = `Evidaxis snapshot ${date}: momentum measurements for ${snapshot.counts.entities} AI systems, methodology ${snapshot.methodology_version}. Frozen, hash-verified, CC0 open data.`;
 const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.toFixed(digits);
@@ -108,7 +112,7 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
             {hasThirdAxis && <td>{fmt(e.axes?.deps_direct_dependents_momentum?.cohort_z)}<small>{e.axes?.deps_direct_dependents_momentum?.as_of_partition ?? e.axes?.deps_direct_dependents_momentum?.status}</small></td>}
           </tr>)}</tbody>
         </table>
-      </div>
+      </div>{totalPages > 1 && <Pagination page={1} totalPages={totalPages} basePath={`/snapshots/${date}/`} />}
     </div>
   </section>
 </Base>

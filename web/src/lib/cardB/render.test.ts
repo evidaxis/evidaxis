@@ -27,6 +27,13 @@ describe('actual Astro Card B render', () => {
       expect(first).toContain('convergence gate');
       expect(first).toContain('Gate ETA: never published');
       expect(first).not.toContain('needs snapshot history (1 snapshot exists)');
+      if (model.nicheAssigned) expect(first).toContain('niche median');
+      else {
+        expect(first.match(/Niche: not yet assigned\./g)).toHaveLength(1);
+        expect(first).not.toContain('niche median');
+        expect(first).not.toContain('card-b-neighbours');
+        expect(first).not.toContain('Peer signals');
+      }
       if (id === 'e_S7DQ1QJCCMT') expect(/total citations<\/div>\s*<div[^>]*><data value="5">5<\/data>/.test(first)).toBe(true);
       expect(scanEntityPageWide(first)).toEqual([]);
       expect(scanEntityLexicon(first, e.name)).toEqual([]);

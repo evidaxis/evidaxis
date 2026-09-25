@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { atomFeed, diffFeedEntries, entryId, jsonFeed } from './feed';
+import { atomFeed, diffFeedEntries, entryId, jsonFeed, SITE_FEED_LIMIT, siteFeedEntries } from './feed';
 import { CITATION_AXIS, DEVELOPMENT_AXIS, deriveMeasurementState } from './measurement';
 
 function entity(id: string, axes: string[], rising = false): any {
@@ -83,6 +83,13 @@ describe('typed feeds and immutable signal ids', () => {
     expect(atom).toMatch(/^<\?xml version="1\.0"/);
     expect(atom).toContain('<feed xmlns="http://www.w3.org/2005/Atom">');
     expect(atom.trimEnd().endsWith('</feed>')).toBe(true);
+  });
+
+  it('caps only the site-wide feed projection at 100 entries', () => {
+    const previous = snap('2026-08-08', '2026-w32', [entity('e_prior', [DEVELOPMENT_AXIS])]);
+    const current = snap('2026-08-15', '2026-w33', Array.from({ length: 140 }, (_, index) => entity(`e_${index}`, [DEVELOPMENT_AXIS])));
+    expect(siteFeedEntries([previous, current])).toHaveLength(SITE_FEED_LIMIT);
+    expect(diffFeedEntries(previous, current)).toHaveLength(140);
   });
 
   it('hashes only the fixed canonical identity fields, with snapshot date included', () => {

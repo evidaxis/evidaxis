@@ -160,7 +160,10 @@ for (const htmlPath of htmlFiles.filter((file) => /\/e\/e_[^/]+\/index\.html$/.t
     if (record.display?.template !== 'B' || !html.includes('data-card-b')) errors.push(`e/${id}/: B assignment missing its projection`);
     if (!/data-b-citation/.test(html)) errors.push(`e/${id}/: B citation block missing`);
     const answer = html.match(/<p[^>]*data-b-answer[^>]*>([\s\S]*?)<\/p>/)?.[1]?.replace(/<[^>]+>/g, '') ?? '';
-    if (!/\d/.test(answer) || !/\bmedian\b/.test(answer)) errors.push(`e/${id}/: B answer needs a number and median comparator`);
+    const nicheAssigned = record.display?.niche_assigned !== false;
+    if (!/\d/.test(answer)) errors.push(`e/${id}/: B answer needs a measured number`);
+    if (nicheAssigned && !/\bmedian\b/.test(answer)) errors.push(`e/${id}/: assigned-niche B answer needs a median comparator`);
+    if (!nicheAssigned && /\bniche median\b/i.test(answer)) errors.push(`e/${id}/: unassigned B answer contains a niche comparator`);
     const words = answer.trim().split(/\s+/).length;
     if (words < 40 || words > 60) errors.push(`e/${id}/: B answer has ${words} words, expected 40-60`);
     if (/\bn\/a\b/i.test(html)) errors.push(`e/${id}/: B contains n/a`);
@@ -173,6 +176,20 @@ for (const htmlPath of htmlFiles.filter((file) => /\/e\/e_[^/]+\/index\.html$/.t
     }
     const tree = parseHTML(html), card = cardArticle(tree);
     if (card) {
+      if (!nicheAssigned) {
+        const cardText = plainText(card);
+        if ((cardText.match(/Niche: not yet assigned\./g) ?? []).length !== 1) errors.push(`e/${id}/: unassigned B needs exactly one niche status line`);
+        if (/niche median/i.test(cardText) || elements(card, node => hasClass(node, 'card-b-neighbours')).length > 0 || /\/niche-[^"<]+\.svg/.test(html) || cardText.includes('Peer signals')) {
+          errors.push(`e/${id}/: unassigned B contains niche comparison output`);
+        }
+        if (record.display?.answer_comparison !== null || record.display?.tiles?.some(tile => tile.median !== null || tile.n !== 0)) {
+          errors.push(`e/${id}/: unassigned B JSON contains niche comparison output`);
+        }
+      }
+      for (const table of elements(card, node => hasClass(node, 'card-b-neighbours'))) {
+        const body = elements(table, node => node.tag === 'tbody')[0];
+        if (body && elements(body, node => node.tag === 'tr').length > 50) errors.push(`e/${id}/: B peer table exceeds 50 rows`);
+      }
       for (const caption of elements(card, node => node.tag === 'figcaption')) {
         const content = plainText(caption);
         if (!/\d/.test(content) || !/\b\d{4}-\d{2}-\d{2}\b/.test(content)) errors.push(`e/${id}/: chart caption needs a number and date`);
@@ -430,6 +447,7 @@ if (existsSync(feedJsonPath)) {
     const feed = JSON.parse(readFileSync(feedJsonPath, 'utf8'));
     if (feed.version !== 'https://jsonfeed.org/version/1.1') errors.push('feed.json: expected JSON Feed 1.1');
     if (!Array.isArray(feed.items) || feed.items.length === 0) errors.push('feed.json: expected at least one latest-diff entry');
+    if (Array.isArray(feed.items) && feed.items.length > 100) errors.push('feed.json: site-wide feed exceeds 100 entries');
     const ids = new Set();
     for (const item of feed.items ?? []) {
       const entry = item?._evidaxis;

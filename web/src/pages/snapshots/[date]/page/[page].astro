@@ -1,0 +1,62 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Pagination from '../../../../components/Pagination.astro';
+import { snapshots } from '../../../../lib/data';
+import type { Snapshot } from '../../../../lib/data';
+import { breadcrumb } from '../../../../lib/jsonld';
+import { claimUrnForEntity } from '../../../../lib/claim_urn';
+import { measurementPhrases, measurementStateFor } from '../../../../lib/measurement';
+import { DEPENDENTS_AXIS, methodologyAxes } from '../../../../lib/methodology';
+import { LIST_PAGE_SIZE, pageCount, pageItems, pagePath } from '../../../../lib/pagination';
+
+export function getStaticPaths() {
+  return snapshots.flatMap((snapshot) => Array.from({ length: Math.max(0, pageCount(snapshot.entities.length) - 1) }, (_, index) => ({
+    params: { date: snapshot.snapshot_date, page: String(index + 2) },
+    props: { snapshot, page: index + 2 },
+  })));
+}
+const { snapshot, page } = Astro.props as { snapshot: Snapshot; page: number };
+const date = snapshot.snapshot_date;
+const hasThirdAxis = methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS);
+const ordered = [...snapshot.entities].sort((a, b) => a.name.localeCompare(b.name));
+const totalPages = pageCount(ordered.length);
+const visible = pageItems(ordered, page);
+const basePath = `/snapshots/${date}/`;
+const path = pagePath(basePath, page);
+const desc = `Page ${page} of Evidaxis snapshot ${date}: frozen weekly measurements in alphabetical order.`;
+const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.toFixed(digits);
+---
+<Base title={`Snapshot ${date}, page ${page} | Evidaxis`} description={desc} canonical={path} jsonTwin={`/snapshots/${date}/snapshot.json`} jsonLd={[breadcrumb([{ name: 'Snapshot archive', path: '/snapshots/' }, { name: date, path: basePath }, { name: `Page ${page}`, path }])]}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Frozen snapshot, dated record</p>
+      <h1>Snapshot {date}, page {page}</h1>
+      <p class="lead" style="max-width:60ch">Systems {(page - 1) * LIST_PAGE_SIZE + 1} to {Math.min(page * LIST_PAGE_SIZE, ordered.length)} of {ordered.length}. Every row belongs to this frozen snapshot.</p>
+      <div class="archive-table-wrap">
+        <table class="archive-table">
+          <caption>Systems measured in snapshot {date}, page {page}, with claim-URN per row</caption>
+          <thead><tr><th scope="col">System</th><th scope="col">Status</th><th scope="col">Momentum</th><th scope="col">Velocity z</th><th scope="col">Citation z</th>{hasThirdAxis && <th scope="col">Direct-dependents z</th>}</tr></thead>
+          <tbody>{visible.map((entity) => <tr>
+            <th scope="row"><a href={`/e/${entity.entity_id}/`}><strong>{entity.name}</strong></a><small class="mono">{entity.entity_id}</small><small class="mono urn">{claimUrnForEntity(entity, snapshot)}</small></th>
+            <td>{measurementPhrases(measurementStateFor(entity, snapshot)).compact}</td>
+            <td>{fmt(entity.momentum, 1)}</td><td>{fmt(entity.axes?.github_commit_velocity?.cohort_z)}</td><td>{fmt(entity.axes?.openalex_citation_momentum?.cohort_z)}</td>
+            {hasThirdAxis && <td>{fmt(entity.axes?.deps_direct_dependents_momentum?.cohort_z)}<small>{entity.axes?.deps_direct_dependents_momentum?.as_of_partition ?? entity.axes?.deps_direct_dependents_momentum?.status}</small></td>}
+          </tr>)}</tbody>
+        </table>
+      </div>
+      <Pagination page={page} totalPages={totalPages} basePath={basePath} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .archive-table-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: 12px; background: var(--surface); }
+  .archive-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+  .archive-table caption { caption-side: top; text-align: left; padding: 12px 14px 4px; font-family: var(--font-mono); font-size: .72rem; color: var(--ink-mute); }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  thead th { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+  tbody th { font-weight: 400; }
+  tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+  th small, td small { display: block; color: var(--ink-mute); margin-top: 3px; }
+  th .urn, td .urn { font-size: .62rem; word-break: break-all; }
+</style>

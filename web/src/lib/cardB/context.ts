@@ -9,6 +9,8 @@ const papersByDate = new Map<string, Record<string, { raw?: Record<string, { tit
 const dailyByDate = new Map<string, ReturnType<typeof buildDepsMap>>();
 const historyById = new Map<string, { entity: ArchivedEntity['entity']; snapshot: ArchivedEntity['snapshot'] }[]>();
 const summaries = new Map<string, ReturnType<typeof summarizeCohort>>();
+const cohortMembers = new Map<string, ArchivedEntity['entity'][]>();
+const cohortPeers = new Map<string, ReturnType<typeof summarizeCohort>['peers']>();
 const citationMedians = new Map<string, number | null>();
 for (const snapshot of snapshots) for (const entity of snapshot.entities) {
   const rows = historyById.get(entity.entity_id) ?? [];
@@ -34,18 +36,24 @@ const bannedOwners = [...new Set([
 export function contextFor(record: ArchivedEntity): Context {
   const { entity: e, snapshot: snap } = record;
   const entry = ownerTypes.repos[e.github_repo];
+  const hasAssignedNiche = e.cohort !== 'unassigned-v1';
   // A cohort's sorted rows, medians and 52 percentile bands are shared across
   // cards; the admission batch must not recompute them for every new system.
   const key = `${snap.snapshot_id}:${e.cohort}`;
-  if (!summaries.has(key)) summaries.set(key, summarizeCohort(snap.entities.filter(p => p.cohort === e.cohort), rawSeries(snap.snapshot_date)));
+  if (!cohortMembers.has(key)) cohortMembers.set(key, snap.entities.filter(p => p.cohort === e.cohort));
+  const cohort = cohortMembers.get(key)!;
+  if (hasAssignedNiche && !summaries.has(key)) summaries.set(key, summarizeCohort(cohort, rawSeries(snap.snapshot_date)));
   if (!citationMedians.has(snap.snapshot_id)) citationMedians.set(snap.snapshot_id, median(snap.entities
     .filter(p => p.axes_present.includes('openalex_citation_momentum')).map(p => metrics(p).citations).filter(numeric)));
-  const cohortSummary = summaries.get(key)!;
+  const cohortSummary = hasAssignedNiche ? summaries.get(key)! : undefined;
+  if (!hasAssignedNiche && !cohortPeers.has(key)) cohortPeers.set(key, [...cohort]
+    .sort((a, b) => a.name.localeCompare(b.name, 'en') || a.entity_id.localeCompare(b.entity_id))
+    .map(peer => ({ id: peer.entity_id, name: peer.name, ...metrics(peer), momentum: peer.momentum, percentile: peer.percentile })));
   const history: HistoryPoint[] = (historyById.get(e.entity_id) ?? []).filter(p => p.snapshot.snapshot_date <= snap.snapshot_date)
     .map(p => ({ ...p, commits: rawSeries(p.snapshot.snapshot_date)[e.entity_id] ?? [], daily: dailyFor(p.snapshot).get(e.entity_id) ?? null }));
   return {
     state: measurementStateFor(e, snap), commits: rawSeries(snap.snapshot_date)[e.entity_id] ?? [],
-    cohort: cohortSummary.cohort, cohortCommits: rawSeries(snap.snapshot_date), history, cohortSummary, registryMedian: citationMedians.get(snap.snapshot_id)!,
+    cohort, cohortCommits: rawSeries(snap.snapshot_date), history, cohortSummary, cohortPeers: cohortSummary?.peers ?? cohortPeers.get(key), registryMedian: citationMedians.get(snap.snapshot_id)!,
     daily: dailyFor(snap).get(e.entity_id) ?? null, dailySeries: depsSeries(e.entity_id, snap),
     // Backfill is explicitly reconstructed, and dates later than the snapshot
     // are withheld even though the current archive may contain newer captures.

@@ -4,6 +4,8 @@ import EntityTable from '../../../../components/EntityTable.astro';
 import { industries, entitiesInCohort, snapshot } from '../../../../lib/data';
 import { itemListDataset, breadcrumb } from '../../../../lib/jsonld';
 import { cohortMinutes } from '../../../../lib/minutes';
+import { pageCount, pageItems } from '../../../../lib/pagination';
+import Pagination from '../../../../components/Pagination.astro';
 
 export function getStaticPaths() {
   const out: any[] = [];
@@ -16,9 +18,11 @@ export function getStaticPaths() {
 const { field, cohort } = Astro.props;
 const es = entitiesInCohort(cohort.cohortKey);
 const path = `/ai/cohorts/${cohort.slug}/`;
+const totalPages = pageCount(es.length);
+const visible = pageItems(es, 1);
 const pageName = `${cohort.label} - cohort momentum`;
 const desc = `Evidaxis momentum for ${cohort.label}: ${es.length} open AI systems scored on development velocity and citation momentum.`;
-const listJson = itemListDataset({ path, name: pageName, description: desc, period: snapshot.period, snap: snapshot, entities: es });
+const listJson = itemListDataset({ path, name: pageName, description: desc, period: snapshot.period, snap: snapshot, entities: visible });
 const minutesHistory = cohortMinutes()
   .filter((minutes) => minutes.slug === cohort.slug)
   .sort((a, b) => b.week.localeCompare(a.week));
@@ -43,7 +47,7 @@ const minutesHistory = cohortMinutes()
           </ul>
         </nav>
       )}
-      <EntityTable entities={es} />
+      <EntityTable entities={visible} />{totalPages > 1 && <Pagination page={1} totalPages={totalPages} basePath={path} />}
     </div>
   </section>
 </Base>

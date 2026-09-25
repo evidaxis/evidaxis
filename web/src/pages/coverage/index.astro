@@ -8,12 +8,18 @@ import { itemListDataset, breadcrumb } from '../../lib/jsonld';
 import { measurementStateFor } from '../../lib/measurement';
 import { computePowerFunnel } from '../../lib/power';
 import { AXIS3_ESTIMAND, DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS, methodologyAxes } from '../../lib/methodology';
+import { pageCount, pageItems } from '../../lib/pagination';
+import Pagination from '../../components/Pagination.astro';
 const inds = [...industries().values()];
 const allCohorts = inds.flatMap((ind) => [...ind.subniches.values()].map((sn) => ({ ind, sn })));
+const orderedSystems = allCohorts.flatMap(({ sn }) => entitiesInCohort(sn.cohortKey));
+const totalPages = pageCount(orderedSystems.length);
+const visible = pageItems(orderedSystems, 1);
+const visibleIds = totalPages === 1 ? null : new Set(visible.map((entity) => entity.entity_id));
 const power = computePowerFunnel(snapshot);
 const isM3 = methodologyAxes(snapshot.methodology_version).length === 3;
 const desc = `Evidaxis coverage atlas: ${snapshot.counts.entities} AI systems across ${allCohorts.length} cohorts, plus an explicit map of what is not yet measured.`;
-const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: snapshot.entities });
+const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage atlas', description: desc, snap: snapshot, entities: totalPages === 1 ? snapshot.entities : visible });
 ---
 <Base title="Coverage atlas | Evidaxis" description={desc} canonical="/coverage/" jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }])]}>
   <section class="section">
@@ -23,7 +29,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
       <p class="lead" style="max-width:62ch">You cannot catch a flare without the baseline that came before it. So we record the frontier wide and early, every score frozen, with hash-pinned inputs and open raw provenance. Absence here means one thing: no baseline yet. The instrument is the coverage, and the coverage is what compounds.</p>
 
       <!-- Chart wall (moved from homepage WP-J): content-visibility defers offscreen paint. -->
-      <div class="chart-wall" style="margin-top:2.4rem">
+      {totalPages === 1 && <div class="chart-wall" style="margin-top:2.4rem">
         <h2 style="font-size:1.2rem;margin:0 0 1rem">Snapshot chart wall · {snapshot.snapshot_id}</h2>
         <div class="wall-grid">
           <div class="wall-panel">
@@ -49,11 +55,13 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
             <div class="cap mono">have at least two<br />measurable axes{isM3 && <> · {power.three_axis_measurable} have three</>}</div>
           </div>
         </div>
-      </div>
+      </div>}
 
       <div class="stack" style="margin-top:2.4rem">
         {allCohorts.map(({ ind, sn }) => {
-          const es = entitiesInCohort(sn.cohortKey);
+          const cohortEntities = entitiesInCohort(sn.cohortKey);
+          const es = visibleIds ? cohortEntities.filter((entity) => visibleIds.has(entity.entity_id)) : cohortEntities;
+          if (es.length === 0) return null;
           const withCite = es.filter((e) => measurementStateFor(e, snapshot).axis_coverage.axes.openalex_citation_momentum === 'measurable').length;
           return (
             <div class="panel" style="padding:20px 22px">
@@ -69,7 +77,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
             </div>
           );
         })}
-      </div>
+      </div>{totalPages > 1 && <Pagination page={1} totalPages={totalPages} basePath="/coverage/" />}
 
       <div class="panel" style="padding:22px;margin-top:2rem;border-left:3px solid var(--citation)">
         <div class="eyebrow" style="color:var(--citation-ink)">Known gaps</div>

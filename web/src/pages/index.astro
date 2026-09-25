@@ -8,12 +8,23 @@ import { CITATION_AXIS, measurementStateFor } from '../lib/measurement';
 import { computePowerFunnel } from '../lib/power';
 import { orgGraph, snapshotDataset } from '../lib/jsonld';
 import { AXIS3_ESTIMAND, methodologyAxes } from '../lib/methodology';
+import { pageCount, pageItems } from '../lib/pagination';
+import Pagination from '../components/Pagination.astro';
 
 const power = computePowerFunnel(snapshot);
 const isM3 = methodologyAxes(snapshot.methodology_version).length === 3;
 const nCohorts = Object.keys(snapshot.cohorts).length;
 const byMom = [...entities].sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1));
 const hero = byMom.find((e) => measurementStateFor(e, snapshot).axis_coverage.axes[CITATION_AXIS] === 'measurable') ?? byMom[0];
+const cohortIndex = (key: string) => {
+  const index = COHORT_ORDER.indexOf(key);
+  return index < 0 ? Number.MAX_SAFE_INTEGER : index;
+};
+const assigned = entities.filter((entity) => entity.cohort !== 'unassigned-v1').sort((a, b) =>
+  cohortIndex(a.cohort) - cohortIndex(b.cohort) || a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+const awaitingNiche = entities.length - assigned.length;
+const catalogPages = pageCount(assigned.length);
+const visibleCatalog = pageItems(assigned, 1);
 
 const cohortDesc: Record<string, string> = {
   'robotics-embodied': 'Policies, simulators and embodied agents.',
@@ -144,7 +155,9 @@ const desc = `Evidaxis: a weekly record of momentum across ${power.registry_memb
       </div>
 
       <!-- Single compact catalog table (no per-row sparklines  -  see /coverage for the chart wall). -->
-      <RankTable title="Catalog" showSparks={false} />
+      <RankTable title="Catalog" showSparks={false} entities={visibleCatalog} />
+      {awaitingNiche > 0 && <p class="muted" style="margin-top:1rem"><a href="/ai/cohorts/unassigned-v1/">{awaitingNiche} more systems are measured weekly and await a niche</a></p>}
+      <Pagination page={1} totalPages={catalogPages} basePath="/" />
     </div>
   </section>
 

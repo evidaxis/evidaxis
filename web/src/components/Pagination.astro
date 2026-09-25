@@ -1,0 +1,16 @@
+---
+import { pagePath } from '../lib/pagination';
+
+export interface Props { page: number; totalPages: number; basePath: string; }
+const { page, totalPages, basePath } = Astro.props;
+const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+---
+{totalPages > 1 && <nav class="mono" aria-label="Pages" style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.7rem 1rem;margin:1.6rem 0 0;font-size:.78rem">
+  {page > 1 ? <a rel="prev" href={pagePath(basePath, page - 1)}>Previous</a> : <span aria-disabled="true">Previous</span>}
+  <span style="display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem">
+    {pages.map((number) => number === page
+      ? <strong aria-current="page">{number}</strong>
+      : <a href={pagePath(basePath, number)}>{number}</a>)}
+  </span>
+  {page < totalPages ? <a rel="next" href={pagePath(basePath, page + 1)}>Next</a> : <span aria-disabled="true">Next</span>}
+</nav>}

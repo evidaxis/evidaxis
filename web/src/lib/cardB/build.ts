@@ -54,6 +54,7 @@ export type Context = {
   backfill: { period: string; value: number }[]; repoLabel: string; repoUrl: string | null;
   repoApi: string | null; homepage: string | null; bannedOwners: string[];
   cohortSummary?: ReturnType<typeof summarizeCohort>; registryMedian?: number | null;
+  cohortPeers?: ReturnType<typeof summarizeCohort>['peers'];
   paperWorks?: { id: string; title: string | null }[];
 };
 export type Reading = {
@@ -91,10 +92,15 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const date = snap.snapshot_date, release = `${snap.snapshot_id}-${TEMPLATE_VERSION}`;
   const path = `/e/${e.entity_id}/`, url = `https://evidaxis.org${path}`;
   const urn = claimUrnForEntity(e, snap), own = metrics(e);
-  const summary = ctx.cohortSummary?.cohort === ctx.cohort ? ctx.cohortSummary : summarizeCohort(ctx.cohort, ctx.cohortCommits);
+  const nicheAssigned = e.cohort !== 'unassigned-v1';
+  const summary = nicheAssigned
+    ? ctx.cohortSummary?.cohort === ctx.cohort ? ctx.cohortSummary : summarizeCohort(ctx.cohort, ctx.cohortCommits)
+    : null;
   const cohort = ctx.cohort;
   const cohortLabel = (snap.cohorts[e.cohort]?.label ?? e.sub_niche).replace(/\u2014/g, ',');
-  const medians = summary.medians;
+  const emptyMedians = Object.fromEntries((['commits', 'citations', 'dependents', 'stars'] as MetricKey[])
+    .map(key => [key, { value: null, n: 0 }])) as Record<MetricKey, { value: number | null; n: number }>;
+  const medians = summary?.medians ?? emptyMedians;
   const registryMedian = ctx.registryMedian !== undefined ? ctx.registryMedian : median(snap.entities.filter(peer => peer.axes_present.includes('openalex_citation_momentum'))
     .map(peer => metrics(peer).citations).filter(numeric));
   const ruler = commitRuler(ctx.commits, snap.captured_at);
@@ -120,19 +126,29 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     work_ids: (e.openalex_work_ids ?? []).join(', '),
   };
   const make = (id: Parameters<typeof facet>[0], extra = {}) => facet(id, { ...vars, ...extra }, name, ctx.bannedOwners);
-  const facets = {
+  const rawFacets = {
     code: make(classes.code, { med: fmt(medians.commits.value), n: medians.commits.n }),
     citations: make(classes.citations, { slope: fmt(oa?.slope ?? null) }),
     dependents: make(classes.dependents, { med: fmt(medians.dependents.value), slope: fmt(dd?.slope ?? null) }),
     standing: make(classes.standing), stars: own.stars === null ? null : make('STARS'),
     paper_ref: paper ? make('PAPERREF') : null,
   };
+  const plainCode = own.commits === null
+    ? 'No commit reading was captured.'
+    : `${fmt(own.commits)} commits per week averaged over the trailing window.`;
+  const facets = nicheAssigned ? rawFacets : {
+    ...rawFacets,
+    code: { ...rawFacets.code, text: plainCode, answer: plainCode },
+    citations: { ...rawFacets.citations, text: rawFacets.citations.answer },
+    dependents: { ...rawFacets.dependents, text: rawFacets.dependents.answer },
+    standing: { ...rawFacets.standing, text: rawFacets.standing.answer },
+  };
   const text = (key: Parameters<typeof copy>[0], extra = {}) => copy(key, { ...vars, ...extra }, name, ctx.bannedOwners);
   const primaryKey: MetricKey | null = own.commits !== null ? 'commits' : own.citations !== null ? 'citations' : own.dependents !== null ? 'dependents' : null;
-  const lead = own.commits !== null ? facets.code.answer : primaryKey ? text('repository_free', {
+  const lead = own.commits !== null ? facets.code.answer : primaryKey && nicheAssigned ? text('repository_free', {
     value: fmt(own[primaryKey]), unit: primaryKey === 'citations' ? 'OpenAlex citing works' : 'deps.dev direct dependents',
     median: fmt(medians[primaryKey].value), n: medians[primaryKey].n,
-  }).text : facets.code.answer;
+  }).text : primaryKey ? `${fmt(own[primaryKey])} ${primaryKey === 'citations' ? 'OpenAlex citing works' : 'deps.dev direct dependents'} as of ${date}.` : facets.code.answer;
   const parts = [lead, ...(primaryKey !== 'citations' ? [facets.citations.answer] : []),
     ...(primaryKey !== 'dependents' ? [facets.dependents.answer] : []),
     ...(['C01', 'C02', 'C03'].includes(classes.standing) ? [facets.standing.answer] : [])];
@@ -168,7 +184,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const readings: Reading[] = (Object.keys(own) as MetricKey[]).map(key => ({
     key, entity_id: e.entity_id, label: labels[key], value: own[key], unit: units[key],
     date: key === 'dependents' ? dd?.as_of_partition ?? date : date, source: source(key), definition: definitions[key],
-    median: medians[key].value, n: medians[key].n,
+    median: nicheAssigned ? medians[key].value : null, n: nicheAssigned ? medians[key].n : 0,
     delta4: difference(own[key], key === 'commits' ? trailingAverage(4) : priorValue(key, 4)),
     delta26: difference(own[key], key === 'commits' ? trailingAverage(26) : priorValue(key, 26)),
     range: key === 'commits' ? span(averages) : span(history.filter(p => p.snapshot.snapshot_date >= dateAgo(date, 52)).map(p => metrics(p.entity)[key]).filter(numeric)),
@@ -190,26 +206,27 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     previous_snapshot_id: previous?.snapshot.snapshot_id ?? null, snapshot_id: snap.snapshot_id }));
   const missing = readings.filter(r => r.value === null && !r.key.endsWith('_series')).map(r => ({ key: r.key, label: r.label,
     reason: r.key === 'citations' ? e.openalex_work_ids.length ? 'no reading captured for the linked work' : 'not linked' : r.key === 'dependents' ? dd?.status === 'out_of_panel' ? 'outside panel' : 'no partition' : 'no reading captured' }));
-  const peers = summary.peers;
-  const commitBand = summary.commitBand.slice(0, ctx.commits.length);
+  const peers = summary?.peers ?? ctx.cohortPeers ?? [];
+  const commitBand = summary?.commitBand.slice(0, ctx.commits.length) ?? [];
   const display = { template: 'B', release_id: release, entity_id: e.entity_id, answer,
     tiles: readings.filter(r => ['commits', 'citations', 'dependents', 'stars'].includes(r.key))
       .map(r => ({ key: r.key, value: r.value, unit: r.unit, median: r.median, n: r.n, source: r.source, date: r.date })),
     answer_claims: [facets.code.claim_id, facets.citations.claim_id, facets.dependents.claim_id, facets.standing.claim_id],
-    answer_comparison: primaryKey ? { key: primaryKey, median: medians[primaryKey].value, n: medians[primaryKey].n, rendered_value: fmt(own[primaryKey]) } : null,
-    paper_ref: paper, paper_works: ctx.paperWorks ?? [], cohort: cohortLabel, cohort_n: cohort.length, date, urn,
+    answer_comparison: nicheAssigned && primaryKey ? { key: primaryKey, median: medians[primaryKey].value, n: medians[primaryKey].n, rendered_value: fmt(own[primaryKey]) } : null,
+    ...(!nicheAssigned && { niche_assigned: false }), paper_ref: paper, paper_works: ctx.paperWorks ?? [], cohort: nicheAssigned ? cohortLabel : null, cohort_n: cohort.length, date, urn,
   };
   const texts = {
     average: text('code_average'), code: text(ruler.lastCommitWeek ? (ruler.zeroWeeks > 0 ? 'code_last' : 'code_last_active') : 'code_none'),
     citations_difference: text('citations_difference'), citations_report: text('citations_report'), citation_scope: text('citation_scope'),
-    readings: text('readings'), niche: text('niche', { median: fmt(medians.commits.value) }),
+    readings: text('readings'), niche: nicheAssigned ? text('niche', { median: fmt(medians.commits.value) })
+      : { claim_id: 'urn:evidaxis:claim:class:NICHE_UNASSIGNED:b1', text: 'Niche: not yet assigned.' },
     changes: previous ? text('changes', { count: changes.filter(c => c.previous !== c.current).length, previous: previous.snapshot.snapshot_id, current: snap.snapshot_id }) : text('no_previous'),
     citation: text('citation'), exports: text('exports'), teams: text('teams'), links: text('links'), missing: text('missing'),
     gate_eta: text('gate_eta'), detail: text('detail'), reconstructed: text('reconstructed'),
   };
   const result = { display, facets, readings, changes, texts, entity: { id: e.entity_id, name, type: e.entity_type },
     release, path, url, urn, date, snapshot_id: snap.snapshot_id, methodology: snap.methodology_version, superseded: record.recordStatus === 'superseded',
-    cohortLabel, peers, medians, ruler, years, commitBand, missing, paper,
+    cohortLabel, cohortN: cohort.length, nicheAssigned, peers, medians, ruler, years, commitBand, missing, paper,
     repoLabel: ctx.repoLabel, repoUrl: ctx.repoUrl, homepage: ctx.homepage, workIds: e.openalex_work_ids,
     history, dailySeries: ctx.dailySeries, backfill: ctx.backfill, daily: ctx.daily,
     deps: dd ?? null, state, phrases, valuesUrl: `${path}values-${release}.csv`, historyUrl: `${path}history-${release}.csv`,
@@ -217,7 +234,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   };
   // Raw archive rows stay private to the generator; only explicit projections
   // cross the person-free boundary. This also validates links before rendering.
-  assertPublicText(JSON.stringify({ display, facets, readings, changes, texts, peers, repo: ctx.repoLabel, repoUrl: ctx.repoUrl, homepage: ctx.homepage }), name, ctx.bannedOwners);
+  assertPublicText(JSON.stringify({ display, facets, readings, changes, texts, ...(nicheAssigned ? { peers } : {}), repo: ctx.repoLabel, repoUrl: ctx.repoUrl, homepage: ctx.homepage }), name, ctx.bannedOwners);
   return result;
 }
 export type CardBModel = ReturnType<typeof buildCardB>;

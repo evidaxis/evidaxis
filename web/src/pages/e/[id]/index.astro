@@ -85,8 +85,11 @@ const card = templateB ? cardBFor(record) : null;
 const indexRecord = { entity: e, measurement_state: measurementState, ...(card ? { display: card.display, readings: card.readings } : {}) };
 const graphs = [entityGraph(e, snapshot, urn, dep), crumbs];
 const pageGraphs = card ? cardBGraphs(graphs, card) : graphs;
+const cardDescription = card?.nicheAssigned
+  ? `Dated measurements for ${e.name}: commits, OpenAlex citing works, direct dependents and stars, with niche medians and source records.`
+  : `Dated measurements for ${e.name}: commits, OpenAlex citing works, direct dependents and stars, with source records.`;
 ---
-<Base title={pageTitle} description={templateB ? `Dated measurements for ${e.name}: commits, OpenAlex citing works, direct dependents and stars, with niche medians and source records.` : desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={pageGraphs} noindex={!isIndexable(indexRecord)} feedLinks={canary !== 'control'}>
+<Base title={pageTitle} description={templateB ? cardDescription : desc} canonical={`/e/${e.entity_id}/`} ogType="article" jsonTwin={`/e/${e.entity_id}.json`} citeAs={urn} jsonLd={pageGraphs} noindex={!isIndexable(indexRecord)} feedLinks={canary !== 'control'}>
   {card ? <CardB model={card} industry={e.industry} industryLabel={indLabel} subNiche={e.sub_niche}>
     <Fragment slot="measurement">
       {!isSuperseded && <EntityCard entity={e} />}

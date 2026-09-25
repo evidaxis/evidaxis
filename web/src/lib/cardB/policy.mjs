@@ -23,6 +23,9 @@ export function isIndexable(record) {
   const primary = new Set(['commits', 'commit_series', 'citations', 'citation_series', 'dependents', 'dependents_series', 'stars']);
   const keys = new Set(measured.filter(r => primary.has(r.key)).map(r => r.key));
   const comparison = record.display.answer_comparison;
+  if (record.display.niche_assigned === false) {
+    return keys.size >= 2 && comparison === null && !/\bniche median\b/i.test(record.display.answer);
+  }
   return keys.size >= 2 && /\bmedian\b/i.test(record.display.answer)
     && measured.some(r => r.key === comparison?.key && Number.isFinite(r.value)
       && Number.isFinite(comparison?.median) && comparison.n > 0

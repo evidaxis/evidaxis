@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import RankTable from '../../components/RankTable.astro';
+import Pagination from '../../components/Pagination.astro';
+import { entities, snapshot } from '../../lib/data';
+import { COHORT_ORDER } from '../../lib/cohorts';
+import { LIST_PAGE_SIZE, pageCount, pageItems, pagePath } from '../../lib/pagination';
+
+export function getStaticPaths() {
+  const total = pageCount(entities.filter((entity) => entity.cohort !== 'unassigned-v1').length);
+  return Array.from({ length: Math.max(0, total - 1) }, (_, index) => ({
+    params: { page: String(index + 2) }, props: { page: index + 2 },
+  }));
+}
+const page = Number(Astro.props.page);
+const cohortIndex = (key: string) => {
+  const index = COHORT_ORDER.indexOf(key);
+  return index < 0 ? Number.MAX_SAFE_INTEGER : index;
+};
+const assigned = entities.filter((entity) => entity.cohort !== 'unassigned-v1').sort((a, b) =>
+  cohortIndex(a.cohort) - cohortIndex(b.cohort) || a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+const totalPages = pageCount(assigned.length);
+const visible = pageItems(assigned, page);
+const path = pagePath('/', page);
+const desc = `Page ${page} of the Evidaxis catalog of AI systems with assigned niches, measured weekly.`;
+---
+<Base title={`Evidaxis catalog, page ${page}`} description={desc} canonical={path}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Catalog · snapshot {snapshot.snapshot_id}</p>
+      <h1>Systems with assigned niches, page {page}</h1>
+      <p class="lead" style="max-width:60ch">Systems {(page - 1) * LIST_PAGE_SIZE + 1} to {Math.min(page * LIST_PAGE_SIZE, assigned.length)} of {assigned.length}, in cohort and name order.</p>
+      <RankTable title="Catalog" showSparks={false} entities={visible} />
+      <Pagination page={page} totalPages={totalPages} basePath="/" />
+    </div>
+  </section>
+</Base>

@@ -35,7 +35,8 @@ export const ratioText = (ratio: number) => ratio >= 10 ? `${Math.floor(ratio).t
 export const growthPercent = (a: number | undefined, b: number | undefined): number | null =>
   a !== undefined && b !== undefined && a >= 1 && b >= 10 && b / a - 1 >= .25 ? Math.round((b / a - 1) * 100) : null;
 export function nicheCandidates(own: { citations: number | null; dependents: number | null },
-  medians: Record<'citations' | 'dependents', { value: number | null; n: number }>, verified: boolean) {
+  medians: Record<'citations' | 'dependents', { value: number | null; n: number }>, verified: boolean, cohort = '') {
+  if (cohort === 'unassigned-v1') return [];
   return (['citations', 'dependents'] as const).flatMap(metric => {
     const value = own[metric], { value: median, n } = medians[metric];
     return value !== null && median !== null && n >= 5 && median >= 3 && (metric !== 'dependents' || verified)
@@ -80,8 +81,10 @@ export function badgeData(record: ArchivedEntity, key: BadgeKey): BadgeData {
   const measured = 'Measured weekly by Evidaxis.';
   let data: BadgeData;
   if (key === 'medal') {
-    const medians = contextFor(record).cohortSummary!.medians;
-    const candidates = nicheCandidates(own, medians, verified);
+    const medians = e.cohort === 'unassigned-v1'
+      ? { citations: { value: null, n: 0 }, dependents: { value: null, n: 0 } }
+      : contextFor(record).cohortSummary!.medians;
+    const candidates = nicheCandidates(own, medians, verified, e.cohort);
     const best = candidates[0]?.ratio >= 1 ? candidates[0] : undefined;
     const fallback = (['citations', 'dependents'] as const).filter(metric => metric === 'citations' || verified)
       .sort((a, b) => (own[b] ?? -1) - (own[a] ?? -1))[0];

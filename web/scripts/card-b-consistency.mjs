@@ -38,6 +38,18 @@ for (const entry of readdirSync(join(dist, 'e'), { withFileTypes: true })) {
   const release = article.attrs['data-release'];
   const twin = JSON.parse(readFileSync(join(dist, 'e', `${id}.json`), 'utf8'));
   if (release !== twin.display?.release_id) fail(id, 'HTML and JSON release_id differ');
+  const nicheAssigned = twin.display?.niche_assigned !== false;
+  const articleText = plainText(article);
+  const peerTables = elements(article, node => hasClass(node, 'card-b-neighbours'));
+  if (!nicheAssigned) {
+    if ((articleText.match(/Niche: not yet assigned\./g) ?? []).length !== 1) fail(id, 'unassigned card needs one niche status line');
+    if (/niche median/i.test(articleText) || peerTables.length || articleText.includes('Peer signals')) fail(id, 'unassigned card contains niche comparison output');
+    if (twin.display?.answer_comparison !== null || twin.display?.tiles?.some(tile => tile.median !== null || tile.n !== 0)) fail(id, 'unassigned JSON contains niche comparison output');
+  }
+  for (const table of peerTables) {
+    const body = elements(table, node => node.tag === 'tbody')[0];
+    if (body && elements(body, node => node.tag === 'tr').length > 50) fail(id, 'peer table exceeds 50 rows');
+  }
   const csvPath = join(dist, 'e', id, `values-${release}.csv`);
   if (!existsSync(csvPath)) { fail(id, 'current values CSV missing'); continue; }
   const rows = csvRows(readFileSync(csvPath, 'utf8'));

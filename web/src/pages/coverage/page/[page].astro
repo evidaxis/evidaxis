@@ -1,0 +1,57 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Pagination from '../../../components/Pagination.astro';
+import { snapshot, industries, entitiesInCohort } from '../../../lib/data';
+import { itemListDataset, breadcrumb } from '../../../lib/jsonld';
+import { measurementStateFor } from '../../../lib/measurement';
+import { LIST_PAGE_SIZE, pageCount, pageItems, pagePath } from '../../../lib/pagination';
+
+export function getStaticPaths() {
+  const count = [...industries().values()].flatMap((ind) => [...ind.subniches.values()]
+    .map((sn) => entitiesInCohort(sn.cohortKey))).reduce((total, entities) => total + entities.length, 0);
+  return Array.from({ length: Math.max(0, pageCount(count) - 1) }, (_, index) => ({
+    params: { page: String(index + 2) }, props: { page: index + 2 },
+  }));
+}
+const page = Number(Astro.props.page);
+const cohorts = [...industries().values()].flatMap((ind) => [...ind.subniches.values()]
+  .map((sn) => ({ ind, sn, entities: entitiesInCohort(sn.cohortKey) })));
+const all = cohorts.flatMap((cohort) => cohort.entities);
+const totalPages = pageCount(all.length);
+const visible = pageItems(all, page);
+const visibleIds = new Set(visible.map((entity) => entity.entity_id));
+const path = pagePath('/coverage/', page);
+const desc = `Page ${page} of the Evidaxis coverage atlas, with weekly measurements in catalog order.`;
+const listJson = itemListDataset({ path, name: `Evidaxis coverage atlas, page ${page}`, description: desc, snap: snapshot, entities: visible });
+---
+<Base title={`Coverage atlas, page ${page} | Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Page ${page}`, path }])]}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Coverage atlas</p>
+      <h1>Measured systems, page {page}</h1>
+      <p class="lead" style="max-width:62ch">Systems {(page - 1) * LIST_PAGE_SIZE + 1} to {Math.min(page * LIST_PAGE_SIZE, all.length)} of {all.length}, in cohort and name order.</p>
+      <div class="stack" style="margin-top:2.4rem">
+        {cohorts.map(({ ind, sn, entities }) => {
+          const es = entities.filter((entity) => visibleIds.has(entity.entity_id));
+          if (es.length === 0) return null;
+          const withCite = es.filter((entity) => measurementStateFor(entity, snapshot).axis_coverage.axes.openalex_citation_momentum === 'measurable').length;
+          return <div class="panel" style="padding:20px 22px">
+            <div class="row" style="justify-content:space-between;align-items:baseline">
+              <h2 style="margin:0;font-size:1.12rem"><a href={`/ai/cohorts/${sn.slug}/`} style="border:none">{sn.label}</a></h2>
+              <span class="mono muted" style="font-size:.74rem">{ind.label} · {es.length} on this page · {withCite} with citation axis</span>
+            </div>
+            <div class="row" style="margin-top:.9rem;gap:8px">
+              {es.map((entity) => <a href={`/e/${entity.entity_id}/`} class={`system-link ${measurementStateFor(entity, snapshot).positive_signal.state === 'published' ? 'positive-signal' : ''}`}>{entity.name}</a>)}
+            </div>
+          </div>;
+        })}
+      </div>
+      <Pagination page={page} totalPages={totalPages} basePath="/coverage/" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .system-link { border: 1px solid var(--hairline); border-radius: 5px; padding: 3px 8px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-soft); }
+  .system-link.positive-signal { border-color: var(--velocity); color: var(--velocity-ink); }
+</style>

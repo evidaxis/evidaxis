@@ -32,22 +32,25 @@ export function chartsFor(m: CardBModel): Record<string, Chart> {
   };
   const commits = m.ruler.weeks.map(p => p.value);
   if (commits.length) {
-    const max = Math.max(1, ...commits, ...m.commitBand.map(p => p.p75 ?? 0));
+    const max = Math.max(1, ...commits, ...(m.nicheAssigned ? m.commitBand.map(p => p.p75 ?? 0) : []));
     const band = m.commitBand;
     const upper = band.map((p, i) => `${x(i, commits.length)},${y(p.p75 ?? 0, max)}`);
     const lower = band.map((p, i) => `${x(i, commits.length)},${y(p.p25 ?? 0, max)}`).reverse();
     const rwc = reading('commits').value as number | null, med = m.medians.commits.value, last = m.ruler.weeks.at(-1)!;
     const key = rwc === null ? 'commits_missing' : rwc === 0 ? 'commits_zero' : med !== null && med > 0 ? 'commits_ratio' : 'commits';
     const ratio = rwc !== null && med ? rwc / med : null;
-    const title = conclusion(key, { value: fmt(rwc), median: fmt(med), ratio: ratio === null ? '' : ratio < 10 ? ratio.toFixed(1) : String(Math.round(ratio)), zero_weeks: m.ruler.zeroWeeks });
+    const title = m.nicheAssigned
+      ? conclusion(key, { value: fmt(rwc), median: fmt(med), ratio: ratio === null ? '' : ratio < 10 ? ratio.toFixed(1) : String(Math.round(ratio)), zero_weeks: m.ruler.zeroWeeks })
+      : rwc === null ? `No commit reading for ${m.entity.name}.` : `${m.entity.name} averaged ${fmt(rwc)} commits a week.`;
     // The line and band compare raw weeks. The headline compares trailing
     // means; using that mean as a raw-week median would mix observations.
     const medians = band.map(p => p.median);
     const medianLine = medians.every(numeric) ? line(medians, max, '#bd783e') : '';
-    make('commits', 'line', title, 'weekly commits', `${fmt(last.value)} in latest week`, fmt(band.at(-1)?.median ?? null), `${m.ruler.firstWeek} to ${last.date}`, 'GitHub commit_activity',
-      axis(max, m.ruler.firstWeek!, last.date) + `<polygon points="${[...upper, ...lower].join(' ')}" fill="#dfece5"/>` + medianLine + line(commits, max)
-      + labels(commits, max, band.at(-1)?.median ?? null, 'weekly_commits', last.date, 'commits')
-      + text(40, 16, 'Raw weekly totals; niche P25-P75 band and weekly median'),
+    make('commits', 'line', title, 'weekly commits', `${fmt(last.value)} in latest week`, m.nicheAssigned ? fmt(band.at(-1)?.median ?? null) : null, `${m.ruler.firstWeek} to ${last.date}`, 'GitHub commit_activity',
+      axis(max, m.ruler.firstWeek!, last.date)
+      + (m.nicheAssigned ? `<polygon points="${[...upper, ...lower].join(' ')}" fill="#dfece5"/>${medianLine}` : '') + line(commits, max)
+      + labels(commits, max, m.nicheAssigned ? band.at(-1)?.median ?? null : null, 'weekly_commits', last.date, 'commits')
+      + text(40, 16, m.nicheAssigned ? 'Raw weekly totals; niche P25-P75 band and weekly median' : 'Raw weekly totals'),
       'Week dates reconstructed from capture Sunday; the headline uses the trailing average.');
     const recent = commits.slice(-26), heatMax = Math.max(1, ...recent), active = recent.filter(v => v > 0).length;
     make('heatmap', 'heatmap', conclusion('heatmap', { active, weeks: recent.length }), 'weeks with commits', `${active} of ${recent.length}`, null,
@@ -56,7 +59,7 @@ export function chartsFor(m: CardBModel): Record<string, Chart> {
   }
   if (m.years.length) {
     const max = Math.max(1, ...m.years.map(p => p.value)), width = 398 / m.years.length, total = reading('citations').value as number | null;
-    make('citations', 'bar', conclusion('citations', { value: fmt(total), median: fmt(m.medians.citations.value) }), 'citing works', fmt(total), fmt(m.medians.citations.value),
+    make('citations', 'bar', m.nicheAssigned ? conclusion('citations', { value: fmt(total), median: fmt(m.medians.citations.value) }) : `${fmt(total)} OpenAlex citing works for ${m.entity.name}.`, 'citing works', fmt(total), m.nicheAssigned ? fmt(m.medians.citations.value) : null,
       `${m.years[0].year}-${m.years.at(-1)!.year} completed years`, 'OpenAlex', axis(max, '', '')
       + m.years.map((p, i) => { const left = 52 + i * width, barWidth = Math.max(2, width - 12); return `<rect x="${left}" y="${y(p.value, max)}" width="${barWidth}" height="${165 - y(p.value, max)}" fill="#bd783e"/>${text(left, 188, String(p.year))}`
         + (i === m.years.length - 1 ? text(left + barWidth / 2, y(p.value, max) - 7, fmt(p.value), 'middle', ` data-chart-latest="yearly_citing_works" data-value="${p.value}" data-period="${p.year}"`) : ''); }).join(''));
@@ -68,14 +71,14 @@ export function chartsFor(m: CardBModel): Record<string, Chart> {
   }
   if (byPartition.size) {
     const points = [...byPartition].sort(([a], [b]) => a.localeCompare(b)), values = points.map(([, v]) => v), med = m.medians.dependents.value;
-    const max = Math.max(1, ...values, med ?? 0), last = points.at(-1)!;
+    const max = Math.max(1, ...values, m.nicheAssigned ? med ?? 0 : 0), last = points.at(-1)!;
     const single = points.length === 1;
-    make('dependents', 'sparkline', conclusion('dependents', { value: fmt(last[1]), median: fmt(med) }), 'direct dependents', fmt(last[1]), fmt(med),
+    make('dependents', 'sparkline', m.nicheAssigned ? conclusion('dependents', { value: fmt(last[1]), median: fmt(med) }) : `${fmt(last[1])} direct dependents on deps.dev for ${m.entity.name}.`, 'direct dependents', fmt(last[1]), m.nicheAssigned ? fmt(med) : null,
       single ? last[0] : `${points[0][0]} to ${last[0]}`, 'deps.dev weekly package union', single
         ? text(40, 100, `${fmt(last[1])} dependents · ${last[0]}`, 'start', ` data-chart-latest="dependents" data-value="${last[1]}" data-period="${xml(last[0])}"`)
         : axis(max, points[0][0], last[0])
-          + (med === null ? '' : `<path d="M40 ${y(med, max)}H450" stroke="#bd783e" stroke-dasharray="3 3"/>`) + line(values, max)
-          + labels(values, max, med, 'dependents', last[0], 'dependents'), 'Repeated partitions appear once; the median is the current niche reading.');
+          + (!m.nicheAssigned || med === null ? '' : `<path d="M40 ${y(med, max)}H450" stroke="#bd783e" stroke-dasharray="3 3"/>`) + line(values, max)
+          + labels(values, max, m.nicheAssigned ? med : null, 'dependents', last[0], 'dependents'), m.nicheAssigned ? 'Repeated partitions appear once; the median is the current niche reading.' : 'Repeated partitions appear once.');
   }
   for (const [block, points, source, unit] of [
     ['daily', m.dailySeries, 'deps.dev REST (unscored)', 'daily dependents'],
@@ -83,11 +86,11 @@ export function chartsFor(m: CardBModel): Record<string, Chart> {
   ] as const) {
     if (points.length < 2) continue;
     const values = points.map(p => p.value), max = Math.max(1, ...values), last = points.at(-1)!;
-    make(block, 'sparkline', conclusion(block, { value: fmt(last.value) }), unit, fmt(last.value), null,
+    make(block, 'sparkline', m.nicheAssigned ? conclusion(block, { value: fmt(last.value) }) : `${m.entity.name} recorded ${fmt(last.value)} ${unit}.`, unit, fmt(last.value), null,
       `${points[0].period} to ${last.period}`, source, axis(max, points[0].period, last.period) + line(values, max) + labels(values, max, null, block, last.period, ''));
   }
-  const positions = m.peers.filter(p => p.commits !== null);
-  if (positions.length) {
+  const positions = m.nicheAssigned ? m.peers.filter(p => p.commits !== null) : [];
+  if (m.nicheAssigned && positions.length) {
     const max = Math.max(1, ...positions.map(p => p.commits!)), med = m.medians.commits.value!, own = reading('commits').value as number | null;
     const px = (v: number) => 40 + v / max * 540;
     make('niche', 'dot plot', conclusion('niche', { value: fmt(own), systems: m.peers.length, median: fmt(med) }), 'averaged commits per week', fmt(own), fmt(med), m.date, 'GitHub, current cohort',

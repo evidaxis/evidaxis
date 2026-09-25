@@ -331,6 +331,11 @@ export function latestFeedEntries(allSnapshots: Snapshot[] = snapshots): FeedEnt
     : [];
 }
 
+export const SITE_FEED_LIMIT = 100;
+export function siteFeedEntries(allSnapshots: Snapshot[] = snapshots): FeedEntry[] {
+  return latestFeedEntries(allSnapshots).slice(0, SITE_FEED_LIMIT);
+}
+
 export function jsonFeed(entries: FeedEntry[] = latestFeedEntries()) {
   return {
     version: 'https://jsonfeed.org/version/1.1',

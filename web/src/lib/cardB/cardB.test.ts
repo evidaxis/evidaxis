@@ -118,7 +118,13 @@ describe('twelve forced B fixtures and content indexability', () => {
       expect(JSON.stringify(first.display)).toBe(JSON.stringify(second.display));
       expect(JSON.stringify(chartsFor(first))).toBe(JSON.stringify(chartsFor(second)));
       expect(valuesCSV(first)).toBe(valuesCSV(second));
-      expect(first.display.answer).toMatch(/^\d/); expect(first.display.answer).toContain('median');
+      expect(first.display.answer).toMatch(/^\d/);
+      if (first.nicheAssigned) expect(first.display.answer).toContain('median');
+      else {
+        expect(first.display.answer).not.toContain('niche median');
+        expect(first.display.answer_comparison).toBeNull();
+        expect(first.commitBand).toEqual([]);
+      }
       expect(first.display.answer.split(/\s+/).length).toBeGreaterThanOrEqual(40);
       expect(first.display.answer.split(/\s+/).length).toBeLessThanOrEqual(60);
       expect(first.readings.filter(r => r.value !== null && r.source && r.date).length).toBeGreaterThanOrEqual(3);

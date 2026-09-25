@@ -18,8 +18,10 @@ describe('README badges', () => {
         expect(endpoint).toEqual({ schemaVersion: 1, label: key, message: data.message,
           color: data.color.slice(1), labelColor: '555', logoSvg: expect.stringContaining('<svg'), cacheSeconds: 21600 });
       }
-      const median = contextFor(record).cohortSummary!.medians;
-      const best = nicheCandidates(own, median, verifiedPin(record))[0];
+      const median = record.entity.cohort === 'unassigned-v1'
+        ? { citations: { value: null, n: 0 }, dependents: { value: null, n: 0 } }
+        : contextFor(record).cohortSummary!.medians;
+      const best = nicheCandidates(own, median, verifiedPin(record), record.entity.cohort)[0];
       const medal = badgeData(record, 'medal');
       if (best && best.ratio >= 1) {
         expect(medal.metric).toBe(best.metric);
@@ -39,6 +41,16 @@ describe('README badges', () => {
     expect(nicheCandidates({ citations: 9, dependents: 300 }, medians, true)[0].metric).toBe('dependents');
     expect(nicheCandidates({ citations: 9, dependents: null }, { ...medians, citations: { value: 10, n: 4 } }, true)).toEqual([]);
     expect(nicheCandidates({ citations: 9, dependents: null }, { ...medians, citations: { value: 2, n: 5 } }, true)).toEqual([]);
+    expect(nicheCandidates({ citations: 900, dependents: 300 }, medians, true, 'unassigned-v1')).toEqual([]);
+  });
+
+  it('never offers a niche medal to systems awaiting a niche', () => {
+    const unassigned = badgeRecords.filter(record => record.entity.cohort === 'unassigned-v1');
+    expect(unassigned.length).toBeGreaterThan(0);
+    for (const record of unassigned) {
+      expect(badgeData(record, 'medal').offered).toBe(false);
+      expect(badgeData(record, 'medal').message).not.toContain('niche median');
+    }
   });
 
   it('offers completed-year growth only above the gates', () => {

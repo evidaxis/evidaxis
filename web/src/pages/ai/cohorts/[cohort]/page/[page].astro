@@ -1,0 +1,40 @@
+---
+import Base from '../../../../../layouts/Base.astro';
+import EntityTable from '../../../../../components/EntityTable.astro';
+import Pagination from '../../../../../components/Pagination.astro';
+import { industries, entitiesInCohort, snapshot } from '../../../../../lib/data';
+import { itemListDataset, breadcrumb } from '../../../../../lib/jsonld';
+import { pageCount, pageItems, pagePath } from '../../../../../lib/pagination';
+
+export function getStaticPaths() {
+  const out: any[] = [];
+  for (const field of industries().values()) for (const cohort of field.subniches.values()) {
+    const totalPages = pageCount(entitiesInCohort(cohort.cohortKey).length);
+    for (let page = 2; page <= totalPages; page += 1) {
+      out.push({ params: { cohort: cohort.slug, page: String(page) }, props: { field, cohort, page } });
+    }
+  }
+  return out;
+}
+const { field, cohort, page } = Astro.props;
+const es = entitiesInCohort(cohort.cohortKey);
+const totalPages = pageCount(es.length);
+const visible = pageItems(es, page);
+const basePath = `/ai/cohorts/${cohort.slug}/`;
+const path = pagePath(basePath, page);
+const pageName = `${cohort.label} - cohort momentum, page ${page}`;
+const desc = `Page ${page} of Evidaxis momentum records for ${cohort.label}: ${es.length} open AI systems measured weekly.`;
+const listJson = itemListDataset({ path, name: pageName, description: desc, period: snapshot.period, snap: snapshot, entities: visible });
+---
+<Base title={`${pageName} | Evidaxis`} description={desc} canonical={path} jsonLd={[listJson, breadcrumb([{ name: 'Coverage', path: '/coverage/' }, { name: `Field: ${field.label}`, path: `/ai/fields/${field.slug}/` }, { name: `Cohort: ${cohort.label}`, path: basePath }, { name: `Page ${page}`, path }])]}>
+  <section class="section">
+    <div class="wrap">
+      <div class="mono muted" style="font-size:.74rem;margin-bottom:.6rem"><a href={basePath} style="border:none;color:inherit">{cohort.label}</a> / page {page}</div>
+      <p class="eyebrow">Cohort</p>
+      <h1>{cohort.label}, page {page}</h1>
+      <p class="lead" style="max-width:60ch">Systems {(page - 1) * 200 + 1} to {Math.min(page * 200, es.length)} of {es.length}, in catalog order.</p>
+      <EntityTable entities={visible} />
+      <Pagination page={page} totalPages={totalPages} basePath={basePath} />
+    </div>
+  </section>
+</Base>
