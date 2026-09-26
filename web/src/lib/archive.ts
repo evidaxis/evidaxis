@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { REPO_ROOT, dataPath, repoDataPath } from './data-path';
 import type { Entity, Snapshot } from './data';
+import { neutralName, revealsHandle, type OwnerTypes } from './person_free';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -53,6 +54,7 @@ export function readSnapshotArtifactRaw(date: string, name: string, repoRoot = R
 /** Enumerate immutable snapshot payloads. Exported with a root argument for tests. */
 export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
   const snapshotsDir = repoDataPath(repoRoot, 'snapshots');
+  const registry = readJson(join(repoRoot, 'etl', 'owner_types.json')) as OwnerTypes;
   return readdirSync(snapshotsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && DATE_RE.test(entry.name))
     .map((entry) => {
@@ -60,6 +62,10 @@ export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
       if (snap.snapshot_date !== entry.name) {
         throw new Error(`snapshot date mismatch: directory ${entry.name}, payload ${snap.snapshot_date}`);
       }
+      // Public projection at load: a name or slug that is a person's GitHub handle never
+      // reaches a page, feed, badge or JSON twin (person_free.ts). Archive files stay canonical.
+      snap.entities = snap.entities.map((e) => revealsHandle(e.name, registry) || revealsHandle(e.slug, registry)
+        ? { ...e, name: neutralName(e.entity_id), slug: e.entity_id.toLowerCase() } : e);
       return snap;
     })
     .sort((a, b) => a.snapshot_date.localeCompare(b.snapshot_date));

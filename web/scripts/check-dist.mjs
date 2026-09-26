@@ -22,6 +22,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
+import { buildHandleIndex, handleHits } from '../src/lib/personFree.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -265,6 +266,8 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   }
 
   const bannedOwners = new Map();
+  const staleSlugs = new Set();   // exact old 'owner/repo' paths of moved repositories
+  const orgOwners = new Set();    // owners that are Organizations today
   // Cache-flip defense floor (review 2026-07-10): these handles are User-owned as of
   // 2026-07-10 and stay banned even if a (possibly poisoned) cache says otherwise.
   // Remove an entry ONLY via a deliberate, reviewed commit.
@@ -288,11 +291,26 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     // rejecting stale repository paths and serialized slugs.
     if (storedOwner.toLowerCase() !== canonicalOwner.toLowerCase()) {
       bannedOwners.set(storedOwner.toLowerCase(), 'slug');
+      staleSlugs.add(storedRepo.toLowerCase());
     }
+    if (entry.owner_type === 'Organization') orgOwners.add(canonicalOwner.toLowerCase());
   }
 
+  // User owners: whole-handle matching (web/src/lib/personFree.mjs); moved Organization
+  // owners keep slug-context matching.
+  // A former owner that is an Organization today (e.g. "apple", which still owns other
+  // repositories) is not personal data: only the exact stale path is rejected. A former
+  // owner not known as an Organization may be a person and joins the handle matcher.
+  // Former owners are matched only in GitHub context (github.com/owner/, repos/owner/,
+  // @owner), never as a plain word: "block" was an Organization and is an ordinary word.
+  const formerPersonal = [...bannedOwners].filter(([owner, mode]) => mode === 'slug' && !orgOwners.has(owner)).map(([owner]) => owner);
+  const userIndex = buildHandleIndex([...bannedOwners].filter(([, mode]) => mode === 'substring').map(([owner]) => owner));
+  const formerIndex = { all: new Set(formerPersonal), words: new Set() };
   for (const file of distFiles) {
     const r = rel(file);
+    // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce
+    // accidental matches such as "@f"; they carry no repository metadata.
+    if (/\.(woff2?|ttf|otf|png|jpe?g|gif|webp|avif|ico|pdf|zip|gz)$/i.test(r)) continue;
     // WP-H: verification-bundle artifacts are frozen raw pass-through of the
     // archive (hash-pinned provenance / dropped lists). They intentionally
     // retain historical github_repo strings for auditability. Person-free is
@@ -308,9 +326,10 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
     variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)).toLowerCase()));
     const body = variants.join('\n');
-    for (const [owner, mode] of bannedOwners) {
-      const needle = mode === 'slug' ? `${owner}/` : owner;
-      if (body.includes(needle)) errors.push(`${r}: contains private or stale repository owner ${owner}`);
+    for (const owner of handleHits(body, userIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
+    for (const owner of handleHits(body, formerIndex)) errors.push(`${r}: contains former repository owner ${owner} in a GitHub path`);
+    for (const slug of staleSlugs) {
+      if (body.includes(slug)) errors.push(`${r}: contains stale repository path ${slug}`);
     }
   }
 }

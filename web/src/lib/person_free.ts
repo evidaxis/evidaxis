@@ -1,3 +1,4 @@
+import { FLOOR_HANDLES, buildHandleIndex, handleHits } from './personFree.mjs';
 export type OwnerType = 'Organization' | 'User';
 
 export type OwnerEntry = {
@@ -58,9 +59,30 @@ function safeUserHomepage(homepage: string | null | undefined, owner: string): s
     : homepage;
 }
 
+// A system's public name, slug or repository name can itself be a person's GitHub handle
+// (a repository under a personal account named after the account, 20 of 5,914 on 2026-09-26).
+// Those strings are projected to neutral forms; the archive keeps the canonical record.
+const HANDLE_INDEXES = new WeakMap<OwnerTypes, ReturnType<typeof buildHandleIndex>>();
+export function userHandleIndex(registry: OwnerTypes) {
+  let index = HANDLE_INDEXES.get(registry);
+  if (!index) {
+    index = buildHandleIndex([...FLOOR_HANDLES, ...Object.values(registry.repos).filter((r) => r.owner_type === 'User').map((r) => r.full_name.split('/')[0])]);
+    HANDLE_INDEXES.set(registry, index);
+  }
+  return index;
+}
+export const revealsHandle = (text: string | null | undefined, registry: OwnerTypes) =>
+  !!text && handleHits(text, userHandleIndex(registry)).length > 0;
+export const neutralName = (entityId: string) => `System ${entityId}`;
+export function publicName(e: { name: string; entity_id: string }, registry: OwnerTypes): string {
+  return revealsHandle(e.name, registry) ? neutralName(e.entity_id) : e.name;
+}
+
 export function publicRepoLabel(e: RepositoryEntity, registry: OwnerTypes): string {
   const entry = entryFor(e, registry);
-  return entry.owner_type === 'User' ? entry.full_name.split('/')[1] : entry.full_name;
+  if (entry.owner_type !== 'User') return entry.full_name;
+  const repoName = entry.full_name.split('/')[1];
+  return revealsHandle(repoName, registry) ? 'repository not shown' : repoName;
 }
 
 export function publicOwnerType(e: RepositoryEntity, registry: OwnerTypes): OwnerType {
@@ -91,7 +113,7 @@ export function publicEntity<T extends RepositoryEntity>(e: T, registry: OwnerTy
     ...rest,
     homepage: safeUserHomepage(e.homepage, entry.full_name.split('/')[0]),
     repository: {
-      repo_name: entry.full_name.split('/')[1],
+      repo_name: revealsHandle(entry.full_name.split('/')[1], registry) ? null : entry.full_name.split('/')[1],
       owner_type: 'user',
       repo_ref: `gh:${entry.repo_id}`,
     },

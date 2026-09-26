@@ -1,5 +1,8 @@
 import { FACETS, COPY } from '../../data/card-b-facets';
 import { scanEntityLexicon, scanEntityPageWide } from '../../../scripts/entity-lexicon.mjs';
+import { buildHandleIndex, handleHits } from '../personFree.mjs';
+const INDEXES = new WeakMap<string[], ReturnType<typeof buildHandleIndex>>();
+const handleIndex = (banned: string[]) => { let i = INDEXES.get(banned); if (!i) { i = buildHandleIndex(banned); INDEXES.set(banned, i); } return i; };
 
 export type FacetInput = {
   commits: number | null; zeroWeeks: number; commitWeeks: number; axes: number;
@@ -43,7 +46,7 @@ export function assertPublicText(text: string, name: string, banned: string[] = 
   let decoded = text.replace(/\\u([a-f\d]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
     .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d));
   for (let i = 0; i < 3; i++) { try { decoded = decodeURIComponent(decoded); } catch { break; } }
-  if (banned.some(owner => decoded.toLowerCase().includes(owner.toLowerCase()))
+  if (handleHits(decoded, handleIndex(banned)).length
     || /"(?:author|founder)"|"@type"\s*:\s*"Person"/i.test(text)) {
     throw new Error(`person_free violation in Card B for ${name}`);
   }

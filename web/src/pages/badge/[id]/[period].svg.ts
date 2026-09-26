@@ -1,14 +1,24 @@
 import type { APIRoute } from 'astro';
 import { snapshot } from '../../../lib/data';
+import { snapshots } from '../../../lib/archive';
 import { entityUniverse } from '../../../lib/archive';
 import { measurementStateFor } from '../../../lib/measurement';
 
 export function getStaticPaths() {
-  // Universe, not latest-only: preserved (superseded) pages link their badges too
-  // (re-audit fix 2026-07-10). Each badge renders at its record's own period.
-  return entityUniverse.map((r) => ({
-    params: { id: r.entity.entity_id, period: r.snapshot.period ?? snapshot.period },
-    props: { e: r.entity, recordSnapshot: r.snapshot },
+  // Every week a system was measured keeps its dated badge: an embedded
+  // /badge/{id}/{period}.svg must never turn into a 404 when the next snapshot
+  // arrives (2026-09-26). One record per (system, period): the latest snapshot of
+  // that period wins; superseded systems keep the badges of the weeks they had.
+  const byKey = new Map<string, { e: any; recordSnapshot: any }>();
+  for (const snap of snapshots) {
+    for (const e of snap.entities) byKey.set(`${e.entity_id}|${snap.period}`, { e, recordSnapshot: snap });
+  }
+  for (const r of entityUniverse) {
+    byKey.set(`${r.entity.entity_id}|${r.snapshot.period ?? snapshot.period}`, { e: r.entity, recordSnapshot: r.snapshot });
+  }
+  return [...byKey.values()].map(({ e, recordSnapshot }) => ({
+    params: { id: e.entity_id, period: recordSnapshot.period ?? snapshot.period },
+    props: { e, recordSnapshot },
   }));
 }
 
