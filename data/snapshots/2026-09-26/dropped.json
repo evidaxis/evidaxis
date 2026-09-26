@@ -1,0 +1,150 @@
+{
+  "v": "dropped_1",
+  "snapshot_date": "2026-09-26",
+  "checked_at": "2026-09-26T23:09:53Z",
+  "seeded": 5937,
+  "in_snapshot": 5914,
+  "drop_fraction": 0.0039,
+  "dropped": [
+    {
+      "entity_id": "e_063PGVHS74Z",
+      "github_repo": "OpenChemistry/avogadrolibs",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_174RK3YSAVP",
+      "github_repo": "PennyLaneAI/demos",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_5VP8W8WD9YJ",
+      "github_repo": "mosaicml/streaming",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_60BD46BT7WG",
+      "github_repo": "grishahq/recursive-llm",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_67AN0PQ2E9J",
+      "github_repo": "perfanalytics/pose2sim",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_7NZ0M5XCB5D",
+      "github_repo": "jsgrrchg/NeverWrite",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_86W7T6A0J9P",
+      "github_repo": "h5i-dev/h5i",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_A466AX07Z8F",
+      "github_repo": "luckyPipewrench/pipelock",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_CGHGFK69X0B",
+      "github_repo": "genomoncology/biomcp",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_DKP0NNS8EN4",
+      "github_repo": "vshulcz/deja-vu",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_DYJR0A6MVXH",
+      "github_repo": "mosaicml/composer",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_GF3K0MV6VCH",
+      "github_repo": "databricks/spark-deep-learning",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_SBEQFD167TD",
+      "github_repo": "mosaicml/diffusion",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_V3VJDE3K0EA",
+      "github_repo": "adolfousier/opencrabs",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_VCTK5TFX4VY",
+      "github_repo": "HBAI-Ltd/Toonflow-app",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_VMQ8QRRDWVS",
+      "github_repo": "flashinfer-ai/flashinfer",
+      "previously_tracked": true,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_W56GQ0SS95E",
+      "github_repo": "xxxily/hello-ai",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_WAZK9SAYRTM",
+      "github_repo": "mosaicml/llm-foundry",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_X4BPM7D2QFJ",
+      "github_repo": "AgentiLoop/Agent",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_XAR9FXQH499",
+      "github_repo": "peters/horizon",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_Y9S5GPNMC44",
+      "github_repo": "roboflow/rf-detr",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_YGAEFE4JEHR",
+      "github_repo": "PennyLaneAI/pennylane",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    },
+    {
+      "entity_id": "e_ZF8VHX8KK1E",
+      "github_repo": "openappsec/openappsec",
+      "previously_tracked": false,
+      "reason": "not captured this period: the frozen collector produced no record (GitHub /stats/commit_activity 202 unresolved within the collection window is the dominant transient cause; a genuinely deleted repo 404s). A DECLARED gap, not a silent drop."
+    }
+  ],
+  "note": "Written by collectors/completeness_gate.py. Drops are recorded here (never silent). The snapshot proceeds for a small transient fraction; it FAILS only on a structural fraction (see max_drop_fraction).",
+  "max_drop_fraction": 0.15
+}

@@ -14,18 +14,18 @@ classification:
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: fcfd3a7ccdcb
-  captured_at: 2026-09-19T11:17:34+00:00
-  period: 2026-w38
-  momentum: 13.5
-  percentile: 8
+  snapshot_id: 9d2fe956adbc
+  captured_at: 2026-09-26T22:11:54+00:00
+  period: 2026-w39
+  momentum: 34.8
+  percentile: 33
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.007109201851896875, "cohort_z": -2.92, "recent_weekly_commits": 0.0, "stars_not_scored": 3895}
+    github_commit_velocity: {"slope": -0.0021327605555690626, "cohort_z": -1.214, "recent_weekly_commits": 0.1, "stars_not_scored": 3910}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 5, "by_year": {"2026": 5}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
@@ -33,4 +33,4 @@ note: "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisiona
 
 # SmolVLM
 
-Evidaxis measures **SmolVLM** on methodology m3. Momentum 13.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **SmolVLM** on methodology m3. Momentum 34.8/100; 1 axes present, 0 axes converging.

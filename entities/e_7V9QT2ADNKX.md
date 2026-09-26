@@ -1,0 +1,36 @@
+---
+schema_ver: 1.0
+entity_id: e_7V9QT2ADNKX
+entity_type: repo
+name: "zerobox"
+slug: zerobox
+homepage: "https://github.com/afshinm/zerobox"
+ids:
+  github_repo: "afshinm/zerobox"
+  openalex_work_ids: []
+classification:
+  domain: ai
+  industry: ai
+  sub_niche: unassigned
+score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
+  methodology_version: m3
+  snapshot_id: 9d2fe956adbc
+  captured_at: 2026-09-26T22:11:54+00:00
+  period: 2026-w39
+  momentum: 13.0
+  percentile: 11
+  confidence: low
+  axes_present: ["github_commit_velocity"]
+  convergent_axes: []
+  rising: false
+  status: single-axis
+  axes:
+    github_commit_velocity: {"slope": -0.1175082034963502, "cohort_z": -2.956, "recent_weekly_commits": 0.0, "stars_not_scored": 718}
+    openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+---
+
+# zerobox
+
+Evidaxis measures **zerobox** on methodology m3. Momentum 13.0/100; 1 axes present, 0 axes converging.

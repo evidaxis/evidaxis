@@ -14,22 +14,22 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: fcfd3a7ccdcb
-  captured_at: 2026-09-19T11:17:34+00:00
-  period: 2026-w38
-  momentum: 36.0
-  percentile: 6
+  snapshot_id: 9d2fe956adbc
+  captured_at: 2026-09-26T22:11:54+00:00
+  period: 2026-w39
+  momentum: 35.4
+  percentile: 0
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.05553302374520149, "cohort_z": -1.117, "recent_weekly_commits": 0.1, "stars_not_scored": 34340}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 362, "by_year": {"2026": 191, "2025": 146, "2024": 25}, "proxy": null}
+    github_commit_velocity: {"slope": -0.05333291238499924, "cohort_z": -1.168, "recent_weekly_commits": 0.1, "stars_not_scored": 34399}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 372, "by_year": {"2026": 201, "2025": 146, "2024": 25}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # ChatDev
 
-Evidaxis measures **ChatDev** on methodology m3. Momentum 36.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **ChatDev** on methodology m3. Momentum 35.4/100; 1 axes present, 0 axes converging.

@@ -13,23 +13,24 @@ classification:
   industry: robotics
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m2
-  snapshot_id: 0a7b1714d0ad
-  captured_at: 2026-09-12T11:03:57+00:00
-  period: 2026-w37
-  momentum: 45.5
+  methodology_version: m3
+  snapshot_id: 9d2fe956adbc
+  captured_at: 2026-09-26T22:11:54+00:00
+  period: 2026-w39
+  momentum: 48.0
   percentile: 27
   confidence: medium
-  rising: false
-  status: tracked
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
+  rising: false
+  status: tracked
   axes:
-    github_commit_velocity: {"slope": -0.004131533393281779, "cohort_z": -0.119, "recent_weekly_commits": 0.0, "stars_not_scored": 3128}
-    openalex_citation_momentum: {"status": "present", "slope": -0.8411019845501386, "cohort_z": -0.601, "total_citations": 195, "by_year": {"2024": 3, "2023": 5, "2022": 10, "2021": 80, "2020": 72, "2019": 25}, "proxy": null}
+    github_commit_velocity: {"slope": -0.0056339091726569715, "cohort_z": -0.028, "recent_weekly_commits": 0.0, "stars_not_scored": 3144}
+    openalex_citation_momentum: {"status": "present", "slope": 0.21436849945392028, "cohort_z": -0.299, "total_citations": 1218, "by_year": {"2026": 117, "2025": 203, "2024": 195, "2023": 183, "2022": 150, "2021": 207, "2020": 128, "2019": 34, "2018": 1}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
 ---
 
 # Habitat-Lab
 
-Evidaxis measures **Habitat-Lab** in the embodied-ai cohort.
+Evidaxis measures **Habitat-Lab** on methodology m3. Momentum 48.0/100; 2 axes present, 0 axes converging.
