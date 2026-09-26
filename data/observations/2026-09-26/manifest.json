@@ -1,0 +1,280 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-09-26T12:54:14Z",
+  "date": "2026-09-26",
+  "period": "2026-w39",
+  "entity_count": 5882,
+  "error_count": 57,
+  "error_rate": 0.0096,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "swirlai/swirl-search",
+      "http_status": 403
+    },
+    {
+      "repo": "maciejkula/spotlight",
+      "http_status": 403
+    },
+    {
+      "repo": "pinecone-io/examples",
+      "http_status": 403
+    },
+    {
+      "repo": "sdatkinson/neural-amp-modeler",
+      "http_status": 403
+    },
+    {
+      "repo": "microsoft/skills",
+      "http_status": 403
+    },
+    {
+      "repo": "datascale-ai/opentalking",
+      "http_status": 403
+    },
+    {
+      "repo": "MiniMax-AI/Mini-Agent",
+      "http_status": 403
+    },
+    {
+      "repo": "yuchenlin/rebiber",
+      "http_status": 403
+    },
+    {
+      "repo": "bigscience-workshop/promptsource",
+      "http_status": 403
+    },
+    {
+      "repo": "allweonedev/presentation-ai",
+      "http_status": 403
+    },
+    {
+      "repo": "dwgx/WindsurfAPI",
+      "http_status": 403
+    },
+    {
+      "repo": "ianarawjo/ChainForge",
+      "http_status": 403
+    },
+    {
+      "repo": "facebookresearch/Pearl",
+      "http_status": 403
+    },
+    {
+      "repo": "xyproto/algernon",
+      "http_status": 403
+    },
+    {
+      "repo": "montanaflynn/stats",
+      "http_status": 403
+    },
+    {
+      "repo": "ascending-llc/jarvis-registry",
+      "http_status": 403
+    },
+    {
+      "repo": "limbonaut/limboai",
+      "http_status": 403
+    },
+    {
+      "repo": "Eladlev/AutoPrompt",
+      "http_status": 403
+    },
+    {
+      "repo": "osmr/imgclsmob",
+      "http_status": 403
+    },
+    {
+      "repo": "Simon-He95/markstream-vue",
+      "http_status": 403
+    },
+    {
+      "repo": "deepnote/deepnote",
+      "http_status": 403
+    },
+    {
+      "repo": "FB208/OpenBidKit_Yibiao",
+      "http_status": 403
+    },
+    {
+      "repo": "weld-project/weld",
+      "http_status": 403
+    },
+    {
+      "repo": "thu-pacman/chitu",
+      "http_status": 403
+    },
+    {
+      "repo": "BayesWitnesses/m2cgen",
+      "http_status": 403
+    },
+    {
+      "repo": "ElricLiu/AutoGPT-Next-Web",
+      "http_status": 403
+    },
+    {
+      "repo": "CheshireCC/faster-whisper-GUI",
+      "http_status": 403
+    },
+    {
+      "repo": "sdatkinson/NeuralAmpModelerPlugin",
+      "http_status": 403
+    },
+    {
+      "repo": "divamgupta/image-segmentation-keras",
+      "http_status": 403
+    },
+    {
+      "repo": "LLMQuant/quant-mind",
+      "http_status": 403
+    },
+    {
+      "repo": "Jpisnice/shadcn-ui-mcp-server",
+      "http_status": 403
+    },
+    {
+      "repo": "keithito/tacotron",
+      "http_status": 403
+    },
+    {
+      "repo": "pytorch/TensorRT",
+      "http_status": 403
+    },
+    {
+      "repo": "raghakot/keras-vis",
+      "http_status": 403
+    },
+    {
+      "repo": "libffcv/ffcv",
+      "http_status": 403
+    },
+    {
+      "repo": "benedekrozemberczki/pytorch_geometric_temporal",
+      "http_status": 403
+    },
+    {
+      "repo": "vercel-labs/opensrc",
+      "http_status": 403
+    },
+    {
+      "repo": "eli64s/readme-ai",
+      "http_status": 403
+    },
+    {
+      "repo": "pharmapsychotic/clip-interrogator",
+      "http_status": 403
+    },
+    {
+      "repo": "hosseinmoein/DataFrame",
+      "http_status": 403
+    },
+    {
+      "repo": "sovrasov/flops-counter.pytorch",
+      "http_status": 403
+    },
+    {
+      "repo": "bethgelab/foolbox",
+      "http_status": 403
+    },
+    {
+      "repo": "pingcap/autoflow",
+      "http_status": 403
+    },
+    {
+      "repo": "patrick-kidger/equinox",
+      "http_status": 403
+    },
+    {
+      "repo": "codigoencasa/builderbot",
+      "http_status": 403
+    },
+    {
+      "repo": "Cartucho/mAP",
+      "http_status": 403
+    },
+    {
+      "repo": "leriomaggio/deep-learning-keras-tensorflow",
+      "http_status": 403
+    },
+    {
+      "repo": "sunsmarterjie/yolov12",
+      "http_status": 403
+    },
+    {
+      "repo": "li-plus/chatglm.cpp",
+      "http_status": 403
+    },
+    {
+      "repo": "sherlockchou86/VideoPipe",
+      "http_status": 403
+    },
+    {
+      "repo": "dreamquark-ai/tabnet",
+      "http_status": 403
+    },
+    {
+      "repo": "radixark/miles",
+      "http_status": 403
+    },
+    {
+      "repo": "open-gitagent/opengap",
+      "http_status": 403
+    },
+    {
+      "repo": "microsoft/table-transformer",
+      "http_status": 403
+    },
+    {
+      "repo": "Project-N-E-K-O/N.E.K.O",
+      "http_status": 403
+    },
+    {
+      "repo": "aitytech/agentkits-marketing",
+      "http_status": 404
+    },
+    {
+      "repo": "Saganaki22/ComfyUI-OmniVoice-TTS",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "00d4c1d3a9d422067d81106daf157e8b30dec0b491a48430fe0d8788f90e1cb9",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}
