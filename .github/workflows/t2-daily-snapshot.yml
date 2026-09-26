@@ -35,8 +35,13 @@ jobs:
           python-version: "3.12"
 
       - name: Capture Type-2 observations
+        # 5,939 systems (2026-09-27 onward) = 5,939 REST calls/day: carried by the GitHub App
+        # installation token (collectors/gh_auth.py) with rate limits waited out
+        # (collectors/gh_http.py); GITHUB_TOKEN stays as the fallback.
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          COLLECT_APP_ID: ${{ secrets.COLLECT_APP_ID }}
+          COLLECT_APP_KEY: ${{ secrets.COLLECT_APP_KEY }}
         run: python3 collectors/t2_collect.py
 
       - name: Capture deps.dev dependents (R0 adoption signal)

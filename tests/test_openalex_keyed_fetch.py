@@ -31,7 +31,9 @@ def test_rewrite_handles_no_query():
         "https://api.openalex.org/works/W1?api_key=K"
 
 
-def test_non_openalex_url_delegates_to_frozen_fetcher(monkeypatch):
+def test_non_openalex_non_github_url_delegates_to_frozen_fetcher(monkeypatch):
+    # GitHub URLs now go through the rate-limit-aware gh_http path
+    # (tests/test_gh_fetch_layer.py); anything else still reaches the frozen fetcher.
     calls = {}
 
     def fake_orig(url, headers=None, tries=5):
@@ -39,9 +41,9 @@ def test_non_openalex_url_delegates_to_frozen_fetcher(monkeypatch):
         return {"ok": 1}
 
     monkeypatch.setattr(okf, "_ORIG_GET_JSON", fake_orig)
-    out = okf._get_json_keyed("https://api.github.com/repos/x/y")
+    out = okf._get_json_keyed("https://example.org/x/y")
     assert out == {"ok": 1}
-    assert calls["url"] == "https://api.github.com/repos/x/y"
+    assert calls["url"] == "https://example.org/x/y"
 
 
 class _Resp:

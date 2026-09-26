@@ -7,11 +7,14 @@ import json
 import os
 import sys
 import tempfile
+import time
 import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
 REPO = Path(__file__).resolve().parent.parent
+if str(REPO / "collectors") not in sys.path:
+    sys.path.insert(0, str(REPO / "collectors"))
 ID_MAP_PATH = REPO / "etl/id_map.json"
 CACHE_PATH = REPO / "etl/owner_types.json"
 SCHEMA_VERSION = "owner_types_1"
@@ -68,6 +71,10 @@ def fetch_classification(
     request = urllib.request.Request(GITHUB_API.format(repo=repo), headers=headers)
     with opener(request, timeout=40) as response:
         payload = json.loads(response.read())
+    return classification_from_payload(repo, payload)
+
+
+def classification_from_payload(repo: str, payload: dict[str, Any]) -> dict[str, Any]:
     owner = payload.get("owner")
     owner_type = owner.get("type") if isinstance(owner, dict) else None
     repo_id = payload.get("id")
@@ -79,6 +86,62 @@ def fetch_classification(
     if not isinstance(full_name, str) or len(full_name.split("/")) != 2 or not all(full_name.split("/")):
         raise ValueError(f"{repo}: GitHub canonical full_name is malformed")
     return {"owner_type": owner_type, "repo_id": repo_id, "full_name": full_name}
+
+
+def classification_from_graphql(repo: str, node: dict[str, Any]) -> dict[str, Any]:
+    """The same three fields from a gh_graphql cache node (owner __typename)."""
+    return classification_from_payload(repo, {
+        "id": node.get("databaseId"),
+        "full_name": node.get("nameWithOwner"),
+        "owner": {"type": node.get("owner_type")},
+    })
+
+
+def _rest_classification(repo: str) -> dict[str, Any]:
+    """REST fallback through the shared GitHub path (auth header, rate-limit waits)."""
+    import gh_http
+
+    last: int | str = 0
+    for attempt in range(4):
+        try:
+            status, _headers, body = gh_http.request(GITHUB_API.format(repo=repo), headers={
+                "User-Agent": "evidaxis-owner-classifier", "X-GitHub-Api-Version": "2022-11-28"})
+        except OSError as exc:  # URLError / timeout / reset: transient transport, retry
+            last = type(exc).__name__
+            time.sleep(2 ** attempt)
+            continue
+        if status == 200:
+            return classification_from_payload(repo, json.loads(body))
+        last = status
+        if status < 500:
+            break
+        time.sleep(2 ** attempt)
+    raise RuntimeError(f"{repo}: GitHub REST answered {last}")
+
+
+def graphql_fetcher(repos: list[str]) -> Callable[[str, str], dict[str, Any]]:
+    """Fetcher for refresh(): GraphQL cache/batch first, REST only for misses."""
+    import gh_graphql
+
+    try:
+        meta = gh_graphql.load_cache()
+    except Exception:
+        meta = {}
+    missing = [repo for repo in repos if repo.lower() not in meta]
+    if missing:
+        meta.update(gh_graphql.prefetch(missing))
+    stats = {"graphql": 0, "rest": 0}
+
+    def fetch(repo: str, _token: str) -> dict[str, Any]:
+        node = meta.get(repo.lower())
+        if node:
+            stats["graphql"] += 1
+            return classification_from_graphql(repo, node)
+        stats["rest"] += 1
+        return _rest_classification(repo)
+
+    fetch.stats = stats  # type: ignore[attr-defined]
+    return fetch
 
 
 def _atomic_write(path: Path, payload: dict[str, Any]) -> None:
@@ -137,7 +200,15 @@ def main(argv: list[str] | None = None) -> int:
     # Review 2026-07-10: an explicit refresh that could not refresh must fail loudly —
     # a silent success would let a stale Organization label survive a transfer to a
     # personal account (fail-closed at the seam).
-    return 0 if refresh(token=os.environ.get("GITHUB_TOKEN")) else 1
+    import gh_auth
+
+    token = gh_auth.token()   # GitHub App installation token when configured, else GITHUB_TOKEN
+    if not token:
+        return 0 if refresh(token=None) else 1
+    fetcher = graphql_fetcher(list(id_map))
+    ok = refresh(token=token, fetcher=fetcher)
+    print(f"owner classification: {fetcher.stats['graphql']} from GraphQL, {fetcher.stats['rest']} via REST")  # type: ignore[attr-defined]
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

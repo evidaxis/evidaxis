@@ -31,10 +31,12 @@ import os
 import sys
 import time
 import urllib.error
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import gh_http  # shared GitHub path: App token (gh_auth), rate-limit waits, 401 refresh
 from field_policy import filter_provenance
 
 REPO = Path(__file__).resolve().parent.parent
@@ -56,34 +58,33 @@ SIGNAL_SPEC = [
 
 
 def _fetch(url: str, token: str | None, tries: int = 5, timeout: int = 40) -> tuple[int, bytes]:
+    """GET through gh_http: the GitHub App token when configured (else `token`),
+    rate limits waited out (sleep until X-RateLimit-Reset / Retry-After, same
+    request retried, no try consumed), a 401 on an App token refreshed once."""
     headers = {"User-Agent": "evidaxis-t2-collector", "Accept": "application/vnd.github+json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
     last: Exception | None = None
     for attempt in range(tries):
-        req = urllib.request.Request(url, headers=headers)
         try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return resp.getcode(), resp.read()
-        except urllib.error.HTTPError as exc:
-            last = exc
-            if exc.code == 401:
-                # Dead/revoked token: every subsequent call would fail identically.
-                # Fail the whole run loudly instead of capturing a blind snapshot.
-                raise RuntimeError("GitHub API 401 (token dead/revoked) - aborting capture") from exc
-            if exc.code in (403, 429) and attempt < tries - 1:
-                time.sleep(2 ** attempt * 2)
-                continue
-            if exc.code >= 500 and attempt < tries - 1:
-                time.sleep(2 ** attempt)
-                continue
-            return exc.code, exc.read()
+            status, _resp_headers, body = gh_http.request(url, headers=headers, timeout=timeout)
+        except gh_http.RateLimited as exc:
+            # A limit that cannot be waited out (> 65 min, or 3 hits): this repo is an error.
+            raise RuntimeError(f"GitHub rate limit not recoverable: {exc}") from exc
         except (urllib.error.URLError, TimeoutError) as exc:
             last = exc
             if attempt < tries - 1:
                 time.sleep(2 ** attempt)
                 continue
             raise
+        if status == 401:
+            # Dead/revoked token: every subsequent call would fail identically.
+            # Fail the whole run loudly instead of capturing a blind snapshot.
+            raise RuntimeError("GitHub API 401 (token dead/revoked) - aborting capture")
+        if status >= 500 and attempt < tries - 1:
+            time.sleep(2 ** attempt)
+            continue
+        return status, body
     raise RuntimeError(f"unreachable retry exhaustion: {last}")
 
 
