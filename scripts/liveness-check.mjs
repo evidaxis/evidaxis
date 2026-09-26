@@ -1,6 +1,7 @@
 // Runner for the external liveness sensor. Probes the live site (SITE_URL) for
 // HTTP 200 + a required content marker and pings Telegram on failure. Runs under
 // plain `node` — no npm install (see liveness.mjs).
+import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import { evaluateLiveness } from './liveness.mjs';
 
 /** @param {string} url @param {string} marker */
@@ -54,11 +55,16 @@ const result = evaluateLiveness({ url, marker, ...p });
 console.log(JSON.stringify({ url, status: p.status, hasMarker: p.hasMarker, ...result }));
 
 if (result.alert) {
-  const actionsLink =
-    process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY
-      ? `\n${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions`
-      : '';
-  await sendTelegram(`🔴 ${label} · прод-доступность\n\n${result.message}${actionsLink}`);
+  // One outage = one push, then at most one morning reminder a day (alert-gate.mjs).
+  // The run stays red either way: the next run reads it as "already pushed".
+  if (shouldPush({ previousConclusion: await previousConclusion(), nowIso: new Date().toISOString() })) {
+    await sendTelegram(
+      `🔴 Сайт ${url.replace(/^https?:\/\//, '')} не открывается.\n` +
+        `Что сделать: открой чат по Evidaxis и скажи «сайт не открывается, почини».`,
+    );
+  } else {
+    console.log('[liveness] (тихо · повтор) уже отправлено, напоминание — утром');
+  }
   process.exit(1);
 }
 process.exit(0);

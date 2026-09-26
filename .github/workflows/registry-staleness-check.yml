@@ -42,7 +42,7 @@ jobs:
           latest="commit $(date -u -d @"$ts" +%F) (${newest_file#* })"
           echo "newest tranche commit: $latest (${days}d ago)"
           if [ "$days" -gt "$THRESHOLD_DAYS" ]; then
-            msg="⏰ Evidaxis: пополнение индекса (недельный транш карточек) не исполнялось ${days} дн. Скажи Клоду: «продолжаем evidaxis, пополнение индекса»."
+            msg="⏰ Evidaxis: новые проекты в каталог не добавлялись ${days} дн. (обычно — раз в неделю)."$'\n'"Что сделать: в любом чате скажи «продолжаем evidaxis, пополнение индекса»."
             # Delivery IS the alarm (noise audit 2026-08-28). A DELIVERED reminder
             # leaves the run GREEN: the daily cron already repeats the message, so a
             # red run only adds a GitHub failure e-mail plus a second, contentless

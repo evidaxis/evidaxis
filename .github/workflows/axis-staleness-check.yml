@@ -38,7 +38,7 @@ jobs:
           latest="commit $(date -u -d @"$ts" +%F) (${newest_file#* })"
           echo "newest capture commit: $latest (${days}d ago)"
           if [ "$days" -gt "$THRESHOLD_DAYS" ]; then
-            msg="⏰ Evidaxis: ось m3 не капчурилась ${days} дн. Скажи Клоду: «ритуал недели» или «продолжаем evidaxis»."
+            msg="⏰ Evidaxis: еженедельный сбор данных о зависимостях проектов не делался ${days} дн. — на сайте стареет одна из осей рейтинга."$'\n'"Что сделать: в любом чате скажи «продолжаем evidaxis»."
             # Delivery IS the alarm (noise audit 2026-08-28). A DELIVERED reminder
             # leaves the run GREEN: the daily cron already repeats the message, so a
             # red run only adds a GitHub failure e-mail plus a second, contentless

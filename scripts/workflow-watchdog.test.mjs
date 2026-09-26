@@ -258,3 +258,48 @@ test('one stale workflow while the scheduler keeps dispatching is NOT a drought'
   assert.equal(results.length, 1, 'no platform line');
   assert.equal(results[0].alert, true);
 });
+
+// Gate 4 — audience (2026-09-26): only the keeper's business reaches Telegram, once.
+import { applyAudienceGate } from './workflow-watchdog.mjs';
+
+const never = () => false;
+const always = () => true;
+
+test('a red code check never reaches the keeper (assistant work)', () => {
+  const [row] = applyAudienceGate(
+    [{ name: 'python-ci', kind: 'event', status: 'red', alert: true, since: '2026-09-26T11:00:00Z', message: 'm' }],
+    { nowIso: '2026-09-26T12:00:00Z', inReminderWindow: always },
+  );
+  assert.equal(row.alert, false);
+  assert.equal(row.quiet, 'dev');
+});
+
+test('lost capture is pushed when new, then only in the morning window', () => {
+  const row = { name: 't2-daily-snapshot', kind: 'scheduled', status: 'red', alert: true, critical: true, dataLoss: true, message: 'm' };
+  const fresh = applyAudienceGate([{ ...row, since: '2026-09-26T09:00:00Z' }], { nowIso: '2026-09-26T12:00:00Z', inReminderWindow: never });
+  assert.equal(fresh[0].alert, true);
+  const old = applyAudienceGate([{ ...row, since: '2026-09-25T09:00:00Z' }], { nowIso: '2026-09-26T12:00:00Z', inReminderWindow: never });
+  assert.equal(old[0].alert, false);
+  assert.equal(old[0].quiet, 'repeat');
+  const morning = applyAudienceGate([{ ...row, since: '2026-09-25T09:00:00Z' }], { nowIso: '2026-09-26T06:23:00Z', inReminderWindow: always });
+  assert.equal(morning[0].alert, true);
+});
+
+test('a red liveness row is quiet: the liveness sensor already messaged', () => {
+  const [row] = applyAudienceGate(
+    [{ name: 'liveness-check', kind: 'scheduled', status: 'red', alert: true, critical: true, factGate: 'site', since: '2026-09-26T11:30:00Z', message: 'm' }],
+    { nowIso: '2026-09-26T12:00:00Z', inReminderWindow: always },
+  );
+  assert.equal(row.quiet, 'dup');
+});
+
+test('the platform drought line is quiet when no row next to it is loud', () => {
+  const out = applyAudienceGate(
+    [
+      { name: 'archive-integrity', kind: 'scheduled', status: 'stale', alert: true, since: '2026-09-26T11:00:00Z', message: 'm' },
+      { name: 'github-scheduler', kind: 'platform', status: 'drought', alert: true, message: 'p' },
+    ],
+    { nowIso: '2026-09-26T12:00:00Z', inReminderWindow: always },
+  );
+  assert.equal(out.every((r) => !r.alert), true);
+});

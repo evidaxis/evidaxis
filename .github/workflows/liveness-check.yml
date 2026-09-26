@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  actions: read   # alert-gate.mjs reads the previous run to push a problem once
 
 jobs:
   check:
@@ -26,6 +27,7 @@ jobs:
           SITE_URL: https://evidaxis.org
           MARKER: 'Evidaxis, the longitudinal map of open AI momentum'
           SITE_LABEL: evidaxis
+          GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
         run: node scripts/liveness-check.mjs
@@ -40,6 +42,7 @@ jobs:
         env:
           SITE_URL: https://evidaxis.org
           SITE_LABEL: evidaxis
+          GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
         run: node scripts/freshness-check.mjs

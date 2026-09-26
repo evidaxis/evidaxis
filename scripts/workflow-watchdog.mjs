@@ -74,6 +74,7 @@ function judge(workflow, i, now) {
     return {
       status: /** @type {WorkflowStatus} */ ('red'),
       alert: true,
+      since: runTime(completed),
       message:
         `${workflow.name}: последний запуск завершился с результатом «${conclusion}». ` +
         `Сигнал повторится, пока воркфлоу не станет зелёным.\n${ACTIONS_URL}`,
@@ -97,6 +98,8 @@ function judge(workflow, i, now) {
       return {
         status: /** @type {WorkflowStatus} */ ('stale'),
         alert: true,
+        since: new Date(succeededAt + (workflow.budgetHours ?? 0) * HOUR_MS).toISOString(),
+        ageHours,
         message:
           `${workflow.name}: последний успешный запуск был ${ageText(ageHours)} назад, ` +
           `бюджет ${workflow.budgetHours} ч исчерпан.\n${ACTIONS_URL}`,
@@ -151,6 +154,7 @@ export function evaluateWorkflowHealth(i) {
       ...(workflow.self ? { self: true } : {}),
       ...(workflow.factGate ? { factGate: workflow.factGate } : {}),
       ...(workflow.dataLoss ? { dataLoss: true } : {}),
+      ...(workflow.critical ? { critical: true } : {}),
       ...(workflow.budgetHours ? { budgetHours: workflow.budgetHours } : {}),
     };
     return workflow.self ? silenceSelf(result) : result;
@@ -247,4 +251,41 @@ export function applyDroughtGate(results, i) {
       `за это окно не стартовала ни одна задача архива. Дело в расписании GitHub, не в Evidaxis.\n${ACTIONS_URL}`,
   });
   return gated;
+}
+
+/**
+ * Gate 4 — AUDIENCE (2026-09-26, the keeper: "only the critical should arrive, and
+ * written so I understand what to do with it"). Three gates above decide whether a
+ * row is TRUE; this one decides whether it is the KEEPER's business.
+ *   - Only rows marked `critical` in the roster reach him: lost un-backfillable
+ *     capture and the site being down. A red code check, a failed deploy, a red
+ *     verifier, an unrostered workflow are the assistant's work — quiet ('dev'),
+ *     read from the run log by the next session in the repo.
+ *   - A critical row whose own workflow already pushes (liveness red = the liveness
+ *     sensor has messaged) is quiet ('dup').
+ *   - The SAME problem is pushed once: a row is new when it turned bad within the
+ *     last watchdog cadence; older rows repeat only in the morning reminder window.
+ *   - The platform drought line survives only next to a row that is still loud.
+ * @param {Array<any>} results
+ * @param {{ nowIso: string, cadenceHours?: number, inReminderWindow: (nowIso: string) => boolean }} i
+ */
+export function applyAudienceGate(results, i) {
+  const now = Date.parse(i.nowIso);
+  const cadenceMs = ((i.cadenceHours ?? 6) + 0.5) * HOUR_MS;
+  const reminder = i.inReminderWindow(i.nowIso);
+  const gated = results.map((result) => {
+    if (!result.alert || result.kind === 'platform') return result;
+    if (!result.critical) return { ...result, alert: false, quiet: 'dev' };
+    if (result.factGate && result.status === 'red') return { ...result, alert: false, quiet: 'dup' };
+    const since = Date.parse(result.since ?? '');
+    const fresh = !Number.isNaN(since) && !Number.isNaN(now) && now - since < cadenceMs;
+    if (!fresh && !reminder) return { ...result, alert: false, quiet: 'repeat' };
+    return result;
+  });
+  const loudRows = gated.some((result) => result.alert && result.kind !== 'platform');
+  return gated.map((result) =>
+    result.kind === 'platform' && result.alert && !loudRows
+      ? { ...result, alert: false, quiet: 'repeat' }
+      : result,
+  );
 }

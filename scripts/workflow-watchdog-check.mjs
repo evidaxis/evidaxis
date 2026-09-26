@@ -2,7 +2,9 @@
 // source of run outcomes; Telegram is the independent delivery channel that
 // repeats every six hours until each failed or overdue workflow is green.
 import { readdirSync, readFileSync } from 'node:fs';
+import { inReminderWindow } from './alert-gate.mjs';
 import {
+  applyAudienceGate,
   applyDroughtGate,
   applyFactGates,
   evaluateWorkflowHealth,
@@ -17,15 +19,21 @@ const WORKFLOW_DIR = '.github/workflows';
 // Verifiers (integrity, staleness checks) re-run to the same answer later: quiet.
 // `factGate` = the workflow stands for an observable fact the watchdog can check
 // itself, so overdue alone never wakes anyone. `self` = the watchdog's own row.
+// `critical` = the keeper's business (Gate 4, 2026-09-26): only these can reach
+// Telegram; `human` is how the push names the workflow in plain words.
 const ROSTER = [
-  { name: 'liveness-check', kind: 'scheduled', budgetHours: 3, factGate: 'site' },
-  { name: 't2-daily-snapshot', kind: 'scheduled', budgetHours: 36, dataLoss: true },
+  { name: 'liveness-check', kind: 'scheduled', budgetHours: 3, factGate: 'site', critical: true },
+  { name: 't2-daily-snapshot', kind: 'scheduled', budgetHours: 36, dataLoss: true, critical: true,
+    human: 'ежедневный снимок данных (звёзды, наблюдатели, открытые задачи проектов)' },
   { name: 'archive-integrity', kind: 'scheduled', budgetHours: 36 },
   { name: 'axis-staleness-check', kind: 'scheduled', budgetHours: 36 },
   { name: 'registry-staleness-check', kind: 'scheduled', budgetHours: 36 },
-  { name: 'weekly-snapshot', kind: 'scheduled', budgetHours: 204, dataLoss: true },
-  { name: 'shadow-observe', kind: 'scheduled', budgetHours: 204, dataLoss: true },
-  { name: 'shadow-discover', kind: 'scheduled', budgetHours: 840, dataLoss: true },
+  { name: 'weekly-snapshot', kind: 'scheduled', budgetHours: 204, dataLoss: true, critical: true,
+    human: 'недельный снимок данных' },
+  { name: 'shadow-observe', kind: 'scheduled', budgetHours: 204, dataLoss: true, critical: true,
+    human: 'недельный замер звёзд у проектов-кандидатов' },
+  { name: 'shadow-discover', kind: 'scheduled', budgetHours: 840, dataLoss: true, critical: true,
+    human: 'ежемесячный поиск новых проектов-кандидатов' },
   { name: 'workflow-watchdog', kind: 'scheduled', budgetHours: 13, self: true },
   { name: 'deploy-web', kind: 'event' },
   { name: 'web-ci', kind: 'event' },
@@ -173,7 +181,27 @@ async function evaluate() {
       message: `${name}: воркфлоу вне надзора, добавьте его в roster.\n${ACTIONS_URL}`,
     });
   }
-  return results;
+  return applyAudienceGate(results, { nowIso, cadenceHours: 6, inReminderWindow });
+}
+
+/** The push the keeper reads: what happened in plain words, then what to do. @param {any} result */
+function keeperText(result) {
+  if (result.kind === 'platform') {
+    return `🟠 Причина, похоже, на стороне GitHub: плановые задачи Evidaxis не запускаются.\n` +
+      `Что сделать: ничего отдельно — это причина сообщения выше.`;
+  }
+  if (result.factGate === 'site') {
+    return `🔴 Сайт evidaxis.org не открывается, а проверка доступности не запускается.\n` +
+      `Что сделать: открой чат по Evidaxis и скажи «сайт не открывается, почини».`;
+  }
+  const human = ROSTER.find((w) => w.name === result.name)?.human ?? result.name;
+  const why = result.status === 'red'
+    ? 'последний запуск упал'
+    : result.status === 'stale'
+      ? `последний удачный запуск был ${Math.floor(result.ageHours ?? 0)} ч назад`
+      : 'запусков нет';
+  return `🔴 Evidaxis не собирает ${human}: ${why}. Пропущенные дни потом не восстановить.\n` +
+    `Что сделать: открой чат по Evidaxis и скажи «почини сбор данных».`;
 }
 
 if (process.argv.includes('--selftest')) {
@@ -192,13 +220,18 @@ try {
   }
   const alerts = results.filter((result) => result.alert);
   for (const result of alerts) {
-    await sendTelegram(`🔴 evidaxis · сторож воркфлоу\n\n${result.message}`);
+    await sendTelegram(keeperText(result));
   }
   process.exit(alerts.length > 0 ? 1 : 0);
 } catch (e) {
   console.error('[workflow-watchdog] evaluation failed', e);
-  await sendTelegram(
-    `🔴 evidaxis · сторож воркфлоу\n\nПроверка исходов не состоялась: ${e.message}.\n${ACTIONS_URL}`,
-  );
+  // A blind watchdog is the assistant's problem until it lasts: once a day, in the
+  // morning window, so a transient GitHub API error never reaches the keeper.
+  if (inReminderWindow(new Date().toISOString())) {
+    await sendTelegram(
+      `🟠 Сторож Evidaxis не смог проверить плановые задачи, поэтому сбой сбора данных сейчас может пройти незамеченным.\n` +
+        `Что сделать: открой чат по Evidaxis и скажи «почини сторож».`,
+    );
+  }
   process.exit(1);
 }

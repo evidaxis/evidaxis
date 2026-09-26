@@ -4,6 +4,7 @@
 // under plain `node` — no npm install (see freshness.mjs for the fact it
 // watches and why it is separate from the liveness sensor).
 import { readFileSync } from 'node:fs';
+import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import {
   evaluateArchiveFreshness,
   evaluateFeedFreshness,
@@ -99,10 +100,17 @@ console.log(JSON.stringify({
 }));
 
 if (result.alert || feedResult.alert || archiveResult.alert) {
-  await sendTelegram(
-    `🟠 ${label} · свежесть данных\n\n` +
-    `${result.message}\n${feedResult.message}\n${archiveResult.message}`,
-  );
+  // Same repeat gate as liveness (alert-gate.mjs): new problem at once, the same one
+  // at most once a day. Only the failing facts go into the push.
+  if (shouldPush({ previousConclusion: await previousConclusion(), nowIso: now.toISOString() })) {
+    const details = [result, feedResult, archiveResult].filter((r) => r.alert).map((r) => r.message);
+    await sendTelegram(
+      `🟠 На сайте Evidaxis не обновились данные: посетители видят устаревший снимок.\n` +
+        `Что сделать: открой чат по Evidaxis и скажи «данные на сайте не обновились, почини».`,
+    );
+  } else {
+    console.log('[freshness] (тихо · повтор) уже отправлено, напоминание — утром');
+  }
   process.exit(1);
 }
 process.exit(0);
