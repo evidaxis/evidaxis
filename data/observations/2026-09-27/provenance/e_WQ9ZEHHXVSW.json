@@ -1,0 +1,33 @@
+{
+  "full_name": "thuml/depyf",
+  "network_count": 31,
+  "archived": false,
+  "fork": false,
+  "node_id": "R_kgDOKMO_AQ",
+  "language": "Python",
+  "name": "depyf",
+  "visibility": "public",
+  "topics": [
+    "compiler",
+    "deep-learning",
+    "pytorch"
+  ],
+  "pushed_at": "2025-10-13T12:34:42Z",
+  "size": 12754,
+  "forks_count": 31,
+  "subscribers_count": 7,
+  "open_issues_count": 7,
+  "description": "depyf is a tool to help you understand and adapt to PyTorch compiler torch.compile.",
+  "disabled": false,
+  "created_at": "2023-08-28T04:05:54Z",
+  "id": 683917057,
+  "updated_at": "2026-09-23T18:31:15Z",
+  "default_branch": "master",
+  "watchers_count": 815,
+  "private": false,
+  "homepage": "https://depyf.readthedocs.io",
+  "stargazers_count": 815,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

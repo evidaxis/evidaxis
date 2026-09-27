@@ -1,0 +1,32 @@
+{
+  "full_name": "datalab-to/chandra",
+  "network_count": 1242,
+  "archived": false,
+  "fork": false,
+  "node_id": "R_kgDOP-2oUg",
+  "language": "Python",
+  "name": "chandra",
+  "visibility": "public",
+  "topics": [
+    "ai",
+    "ocr"
+  ],
+  "pushed_at": "2026-06-26T10:26:47Z",
+  "size": 23475,
+  "forks_count": 1242,
+  "subscribers_count": 89,
+  "open_issues_count": 61,
+  "description": "OCR model that handles complex tables, forms, handwriting with full layout.",
+  "disabled": false,
+  "created_at": "2025-10-08T21:34:16Z",
+  "id": 1072539730,
+  "updated_at": "2026-09-27T06:42:15Z",
+  "default_branch": "master",
+  "watchers_count": 12333,
+  "private": false,
+  "homepage": "https://www.datalab.to",
+  "stargazers_count": 12333,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

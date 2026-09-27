@@ -1,0 +1,32 @@
+{
+  "full_name": "replicate/keepsake",
+  "network_count": 75,
+  "archived": false,
+  "fork": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNzYyNzc4MDU=",
+  "language": "Python",
+  "name": "keepsake",
+  "visibility": "public",
+  "topics": [
+    "machine-learning",
+    "version-control"
+  ],
+  "pushed_at": "2025-02-25T23:52:42Z",
+  "size": 16627,
+  "forks_count": 75,
+  "subscribers_count": 22,
+  "open_issues_count": 124,
+  "description": "Version control for machine learning",
+  "disabled": false,
+  "created_at": "2020-07-01T04:37:44Z",
+  "id": 276277805,
+  "updated_at": "2026-09-14T12:13:03Z",
+  "default_branch": "main",
+  "watchers_count": 1679,
+  "private": false,
+  "homepage": "https://keepsake.ai",
+  "stargazers_count": 1679,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

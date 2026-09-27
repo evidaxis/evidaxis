@@ -1,0 +1,33 @@
+{
+  "full_name": "gastownhall/beads",
+  "network_count": 1858,
+  "archived": false,
+  "fork": false,
+  "node_id": "R_kgDOQAyAEg",
+  "language": "Go",
+  "name": "beads",
+  "visibility": "public",
+  "topics": [
+    "agents",
+    "claude-code",
+    "coding"
+  ],
+  "pushed_at": "2026-09-27T10:59:06Z",
+  "size": 166530,
+  "forks_count": 1858,
+  "subscribers_count": 94,
+  "open_issues_count": 1246,
+  "description": "Beads - A memory upgrade for your coding agent",
+  "disabled": false,
+  "created_at": "2025-10-12T03:09:46Z",
+  "id": 1074561042,
+  "updated_at": "2026-09-27T11:40:20Z",
+  "default_branch": "main",
+  "watchers_count": 27465,
+  "private": false,
+  "homepage": "https://beads.gascity.com",
+  "stargazers_count": 27465,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

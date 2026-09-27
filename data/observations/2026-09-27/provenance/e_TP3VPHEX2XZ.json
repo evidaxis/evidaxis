@@ -1,0 +1,33 @@
+{
+  "full_name": "THUDM/SwissArmyTransformer",
+  "network_count": 100,
+  "archived": false,
+  "fork": false,
+  "node_id": "R_kgDOGLA_aA",
+  "language": "Python",
+  "name": "SwissArmyTransformer",
+  "visibility": "public",
+  "topics": [
+    "pretrained-models",
+    "pytorch",
+    "transformer"
+  ],
+  "pushed_at": "2024-12-26T13:23:58Z",
+  "size": 22098,
+  "forks_count": 100,
+  "subscribers_count": 32,
+  "open_issues_count": 42,
+  "description": "SwissArmyTransformer is a flexible and powerful library to develop your own Transformer variants.",
+  "disabled": false,
+  "created_at": "2021-10-06T12:30:39Z",
+  "id": 414203752,
+  "updated_at": "2026-09-25T02:37:08Z",
+  "default_branch": "main",
+  "watchers_count": 1122,
+  "private": false,
+  "homepage": "https://THUDM.github.io/SwissArmyTransformer",
+  "stargazers_count": 1122,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
