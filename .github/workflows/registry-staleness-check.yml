@@ -37,6 +37,20 @@ jobs:
                           | xargs -0 -I{} sh -c 'echo "$(git log -1 --format=%ct -- "{}") {}"' \
                           | sort -n | tail -1 || true)
           if [ -z "$newest_file" ]; then echo "no tranches found"; exit 1; fi
+          # 2026-09-28: the capacity-bounded tranche of 2026-09-20 drained the queue
+          # (5,705 of 5,705). With nothing left to activate, a quiet week is not a
+          # missed tranche. Stay silent while the newest census holds fewer pending
+          # members than the policy floor (10 per tranche, REGISTRY-GROWTH-POLICY);
+          # the next monthly census refills the queue and the age check resumes.
+          newest_manifest=$(ls data/census/20*/pending-manifest.json 2>/dev/null | sort | tail -1 || true)
+          if [ -n "$newest_manifest" ]; then
+            pending=$(python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); print(sum(1 for x in m["members"] if x.get("status") == "pending"))' "$newest_manifest")
+            echo "pending in ${newest_manifest}: ${pending}"
+            if [ "$pending" -lt 10 ]; then
+              echo "::notice title=Queue drained::${pending} pending (<10, policy floor) - nothing to activate until the next census"
+              exit 0
+            fi
+          fi
           ts=${newest_file%% *}
           days=$(( ( $(date +%s) - ts ) / 86400 ))
           latest="commit $(date -u -d @"$ts" +%F) (${newest_file#* })"
