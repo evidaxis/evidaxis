@@ -704,6 +704,11 @@
       "package": "raganything",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "HUANGCHIHHUNGLeo/claude-real-video": {
+      "system": "pypi",
+      "package": "claude-real-video",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "HarnessRouter/harnessrouter": {
       "system": "pypi",
       "package": "harnessrouter",
@@ -894,6 +899,11 @@
       "package": "realtimestt",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "KoljaB/RealtimeTTS": {
+      "system": "pypi",
+      "package": "realtimetts",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "Kuberwastaken/claurst": {
       "system": "npm",
       "package": "claurst",
@@ -964,6 +974,11 @@
       "system": "pypi",
       "package": "sumo-rl",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "LucasBassetti/react-simple-chatbot": {
+      "system": "npm",
+      "package": "react-simple-chatbot",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "Lumiwealth/lumibot": {
       "system": "pypi",
@@ -1411,6 +1426,11 @@
       "package": "tweakcc",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "Pipelex/pipelex": {
+      "system": "pypi",
+      "package": "pipelex",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "PolymathicAI/the_well": {
       "system": "pypi",
       "package": "the_well",
@@ -1420,6 +1440,11 @@
       "system": "pypi",
       "package": "fastmcp",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "PrefectHQ/prefect": {
+      "system": "pypi",
+      "package": "prefect",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "PrithivirajDamodaran/FlashRank": {
       "system": "pypi",
@@ -1480,6 +1505,11 @@
       "system": "pypi",
       "package": "whisperlivekit",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "QwenAudio/qwen-audio-agent": {
+      "system": "npm",
+      "package": "qwen-audio-agent",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "QwenLM/Qwen-Agent": {
       "system": "pypi",
@@ -1823,6 +1853,11 @@
       "system": "npm",
       "package": "ts-auto-mock",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "UKGovernmentBEIS/inspect_ai": {
+      "system": "pypi",
+      "package": "inspect_ai",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "UKPLab/EasyNMT": {
       "system": "pypi",
@@ -2708,6 +2743,11 @@
       "package": "boxlite",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "bpwhelan/GameSentenceMiner": {
+      "system": "pypi",
+      "package": "gamesentenceminer",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "braindecode/braindecode": {
       "system": "pypi",
       "package": "braindecode",
@@ -2852,6 +2892,11 @@
       "package": "seqeval",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "charnley/rmsd": {
+      "system": "pypi",
+      "package": "rmsd",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "chemosim-lab/ProLIF": {
       "system": "pypi",
       "package": "prolif",
@@ -2975,10 +3020,20 @@
       "package": "tweakpane",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "codeaholicguy/ai-devkit": {
+      "system": "npm",
+      "package": "ai-devkit",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "codelion/adaptive-classifier": {
       "system": "pypi",
       "package": "adaptive-classifier",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "coderaiser/putout": {
+      "system": "npm",
+      "package": "putout",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "codertimo/BERT-pytorch": {
       "system": "pypi",
@@ -3085,6 +3140,11 @@
       "system": "pypi",
       "package": "v-diffusion-pytorch",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "csinva/imodels": {
+      "system": "pypi",
+      "package": "imodels",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "cvs-health/uqlm": {
       "system": "pypi",
@@ -3659,6 +3719,11 @@
       "package": "sweetviz",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "feast-dev/feast": {
+      "system": "pypi",
+      "package": "feast",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "feathr-ai/feathr": {
       "system": "pypi",
       "package": "feathr",
@@ -3693,6 +3758,16 @@
       "system": "pypi",
       "package": "firecrawl",
       "pinned_at": "2026-08-09T07:27:46Z"
+    },
+    "firerpa/lamda": {
+      "system": "pypi",
+      "package": "lamda",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
+    "first-fluke/oh-my-agent": {
+      "system": "npm",
+      "package": "oh-my-agent",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "fivetran/great_expectations": {
       "system": "pypi",
@@ -3804,6 +3879,11 @@
       "package": "haiku.rag",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "ggozad/oterm": {
+      "system": "pypi",
+      "package": "oterm",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "gi-dellav/zerostack": {
       "system": "cargo",
       "package": "zerostack",
@@ -3910,6 +3990,11 @@
       "package": "langextract",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "google/langfun": {
+      "system": "pypi",
+      "package": "langfun",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "google/magika": {
       "system": "pypi",
       "package": "magika",
@@ -3919,6 +4004,11 @@
       "system": "pypi",
       "package": "paxml",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "google/pyglove": {
+      "system": "pypi",
+      "package": "pyglove",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "google/qkeras": {
       "system": "pypi",
@@ -4465,6 +4555,11 @@
       "package": "onnxocr",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "jjang-ai/vmlx": {
+      "system": "pypi",
+      "package": "vmlx",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "jmuncor/tokentap": {
       "system": "pypi",
       "package": "tokentap",
@@ -4610,6 +4705,11 @@
       "package": "reddit-mcp-buddy",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "kbwo/ccmanager": {
+      "system": "npm",
+      "package": "ccmanager",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "kdcokenny/ocx": {
       "system": "npm",
       "package": "ocx",
@@ -4634,6 +4734,11 @@
       "system": "pypi",
       "package": "agentsview",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "kenryu42/cc-safety-net": {
+      "system": "npm",
+      "package": "cc-safety-net",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "keras-rl/keras-rl": {
       "system": "pypi",
@@ -4847,6 +4952,11 @@
       "package": "openevals",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "langflow-ai/langflow": {
+      "system": "pypi",
+      "package": "langflow",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "langwatch/langwatch": {
       "system": "npm",
       "package": "langwatch",
@@ -5006,6 +5116,11 @@
       "system": "pypi",
       "package": "medpy",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "loopx-project/loopx": {
+      "system": "pypi",
+      "package": "loopx",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "lucasnewman/f5-tts-mlx": {
       "system": "pypi",
@@ -5659,6 +5774,11 @@
       "package": "dropblock",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "mikehasa/agentacct": {
+      "system": "pypi",
+      "package": "agentacct",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "mikeyobrien/ralph-orchestrator": {
       "system": "pypi",
       "package": "ralph-orchestrator",
@@ -5668,6 +5788,11 @@
       "system": "pypi",
       "package": "pymilvus",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "mims-harvard/ToolUniverse": {
+      "system": "pypi",
+      "package": "tooluniverse",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "minimaxir/aitextgen": {
       "system": "pypi",
@@ -5865,6 +5990,11 @@
       "package": "ida-pro-mcp",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "mrwadams/stride-gpt": {
+      "system": "pypi",
+      "package": "stride-gpt",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "mseitzer/pytorch-fid": {
       "system": "pypi",
       "package": "pytorch-fid",
@@ -5889,6 +6019,11 @@
       "system": "pypi",
       "package": "mjlab",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "mybigday/llama.rn": {
+      "system": "npm",
+      "package": "llama.rn",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "mybigday/whisper.rn": {
       "system": "npm",
@@ -5989,6 +6124,16 @@
       "system": "pypi",
       "package": "nfstream",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "nicobailon/pi-mcp-adapter": {
+      "system": "npm",
+      "package": "pi-mcp-adapter",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
+    "nicobailon/surf-cli": {
+      "system": "npm",
+      "package": "surf-cli",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "niieani/gpt-tokenizer": {
       "system": "npm",
@@ -6336,6 +6481,11 @@
       "package": "xprof",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "opral/lix": {
+      "system": "cargo",
+      "package": "lix",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "optuna/optuna": {
       "system": "pypi",
       "package": "optuna",
@@ -6540,6 +6690,11 @@
       "system": "pypi",
       "package": "selfcheckgpt",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "prateek-chaubey/YTPro": {
+      "system": "npm",
+      "package": "ytpro",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "primeqa/primeqa": {
       "system": "pypi",
@@ -6960,6 +7115,16 @@
       "package": "muspy",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "samchon/nestia": {
+      "system": "npm",
+      "package": "nestia",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
+    "samchon/typia": {
+      "system": "npm",
+      "package": "typia",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "sandeco/reversa": {
       "system": "npm",
       "package": "reversa",
@@ -7075,6 +7240,11 @@
       "package": "deepface",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "servo/servo": {
+      "system": "cargo",
+      "package": "servo",
+      "pinned_at": "2026-09-28T15:17:45Z"
+    },
     "sgl-project/SpecForge": {
       "system": "pypi",
       "package": "specforge",
@@ -7177,6 +7347,11 @@
       "system": "pypi",
       "package": "llm",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "simstudioai/sim": {
+      "system": "npm",
+      "package": "sim",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "sipyourdrink-ltd/bernstein": {
       "system": "pypi",
@@ -7528,6 +7703,11 @@
       "system": "npm",
       "package": "claude-mem",
       "pinned_at": "2026-08-16T07:06:23Z"
+    },
+    "thetahealth/mirobody": {
+      "system": "pypi",
+      "package": "mirobody",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "thewh1teagle/kokoro-onnx": {
       "system": "pypi",
@@ -8302,6 +8482,11 @@
       "system": "pypi",
       "package": "mtplx",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "ysr666/dsh-vision-router": {
+      "system": "npm",
+      "package": "dsh-vision-router",
+      "pinned_at": "2026-09-28T15:17:45Z"
     },
     "yuce/pyswip": {
       "system": "pypi",

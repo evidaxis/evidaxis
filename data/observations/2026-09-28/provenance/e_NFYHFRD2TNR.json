@@ -1,0 +1,33 @@
+{
+  "homepage": "https://triton-inference-server.github.io/pytriton/",
+  "stargazers_count": 849,
+  "topics": [
+    "deep-learning",
+    "gpu",
+    "inference"
+  ],
+  "private": false,
+  "subscribers_count": 15,
+  "fork": false,
+  "id": 563462295,
+  "default_branch": "main",
+  "open_issues_count": 11,
+  "disabled": false,
+  "watchers_count": 849,
+  "size": 9586,
+  "description": "PyTriton is a Flask/FastAPI-like interface that simplifies Triton's deployment in Python environments.",
+  "visibility": "public",
+  "created_at": "2022-11-08T17:00:55Z",
+  "language": "Python",
+  "node_id": "R_kgDOIZXAlw",
+  "network_count": 63,
+  "full_name": "triton-inference-server/pytriton",
+  "archived": false,
+  "updated_at": "2026-09-28T07:50:52Z",
+  "pushed_at": "2025-08-13T13:31:14Z",
+  "name": "pytriton",
+  "forks_count": 63,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
