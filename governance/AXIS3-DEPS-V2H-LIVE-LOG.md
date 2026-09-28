@@ -579,3 +579,26 @@ counts, the single-ecosystem dependent base and the missing citation axis stated
 (2026-08-17, 2026-09-21). Both times the artifacts were intact and the recovery was cheap, and
 both times the tact was only finished because someone went looking. Cost this tact: capture was
 already paid at 06:51, sidecar ~$0.08.
+
+## 2026-09-28 — tact: partition 2026-09-21, 6/6
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-09-21` — panel **90 systems / 628 packages**,
+**64/90 matched**, 10 canaries, manifest `026eaa45377a…`, job `bqjob_r6d0a911b3081b850…`. Same
+frozen panel and match count as the 2026-09-14 partition, so no drift this week.
+
+**Sidecar** (`--sidecar 2026-09-21`): PV2P 1150 rows, Projects 4192 rows, retention tripwire
+{earliest 20230410 · latest 20260921 · n 179 · rows_total 1,060,613,381,352}.
+
+**Sanity gate** (same calibration, `--series v2h1`): 27 partitions checked; **2026-09-14 promoted
+CLEAN** (cov=64); 2026-09-21 PROVISIONAL (cov=64). KILL-BAR PASS, flagged exactly the two
+known-bad partitions. Artifact `data/quarantine/axis3-deps-v2/sanity-check-dac1cf338243.json`.
+
+**Evaluation** (`--as-of 2026-09-14 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-09-14**, 48 voting / 8 rising, 0 unstable-vetoed.
+**c1–c6 PASS — 6/6.** Artifact `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-09-14-043e04997d11.json`.
+
+**`score_m3.py --verify`:** files match recomputation.
+
+**Tranche.** Not run in this tact: since the 2026-09-20 amendment `activation_tranche.py` needs
+`--size N` from the capacity dry run; routed to a separate session. Artifacts committed in the same
+tact (the capture-then-leave-uncommitted pattern of 08-17 and 09-21 did not repeat).
