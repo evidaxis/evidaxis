@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "scGPT",
+  "subscribers_count": 34,
+  "stargazers_count": 1639,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 343,
+  "open_issues_count": 176,
+  "created_at": "2023-04-23T21:15:27Z",
+  "updated_at": "2026-09-28T14:15:07Z",
+  "disabled": false,
+  "node_id": "R_kgDOJacRTQ",
+  "description": null,
+  "pushed_at": "2026-04-29T17:41:42Z",
+  "visibility": "public",
+  "watchers_count": 1639,
+  "size": 35678,
+  "full_name": "bowang-lab/scGPT",
+  "archived": false,
+  "id": 631705933,
+  "homepage": "https://scgpt.readthedocs.io/en/latest/",
+  "forks_count": 343,
+  "language": "Jupyter Notebook",
+  "topics": [
+    "foundation-model",
+    "gpt",
+    "single-cell"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

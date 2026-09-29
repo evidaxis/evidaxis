@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "hallo",
+  "subscribers_count": 450,
+  "stargazers_count": 8665,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 1119,
+  "open_issues_count": 114,
+  "created_at": "2024-06-12T02:53:36Z",
+  "updated_at": "2026-09-28T07:55:57Z",
+  "disabled": false,
+  "node_id": "R_kgDOMIOhtw",
+  "description": "Hallo: Hierarchical Audio-Driven Visual Synthesis for Portrait Image Animation",
+  "pushed_at": "2024-09-14T13:23:02Z",
+  "visibility": "public",
+  "watchers_count": 8665,
+  "size": 43989,
+  "full_name": "fudan-generative-vision/hallo",
+  "archived": false,
+  "id": 813932983,
+  "homepage": "https://fudan-generative-vision.github.io/hallo/",
+  "forks_count": 1119,
+  "language": "Python",
+  "topics": [
+    "face-animation",
+    "image-animation",
+    "video-animation"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

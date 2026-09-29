@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "mergekit",
+  "subscribers_count": 61,
+  "stargazers_count": 7382,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 792,
+  "open_issues_count": 272,
+  "created_at": "2023-08-21T03:50:04Z",
+  "updated_at": "2026-09-29T03:37:22Z",
+  "disabled": false,
+  "node_id": "R_kgDOKJdF2g",
+  "description": "Tools for merging pretrained large language models.",
+  "pushed_at": "2026-09-12T03:24:42Z",
+  "visibility": "public",
+  "watchers_count": 7382,
+  "size": 1405,
+  "full_name": "arcee-ai/mergekit",
+  "archived": false,
+  "id": 681002458,
+  "homepage": "",
+  "forks_count": 792,
+  "language": "Python",
+  "topics": [
+    "llama",
+    "llm",
+    "model-merging"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "LGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

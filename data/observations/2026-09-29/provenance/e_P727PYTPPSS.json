@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "examples",
+  "subscribers_count": 26,
+  "stargazers_count": 627,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 286,
+  "open_issues_count": 2,
+  "created_at": "2024-03-14T10:40:22Z",
+  "updated_at": "2026-09-25T12:04:14Z",
+  "disabled": false,
+  "node_id": "R_kgDOLgO9fg",
+  "description": null,
+  "pushed_at": "2026-09-25T18:28:59Z",
+  "visibility": "public",
+  "watchers_count": 627,
+  "size": 46617,
+  "full_name": "elevenlabs/examples",
+  "archived": false,
+  "id": 771997054,
+  "homepage": "https://elevenlabs.io/docs/api-reference/getting-started",
+  "forks_count": 286,
+  "language": "TypeScript",
+  "topics": [
+    "dubbing",
+    "elevenlabs",
+    "text-to-speech"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

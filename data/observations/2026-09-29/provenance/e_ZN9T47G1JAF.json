@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "sammo",
+  "subscribers_count": 8,
+  "stargazers_count": 778,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 53,
+  "open_issues_count": 10,
+  "created_at": "2023-12-04T22:49:34Z",
+  "updated_at": "2026-09-28T07:52:19Z",
+  "disabled": false,
+  "node_id": "R_kgDOK1woyQ",
+  "description": "A library for prompt engineering and optimization (SAMMO = Structure-aware Multi-Objective Metaprompt Optimization)",
+  "pushed_at": "2025-06-23T15:43:04Z",
+  "visibility": "public",
+  "watchers_count": 778,
+  "size": 2955,
+  "full_name": "microsoft/sammo",
+  "archived": false,
+  "id": 727460041,
+  "homepage": "",
+  "forks_count": 53,
+  "language": "Python",
+  "topics": [
+    "llms",
+    "prompt-engineering",
+    "prompt-tuning"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

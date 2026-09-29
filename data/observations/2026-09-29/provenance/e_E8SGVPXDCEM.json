@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "PointPillars",
+  "subscribers_count": 4,
+  "stargazers_count": 898,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 193,
+  "open_issues_count": 51,
+  "created_at": "2022-05-28T07:18:40Z",
+  "updated_at": "2026-09-20T07:43:58Z",
+  "disabled": false,
+  "node_id": "R_kgDOHaNX4w",
+  "description": "A Simple PointPillars PyTorch Implementation for 3D LiDAR(KITTI) Detection.",
+  "pushed_at": "2025-02-15T23:55:34Z",
+  "visibility": "public",
+  "watchers_count": 898,
+  "size": 4877,
+  "full_name": "zhulf0804/PointPillars",
+  "archived": false,
+  "id": 497244131,
+  "homepage": "",
+  "forks_count": 193,
+  "language": "Python",
+  "topics": [
+    "kitty",
+    "lidar-detection",
+    "pointpillars"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

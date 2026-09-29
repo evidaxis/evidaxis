@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "name": "Magic123",
+  "subscribers_count": 0,
+  "stargazers_count": 1624,
+  "private": false,
+  "default_branch": "main",
+  "network_count": 97,
+  "open_issues_count": 0,
+  "created_at": "2023-06-26T21:08:38Z",
+  "updated_at": "2026-09-27T07:59:42Z",
+  "disabled": false,
+  "node_id": "R_kgDOJ0baJw",
+  "description": "[ICLR'24] Official PyTorch Implementation of Magic123: One Image to High-Quality 3D Object Generation Using Both 2D and 3D Diffusion Priors",
+  "pushed_at": "2026-07-06T02:45:31Z",
+  "visibility": "public",
+  "watchers_count": 1624,
+  "size": 117967,
+  "full_name": "guochengqian/Magic123",
+  "archived": false,
+  "id": 658954791,
+  "homepage": "https://guochengqian.github.io/project/magic123",
+  "forks_count": 97,
+  "language": "Jupyter Notebook",
+  "topics": [
+    "3d-generation",
+    "diffusion-models",
+    "image-to-3d"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
