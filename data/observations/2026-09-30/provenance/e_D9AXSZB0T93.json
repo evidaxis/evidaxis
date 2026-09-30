@@ -1,0 +1,33 @@
+{
+  "created_at": "2023-03-26T11:59:52Z",
+  "topics": [
+    "artificial-intelligence",
+    "conversational-ai",
+    "text-to-speech"
+  ],
+  "subscribers_count": 50,
+  "description": "The official Python SDK for the ElevenLabs API.",
+  "node_id": "R_kgDOJOdgwQ",
+  "fork": false,
+  "name": "elevenlabs-python",
+  "full_name": "elevenlabs/elevenlabs-python",
+  "updated_at": "2026-09-30T05:48:46Z",
+  "stargazers_count": 3122,
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T12:59:28Z",
+  "language": "Python",
+  "watchers_count": 3122,
+  "open_issues_count": 47,
+  "forks_count": 451,
+  "homepage": "https://elevenlabs.io/docs/api-reference/overview",
+  "network_count": 451,
+  "size": 11203,
+  "visibility": "public",
+  "id": 619143361,
+  "archived": false,
+  "private": false,
+  "disabled": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

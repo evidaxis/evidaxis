@@ -1,0 +1,33 @@
+{
+  "created_at": "2019-11-22T10:19:35Z",
+  "topics": [
+    "metamodel",
+    "timeseries",
+    "transformer"
+  ],
+  "subscribers_count": 13,
+  "description": "Implementation of Transformer model (originally from Attention is All You Need) applied to Time Series.",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMjMzNzg2NzY=",
+  "fork": false,
+  "name": "transformer",
+  "full_name": "maxjcohen/transformer",
+  "updated_at": "2026-09-07T07:57:59Z",
+  "stargazers_count": 905,
+  "default_branch": "master",
+  "pushed_at": "2026-04-08T07:24:11Z",
+  "language": "Jupyter Notebook",
+  "watchers_count": 905,
+  "open_issues_count": 6,
+  "forks_count": 166,
+  "homepage": "https://timeseriestransformer.readthedocs.io/en/latest/",
+  "network_count": 166,
+  "size": 68332,
+  "visibility": "public",
+  "id": 223378676,
+  "archived": false,
+  "private": false,
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

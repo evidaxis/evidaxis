@@ -1,0 +1,31 @@
+{
+  "created_at": "2025-10-24T10:05:19Z",
+  "topics": [
+    "nof1"
+  ],
+  "subscribers_count": 11,
+  "description": "A command-line tool for tracking nof1.ai AI Agent trading signals and automatically executing Binance futures trades",
+  "node_id": "R_kgDOQIVssg",
+  "fork": false,
+  "name": "nof1-tracker",
+  "full_name": "terryso/nof1-tracker",
+  "updated_at": "2026-09-29T10:18:09Z",
+  "stargazers_count": 761,
+  "default_branch": "master",
+  "pushed_at": "2025-11-28T21:19:58Z",
+  "language": "TypeScript",
+  "watchers_count": 761,
+  "open_issues_count": 26,
+  "forks_count": 198,
+  "homepage": "https://nof1-tracker-dashboard.onrender.com/",
+  "network_count": 198,
+  "size": 332,
+  "visibility": "public",
+  "id": 1082485938,
+  "archived": false,
+  "private": false,
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

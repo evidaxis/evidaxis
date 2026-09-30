@@ -1,0 +1,16 @@
+{
+  "collector_version": "t2_deps_m2",
+  "captured_at": "2026-09-30T13:54:20Z",
+  "date": "2026-09-30",
+  "period": "2026-w40",
+  "entity_count": 5937,
+  "matched": 1627,
+  "unmatched": 4223,
+  "fetch_errors": 0,
+  "pins_broken": 0,
+  "versions_pending": 87,
+  "new_pins": 3,
+  "observations_sha256": "87e9151464d52c0c40b7815513e4cfe5610afe6cb69d1f5feedda09e569514e8",
+  "signal": "deps_dev_dependents (R0/adoption: how many packages depend on this system)",
+  "note": "TYPE-2 point-in-time via live deps.dev REST; additive, NOT scored, person-free; identity pinned in data/deps_id_map.json."
+}

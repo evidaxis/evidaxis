@@ -1,0 +1,33 @@
+{
+  "created_at": "2020-08-28T00:09:15Z",
+  "topics": [
+    "evaluation-framework",
+    "language-model",
+    "transformer"
+  ],
+  "subscribers_count": 55,
+  "description": "A framework for few-shot evaluation of language models.",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyOTA5MDkxOTI=",
+  "fork": false,
+  "name": "lm-evaluation-harness",
+  "full_name": "EleutherAI/lm-evaluation-harness",
+  "updated_at": "2026-09-30T04:05:59Z",
+  "stargazers_count": 14104,
+  "default_branch": "main",
+  "pushed_at": "2026-09-14T10:51:06Z",
+  "language": "Python",
+  "watchers_count": 14104,
+  "open_issues_count": 1073,
+  "forks_count": 3620,
+  "homepage": "https://www.eleuther.ai",
+  "network_count": 3620,
+  "size": 35969,
+  "visibility": "public",
+  "id": 290909192,
+  "archived": false,
+  "private": false,
+  "disabled": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1306,6 +1306,11 @@
       "package": "voxcpm",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "OpenDCAI/DataFlex": {
+      "system": "pypi",
+      "package": "dataflex",
+      "pinned_at": "2026-09-30T13:54:20Z"
+    },
     "OpenMined/PySyft": {
       "system": "pypi",
       "package": "pysyft",
@@ -3448,6 +3453,11 @@
       "package": "dynamiq",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "dyoshikawa/rulesync": {
+      "system": "npm",
+      "package": "rulesync",
+      "pinned_at": "2026-09-30T13:54:20Z"
+    },
     "e2b-dev/E2B": {
       "system": "pypi",
       "package": "e2b",
@@ -4154,6 +4164,11 @@
       "system": "pypi",
       "package": "voicefixer",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "haris-musa/excel-mcp-server": {
+      "system": "pypi",
+      "package": "excel-mcp-server",
+      "pinned_at": "2026-09-30T13:54:20Z"
     },
     "harlan-zw/mdream": {
       "system": "npm",

@@ -1,0 +1,33 @@
+{
+  "created_at": "2024-04-08T06:10:36Z",
+  "topics": [
+    "ai",
+    "generative-ai",
+    "llms"
+  ],
+  "subscribers_count": 14,
+  "description": "WilmerAI is one of the oldest LLM semantic routers. It uses multi-layer prompt routing and complex workflows to allow you to not only create practical chatbots, but to extend any kind of application that connects to an LLM via REST API. Wilmer sits between your app and your many LLM APIs, so that you can manipulate prompts as needed.",
+  "node_id": "R_kgDOLrQouw",
+  "fork": false,
+  "name": "WilmerAI",
+  "full_name": "SomeOddCodeGuy/WilmerAI",
+  "updated_at": "2026-09-28T16:49:02Z",
+  "stargazers_count": 832,
+  "default_branch": "master",
+  "pushed_at": "2026-09-08T03:59:46Z",
+  "language": "Python",
+  "watchers_count": 832,
+  "open_issues_count": 3,
+  "forks_count": 51,
+  "homepage": "",
+  "network_count": 51,
+  "size": 17857,
+  "visibility": "public",
+  "id": 783558843,
+  "archived": false,
+  "private": false,
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
