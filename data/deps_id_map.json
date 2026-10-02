@@ -4800,6 +4800,11 @@
       "package": "memary",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "kitfunso/hippo-memory": {
+      "system": "npm",
+      "package": "hippo-memory",
+      "pinned_at": "2026-10-02T13:57:03Z"
+    },
     "kmkurn/pytorch-crf": {
       "system": "pypi",
       "package": "pytorch-crf",
@@ -6000,6 +6005,11 @@
       "package": "banditpam",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "mpfaffenberger/code_puppy": {
+      "system": "pypi",
+      "package": "code_puppy",
+      "pinned_at": "2026-10-02T13:57:03Z"
+    },
     "mrexodia/ida-pro-mcp": {
       "system": "pypi",
       "package": "ida-pro-mcp",
@@ -6144,6 +6154,11 @@
       "system": "npm",
       "package": "pi-mcp-adapter",
       "pinned_at": "2026-09-28T15:17:45Z"
+    },
+    "nicobailon/pi-web-access": {
+      "system": "npm",
+      "package": "pi-web-access",
+      "pinned_at": "2026-10-02T13:57:03Z"
     },
     "nicobailon/surf-cli": {
       "system": "npm",
@@ -7377,6 +7392,11 @@
       "system": "pypi",
       "package": "tesserocr",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "skfolio/skfolio": {
+      "system": "pypi",
+      "package": "skfolio",
+      "pinned_at": "2026-10-02T13:57:03Z"
     },
     "skforecast/skforecast": {
       "system": "pypi",

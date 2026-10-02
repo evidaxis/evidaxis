@@ -1,0 +1,33 @@
+{
+  "network_count": 54,
+  "stargazers_count": 513,
+  "forks_count": 54,
+  "id": 273573169,
+  "pushed_at": "2023-07-28T14:59:08Z",
+  "fork": false,
+  "description": "Pytorch implementation of SIREN -  Implicit Neural Representations with Periodic Activation Function",
+  "updated_at": "2026-09-03T02:35:51Z",
+  "language": "Python",
+  "default_branch": "master",
+  "private": false,
+  "archived": false,
+  "subscribers_count": 11,
+  "visibility": "public",
+  "created_at": "2020-06-19T19:39:13Z",
+  "topics": [
+    "activation-functions",
+    "artificial-intelligence",
+    "deep-learning"
+  ],
+  "full_name": "lucidrains/siren-pytorch",
+  "name": "siren-pytorch",
+  "size": 16,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNzM1NzMxNjk=",
+  "watchers_count": 513,
+  "open_issues_count": 4,
+  "homepage": "",
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

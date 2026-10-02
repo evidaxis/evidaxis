@@ -1,0 +1,33 @@
+{
+  "network_count": 161,
+  "stargazers_count": 855,
+  "forks_count": 161,
+  "id": 619861948,
+  "pushed_at": "2026-09-10T09:18:10Z",
+  "fork": false,
+  "description": "Multi-Agent Reinforcement Learning with JAX",
+  "updated_at": "2026-10-02T08:55:42Z",
+  "language": "Python",
+  "default_branch": "main",
+  "private": false,
+  "archived": false,
+  "subscribers_count": 14,
+  "visibility": "public",
+  "created_at": "2023-03-27T15:03:14Z",
+  "topics": [
+    "marl",
+    "multiagent-reinforcement-learning",
+    "reinforcement-learning"
+  ],
+  "full_name": "bold-lab-ai/JaxMARL",
+  "name": "JaxMARL",
+  "size": 61627,
+  "node_id": "R_kgDOJPJXvA",
+  "watchers_count": 855,
+  "open_issues_count": 14,
+  "homepage": "https://jaxmarl.foersterlab.com/",
+  "disabled": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

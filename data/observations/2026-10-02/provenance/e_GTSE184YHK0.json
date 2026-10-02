@@ -1,0 +1,31 @@
+{
+  "network_count": 170,
+  "stargazers_count": 1985,
+  "forks_count": 170,
+  "id": 1168456418,
+  "pushed_at": "2026-07-13T09:40:42Z",
+  "fork": false,
+  "description": "Semantic Intelligence for Large-Scale Engineering. Context+ is an MCP server designed for developers who demand 99% accuracy. By combining RAG, Tree-sitter AST, Spectral Clustering, and Obsidian-style linking, Context+ turns a massive codebase into a searchable, hierarchical feature graph.",
+  "updated_at": "2026-09-30T12:35:07Z",
+  "language": "TypeScript",
+  "default_branch": "main",
+  "private": false,
+  "archived": false,
+  "subscribers_count": 14,
+  "visibility": "public",
+  "created_at": "2026-02-27T12:12:20Z",
+  "topics": [
+    "mcp-server"
+  ],
+  "full_name": "forloopcodes/contextplus",
+  "name": "contextplus",
+  "size": 386,
+  "node_id": "R_kgDORaU64g",
+  "watchers_count": 1985,
+  "open_issues_count": 2,
+  "homepage": "https://contextplus.vercel.app",
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
