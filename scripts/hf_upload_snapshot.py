@@ -17,6 +17,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from urllib.parse import urlsplit
 
 REPO = Path(__file__).resolve().parent.parent
 SNAPSHOTS = REPO / "data" / "snapshots"
@@ -62,8 +63,16 @@ def project_person_free(snap: dict) -> dict:
             forge = any(h in hp for h in ("github.com", "gitlab.com", "huggingface.co"))
             if hp and (forge or any(o in hp for o in owners)):
                 e.pop("homepage", None)
-        elif canonical != repo:
+        elif entry.get("owner_type") == "Organization":
             e["github_repo"] = canonical
+            # Archived GitHub homepages still contain the old personal owner.
+            # Resolve those through the confirmed cache, as the web projection does.
+            try:
+                host = (urlsplit(e.get("homepage") or "").hostname or "").lower()
+            except ValueError:
+                host = ""
+            if host in {"github.com", "www.github.com"}:
+                e["homepage"] = f"https://github.com/{canonical}"
     return out
 
 
@@ -91,7 +100,8 @@ def _assert_person_free(folder: Path) -> None:
     appear anywhere in the staged upload. Would have caught the 2026-07-11 homepage
     and provenance leaks."""
     types = json.loads((REPO / "etl" / "owner_types.json").read_text(encoding="utf-8"))["repos"]
-    handles = set()
+    # Ownership changes must not erase known personal handles from publication checks.
+    handles = set(json.loads((REPO / "web/src/data/person-free-handles.json").read_text(encoding="utf-8")))
     for repo, v in types.items():
         if v.get("owner_type") == "User":
             handles.add(repo.split("/")[0].lower())

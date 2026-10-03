@@ -22,7 +22,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { buildHandleIndex, handleHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, buildHandleIndex, handleHits } from '../src/lib/personFree.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -268,12 +268,8 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   const bannedOwners = new Map();
   const staleSlugs = new Set();   // exact old 'owner/repo' paths of moved repositories
   const orgOwners = new Set();    // owners that are Organizations today
-  // Cache-flip defense floor (review 2026-07-10): these handles are User-owned as of
-  // 2026-07-10 and stay banned even if a (possibly poisoned) cache says otherwise.
-  // Remove an entry ONLY via a deliberate, reviewed commit.
-  for (const h of ['paul-gauthier', 'gcorso', 'jwohlwend', 'petergriffinjin', 'haotian-liu',
-                   'hexgrad', 'dauparas', 'comfyanonymous', 'geeeekexplorer', 'arneschneuing'])
-    bannedOwners.set(h, 'substring');
+  // The shared floor survives transfers and cache changes, just as on the cards.
+  for (const h of FLOOR_HANDLES) bannedOwners.set(h, 'substring');
   for (const storedRepo of internalRepos) {
     const entry = registry[storedRepo];
     if (!entry || !['Organization', 'User'].includes(entry.owner_type)
@@ -290,7 +286,8 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     // ordinary-word collisions such as the former owner "block" while still
     // rejecting stale repository paths and serialized slugs.
     if (storedOwner.toLowerCase() !== canonicalOwner.toLowerCase()) {
-      bannedOwners.set(storedOwner.toLowerCase(), 'slug');
+      // A move cannot weaken the full handle ban of a known personal owner.
+      if (!bannedOwners.has(storedOwner.toLowerCase())) bannedOwners.set(storedOwner.toLowerCase(), 'slug');
       staleSlugs.add(storedRepo.toLowerCase());
     }
     if (entry.owner_type === 'Organization') orgOwners.add(canonicalOwner.toLowerCase());

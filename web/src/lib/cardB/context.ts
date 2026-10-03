@@ -1,6 +1,7 @@
 import { snapshots, entityUniverse, provenanceForSnapshot, type ArchivedEntity } from '../archive';
 import { buildDepsMap, depsSeries, backfillSeries, ownerTypes, publicRepoLabel, publicRepoUrl, publicHomepage } from '../data';
 import { measurementStateFor } from '../measurement';
+import { userHandleIndex } from '../person_free';
 import { isTemplateB } from './policy.mjs';
 import { buildCardB, summarizeCohort, median, metrics, numeric, type Context, type CardBModel, type HistoryPoint } from './build';
 
@@ -28,10 +29,7 @@ const dailyFor = (snapshot: ArchivedEntity['snapshot']) => {
   if (!dailyByDate.has(snapshot.snapshot_date)) dailyByDate.set(snapshot.snapshot_date, buildDepsMap(snapshot));
   return dailyByDate.get(snapshot.snapshot_date)!;
 };
-const bannedOwners = [...new Set([
-  'paul-gauthier', 'gcorso', 'jwohlwend', 'petergriffinjin', 'haotian-liu', 'hexgrad', 'dauparas', 'comfyanonymous', 'geeeekexplorer', 'arneschneuing',
-  ...Object.values(ownerTypes.repos).filter(r => r.owner_type === 'User').map(r => r.full_name.split('/')[0]),
-])];
+const bannedOwners = [...userHandleIndex(ownerTypes).all];
 
 export function contextFor(record: ArchivedEntity): Context {
   const { entity: e, snapshot: snap } = record;

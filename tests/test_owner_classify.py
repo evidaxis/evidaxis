@@ -98,6 +98,32 @@ def test_refresh_requires_manual_confirmation_for_user_to_org(tmp_path):
         )
 
 
+@pytest.mark.parametrize("fetched_id", [1129585228, 1129585229])
+def test_confirmed_transfer_preserves_internal_key_and_identity(tmp_path, fetched_id):
+    repo = "mensfeld/code-on-incus"
+    ids = {repo: "e_WJWEQY59YG9"}
+    entry = {"owner_type": "Organization", "repo_id": 1129585228, "full_name": "coipond/coi"}
+    confirmed = {"schema_version": "owner_types_1", "repos": {repo: entry}}
+    id_map = tmp_path / "id_map.json"
+    cache = tmp_path / "owner_types.json"
+    id_map.write_text(json.dumps(ids))
+    cache.write_text(json.dumps(confirmed))
+    original = cache.read_bytes()
+
+    def fetcher(requested_repo, _token):
+        assert requested_repo == repo
+        return {**entry, "repo_id": fetched_id}
+
+    if fetched_id != entry["repo_id"]:
+        with pytest.raises(RuntimeError, match="identity"):
+            owner_classify.refresh(id_map, cache, token="test-token", fetcher=fetcher)
+        assert cache.read_bytes() == original
+    else:
+        assert owner_classify.refresh(id_map, cache, token="test-token", fetcher=fetcher)
+        assert json.loads(cache.read_text()) == confirmed
+    assert json.loads(id_map.read_text()) == ids
+
+
 def test_refresh_rejects_repository_identity_mismatch(tmp_path):
     id_map = tmp_path / "id_map.json"
     cache = tmp_path / "owner_types.json"

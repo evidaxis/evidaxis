@@ -8,8 +8,10 @@
 // Plain substring matching was sound at 60 user owners; at 2,319 (registry of 2026-09-26)
 // handles such as "f", "av", "78" or "100" matched ordinary words and numbers in every card,
 // so the guard failed every build without finding a single real handle.
-// User-owned as of 2026-07-10; banned even if a (possibly poisoned) cache says otherwise.
-export const FLOOR_HANDLES = ['paul-gauthier', 'gcorso', 'jwohlwend', 'petergriffinjin', 'haotian-liu', 'hexgrad', 'dauparas', 'comfyanonymous', 'geeeekexplorer', 'arneschneuing'];
+// Keep known personal owners banned after a transfer or cache change. The HF
+// exporter reads the same data; removal requires a deliberate, reviewed record.
+import floorHandles from '../data/person-free-handles.json' with { type: 'json' };
+export const FLOOR_HANDLES = Object.freeze(floorHandles);
 
 export function buildHandleIndex(handles) {
   const all = new Set();
