@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 971,
+  "pushed_at": "2026-10-03T11:01:16Z",
+  "fork": false,
+  "updated_at": "2026-10-03T11:04:56Z",
+  "visibility": "public",
+  "size": 42099,
+  "disabled": false,
+  "watchers_count": 1128,
+  "id": 775232941,
+  "network_count": 559,
+  "subscribers_count": 14,
+  "created_at": "2024-03-21T02:04:53Z",
+  "private": false,
+  "language": "Python",
+  "homepage": "",
+  "forks_count": 559,
+  "full_name": "flagos-ai/FlagGems",
+  "name": "FlagGems",
+  "default_branch": "master",
+  "description": "FlagGems is an operator library for large language models implemented in the Triton Language.",
+  "node_id": "R_kgDOLjUdrQ",
+  "stargazers_count": 1128,
+  "archived": false,
+  "topics": [
+    "pytorch",
+    "triton",
+    "triton-kernels"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

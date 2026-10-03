@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 31,
+  "pushed_at": "2026-05-12T13:55:32Z",
+  "fork": false,
+  "updated_at": "2026-09-25T20:10:42Z",
+  "visibility": "public",
+  "size": 25496,
+  "disabled": false,
+  "watchers_count": 861,
+  "id": 508635170,
+  "network_count": 151,
+  "subscribers_count": 11,
+  "created_at": "2022-06-29T09:55:30Z",
+  "private": false,
+  "language": "Python",
+  "homepage": "",
+  "forks_count": 151,
+  "full_name": "dog-qiuqiu/FastestDet",
+  "name": "FastestDet",
+  "default_branch": "main",
+  "description": ":zap: A newly designed ultra lightweight anchor free target detection algorithm， weight only 250K parameters， reduces the time consumption by 10% compared with yolo-fastest, and the post-processing is simpler",
+  "node_id": "R_kgDOHlEoIg",
+  "stargazers_count": 861,
+  "archived": false,
+  "topics": [
+    "computer-vision",
+    "deep-learning",
+    "object-detection"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "BSD-3-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

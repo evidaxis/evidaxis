@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 5,
+  "pushed_at": "2025-12-20T18:16:03Z",
+  "fork": false,
+  "updated_at": "2026-08-10T09:06:18Z",
+  "visibility": "public",
+  "size": 306,
+  "disabled": false,
+  "watchers_count": 517,
+  "id": 826457789,
+  "network_count": 53,
+  "subscribers_count": 25,
+  "created_at": "2024-07-09T18:39:27Z",
+  "private": false,
+  "language": "Python",
+  "homepage": "",
+  "forks_count": 53,
+  "full_name": "lucidrains/e2-tts-pytorch",
+  "name": "e2-tts-pytorch",
+  "default_branch": "main",
+  "description": "Implementation of E2-TTS, \"Embarrassingly Easy Fully Non-Autoregressive Zero-Shot TTS\", in Pytorch",
+  "node_id": "R_kgDOMUK-vQ",
+  "stargazers_count": 517,
+  "archived": false,
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "text-to-speech"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
