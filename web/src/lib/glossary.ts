@@ -53,7 +53,7 @@ export const GLOSSARY_SECTIONS = [
 ] as const;
 
 const M4_GLOSSARY: Record<string, string> = {
-  'direct-dependents-momentum': 'Axis 3 in m4: the log-slope of unique direct dependents over a system\'s own packages. A package counts when it is published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified. History is derived exactly from stored per-package weekly rows or restarted. At least 14 usable points of the new quantity and 5 latest dependents are required; cohort agreement and fragility can withhold a vote.',
+  'direct-dependents-momentum': 'Axis 3 in m4: the log-slope of unique direct dependents over a system\'s own packages. A package counts when it is declared in the system\'s own tree, published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified. History is derived exactly from stored per-package weekly rows or restarted. At least 14 usable points of the new quantity and 5 latest dependents are required; cohort agreement and fragility can withhold a vote.',
   'residualization': 'Axes 1 and 2 adjust their robust z against size proxies (log stars and log total citations). Axis 3 in m4 residualizes raw slope against log(1 + latest dependents) before robust z. This removes the fitted size relationship within each cohort.',
   'convergence-gate': 'The recognition rule in m2, m3 and m4: a non-incumbent system is Rising only when its cohort has at least five members and at least two independent axes are present and rising (positive slope and within-cohort z at least one, plus axis-specific floors and vetoes). M2 has two axes; m3 and m4 accept any two of three.',
 };

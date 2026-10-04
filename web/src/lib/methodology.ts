@@ -28,7 +28,7 @@ export function methodologyAxes(version: string): readonly AxisKey[] {
 }
 
 const AXIS3_ESTIMAND_M3 = 'This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.';
-const AXIS3_ESTIMAND_M4 = 'This axis measures the trajectory of a system\'s own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.';
+const AXIS3_ESTIMAND_M4 = 'This axis measures the trajectory of a system\'s own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays, unless its own manifest is private and the published package does not name the declaring repository. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.';
 const AXIS3_HISTORY_M3 = 'The earliest weekly points of each series were read from deps.dev\'s BigQuery history on 2026-07-21; later points are weekly captures. Each record reports how many of its points are reconstructed history.';
 const AXIS3_HISTORY_M4 = 'The earliest weekly points of each series were read from deps.dev\'s BigQuery history on 2026-07-21; later points are weekly captures. m4 does not replay those partitions: each point is the stored system total, one package\'s unique_direct, or a complete sketch union, and a point that is not exact is withheld. Each record reports how many of its points are reconstructed history.';
 
@@ -54,7 +54,7 @@ export function axis3Permalink(version: string): string {
 }
 
 export function axis3Short(version: string): string {
-  if (version === 'm4') return 'Weekly counts of a system\'s own packages, published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified.';
+  if (version === 'm4') return 'Weekly counts of a system\'s own packages: declared in its own tree, published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified.';
   return 'Confirmed-clean weekly package-union counts, measured as a size-adjusted log-slope within the frozen panel.';
 }
 
@@ -67,7 +67,7 @@ export function axis3MethodLabel(version: string): string {
 }
 
 export function axis3ReadingDefinition(version: string): string {
-  if (version === 'm4') return 'deps.dev weekly direct dependents of the system\'s own packages. A package counts when it is published under that name and not attributed by deps.dev to another repository. Partition dates can repeat across snapshots.';
+  if (version === 'm4') return 'deps.dev weekly direct dependents of the system\'s own packages. A package counts when it is declared in the system\'s own tree, published under that name and not attributed by deps.dev to another repository. Partition dates can repeat across snapshots.';
   return 'deps.dev weekly package-union direct dependents, frozen m3 panel; partition dates can repeat across snapshots.';
 }
 
