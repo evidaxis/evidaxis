@@ -1,0 +1,2639 @@
+{
+ "v": "private_manifests_1",
+ "audited_at": "2026-10-04",
+ "rule": "npm package.json at the repository HEAD commit of 2026-10-04; private=true means the declared package is never published under that name",
+ "packages": [
+  {
+   "entity_id": "e_ADRWZ5YBESZ",
+   "package": "@openhands/ui",
+   "manifest_path": "openhands-ui/package.json",
+   "private": null,
+   "commit": "35dc8aafaad2d883cf0c6629dea857eb2235895e",
+   "status": "http_404"
+  },
+  {
+   "entity_id": "e_QTVWFV6FJ2V",
+   "package": "mineflayer-collectblock",
+   "manifest_path": "metagpt/environment/minecraft/mineflayer/mineflayer-collectblock/package.json",
+   "private": false,
+   "commit": "11cdf466d042aece04fc6cfd13b28e1a70341b1f",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_QTVWFV6FJ2V",
+   "package": "voyager",
+   "manifest_path": "metagpt/environment/minecraft/mineflayer/package.json",
+   "private": false,
+   "commit": "11cdf466d042aece04fc6cfd13b28e1a70341b1f",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "package": "@kilocode/cli",
+   "manifest_path": "packages/opencode/package.json",
+   "private": false,
+   "commit": "76bcfd40be616a72f4697b3041565f322245b462",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "package": "@kilocode/plugin",
+   "manifest_path": "packages/plugin/package.json",
+   "private": false,
+   "commit": "76bcfd40be616a72f4697b3041565f322245b462",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "package": "@kilocode/sdk",
+   "manifest_path": "packages/sdk/js/package.json",
+   "private": false,
+   "commit": "76bcfd40be616a72f4697b3041565f322245b462",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "package": "@opencode-ai/ui",
+   "manifest_path": "packages/ui/package.json",
+   "private": false,
+   "commit": "76bcfd40be616a72f4697b3041565f322245b462",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "docs-site",
+   "manifest_path": "docs-site/package.json",
+   "private": false,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/qwen-code",
+   "manifest_path": "package.json",
+   "private": true,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/audio-capture",
+   "manifest_path": "packages/audio-capture/package.json",
+   "private": false,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/channel-base",
+   "manifest_path": "packages/channels/base/package.json",
+   "private": false,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/qwen-code-core",
+   "manifest_path": "packages/core/package.json",
+   "private": true,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/mobile-mcp",
+   "manifest_path": "packages/mobile-mcp/package.json",
+   "private": false,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/sdk",
+   "manifest_path": "packages/sdk-typescript/package.json",
+   "private": false,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "qwen-code-vscode-ide-companion",
+   "manifest_path": "packages/vscode-ide-companion/package.json",
+   "private": true,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "package": "@qwen-code/webui",
+   "manifest_path": "packages/webui/package.json",
+   "private": null,
+   "commit": "9915c7ff8ff17a6c5e0840053a0c05bb72eec510",
+   "status": "http_404"
+  },
+  {
+   "entity_id": "e_GQ2E6K86NWF",
+   "package": "tabby-agent",
+   "manifest_path": "clients/tabby-agent/package.json",
+   "private": false,
+   "commit": "21b29048d7bcf6b94f9f482f2d0fd05efadfd19f",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "package": "@opencode-ai/cli",
+   "manifest_path": "packages/cli/package.json",
+   "private": false,
+   "commit": "907b3bc518fa48e90e8ec24dd327d13eee71c36c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "package": "@opencode-ai/plugin",
+   "manifest_path": "packages/plugin/package.json",
+   "private": false,
+   "commit": "907b3bc518fa48e90e8ec24dd327d13eee71c36c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "package": "@opencode-ai/sdk",
+   "manifest_path": "packages/sdk/js/package.json",
+   "private": false,
+   "commit": "907b3bc518fa48e90e8ec24dd327d13eee71c36c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "package": "@opencode-ai/ui",
+   "manifest_path": "packages/ui/package.json",
+   "private": false,
+   "commit": "907b3bc518fa48e90e8ec24dd327d13eee71c36c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose-binary-darwin-arm64",
+   "manifest_path": "ui/goose-binary/goose-binary-darwin-arm64/package.json",
+   "private": false,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose-binary-darwin-x64",
+   "manifest_path": "ui/goose-binary/goose-binary-darwin-x64/package.json",
+   "private": false,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose-binary-linux-arm64",
+   "manifest_path": "ui/goose-binary/goose-binary-linux-arm64/package.json",
+   "private": false,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose-binary-linux-x64",
+   "manifest_path": "ui/goose-binary/goose-binary-linux-x64/package.json",
+   "private": false,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose-binary-win32-x64",
+   "manifest_path": "ui/goose-binary/goose-binary-win32-x64/package.json",
+   "private": false,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose-sdk",
+   "manifest_path": "ui/sdk/package.json",
+   "private": null,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "http_404"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "package": "@aaif/goose",
+   "manifest_path": "ui/text/package.json",
+   "private": null,
+   "commit": "591edd47cf2cfea4957d720c607cf2a4def8673d",
+   "status": "http_404"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "pnpm-dev-kit",
+   "manifest_path": "infra/pdk/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-tars/cli",
+   "manifest_path": "multimodal/agent-tars/cli/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-tars/core",
+   "manifest_path": "multimodal/agent-tars/core/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-tars/interface",
+   "manifest_path": "multimodal/agent-tars/interface/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/action-parser",
+   "manifest_path": "multimodal/gui-agent/action-parser/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/agent-sdk",
+   "manifest_path": "multimodal/gui-agent/agent-sdk/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/cli",
+   "manifest_path": "multimodal/gui-agent/cli/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/operator-adb",
+   "manifest_path": "multimodal/gui-agent/operator-adb/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/operator-aio",
+   "manifest_path": "multimodal/gui-agent/operator-aio/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/operator-browser",
+   "manifest_path": "multimodal/gui-agent/operator-browser/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/operator-nutjs",
+   "manifest_path": "multimodal/gui-agent/operator-nutjs/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@gui-agent/shared",
+   "manifest_path": "multimodal/gui-agent/shared/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@omni-tars/code-agent",
+   "manifest_path": "multimodal/omni-tars/code-agent/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@omni-tars/core",
+   "manifest_path": "multimodal/omni-tars/core/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@omni-tars/gui-agent",
+   "manifest_path": "multimodal/omni-tars/gui-agent/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@omni-tars/mcp-agent",
+   "manifest_path": "multimodal/omni-tars/mcp-agent/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@omni-tars/agent",
+   "manifest_path": "multimodal/omni-tars/omni-agent/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-cli",
+   "manifest_path": "multimodal/tarko/agent-cli/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-interface",
+   "manifest_path": "multimodal/tarko/agent-interface/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-server-next",
+   "manifest_path": "multimodal/tarko/agent-server-next/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-server",
+   "manifest_path": "multimodal/tarko/agent-server/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-snapshot",
+   "manifest_path": "multimodal/tarko/agent-snapshot/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-ui-builder",
+   "manifest_path": "multimodal/tarko/agent-ui-builder/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-ui-cli",
+   "manifest_path": "multimodal/tarko/agent-ui-cli/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent-ui",
+   "manifest_path": "multimodal/tarko/agent-ui/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agent",
+   "manifest_path": "multimodal/tarko/agent/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/agio",
+   "manifest_path": "multimodal/tarko/agio/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/config-loader",
+   "manifest_path": "multimodal/tarko/config-loader/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/context-engineer",
+   "manifest_path": "multimodal/tarko/context-engineer/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/interface",
+   "manifest_path": "multimodal/tarko/interface/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/llm-client",
+   "manifest_path": "multimodal/tarko/llm-client/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/mcp-agent-interface",
+   "manifest_path": "multimodal/tarko/mcp-agent-interface/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/mcp-agent",
+   "manifest_path": "multimodal/tarko/mcp-agent/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/model-provider",
+   "manifest_path": "multimodal/tarko/model-provider/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/shared-media-utils",
+   "manifest_path": "multimodal/tarko/shared-media-utils/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/shared-utils",
+   "manifest_path": "multimodal/tarko/shared-utils/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@tarko/ui",
+   "manifest_path": "multimodal/tarko/ui/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/browser-use",
+   "manifest_path": "packages/agent-infra/browser-use/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/browser",
+   "manifest_path": "packages/agent-infra/browser/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "create-new-mcp",
+   "manifest_path": "packages/agent-infra/create-new-mcp/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/logger",
+   "manifest_path": "packages/agent-infra/logger/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/mcp-client",
+   "manifest_path": "packages/agent-infra/mcp-client/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "mcp-http-server",
+   "manifest_path": "packages/agent-infra/mcp-http-server/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/mcp-server-browser",
+   "manifest_path": "packages/agent-infra/mcp-servers/browser/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/mcp-server-commands",
+   "manifest_path": "packages/agent-infra/mcp-servers/commands/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/mcp-server-filesystem",
+   "manifest_path": "packages/agent-infra/mcp-servers/filesystem/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/mcp-server-search",
+   "manifest_path": "packages/agent-infra/mcp-servers/search/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/mcp-shared",
+   "manifest_path": "packages/agent-infra/mcp-shared/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/bing-search",
+   "manifest_path": "packages/agent-infra/search/bing-search/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/browser-search",
+   "manifest_path": "packages/agent-infra/search/browser-search/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/duckduckgo-search",
+   "manifest_path": "packages/agent-infra/search/duckduckgo-search/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/search",
+   "manifest_path": "packages/agent-infra/search/search/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@agent-infra/shared",
+   "manifest_path": "packages/agent-infra/shared/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/action-parser",
+   "manifest_path": "packages/ui-tars/action-parser/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/cli",
+   "manifest_path": "packages/ui-tars/cli/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/electron-ipc",
+   "manifest_path": "packages/ui-tars/electron-ipc/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/operator-adb",
+   "manifest_path": "packages/ui-tars/operators/adb/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/operator-browser",
+   "manifest_path": "packages/ui-tars/operators/browser-operator/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/operator-browserbase",
+   "manifest_path": "packages/ui-tars/operators/browserbase/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/operator-nut-js",
+   "manifest_path": "packages/ui-tars/operators/nut-js/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/sdk",
+   "manifest_path": "packages/ui-tars/sdk/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/shared",
+   "manifest_path": "packages/ui-tars/shared/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/utio",
+   "manifest_path": "packages/ui-tars/utio/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "package": "@ui-tars/visualizer",
+   "manifest_path": "packages/ui-tars/visualizer/package.json",
+   "private": false,
+   "commit": "2ff41a9e515828c5bd5b276e493d73aa0bdf4a3a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/cli",
+   "manifest_path": "apps/cli/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "claude-dev",
+   "manifest_path": "apps/vscode/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "vscode",
+   "manifest_path": "apps/vscode/standalone/runtime-files/vscode/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/agents",
+   "manifest_path": "sdk/packages/agents/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/core",
+   "manifest_path": "sdk/packages/core/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/llms",
+   "manifest_path": "sdk/packages/llms/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/sdk",
+   "manifest_path": "sdk/packages/sdk/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/shared",
+   "manifest_path": "sdk/packages/shared/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "package": "@cline/ui",
+   "manifest_path": "sdk/packages/ui/package.json",
+   "private": false,
+   "commit": "39ff2359f7e08231281539696e48a166ce49270c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "binary",
+   "manifest_path": "binary/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/core",
+   "manifest_path": "core/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/cli",
+   "manifest_path": "extensions/cli/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "continue",
+   "manifest_path": "extensions/vscode/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "my-react-project",
+   "manifest_path": "manual-testing-sandbox/nested-folder/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/config-types",
+   "manifest_path": "packages/config-types/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/config-yaml",
+   "manifest_path": "packages/config-yaml/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/sdk",
+   "manifest_path": "packages/continue-sdk/typescript/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/fetch",
+   "manifest_path": "packages/fetch/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/llm-info",
+   "manifest_path": "packages/llm-info/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "package": "@continuedev/openai-adapters",
+   "manifest_path": "packages/openai-adapters/package.json",
+   "private": false,
+   "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_03QFRGK7VQX",
+   "package": "mujoco",
+   "manifest_path": "wasm/package.json",
+   "private": false,
+   "commit": "07dfe91655630418a39bf863e454b0ad9fb8fbc0",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_4A9TG2M8403",
+   "package": "@google/gemini-cli",
+   "manifest_path": "package.json",
+   "private": false,
+   "commit": "fb972b2f87fe7d5b06d37eac711490162d98de2c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_4A9TG2M8403",
+   "package": "@google/gemini-cli-a2a-server",
+   "manifest_path": "packages/a2a-server/package.json",
+   "private": false,
+   "commit": "fb972b2f87fe7d5b06d37eac711490162d98de2c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_4A9TG2M8403",
+   "package": "@google/gemini-cli-core",
+   "manifest_path": "packages/core/package.json",
+   "private": false,
+   "commit": "fb972b2f87fe7d5b06d37eac711490162d98de2c",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MB6DQ5PDDKH",
+   "package": "kokoro-js",
+   "manifest_path": "kokoro.js/package.json",
+   "private": false,
+   "commit": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_15264R968MN",
+   "package": "app",
+   "manifest_path": "sandbox/resources/server/package.json",
+   "private": null,
+   "commit": "5bcdd177d70fa2b31a754cfcd801e77b2e1ab16a",
+   "status": "http_404"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/acp",
+   "manifest_path": "agent-sdks/acp/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/claude",
+   "manifest_path": "agent-sdks/claude/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/cursor",
+   "manifest_path": "agent-sdks/cursor/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/openai",
+   "manifest_path": "agent-sdks/openai/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-auth0",
+   "manifest_path": "auth/auth0/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-better-auth",
+   "manifest_path": "auth/better-auth/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-clerk",
+   "manifest_path": "auth/clerk/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-cloud",
+   "manifest_path": "auth/cloud/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-firebase",
+   "manifest_path": "auth/firebase/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-google",
+   "manifest_path": "auth/google/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-neon",
+   "manifest_path": "auth/neon/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-okta",
+   "manifest_path": "auth/okta/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-studio",
+   "manifest_path": "auth/studio/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-supabase",
+   "manifest_path": "auth/supabase/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth-workos",
+   "manifest_path": "auth/workos/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/agent-browser",
+   "manifest_path": "browser/agent-browser/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/browser-viewer",
+   "manifest_path": "browser/browser-viewer/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/browser-firecrawl",
+   "manifest_path": "browser/firecrawl/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/stagehand",
+   "manifest_path": "browser/stagehand/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/slack",
+   "manifest_path": "channels/slack/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/ai-sdk",
+   "manifest_path": "client-sdks/ai-sdk/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/client-js",
+   "manifest_path": "client-sdks/client-js/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/react",
+   "manifest_path": "client-sdks/react/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/deployer-cloud",
+   "manifest_path": "deployers/cloud/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/deployer-cloudflare",
+   "manifest_path": "deployers/cloudflare/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/deployer-netlify",
+   "manifest_path": "deployers/netlify/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/deployer-vercel",
+   "manifest_path": "deployers/vercel/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "commonjs",
+   "manifest_path": "e2e-tests/commonjs/template/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "monorepo",
+   "manifest_path": "e2e-tests/monorepo/template/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "template",
+   "manifest_path": "e2e-tests/no-bundling/template/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voyageai",
+   "manifest_path": "embedders/voyageai/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/longmemeval",
+   "manifest_path": "explorations/longmemeval/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/brightdata",
+   "manifest_path": "integrations/brightdata/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/livekit",
+   "manifest_path": "integrations/livekit/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/opencode",
+   "manifest_path": "integrations/opencode/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/perplexity",
+   "manifest_path": "integrations/perplexity/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/tavily",
+   "manifest_path": "integrations/tavily/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "create-factory",
+   "manifest_path": "mastracode/mastra-factory/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/code-sdk",
+   "manifest_path": "mastracode/sdk/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "mastracode",
+   "manifest_path": "mastracode/tui/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/arize",
+   "manifest_path": "observability/arize/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/arthur",
+   "manifest_path": "observability/arthur/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/braintrust",
+   "manifest_path": "observability/braintrust/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/datadog",
+   "manifest_path": "observability/datadog/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/laminar",
+   "manifest_path": "observability/laminar/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/langfuse",
+   "manifest_path": "observability/langfuse/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/langsmith",
+   "manifest_path": "observability/langsmith/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/observability",
+   "manifest_path": "observability/mastra/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/otel-bridge",
+   "manifest_path": "observability/otel-bridge/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/otel-exporter",
+   "manifest_path": "observability/otel-exporter/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/posthog",
+   "manifest_path": "observability/posthog/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/sentry",
+   "manifest_path": "observability/sentry/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/agent-builder",
+   "manifest_path": "packages/agent-builder/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/auth",
+   "manifest_path": "packages/auth/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "mastra",
+   "manifest_path": "packages/cli/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/codemod",
+   "manifest_path": "packages/codemod/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/core",
+   "manifest_path": "packages/core/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "create-mastra",
+   "manifest_path": "packages/create-mastra/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/deployer",
+   "manifest_path": "packages/deployer/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/editor",
+   "manifest_path": "packages/editor/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/evals",
+   "manifest_path": "packages/evals/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/fastembed",
+   "manifest_path": "packages/fastembed/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/loggers",
+   "manifest_path": "packages/loggers/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mcp-docs-server",
+   "manifest_path": "packages/mcp-docs-server/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mcp-registry-registry",
+   "manifest_path": "packages/mcp-registry-registry/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mcp",
+   "manifest_path": "packages/mcp/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/memory",
+   "manifest_path": "packages/memory/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/playground-ui",
+   "manifest_path": "packages/playground-ui/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/rag",
+   "manifest_path": "packages/rag/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/schema-compat",
+   "manifest_path": "packages/schema-compat/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/server",
+   "manifest_path": "packages/server/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/google-cloud-pubsub",
+   "manifest_path": "pubsub/google-cloud-pubsub/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/redis-streams",
+   "manifest_path": "pubsub/redis-streams/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/express",
+   "manifest_path": "server-adapters/express/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/fastify",
+   "manifest_path": "server-adapters/fastify/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/hono",
+   "manifest_path": "server-adapters/hono/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/koa",
+   "manifest_path": "server-adapters/koa/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/nestjs",
+   "manifest_path": "server-adapters/nestjs/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/next",
+   "manifest_path": "server-adapters/next/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/tanstack-start",
+   "manifest_path": "server-adapters/tanstack-start/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/github-signals",
+   "manifest_path": "signals/github/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/astra",
+   "manifest_path": "stores/astra/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/chroma",
+   "manifest_path": "stores/chroma/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/clickhouse",
+   "manifest_path": "stores/clickhouse/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/cloudflare-d1",
+   "manifest_path": "stores/cloudflare-d1/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/cloudflare",
+   "manifest_path": "stores/cloudflare/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/convex",
+   "manifest_path": "stores/convex/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/couchbase",
+   "manifest_path": "stores/couchbase/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/dsql",
+   "manifest_path": "stores/dsql/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/duckdb",
+   "manifest_path": "stores/duckdb/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/dynamodb",
+   "manifest_path": "stores/dynamodb/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/elasticsearch",
+   "manifest_path": "stores/elasticsearch/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/lance",
+   "manifest_path": "stores/lance/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/libsql",
+   "manifest_path": "stores/libsql/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mongodb",
+   "manifest_path": "stores/mongodb/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mssql",
+   "manifest_path": "stores/mssql/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mysql",
+   "manifest_path": "stores/mysql/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/opensearch",
+   "manifest_path": "stores/opensearch/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/pg",
+   "manifest_path": "stores/pg/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/pinecone",
+   "manifest_path": "stores/pinecone/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/qdrant",
+   "manifest_path": "stores/qdrant/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/redis",
+   "manifest_path": "stores/redis/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/s3vectors",
+   "manifest_path": "stores/s3vectors/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/spanner",
+   "manifest_path": "stores/spanner/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/turbopuffer",
+   "manifest_path": "stores/turbopuffer/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/upstash",
+   "manifest_path": "stores/upstash/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/vectorize",
+   "manifest_path": "stores/vectorize/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "chat-with-pdf",
+   "manifest_path": "templates/template-chat-with-pdf/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "deep-search",
+   "manifest_path": "templates/template-deep-search/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "weather-agent",
+   "manifest_path": "templates/weather-agent/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-aws-nova-sonic",
+   "manifest_path": "voice/aws-nova-sonic/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-azure",
+   "manifest_path": "voice/azure/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-cloudflare",
+   "manifest_path": "voice/cloudflare/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-deepgram",
+   "manifest_path": "voice/deepgram/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-elevenlabs",
+   "manifest_path": "voice/elevenlabs/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-gladia",
+   "manifest_path": "voice/gladia/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-google-gemini-live",
+   "manifest_path": "voice/google-gemini-live-api/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-google",
+   "manifest_path": "voice/google/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-inworld",
+   "manifest_path": "voice/inworld/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-mistral",
+   "manifest_path": "voice/mistral/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-modelslab",
+   "manifest_path": "voice/modelslab/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-murf",
+   "manifest_path": "voice/murf/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-openai-realtime",
+   "manifest_path": "voice/openai-realtime-api/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-openai",
+   "manifest_path": "voice/openai/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-playai",
+   "manifest_path": "voice/playai/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-sarvam",
+   "manifest_path": "voice/sarvam/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-speechify",
+   "manifest_path": "voice/speechify/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/voice-xai-realtime",
+   "manifest_path": "voice/xai-realtime-api/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/inngest",
+   "manifest_path": "workflows/inngest/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/temporal",
+   "manifest_path": "workflows/temporal/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/agentcore",
+   "manifest_path": "workspaces/agentcore/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/agentfs",
+   "manifest_path": "workspaces/agentfs/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/apple-container",
+   "manifest_path": "workspaces/apple-container/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/archil",
+   "manifest_path": "workspaces/archil/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/azure",
+   "manifest_path": "workspaces/azure/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/blaxel",
+   "manifest_path": "workspaces/blaxel/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/daytona",
+   "manifest_path": "workspaces/daytona/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/docker",
+   "manifest_path": "workspaces/docker/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/e2b",
+   "manifest_path": "workspaces/e2b/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/files-sdk",
+   "manifest_path": "workspaces/files-sdk/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/gcs",
+   "manifest_path": "workspaces/gcs/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/google-drive",
+   "manifest_path": "workspaces/google-drive/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/mesa",
+   "manifest_path": "workspaces/mesa/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/modal",
+   "manifest_path": "workspaces/modal/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/platform-workspace",
+   "manifest_path": "workspaces/platform-workspace/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/railway",
+   "manifest_path": "workspaces/railway/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/s3",
+   "manifest_path": "workspaces/s3/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "package": "@mastra/vercel",
+   "manifest_path": "workspaces/vercel/package.json",
+   "private": false,
+   "commit": "a74c4f0391a5ff91552fbb9d76a6a4830c0a546a",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "package": "@openai/codex",
+   "manifest_path": "codex-cli/package.json",
+   "private": false,
+   "commit": "c2f7fe89d87ce853900d0b5cb1f5dc4863e44d73",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "package": "@openai/codex-responses-api-proxy",
+   "manifest_path": "codex-rs/responses-api-proxy/npm/package.json",
+   "private": false,
+   "commit": "c2f7fe89d87ce853900d0b5cb1f5dc4863e44d73",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "package": "@openai/codex-sdk",
+   "manifest_path": "sdk/typescript/package.json",
+   "private": false,
+   "commit": "c2f7fe89d87ce853900d0b5cb1f5dc4863e44d73",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "package": "@openai/codex",
+   "manifest_path": "codex-cli/package.json",
+   "private": false,
+   "commit": "2767e5f20d6927500b8f1938c773c61afb823245",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "package": "@openai/codex-responses-api-proxy",
+   "manifest_path": "codex-rs/responses-api-proxy/npm/package.json",
+   "private": false,
+   "commit": "2767e5f20d6927500b8f1938c773c61afb823245",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "package": "@openai/codex-sdk",
+   "manifest_path": "sdk/typescript/package.json",
+   "private": false,
+   "commit": "2767e5f20d6927500b8f1938c773c61afb823245",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "package": "docs",
+   "manifest_path": "site/package.json",
+   "private": false,
+   "commit": "8ba04f70af542e41aadbc2eb8093b1a07df5ec96",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "package": "@strands-agents/sdk",
+   "manifest_path": "strands-ts/package.json",
+   "private": false,
+   "commit": "8ba04f70af542e41aadbc2eb8093b1a07df5ec96",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "package": "test-infra",
+   "manifest_path": "test-infra/package.json",
+   "private": false,
+   "commit": "8ba04f70af542e41aadbc2eb8093b1a07df5ec96",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "builtin",
+   "manifest_path": "build/builtin/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "code-oss-dev-build",
+   "manifest_path": "build/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "bat",
+   "manifest_path": "extensions/bat/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "clojure",
+   "manifest_path": "extensions/clojure/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "coffeescript",
+   "manifest_path": "extensions/coffeescript/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "cpp",
+   "manifest_path": "extensions/cpp/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "csharp",
+   "manifest_path": "extensions/csharp/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "css",
+   "manifest_path": "extensions/css/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "dart",
+   "manifest_path": "extensions/dart/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "diff",
+   "manifest_path": "extensions/diff/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "docker",
+   "manifest_path": "extensions/docker/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "emmet",
+   "manifest_path": "extensions/emmet/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "fsharp",
+   "manifest_path": "extensions/fsharp/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "git",
+   "manifest_path": "extensions/git/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "github",
+   "manifest_path": "extensions/github/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "go",
+   "manifest_path": "extensions/go/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "groovy",
+   "manifest_path": "extensions/groovy/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "gulp",
+   "manifest_path": "extensions/gulp/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "handlebars",
+   "manifest_path": "extensions/handlebars/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "html",
+   "manifest_path": "extensions/html/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "ipynb",
+   "manifest_path": "extensions/ipynb/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "jake",
+   "manifest_path": "extensions/jake/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "java",
+   "manifest_path": "extensions/java/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "javascript",
+   "manifest_path": "extensions/javascript/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "vscode-json-languageserver",
+   "manifest_path": "extensions/json-language-features/server/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "json",
+   "manifest_path": "extensions/json/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "julia",
+   "manifest_path": "extensions/julia/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "latex",
+   "manifest_path": "extensions/latex/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "less",
+   "manifest_path": "extensions/less/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "log",
+   "manifest_path": "extensions/log/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "lua",
+   "manifest_path": "extensions/lua/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "make",
+   "manifest_path": "extensions/make/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "markdown",
+   "manifest_path": "extensions/markdown-basics/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "keytar",
+   "manifest_path": "extensions/microsoft-authentication/packageMocks/keytar/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "vscode-extensions",
+   "manifest_path": "extensions/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "perl",
+   "manifest_path": "extensions/perl/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "php",
+   "manifest_path": "extensions/php/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "powershell",
+   "manifest_path": "extensions/powershell/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "pug",
+   "manifest_path": "extensions/pug/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "python",
+   "manifest_path": "extensions/python/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "r",
+   "manifest_path": "extensions/r/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "razor",
+   "manifest_path": "extensions/razor/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "ruby",
+   "manifest_path": "extensions/ruby/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "rust",
+   "manifest_path": "extensions/rust/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "scss",
+   "manifest_path": "extensions/scss/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "shaderlab",
+   "manifest_path": "extensions/shaderlab/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "shellscript",
+   "manifest_path": "extensions/shellscript/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "simple-browser",
+   "manifest_path": "extensions/simple-browser/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "sql",
+   "manifest_path": "extensions/sql/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "swift",
+   "manifest_path": "extensions/swift/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "typescript",
+   "manifest_path": "extensions/typescript-basics/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "vb",
+   "manifest_path": "extensions/vb/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "xml",
+   "manifest_path": "extensions/xml/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "package": "yaml",
+   "manifest_path": "extensions/yaml/package.json",
+   "private": false,
+   "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+   "status": "ok"
+  }
+ ]
+}

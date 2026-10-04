@@ -24,8 +24,12 @@ and vendored third-party packages matched their upstream names.
 **m4 rule:** as m3, and additionally a declared package is excluded when
 1. its published metadata on deps.dev names a different source repository than the
    declaring one (`other_repo` in `data/quarantine/axis3-deps-v2/linkage-audit-2026-10-04.json`), or
-2. its own manifest marks it `"private": true` (npm), which means the declared package is
-   never published and any package of that name is somebody else's.
+2. its own manifest marks it `"private": true` (npm) and the published package of that
+   name does not name the declaring repository — the declared package is never published,
+   so the name belongs to somebody else. (Checked 2026-10-04 on 329 npm manifests at HEAD,
+   `data/quarantine/axis3-deps-v2/private-manifests-2026-10-04.json`: 3 are private, all 3
+   are published by the same repository from another manifest and stay; 5 manifests no
+   longer exist at HEAD. The rule removes nothing today and guards future admissions.)
 
 A package whose metadata names no repository (`no_link`) stays and is labelled
 **unverified**: absence of metadata is not evidence of a namesake. The Sybil guard is
@@ -55,14 +59,14 @@ an unbroken run of usable points; after a withheld point the series restarts, so
 estimator never spans a gap with ordinal time. A vote needs ≥ 14 usable points of the m4
 quantity, not merely 14 confirmed-clean partitions.
 
-## 3. Effect, computed from committed files on 2026-10-04 (before the `private` check)
+## 3. Effect, computed from committed files on 2026-10-04
 
 Of the systems carrying at least one `other_repo` package in stored captures: 9 keep an
 exactly derived history (19–27 usable points); 3 restart and are unscored on axis 3 until
 14 usable points accrue (about three months), among them Void (`e_MX90J81EYDE`), whose
 published m3 value of 126,420 direct dependents came from packages of other repositories;
 8 leave axis 3. All other panel systems are unchanged. Numbers are recomputed at
-activation after the `private` check and published with the first m4 snapshot.
+activation and published with the first m4 snapshot.
 
 ## 4. Forward captures
 
