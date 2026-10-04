@@ -1,0 +1,4306 @@
+{
+ "v": "linkage_audit_1",
+ "audited_at": "2026-10-04",
+ "source": "deps.dev v3: package -> default version -> relatedProjects (SOURCE_REPO) and links",
+ "rule": "verified = the published package names the declaring repository (stored or canonical full name); other_repo = it names a different repository; no_link = it names none",
+ "packages": [
+  {
+   "entity_id": "e_ADRWZ5YBESZ",
+   "system": "npm",
+   "package": "@openhands/ui",
+   "manifest_path": "openhands-ui/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_ADRWZ5YBESZ",
+   "system": "pypi",
+   "package": "openhands-ai",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_8N97348DQ66",
+   "system": "pypi",
+   "package": "gymnasium",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_QTVWFV6FJ2V",
+   "system": "npm",
+   "package": "mineflayer-collectblock",
+   "manifest_path": "metagpt/environment/minecraft/mineflayer/mineflayer-collectblock/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_QTVWFV6FJ2V",
+   "system": "npm",
+   "package": "voyager",
+   "manifest_path": "metagpt/environment/minecraft/mineflayer/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_J4DR3YCQCAN",
+   "system": "pypi",
+   "package": "genesis-world",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "system": "npm",
+   "package": "@kilocode/cli",
+   "manifest_path": "packages/opencode/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "system": "npm",
+   "package": "@kilocode/plugin",
+   "manifest_path": "packages/plugin/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "system": "npm",
+   "package": "@kilocode/sdk",
+   "manifest_path": "packages/sdk/js/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JA1TAYFFAHR",
+   "system": "npm",
+   "package": "@opencode-ai/ui",
+   "manifest_path": "packages/ui/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_V05C8HCBBV2",
+   "system": "go",
+   "package": "github.com/LMCache/LMCache",
+   "manifest_path": "operator/go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_V05C8HCBBV2",
+   "system": "pypi",
+   "package": "lmcache",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_QFECGB8X9W5",
+   "system": "pypi",
+   "package": "ltx-video",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_QHYA574DXDQ",
+   "system": "pypi",
+   "package": "megatron-bridge",
+   "manifest_path": "3rdparty/Megatron-Bridge-workspace/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_QHYA574DXDQ",
+   "system": "pypi",
+   "package": "nemo-rl",
+   "manifest_path": "pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_9SWWW2SWASG",
+   "system": "pypi",
+   "package": "tensorrt-llm",
+   "manifest_path": "security_scanning/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M6GFCMQK7DQ",
+   "system": "pypi",
+   "package": "locate_anything",
+   "manifest_path": "Embodied/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_R2VJDA1P0WH",
+   "system": "pypi",
+   "package": "sana",
+   "manifest_path": "pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_26C836YXKF2",
+   "system": "pypi",
+   "package": "llava",
+   "manifest_path": "internvl_chat_llava/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_2S60RGNZHBS",
+   "system": "pypi",
+   "package": "openpipe-art",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y3CPRHKVF8H",
+   "system": "pypi",
+   "package": "verl",
+   "manifest_path": "pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_7ZJR0NT1B6H",
+   "system": "pypi",
+   "package": "openpi-client",
+   "manifest_path": "packages/openpi-client/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_7ZJR0NT1B6H",
+   "system": "pypi",
+   "package": "openpi",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_VVAJB7D0NQX",
+   "system": "pypi",
+   "package": "qwen-vl-utils",
+   "manifest_path": "qwen-vl-utils/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "docs-site",
+   "manifest_path": "docs-site/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/qwen-code",
+   "manifest_path": "package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/audio-capture",
+   "manifest_path": "packages/audio-capture/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/channel-base",
+   "manifest_path": "packages/channels/base/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/qwen-code-core",
+   "manifest_path": "packages/core/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "pypi",
+   "package": "cua-driver",
+   "manifest_path": "packages/cua-driver/python/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/mobile-mcp",
+   "manifest_path": "packages/mobile-mcp/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "pypi",
+   "package": "qwen-code-sdk",
+   "manifest_path": "packages/sdk-python/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/sdk",
+   "manifest_path": "packages/sdk-typescript/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "qwen-code-vscode-ide-companion",
+   "manifest_path": "packages/vscode-ide-companion/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_X33782S1M13",
+   "system": "npm",
+   "package": "@qwen-code/webui",
+   "manifest_path": "packages/webui/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_DAFJYGYBDKF",
+   "system": "pypi",
+   "package": "mini-swe-agent",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EF7QKB37YJK",
+   "system": "pypi",
+   "package": "swebench",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_GQ2E6K86NWF",
+   "system": "npm",
+   "package": "tabby-agent",
+   "manifest_path": "clients/tabby-agent/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_GQ2E6K86NWF",
+   "system": "cargo",
+   "package": "hash-ids",
+   "manifest_path": "crates/hash-ids/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_GQ2E6K86NWF",
+   "system": "cargo",
+   "package": "sqlx-migrate-validate",
+   "manifest_path": "crates/sqlx-migrate-validate/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_GQ2E6K86NWF",
+   "system": "cargo",
+   "package": "tabby",
+   "manifest_path": "crates/tabby/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_DQT3XHMXA2C",
+   "system": "pypi",
+   "package": "trinity-rft",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_97SYW64PA3G",
+   "system": "pypi",
+   "package": "agentscope",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EY620A0EAK9",
+   "system": "pypi",
+   "package": "agno",
+   "manifest_path": "libs/agno/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EY620A0EAK9",
+   "system": "pypi",
+   "package": "agno-infra",
+   "manifest_path": "libs/agno_infra/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_EY620A0EAK9",
+   "system": "pypi",
+   "package": "agnoctl",
+   "manifest_path": "libs/agnoctl/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_357KR6Z8TFG",
+   "system": "pypi",
+   "package": "mcore_adapter",
+   "manifest_path": "mcore_adapter/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "system": "npm",
+   "package": "@opencode-ai/cli",
+   "manifest_path": "packages/cli/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "system": "npm",
+   "package": "@opencode-ai/plugin",
+   "manifest_path": "packages/plugin/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "system": "npm",
+   "package": "@opencode-ai/sdk",
+   "manifest_path": "packages/sdk/js/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_BTT9Q5KW4YN",
+   "system": "npm",
+   "package": "@opencode-ai/ui",
+   "manifest_path": "packages/ui/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JN83HWXP85Z",
+   "system": "pypi",
+   "package": "llava",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_B10ZF25BFZT",
+   "system": "pypi",
+   "package": "axolotl",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_R2KZCZM6TGV",
+   "system": "pypi",
+   "package": "flux",
+   "manifest_path": "pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-cli",
+   "manifest_path": "crates/goose-cli/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-download-manager",
+   "manifest_path": "crates/goose-download-manager/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-local-inference",
+   "manifest_path": "crates/goose-local-inference/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-provider-types",
+   "manifest_path": "crates/goose-provider-types/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-providers",
+   "manifest_path": "crates/goose-providers/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-sdk-types",
+   "manifest_path": "crates/goose-sdk-types/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose-sdk",
+   "manifest_path": "crates/goose-sdk/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "pypi",
+   "package": "goose-sdk",
+   "manifest_path": "crates/goose-sdk/python/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "cargo",
+   "package": "goose",
+   "manifest_path": "crates/goose/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose-binary-darwin-arm64",
+   "manifest_path": "ui/goose-binary/goose-binary-darwin-arm64/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose-binary-darwin-x64",
+   "manifest_path": "ui/goose-binary/goose-binary-darwin-x64/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose-binary-linux-arm64",
+   "manifest_path": "ui/goose-binary/goose-binary-linux-arm64/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose-binary-linux-x64",
+   "manifest_path": "ui/goose-binary/goose-binary-linux-x64/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose-binary-win32-x64",
+   "manifest_path": "ui/goose-binary/goose-binary-win32-x64/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose-sdk",
+   "manifest_path": "ui/sdk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_FTD4XD7DVG3",
+   "system": "npm",
+   "package": "@aaif/goose",
+   "manifest_path": "ui/text/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_1GSH6ZQHW7B",
+   "system": "pypi",
+   "package": "browser-use",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "pnpm-dev-kit",
+   "manifest_path": "infra/pdk/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-tars/cli",
+   "manifest_path": "multimodal/agent-tars/cli/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-tars/core",
+   "manifest_path": "multimodal/agent-tars/core/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-tars/interface",
+   "manifest_path": "multimodal/agent-tars/interface/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/action-parser",
+   "manifest_path": "multimodal/gui-agent/action-parser/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/agent-sdk",
+   "manifest_path": "multimodal/gui-agent/agent-sdk/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/cli",
+   "manifest_path": "multimodal/gui-agent/cli/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/operator-adb",
+   "manifest_path": "multimodal/gui-agent/operator-adb/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/operator-aio",
+   "manifest_path": "multimodal/gui-agent/operator-aio/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/operator-browser",
+   "manifest_path": "multimodal/gui-agent/operator-browser/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/operator-nutjs",
+   "manifest_path": "multimodal/gui-agent/operator-nutjs/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@gui-agent/shared",
+   "manifest_path": "multimodal/gui-agent/shared/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@omni-tars/code-agent",
+   "manifest_path": "multimodal/omni-tars/code-agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@omni-tars/core",
+   "manifest_path": "multimodal/omni-tars/core/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@omni-tars/gui-agent",
+   "manifest_path": "multimodal/omni-tars/gui-agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@omni-tars/mcp-agent",
+   "manifest_path": "multimodal/omni-tars/mcp-agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@omni-tars/agent",
+   "manifest_path": "multimodal/omni-tars/omni-agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-cli",
+   "manifest_path": "multimodal/tarko/agent-cli/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-interface",
+   "manifest_path": "multimodal/tarko/agent-interface/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-server-next",
+   "manifest_path": "multimodal/tarko/agent-server-next/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-server",
+   "manifest_path": "multimodal/tarko/agent-server/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-snapshot",
+   "manifest_path": "multimodal/tarko/agent-snapshot/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-ui-builder",
+   "manifest_path": "multimodal/tarko/agent-ui-builder/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-ui-cli",
+   "manifest_path": "multimodal/tarko/agent-ui-cli/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent-ui",
+   "manifest_path": "multimodal/tarko/agent-ui/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agent",
+   "manifest_path": "multimodal/tarko/agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/agio",
+   "manifest_path": "multimodal/tarko/agio/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/config-loader",
+   "manifest_path": "multimodal/tarko/config-loader/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/context-engineer",
+   "manifest_path": "multimodal/tarko/context-engineer/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/interface",
+   "manifest_path": "multimodal/tarko/interface/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/llm-client",
+   "manifest_path": "multimodal/tarko/llm-client/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/mcp-agent-interface",
+   "manifest_path": "multimodal/tarko/mcp-agent-interface/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/mcp-agent",
+   "manifest_path": "multimodal/tarko/mcp-agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/model-provider",
+   "manifest_path": "multimodal/tarko/model-provider/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/shared-media-utils",
+   "manifest_path": "multimodal/tarko/shared-media-utils/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/shared-utils",
+   "manifest_path": "multimodal/tarko/shared-utils/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@tarko/ui",
+   "manifest_path": "multimodal/tarko/ui/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/browser-use",
+   "manifest_path": "packages/agent-infra/browser-use/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/browser",
+   "manifest_path": "packages/agent-infra/browser/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "create-new-mcp",
+   "manifest_path": "packages/agent-infra/create-new-mcp/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/logger",
+   "manifest_path": "packages/agent-infra/logger/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/mcp-client",
+   "manifest_path": "packages/agent-infra/mcp-client/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "mcp-http-server",
+   "manifest_path": "packages/agent-infra/mcp-http-server/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/mcp-server-browser",
+   "manifest_path": "packages/agent-infra/mcp-servers/browser/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/mcp-server-commands",
+   "manifest_path": "packages/agent-infra/mcp-servers/commands/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/mcp-server-filesystem",
+   "manifest_path": "packages/agent-infra/mcp-servers/filesystem/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/mcp-server-search",
+   "manifest_path": "packages/agent-infra/mcp-servers/search/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/mcp-shared",
+   "manifest_path": "packages/agent-infra/mcp-shared/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/bing-search",
+   "manifest_path": "packages/agent-infra/search/bing-search/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/browser-search",
+   "manifest_path": "packages/agent-infra/search/browser-search/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/duckduckgo-search",
+   "manifest_path": "packages/agent-infra/search/duckduckgo-search/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/search",
+   "manifest_path": "packages/agent-infra/search/search/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@agent-infra/shared",
+   "manifest_path": "packages/agent-infra/shared/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/action-parser",
+   "manifest_path": "packages/ui-tars/action-parser/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/cli",
+   "manifest_path": "packages/ui-tars/cli/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/electron-ipc",
+   "manifest_path": "packages/ui-tars/electron-ipc/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/operator-adb",
+   "manifest_path": "packages/ui-tars/operators/adb/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/operator-browser",
+   "manifest_path": "packages/ui-tars/operators/browser-operator/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/operator-browserbase",
+   "manifest_path": "packages/ui-tars/operators/browserbase/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/operator-nut-js",
+   "manifest_path": "packages/ui-tars/operators/nut-js/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/sdk",
+   "manifest_path": "packages/ui-tars/sdk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/shared",
+   "manifest_path": "packages/ui-tars/shared/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/utio",
+   "manifest_path": "packages/ui-tars/utio/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_A4CCB1NFPZB",
+   "system": "npm",
+   "package": "@ui-tars/visualizer",
+   "manifest_path": "packages/ui-tars/visualizer/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_VBBNJDDB0DA",
+   "system": "pypi",
+   "package": "camel-ai",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_2XFTYTGJT3Z",
+   "system": "pypi",
+   "package": "chai_lab",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_1TMQEKAN7S6",
+   "system": "go",
+   "package": "github.com/charmbracelet/crush",
+   "manifest_path": "go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/cli",
+   "manifest_path": "apps/cli/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "claude-dev",
+   "manifest_path": "apps/vscode/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "vscode",
+   "manifest_path": "apps/vscode/standalone/runtime-files/vscode/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/agents",
+   "manifest_path": "sdk/packages/agents/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/core",
+   "manifest_path": "sdk/packages/core/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/llms",
+   "manifest_path": "sdk/packages/llms/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/sdk",
+   "manifest_path": "sdk/packages/sdk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/shared",
+   "manifest_path": "sdk/packages/shared/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_P4YGBAFMV94",
+   "system": "npm",
+   "package": "@cline/ui",
+   "manifest_path": "sdk/packages/ui/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_126THNX952P",
+   "system": "pypi",
+   "package": "comfyui",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "binary",
+   "manifest_path": "binary/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/core",
+   "manifest_path": "core/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/cli",
+   "manifest_path": "extensions/cli/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "continue",
+   "manifest_path": "extensions/vscode/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "my-react-project",
+   "manifest_path": "manual-testing-sandbox/nested-folder/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/config-types",
+   "manifest_path": "packages/config-types/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/config-yaml",
+   "manifest_path": "packages/config-yaml/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/sdk",
+   "manifest_path": "packages/continue-sdk/typescript/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/fetch",
+   "manifest_path": "packages/fetch/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/llm-info",
+   "manifest_path": "packages/llm-info/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "npm",
+   "package": "@continuedev/openai-adapters",
+   "manifest_path": "packages/openai-adapters/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_5WYRYN5H1XY",
+   "system": "cargo",
+   "package": "sync",
+   "manifest_path": "sync/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_SV60T2QMXGE",
+   "system": "pypi",
+   "package": "crewai-cli",
+   "manifest_path": "lib/cli/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_SV60T2QMXGE",
+   "system": "pypi",
+   "package": "crewai-core",
+   "manifest_path": "lib/crewai-core/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_SV60T2QMXGE",
+   "system": "pypi",
+   "package": "crewai-files",
+   "manifest_path": "lib/crewai-files/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_SV60T2QMXGE",
+   "system": "pypi",
+   "package": "crewai-tools",
+   "manifest_path": "lib/crewai-tools/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_SV60T2QMXGE",
+   "system": "pypi",
+   "package": "crewai",
+   "manifest_path": "lib/crewai/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-node-api-cxx",
+   "manifest_path": "apis/c++/node/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-node-api-c",
+   "manifest_path": "apis/c/node/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-operator-api-c",
+   "manifest_path": "apis/c/operator/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "pypi",
+   "package": "dora-rs",
+   "manifest_path": "apis/python/node/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-operator-api-python",
+   "manifest_path": "apis/python/operator/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-node-api",
+   "manifest_path": "apis/rust/node/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-operator-api",
+   "manifest_path": "apis/rust/operator/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-operator-api-macros",
+   "manifest_path": "apis/rust/operator/macros/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-operator-api-types",
+   "manifest_path": "apis/rust/operator/types/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-cli",
+   "manifest_path": "binaries/cli/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "pypi",
+   "package": "dora-rs-cli",
+   "manifest_path": "binaries/cli/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-coordinator",
+   "manifest_path": "binaries/coordinator/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-daemon",
+   "manifest_path": "binaries/daemon/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-runtime",
+   "manifest_path": "binaries/runtime/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-arrow-convert",
+   "manifest_path": "libraries/arrow-convert/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-coordinator-store",
+   "manifest_path": "libraries/coordinator-store/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-core",
+   "manifest_path": "libraries/core/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-download",
+   "manifest_path": "libraries/extensions/download/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-memory-pool",
+   "manifest_path": "libraries/extensions/memory-pool/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-ros2-bridge",
+   "manifest_path": "libraries/extensions/ros2-bridge/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-ros2-bridge-msg-gen",
+   "manifest_path": "libraries/extensions/ros2-bridge/msg-gen/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-metrics",
+   "manifest_path": "libraries/extensions/telemetry/metrics/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-tracing",
+   "manifest_path": "libraries/extensions/telemetry/tracing/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-hub-client",
+   "manifest_path": "libraries/hub-client/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-message",
+   "manifest_path": "libraries/message/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "dora-recording",
+   "manifest_path": "libraries/recording/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Y31RBTP1VWD",
+   "system": "cargo",
+   "package": "xtask",
+   "manifest_path": "xtask/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_V9ERGE3E0B4",
+   "system": "pypi",
+   "package": "fish-speech",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_VMQ8QRRDWVS",
+   "system": "pypi",
+   "package": "flashinfer-cubin",
+   "manifest_path": "flashinfer-cubin/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_VMQ8QRRDWVS",
+   "system": "pypi",
+   "package": "flashinfer-python",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_Z7YDNC4F139",
+   "system": "pypi",
+   "package": "gguf",
+   "manifest_path": "gguf-py/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_88YAM3PXK4S",
+   "system": "pypi",
+   "package": "alphafold3",
+   "manifest_path": "pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_03QFRGK7VQX",
+   "system": "pypi",
+   "package": "mujoco-mjx",
+   "manifest_path": "mjx/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_03QFRGK7VQX",
+   "system": "pypi",
+   "package": "mujoco",
+   "manifest_path": "python/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_03QFRGK7VQX",
+   "system": "npm",
+   "package": "mujoco",
+   "manifest_path": "wasm/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4A9TG2M8403",
+   "system": "npm",
+   "package": "@google/gemini-cli",
+   "manifest_path": "package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4A9TG2M8403",
+   "system": "npm",
+   "package": "@google/gemini-cli-a2a-server",
+   "manifest_path": "packages/a2a-server/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4A9TG2M8403",
+   "system": "npm",
+   "package": "@google/gemini-cli-core",
+   "manifest_path": "packages/core/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_ADT3TJHK8W8",
+   "system": "pypi",
+   "package": "google-adk",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_41T3C34FQFA",
+   "system": "pypi",
+   "package": "llava",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MB6DQ5PDDKH",
+   "system": "npm",
+   "package": "kokoro-js",
+   "manifest_path": "kokoro.js/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_MB6DQ5PDDKH",
+   "system": "pypi",
+   "package": "kokoro",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_8V2DZWR8HPM",
+   "system": "pypi",
+   "package": "llamafactory",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_H6PPP8CA9RR",
+   "system": "pypi",
+   "package": "lerobot",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4P7EDPAWCY2",
+   "system": "pypi",
+   "package": "smolagents",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_B1Q69HZTTMA",
+   "system": "pypi",
+   "package": "trl",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_PCV8H6P7B04",
+   "system": "pypi",
+   "package": "areal",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_9VD4D2XPK7H",
+   "system": "pypi",
+   "package": "boltz",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_N2RFM19TP1D",
+   "system": "go",
+   "package": "github.com/kvcache-ai/Mooncake/mooncake-common/etcd",
+   "manifest_path": "mooncake-common/etcd/go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_N2RFM19TP1D",
+   "system": "go",
+   "package": "github.com/kvcache-ai/Mooncake/mooncake-p2p-store/src/p2pstore",
+   "manifest_path": "mooncake-p2p-store/src/p2pstore/go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_N2RFM19TP1D",
+   "system": "go",
+   "package": "github.com/kvcache-ai/Mooncake/mooncake-store/go",
+   "manifest_path": "mooncake-store/go/go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_N2RFM19TP1D",
+   "system": "pypi",
+   "package": "mooncake-transfer-engine",
+   "manifest_path": "mooncake-wheel/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_MMGH765AVAA",
+   "system": "pypi",
+   "package": "ktransformers",
+   "manifest_path": "archive/kt-sft/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_MMGH765AVAA",
+   "system": "pypi",
+   "package": "kt-kernel",
+   "manifest_path": "kt-kernel/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-checkpoint-conformance",
+   "manifest_path": "libs/checkpoint-conformance/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-checkpoint-postgres",
+   "manifest_path": "libs/checkpoint-postgres/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-checkpoint-sqlite",
+   "manifest_path": "libs/checkpoint-sqlite/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-checkpoint",
+   "manifest_path": "libs/checkpoint/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-cli",
+   "manifest_path": "libs/cli/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "agent",
+   "manifest_path": "libs/cli/python-monorepo-example/apps/agent/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "shared",
+   "manifest_path": "libs/cli/python-monorepo-example/libs/shared/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph",
+   "manifest_path": "libs/langgraph/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-prebuilt",
+   "manifest_path": "libs/prebuilt/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_13NVVKJA2MM",
+   "system": "pypi",
+   "package": "langgraph-sdk",
+   "manifest_path": "libs/sdk-py/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_15264R968MN",
+   "system": "pypi",
+   "package": "letta",
+   "manifest_path": "pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_15264R968MN",
+   "system": "npm",
+   "package": "app",
+   "manifest_path": "sandbox/resources/server/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/acp",
+   "manifest_path": "agent-sdks/acp/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/claude",
+   "manifest_path": "agent-sdks/claude/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/cursor",
+   "manifest_path": "agent-sdks/cursor/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/openai",
+   "manifest_path": "agent-sdks/openai/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-auth0",
+   "manifest_path": "auth/auth0/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-better-auth",
+   "manifest_path": "auth/better-auth/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-clerk",
+   "manifest_path": "auth/clerk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-cloud",
+   "manifest_path": "auth/cloud/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-firebase",
+   "manifest_path": "auth/firebase/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-google",
+   "manifest_path": "auth/google/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-neon",
+   "manifest_path": "auth/neon/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-okta",
+   "manifest_path": "auth/okta/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-studio",
+   "manifest_path": "auth/studio/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-supabase",
+   "manifest_path": "auth/supabase/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth-workos",
+   "manifest_path": "auth/workos/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/agent-browser",
+   "manifest_path": "browser/agent-browser/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/browser-viewer",
+   "manifest_path": "browser/browser-viewer/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/browser-firecrawl",
+   "manifest_path": "browser/firecrawl/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/stagehand",
+   "manifest_path": "browser/stagehand/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/slack",
+   "manifest_path": "channels/slack/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/ai-sdk",
+   "manifest_path": "client-sdks/ai-sdk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/client-js",
+   "manifest_path": "client-sdks/client-js/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/react",
+   "manifest_path": "client-sdks/react/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/deployer-cloud",
+   "manifest_path": "deployers/cloud/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/deployer-cloudflare",
+   "manifest_path": "deployers/cloudflare/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/deployer-netlify",
+   "manifest_path": "deployers/netlify/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/deployer-vercel",
+   "manifest_path": "deployers/vercel/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "commonjs",
+   "manifest_path": "e2e-tests/commonjs/template/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "monorepo",
+   "manifest_path": "e2e-tests/monorepo/template/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "template",
+   "manifest_path": "e2e-tests/no-bundling/template/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voyageai",
+   "manifest_path": "embedders/voyageai/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/longmemeval",
+   "manifest_path": "explorations/longmemeval/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/brightdata",
+   "manifest_path": "integrations/brightdata/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/livekit",
+   "manifest_path": "integrations/livekit/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/opencode",
+   "manifest_path": "integrations/opencode/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/perplexity",
+   "manifest_path": "integrations/perplexity/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/tavily",
+   "manifest_path": "integrations/tavily/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "create-factory",
+   "manifest_path": "mastracode/mastra-factory/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/code-sdk",
+   "manifest_path": "mastracode/sdk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "mastracode",
+   "manifest_path": "mastracode/tui/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/arize",
+   "manifest_path": "observability/arize/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/arthur",
+   "manifest_path": "observability/arthur/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/braintrust",
+   "manifest_path": "observability/braintrust/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/datadog",
+   "manifest_path": "observability/datadog/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/laminar",
+   "manifest_path": "observability/laminar/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/langfuse",
+   "manifest_path": "observability/langfuse/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/langsmith",
+   "manifest_path": "observability/langsmith/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/observability",
+   "manifest_path": "observability/mastra/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/otel-bridge",
+   "manifest_path": "observability/otel-bridge/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/otel-exporter",
+   "manifest_path": "observability/otel-exporter/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/posthog",
+   "manifest_path": "observability/posthog/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/sentry",
+   "manifest_path": "observability/sentry/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/agent-builder",
+   "manifest_path": "packages/agent-builder/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/auth",
+   "manifest_path": "packages/auth/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "mastra",
+   "manifest_path": "packages/cli/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/codemod",
+   "manifest_path": "packages/codemod/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/core",
+   "manifest_path": "packages/core/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "create-mastra",
+   "manifest_path": "packages/create-mastra/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/deployer",
+   "manifest_path": "packages/deployer/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/editor",
+   "manifest_path": "packages/editor/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/evals",
+   "manifest_path": "packages/evals/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/fastembed",
+   "manifest_path": "packages/fastembed/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/loggers",
+   "manifest_path": "packages/loggers/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mcp-docs-server",
+   "manifest_path": "packages/mcp-docs-server/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mcp-registry-registry",
+   "manifest_path": "packages/mcp-registry-registry/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mcp",
+   "manifest_path": "packages/mcp/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/memory",
+   "manifest_path": "packages/memory/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/playground-ui",
+   "manifest_path": "packages/playground-ui/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/rag",
+   "manifest_path": "packages/rag/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/schema-compat",
+   "manifest_path": "packages/schema-compat/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/server",
+   "manifest_path": "packages/server/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/google-cloud-pubsub",
+   "manifest_path": "pubsub/google-cloud-pubsub/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/redis-streams",
+   "manifest_path": "pubsub/redis-streams/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/express",
+   "manifest_path": "server-adapters/express/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/fastify",
+   "manifest_path": "server-adapters/fastify/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/hono",
+   "manifest_path": "server-adapters/hono/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/koa",
+   "manifest_path": "server-adapters/koa/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/nestjs",
+   "manifest_path": "server-adapters/nestjs/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/next",
+   "manifest_path": "server-adapters/next/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/tanstack-start",
+   "manifest_path": "server-adapters/tanstack-start/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/github-signals",
+   "manifest_path": "signals/github/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/astra",
+   "manifest_path": "stores/astra/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/chroma",
+   "manifest_path": "stores/chroma/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/clickhouse",
+   "manifest_path": "stores/clickhouse/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/cloudflare-d1",
+   "manifest_path": "stores/cloudflare-d1/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/cloudflare",
+   "manifest_path": "stores/cloudflare/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/convex",
+   "manifest_path": "stores/convex/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/couchbase",
+   "manifest_path": "stores/couchbase/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/dsql",
+   "manifest_path": "stores/dsql/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/duckdb",
+   "manifest_path": "stores/duckdb/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/dynamodb",
+   "manifest_path": "stores/dynamodb/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/elasticsearch",
+   "manifest_path": "stores/elasticsearch/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/lance",
+   "manifest_path": "stores/lance/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/libsql",
+   "manifest_path": "stores/libsql/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mongodb",
+   "manifest_path": "stores/mongodb/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mssql",
+   "manifest_path": "stores/mssql/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mysql",
+   "manifest_path": "stores/mysql/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/opensearch",
+   "manifest_path": "stores/opensearch/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/pg",
+   "manifest_path": "stores/pg/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/pinecone",
+   "manifest_path": "stores/pinecone/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/qdrant",
+   "manifest_path": "stores/qdrant/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/redis",
+   "manifest_path": "stores/redis/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/s3vectors",
+   "manifest_path": "stores/s3vectors/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/spanner",
+   "manifest_path": "stores/spanner/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/turbopuffer",
+   "manifest_path": "stores/turbopuffer/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/upstash",
+   "manifest_path": "stores/upstash/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/vectorize",
+   "manifest_path": "stores/vectorize/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "chat-with-pdf",
+   "manifest_path": "templates/template-chat-with-pdf/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "deep-search",
+   "manifest_path": "templates/template-deep-search/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "weather-agent",
+   "manifest_path": "templates/weather-agent/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-aws-nova-sonic",
+   "manifest_path": "voice/aws-nova-sonic/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-azure",
+   "manifest_path": "voice/azure/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-cloudflare",
+   "manifest_path": "voice/cloudflare/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-deepgram",
+   "manifest_path": "voice/deepgram/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-elevenlabs",
+   "manifest_path": "voice/elevenlabs/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-gladia",
+   "manifest_path": "voice/gladia/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-google-gemini-live",
+   "manifest_path": "voice/google-gemini-live-api/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-google",
+   "manifest_path": "voice/google/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-inworld",
+   "manifest_path": "voice/inworld/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-mistral",
+   "manifest_path": "voice/mistral/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-modelslab",
+   "manifest_path": "voice/modelslab/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-murf",
+   "manifest_path": "voice/murf/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-openai-realtime",
+   "manifest_path": "voice/openai-realtime-api/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-openai",
+   "manifest_path": "voice/openai/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-playai",
+   "manifest_path": "voice/playai/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-sarvam",
+   "manifest_path": "voice/sarvam/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-speechify",
+   "manifest_path": "voice/speechify/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/voice-xai-realtime",
+   "manifest_path": "voice/xai-realtime-api/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/inngest",
+   "manifest_path": "workflows/inngest/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/temporal",
+   "manifest_path": "workflows/temporal/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/agentcore",
+   "manifest_path": "workspaces/agentcore/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/agentfs",
+   "manifest_path": "workspaces/agentfs/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/apple-container",
+   "manifest_path": "workspaces/apple-container/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/archil",
+   "manifest_path": "workspaces/archil/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/azure",
+   "manifest_path": "workspaces/azure/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/blaxel",
+   "manifest_path": "workspaces/blaxel/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/daytona",
+   "manifest_path": "workspaces/daytona/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/docker",
+   "manifest_path": "workspaces/docker/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/e2b",
+   "manifest_path": "workspaces/e2b/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/files-sdk",
+   "manifest_path": "workspaces/files-sdk/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/gcs",
+   "manifest_path": "workspaces/gcs/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/google-drive",
+   "manifest_path": "workspaces/google-drive/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/mesa",
+   "manifest_path": "workspaces/mesa/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/modal",
+   "manifest_path": "workspaces/modal/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/platform-workspace",
+   "manifest_path": "workspaces/platform-workspace/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/railway",
+   "manifest_path": "workspaces/railway/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/s3",
+   "manifest_path": "workspaces/s3/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TV0JWZEFEAQ",
+   "system": "npm",
+   "package": "@mastra/vercel",
+   "manifest_path": "workspaces/vercel/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-a2a",
+   "manifest_path": "python/packages/a2a/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-ag-ui",
+   "manifest_path": "python/packages/ag-ui/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-anthropic",
+   "manifest_path": "python/packages/anthropic/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-azure-ai-search",
+   "manifest_path": "python/packages/azure-ai-search/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-azure-contentunderstanding",
+   "manifest_path": "python/packages/azure-contentunderstanding/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-azure-cosmos",
+   "manifest_path": "python/packages/azure-cosmos/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-azurefunctions",
+   "manifest_path": "python/packages/azurefunctions/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-bedrock",
+   "manifest_path": "python/packages/bedrock/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-chatkit",
+   "manifest_path": "python/packages/chatkit/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-claude",
+   "manifest_path": "python/packages/claude/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-copilotstudio",
+   "manifest_path": "python/packages/copilotstudio/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-core",
+   "manifest_path": "python/packages/core/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-declarative",
+   "manifest_path": "python/packages/declarative/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-devui",
+   "manifest_path": "python/packages/devui/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-durabletask",
+   "manifest_path": "python/packages/durabletask/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-foundry",
+   "manifest_path": "python/packages/foundry/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-foundry-hosting",
+   "manifest_path": "python/packages/foundry_hosting/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-foundry-local",
+   "manifest_path": "python/packages/foundry_local/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-gemini",
+   "manifest_path": "python/packages/gemini/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-github-copilot",
+   "manifest_path": "python/packages/github_copilot/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-hosting-responses",
+   "manifest_path": "python/packages/hosting-responses/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-hosting",
+   "manifest_path": "python/packages/hosting/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-hyperlight",
+   "manifest_path": "python/packages/hyperlight/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-lab",
+   "manifest_path": "python/packages/lab/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-mem0",
+   "manifest_path": "python/packages/mem0/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-mistral",
+   "manifest_path": "python/packages/mistral/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-monty",
+   "manifest_path": "python/packages/monty/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-ollama",
+   "manifest_path": "python/packages/ollama/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-openai",
+   "manifest_path": "python/packages/openai/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-orchestrations",
+   "manifest_path": "python/packages/orchestrations/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-purview",
+   "manifest_path": "python/packages/purview/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework-redis",
+   "manifest_path": "python/packages/redis/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_M5SCCQPBZ89",
+   "system": "pypi",
+   "package": "agent-framework",
+   "manifest_path": "python/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EDX1R1KVT3X",
+   "system": "pypi",
+   "package": "autogen-agentchat",
+   "manifest_path": "python/packages/autogen-agentchat/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EDX1R1KVT3X",
+   "system": "pypi",
+   "package": "autogen-core",
+   "manifest_path": "python/packages/autogen-core/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EDX1R1KVT3X",
+   "system": "pypi",
+   "package": "autogen-ext",
+   "manifest_path": "python/packages/autogen-ext/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EDX1R1KVT3X",
+   "system": "pypi",
+   "package": "autogenstudio",
+   "manifest_path": "python/packages/autogen-studio/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EDX1R1KVT3X",
+   "system": "pypi",
+   "package": "magentic-one-cli",
+   "manifest_path": "python/packages/magentic-one-cli/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_EDX1R1KVT3X",
+   "system": "pypi",
+   "package": "pyautogen",
+   "manifest_path": "python/packages/pyautogen/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JPV9HP2D5X4",
+   "system": "pypi",
+   "package": "bioemu",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_TRJN6D7V12H",
+   "system": "go",
+   "package": "github.com/ollama/ollama",
+   "manifest_path": "go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "npm",
+   "package": "@openai/codex",
+   "manifest_path": "codex-cli/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "cargo",
+   "package": "codex-app-server-protocol",
+   "manifest_path": "codex-rs/app-server-protocol/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "cargo",
+   "package": "codex-protocol",
+   "manifest_path": "codex-rs/protocol/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "npm",
+   "package": "@openai/codex-responses-api-proxy",
+   "manifest_path": "codex-rs/responses-api-proxy/npm/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "cargo",
+   "package": "codex-utils-cache",
+   "manifest_path": "codex-rs/utils/cache/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "cargo",
+   "package": "codex-utils-image",
+   "manifest_path": "codex-rs/utils/image/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "pypi",
+   "package": "openai-codex-cli-bin",
+   "manifest_path": "sdk/python-runtime/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "pypi",
+   "package": "openai-codex",
+   "manifest_path": "sdk/python/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_W2REDH3NZ0S",
+   "system": "npm",
+   "package": "@openai/codex-sdk",
+   "manifest_path": "sdk/typescript/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_3HZS2JPM2CR",
+   "system": "pypi",
+   "package": "openai-agents",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "npm",
+   "package": "@openai/codex",
+   "manifest_path": "codex-cli/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "cargo",
+   "package": "codex-app-server-protocol",
+   "manifest_path": "codex-rs/app-server-protocol/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "cargo",
+   "package": "codex-protocol",
+   "manifest_path": "codex-rs/protocol/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "npm",
+   "package": "@openai/codex-responses-api-proxy",
+   "manifest_path": "codex-rs/responses-api-proxy/npm/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "cargo",
+   "package": "codex-utils-cache",
+   "manifest_path": "codex-rs/utils/cache/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "cargo",
+   "package": "codex-utils-image",
+   "manifest_path": "codex-rs/utils/image/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "pypi",
+   "package": "openai-codex-cli-bin",
+   "manifest_path": "sdk/python-runtime/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "pypi",
+   "package": "openai-codex",
+   "manifest_path": "sdk/python/pyproject.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_JBM5J6NVTF7",
+   "system": "npm",
+   "package": "@openai/codex-sdk",
+   "manifest_path": "sdk/typescript/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_TBARBJKAD2G",
+   "system": "pypi",
+   "package": "aider-chat",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_D029GAZTH3Z",
+   "system": "pypi",
+   "package": "sweagent",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_2CS7SM2993J",
+   "system": "pypi",
+   "package": "clai",
+   "manifest_path": "clai/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_2CS7SM2993J",
+   "system": "pypi",
+   "package": "pydantic-ai-slim",
+   "manifest_path": "pydantic_ai_slim/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_2CS7SM2993J",
+   "system": "pypi",
+   "package": "pydantic-evals",
+   "manifest_path": "pydantic_evals/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_2CS7SM2993J",
+   "system": "pypi",
+   "package": "pydantic-graph",
+   "manifest_path": "pydantic_graph/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_2CS7SM2993J",
+   "system": "pypi",
+   "package": "pydantic-ai",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_77AC6K7XEWB",
+   "system": "pypi",
+   "package": "amd-sglang",
+   "manifest_path": "3rdparty/amd/wheel/sglang/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_77AC6K7XEWB",
+   "system": "pypi",
+   "package": "sglang",
+   "manifest_path": "python/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_77AC6K7XEWB",
+   "system": "pypi",
+   "package": "flash-attn-4",
+   "manifest_path": "python/sglang/jit_kernel/flash_attn/cute/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_77AC6K7XEWB",
+   "system": "pypi",
+   "package": "sglang-kernel",
+   "manifest_path": "sgl-kernel/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_77AC6K7XEWB",
+   "system": "pypi",
+   "package": "sglang-router",
+   "manifest_path": "sgl-model-gateway/bindings/python/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_X9JA7ZTD6TF",
+   "system": "pypi",
+   "package": "dspy",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_R2TJDSZX29K",
+   "system": "cargo",
+   "package": "block-aligner",
+   "manifest_path": "lib/mmseqs/lib/block-aligner/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "system": "npm",
+   "package": "docs",
+   "manifest_path": "site/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "system": "pypi",
+   "package": "strands-agents",
+   "manifest_path": "strands-py/pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "system": "npm",
+   "package": "@strands-agents/sdk",
+   "manifest_path": "strands-ts/package.json",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_3K17NV4B0JF",
+   "system": "npm",
+   "package": "test-infra",
+   "manifest_path": "test-infra/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_J16JY8N155H",
+   "system": "pypi",
+   "package": "unsloth",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_607VJ9XWYRJ",
+   "system": "pypi",
+   "package": "verl",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4249BQNHNVB",
+   "system": "go",
+   "package": "github.com/vllm-project/aibrix/deployment/terraform",
+   "manifest_path": "deployment/terraform/go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4249BQNHNVB",
+   "system": "go",
+   "package": "github.com/vllm-project/aibrix",
+   "manifest_path": "go.mod",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_4249BQNHNVB",
+   "system": "pypi",
+   "package": "aibrix-kvcache",
+   "manifest_path": "python/aibrix_kvcache/pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_R372CCSVG44",
+   "system": "pypi",
+   "package": "vllm",
+   "manifest_path": "pyproject.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "builtin",
+   "manifest_path": "build/builtin/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "code-oss-dev-build",
+   "manifest_path": "build/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "cargo",
+   "package": "code-cli",
+   "manifest_path": "cli/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "bat",
+   "manifest_path": "extensions/bat/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "clojure",
+   "manifest_path": "extensions/clojure/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "coffeescript",
+   "manifest_path": "extensions/coffeescript/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "cpp",
+   "manifest_path": "extensions/cpp/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "csharp",
+   "manifest_path": "extensions/csharp/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "css",
+   "manifest_path": "extensions/css/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "dart",
+   "manifest_path": "extensions/dart/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "diff",
+   "manifest_path": "extensions/diff/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "docker",
+   "manifest_path": "extensions/docker/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "emmet",
+   "manifest_path": "extensions/emmet/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "fsharp",
+   "manifest_path": "extensions/fsharp/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "git",
+   "manifest_path": "extensions/git/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "github",
+   "manifest_path": "extensions/github/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "go",
+   "manifest_path": "extensions/go/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "groovy",
+   "manifest_path": "extensions/groovy/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "gulp",
+   "manifest_path": "extensions/gulp/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "handlebars",
+   "manifest_path": "extensions/handlebars/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "html",
+   "manifest_path": "extensions/html/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "ipynb",
+   "manifest_path": "extensions/ipynb/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "jake",
+   "manifest_path": "extensions/jake/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "java",
+   "manifest_path": "extensions/java/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "javascript",
+   "manifest_path": "extensions/javascript/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "vscode-json-languageserver",
+   "manifest_path": "extensions/json-language-features/server/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "json",
+   "manifest_path": "extensions/json/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "julia",
+   "manifest_path": "extensions/julia/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "latex",
+   "manifest_path": "extensions/latex/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "less",
+   "manifest_path": "extensions/less/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "log",
+   "manifest_path": "extensions/log/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "lua",
+   "manifest_path": "extensions/lua/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "make",
+   "manifest_path": "extensions/make/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "markdown",
+   "manifest_path": "extensions/markdown-basics/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "keytar",
+   "manifest_path": "extensions/microsoft-authentication/packageMocks/keytar/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "vscode-extensions",
+   "manifest_path": "extensions/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "perl",
+   "manifest_path": "extensions/perl/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "php",
+   "manifest_path": "extensions/php/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "powershell",
+   "manifest_path": "extensions/powershell/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "pug",
+   "manifest_path": "extensions/pug/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "python",
+   "manifest_path": "extensions/python/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "r",
+   "manifest_path": "extensions/r/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "razor",
+   "manifest_path": "extensions/razor/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "ruby",
+   "manifest_path": "extensions/ruby/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "rust",
+   "manifest_path": "extensions/rust/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "scss",
+   "manifest_path": "extensions/scss/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "shaderlab",
+   "manifest_path": "extensions/shaderlab/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "shellscript",
+   "manifest_path": "extensions/shellscript/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "simple-browser",
+   "manifest_path": "extensions/simple-browser/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "sql",
+   "manifest_path": "extensions/sql/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "swift",
+   "manifest_path": "extensions/swift/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "typescript",
+   "manifest_path": "extensions/typescript-basics/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "vb",
+   "manifest_path": "extensions/vb/package.json",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "xml",
+   "manifest_path": "extensions/xml/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_MX90J81EYDE",
+   "system": "npm",
+   "package": "yaml",
+   "manifest_path": "extensions/yaml/package.json",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_NA2QKMK6XZM",
+   "system": "pypi",
+   "package": "osworld",
+   "manifest_path": "pyproject.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "agent",
+   "manifest_path": "crates/agent/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "agent_skills",
+   "manifest_path": "crates/agent_skills/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "anthropic",
+   "manifest_path": "crates/anthropic/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "assets",
+   "manifest_path": "crates/assets/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "audio",
+   "manifest_path": "crates/audio/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "bedrock",
+   "manifest_path": "crates/bedrock/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "breadcrumbs",
+   "manifest_path": "crates/breadcrumbs/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "call",
+   "manifest_path": "crates/call/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "channel",
+   "manifest_path": "crates/channel/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "cli",
+   "manifest_path": "crates/cli/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "client",
+   "manifest_path": "crates/client/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "clock",
+   "manifest_path": "crates/clock/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "collab",
+   "manifest_path": "crates/collab/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "component",
+   "manifest_path": "crates/component/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "copilot",
+   "manifest_path": "crates/copilot/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "dap",
+   "manifest_path": "crates/dap/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "db",
+   "manifest_path": "crates/db/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "diagnostics",
+   "manifest_path": "crates/diagnostics/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "editor",
+   "manifest_path": "crates/editor/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "env_var",
+   "manifest_path": "crates/env_var/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "extension",
+   "manifest_path": "crates/extension/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "zed_extension_api",
+   "manifest_path": "crates/extension_api/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "extension_host",
+   "manifest_path": "crates/extension_host/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "file_finder",
+   "manifest_path": "crates/file_finder/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "fs",
+   "manifest_path": "crates/fs/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "fuzzy",
+   "manifest_path": "crates/fuzzy/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "git",
+   "manifest_path": "crates/git/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "gpui",
+   "manifest_path": "crates/gpui/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "gpui_macros",
+   "manifest_path": "crates/gpui_macros/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "gpui_util",
+   "manifest_path": "crates/gpui_util/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "html_to_markdown",
+   "manifest_path": "crates/html_to_markdown/Cargo.toml",
+   "verdict": "verified"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "http_client",
+   "manifest_path": "crates/http_client/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "http_proxy",
+   "manifest_path": "crates/http_proxy/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "icons",
+   "manifest_path": "crates/icons/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "journal",
+   "manifest_path": "crates/journal/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "language",
+   "manifest_path": "crates/language/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "languages",
+   "manifest_path": "crates/languages/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "livekit_api",
+   "manifest_path": "crates/livekit_api/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "llama_cpp",
+   "manifest_path": "crates/llama_cpp/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "lsp",
+   "manifest_path": "crates/lsp/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "markdown",
+   "manifest_path": "crates/markdown/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "markdown_preview",
+   "manifest_path": "crates/markdown_preview/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "media",
+   "manifest_path": "crates/media/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "menu",
+   "manifest_path": "crates/menu/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "mermaid_render",
+   "manifest_path": "crates/mermaid_render/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "migrator",
+   "manifest_path": "crates/migrator/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "mistral",
+   "manifest_path": "crates/mistral/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "net",
+   "manifest_path": "crates/net/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "node_runtime",
+   "manifest_path": "crates/node_runtime/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "ollama",
+   "manifest_path": "crates/ollama/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "open_ai",
+   "manifest_path": "crates/open_ai/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "opencode",
+   "manifest_path": "crates/opencode/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "outline",
+   "manifest_path": "crates/outline/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "panel",
+   "manifest_path": "crates/panel/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "path",
+   "manifest_path": "crates/path/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "paths",
+   "manifest_path": "crates/paths/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "picker",
+   "manifest_path": "crates/picker/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "prettier",
+   "manifest_path": "crates/prettier/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "project",
+   "manifest_path": "crates/project/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "prompt_store",
+   "manifest_path": "crates/prompt_store/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "proto",
+   "manifest_path": "crates/proto/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "remote",
+   "manifest_path": "crates/remote/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "repl",
+   "manifest_path": "crates/repl/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "reqwest_client",
+   "manifest_path": "crates/reqwest_client/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "rope",
+   "manifest_path": "crates/rope/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "rpc",
+   "manifest_path": "crates/rpc/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "sandbox",
+   "manifest_path": "crates/sandbox/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "scheduler",
+   "manifest_path": "crates/scheduler/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "schema_generator",
+   "manifest_path": "crates/schema_generator/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "search",
+   "manifest_path": "crates/search/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "session",
+   "manifest_path": "crates/session/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "settings",
+   "manifest_path": "crates/settings/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "settings_macros",
+   "manifest_path": "crates/settings_macros/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "sidebar",
+   "manifest_path": "crates/sidebar/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "snippet",
+   "manifest_path": "crates/snippet/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "task",
+   "manifest_path": "crates/task/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "telemetry",
+   "manifest_path": "crates/telemetry/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "terminal",
+   "manifest_path": "crates/terminal/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "text",
+   "manifest_path": "crates/text/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "theme",
+   "manifest_path": "crates/theme/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "time_format",
+   "manifest_path": "crates/time_format/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "ui",
+   "manifest_path": "crates/ui/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "util",
+   "manifest_path": "crates/util/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "watch",
+   "manifest_path": "crates/watch/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "web_search",
+   "manifest_path": "crates/web_search/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "which_key",
+   "manifest_path": "crates/which_key/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "workspace",
+   "manifest_path": "crates/workspace/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "worktree",
+   "manifest_path": "crates/worktree/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "x_ai",
+   "manifest_path": "crates/x_ai/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "zed",
+   "manifest_path": "crates/zed/Cargo.toml",
+   "verdict": "other_repo"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "zlog",
+   "manifest_path": "crates/zlog/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "compliance",
+   "manifest_path": "tooling/compliance/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "lints",
+   "manifest_path": "tooling/lints/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "perf",
+   "manifest_path": "tooling/perf/Cargo.toml",
+   "verdict": "no_link"
+  },
+  {
+   "entity_id": "e_KRDEF79H7GD",
+   "system": "cargo",
+   "package": "xtask",
+   "manifest_path": "tooling/xtask/Cargo.toml",
+   "verdict": "other_repo"
+  }
+ ]
+}
