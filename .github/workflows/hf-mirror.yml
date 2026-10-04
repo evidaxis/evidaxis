@@ -1,0 +1,52 @@
+name: hf-mirror
+
+# Manual mirror of selected snapshot dates onto the Hugging Face dataset.
+# Any non-zero exit from the uploader fails the job, including a person-free abort.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: "Space-separated snapshot dates YYYY-MM-DD"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Install huggingface_hub
+        run: python -m pip install --quiet "huggingface_hub[cli]"
+
+      - name: Mirror selected snapshots
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          DATES: ${{ inputs.dates }}
+        run: |
+          set -euo pipefail
+          if [ -z "${HF_TOKEN:-}" ]; then
+            echo "::error::HF_TOKEN missing"
+            exit 1
+          fi
+          if [ -z "${DATES// /}" ]; then
+            echo "::error::dates input is empty"
+            exit 1
+          fi
+          for date in $DATES; do
+            case "$date" in
+              [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
+              *) echo "::error::dates must be space-separated YYYY-MM-DD, got '$date'"; exit 1 ;;
+            esac
+            python3 scripts/hf_upload_snapshot.py --date "$date"
+          done

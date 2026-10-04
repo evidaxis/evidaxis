@@ -3,6 +3,7 @@ import json
 import pytest
 
 from scripts import hf_upload_snapshot as hf
+from scripts.person_free import build_handle_index, handle_hits
 
 
 @pytest.fixture
@@ -82,3 +83,131 @@ def test_user_owned_projection_and_guard_remain_active(publication_repo, tmp_pat
     (stage / "snapshot.json").write_text("current-person")
     with pytest.raises(SystemExit, match="current-person"):
         hf._assert_person_free(stage)
+
+
+# Parity with web/src/lib/personFree.test.ts. Handles here are synthetic.
+_SCALE = build_handle_index(["f", "av", "78", "100", "e", "synth-owner", "longhandle", "q00"])
+
+
+def test_short_or_numeric_handles_ignore_ordinary_text():
+    ordinary = "A free weekly archive of 100 systems, 78 of them with a figure; av. commits"
+    paths = '<a href="/e/e_ZZZKJHG7Q9A/">agentmemory</a> /ai/cohorts/x/page/100/'
+    assert handle_hits(ordinary, _SCALE) == []
+    assert handle_hits(paths, _SCALE) == []
+    assert handle_hits("code q00", _SCALE) == []
+
+
+def test_handle_in_repository_slug_and_github_url():
+    assert handle_hits("synth-owner/widget", _SCALE) == ["synth-owner"]
+    assert handle_hits("https://github.com/synth-owner/widget", _SCALE) == ["synth-owner"]
+    assert handle_hits("https://api.github.com/repos/synth-owner/widget", _SCALE) == ["synth-owner"]
+    assert handle_hits("see https://github.com/f/repo and https://github.com/100/x", _SCALE) == ["f", "100"]
+    assert handle_hits("https://github.com/q00/x", _SCALE) == ["q00"]
+
+
+def test_mention_and_standalone_distinctive_handle():
+    assert handle_hits("thanks @AV", _SCALE) == ["av"]
+    assert handle_hits("Built by Synth-Owner.", _SCALE) == ["synth-owner"]
+    assert handle_hits("LONGHANDLE model", _SCALE) == ["longhandle"]
+
+
+def test_distinctive_handle_inside_longer_token_does_not_match():
+    assert handle_hits("longhandling and synth-owner-fan", _SCALE) == []
+
+
+def _tiny_repo(tmp_path, repos):
+    repo = tmp_path / "repo"
+    (repo / "etl").mkdir(parents=True)
+    data = repo / "web/src/data"
+    data.mkdir(parents=True)
+    (data / "person-free-handles.json").write_text("[]")
+    (repo / "etl/owner_types.json").write_text(json.dumps({
+        "schema_version": "owner_types_1",
+        "repos": repos,
+    }))
+    return repo
+
+
+def test_guard_ignores_ordinary_text_and_catches_a_real_handle(tmp_path, monkeypatch):
+    repo = _tiny_repo(tmp_path, {
+        "f/widget": {"owner_type": "User", "repo_id": 1, "full_name": "f/widget"},
+        "av/widget": {"owner_type": "User", "repo_id": 2, "full_name": "av/widget"},
+        "78/widget": {"owner_type": "User", "repo_id": 3, "full_name": "78/widget"},
+        "100/widget": {"owner_type": "User", "repo_id": 4, "full_name": "100/widget"},
+        "synth-owner/widget": {"owner_type": "User", "repo_id": 5, "full_name": "synth-owner/widget"},
+    })
+    monkeypatch.setattr(hf, "REPO", repo)
+    stage = tmp_path / "upload"
+    stage.mkdir()
+    blob = stage / "snapshot.json"
+    blob.write_text("A free weekly archive of 100 systems, 78 of them with a figure; av. commits")
+    hf._assert_person_free(stage)
+    blob.write_text("synth-owner/widget")
+    with pytest.raises(SystemExit, match="synth-owner") as caught:
+        hf._assert_person_free(stage)
+    assert caught.value.code == 3
+    blob.write_text("thanks @synth-owner")
+    with pytest.raises(SystemExit, match="synth-owner"):
+        hf._assert_person_free(stage)
+    blob.write_text("Built by Synth-Owner.")
+    with pytest.raises(SystemExit, match="synth-owner"):
+        hf._assert_person_free(stage)
+
+
+def test_projection_neutralizes_handle_name_and_package_label(tmp_path, monkeypatch):
+    repo = _tiny_repo(tmp_path, {
+        "synth-owner/synth-owner": {
+            "owner_type": "User", "repo_id": 11, "full_name": "synth-owner/synth-owner",
+        },
+        "example-org/widget": {
+            "owner_type": "Organization", "repo_id": 12, "full_name": "example-org/widget",
+        },
+    })
+    monkeypatch.setattr(hf, "REPO", repo)
+    original = {"entities": [
+        {
+            "entity_id": "e_SYNTH0001",
+            "name": "Synth-Owner",
+            "slug": "synth-owner",
+            "github_repo": "synth-owner/synth-owner",
+            "homepage": "https://github.com/synth-owner/synth-owner",
+            "note": "maintained as synth-owner",
+            "deps": {"system": "pypi", "package": "synth-owner"},
+        },
+        {
+            "entity_id": "e_ORG0000001",
+            "name": "Widget",
+            "slug": "widget",
+            "github_repo": "example-org/widget",
+            "homepage": "https://example.org",
+            "deps": {"system": "pypi", "package": "torch"},
+        },
+    ]}
+    before = json.dumps(original)
+    projected = hf.project_person_free(original)
+    assert json.dumps(original) == before
+    masked = projected["entities"][0]
+    assert masked["name"] == "System e_SYNTH0001"
+    assert masked["slug"] == "e_synth0001"
+    assert masked["deps"]["package"] == "package not shown"
+    assert "note" not in masked
+    assert "github_repo" not in masked
+    assert masked["repository"]["repo_name"] is None
+    assert "synth-owner" not in json.dumps(projected).lower()
+    kept = projected["entities"][1]
+    assert kept["name"] == "Widget"
+    assert kept["github_repo"] == "example-org/widget"
+    assert kept["homepage"] == "https://example.org"
+    assert kept["deps"]["package"] == "torch"
+    stage = tmp_path / "upload"
+    stage.mkdir()
+    (stage / "snapshot.json").write_text(json.dumps(projected))
+    hf._assert_person_free(stage)
+
+
+@pytest.mark.parametrize("date", ["2026-10-03", "2026-09-26", "2026-09-19"])
+def test_dry_run_real_snapshot_has_zero_guard_hits(date, capsys):
+    assert hf.main(["--date", date, "--dry-run"]) == 0
+    out = capsys.readouterr().out
+    assert f"dry-run {date}:" in out
+    assert "guard_hits=0" in out

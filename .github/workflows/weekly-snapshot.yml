@@ -240,13 +240,25 @@ jobs:
       - name: Mirror latest snapshot to the HF dataset (best-effort)
         if: ${{ inputs.dry_run != true }}
         # Publication projection only (person-free fail-closed guard inside the script).
-        # Never fails the pipeline: the canonical archive is git + Zenodo.
+        # A person-free abort (exit 3) fails this step. Network or upload failures stay
+        # a warning: the canonical archive is git + Zenodo.
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           if [ -z "$HF_TOKEN" ]; then echo "HF_TOKEN absent - skip"; exit 0; fi
           python -m pip install --quiet "huggingface_hub[cli]" || { echo "hf lib install failed"; exit 0; }
-          python3 scripts/hf_upload_snapshot.py || echo "::warning::HF upload deferred (guard or network)"
+          set +e
+          python3 scripts/hf_upload_snapshot.py
+          code=$?
+          set -e
+          if [ "$code" -eq 3 ]; then
+            echo "::error::HF mirror person-free abort (exit 3)"
+            exit 3
+          fi
+          if [ "$code" -ne 0 ]; then
+            echo "::warning::HF upload deferred (network)"
+            exit 0
+          fi
 
       - name: Ask Software Heritage to re-archive the repository
         if: ${{ inputs.dry_run != true }}
