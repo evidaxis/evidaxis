@@ -14,23 +14,23 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 56.4
-  percentile: 73
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 52.8
+  percentile: 40
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.0004706415993899899, "cohort_z": 0.514, "recent_weekly_commits": 0.6, "stars_not_scored": 1759}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 45, "by_year": {"2026": 22, "2025": 23}, "proxy": null}
+    github_commit_velocity: {"slope": -0.006194409586561377, "cohort_z": 0.223, "recent_weekly_commits": 0.4, "stars_not_scored": 1775}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 46, "by_year": {"2026": 23, "2025": 23}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # RoboCasa
 
-Evidaxis measures **RoboCasa** on methodology m3. Momentum 56.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **RoboCasa** on methodology m3. Momentum 52.8/100; 1 axes present, 0 axes converging.

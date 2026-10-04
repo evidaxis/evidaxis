@@ -14,11 +14,11 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
   momentum: 50.0
-  percentile: 45
+  percentile: 46
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []

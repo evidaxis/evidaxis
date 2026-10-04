@@ -14,10 +14,10 @@ classification:
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 54.3
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 50.9
   percentile: 67
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.003000118726826162, "cohort_z": 0.342, "recent_weekly_commits": 0.2, "stars_not_scored": 12384}
+    github_commit_velocity: {"slope": 0.0010237961573245108, "cohort_z": 0.071, "recent_weekly_commits": 0.2, "stars_not_scored": 12523}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 2, "by_year": {"2025": 2}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Agent S
 
-Evidaxis measures **Agent S** on methodology m3. Momentum 54.3/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Agent S** on methodology m3. Momentum 50.9/100; 1 axes present, 0 axes converging.

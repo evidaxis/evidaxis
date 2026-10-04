@@ -14,23 +14,23 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 51.5
-  percentile: 40
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 61.8
+  percentile: 87
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.012894786050324071, "cohort_z": 0.122, "recent_weekly_commits": 18.8, "stars_not_scored": 29988}
+    github_commit_velocity: {"slope": 0.02592789382733658, "cohort_z": 0.941, "recent_weekly_commits": 20.9, "stars_not_scored": 30019}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 4, "points": 23, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 4, "points": 24, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "No canonical peer paper in OpenAlex; axis-2 absent."
 ---
 
 # Genesis
 
-Evidaxis measures **Genesis** on methodology m3. Momentum 51.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Genesis** on methodology m3. Momentum 61.8/100; 1 axes present, 0 axes converging.

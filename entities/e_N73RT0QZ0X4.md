@@ -14,10 +14,10 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 48.0
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 47.8
   percentile: 27
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": -0.0056339091726569715, "cohort_z": -0.028, "recent_weekly_commits": 0.0, "stars_not_scored": 3144}
-    openalex_citation_momentum: {"status": "present", "slope": 0.21436849945392028, "cohort_z": -0.299, "total_citations": 1218, "by_year": {"2026": 117, "2025": 203, "2024": 195, "2023": 183, "2022": 150, "2021": 207, "2020": 128, "2019": 34, "2018": 1}, "proxy": null}
+    github_commit_velocity: {"slope": -0.006385097062344568, "cohort_z": -0.062, "recent_weekly_commits": 0.0, "stars_not_scored": 3146}
+    openalex_citation_momentum: {"status": "present", "slope": 0.22374984964659989, "cohort_z": -0.297, "total_citations": 1210, "by_year": {"2026": 119, "2025": 204, "2024": 195, "2023": 181, "2022": 151, "2021": 203, "2020": 124, "2019": 32, "2018": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
 ---
 
 # Habitat-Lab
 
-Evidaxis measures **Habitat-Lab** on methodology m3. Momentum 48.0/100; 2 axes present, 0 axes converging.
+Evidaxis measures **Habitat-Lab** on methodology m3. Momentum 47.8/100; 2 axes present, 0 axes converging.

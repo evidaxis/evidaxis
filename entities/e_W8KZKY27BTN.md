@@ -14,10 +14,10 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 54.5
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 53.3
   percentile: 72
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: calibration
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.232, "recent_weekly_commits": 0.0, "stars_not_scored": 4170}
-    openalex_citation_momentum: {"status": "present", "slope": 1.6322112963624393, "cohort_z": 0.481, "total_citations": 6142, "by_year": {"2026": 1802, "2025": 2040, "2024": 1505, "2023": 737, "2022": 53, "2020": 1, "2013": 1, "2012": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.035, "recent_weekly_commits": 0.0, "stars_not_scored": 4168}
+    openalex_citation_momentum: {"status": "present", "slope": 1.6324518486709496, "cohort_z": 0.487, "total_citations": 6201, "by_year": {"2026": 1857, "2025": 2041, "2024": 1508, "2023": 737, "2022": 53, "2020": 1, "2013": 1, "2012": 3}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Mature incumbent — cohort calibration; measured but not badge-eligible. Science pub + bioRxiv preprint summed by year."
 ---
 
 # ESM / ESMFold
 
-Evidaxis measures **ESM / ESMFold** on methodology m3. Momentum 54.5/100; 2 axes present, 0 axes converging.
+Evidaxis measures **ESM / ESMFold** on methodology m3. Momentum 53.3/100; 2 axes present, 0 axes converging.

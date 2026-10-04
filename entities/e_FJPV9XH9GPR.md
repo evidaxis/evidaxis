@@ -14,23 +14,25 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 52.4
-  percentile: 53
-  confidence: low
-  axes_present: ["github_commit_velocity"]
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 45.8
+  percentile: 47
+  confidence: medium
+  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
   rising: false
-  status: single-axis
+  status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.00950338104452078, "cohort_z": 0.191, "recent_weekly_commits": 27.0, "stars_not_scored": 15731}
+    github_commit_velocity: {"slope": 0.005947107744845592, "cohort_z": 0.003, "recent_weekly_commits": 26.2, "stars_not_scored": 15776}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 4, "points": 23, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": -0.016902, "theil_sen": 0.0, "cohort_z": -0.674, "latest": 5, "points": 24, "points_reconstructable": 15, "as_of_partition": "2026-09-14", "unstable": false, "rising_vote": false}
 note: "paper_ref: 2408.05517; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # ms-swift
 
-Evidaxis measures **ms-swift** on methodology m3. Momentum 52.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **ms-swift** on methodology m3. Momentum 45.8/100; 2 axes present, 0 axes converging.
+
+This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.

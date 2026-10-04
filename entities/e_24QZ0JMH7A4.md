@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 22.9
-  percentile: 17
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 43.8
+  percentile: 29
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.02513060255648885, "cohort_z": -2.164, "recent_weekly_commits": 0.0, "stars_not_scored": 726}
+    github_commit_velocity: {"slope": -0.005924334876580729, "cohort_z": -0.496, "recent_weekly_commits": 0.0, "stars_not_scored": 724}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # infinite-monitor
 
-Evidaxis measures **infinite-monitor** on methodology m3. Momentum 22.9/100; 1 axes present, 0 axes converging.
+Evidaxis measures **infinite-monitor** on methodology m3. Momentum 43.8/100; 1 axes present, 0 axes converging.

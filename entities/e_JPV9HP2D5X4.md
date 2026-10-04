@@ -14,10 +14,10 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 84.8
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 87.1
   percentile: 100
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.016434071499507766, "cohort_z": 2.782, "recent_weekly_commits": 2.1, "stars_not_scored": 883}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 287, "by_year": {"2026": 221, "2025": 66}, "proxy": null}
+    github_commit_velocity: {"slope": 0.012142877106074985, "cohort_z": 2.967, "recent_weekly_commits": 2.1, "stars_not_scored": 884}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 292, "by_year": {"2026": 226, "2025": 66}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # BioEmu
 
-Evidaxis measures **BioEmu** on methodology m3. Momentum 84.8/100; 1 axes present, 0 axes converging.
+Evidaxis measures **BioEmu** on methodology m3. Momentum 87.1/100; 1 axes present, 0 axes converging.

@@ -14,23 +14,23 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 59.3
-  percentile: 79
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 58.8
+  percentile: 89
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.004113307220791849, "cohort_z": 0.744, "recent_weekly_commits": 63.9, "stars_not_scored": 54684}
+    github_commit_velocity: {"slope": -0.010224514389233693, "cohort_z": 0.703, "recent_weekly_commits": 62.6, "stars_not_scored": 54914}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 2, "points": 23, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 2, "points": 24, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "No academic paper; axis-2 absent."
 ---
 
 # Goose
 
-Evidaxis measures **Goose** on methodology m3. Momentum 59.3/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Goose** on methodology m3. Momentum 58.8/100; 1 axes present, 0 axes converging.

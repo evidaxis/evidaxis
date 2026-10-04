@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 84.3
-  percentile: 87
+  snapshot_id: a57effe0708b
+  captured_at: 2026-10-04T02:32:12+00:00
+  period: 2026-w40
+  momentum: 47.9
+  percentile: 33
   confidence: low
   axes_present: ["github_commit_velocity"]
-  convergent_axes: ["github_commit_velocity"]
+  convergent_axes: []
   rising: false
-  status: watch
+  status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.030679869688344637, "cohort_z": 2.744, "recent_weekly_commits": 10.4, "stars_not_scored": 653}
+    github_commit_velocity: {"slope": -0.0020875045112593786, "cohort_z": -0.169, "recent_weekly_commits": 9.1, "stars_not_scored": 654}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # kooky
 
-Evidaxis measures **kooky** on methodology m3. Momentum 84.3/100; 1 axes present, 1 axes converging.
+Evidaxis measures **kooky** on methodology m3. Momentum 47.9/100; 1 axes present, 0 axes converging.
