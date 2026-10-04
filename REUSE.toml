@@ -18,6 +18,13 @@ precedence = "aggregate"
 SPDX-FileCopyrightText = "NONE"
 SPDX-License-Identifier = "CC0-1.0"
 
+# Research notes: findings, their data and the reproduction scripts are CC0 like the data.
+[[annotations]]
+path = ["research/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
+
 [[annotations]]
 path = ["web/src/pages/methodology/**", "methodology/**"]
 precedence = "override"
