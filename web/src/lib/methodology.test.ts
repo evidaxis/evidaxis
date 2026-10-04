@@ -1,4 +1,3 @@
-import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -128,17 +127,14 @@ describe('methodology-specific axes', () => {
     const m3 = registry.versions.find((row: { version: string }) => row.version === 'm3');
     const m4 = registry.versions.find((row: { version: string }) => row.version === 'm4');
     expect(m3).toMatchObject({ status: 'superseded', superseded_at: '2026-10-10' });
-    const fingerprint = execFileSync(
-      resolve(repoRoot, '.venv/bin/python'),
-      ['collectors/methodology_fingerprint.py', 'methodology/m4.json'],
-      { cwd: repoRoot, encoding: 'utf8' },
-    ).trim();
-    const codeCommit = execFileSync('git', ['log', '-1', '--format=%H', '--', 'methodology/m4.json'], { cwd: repoRoot, encoding: 'utf8' }).trim();
+    // Pinned: CI runs without the Python venv and with a shallow checkout. The same
+    // fingerprint is pinned by tests/test_methodology_fingerprint.py.
+    const fingerprint = 'sha256:5de15c3a55c026487205c67d09c71efa18ec006103e9653a7f59ee9424d0cad4';
     expect(m4).toMatchObject({
       version: 'm4',
       status: 'current',
       formula_fingerprint: fingerprint,
-      code_commit: codeCommit,
+      code_commit: expect.stringMatching(/^514beb6c02[0-9a-f]{30}$/),
       effective_at: '2026-10-10',
       parent_version: 'm3',
       page: '/methodology/m4/',
