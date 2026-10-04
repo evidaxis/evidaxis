@@ -59,8 +59,10 @@ const fmt = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(3);
 const fmtR = (v: number) => (v >= 0 ? '+' : '') + v.toFixed(2);
 // a 'flat base' ratio (prior slope ~ 0) is mathematically degenerate (e.g. +250212x);
 // show a token and let the regime words carry the meaning, not an absurd number.
-const flatBase = !reserved && sig.label.includes('flat base');
-const swingText = flatBase ? 'n/a' : fmtR(sig.value) + '\u00d7';
+const flatBase = !!sigData && sigData.label.includes('flat base');
+// Computed in frontmatter for every card, so a RESERVED series (fewer than 14 commit
+// weeks; first seen 2026-10-03) must not reach fmtR: it has no value to format.
+const swingText = !sigData ? '' : flatBase ? 'n/a' : fmtR(sigData.value) + '\u00d7';
 ---
 {!reserved ? (
   <figure class="evchart sigcard">

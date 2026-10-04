@@ -38,6 +38,12 @@ export function selectClasses(f: FacetInput) {
   };
 }
 
+// A public package name can equal its owner's personal GitHub handle (a pypi
+// package named like its User owner, 2026-10-03); such a link must be dropped
+// before the card text is assembled, not caught after it.
+export const revealsBannedHandle = (text: string, banned: string[]) =>
+  handleHits(decodeURIComponent(text), handleIndex(banned)).length > 0;
+
 export function assertPublicText(text: string, name: string, banned: string[] = []) {
   const findings = [...scanEntityLexicon(text, name), ...scanEntityPageWide(text)];
   if (findings.length || /\u2014|\bn\/a\b|\b(dead|abandoned|dormant|stale|unmaintained|declining|suspended)\b/i.test(text)) {

@@ -1,6 +1,6 @@
 ---
 import type { Entity } from '../lib/data';
-import { commitSeries, citationSeries, deps } from '../lib/data';
+import { commitSeries, citationSeries, deps, publicPackageLabel } from '../lib/data';
 import { COHORT_ORDER } from '../lib/cohorts';
 import Sparkline from './Sparkline.astro';
 import StatusBadge from './StatusBadge.astro';
@@ -63,7 +63,7 @@ const entities = [...raw].sort((a, b) => {
               : <span class="mono muted" style="font-size:.72rem">{measurementPhrases(measurementStateFor(e, snapshot)).citation_axis}</span>}
           </td>
           {hasThirdAxis && <td class="num" title={measurementPhrases(measurementStateFor(e, snapshot)).dependents_axis}>{fmtZ(e.axes.deps_direct_dependents_momentum?.cohort_z ?? null)}</td>}
-          <td class="num" title={dep ? `${dep.direct} direct${dep.indirect ? `, ${dep.indirect} indirect` : ''} (deps.dev ${dep.system}/${dep.package}); daily unscored count` : 'not measured'}>
+          <td class="num" title={dep ? `${dep.direct} direct${dep.indirect ? `, ${dep.indirect} indirect` : ''} (deps.dev ${publicPackageLabel(dep.system, dep.package)}); daily unscored count` : 'not measured'}>
             {dep ? dep.value.toLocaleString() : <span class="mono muted" style="font-size:.72rem">n/a</span>}
           </td>
         </tr>

@@ -85,6 +85,12 @@ export function publicRepoLabel(e: RepositoryEntity, registry: OwnerTypes): stri
   return revealsHandle(repoName, registry) ? 'repository not shown' : repoName;
 }
 
+// deps.dev package names can equal the owner's personal handle (pypi packages
+// named like their User repositories, 2026-10-03); hide those like repo labels.
+export function publicPackageLabel(system: string, pkg: string, registry: OwnerTypes): string {
+  return revealsHandle(pkg, registry) ? 'package not shown' : `${system}/${pkg}`;
+}
+
 export function publicOwnerType(e: RepositoryEntity, registry: OwnerTypes): OwnerType {
   return entryFor(e, registry).owner_type;
 }

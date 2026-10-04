@@ -15,6 +15,7 @@ import {
   publicHomepage as projectPublicHomepage,
   publicOwnerType as projectPublicOwnerType,
   publicRepoLabel as projectPublicRepoLabel,
+  publicPackageLabel as projectPublicPackageLabel,
   publicRepoUrl as projectPublicRepoUrl,
   publicSnapshot as projectPublicSnapshot,
   type OwnerTypes,
@@ -127,6 +128,7 @@ export const manifest = readJson(`data/snapshots/${SNAP_DATE}/manifest.json`);
 export const taxonomy = readJson('taxonomy/nodes.json');
 export const ownerTypes = readJson('etl/owner_types.json') as OwnerTypes;
 export const publicRepoLabel = (e: Entity) => projectPublicRepoLabel(e, ownerTypes);
+export const publicPackageLabel = (system: string, pkg: string) => projectPublicPackageLabel(system, pkg, ownerTypes);
 export const publicOwnerType = (e: Entity) => projectPublicOwnerType(e, ownerTypes);
 export const publicRepoUrl = (e: Entity) => projectPublicRepoUrl(e, ownerTypes);
 export const publicHomepage = (e: Entity) => projectPublicHomepage(e, ownerTypes);

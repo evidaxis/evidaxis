@@ -4,7 +4,7 @@ import type { MeasurementState } from '../measurement';
 import { measurementPhrases } from '../measurement';
 import { claimUrnForEntity } from '../claim_urn';
 import { TEMPLATE_VERSION } from './config';
-import { assertPublicText, copy, facet, selectClasses } from './facets';
+import { assertPublicText, copy, facet, revealsBannedHandle, selectClasses } from './facets';
 
 export const numeric = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
 export const fmt = (n: number | null): string => n === null ? 'no reading' : Number(n.toFixed(3)).toLocaleString('en-US', { maximumFractionDigits: 3 });
@@ -168,10 +168,13 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     return end >= 12 ? roundedAverage(ctx.commits.slice(end - 12, end)) : null;
   };
   const averages = ctx.commits.slice(11).map((_, i) => roundedAverage(ctx.commits.slice(i, i + 12)));
+  const dailyUrl = ctx.daily ? `https://api.deps.dev/v3alpha/systems/${encodeURIComponent(ctx.daily.system)}/packages/${encodeURIComponent(ctx.daily.package)}` : '';
+  // No source link rather than one that names a person (empty is the existing no-API case).
+  const dailySource = dailyUrl && !revealsBannedHandle(dailyUrl, ctx.bannedOwners) ? dailyUrl : '';
   const source = (key: string) => key === 'citations' || key === 'citation_series'
     ? `https://api.openalex.org/works?filter=openalex:${e.openalex_work_ids.join('|')}`
     : key === 'dependents' || key === 'dependents_series' ? `https://evidaxis.org/snapshots/${date}/snapshot.json`
-    : key === 'daily' && ctx.daily ? `https://api.deps.dev/v3alpha/systems/${encodeURIComponent(ctx.daily.system)}/packages/${encodeURIComponent(ctx.daily.package)}`
+    : key === 'daily' && ctx.daily ? dailySource
     : ctx.repoApi ? `${ctx.repoApi}${key === 'stars' ? '' : '/stats/commit_activity'}` : '';
   const definitions = {
     commits: 'GitHub averaged commits per week over the trailing window (12 weeks); deltas compare trailing averages, range spans rolling averages within 52 weeks.',

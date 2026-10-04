@@ -156,3 +156,29 @@ def test_repository_cache_covers_internal_id_map():
     ids = json.loads((root / "etl/id_map.json").read_text())
     cache = json.loads((root / "etl/owner_types.json").read_text())
     assert owner_classify.verify_cache(ids, cache) == []
+
+
+def test_refresh_keeps_a_departed_seed_classified_and_never_fetches_it(tmp_path):
+    # Seed removed from id_map (repository deleted on GitHub) but still in archived
+    # snapshots: its last classification stays, so the site can render the card.
+    id_map = tmp_path / "id_map.json"
+    cache = tmp_path / "owner_types.json"
+    id_map.write_text(json.dumps({"live/repo": "e_1"}))
+    gone = {"owner_type": "User", "repo_id": 7, "full_name": "gone/repo"}
+    cache.write_text(json.dumps({
+        "schema_version": "owner_types_1",
+        "repos": {"live/repo": {"owner_type": "Organization", "repo_id": 1, "full_name": "live/repo"},
+                  "gone/repo": gone},
+    }))
+
+    def fetcher(repo, _token):
+        assert repo == "live/repo"
+        return {"owner_type": "Organization", "repo_id": 1, "full_name": "live/repo"}
+
+    assert owner_classify.refresh(id_map, cache, token="token", fetcher=fetcher)
+    assert json.loads(cache.read_text())["repos"]["gone/repo"] == gone
+
+
+def test_verify_still_requires_every_current_repository():
+    cache = {"schema_version": "owner_types_1", "repos": {}}
+    assert any("missing=['live/repo']" in e for e in owner_classify.verify_cache({"live/repo": "e_1"}, cache))

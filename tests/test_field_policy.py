@@ -45,7 +45,16 @@ def test_owner_classification_is_complete_and_minimal():
     id_map = json.loads((REPO / "etl/id_map.json").read_text())
     cache = json.loads((REPO / "etl/owner_types.json").read_text())
     assert cache.get("schema_version") == "owner_types_1"
-    assert set(cache.get("repos", {})) == set(id_map)
+    repos = set(cache.get("repos", {}))
+    assert set(id_map) <= repos
+    # Minimal: an entry outside id_map is allowed only for a departed seed whose
+    # card an archived snapshot still publishes (owner_classify carries it over).
+    extra = repos - set(id_map)
+    if extra:
+        archived = set()
+        for snap in (REPO / "data" / "snapshots").glob("*/snapshot.json"):
+            archived |= {e.get("github_repo") for e in json.loads(snap.read_text())["entities"]}
+        assert extra <= archived, f"owner cache keeps repos no snapshot publishes: {sorted(extra - archived)}"
     for entry in cache["repos"].values():
         assert set(entry) == {"owner_type", "repo_id", "full_name"}
         assert entry["owner_type"] in {"Organization", "User"}

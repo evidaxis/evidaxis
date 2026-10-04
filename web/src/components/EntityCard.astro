@@ -10,7 +10,7 @@
  * own honest null state; nothing is fabricated.
  */
 import type { Entity } from '../lib/data';
-import { snapshot, commitSeries, entitiesInCohort, deps, publicRepoLabel, publicRepoUrl } from '../lib/data';
+import { snapshot, commitSeries, entitiesInCohort, deps, publicRepoLabel, publicRepoUrl, publicPackageLabel } from '../lib/data';
 import { cohortColor, cohortLabel } from '../lib/cohorts';
 import { measurementPhrases, measurementStateFor } from '../lib/measurement';
 import GateGlyph from './charts/GateGlyph.astro';
@@ -122,7 +122,7 @@ const repoUrl = publicRepoUrl(e);
       <div class="adoption">
         <span class="ad-lab mono">Daily dependents count (unscored)</span>
         <span class="ad-val"><data value={String(dep.value)}>{dep.value.toLocaleString()}</data> dependents</span>
-        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {dep.system}/{dep.package} · deps.dev{hasThirdAxis && <> · <a href="/methodology/m3/#dependents">the scored m3 axis uses weekly partitions</a></>}</span>
+        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {publicPackageLabel(dep.system, dep.package)} · deps.dev{hasThirdAxis && <> · <a href="/methodology/m3/#dependents">the scored m3 axis uses weekly partitions</a></>}</span>
       </div>
     )}
   </div>

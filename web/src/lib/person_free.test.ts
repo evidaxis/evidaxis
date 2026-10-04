@@ -124,3 +124,14 @@ describe('person-free repository publication', () => {
     expect(() => publicRepoLabel({ github_repo: 'new/repo' }, registry)).toThrow(/classification/);
   });
 });
+
+describe('publicPackageLabel', () => {
+  it('hides a deps.dev package named like its personal owner and keeps others', async () => {
+    const { publicPackageLabel } = await import('./person_free');
+    const registry = { schema_version: 'owner_types_1', repos: {
+      'some-person/some-person': { owner_type: 'User', repo_id: 11, full_name: 'some-person/some-person' },
+    } } as never;
+    expect(publicPackageLabel('pypi', 'some-person', registry)).toBe('package not shown');
+    expect(publicPackageLabel('pypi', 'torch', registry)).toBe('pypi/torch');
+  });
+});

@@ -261,8 +261,24 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
 } else {
   const internalRepos = Object.keys(ID_MAP).sort();
   const classifiedRepos = Object.keys(registry).sort();
-  if (JSON.stringify(internalRepos) !== JSON.stringify(classifiedRepos)) {
-    errors.push('etl/owner_types.json: repository coverage must exactly match etl/id_map.json');
+  // Every current repository must be classified; an extra key is allowed only for a
+  // departed seed whose card an archived snapshot still publishes (owner_classify.py
+  // carries it over; 2026-10-03, a repository deleted on GitHub).
+  const classifiedSet = new Set(classifiedRepos);
+  if (internalRepos.some(r => !classifiedSet.has(r))) {
+    errors.push('etl/owner_types.json: every repository in etl/id_map.json must be classified');
+  }
+  const internalSet = new Set(internalRepos);
+  const extraRepos = classifiedRepos.filter(r => !internalSet.has(r));
+  if (extraRepos.length) {
+    const snapRoot = new URL('../../data/snapshots/', import.meta.url);
+    const archived = new Set();
+    for (const d of readdirSync(snapRoot)) {
+      const f = new URL(`${d}/snapshot.json`, snapRoot);
+      if (existsSync(f)) for (const e of JSON.parse(readFileSync(f, 'utf8')).entities) archived.add(e.github_repo);
+    }
+    const unpublished = extraRepos.filter(r => !archived.has(r));
+    if (unpublished.length) errors.push(`etl/owner_types.json: keeps repositories no snapshot publishes: ${unpublished.join(', ')}`);
   }
 
   const bannedOwners = new Map();

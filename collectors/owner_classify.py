@@ -38,10 +38,12 @@ def verify_cache(id_map: dict[str, str], cache: Any) -> list[str]:
     repos = cache.get("repos")
     if not isinstance(repos, dict):
         return ["cache repos must be an object"]
-    if set(repos) != set(id_map):
-        missing = sorted(set(id_map) - set(repos))
-        extra = sorted(set(repos) - set(id_map))
-        errors.append(f"cache coverage mismatch; missing={missing}, extra={extra}")
+    # Every current repository must be classified. Extra keys are departed seeds
+    # (deleted on GitHub, no longer in id_map) whose archived cards still render;
+    # refresh() only ever carries them over from the previous cache.
+    missing = sorted(set(id_map) - set(repos))
+    if missing:
+        errors.append(f"cache coverage mismatch; missing={missing}")
     for repo, entry in repos.items():
         if not isinstance(entry, dict) or set(entry) != ALLOWED_FIELDS:
             errors.append(f"{repo}: fields must be {sorted(ALLOWED_FIELDS)}")
@@ -175,6 +177,12 @@ def refresh(
         if old_entry.get("owner_type") == "User" and entry["owner_type"] == "Organization":
             raise RuntimeError(f"{repo}: User to Organization transition requires manual confirmation")
         refreshed[repo] = entry
+    # A seed removed from id_map (e.g. its repository is gone on GitHub) keeps its
+    # last confirmed classification: archived snapshots still publish its card, and
+    # the site fails closed on an unclassified owner (2026-10-03 deploy stop).
+    for repo, old_entry in old_repos.items():
+        if repo not in refreshed and isinstance(old_entry, dict):
+            refreshed[repo] = old_entry
     payload = {"schema_version": SCHEMA_VERSION, "repos": refreshed}
     errors = verify_cache(id_map, payload)
     if errors:

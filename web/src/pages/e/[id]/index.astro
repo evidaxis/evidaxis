@@ -10,7 +10,7 @@ import AlphaSignal from '../../../components/charts/AlphaSignal.astro';
 import GateEtaSignal from '../../../components/charts/GateEtaSignal.astro';
 import SignalQuality from '../../../components/charts/SignalQuality.astro';
 import SnapshotProvenance from '../../../components/charts/SnapshotProvenance.astro';
-import { entityUniverse, commitSeries, industries, entitiesInCohort, deps, depsSeries, backfillSeries, cleanLabel, fmtZ, fmtSlope, publicRepoLabel, publicRepoUrl, publicHomepage } from '../../../lib/data';
+import { entityUniverse, commitSeries, industries, entitiesInCohort, deps, depsSeries, backfillSeries, cleanLabel, fmtZ, fmtSlope, publicRepoLabel, publicRepoUrl, publicHomepage, publicPackageLabel } from '../../../lib/data';
 import type { ArchivedEntity } from '../../../lib/archive';
 import { cohortLabel } from '../../../lib/cohorts';
 import { entityGraph, breadcrumb } from '../../../lib/jsonld';
@@ -187,7 +187,7 @@ const cardDescription = card?.nicheAssigned
           <div class="ad-row">
             <DepsSparkline series={dSeries} label={`${e.name} dependents over time`} />
             <p class="ad-cap mono">
-              Downstream packages depending on <b>{dep.system}/{dep.package}</b> (deps.dev), captured point-in-time each snapshot.
+              Downstream packages depending on <b>{publicPackageLabel(dep.system, dep.package)}</b> (deps.dev), captured point-in-time each snapshot.
               This daily series is unscored. The <a href="/methodology/m3/#dependents">scored axis in m3 uses weekly partitions</a>.
             </p>
           </div>
