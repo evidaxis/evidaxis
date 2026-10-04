@@ -237,3 +237,26 @@ def test_rewrite_capture_refs_date_guarded(tmp_path, monkeypatch):
     assert json.loads(lines[1])["snapshot_id"] == "oldoldoldold"   # published: untouched
     assert "newnewnewnew" in (ents / "e_X.md").read_text()
     assert "oldoldoldold" in (ents / "e_Y.md").read_text()
+
+
+def test_rewrite_capture_refs_follows_a_run_that_crosses_midnight(tmp_path, monkeypatch):
+    """Pinned 2026-10-03 run whose capture happened after 00:00 UTC on 2026-10-04."""
+    from datetime import datetime, timezone
+    hist = tmp_path / "data" / "history"
+    hist.mkdir(parents=True)
+    this_run = json.dumps({"v": "ts_1", "snapshot_id": "oldoldoldold",
+                           "captured_at": "2026-10-04T01:30:00+00:00", "momentum": 1.0})
+    earlier = json.dumps({"v": "ts_1", "snapshot_id": "oldoldoldold",
+                          "captured_at": "2026-09-26T22:11:54+00:00", "momentum": 2.0})
+    (hist / "e_X.jsonl").write_text(earlier + "\n" + this_run + "\n")
+    monkeypatch.setattr(si, "HISTORY", hist)
+    monkeypatch.setattr(si, "ENTITIES", tmp_path / "entities")
+
+    # Without the run start only the snapshot date matches: the row stays a phantom.
+    assert si.rewrite_capture_refs("oldoldoldold", "newnewnewnew", "2026-10-03") == 0
+
+    started = datetime(2026, 10, 4, 0, 15, tzinfo=timezone.utc)
+    assert si.rewrite_capture_refs("oldoldoldold", "newnewnewnew", "2026-10-03", started) == 1
+    lines = (hist / "e_X.jsonl").read_text().splitlines()
+    assert json.loads(lines[0])["snapshot_id"] == "oldoldoldold"   # earlier capture untouched
+    assert json.loads(lines[1])["snapshot_id"] == "newnewnewnew"   # this run follows the id

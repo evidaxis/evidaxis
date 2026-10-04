@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -94,13 +95,29 @@ def rewrite_snapshot(path: Path) -> tuple[str, str, bool]:
     return old, new, True
 
 
-def rewrite_capture_refs(old: str, new: str, snapshot_date: str) -> int:
+def _captured_since(captured_at: str, run_started: datetime | None) -> bool:
+    if run_started is None:
+        return False
+    try:
+        ts = datetime.fromisoformat(captured_at.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=timezone.utc)
+    return ts >= run_started
+
+
+def rewrite_capture_refs(old: str, new: str, snapshot_date: str,
+                         run_started: datetime | None = None) -> int:
     """The frozen collector stamps TODAY's history rows (data/history/*.jsonl, ts_1)
     and entity cards (entities/*.md) with the pre-rewrite snapshot_id DURING capture,
     before this post-step runs. Bring those same-capture references in lockstep or
     history_ledger_check sees a phantom id (CI failure 2026-07-10, run 29118368474).
     Guard: only rows whose captured_at falls on `snapshot_date` are touched —
-    published rows from earlier captures stay byte-identical (append-only)."""
+    published rows from earlier captures stay byte-identical (append-only).
+    A pinned snapshot_date does not move captured_at, so a run that crosses 00:00 UTC
+    stamps rows with the next day (2026-10-03 re-run, 5,924 phantom rows). Rows
+    captured at or after `run_started` belong to this capture too."""
     n = 0
     if HISTORY.is_dir():
         for f in HISTORY.glob("*.jsonl"):
@@ -114,8 +131,10 @@ def rewrite_capture_refs(old: str, new: str, snapshot_date: str) -> int:
                         row = json.loads(ln)
                     except ValueError:
                         row = None
+                    captured = str(row.get("captured_at", "")) if row else ""
                     if (row and row.get("snapshot_id") == old
-                            and str(row.get("captured_at", "")).startswith(snapshot_date)):
+                            and (captured.startswith(snapshot_date)
+                                 or _captured_since(captured, run_started))):
                         # Quoted-token replace keeps the row's original formatting.
                         ln = ln.replace(f'"{old}"', f'"{new}"')
                         changed = True
@@ -275,7 +294,11 @@ def main() -> int:
     old, new, changed = rewrite_snapshot(path)
     if changed:
         print(f"snapshot_identity: {date} snapshot_id {old} -> {new}")
-        refs = rewrite_capture_refs(old, new, date)
+        # The workflow pins EVX_RUN_STARTED once per run (epoch seconds).
+        started = os.environ.get("EVX_RUN_STARTED", "")
+        run_started = (datetime.fromtimestamp(int(started), timezone.utc)
+                       if started.isdigit() and int(started) > 0 else None)
+        refs = rewrite_capture_refs(old, new, date, run_started)
         if refs:
             print(f"snapshot_identity: {refs} same-capture reference(s) brought in lockstep "
                   f"(data/history + entities cards)")
