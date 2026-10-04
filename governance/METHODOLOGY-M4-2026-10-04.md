@@ -1,7 +1,8 @@
 # Methodology m4 — axis 3 counts only a system's own packages, effective 2026-10-10
 
-> status: RECORD 2026-10-04, implementation pending (this file is FIXED by the commit that
-> activates m4 in the weekly pipeline). Supersedes the axis-3 package admission of
+> status: FIXED 2026-10-04. Implementation: `e5ea50fb4` (core), `514beb6c0` (review fixes),
+> `fa0b427b6` and follow-ups (site, registry, permalink). Scoring switches to m4
+> automatically for snapshots dated 2026-10-10 and later; earlier snapshots stay on m3. Supersedes the axis-3 package admission of
 > `AXIS3-DEPS-V2H1-SUPERSESSION-2026-07-21.md` component 5 for m4 scoring only. m1, m2 and
 > m3 rows, pages and snapshots are unchanged; nothing published is recomputed
 > (METHODOLOGY-VERSIONING.md rule 3). Class: MAJOR (the axis-3 measurand changes).
