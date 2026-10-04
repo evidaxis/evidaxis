@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" font-family="Inter, Helvetica, Arial, sans-serif">
+<rect width="720" height="300" fill="#fcfcfb"/>
+<text x="24" y="34" font-size="17" font-weight="600" fill="#0b0b0b">Share of open-source AI repos with no default-branch commits in 12 weeks</text>
+<text x="24" y="56" font-size="13" fill="#52514e">By GitHub stars · Evidaxis registry, 2026-10-03 · n = 5,909</text>
+<text x="108" y="96.0" font-size="14" text-anchor="end" fill="#0b0b0b">&lt;1k stars</text>
+<rect x="120" y="74" width="450" height="34" fill="#ecebe8"/>
+<rect x="120" y="74" width="235.5" height="34" rx="4" fill="#2a78d6"/>
+<text x="582" y="96.0" font-size="14" fill="#0b0b0b">52%  <tspan fill="#52514e">(1,074 of 2,052)</tspan></text>
+<text x="108" y="148.0" font-size="14" text-anchor="end" fill="#0b0b0b">1k-10k stars</text>
+<rect x="120" y="126" width="450" height="34" fill="#ecebe8"/>
+<rect x="120" y="126" width="187.2" height="34" rx="4" fill="#2a78d6"/>
+<text x="582" y="148.0" font-size="14" fill="#0b0b0b">42%  <tspan fill="#52514e">(1,342 of 3,226)</tspan></text>
+<text x="108" y="200.0" font-size="14" text-anchor="end" fill="#0b0b0b">10k-50k stars</text>
+<rect x="120" y="178" width="450" height="34" fill="#ecebe8"/>
+<rect x="120" y="178" width="100.1" height="34" rx="4" fill="#2a78d6"/>
+<text x="582" y="200.0" font-size="14" fill="#0b0b0b">22%  <tspan fill="#52514e">(119 of 535)</tspan></text>
+<text x="108" y="252.0" font-size="14" text-anchor="end" fill="#0b0b0b">50k+ stars</text>
+<rect x="120" y="230" width="450" height="34" fill="#ecebe8"/>
+<rect x="120" y="230" width="37.5" height="34" rx="4" fill="#2a78d6"/>
+<text x="582" y="252.0" font-size="14" fill="#0b0b0b">8%  <tspan fill="#52514e">(8 of 96)</tspan></text>
+</svg>
