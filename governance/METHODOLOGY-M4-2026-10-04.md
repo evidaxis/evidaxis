@@ -61,12 +61,23 @@ quantity, not merely 14 confirmed-clean partitions.
 
 ## 3. Effect, computed from committed files on 2026-10-04
 
-Of the systems carrying at least one `other_repo` package in stored captures: 9 keep an
-exactly derived history (19–27 usable points); 3 restart and are unscored on axis 3 until
-14 usable points accrue (about three months), among them Void (`e_MX90J81EYDE`), whose
-published m3 value of 126,420 direct dependents came from packages of other repositories;
-8 leave axis 3. All other panel systems are unchanged. Numbers are recomputed at
-activation and published with the first m4 snapshot.
+`collectors/axis3_m4_activation_report.py --as-of 2026-10-03` (cutoff partition
+2026-09-14): 26 systems hold at least one excluded package. Of the 15 of them with a scored
+axis 3 in the m3 snapshot of 2026-10-03, under m4:
+
+- 8 stay scored on an exactly derived 24-point run (Continue, UI-TARS Desktop, Kilo Code,
+  Zed, Microsoft Agent Framework, Cline, Qwen Code, dora-rs);
+- 3 restart and are unscored on axis 3 until 14 usable points accrue, about three months
+  (LangGraph, Void, Mastra) — Void's published m3 value of 126,420 direct dependents came
+  from packages of other repositories;
+- 4 leave axis 3 because no admitted package remains (Letta, Open Interpreter, MetaGPT,
+  Qwen3-VL).
+
+The other 11 affected systems were not scored under m3 and are not scored under m4 (7 out of
+panel, 4 below floor). Cohort canary agreement under m4 is equal or higher in every cohort
+with votes (agent-frameworks 0.941 → 1.000, coding-agents 0.917 → 1.000); the
+multimodal-foundation-models cohort has no axis-3 vote under m4 (n 1 → 0). All other panel
+systems are unchanged. The report is re-run on the first m4 snapshot and published with it.
 
 ## 4. Forward captures
 
