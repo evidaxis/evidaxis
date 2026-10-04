@@ -109,6 +109,19 @@ Two clarifications that close open seams in the pre-spine interim, forward-only:
 
 ## Errata (documentation-only; frozen files are never edited)
 
+- **2026-10-04 — m3 axis 3 is not "linkage-verified".** `methodology/m3.json` and the
+  axis-3 text on cards describe the package union as linkage-verified. The frozen rule
+  admitted a package when one of that NAME existed on deps.dev; 158 of 614 admitted
+  packages name a different source repository (audit:
+  `data/quarantine/axis3-deps-v2/linkage-audit-2026-10-04.json`). Affected published m3
+  snapshots: 2026-09-19, 2026-09-26, 2026-10-03. In them, the axis-3 values of the systems
+  holding such packages (15 of the 48 with a scored axis 3 on 2026-10-03) include
+  dependents of other repositories' packages — for example Void (`e_MX90J81EYDE`), 126,420
+  on 2026-10-03, none attributable to its own packages — and the cohort z of every system
+  in those cohorts is computed against those values. The snapshots stay as published under
+  m3; the correction is methodology m4 (`governance/METHODOLOGY-M4-2026-10-04.md`),
+  effective 2026-10-10.
+
 - **2026-07-02 — `etl/collect.py` header docstring lags m2.** The module
   docstring (lines 10-11) still describes the gate in m1 language ("raw slope > 0
   AND cohort-z >= 0"). The *executable* code enforces m2: `RISING_Z_FLOOR = 1.0`

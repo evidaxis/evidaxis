@@ -1,6 +1,6 @@
 # DRAFT 2026-10-04: the axis-3 panel admits namesake packages of other repositories
 
-> status: DRAFT — finding with a proposed correction; the correction changes the frozen
+> status: SUPERSEDED 2026-10-04 by `governance/METHODOLOGY-M4-2026-10-04.md` (its option 3 — a paid replay or subtraction — is NOT adopted; history is derived exactly from stored per-package rows or restarts). Original status: DRAFT — finding with a proposed correction; the correction changes the frozen
 > panel, so it needs a superseding record, not an erratum · class: identity defect in the
 > frozen panel plus a description that overstates it · evidence:
 > `data/quarantine/axis3-deps-v2/linkage-audit-2026-10-04.json`. No committed verdict,
