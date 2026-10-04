@@ -2,6 +2,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from collectors import axis3_m4_identity as ident
 from collectors import score_m3 as m3
 from collectors import t2_deps_v2h1_collect as collect
@@ -57,12 +59,13 @@ def test_admitted_truth_table(monkeypatch):
         ("e", "NPM/priv-ok"): "verified",
         ("e", "NPM/nolink"): "no_link",
     })
-    monkeypatch.setattr(ident, "_private_flags", lambda: {("e", "priv-open"): True, ("e", "priv-ok"): True})
+    monkeypatch.setattr(ident, "_private_flags", lambda: {("e", "NPM/priv-open"): True, ("e", "NPM/priv-ok"): True})
     assert ident.admitted("e", "NPM/other") is False
     assert ident.admitted("e", "NPM/priv-open") is False
     assert ident.admitted("e", "NPM/priv-ok") is True
     assert ident.admitted("e", "NPM/nolink") is True
     assert ident.admission_label("e", "NPM/nolink") == "unverified"
+    assert ident.admission_label("e", "NPM/priv-open") == "private"
 
 
 def test_real_audit_admission_matches_stored_verdicts():
@@ -71,7 +74,7 @@ def test_real_audit_admission_matches_stored_verdicts():
     other = next(key for key, verdict in verdicts.items() if verdict == "other_repo")
     no_link = next(key for key, verdict in verdicts.items() if verdict == "no_link")
     private_ok = next(key for key, verdict in verdicts.items()
-                      if verdict == "verified" and private.get((key[0], key[1].split("/", 1)[1]), False))
+                      if verdict == "verified" and private.get(key, False))
     assert ident.admitted(*other) is False
     assert ident.admitted(*no_link) is True
     assert ident.admission_label(*no_link) == "unverified"
@@ -81,7 +84,7 @@ def test_real_audit_admission_matches_stored_verdicts():
 def test_panel_m4_drops_unadmitted_and_keeps_self_names():
     full, sha = collect.load_panel()
     admitted, admitted_sha = ident.load_panel_m4()
-    assert admitted_sha == sha
+    assert admitted_sha.startswith("m4:") and admitted_sha == ident.m4_mapping_sha(sha)
     assert set(admitted) < set(full)
     for eid, pkgs in admitted.items():
         assert pkgs <= full[eid] and pkgs
@@ -241,3 +244,32 @@ def test_forward_capture_uses_m4_mapping_and_fixed_self_names():
         system, pkg = name.split("/", 1)
         assert f"WHEN d.System = '{system}' AND d.Name = '{pkg}'" not in case
         assert f"'{name}'" in rest
+
+
+
+# ---------------------------------------------------------------- review fixes 2026-10-04
+
+def test_unaudited_panel_package_fails_loudly(monkeypatch):
+    monkeypatch.setattr(ident, "_verdicts", lambda: {})
+    monkeypatch.setattr(ident, "_legacy_pins", lambda: frozenset({("e_PIN", "PYPI/pinned")}))
+    assert ident.admitted("e_PIN", "PYPI/pinned") is True  # legacy pin = verified by construction
+    with pytest.raises(ValueError):
+        ident.admitted("e_UNKNOWN", "NPM/nobody-audited-this")
+
+
+def test_every_v2h1_panel_package_has_a_verdict():
+    full, _sha = collect.load_panel()
+    for eid, pkgs in full.items():
+        for system, name in pkgs:
+            ident.admitted(eid, f"{system}/{name}")  # raises when a pair is uncovered
+
+
+def test_gap_in_calendar_restarts_the_run():
+    points = [("2026-01-05", "a", 10), ("2026-01-12", "a", 11), ("2026-01-26", "a", 13)]
+    calendar = ["2026-01-05", "2026-01-12", "2026-01-19", "2026-01-26"]
+    assert ident._latest_run(points, None, calendar) == [("2026-01-26", 13)]
+    # dates before the series starts are not gaps
+    assert ident._latest_run(points[2:], None, calendar) == [("2026-01-26", 13)]
+    # a date outside the confirmed set is skipped, not a gap
+    assert ident._latest_run(points, {"2026-01-05", "2026-01-12", "2026-01-26"}, calendar) == [
+        ("2026-01-05", 10), ("2026-01-12", 11), ("2026-01-26", 13)]

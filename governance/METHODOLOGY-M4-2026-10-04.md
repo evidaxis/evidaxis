@@ -81,9 +81,14 @@ systems are unchanged. The report is re-run on the first m4 snapshot and publish
 
 ## 4. Forward captures
 
-From the first capture after activation, the BigQuery query maps only m4-admitted packages
-to systems; the self-name list stays as in §1. Cost is the existing weekly capture; no
-replay is bought.
+For deps.dev partitions dated on or after 2026-10-10, the BigQuery query maps only
+m4-admitted packages to systems; the self-name list stays as in §1. The switch follows the
+partition date, not the day the capture runs, so a capture is reproducible from its
+partition alone; a partition captured under the v2h.1 mapping is still scored through §2.
+Each m4 capture records its own mapping hash (v2h.1 manifest + linkage audit + private
+evidence). Legacy pins of the v2h.1 panel count as verified (linkage was checked when each
+was pinned); any other panel package without an audit verdict stops the run. Cost is the
+existing weekly capture; no replay is bought.
 
 ## 5. Gates rechecked at activation (thresholds not lowered)
 

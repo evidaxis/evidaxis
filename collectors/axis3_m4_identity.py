@@ -7,6 +7,7 @@ Standard library only.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from collections import defaultdict
 from functools import lru_cache
@@ -41,7 +42,33 @@ def _verdicts() -> dict[tuple[str, str], str]:
 @lru_cache(maxsize=1)
 def _private_flags() -> dict[tuple[str, str], bool]:
     doc = json.loads(PRIVATE_PATH.read_text(encoding="utf-8"))
-    return {(row["entity_id"], row["package"]): row.get("private") is True for row in doc["packages"]}
+    # The evidence file covers npm package.json manifests only.
+    return {(row["entity_id"], f"NPM/{row['package']}"): row.get("private") is True for row in doc["packages"]}
+
+
+@lru_cache(maxsize=1)
+def _legacy_pins() -> frozenset[tuple[str, str]]:
+    """Pre-freeze pins of the v2h.1 panel: name match AND source-repository linkage were
+    verified when each was pinned (data/deps_id_map.json), so they count as verified."""
+    pins = json.loads(deps.LEGACY_PINS.read_text(encoding="utf-8"))["pins"]
+    id_map = json.loads((deps.REPO / "etl/id_map.json").read_text(encoding="utf-8"))
+    out = set()
+    for repo, pin in pins.items():
+        if not pin.get("pinned_at") or pin["pinned_at"] > deps.FROZEN_PIN_CUTOFF:
+            continue
+        eid = id_map.get(repo)
+        if eid:
+            out.add((eid, _pkg_key(f"{pin['system']}/{pin['package']}")))
+    return frozenset(out)
+
+
+def _verdict(entity_id: str, key: str) -> str:
+    verdict = _verdicts().get((entity_id, key))
+    if verdict is not None:
+        return verdict
+    if (entity_id, key) in _legacy_pins():
+        return "verified"
+    raise ValueError(f"m4 identity: {entity_id} {key} has no audit verdict and is not a legacy pin")
 
 
 def admitted(entity_id: str, pkg: str) -> bool:
@@ -52,19 +79,21 @@ def admitted(entity_id: str, pkg: str) -> bool:
     labelled unverified. A package the audit does not mention stays.
     """
     key = _pkg_key(pkg)
-    verdict = _verdicts().get((entity_id, key))
+    verdict = _verdict(entity_id, key)
     if verdict == "other_repo":
         return False
-    name = key.split("/", 1)[1]
-    if _private_flags().get((entity_id, name), False) and verdict != "verified":
+    if _private_flags().get((entity_id, key), False) and verdict != "verified":
         return False
     return True
 
 
 def admission_label(entity_id: str, pkg: str) -> str:
     """verified, other_repo, unverified (no_link or no audit row), or private."""
-    verdict = _verdicts().get((entity_id, _pkg_key(pkg)))
-    if verdict == "no_link" or verdict is None:
+    key = _pkg_key(pkg)
+    verdict = _verdict(entity_id, key)
+    if verdict != "other_repo" and _private_flags().get((entity_id, key), False) and verdict != "verified":
+        return "private"
+    if verdict == "no_link":
         return UNVERIFIED
     return verdict
 
@@ -85,9 +114,18 @@ def _panels() -> tuple[dict, dict[str, set[str]], dict[str, set[str]], str]:
     return full, kept, dropped, sha
 
 
+def m4_mapping_sha(manifest_sha: str) -> str:
+    """Provenance of an m4 mapping: v2h.1 manifest + linkage audit + private-manifest evidence."""
+    h = hashlib.sha256()
+    for part in (manifest_sha.encode(), AUDIT_PATH.read_bytes(), PRIVATE_PATH.read_bytes()):
+        h.update(hashlib.sha256(part).digest())
+    return "m4:" + h.hexdigest()
+
+
 def load_panel_m4() -> tuple[dict, str]:
-    """(entity -> admitted packages, manifest sha). Entities with none are absent."""
-    full, kept, _dropped, sha = _panels()
+    """(entity -> admitted packages, m4 mapping sha). Entities with none are absent."""
+    full, kept, _dropped, manifest_sha = _panels()
+    sha = m4_mapping_sha(manifest_sha)
     out = {}
     for eid, pkgs in full.items():
         keep = {(system, name) for system, name in pkgs if f"{system}/{name}" in kept.get(eid, ())}
@@ -169,16 +207,28 @@ def partition_cases(as_of: str, observations: Path, captured_at: str | None = No
         day = (row.get("snapshot_at") or "")[:10]
         if not day:
             continue
-        system_value = int(row["signals"]["deps_v2h1_unique_direct"]["value"])
         grouped = _package_index(path.with_name(path.stem + "-packages.jsonl"), cache)
         keep, drop = kept.get(eid, set()), dropped.get(eid, set())
+        try:
+            system_value = int(row["signals"]["deps_v2h1_unique_direct"]["value"])
+        except (KeyError, TypeError, ValueError):
+            latest[(eid, day)] = ("d", None)
+            continue
         if grouped is None:
             case, value = _classify(system_value, [], False, False, bool(drop))
         else:
             rows = grouped.get(eid, {})
+            if drop and not rows:
+                # A system total with no per-package rows cannot be checked for excluded
+                # packages: withhold rather than publish the v2h.1 total (review 2026-10-04).
+                latest[(eid, day)] = ("d", None)
+                continue
             admitted_rows = [rows[key] for key in sorted(rows) if key in keep]
             excluded_present = any(key in drop for key in rows)
-            case, value = _classify(system_value, admitted_rows, excluded_present, True, bool(drop))
+            try:
+                case, value = _classify(system_value, admitted_rows, excluded_present, True, bool(drop))
+            except (KeyError, TypeError, ValueError):
+                case, value = "d", None
         latest[(eid, day)] = (case, value)
     by_entity: dict[str, list[tuple[str, str, int | None]]] = defaultdict(list)
     for (eid, day), (case, value) in latest.items():
@@ -188,12 +238,27 @@ def partition_cases(as_of: str, observations: Path, captured_at: str | None = No
     return dict(by_entity)
 
 
-def _latest_run(points: list[tuple[str, str, int | None]], confirmed: set[str] | None) -> list[tuple[str, int]]:
-    """Latest unbroken usable run. A withheld point clears the run. Dates outside confirmed are skipped."""
+def _latest_run(points: list[tuple[str, str, int | None]], confirmed: set[str] | None,
+                calendar: list[str] | None = None) -> list[tuple[str, int]]:
+    """Latest unbroken usable run over the partition calendar.
+
+    A withheld point clears the run, and so does a calendar date with no point once the
+    series has started: the estimator fits ordinal positions, so a gap must restart the
+    series rather than be compressed (review 2026-10-04). Dates outside confirmed are skipped.
+    """
+    by_day = {day: (case, value) for day, case, value in points}
+    days = sorted(set(calendar or []) | set(by_day))
     run: list[tuple[str, int]] = []
-    for day, case, value in points:
+    started = False
+    for day in days:
         if confirmed is not None and day not in confirmed:
             continue
+        if day not in by_day:
+            if started:
+                run = []
+            continue
+        case, value = by_day[day]
+        started = True
         if case == "d" or value is None:
             run = []
         else:
@@ -211,10 +276,12 @@ def derive_m4_series(as_of: str, observations: Path, captured_at: str | None = N
     """
     _full, kept, _dropped, _sha = _panels()
     series = {}
-    for eid, points in partition_cases(as_of, observations, captured_at).items():
+    cases = partition_cases(as_of, observations, captured_at)
+    calendar = sorted({day for points in cases.values() for day, _case, _value in points})
+    for eid, points in cases.items():
         if eid not in kept:
             continue
-        run = _latest_run(points, confirmed)
+        run = _latest_run(points, confirmed, calendar)
         if run:
             series[eid] = run
     return series
