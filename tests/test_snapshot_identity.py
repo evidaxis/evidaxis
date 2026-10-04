@@ -260,3 +260,17 @@ def test_rewrite_capture_refs_follows_a_run_that_crosses_midnight(tmp_path, monk
     lines = (hist / "e_X.jsonl").read_text().splitlines()
     assert json.loads(lines[0])["snapshot_id"] == "oldoldoldold"   # earlier capture untouched
     assert json.loads(lines[1])["snapshot_id"] == "newnewnewnew"   # this run follows the id
+
+
+def test_rewrite_capture_refs_follows_cards_of_a_run_that_crosses_midnight(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    ents = tmp_path / "entities"
+    ents.mkdir()
+    (ents / "e_X.md").write_text("---\n  snapshot_id: oldoldoldold\n  captured_at: 2026-10-04T02:32:12+00:00\n---\n")
+    (ents / "e_Y.md").write_text("---\n  snapshot_id: oldoldoldold\n  captured_at: 2026-09-26T22:11:54+00:00\n---\n")
+    monkeypatch.setattr(si, "HISTORY", tmp_path / "data" / "history")
+    monkeypatch.setattr(si, "ENTITIES", ents)
+    started = datetime(2026, 10, 4, 1, 55, tzinfo=timezone.utc)
+    assert si.rewrite_capture_refs("oldoldoldold", "newnewnewnew", "2026-10-03", started) == 1
+    assert "newnewnewnew" in (ents / "e_X.md").read_text()
+    assert "oldoldoldold" in (ents / "e_Y.md").read_text()

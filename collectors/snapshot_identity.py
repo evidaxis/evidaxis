@@ -27,6 +27,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -146,8 +147,12 @@ def rewrite_capture_refs(old: str, new: str, snapshot_date: str,
         for f in ENTITIES.glob("*.md"):
             text = f.read_text(encoding="utf-8")
             # Cards are regenerated per capture; only cards stamped with TODAY's date
-            # and the old id belong to this capture.
-            if f"snapshot_id: {old}" in text and snapshot_date in text:
+            # and the old id belong to this capture. Cards carry no snapshot date, only
+            # captured_at, so a run past 00:00 UTC is matched by its start time
+            # (2026-10-03 re-run: 5,910 cards kept the pre-rewrite id).
+            m = re.search(r"^\s*captured_at:\s*(\S+)", text, re.M)
+            if f"snapshot_id: {old}" in text and (
+                    snapshot_date in text or (m and _captured_since(m.group(1), run_started))):
                 f.write_text(text.replace(f"snapshot_id: {old}", f"snapshot_id: {new}"),
                              encoding="utf-8")
                 n += 1
