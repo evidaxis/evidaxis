@@ -26,8 +26,8 @@ def snapshot():
             "entities": [entity(f"e_{i}") for i in range(6)]}
 
 
-def observations(root, snap, values=None):
-    for i, partition in enumerate(PARTITIONS):
+def observations(root, snap, values=None, parts=None):
+    for i, partition in enumerate(parts or PARTITIONS):
         folder = root / ("backfill/axis3-deps-v2h1" if i < 7 else "2026-09-19")
         folder.mkdir(parents=True, exist_ok=True)
         rows = [{"entity_id": e["entity_id"], "snapshot_at": partition, "captured_at": CAPTURE,
@@ -133,9 +133,13 @@ def test_rounded_zero_slope_cannot_publish_a_rising_vote():
 @pytest.mark.parametrize("age,expected", [(28, "scored"), (29, "stale")])
 def test_staleness_boundary(tmp_path, age, expected):
     snap = snapshot()
-    snap["snapshot_date"] = (date.fromisoformat(PARTITIONS[-1]) + timedelta(days=age)).isoformat()
-    observations(tmp_path, snap)
-    axis = score(snap, tmp_path)["entities"][0]["axes"][m3.AXIS3]
+    # The 28-day gap stays inside the m3 window. The shared fixture's last
+    # partition plus 28 days lands on or after m4 activation.
+    end = date(2026, 9, 1)
+    parts = [(end - timedelta(weeks=15 - i)).isoformat() for i in range(16)]
+    snap["snapshot_date"] = (end + timedelta(days=age)).isoformat()
+    observations(tmp_path, snap, parts=parts)
+    axis = score(snap, tmp_path, {**EVIDENCE, "states": dict.fromkeys(parts, "CLEAN")})["entities"][0]["axes"][m3.AXIS3]
     assert axis["status"] == expected
     if expected == "stale":
         assert axis["slope"] is None and axis["cohort_z"] is None and not axis["rising_vote"]

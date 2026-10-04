@@ -1,4 +1,7 @@
-"""Forward m3 post-step over the frozen collector's output. Standard library only.
+"""Weekly score post-step over the frozen collector's output. Standard library only.
+
+Snapshots before 2026-10-10 are m3. From that date the same entrypoint scores m4:
+own-package axis 3, exactly derived history. Published m3 snapshots stay on the m3 path.
 
 Run after taxonomy/redirect restoration and before snapshot_identity/refresh_sums.
 --dry-run --out-dir DIR copies data/ into DIR and cards into DIR/entities/, then
@@ -19,6 +22,7 @@ from datetime import date
 from pathlib import Path
 
 try:
+    from . import axis3_m4_identity as identity
     from . import evaluate_axis3_v2h1 as evaluator
     from .axis3_inputs import sanity_as_of
     from .counts_check import expected_counts
@@ -26,6 +30,7 @@ try:
     from .snapshot_identity import content_snapshot_id
     from .t2_deps_v2h1_collect import load_panel
 except ImportError:
+    import axis3_m4_identity as identity
     import evaluate_axis3_v2h1 as evaluator
     from axis3_inputs import sanity_as_of
     from counts_check import expected_counts
@@ -42,12 +47,23 @@ AXIS2 = "openalex_citation_momentum"
 AXIS3 = "deps_direct_dependents_momentum"
 AXES = (AXIS1, AXIS2, AXIS3)
 SPEC = json.loads((REPO / "methodology/m3.json").read_text(encoding="utf-8"))
+M4_DOC = json.loads((REPO / "methodology/m4.json").read_text(encoding="utf-8"))
 AXIS3_DESCRIPTION = (
     "Unique direct dependents over each frozen-panel system's linkage-verified package union "
     "(deps.dev BigQuery Dependents, weekly; intra-panel self-dependents excluded). "
     "OLS log1p slope residualized on log1p latest, then within-cohort robust z; "
     "14 CLEAN points and 5 latest dependents; one-way fragility veto; cohort canary floor 0.80. "
     + SPEC["estimand"] + " " + SPEC["attribution"]
+)
+AXIS3_DESCRIPTION_M4 = (
+    "Unique direct dependents of a system's own packages: declared in its own tree, "
+    "published under that name, and not attributed by deps.dev to another repository. "
+    "no_link packages stay and are unverified. Self-name exclusion is the fixed v2h.1 list. "
+    "deps.dev BigQuery Dependents, weekly. "
+    "OLS log1p slope residualized on log1p latest, then within-cohort robust z; "
+    "14 usable points and 5 latest dependents; a withheld point restarts the series; "
+    "one-way fragility veto; cohort canary floor 0.80. "
+    + M4_DOC["estimand"] + " " + M4_DOC["attribution"]
 )
 GATE = (
     "Rising = not incumbent AND cohort_n >= 5 AND >=2 of 3 axes present AND >=2 axes rising. "
@@ -162,7 +178,17 @@ def axis_correlations(entities: list[dict]) -> dict:
 
 def score_snapshot(snapshot: dict, *, observations: Path, evidence: dict, panel: set) -> dict:
     scored = copy.deepcopy(snapshot)
-    series = evaluator.load_series(snapshot["snapshot_date"], observations=observations, captured_at=snapshot["captured_at"])
+    m4 = snapshot["snapshot_date"] >= identity.M4_ACTIVATION
+    if m4:
+        # Restart only among confirmed-clean partitions. Other capture rows stay out of the run.
+        confirmed = {day for day, status in evidence["states"].items()
+                     if status == "CLEAN" and day <= snapshot["snapshot_date"]}
+        series = identity.derive_m4_series(snapshot["snapshot_date"], observations, snapshot["captured_at"], confirmed=confirmed)
+        panel = set(identity.load_panel_m4()[0])
+        version, description = "m4", AXIS3_DESCRIPTION_M4
+    else:
+        series = evaluator.load_series(snapshot["snapshot_date"], observations=observations, captured_at=snapshot["captured_at"])
+        version, description = "m3", AXIS3_DESCRIPTION
     reconstructed = {}
     for path, row in evaluator.observation_rows(snapshot["snapshot_date"], observations=observations, captured_at=snapshot["captured_at"]):
         reconstructed[(row["entity_id"], row["snapshot_at"][:10])] = (
@@ -171,8 +197,8 @@ def score_snapshot(snapshot: dict, *, observations: Path, evidence: dict, panel:
     for entity in scored["entities"]:
         entity["axes"][AXIS3] = records[entity["entity_id"]]
     aggregate_entities(scored["entities"])
-    scored.update(methodology_version="m3", gate=GATE, axis3_cutoff=cutoff)
-    scored["axes"][AXIS3] = AXIS3_DESCRIPTION
+    scored.update(methodology_version=version, gate=GATE, axis3_cutoff=cutoff)
+    scored["axes"][AXIS3] = description
     scored["counts"] = expected_counts(scored["entities"])
     diagnostics = scored.setdefault("diagnostics", {})
     diagnostics["axis_correlations"] = axis_correlations(scored["entities"])
@@ -198,7 +224,9 @@ def historical_card(entity: dict, snapshot: dict) -> str:
 
 
 def card_text(text: str, entity: dict, snapshot: dict) -> str:
-    score = {"methodology_version": "m3", "snapshot_id": snapshot["snapshot_id"],
+    version = snapshot.get("methodology_version", "m3")
+    spec = M4_DOC if version == "m4" else SPEC
+    score = {"methodology_version": version, "snapshot_id": snapshot["snapshot_id"],
              "captured_at": snapshot["captured_at"], "period": snapshot["period"],
              **{key: entity[key] for key in ENTITY_FIELDS}}
     lines = []
@@ -213,9 +241,9 @@ def card_text(text: str, entity: dict, snapshot: dict) -> str:
         raise ValueError(f"missing score frontmatter: {entity['entity_id']}")
     # The frozen collector's prose can claim no convergence is possible without
     # citations. Regenerate its derived body when a third axis becomes available.
-    body = f"\n# {entity['name']}\n\nEvidaxis measures **{entity['name']}** on methodology m3. Momentum {'n/a' if entity['momentum'] is None else entity['momentum']}{'' if entity['momentum'] is None else '/100'}; {len(entity['axes_present'])} axes present, {len(entity['convergent_axes'])} axes converging.\n"
+    body = f"\n# {entity['name']}\n\nEvidaxis measures **{entity['name']}** on methodology {version}. Momentum {'n/a' if entity['momentum'] is None else entity['momentum']}{'' if entity['momentum'] is None else '/100'}; {len(entity['axes_present'])} axes present, {len(entity['convergent_axes'])} axes converging.\n"
     if entity["axes"][AXIS3]["status"] == "scored":
-        body += "\n" + SPEC["estimand"] + "\n"
+        body += "\n" + spec["estimand"] + "\n"
     return front.rstrip("\n") + sep + body
 
 
@@ -227,7 +255,7 @@ def planned_files(snapshot: dict, old: dict, data: Path, cards: Path) -> dict[Pa
         if path.is_file():
             doc = json.loads(path.read_text())
             if "methodology_version" in doc:
-                doc["methodology_version"] = "m3"
+                doc["methodology_version"] = snapshot.get("methodology_version", "m3")
             doc["snapshot_id"] = snapshot["snapshot_id"]
             plan[path] = json_bytes(doc)
     latest_path = data / "latest.json"

@@ -1,0 +1,73 @@
+{
+  "methodology_version": "m4",
+  "parent_version": "m3",
+  "activation_date": "2026-10-10",
+  "axes": [
+    {
+      "id": "github_commit_velocity",
+      "source": "GitHub REST stats/commit_activity",
+      "estimator": "OLS slope of log(1 + weekly commits), last 26 equally spaced observations",
+      "normalization": "Within-cohort median/MAD robust z (scale 1.4826, clamp +/-3), then residualize against robust z of log(1 + stars); residualization skipped for n < 4. Existing m2 values are preserved.",
+      "floors": {"observations": 3, "cohort_for_z": 3, "rising_average_weekly_commits": 5},
+      "present": "slope is not null",
+      "rising": "slope > 0 and cohort_z >= 1 and recent_weekly_commits >= 5"
+    },
+    {
+      "id": "openalex_citation_momentum",
+      "source": "OpenAlex Works counts_by_year, summed over canonical work ids",
+      "estimator": "OLS slope of log(1 + citations/year); drop partial current year, drop birth year when at least four completed years exist",
+      "normalization": "Within-cohort median/MAD robust z (scale 1.4826, clamp +/-3), then residualize against robust z of log(1 + total citations); residualization skipped for n < 4. Existing m2 values are preserved.",
+      "floors": {"completed_years": 3, "cohort_for_z": 3},
+      "present": "status is present and cohort_z is not null",
+      "rising": "slope > 0 and cohort_z >= 1"
+    },
+    {
+      "id": "deps_direct_dependents_momentum",
+      "source": "deps.dev BigQuery bigquery-public-data.deps_dev_v1.Dependents, weekly partitions",
+      "measurand": "Unique direct dependents over the union of a system's own packages. Own means declared in that system's repository tree and published under that name: the deps.dev metadata does not attribute the package to another repository. no_link stays in the union and is unverified. Highest-release dependents with resolution only. Self-dependents are excluded with the fixed v2h.1 self-name list.",
+      "admission": "Start from the frozen v2h.1 panel. Exclude a package when the 2026-10-04 linkage audit verdict is other_repo, or when private-manifests marks private true and the audit verdict is not verified. no_link is admitted and labelled unverified. An entity with no admitted package is out of the panel.",
+      "panel": "axis3_m4_identity.load_panel_m4(): v2h.1 packages that pass admission; entities left with no package are absent. The self-name exclusion list is axis3_m4_identity.self_names_v2h1(), every package name in the unchanged v2h.1 panel.",
+      "estimator": "Exact m4 value per entity and confirmed partition, then evaluate_axis3_v2h1.votes_at_cutoff on the latest unbroken run only. No excluded package present: the stored system total. Exactly one admitted package present: that package's unique_direct. Several admitted packages, every one with unique_direct <= 64 and len(sketch64) == unique_direct: the number of distinct fingerprints in the union. Otherwise the point is withheld and the run restarts. OLS slope of log(1 + dependents) on equally spaced indices of that run. A vote needs 14 usable points of this quantity.",
+      "normalization": "Residualize slope on log(1 + latest), then within-cohort robust z using upper-middle median and MAD, scale 1.4826, clamp +/-3; zero MAD or fewer than two eligible cohort entities gives z = 0. Reuses the frozen evaluator.",
+      "floors": {"confirmed_clean_points": 14, "latest_dependents": 5, "rising_z": 1},
+      "veto": "One-way fragility veto: leave-one-point-out OLS sign flip or Theil-Sen sign disagreement withholds a rising vote",
+      "canary": {"agreement_floor": 0.8, "minimum_n": 3, "rule": "Hold a cohort when agreement between slope sign and endpoint direction is below the floor", "confirmation": "Baseline minimum per-cohort agreement p among n >= 3, minus sqrt(p*(1-p)/n), must be >= 0.80"},
+      "present": "status is scored",
+      "rising": "scored and evaluator rising vote and reported slope > 0 and reported z >= 1 and not unstable; rounding cannot publish a rising vote with a zero reported slope",
+      "coverage_states": ["scored", "below_floor", "held", "stale", "out_of_panel"]
+    }
+  ],
+  "gate": {"axes_available": 3, "minimum_present": 2, "minimum_rising": 2, "cohort_minimum": 5, "incumbents_eligible": false, "predicate": "not incumbent and cohort_n >= 5 and len(axes_present) >= 2 and len(axes_rising) >= 2"},
+  "momentum": "round(clamp(50 + 12.5 * mean(non-null z of axes 1-2 and scored axis 3), 0, 100), 1); null with no z",
+  "percentile": "Within-cohort ascending momentum, stable input order for ties; round(100*i/max(1,n-1)), singleton 50, unscored null",
+  "confidence": "high if rising and at least two axes present; medium if at least two axes present; otherwise low",
+  "status": "In order: incumbent -> calibration; rising -> rising; exactly one rising axis -> watch; at least two present -> tracked; otherwise single-axis",
+  "asynchrony": {
+    "observation_cutoff": "partition date <= snapshot_date and observation captured_at <= snapshot captured_at; missing or invalid custody timestamps excluded",
+    "sanity": "Newest committed sanity-check artifact from calibration 3e51319d9817 available at snapshot captured_at; only CLEAN partitions, never PROVISIONAL",
+    "axis3_cutoff": "Newest eligible CLEAN partition with available frozen-panel observations",
+    "staleness_days": 28,
+    "staleness_rule": "If snapshot_date minus axis3_cutoff > 28 days, axis 3 is stale and does not score",
+    "disclosure": "Every scored record reports its as_of_partition and points_reconstructable from observation provenance; typical lag two to three weeks"
+  },
+  "estimand": "This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.",
+  "history_origin": "The earliest weekly points of each series were read from deps.dev's BigQuery history on 2026-07-21; later points are weekly captures. m4 does not replay those partitions: each point is the stored system total, one package's unique_direct, or a complete sketch union, and a point that is not exact is withheld. Each record reports how many of its points are reconstructed history.",
+  "independence_monitor": {"pairs": [["deps_direct_dependents_momentum", "github_commit_velocity"], ["deps_direct_dependents_momentum", "openalex_citation_momentum"], ["github_commit_velocity", "openalex_citation_momentum"]], "estimator": "Pooled within-cohort Pearson after centering each pair within cohorts with at least five pairs; per-cohort Pearson for n >= 5; null when undefined", "pre_registered_max_abs_r": 0.5},
+  "attribution": "Source: deps.dev (Google), CC-BY 4.0. Modified: aggregated to system-level counts and momentum scores.",
+  "known_limits": [
+    "Axis 3 adjusts size before standardizing while axes 1-2 do so after standardizing",
+    "Dependents can be inflated by packages outside the panel",
+    "Package-level counts are not published",
+    "Momentum averages present axes, so two-axis and three-axis records are not strictly comparable",
+    "The identity audit is as of 2026-10-04 and is applied to every stored partition; it does not prove ownership at earlier dates",
+    "no_link packages are unverified, not verified",
+    "A 64-bit fingerprint collision is not corrected"
+  ],
+  "changelog": [
+    {
+      "class": "MAJOR",
+      "record": "governance/METHODOLOGY-M4-2026-10-04.md",
+      "change": "Axis 3 counts direct dependents of a system's own packages only. A package declared in the system's tree is excluded when the linkage audit says other_repo, or when its manifest is private and the published name is not verified to that repository. no_link stays and is unverified. The self-name exclusion list stays the v2h.1 panel. History is exactly derived from stored per-package rows; a withheld point restarts the series. Axes 1 and 2, the gate, cohorts, and thresholds are unchanged. Published m3 snapshots are not recomputed."
+    }
+  ]
+}

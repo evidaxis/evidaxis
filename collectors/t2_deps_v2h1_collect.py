@@ -130,16 +130,22 @@ def load_panel() -> tuple:
     return entity_pkgs, manifest_sha
 
 
-def build_query(entity_pkgs: dict, snapshot_date: str) -> str:
+def build_query(entity_pkgs: dict, snapshot_date: str, self_names: set | None = None) -> str:
     """One scan: CASE maps each panel package to its entity; canaries map to
-    CANARY:<sys>/<name>; everything else -> NULL (dropped)."""
+    CANARY:<sys>/<name>; everything else -> NULL (dropped).
+
+    self_names defaults to the packages in entity_pkgs. Pass the fixed v2h.1
+    set so names m4 no longer maps stay excluded as dependents.
+    """
     branches = []
-    self_names = set()
+    mapped = set()
     for eid in sorted(entity_pkgs):
         for sys_, name in sorted(entity_pkgs[eid]):
             branches.append(
                 f"WHEN d.System = '{sys_}' AND d.Name = '{name}' THEN '{eid}'")
-            self_names.add(f"{sys_}/{name}")
+            mapped.add(f"{sys_}/{name}")
+    if self_names is None:
+        self_names = mapped
     for sys_, name in CANARIES:
         branches.append(
             f"WHEN d.System = '{sys_}' AND d.Name = '{name}' THEN 'CANARY:{sys_}/{name}'")
@@ -147,6 +153,22 @@ def build_query(entity_pkgs: dict, snapshot_date: str) -> str:
     self_arr = "[" + ", ".join(f"'{n}'" for n in sorted(self_names)) + "]"
     return QUERY_HEADER.format(dataset=DATASET, snapshot_date=snapshot_date,
                                case_expr=case_expr, self_names=self_arr)
+
+
+def panel_for_partition(snapshot: str) -> tuple:
+    """(entity_pkgs, manifest_sha, self_names or None).
+
+    Partitions on or after m4 activation map only admitted packages.
+    The self-name list stays the full v2h.1 set. Earlier partitions are unchanged.
+    """
+    try:
+        from .axis3_m4_identity import M4_ACTIVATION, load_panel_m4, self_names_v2h1
+    except ImportError:
+        from axis3_m4_identity import M4_ACTIVATION, load_panel_m4, self_names_v2h1
+    if snapshot >= M4_ACTIVATION:
+        pkgs, sha = load_panel_m4()
+        return pkgs, sha, self_names_v2h1()
+    return (*load_panel(), None)
 
 
 def _bq(sql: str, dry_run: bool = False) -> tuple:
@@ -183,8 +205,8 @@ def partitions_before(ts: str, n: int) -> list:
 
 
 def capture_one(entity_pkgs: dict, manifest_sha: str, snapshot: str,
-                series: str, out_dir: Path) -> dict:
-    sql = build_query(entity_pkgs, snapshot)
+                series: str, out_dir: Path, self_names: set | None = None) -> dict:
+    sql = build_query(entity_pkgs, snapshot, self_names)
     sql_sha = hashlib.sha256(sql.encode()).hexdigest()
     rows, job_id = _bq(sql)
     captured_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -345,7 +367,8 @@ def main() -> int:
 
     if args.dry_run:
         snap = args.snapshot or "2026-07-13"
-        sql = build_query(entity_pkgs, snap)
+        pkgs, _sha, names = panel_for_partition(snap)
+        sql = build_query(pkgs, snap, names)
         _bq(sql, dry_run=True)
         print(f"[{COLLECTOR_VERSION}] DRY-RUN ok — query valid ({len(sql)//1024} KB), "
               f"partition {snap}")
@@ -354,8 +377,10 @@ def main() -> int:
     if args.baseline_candidates:
         snaps = partitions_before(args.baseline_candidates, args.n)
         out_dir = REPO / "data/observations/backfill/axis3-deps-v2h1"
-        metas = [capture_one(entity_pkgs, manifest_sha, s, "baseline-candidate", out_dir)
-                 for s in snaps]
+        metas = []
+        for s in snaps:
+            pkgs, sha, names = panel_for_partition(s)
+            metas.append(capture_one(pkgs, sha, s, "baseline-candidate", out_dir, names))
         (out_dir / "candidates_manifest.json").write_text(json.dumps({
             "collector_version": COLLECTOR_VERSION,
             "before_ts": args.baseline_candidates,
@@ -379,7 +404,8 @@ def main() -> int:
             print(f"[{COLLECTOR_VERSION}] {args.snapshot} already captured "
                   f"({mf.parent}) — idempotent no-op")
             return 0
-    capture_one(entity_pkgs, manifest_sha, args.snapshot, "live", out_dir)
+    pkgs, sha, names = panel_for_partition(args.snapshot)
+    capture_one(pkgs, sha, args.snapshot, "live", out_dir, names)
     return 0
 
 
