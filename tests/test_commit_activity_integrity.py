@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -161,7 +161,7 @@ def test_fetch_layer_refuses_a_false_zero_as_unresolved(monkeypatch, tmp_path):
 
 def test_fetch_layer_keeps_a_confirmed_zero(monkeypatch, tmp_path):
     zeros = _weeks()
-    result, calls, cached = _run_wrapper(monkeypatch, tmp_path, QUIET, zeros, lambda url: [])
+    result, _calls, cached = _run_wrapper(monkeypatch, tmp_path, QUIET, zeros, lambda url: [])
     assert result == zeros
     assert cached[QUIET] == zeros
     assert cai.run_log_snapshot()["refused"] == []
