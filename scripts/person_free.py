@@ -18,6 +18,11 @@ SLUG = re.compile(r"(?<![a-z0-9_.-])([a-z0-9][a-z0-9-]{0,38})(?=/)")
 MENTION = re.compile(r"(?<![a-z0-9_.-])@([a-z0-9][a-z0-9-]{0,38})(?![a-z0-9-])")
 WORD = re.compile(r"(?<![a-z0-9-])[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?![a-z0-9-])")
 GITHUB_CONTEXT = re.compile(r"(?:github\.com/|repos/)$")
+# Explicit GitHub contexts count ANY handle, whatever its length (review 2026-10-04):
+# a profile URL without a trailing slash, a Pages host, a raw-content path.
+GH_PROFILE = re.compile(r"github\.com/([a-z0-9][a-z0-9-]{0,38})(?![a-z0-9-])")
+GH_PAGES = re.compile(r"(?<![a-z0-9-])([a-z0-9][a-z0-9-]{0,38})\.github\.io(?![a-z0-9-])")
+GH_RAW = re.compile(r"githubusercontent\.com/([a-z0-9][a-z0-9-]{0,38})/")
 _FULL_NAME = re.compile(r"^[^/]+/[^/]+$")
 _BAD_PERCENT = re.compile(r"%(?![0-9A-Fa-f]{2})")
 _SCHEME = re.compile(r"^[a-zA-Z][a-zA-Z+\-.]*:")
@@ -71,11 +76,32 @@ def handle_hits(text: str, index: HandleIndex) -> list[str]:
         token = match.group(0)
         if token in index.words:
             add(token)
+    for pattern in (GH_PROFILE, GH_PAGES, GH_RAW):
+        for match in pattern.finditer(lower):
+            if match.group(1) in index.all:
+                add(match.group(1))
     return hits
 
 
 def reveals_handle(text: str | None, index: HandleIndex) -> bool:
-    return bool(text) and bool(handle_hits(text, index))
+    if not text:
+        return False
+    # A whole value equal to a handle reveals it, short or all-digit ones included.
+    if str(text).strip().lower() in index.all:
+        return True
+    return bool(handle_hits(text, index))
+
+
+def lenient_decoded(text: str) -> str:
+    """Percent-decode until stable (at most 3 rounds); malformed sequences stay as is.
+    Used by the publication guard so github.com%2Fhandle%2Frepo cannot hide a handle."""
+    out = text
+    for _ in range(3):
+        nxt = unquote(out)
+        if nxt == out:
+            break
+        out = nxt
+    return out
 
 
 def neutral_name(entity_id: str) -> str:
@@ -126,7 +152,7 @@ def is_github_url(value: str) -> bool:
     return host == "github.com"
 
 
-def safe_user_homepage(homepage: str | None, owner: str) -> str | None:
+def safe_user_homepage(homepage: str | None, owner: "str | tuple[str, ...]") -> str | None:
     """web/src/lib/person_free.ts safeUserHomepage. Invalid URLs and any GitHub
     URL (including a percent-encoded one) are dropped, as is a URL whose decoded
     form contains that entity's owner handle."""
@@ -135,7 +161,8 @@ def safe_user_homepage(homepage: str | None, owner: str) -> str | None:
     if not is_valid_url(homepage):
         return None
     decoded = fully_decoded(homepage)
-    if is_github_url(homepage) or is_github_url(decoded) or owner.lower() in decoded:
+    owners = (owner,) if isinstance(owner, str) else tuple(owner)
+    if is_github_url(homepage) or is_github_url(decoded) or any(o.lower() in decoded for o in owners if o):
         return None
     return homepage
 

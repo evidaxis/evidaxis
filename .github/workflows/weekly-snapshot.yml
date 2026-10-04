@@ -240,8 +240,9 @@ jobs:
       - name: Mirror latest snapshot to the HF dataset (best-effort)
         if: ${{ inputs.dry_run != true }}
         # Publication projection only (person-free fail-closed guard inside the script).
-        # A person-free abort (exit 3) fails this step. Network or upload failures stay
-        # a warning: the canonical archive is git + Zenodo.
+        # Only an upload/network failure (exit 5) is a warning: the canonical archive is
+        # git + Zenodo. A person-free abort (3), a projection or classification failure (4)
+        # or any crash fails this step, so the dataset can never go stale silently again.
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
@@ -251,17 +252,18 @@ jobs:
           python3 scripts/hf_upload_snapshot.py
           code=$?
           set -e
-          if [ "$code" -eq 3 ]; then
-            echo "::error::HF mirror person-free abort (exit 3)"
-            exit 3
+          if [ "$code" -eq 5 ]; then
+            echo "::warning::HF upload deferred (network or upload failure, exit 5)"
+            exit 0
           fi
           if [ "$code" -ne 0 ]; then
-            echo "::warning::HF upload deferred (network)"
-            exit 0
+            echo "::error::HF mirror failed (exit $code: 3 person-free abort, 4 projection/classification, other = crash)"
+            exit "$code"
           fi
 
       - name: Ask Software Heritage to re-archive the repository
-        if: ${{ inputs.dry_run != true }}
+        # Independent of the HF mirror: still runs when that step failed.
+        if: ${{ always() && inputs.dry_run != true }}
         # Keeps an independent off-GitHub copy of the full git history current.
         run: |
           curl -fsS -X POST "https://archive.softwareheritage.org/api/1/origin/save/git/url/https://github.com/${GITHUB_REPOSITORY}/" \

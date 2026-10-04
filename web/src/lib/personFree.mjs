@@ -32,6 +32,24 @@ const WORD = /(?<![a-z0-9-])[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?![a-z0-9-])/g;
 // Short (under 4 characters) or all-digit handles collide with the site's own paths
 // ("/e/", "/ai/", "/page/12/"); they count only in an explicit GitHub context.
 const GITHUB_CONTEXT = /(?:github\.com\/|repos\/)$/;
+// Explicit GitHub contexts count ANY handle, whatever its length (review 2026-10-04):
+// a profile URL without a trailing slash, a Pages host, a raw-content path.
+const GH_PROFILE = /github\.com\/([a-z0-9][a-z0-9-]{0,38})(?![a-z0-9-])/g;
+const GH_PAGES = /(?<![a-z0-9-])([a-z0-9][a-z0-9-]{0,38})\.github\.io(?![a-z0-9-])/g;
+const GH_RAW = /githubusercontent\.com\/([a-z0-9][a-z0-9-]{0,38})\//g;
+
+// Percent-decode until stable (at most 3 rounds); malformed sequences stay as is.
+export function lenientDecoded(text) {
+  let out = String(text);
+  for (let i = 0; i < 3; i += 1) {
+    const next = out.replace(/(?:%[0-9a-fA-F]{2})+/g, (seq) => {
+      try { return decodeURIComponent(seq); } catch { return seq; }
+    });
+    if (next === out) break;
+    out = next;
+  }
+  return out;
+}
 
 export function handleHits(text, index) {
   const lower = String(text).toLowerCase();
@@ -43,5 +61,11 @@ export function handleHits(text, index) {
   }
   for (const m of lower.matchAll(MENTION)) if (index.all.has(m[1])) hits.add(m[1]);
   for (const m of lower.matchAll(WORD)) if (index.words.has(m[0])) hits.add(m[0]);
+  for (const re of [GH_PROFILE, GH_PAGES, GH_RAW]) for (const m of lower.matchAll(re)) if (index.all.has(m[1])) hits.add(m[1]);
   return [...hits];
+}
+
+// Raw text plus its percent-decoded form (github.com%2Fhandle%2Frepo cannot hide a handle).
+export function handleHitsDecoded(text, index) {
+  return [...new Set([...handleHits(text, index), ...handleHits(lenientDecoded(text), index)])];
 }

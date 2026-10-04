@@ -22,7 +22,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, buildHandleIndex, handleHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, buildHandleIndex, handleHits, handleHitsDecoded } from '../src/lib/personFree.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -339,7 +339,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
     variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)).toLowerCase()));
     const body = variants.join('\n');
-    for (const owner of handleHits(body, userIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
+    for (const owner of handleHitsDecoded(body, userIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
     for (const owner of handleHits(body, formerIndex)) errors.push(`${r}: contains former repository owner ${owner} in a GitHub path`);
     for (const slug of staleSlugs) {
       if (body.includes(slug)) errors.push(`${r}: contains stale repository path ${slug}`);

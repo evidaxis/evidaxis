@@ -71,8 +71,12 @@ export function userHandleIndex(registry: OwnerTypes) {
   }
   return index;
 }
-export const revealsHandle = (text: string | null | undefined, registry: OwnerTypes) =>
-  !!text && handleHits(text, userHandleIndex(registry)).length > 0;
+export const revealsHandle = (text: string | null | undefined, registry: OwnerTypes) => {
+  if (!text) return false;
+  const index = userHandleIndex(registry);
+  // A whole value equal to a handle reveals it, short or all-digit ones included.
+  return index.all.has(text.trim().toLowerCase()) || handleHits(text, index).length > 0;
+};
 export const neutralName = (entityId: string) => `System ${entityId}`;
 export function publicName(e: { name: string; entity_id: string }, registry: OwnerTypes): string {
   return revealsHandle(e.name, registry) ? neutralName(e.entity_id) : e.name;

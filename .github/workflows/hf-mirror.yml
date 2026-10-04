@@ -16,6 +16,8 @@ permissions:
 
 jobs:
   mirror:
+    # HF_TOKEN is exposed to this job: run it only from main, where the guard is reviewed.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4

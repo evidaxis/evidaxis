@@ -211,3 +211,45 @@ def test_dry_run_real_snapshot_has_zero_guard_hits(date, capsys):
     out = capsys.readouterr().out
     assert f"dry-run {date}:" in out
     assert "guard_hits=0" in out
+
+
+# ---------------------------------------------------------------- review fixes 2026-10-04
+from scripts import person_free as pf
+
+
+def _idx(*handles):
+    return pf.build_handle_index(handles)
+
+
+@pytest.mark.parametrize("text", [
+    "https://github.com/q7", "see github.com/q7?tab=repositories", "https://q7.github.io/site",
+    "https://raw.githubusercontent.com/q7/tool/main/a.png", "github.com%2Fsynthuser%2Frepo",
+])
+def test_github_contexts_and_encoding_catch_handles(text):
+    index = _idx("q7", "synthuser")
+    hits = set(pf.handle_hits(text, index)) | set(pf.handle_hits(pf.lenient_decoded(text), index))
+    assert hits & {"q7", "synthuser"}
+
+
+@pytest.mark.parametrize("text", ["growth of 78% in q7 terms", "f is a letter", "github.com/some-org-name"])
+def test_ordinary_text_still_clean(text):
+    assert pf.handle_hits(text, _idx("78", "f")) == []
+
+
+@pytest.mark.parametrize("value", ["f", "78", " F "])
+def test_whole_value_equal_to_short_handle_reveals_it(value):
+    assert pf.reveals_handle(value, _idx("f", "78"))
+
+
+def test_homepage_checked_against_stored_and_canonical_owner():
+    assert pf.safe_user_homepage("https://jd.dev", ("jd-new", "jd")) is None
+    assert pf.safe_user_homepage("https://example.org", ("jd-new", "jd")) == "https://example.org"
+
+
+def test_unclassified_repo_exits_4_not_a_warning(publication_repo, tmp_path, monkeypatch):
+    snap_dir = tmp_path / "snaps" / "2026-10-03"
+    snap_dir.mkdir(parents=True)
+    (snap_dir / "snapshot.json").write_text(json.dumps({"snapshot_date": "2026-10-03", "entities": [
+        {"entity_id": "e_SYNTH0000001", "name": "tool", "github_repo": "unknown-owner/tool"}]}))
+    monkeypatch.setattr(hf, "SNAPSHOTS", tmp_path / "snaps")
+    assert hf.main(["--date", "2026-10-03", "--dry-run"]) == 4

@@ -31,6 +31,7 @@ from scripts.person_free import (
     FREE_TEXT_KEYS,
     classification_for,
     handle_hits,
+    lenient_decoded,
     is_github_url,
     load_handle_index,
     load_owner_types,
@@ -117,7 +118,8 @@ def _project_entity(entity: dict, registry: dict, index, stats: dict) -> None:
                 stats["fields_redacted"] += 1
             entity.pop("github_repo", None)
             homepage = entity.get("homepage") if isinstance(entity.get("homepage"), str) else None
-            safe = safe_user_homepage(homepage, owner)
+            # After a transfer the stored owner can still sit in the homepage (review 2026-10-04).
+            safe = safe_user_homepage(homepage, (owner, github_repo.split("/", 1)[0]))
             if homepage and safe is None:
                 stats["fields_redacted"] += 1
                 entity.pop("homepage", None)
@@ -188,6 +190,9 @@ def _person_free_hits(folder: Path) -> list[str]:
             continue
         blob = path.read_text(encoding="utf-8", errors="replace")
         found = handle_hits(blob, index)
+        for handle in handle_hits(lenient_decoded(blob), index):  # percent-encoded leaks
+            if handle not in found:
+                found.append(handle)
         lower = blob.lower()
         seen = set(found)
         for stale in stale_paths:
@@ -223,27 +228,27 @@ def main(argv: list[str] | None = None) -> int:
     src = SNAPSHOTS / date
     if not (src / "snapshot.json").is_file():
         print(f"no snapshot at {src}")
-        return 1
+        return 4
     tok = ""
     cli_name = ""
     if not args.dry_run:
         tok = _load_token()
         if not tok:
             print("HF_TOKEN missing (env or etl/.env) — cannot upload")
-            return 1
+            return 4
         # huggingface_hub >=1.0 ships the `hf` CLI; `huggingface-cli upload` is deprecated
         # and fails on recent versions. Prefer `hf`, fall back to the legacy name.
         cli = shutil.which("hf") or shutil.which("huggingface-cli")
         if not cli:
             print("hf CLI not found: pip install -U huggingface_hub")
-            return 1
+            return 4
         cli_name = Path(cli).name
 
     try:
         snap = project_person_free(json.loads((src / "snapshot.json").read_text(encoding="utf-8")))
     except (OSError, ValueError, json.JSONDecodeError, KeyError) as exc:
-        print(exc)
-        return 1
+        print(exc)  # projection or classification failure: never a silent warning
+        return 4
     stats = project_person_free.last_stats
     with tempfile.TemporaryDirectory() as td:
         stage = Path(td) / date
@@ -270,10 +275,19 @@ def main(argv: list[str] | None = None) -> int:
                                      "--repo-type", "dataset"], env=env)
             if result.returncode != 0:
                 print("upload failed")
-                return 1
+                return 5
     print(f"uploaded {date} + card to hf.co/datasets/{DATASET}")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # Exit codes: 0 ok · 5 upload/network failure (the only warning in CI) · 3 person-free
+    # abort · 4 classification/projection/configuration failure · 2 usage error. Python's
+    # own crash code (1, e.g. an import error) therefore also fails CI, never warns.
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except Exception as exc:  # an unexpected crash must not read as a network warning
+        print(f"{type(exc).__name__}: {exc}", file=sys.stderr)
+        sys.exit(4)
