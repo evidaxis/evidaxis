@@ -58,6 +58,7 @@ sys.path.insert(0, str(REPO / "etl"))
 sys.path.insert(0, str(REPO / "collectors"))
 
 import collect  # the frozen collector, imported, never edited
+import commit_activity_integrity as cai
 import gh_graphql
 import gh_http
 
@@ -154,6 +155,7 @@ def _reset_run() -> None:
                 "act_none": 0, "wait_202_s": 0.0, "ratelimit_returned": 0, "warm_202": [],
                 "started": time.time()})
     _META.clear()
+    cai.reset_run_log()
 
 
 _META: dict = {}
@@ -255,6 +257,18 @@ def _fetch(url, headers, tries, backoff_202=()):
     return "none", None
 
 
+def _screen_false_zero(repo, body, headers):
+    """GitHub can answer 200 with all-zero weeks for an active repository
+    (governance/ERRATUM-2026-10-04-commit-activity-false-zero.md). One commits
+    probe decides. A refused body is returned as None, which the frozen collector
+    treats like an unresolved 202: a declared gap that week, never a recorded zero."""
+    def probe(probe_url):
+        kind, payload = _fetch(probe_url, headers, 1)
+        return payload if kind == "ok" else None
+    run_date = os.environ.get("SNAPSHOT_DATE", "").strip() or date.today().isoformat()
+    return cai.screen_commit_activity(repo, body, probe, run_date=run_date)
+
+
 def _commit_activity(repo, url, headers, tries):
     mode = _pass()
     cached = _act_cache_get(repo)
@@ -267,6 +281,10 @@ def _commit_activity(repo, url, headers, tries):
     _progress_tick()
     if kind == "ok":
         RUN["act_200"] += 1
+        body = _screen_false_zero(repo, body, headers)
+        if body is None:  # refused false zero: the frozen collector's unresolved path
+            RUN["act_none"] += 1
+            return None
         _act_cache_put(repo, body)
         return body
     if kind == "202":
@@ -328,11 +346,14 @@ def install_date_pin(value=None):
 def _write_summary() -> None:
     try:
         summary = {k: v for k, v in RUN.items() if k != "warm_202"}
+        activity_log = cai.run_log_snapshot()
         summary.update({"warm_202_count": len(RUN.get("warm_202", [])),
                         "rest_requests": gh_http.STATS["rest"], "graphql_requests": gh_http.STATS["graphql"],
                         "rate_waits": gh_http.STATS["rate_waits"], "rate_wait_s": int(gh_http.STATS["rate_wait_s"]),
                         "auth_refreshes": gh_http.STATS["auth_refreshes"],
                         "rate_remaining_end": gh_http.STATS.get("remaining"),
+                        "commit_activity_false_zero_refused": len(activity_log["refused"]),
+                        "commit_activity_probe_failed": activity_log["probe_failed"],
                         "elapsed_s": int(time.time() - RUN["started"])})
         out = gh_graphql.cache_dir()
         gh_graphql.atomic_write_json(out / f"summary-{RUN['pass']}.json", summary)
@@ -340,6 +361,8 @@ def _write_summary() -> None:
             gh_graphql.atomic_write_json(out / "warm-202.json", sorted(RUN.get("warm_202", [])))
         print(f"[summary] pass={RUN['pass']} repos={RUN['repos']} 200={RUN['act_200']} "
               f"cache_hits={RUN['act_cache_hits']} 202={RUN['act_202_final']} none={RUN['act_none']} "
+              f"false_zero_refused={summary['commit_activity_false_zero_refused']} "
+              f"probe_failed={summary['commit_activity_probe_failed']} "
               f"meta_cache_hits={RUN['meta_cache_hits']} meta_rest={RUN['meta_rest']} | {gh_http.budget_line()} | "
               f"elapsed={summary['elapsed_s']}s", flush=True)
     except Exception as exc:  # a summary must never fail the collection

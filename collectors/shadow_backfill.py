@@ -29,6 +29,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+import commit_activity_integrity as cai
+
 REPO = Path(__file__).resolve().parent.parent
 SEEDS = REPO / "etl/seeds.json"
 ID_MAP = REPO / "etl/id_map.json"
@@ -69,6 +71,40 @@ def backfill_record(entity_id: str, period: str, value: int, computed_at: str) -
     }
 
 
+def _headers(token: str | None) -> dict:
+    headers = {"User-Agent": UA, "Accept": "application/vnd.github+json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
+
+
+def _request_json(url: str, token: str | None):
+    """One GET with the backfill token. ('ok', body) | ('202', None) | ('error', None)."""
+    req = urllib.request.Request(url, headers=_headers(token))
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            if r.status == 202:
+                return "202", None
+            raw = r.read().decode()
+            if not raw:
+                return "error", None
+            return "ok", json.loads(raw)
+    except urllib.error.HTTPError as e:
+        if e.code == 202:
+            return "202", None
+        return "error", None
+    except Exception:
+        return "error", None
+
+
+def _probe_commits(url: str, token: str | None):
+    """One commits GET. A non-list is a failed probe (the helper counts it)."""
+    kind, body = _request_json(url, token)
+    if kind != "ok":
+        return None
+    return body
+
+
 def fetch_commit_activity(repo: str, token: str | None, retries: int = 3) -> list | None:
     """Return [{'week': unix, 'total': n}, ...] (up to 52 weeks) or None.
 
@@ -79,25 +115,14 @@ def fetch_commit_activity(repo: str, token: str | None, retries: int = 3) -> lis
     -> not retryable. This keeps the pass fast: warm repos return instantly.
     """
     url = f"https://api.github.com/repos/{repo}/stats/commit_activity"
-    headers = {"User-Agent": UA, "Accept": "application/vnd.github+json"}
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
     for _ in range(retries):
-        req = urllib.request.Request(url, headers=headers)
-        try:
-            with urllib.request.urlopen(req, timeout=30) as r:
-                if r.status == 202:  # stats being generated; brief back off and retry
-                    time.sleep(2)
-                    continue
-                data = json.loads(r.read().decode() or "[]")
-                return data if isinstance(data, list) and data else None
-        except urllib.error.HTTPError as e:
-            if e.code == 202:
-                time.sleep(2)
-                continue
-            return None
-        except Exception:
-            return None
+        kind, data = _request_json(url, token)
+        if kind == "202":
+            time.sleep(2)
+            continue
+        if kind == "ok":
+            return data if isinstance(data, list) and data else None
+        return None
     return None
 
 
@@ -119,6 +144,8 @@ def main() -> int:
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    run_date = now[:10]
+    cai.reset_run_log()
     reconstructed, skipped = [], []
 
     for repo in repos:
@@ -128,6 +155,10 @@ def main() -> int:
             skipped.append({"repo": repo, "reason": "no entity_id"})
             continue
         activity = fetch_commit_activity(repo, token)
+        if activity:
+            # Same token as the stats call. A false zero is skipped below, like a 202.
+            activity = cai.screen_commit_activity(
+                repo, activity, lambda url, _token=token: _probe_commits(url, _token), run_date=run_date)
         if not activity:
             skipped.append({"repo": repo, "reason": "no commit_activity (202/rate/absent)"})
             continue
@@ -149,11 +180,15 @@ def main() -> int:
         "n_reconstructed": len(reconstructed),
         "n_skipped": len(skipped),
         "n_dropped_by_limit": dropped,
+        "commit_activity_false_zero": cai.run_log_snapshot(),
         "reconstructed": reconstructed,
         "skipped": skipped,
     }
     (OUT_DIR / "backfill_manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"shadow_backfill: reconstructed {len(reconstructed)}, skipped {len(skipped)}, dropped-by-limit {dropped}")
+    log = cai.run_log_snapshot()
+    print(f"shadow_backfill: reconstructed {len(reconstructed)}, skipped {len(skipped)}, "
+          f"dropped-by-limit {dropped}, "
+          f"commit_activity_false_zero_refused={len(log['refused'])} probe_failed={log['probe_failed']}")
     if dropped:
         print(f"  NOTE: --limit dropped {dropped} repos (NOT silent; rerun without --limit to complete)")
     return 0
