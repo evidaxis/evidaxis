@@ -13,6 +13,8 @@ import Provenance from './Provenance.astro';
 
 export interface Props { model: CardBModel; industry: string; industryLabel: string; subNiche: string }
 const { model: m, industry, industryLabel, subNiche } = Astro.props;
+const axis3Href = m.methodology === 'm4' ? '/methodology/m4/#dependents' : '/methodology/m3/#dependents';
+const axis3Method = m.methodology === 'm4' ? 'm4 own packages' : 'm3 package union';
 const charts = chartsFor(m), readings = m.readings.filter(r => !r.key.endsWith('_series'));
 const tileKeys = ['commits', 'citations', 'dependents', 'stars'];
 const report = `mailto:hello@evidaxis.org?subject=${encodeURIComponent(`Measurement correction: ${m.entity.id} / ${m.release}`)}`;
@@ -88,7 +90,7 @@ const peerOverflow = m.peers.length > peerRows.length;
     <section class="card-b-section card-b-readings" id="readings" data-block="readings" data-claim={m.texts.readings.claim_id} data-class="READINGS" data-release={m.release}>
       <h2>Readings</h2>
       <div class="card-b-scroll"><table><caption>Recorded values and sources</caption><thead><tr><th>Reading</th><th>Value</th><th>Δ 4 weeks</th><th>Δ 26 weeks</th><th>52-week range</th><th>Instrument</th><th>Date</th><th>Reproduce</th><th>Previous reading</th></tr></thead><tbody>
-        {readings.map(r => <tr><th>{r.label}</th><td><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></td><td><Number value={r.delta4} /></td><td><Number value={r.delta26} /></td><td>{r.range ? <><Number value={r.range[0]} /> to <Number value={r.range[1]} /></> : 'no reading'}</td><td><a href={r.key === 'dependents' || r.key === 'daily' ? '/methodology/m3/#dependents' : `/methodology/${m.methodology}/`}>{r.key === 'daily' ? 'deps.dev REST, unscored' : r.key === 'citations' ? 'OpenAlex, all years' : r.key === 'commits' ? 'GitHub, trailing 12 weeks' : r.key === 'stars' ? 'GitHub stars, unscored' : r.label}</a></td><td>{r.date}</td><td>{r.source ? <a href={r.source}>Public query</a> : 'not linked'}</td><td><Number value={r.previous} /></td></tr>)}
+        {readings.map(r => <tr><th>{r.label}</th><td><Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} /></td><td><Number value={r.delta4} /></td><td><Number value={r.delta26} /></td><td>{r.range ? <><Number value={r.range[0]} /> to <Number value={r.range[1]} /></> : 'no reading'}</td><td><a href={r.key === 'dependents' || r.key === 'daily' ? axis3Href : `/methodology/${m.methodology}/`}>{r.key === 'daily' ? 'deps.dev REST, unscored' : r.key === 'citations' ? 'OpenAlex, all years' : r.key === 'commits' ? 'GitHub, trailing 12 weeks' : r.key === 'stars' ? 'GitHub stars, unscored' : r.label}</a></td><td>{r.date}</td><td>{r.source ? <a href={r.source}>Public query</a> : 'not linked'}</td><td><Number value={r.previous} /></td></tr>)}
       </tbody></table></div>
       <Provenance model={m} source="Evidaxis snapshot" n={1} unit="systems" method="source linked readings" />
     </section>
@@ -111,11 +113,11 @@ const peerOverflow = m.peers.length > peerRows.length;
     {(m.deps?.latest != null || m.daily) && <section class="card-b-section" id="dependents" data-block="3" data-claim={m.facets.dependents.claim_id} data-class={m.facets.dependents.id} data-release={m.release}>
       <h2>Is anyone using {m.entity.name}?</h2><p class="answer"><Sentence text={m.facets.dependents.text} /></p>
       <Chart chart={charts.dependents} />
-      <table><caption>Weekly dependents</caption><thead><tr><th>Partition</th><th>Direct dependents</th><th>Weekly points</th><th>Method</th></tr></thead><tbody><tr><td>{m.deps?.as_of_partition ?? 'no partition'}</td><td><Number value={m.deps?.latest ?? null} /></td><td><Number value={m.deps?.points ?? null} /></td><td>m3 package union</td></tr></tbody></table>
+      <table><caption>Weekly dependents</caption><thead><tr><th>Partition</th><th>Direct dependents</th><th>Weekly points</th><th>Method</th></tr></thead><tbody><tr><td>{m.deps?.as_of_partition ?? 'no partition'}</td><td><Number value={m.deps?.latest ?? null} /></td><td><Number value={m.deps?.points ?? null} /></td><td>{axis3Method}</td></tr></tbody></table>
       <p>Daily dependents (unscored): <Number value={m.daily?.value ?? null} />. {m.facets.stars?.text}</p>
       <Chart chart={charts.daily} />
       {m.dailySeries.length > 0 && <details><summary>Captured daily series</summary><table><caption>Unscored daily dependents, as captured</caption><thead><tr><th>Period</th><th>Dependents</th></tr></thead><tbody>{m.dailySeries.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>}
-      <Provenance model={m} source="deps.dev" href={`/snapshots/${m.date}/snapshot.json`} period={m.deps?.as_of_partition ?? m.date} n={m.deps?.points ?? 0} unit="partitions" method="m3 package union"> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></Provenance>
+      <Provenance model={m} source="deps.dev" href={`/snapshots/${m.date}/snapshot.json`} period={m.deps?.as_of_partition ?? m.date} n={m.deps?.points ?? 0} unit="partitions" method={axis3Method}> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></Provenance>
     </section>}
 
     {m.nicheAssigned && <section class="card-b-section" id="niche" data-block="4" data-claim={m.texts.niche.claim_id} data-class="NICHE" data-release={m.release}>

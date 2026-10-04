@@ -6,7 +6,7 @@ import { snapshot, entities, SNAP_DATE } from '../lib/data';
 import { COHORT_ORDER } from '../lib/cohorts';
 import { computePowerFunnel } from '../lib/power';
 import { orgGraph, snapshotDataset } from '../lib/jsonld';
-import { AXIS3_ESTIMAND, methodologyAxes } from '../lib/methodology';
+import { axis3Estimand, axis3Short, methodologyAxes } from '../lib/methodology';
 import { pageCount, pageItems } from '../lib/pagination';
 import { glossaryHref } from '../lib/glossary';
 import { assignedNiches, snapshotMedals, unassignedSummary, UNASSIGNED } from '../lib/hubs';
@@ -116,14 +116,14 @@ const terms = [
         </div>
         {isM3 && <div class="axis-item rv">
           <span class="axis-chip">dependents</span>
-          <div><h4>Direct-dependents momentum (deps.dev)</h4><p>Confirmed-clean weekly package-union counts, measured as a size-adjusted log-slope within the frozen panel.</p></div>
+          <div><h4>Direct-dependents momentum (deps.dev)</h4><p>{axis3Short(snapshot.methodology_version)}</p></div>
         </div>}
         <div class="axis-item rv">
           <span class="axis-chip gate">gate</span>
           <div><h4>The convergence gate</h4><p>A system receives a Rising badge only when {isM3 ? 'any two of three measurable axes' : 'both measurable axes'} converge. History, axis coverage, cohort floor, and reference-measurement rules are evaluated mechanically each week.</p></div>
         </div>
       </div>
-      <div class="gate-note rv">{isM3 ? <><b>Why convergence?</b> At least two axes must independently meet their rising rules. The third axis expands coverage; thresholds stay fixed. {AXIS3_ESTIMAND} </> : <><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. </>}<a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
+      <div class="gate-note rv">{isM3 ? <><b>Why convergence?</b> At least two axes must independently meet their rising rules. The third axis expands coverage; thresholds stay fixed. {axis3Estimand(snapshot.methodology_version)} </> : <><b>Why two axes?</b> Velocity moves first and noisily; citations move late and slowly. Requiring both filters hype from signal, and recognition only ever points up. </>}<a href="/coverage/">Full chart wall on the coverage atlas →</a></div>
 
       <h3 class="method-h rv">Convergence is rare, and that is the point.</h3>
       <p class="sec-sub rv">The number that matters here is coverage, not the Rising column. We hold {power.registry_members} systems in period {snapshot.period}, measured every week, each input hash-pinned. Published Rising signals: {power.rising_published}. Every weekly snapshot extends the observation history used by the next evaluation.</p>

@@ -1,18 +1,19 @@
 ---
 // Version-aware ONLY where the methodology actually changed between versions.
 // m1 (genesis): rising at z >= 0, no cohort floor. m2 (D10a): rising at z >= 1,
-// cohort must have >= 5 members. Everything else is identical across versions, so
-// the default keeps the frozen v1 page byte-identical. Old pages are never
-// rewritten (METHODOLOGY-VERSIONING.md rule 5); each version renders its own gate.
+// cohort must have >= 5 members. m3 adds axis 3. m4 changes which packages
+// axis 3 counts. Everything else stays on the frozen page for that version.
+// Old pages are never rewritten (METHODOLOGY-VERSIONING.md rule 5).
 //
 // C5: frozen methodology pages must NOT import the live snapshot (no period
 // interpolation that drifts when "current" advances).
 import MethodologyM3 from './MethodologyM3.astro';
+import MethodologyM4 from './MethodologyM4.astro';
 export interface Props { version?: string }
 const { version = 'm1' } = Astro.props;
 const isM2 = version === 'm2';
 ---
-{version === 'm3' ? <MethodologyM3 /> : <>
+{version === 'm4' ? <MethodologyM4 /> : version === 'm3' ? <MethodologyM3 /> : <>
 <p class="lead" style="max-width:64ch">
   Evidaxis is a survey telescope pointed at open-source AI. It records each tracked system’s momentum week
   after week, builds the baseline, and recognizes a system as rising only when two independent axes

@@ -1,10 +1,10 @@
 ---
 import type { AxisDependents } from '../lib/data';
 import { AXIS_LABEL, fmtZ, fmtSlope } from '../lib/data';
-import { AXIS3_ATTRIBUTION, AXIS3_ESTIMAND, DEPENDENTS_AXIS } from '../lib/methodology';
+import { AXIS3_ATTRIBUTION, DEPENDENTS_AXIS, axis3Estimand, axis3History, axis3Permalink } from '../lib/methodology';
 
-export interface Props { axis?: AxisDependents; snapshotDate: string; phrase?: string }
-const { axis, snapshotDate, phrase } = Astro.props;
+export interface Props { axis?: AxisDependents; snapshotDate: string; phrase?: string; methodologyVersion: string }
+const { axis, snapshotDate, phrase, methodologyVersion } = Astro.props;
 ---
 <section class="panel" style="padding:20px;margin-top:18px" aria-label="Weekly direct-dependents axis">
   <h2 class="eyebrow">{AXIS_LABEL[DEPENDENTS_AXIS]}</h2>
@@ -22,9 +22,9 @@ const { axis, snapshotDate, phrase } = Astro.props;
     <div><dt>Rising vote</dt><dd>{axis?.rising_vote ? 'yes' : 'no'}</dd></div>
   </dl>
   {axis?.status === 'scored' && <>
-    <p>{AXIS3_ESTIMAND}</p>
-    <p>The earliest weekly points of each series were read from deps.dev's BigQuery history on 2026-07-21; later points are weekly captures. Each record reports how many of its points are reconstructed history.</p>
+    <p>{axis3Estimand(methodologyVersion)}</p>
+    <p>{axis3History(methodologyVersion)}</p>
   </>}
   <p class="mono muted" style="font-size:.74rem">{AXIS3_ATTRIBUTION}</p>
-  <p><a href="/methodology/m3/#dependents">Axis definition</a> · <a href={`/snapshots/${snapshotDate}/snapshot.json#diagnostics.axis_correlations`}>Snapshot axis correlations</a></p>
+  <p><a href={axis3Permalink(methodologyVersion)}>Axis definition</a> · <a href={`/snapshots/${snapshotDate}/snapshot.json#diagnostics.axis_correlations`}>Snapshot axis correlations</a></p>
 </section>

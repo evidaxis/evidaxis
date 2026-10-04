@@ -28,7 +28,7 @@ export const GET: APIRoute = ({ props }) => {
   const measurementState = measurementStateFor(e, snapshot);
   const body = {
     entity: typedEntity,
-    measurement_state: serializeMeasurementState(measurementState),
+    measurement_state: serializeMeasurementState(measurementState, snapshot.methodology_version),
     record_status: record.recordStatus,
     last_seen_snapshot: record.lastSeenSnapshot,
     // Format-independent canonical reference (CLAIM-URN.md); cite this, not the URL.

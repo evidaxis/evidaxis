@@ -24,6 +24,10 @@ momentum). The archive is append-only: published snapshots are never rewritten.
 - **Cite a system:** `urn:evidaxis:claim:{entity_id}:{methodology}:{snapshot_date}`
   (per-record URNs are listed in each snapshot and on evidaxis.org).
 
+From 2026-10-10, snapshots are methodology m4
+([definition](https://evidaxis.org/methodology/m4/)). Folders scored under m3
+are unchanged.
+
 ## Files
 
 Per snapshot date `YYYY-MM-DD/`:

@@ -6,7 +6,7 @@ import { hasSnapshotArtifact } from './archive';
 import { measurementPhrases, measurementStateFor } from './measurement';
 
 import registry from './methodology-registry.json';
-import { AXIS3_ATTRIBUTION, AXIS3_ESTIMAND, DEPENDENTS_AXIS, methodologyAxes, methodologyEntry } from './methodology';
+import { AXIS3_ATTRIBUTION, DEPENDENTS_AXIS, axis3Estimand, dailyDependentsDescription, methodologyAxes, methodologyEntry } from './methodology';
 
 const SITE = 'https://evidaxis.org';
 const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
@@ -131,7 +131,7 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
   const axisCount = methodologyAxes(snap.methodology_version).length;
   const vars: any[] = [];
   const measurementState = measurementStateFor(e, snap);
-  const statePhrases = measurementPhrases(measurementState);
+  const statePhrases = measurementPhrases(measurementState, snap.methodology_version);
   if (e.momentum != null)
     vars.push({ '@type': 'PropertyValue', name: 'Evidaxis Momentum Score', value: e.momentum, minValue: 0, maxValue: 100, unitText: 'points', measurementTechnique: methodologyPath(snap.methodology_version) });
   if (a1.cohort_z != null)
@@ -140,12 +140,12 @@ export function entityGraph(e: Entity, snap: Snapshot, urn?: string, depsSig?: D
     vars.push({ '@type': 'PropertyValue', name: 'Citation-momentum z-score (within cohort)', value: a2.cohort_z });
   if (axisCount === 3 && a3?.status === 'scored') {
     vars.push({ '@type': 'PropertyValue', name: 'Direct-dependents momentum (deps.dev)', value: a3.cohort_z,
-      description: `${AXIS3_ESTIMAND} As-of partition ${a3.as_of_partition}; ${a3.points_reconstructable} of ${a3.points} points are reconstructed history. ${AXIS3_ATTRIBUTION}`,
+      description: `${axis3Estimand(snap.methodology_version)} As-of partition ${a3.as_of_partition}; ${a3.points_reconstructable} of ${a3.points} points are reconstructed history. ${AXIS3_ATTRIBUTION}`,
       measurementTechnique: `${methodologyPath(snap.methodology_version)}#dependents` });
   }
   // The daily REST count and the scored weekly union are separate series.
   if (depsSig)
-    vars.push({ '@type': 'PropertyValue', name: 'Daily dependents count (unscored)', value: depsSig.value, description: 'Daily deps.dev REST count, captured point-in-time. The scored direct-dependents axis in m3 uses weekly partitions.' });
+    vars.push({ '@type': 'PropertyValue', name: 'Daily dependents count (unscored)', value: depsSig.value, description: dailyDependentsDescription(snap.methodology_version) });
   vars.push(
     { '@type': 'PropertyValue', name: 'Weekly observation history', value: measurementState.history_sufficiency.weekly_observations, minValue: 0, unitText: 'weekly observations' },
     { '@type': 'PropertyValue', name: 'Measurable axis count', value: measurementState.axis_coverage.measurable_axis_count, minValue: 0, maxValue: axisCount, unitText: 'axes' },
@@ -352,7 +352,7 @@ export function snapshotDataset(snap: Snapshot) {
           },
           ...(methodologyAxes(snap.methodology_version).includes(DEPENDENTS_AXIS) ? [{
             '@type': 'PropertyValue', name: 'Direct-dependents momentum (deps.dev)',
-            description: `${AXIS3_ESTIMAND} ${AXIS3_ATTRIBUTION}`,
+            description: `${axis3Estimand(snap.methodology_version)} ${AXIS3_ATTRIBUTION}`,
             measurementTechnique: `${methodologyPath(snap.methodology_version)}#dependents`,
           }] : []),
         ],

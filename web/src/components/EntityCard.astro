@@ -18,7 +18,7 @@ import PercentileStrip from './charts/PercentileStrip.astro';
 import Gauge from './charts/Gauge.astro';
 import CommitHeatmap from './charts/CommitHeatmap.astro';
 import CitBars from './charts/CitBars.astro';
-import { methodologyAxes, DEPENDENTS_AXIS } from '../lib/methodology';
+import { methodologyAxes, DEPENDENTS_AXIS, axis3Permalink } from '../lib/methodology';
 
 export interface Props { entity: Entity; }
 const { entity: e } = Astro.props;
@@ -33,7 +33,7 @@ const cohortN = cohortRanked.length;
 const color = cohortColor(e.cohort);
 
 const state = measurementStateFor(e, snapshot);
-const phrases = measurementPhrases(state);
+const phrases = measurementPhrases(state, snapshot.methodology_version);
 const isRising = state.positive_signal.state === 'published';
 const accentClass = isRising ? 'rising' : 'measurement';
 const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+' : '') + s.toFixed(3));
@@ -122,7 +122,7 @@ const repoUrl = publicRepoUrl(e);
       <div class="adoption">
         <span class="ad-lab mono">Daily dependents count (unscored)</span>
         <span class="ad-val"><data value={String(dep.value)}>{dep.value.toLocaleString()}</data> dependents</span>
-        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {publicPackageLabel(dep.system, dep.package)} · deps.dev{hasThirdAxis && <> · <a href="/methodology/m3/#dependents">the scored m3 axis uses weekly partitions</a></>}</span>
+        <span class="ad-note mono">{dep.direct.toLocaleString()} direct{dep.indirect ? `, ${dep.indirect.toLocaleString()} indirect` : ''} · {publicPackageLabel(dep.system, dep.package)} · deps.dev{hasThirdAxis && <> · <a href={axis3Permalink(snapshot.methodology_version)}>{snapshot.methodology_version === 'm4' ? 'the scored m4 axis uses weekly partitions' : 'the scored m3 axis uses weekly partitions'}</a></>}</span>
       </div>
     )}
   </div>

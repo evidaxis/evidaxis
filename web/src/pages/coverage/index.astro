@@ -7,7 +7,7 @@ import { snapshot, industries, entitiesInCohort, SNAP_DATE } from '../../lib/dat
 import { itemListDataset, breadcrumb } from '../../lib/jsonld';
 import { measurementStateFor } from '../../lib/measurement';
 import { computePowerFunnel } from '../../lib/power';
-import { AXIS3_ESTIMAND, DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS, methodologyAxes } from '../../lib/methodology';
+import { axis3Estimand, axis3GapLabel, DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS, methodologyAxes } from '../../lib/methodology';
 import { pageCount, pageItems } from '../../lib/pagination';
 import Pagination from '../../components/Pagination.astro';
 const inds = [...industries().values()];
@@ -84,7 +84,7 @@ const listJson = itemListDataset({ path: '/coverage/', name: 'Evidaxis coverage 
         <ul class="prose" style="margin-top:.7rem;margin-bottom:0">
           <li><strong>Closed-source systems.</strong> Private SaaS leaves few public, hard-to-game signals; this pilot tracks OSS / research-native systems where the data is rich and tamper-resistant.</li>
           <li><strong>Systems without a paper.</strong> Where no academic source is configured, citation-source availability is recorded as <span class="mono">source_not_measured</span>.</li>
-          {isM3 && <li><strong>Frozen package panel.</strong> {AXIS3_ESTIMAND}</li>}
+          {isM3 && <li><strong>{axis3GapLabel(snapshot.methodology_version)}</strong> {axis3Estimand(snapshot.methodology_version)}</li>}
           <li><strong>New systems.</strong> Weekly history is reported as an exact count against the four-observation minimum. Each weekly snapshot adds one observation.</li>
           <li><strong>Beyond AI.</strong> The taxonomy reserves room beyond AI; this pilot measures three AI frontiers only.</li>
         </ul>

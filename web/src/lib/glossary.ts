@@ -51,6 +51,21 @@ export const GLOSSARY_SECTIONS = [
   { id: 'terms-on-every-page', title: 'Terms on every page', terms: PLAIN_TERMS },
   { id: 'how-a-figure-is-computed', title: 'How a figure is computed', terms: COMPUTED_TERMS },
 ] as const;
+
+const M4_GLOSSARY: Record<string, string> = {
+  'direct-dependents-momentum': 'Axis 3 in m4: the log-slope of unique direct dependents over a system\'s own packages. A package counts when it is published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified. History is derived exactly from stored per-package weekly rows or restarted. At least 14 usable points of the new quantity and 5 latest dependents are required; cohort agreement and fragility can withhold a vote.',
+  'residualization': 'Axes 1 and 2 adjust their robust z against size proxies (log stars and log total citations). Axis 3 in m4 residualizes raw slope against log(1 + latest dependents) before robust z. This removes the fitted size relationship within each cohort.',
+  'convergence-gate': 'The recognition rule in m2, m3 and m4: a non-incumbent system is Rising only when its cohort has at least five members and at least two independent axes are present and rising (positive slope and within-cohort z at least one, plus axis-specific floors and vetoes). M2 has two axes; m3 and m4 accept any two of three.',
+};
+
+/** m3 and earlier keep the published definitions. m4 replaces only the axis-3 sentences. */
+export function glossarySectionsFor(version: string) {
+  if (version !== 'm4') return GLOSSARY_SECTIONS;
+  return GLOSSARY_SECTIONS.map((section) => ({
+    ...section,
+    terms: section.terms.map((term) => M4_GLOSSARY[term.id] ? { ...term, def: M4_GLOSSARY[term.id] } : term),
+  }));
+}
 export const ALL_TERMS: GlossaryTerm[] = [...PLAIN_TERMS, ...COMPUTED_TERMS];
 
 /** Anchor href for a plain term, e.g. glossaryHref('niche-medal'). Throws on unknown ids. */

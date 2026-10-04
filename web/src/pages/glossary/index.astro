@@ -2,8 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import { breadcrumb } from '../../lib/jsonld';
 import { snapshot } from '../../lib/data';
-import { ALL_TERMS, GLOSSARY_SECTIONS } from '../../lib/glossary';
+import { glossarySectionsFor } from '../../lib/glossary';
 
+const sections = glossarySectionsFor(snapshot.methodology_version);
+const terms = sections.flatMap((section) => section.terms);
 const SITE = 'https://evidaxis.org';
 
 const desc = 'The Evidaxis glossary: system, niche, niche median, niche medal and Rising in plain words, then momentum, the convergence gate and the axes.';
@@ -15,7 +17,7 @@ const definedTermSet = {
   name: 'Evidaxis vocabulary',
   description: 'The defined terms of the Evidaxis measurement methodology.',
   url: `${SITE}/glossary/`,
-  hasDefinedTerm: ALL_TERMS.map((t) => ({
+  hasDefinedTerm: terms.map((t) => ({
     '@type': 'DefinedTerm',
     '@id': `${SITE}/glossary/#${t.id}`,
     name: t.name,
@@ -32,9 +34,9 @@ const crumbs = breadcrumb([{ name: 'Methodology', path: '/methodology/current/' 
       <h1>Glossary</h1>
       <p class="lead">These terms describe Evidaxis measurements. The latest published snapshot uses {snapshot.methodology_version}; historical records retain their own methodology. Each definition names the signal, window, and threshold used to interpret the open data.</p>
       <nav class="mono" aria-label="Glossary sections" style="font-size:.8rem;margin-top:1.2rem">
-        {GLOSSARY_SECTIONS.map((section, i) => <>{i > 0 && ' · '}<a href={`#${section.id}`}>{section.title}</a></>)}
+        {sections.map((section, i) => <>{i > 0 && ' · '}<a href={`#${section.id}`}>{section.title}</a></>)}
       </nav>
-      {GLOSSARY_SECTIONS.map((section) => (
+      {sections.map((section) => (
         <section id={section.id} style="margin-top:2.4rem">
           <h2>{section.title}</h2>
           <dl style="margin-top:1.4rem">

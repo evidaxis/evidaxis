@@ -1,3 +1,4 @@
+import { axis3ChartSource } from '../methodology';
 import { fmt, numeric, metrics, type CardBModel } from './build';
 import { xml } from './exports';
 import { CHART_COPY } from './chart-copy';
@@ -74,7 +75,7 @@ export function chartsFor(m: CardBModel): Record<string, Chart> {
     const max = Math.max(1, ...values, m.nicheAssigned ? med ?? 0 : 0), last = points.at(-1)!;
     const single = points.length === 1;
     make('dependents', 'sparkline', m.nicheAssigned ? conclusion('dependents', { value: fmt(last[1]), median: fmt(med) }) : `${fmt(last[1])} direct dependents on deps.dev for ${m.entity.name}.`, 'direct dependents', fmt(last[1]), m.nicheAssigned ? fmt(med) : null,
-      single ? last[0] : `${points[0][0]} to ${last[0]}`, 'deps.dev weekly package union', single
+      single ? last[0] : `${points[0][0]} to ${last[0]}`, axis3ChartSource(m.methodology), single
         ? text(40, 100, `${fmt(last[1])} dependents · ${last[0]}`, 'start', ` data-chart-latest="dependents" data-value="${last[1]}" data-period="${xml(last[0])}"`)
         : axis(max, points[0][0], last[0])
           + (!m.nicheAssigned || med === null ? '' : `<path d="M40 ${y(med, max)}H450" stroke="#bd783e" stroke-dasharray="3 3"/>`) + line(values, max)

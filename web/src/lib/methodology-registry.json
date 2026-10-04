@@ -27,13 +27,24 @@
     },
     {
       "version": "m3",
-      "status": "current",
+      "status": "superseded",
       "formula_fingerprint": "sha256:1aaae89952f8cea163e22caf25c17668a4d13ec8f60699e0b85bd3841d60d324",
       "code_commit": "128df50bf1f6466d06f3df1fa2fdd825d774b42d",
       "effective_at": "2026-09-19",
+      "superseded_at": "2026-10-10",
       "parent_version": "m2",
       "page": "/methodology/m3/",
       "changelog": "MAJOR: adds frozen-panel direct-dependents momentum from confirmed-clean deps.dev weekly partitions. Any two of three axes may converge; no threshold changed. Axis 3 residualizes before robust z, uses a one-way fragility veto and the confirmed 0.80 cohort canary floor, and expires after 28 days. Existing m1 and m2 snapshots are never recomputed. Canonical specification: methodology/m3.json."
+    },
+    {
+      "version": "m4",
+      "status": "current",
+      "formula_fingerprint": "sha256:5de15c3a55c026487205c67d09c71efa18ec006103e9653a7f59ee9424d0cad4",
+      "code_commit": "e5ea50fb469efa3595166f17ab4851ac81f75f6f",
+      "effective_at": "2026-10-10",
+      "parent_version": "m3",
+      "page": "/methodology/m4/",
+      "changelog": "MAJOR: axis 3 counts only a system's own packages. History is exactly derived from stored per-package weekly rows, or the series restarts. The self-name exclusion list is fixed. Published m3 snapshots are never recomputed. Record: governance/METHODOLOGY-M4-2026-10-04.md. Erratum: METHODOLOGY-VERSIONING.md#errata. Canonical specification: methodology/m4.json."
     }
   ]
 }

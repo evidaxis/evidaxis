@@ -4,6 +4,7 @@ import type { MeasurementState } from '../measurement';
 import { measurementPhrases } from '../measurement';
 import { claimUrnForEntity } from '../claim_urn';
 import { TEMPLATE_VERSION } from './config';
+import { axis3ReadingDefinition } from '../methodology';
 import { assertPublicText, copy, facet, revealsBannedHandle, selectClasses } from './facets';
 
 export const numeric = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
@@ -143,6 +144,17 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     dependents: { ...rawFacets.dependents, text: rawFacets.dependents.answer },
     standing: { ...rawFacets.standing, text: rawFacets.standing.answer },
   };
+  if (snap.methodology_version === 'm4' && classes.dependents === 'C11') {
+    const answer = 'Dependents: no admitted own package.';
+    const text = nicheAssigned
+      ? `Dependents: no admitted own package, a coverage state, not a measured zero. Unscored daily count: ${fmt(ctx.daily?.value ?? null)} (${ctx.dailySeries.at(-1)?.period ?? date}).`
+      : answer;
+    facets.dependents = {
+      ...facets.dependents,
+      text: assertPublicText(text, name, ctx.bannedOwners),
+      answer: assertPublicText(answer, name, ctx.bannedOwners),
+    };
+  }
   const text = (key: Parameters<typeof copy>[0], extra = {}) => copy(key, { ...vars, ...extra }, name, ctx.bannedOwners);
   const primaryKey: MetricKey | null = own.commits !== null ? 'commits' : own.citations !== null ? 'citations' : own.dependents !== null ? 'dependents' : null;
   const lead = own.commits !== null ? facets.code.answer : primaryKey && nicheAssigned ? text('repository_free', {
@@ -179,7 +191,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const definitions = {
     commits: 'GitHub averaged commits per week over the trailing window (12 weeks); deltas compare trailing averages, range spans rolling averages within 52 weeks.',
     citations: 'OpenAlex citing works indexed to date, all years including the current one.',
-    dependents: 'deps.dev weekly package-union direct dependents, frozen m3 panel; partition dates can repeat across snapshots.',
+    dependents: axis3ReadingDefinition(snap.methodology_version),
     stars: 'GitHub stargazers count; recorded, not scored.',
   };
   const labels = { commits: 'Commits per week', citations: 'Citing works', dependents: 'Direct dependents', stars: 'Stars' };

@@ -6,7 +6,7 @@ import { hasSnapshotArtifact } from '../../../lib/archive';
 import { snapshotDataset, breadcrumb } from '../../../lib/jsonld';
 import { claimUrnForEntity } from '../../../lib/claim_urn';
 import { measurementPhrases, measurementStateFor } from '../../../lib/measurement';
-import { AXIS3_ESTIMAND, DEPENDENTS_AXIS, methodologyAxes, methodologyEntry } from '../../../lib/methodology';
+import { axis3Estimand, DEPENDENTS_AXIS, methodologyAxes, methodologyEntry } from '../../../lib/methodology';
 import { pageCount, pageItems } from '../../../lib/pagination';
 import Pagination from '../../../components/Pagination.astro';
 
@@ -91,7 +91,7 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
       </div>
 
       <h2 style="font-size:1.4rem">All measured systems</h2>
-      {hasThirdAxis && <p class="prose">{AXIS3_ESTIMAND} <a href={`/snapshots/${date}/snapshot.json#diagnostics.axis_correlations`}>Inspect diagnostics.axis_correlations in this snapshot</a>.</p>}
+      {hasThirdAxis && <p class="prose">{axis3Estimand(snapshot.methodology_version)} <a href={`/snapshots/${date}/snapshot.json#diagnostics.axis_correlations`}>Inspect diagnostics.axis_correlations in this snapshot</a>.</p>}
       <div class="archive-table-wrap">
         <table class="archive-table">
           <caption>All systems measured in snapshot {date}, with claim-URN per row</caption>

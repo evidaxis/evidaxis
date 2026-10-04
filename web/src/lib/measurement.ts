@@ -414,9 +414,18 @@ function axisPhrase(
   axis: string,
   state: AxisCoverageState,
   reason: AxisCoverageReason,
+  version = 'm3',
 ): string {
-  if (state === 'out_of_panel') return `${axis} axis: outside the frozen panel; not measured.`;
-  if (state === 'below_floor') return `${axis} axis: minimum of 14 clean points and 5 latest dependents not met.`;
+  if (state === 'out_of_panel') {
+    return version === 'm4'
+      ? `${axis} axis: no admitted own package; not measured.`
+      : `${axis} axis: outside the frozen panel; not measured.`;
+  }
+  if (state === 'below_floor') {
+    return version === 'm4'
+      ? `${axis} axis: minimum of 14 usable points of the new quantity and 5 latest dependents not met.`
+      : `${axis} axis: minimum of 14 clean points and 5 latest dependents not met.`;
+  }
   if (state === 'held') return `${axis} axis: cohort source agreement insufficient; score withheld.`;
   if (state === 'stale') return `${axis} axis: confirmed-clean partition older than 28 days; score withheld.`;
   if (state === 'measurable') return `${axis} axis: measured.`;
@@ -464,7 +473,7 @@ function gatePhrase(state: MeasurementState): string {
   }
 }
 
-export function measurementPhrases(state: MeasurementState): MeasurementPhrases {
+export function measurementPhrases(state: MeasurementState, version = 'm3'): MeasurementPhrases {
   const history = state.history_sufficiency;
   const historyPhrase = history.state === 'sufficient'
     ? `History: ${history.weekly_observations} weekly observations; minimum ${history.required}.`
@@ -473,11 +482,13 @@ export function measurementPhrases(state: MeasurementState): MeasurementPhrases 
     'Development velocity',
     state.axis_coverage.axes[DEVELOPMENT_AXIS],
     state.axis_coverage.coverage_reasons[DEVELOPMENT_AXIS],
+    version,
   );
   const citationPhrase = axisPhrase(
     'Citation',
     state.axis_coverage.axes[CITATION_AXIS],
     state.axis_coverage.coverage_reasons[CITATION_AXIS],
+    version,
   );
   const n = state.axis_coverage.measurable_axis_count;
   const axisCount = Object.keys(state.axes).length;
@@ -492,7 +503,7 @@ export function measurementPhrases(state: MeasurementState): MeasurementPhrases 
     development_axis: developmentPhrase,
     citation_axis: citationPhrase,
     ...(state.axes[DEPENDENTS_AXIS] ? { dependents_axis: axisPhrase(
-      'Direct-dependents', state.axes[DEPENDENTS_AXIS]!.axis_coverage, state.axes[DEPENDENTS_AXIS]!.coverage_reason,
+      'Direct-dependents', state.axes[DEPENDENTS_AXIS]!.axis_coverage, state.axes[DEPENDENTS_AXIS]!.coverage_reason, version,
     ) } : {}),
     axis_coverage: axisCoveragePhrase,
     gate,
@@ -503,9 +514,9 @@ export function measurementPhrases(state: MeasurementState): MeasurementPhrases 
   };
 }
 
-export function serializeMeasurementState(state: MeasurementState) {
+export function serializeMeasurementState(state: MeasurementState, version = 'm3') {
   return {
     ...state,
-    phrases: measurementPhrases(state),
+    phrases: measurementPhrases(state, version),
   };
 }

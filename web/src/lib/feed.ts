@@ -91,7 +91,7 @@ function typedObservation(
   title: string,
   sourceFields: string[],
 ): FeedEntry {
-  const gate = measurementPhrases(state).gate;
+  const gate = measurementPhrases(state, current.methodology_version).gate;
   const canonicalSummary = `${title}. ${gate}${gate.endsWith('.') ? '' : '.'}`;
   return finalize({
     schema_version: 'typed_feed_entry_1',
@@ -105,7 +105,7 @@ function typedObservation(
     cohort: entity.cohort,
     entity_ids: [entity.entity_id],
     source_fields: [...sourceFields].sort(),
-    state: serializeMeasurementState(state),
+    state: serializeMeasurementState(state, current.methodology_version),
   });
 }
 
@@ -251,7 +251,7 @@ export function diffFeedEntries(
         [entityPointer(entity, '/reference_measurement')],
       ));
     } else if (state.positive_signal.state === 'published' && priorState.positive_signal.state !== 'published') {
-      const gate = measurementPhrases(state).gate;
+      const gate = measurementPhrases(state, current.methodology_version).gate;
       entries.push(finalize({
         schema_version: 'typed_feed_entry_1',
         type: 'moment_signal',
@@ -264,7 +264,7 @@ export function diffFeedEntries(
         cohort: entity.cohort,
         entity_ids: [entity.entity_id],
         source_fields: [entityPointer(entity, '/positive_signal')],
-        state: serializeMeasurementState(state),
+        state: serializeMeasurementState(state, current.methodology_version),
       }));
     }
   }

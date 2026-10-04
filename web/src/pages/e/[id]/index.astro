@@ -66,7 +66,7 @@ const homepageUrl = publicHomepage(e);
 const distinctHomepageUrl = homepageUrl && homepageUrl !== repoUrl ? homepageUrl : null;
 
 const measurementState = measurementStateFor(e, snapshot);
-const statePhrases = measurementPhrases(measurementState);
+const statePhrases = measurementPhrases(measurementState, snapshot.methodology_version);
 const canary = canaryGroup(e.entity_id);
 const isTreatment = canary === 'treatment';
 
@@ -96,7 +96,7 @@ const cardDescription = card?.nicheAssigned
       <div class="db-grid"><SwingSignal series={cs} /><SharpeSignal series={cs} /><ChangepointSignal series={cs} /><LagSignal /><AlphaSignal /></div>
       <SignalQuality entity={e} series={cs} />
       <SnapshotProvenance total={card.history.length} index={card.history.length} />
-      {methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS) && <Axis3Details axis={e.axes.deps_direct_dependents_momentum} snapshotDate={snapshot.snapshot_date} phrase={statePhrases.dependents_axis} />}
+      {methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS) && <Axis3Details axis={e.axes.deps_direct_dependents_momentum} snapshotDate={snapshot.snapshot_date} methodologyVersion={snapshot.methodology_version} phrase={statePhrases.dependents_axis} />}
     </Fragment>
   </CardB> : (<>{' '}<section class="section ent-wrap">
     <div class="wrap">
@@ -188,7 +188,7 @@ const cardDescription = card?.nicheAssigned
             <DepsSparkline series={dSeries} label={`${e.name} dependents over time`} />
             <p class="ad-cap mono">
               Downstream packages depending on <b>{publicPackageLabel(dep.system, dep.package)}</b> (deps.dev), captured point-in-time each snapshot.
-              This daily series is unscored. The <a href="/methodology/m3/#dependents">scored axis in m3 uses weekly partitions</a>.
+              This daily series is unscored. The <a href={snapshot.methodology_version === 'm4' ? '/methodology/m4/#dependents' : '/methodology/m3/#dependents'}>{snapshot.methodology_version === 'm4' ? 'scored axis in m4 uses weekly partitions' : 'scored axis in m3 uses weekly partitions'}</a>.
             </p>
           </div>
         </div>
@@ -230,7 +230,7 @@ const cardDescription = card?.nicheAssigned
       )}
       </>)}
 
-      {methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS) && <Axis3Details axis={e.axes.deps_direct_dependents_momentum} snapshotDate={snapshot.snapshot_date} phrase={statePhrases.dependents_axis} />}
+      {methodologyAxes(snapshot.methodology_version).includes(DEPENDENTS_AXIS) && <Axis3Details axis={e.axes.deps_direct_dependents_momentum} snapshotDate={snapshot.snapshot_date} methodologyVersion={snapshot.methodology_version} phrase={statePhrases.dependents_axis} />}
 
       {isTreatment && <CitationBlock name={e.name} entityId={e.entity_id} snapshotDate={snapshot.snapshot_date} />}
 
