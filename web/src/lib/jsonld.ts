@@ -34,6 +34,8 @@ const SAME_AS = [
   'https://x.com/evidaxis',
   'https://huggingface.co/evidaxis',
   GENESIS_ZENODO_RECORD,
+  // FAIRsharing knowledgebase record, curator-accepted 2026-10-01.
+  'https://fairsharing.org/10.25504/FAIRsharing.70181b',
 ];
 
 // Durable, VERSIONED methodology permalink for a given methodology_version. Records
