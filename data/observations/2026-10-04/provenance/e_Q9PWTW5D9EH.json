@@ -1,0 +1,32 @@
+{
+  "language": "Python",
+  "default_branch": "main",
+  "visibility": "public",
+  "pushed_at": "2026-10-03T06:45:58Z",
+  "updated_at": "2026-10-04T03:30:09Z",
+  "network_count": 677,
+  "name": "llm-compressor",
+  "archived": false,
+  "subscribers_count": 29,
+  "description": "State-of-the-art LLM compression, built for production inference with vLLM",
+  "homepage": "https://docs.vllm.ai/projects/llm-compressor",
+  "size": 42980,
+  "created_at": "2024-06-20T20:13:34Z",
+  "forks_count": 677,
+  "id": 817962136,
+  "topics": [
+    "compression",
+    "quantization"
+  ],
+  "private": false,
+  "open_issues_count": 102,
+  "watchers_count": 3841,
+  "fork": false,
+  "disabled": false,
+  "node_id": "R_kgDOMMEcmA",
+  "stargazers_count": 3841,
+  "full_name": "vllm-project/llm-compressor",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "language": "TypeScript",
+  "default_branch": "main",
+  "visibility": "public",
+  "pushed_at": "2026-09-28T05:48:23Z",
+  "updated_at": "2026-10-02T14:26:19Z",
+  "network_count": 4,
+  "name": "healthy-diet-ai-agent",
+  "archived": false,
+  "subscribers_count": 2,
+  "description": "Healthy Diet AI Agent is a Bun + TypeScript backend for nutrition chat, food-image analysis, RAG document ingestion, and knowledge-grounded diet guidance.",
+  "homepage": "",
+  "size": 139131,
+  "created_at": "2026-04-21T09:30:16Z",
+  "forks_count": 4,
+  "id": 1216839348,
+  "topics": [
+    "agentic-ai",
+    "agentic-rag",
+    "rag"
+  ],
+  "private": false,
+  "open_issues_count": 5,
+  "watchers_count": 756,
+  "fork": false,
+  "disabled": false,
+  "node_id": "R_kgDOSId-tA",
+  "stargazers_count": 756,
+  "full_name": "archie0732/healthy-diet-ai-agent",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

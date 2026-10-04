@@ -1,0 +1,32 @@
+{
+  "language": "Jupyter Notebook",
+  "default_branch": "main",
+  "visibility": "public",
+  "pushed_at": "2023-08-26T19:35:56Z",
+  "updated_at": "2026-09-25T11:50:56Z",
+  "network_count": 70,
+  "name": "stable-diffusion-2-gui",
+  "archived": false,
+  "subscribers_count": 12,
+  "description": "Lightweight Stable Diffusion v 2.1 web UI: txt2img, img2img, depth2img, inpaint and upscale4x.",
+  "homepage": "",
+  "size": 112,
+  "created_at": "2022-11-25T12:14:10Z",
+  "forks_count": 70,
+  "id": 570530787,
+  "topics": [
+    "image-generation",
+    "stable-diffusion"
+  ],
+  "private": false,
+  "open_issues_count": 4,
+  "watchers_count": 597,
+  "fork": false,
+  "disabled": false,
+  "node_id": "R_kgDOIgGb4w",
+  "stargazers_count": 597,
+  "full_name": "qunash/stable-diffusion-2-gui",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

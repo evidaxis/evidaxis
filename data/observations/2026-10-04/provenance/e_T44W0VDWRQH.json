@@ -1,0 +1,33 @@
+{
+  "language": "TypeScript",
+  "default_branch": "main",
+  "visibility": "public",
+  "pushed_at": "2024-05-06T20:41:13Z",
+  "updated_at": "2026-09-30T13:58:39Z",
+  "network_count": 153,
+  "name": "magic-copy",
+  "archived": false,
+  "subscribers_count": 17,
+  "description": "Magic Copy is a Chrome extension that uses Meta's Segment Anything Model to extract a foreground object from an image and copy it to the clipboard.",
+  "homepage": "",
+  "size": 34532,
+  "created_at": "2023-04-07T04:59:51Z",
+  "forks_count": 153,
+  "id": 624716259,
+  "topics": [
+    "chrome-extension",
+    "computer-vision",
+    "image-processing"
+  ],
+  "private": false,
+  "open_issues_count": 24,
+  "watchers_count": 2454,
+  "fork": false,
+  "disabled": false,
+  "node_id": "R_kgDOJTxp4w",
+  "stargazers_count": 2454,
+  "full_name": "kevmo314/magic-copy",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

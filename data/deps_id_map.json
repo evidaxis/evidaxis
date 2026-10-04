@@ -8223,6 +8223,11 @@
       "package": "openviking",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "vortex-data/vortex": {
+      "system": "cargo",
+      "package": "vortex",
+      "pinned_at": "2026-10-04T13:39:52Z"
+    },
     "voxel51/fiftyone": {
       "system": "pypi",
       "package": "fiftyone",

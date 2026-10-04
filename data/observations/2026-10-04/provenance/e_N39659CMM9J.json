@@ -1,0 +1,32 @@
+{
+  "language": "C",
+  "default_branch": "main",
+  "visibility": "public",
+  "pushed_at": "2026-05-18T06:50:45Z",
+  "updated_at": "2026-10-03T12:47:28Z",
+  "network_count": 351,
+  "name": "sqlite-vec",
+  "archived": false,
+  "subscribers_count": 69,
+  "description": "A vector search SQLite extension that runs anywhere!",
+  "homepage": "",
+  "size": 1306,
+  "created_at": "2024-04-20T20:43:01Z",
+  "forks_count": 351,
+  "id": 789538509,
+  "topics": [
+    "sqlite",
+    "sqlite-extension"
+  ],
+  "private": false,
+  "open_issues_count": 211,
+  "watchers_count": 8160,
+  "fork": false,
+  "disabled": false,
+  "node_id": "R_kgDOLw9mzQ",
+  "stargazers_count": 8160,
+  "full_name": "asg017/sqlite-vec",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

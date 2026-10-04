@@ -1,0 +1,31 @@
+{
+  "language": "TypeScript",
+  "default_branch": "main",
+  "visibility": "public",
+  "pushed_at": "2025-07-07T15:35:16Z",
+  "updated_at": "2026-10-04T10:39:05Z",
+  "network_count": 2359,
+  "name": "gpt-crawler",
+  "archived": false,
+  "subscribers_count": 136,
+  "description": "Crawl a site to generate knowledge files to create your own custom GPT from a URL",
+  "homepage": "https://www.builder.io/blog/custom-gpt",
+  "size": 884,
+  "created_at": "2023-11-14T00:31:11Z",
+  "forks_count": 2359,
+  "id": 718379614,
+  "topics": [
+    "ai"
+  ],
+  "private": false,
+  "open_issues_count": 110,
+  "watchers_count": 22406,
+  "fork": false,
+  "disabled": false,
+  "node_id": "R_kgDOKtGaXg",
+  "stargazers_count": 22406,
+  "full_name": "BuilderIO/gpt-crawler",
+  "owner_type": "Organization",
+  "license_spdx_id": "ISC",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
