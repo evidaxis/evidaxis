@@ -602,3 +602,30 @@ EVALUATED, official cutoff **2026-09-14**, 48 voting / 8 rising, 0 unstable-veto
 **Tranche.** Not run in this tact: since the 2026-09-20 amendment `activation_tranche.py` needs
 `--size N` from the capacity dry run; routed to a separate session. Artifacts committed in the same
 tact (the capture-then-leave-uncommitted pattern of 08-17 and 09-21 did not repeat).
+
+## 2026-10-05 — tact: partition 2026-09-28, 6/6; score_m3 --verify DRIFT (1 system)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-09-28` — panel **90 systems / 628 packages**,
+**64/90 matched**, 10 canaries, manifest `026eaa45377a…`, job `bqjob_r6800042e81d74470…`. Same
+frozen panel and match count as the two previous partitions.
+
+**Sidecar** (`--sidecar 2026-09-28`): PV2P 1154 rows, Projects 4227 rows, retention tripwire
+{earliest 20230410 · latest 20260928 · n 180 · rows_total 1,068,869,495,761}.
+
+**Sanity gate** (same calibration, `--series v2h1`): **2026-09-21 promoted CLEAN** (cov=64);
+2026-09-28 PROVISIONAL (cov=64). KILL-BAR PASS, flagged exactly the two known-bad partitions.
+Artifact `data/quarantine/axis3-deps-v2/sanity-check-e916ba393abf.json`.
+
+**Evaluation** (`--as-of 2026-09-21 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-09-21**, 48 voting / 7 rising, 0 unstable-vetoed.
+**c1–c6 PASS — 6/6.** Artifact `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-09-21-8f9b00d8ae3c.json`.
+
+**`score_m3.py --verify`: DRIFT** on the 2026-10-03 snapshot (4 files). One system differs:
+`e_MB6DQ5PDDKH` (Kokoro-82M) — published `deps_direct_dependents_momentum.cohort_z` −0.674,
+recomputation 0.0 → momentum 46.6 published vs 50.8 recomputed; percentile swaps with
+`e_R2KZCZM6TGV` (36↔29). Files: `data/snapshots/2026-10-03/snapshot.json`, the two entity cards,
+`data/history/e_MB6DQ5PDDKH.jsonl`. Not caused by this tact's capture: `observation_rows` drops rows
+captured after the snapshot's `captured_at` (2026-10-04T02:32Z), and the new sanity artifact is
+uncommitted, so `sanity_as_of` cannot see it. Candidates not checked here: the 6ac880704 card repair
+(run crossing 00:00 UTC), the October census activation (b160809ce). The published snapshot is left
+untouched (immutable); diagnosis routed to a separate session.
