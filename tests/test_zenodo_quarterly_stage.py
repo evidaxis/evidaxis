@@ -45,3 +45,13 @@ def test_foreign_email_stops_the_package(tmp_path, monkeypatch):
 def test_inherited_person_in_metadata_is_refused():
     meta = {"creators": [{"name": "Evidaxis"}], "contributors": [{"name": "Some Person", "type": "Other"}]}
     assert z.check_metadata(meta)
+
+
+def test_deposit_is_strict_by_default(tmp_path):
+    # a DOI cannot be withdrawn: curated project accounts stay masked unless asked for
+    date = json.loads((REPO / "data" / "latest.json").read_text())["snapshot_date"]
+    z.stage(date, tmp_path / "strict")
+    strict = z.project_person_free.last_stats["names_neutralized"]
+    z.stage(date, tmp_path / "open", project_accounts=True)
+    opened = z.project_person_free.last_stats["names_neutralized"]
+    assert strict > opened

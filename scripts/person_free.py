@@ -215,12 +215,14 @@ def load_project_accounts(repo: Path) -> dict:
     return accounts if isinstance(accounts, dict) else {}
 
 
-def load_owner_types(repo: Path) -> dict:
+def load_owner_types(repo: Path, *, project_accounts: bool = True) -> dict:
+    """project_accounts=False is the strict projection (every User owner masked), used for a
+    deposit that cannot be withdrawn until the project-account decision is re-checked."""
     registry = json.loads((repo / "etl" / "owner_types.json").read_text(encoding="utf-8"))["repos"]
-    return apply_project_accounts(registry, load_project_accounts(repo))
+    return apply_project_accounts(registry, load_project_accounts(repo)) if project_accounts else registry
 
 
-def load_handle_index(repo: Path) -> tuple[HandleIndex, tuple[str, ...]]:
+def load_handle_index(repo: Path, *, project_accounts: bool = True) -> tuple[HandleIndex, tuple[str, ...]]:
     """Floor list plus every User owner: stored slug and canonical full_name owner.
 
     A stored slug whose login is an Organization today is not a personal handle
@@ -228,7 +230,7 @@ def load_handle_index(repo: Path) -> tuple[HandleIndex, tuple[str, ...]]:
     Canonical User owners stay in the handle index either way.
     """
     floor = json.loads((repo / "web" / "src" / "data" / "person-free-handles.json").read_text(encoding="utf-8"))
-    registry = load_owner_types(repo)
+    registry = load_owner_types(repo, project_accounts=project_accounts)
     org_owners: set[str] = set()
     for stored, entry in registry.items():
         if isinstance(entry, dict) and entry.get("owner_type") == "Organization":

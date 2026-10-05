@@ -138,7 +138,7 @@ def _project_entity(entity: dict, registry: dict, index, stats: dict) -> None:
     _redact_packages(entity, index, stats)
 
 
-def project_person_free(snap: dict) -> dict:
+def project_person_free(snap: dict, *, project_accounts: bool = True) -> dict:
     """Publication projection, same rules as web/src/lib/person_free.ts plus the
     name/slug neutralization applied when the site loads a snapshot.
 
@@ -149,8 +149,8 @@ def project_person_free(snap: dict) -> dict:
     handle becomes ``System <entity_id>``. A deps.dev package name that reveals a
     handle becomes ``package not shown``. Free text that reveals a handle is dropped.
     """
-    index, _stale = load_handle_index(REPO)
-    registry = load_owner_types(REPO)
+    index, _stale = load_handle_index(REPO, project_accounts=project_accounts)
+    registry = load_owner_types(REPO, project_accounts=project_accounts)
     out = json.loads(json.dumps(snap))
     stats = {"entities": 0, "names_neutralized": 0, "fields_redacted": 0}
     for entity in out.get("entities", []):
@@ -179,11 +179,11 @@ def entities_csv(snap: dict, path: Path) -> None:
         w.writerows(rows)
 
 
-def _person_free_hits(folder: Path) -> list[str]:
+def _person_free_hits(folder: Path, *, project_accounts: bool = True) -> list[str]:
     """Fail-closed scan of the staged upload. Handle matching is exact
     (scripts/person_free.py). Moved repositories also reject the exact stale
     ``owner/repo`` path."""
-    index, stale_paths = load_handle_index(REPO)
+    index, stale_paths = load_handle_index(REPO, project_accounts=project_accounts)
     hits: list[str] = []
     for path in sorted(folder.rglob("*")):
         if not path.is_file():

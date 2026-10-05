@@ -105,7 +105,9 @@ def manifest(folder: Path, date: str, snap: dict) -> dict:
                       for path in sorted(folder.rglob("*")) if path.is_file()}}
 
 
-def stage(date: str, out: Path) -> Path:
+def stage(date: str, out: Path, *, project_accounts: bool = False) -> Path:
+    """Strict by default: a DOI cannot be withdrawn, so project accounts (etl/project_accounts.json)
+    stay masked until the decision is re-checked at a deposit (Codex consult 2026-10-05)."""
     src = SNAPSHOTS / date / "snapshot.json"
     if not src.is_file():
         raise SystemExit(f"no snapshot at {src}")
@@ -113,7 +115,7 @@ def stage(date: str, out: Path) -> Path:
         raise SystemExit(f"--out must be empty: {out}")
     folder = out / f"evidaxis-snapshot-{date}"
     folder.mkdir(parents=True)
-    snap = project_person_free(json.loads(src.read_text(encoding="utf-8")))
+    snap = project_person_free(json.loads(src.read_text(encoding="utf-8")), project_accounts=project_accounts)
     stats = project_person_free.last_stats
     (folder / "snapshot.json").write_text(json.dumps(snap, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     entities_csv(snap, folder / "entities.csv")
@@ -122,7 +124,7 @@ def stage(date: str, out: Path) -> Path:
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(REPO / rel, target)
     (folder / "README.md").write_text(readme(date, snap, stats), encoding="utf-8")
-    hits = _person_free_hits(folder) + email_hits(folder)
+    hits = _person_free_hits(folder, project_accounts=project_accounts) + email_hits(folder)
     if hits:
         print(f"PERSON-FREE ABORT — handle or e-mail leak in staged deposit: {hits}")
         raise SystemExit(3)
@@ -147,9 +149,11 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--date", default=None)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--with-project-accounts", action="store_true",
+                    help="publish curated project accounts by name (only after a re-check of the decision)")
     args = ap.parse_args(argv)
     date = args.date or json.loads((REPO / "data" / "latest.json").read_text())["snapshot_date"]
-    stage(date, args.out)
+    stage(date, args.out, project_accounts=args.with_project_accounts)
     return 0
 
 
