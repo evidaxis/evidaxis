@@ -22,7 +22,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, buildHandleIndex, handleHits, handleHitsDecoded } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded } from '../src/lib/personFree.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -281,6 +281,16 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     if (unpublished.length) errors.push(`etl/owner_types.json: keeps repositories no snapshot publishes: ${unpublished.join(', ')}`);
   }
 
+  // Key check stays on the file: project accounts become Organization only in memory.
+  const accountsUrl = new URL('../../etl/project_accounts.json', import.meta.url);
+  const accountDoc = existsSync(accountsUrl) ? JSON.parse(readFileSync(accountsUrl, 'utf8')) : {};
+  const accounts = accountDoc && typeof accountDoc.accounts === 'object' && !Array.isArray(accountDoc.accounts)
+    ? (accountDoc.accounts ?? {})
+    : {};
+  const diskShape = new Map(Object.entries(registry).map(([repo, entry]) =>
+    [repo, entry && typeof entry === 'object' ? JSON.stringify(Object.keys(entry).sort()) : '']));
+  applyProjectAccounts(registry, accounts);
+
   const bannedOwners = new Map();
   const staleSlugs = new Set();   // exact old 'owner/repo' paths of moved repositories
   const orgOwners = new Set();    // owners that are Organizations today
@@ -291,7 +301,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     if (!entry || !['Organization', 'User'].includes(entry.owner_type)
       || !Number.isInteger(entry.repo_id) || entry.repo_id <= 0
       || typeof entry.full_name !== 'string' || !/^[^/]+\/[^/]+$/.test(entry.full_name)
-      || JSON.stringify(Object.keys(entry).sort()) !== JSON.stringify(['full_name', 'owner_type', 'repo_id'])) {
+      || diskShape.get(storedRepo) !== JSON.stringify(['full_name', 'owner_type', 'repo_id'])) {
       errors.push(`etl/owner_types.json: invalid classification for ${storedRepo}`);
       continue;
     }

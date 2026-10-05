@@ -69,3 +69,24 @@ export function handleHits(text, index) {
 export function handleHitsDecoded(text, index) {
   return [...new Set([...handleHits(text, index), ...handleHits(lenientDecoded(text), index)])];
 }
+
+// A listed User account that is a project's identity is published like an Organization.
+// The owner-types file stays unchanged; callers pass the accounts map (missing file = {}).
+export function applyProjectAccounts(registry, accounts) {
+  if (!registry || typeof registry !== 'object' || Array.isArray(registry)) return registry;
+  if (!accounts || typeof accounts !== 'object' || Array.isArray(accounts)) return registry;
+  for (const [key, entry] of Object.entries(registry)) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry) || entry.owner_type !== 'User') continue;
+    const fullName = entry.full_name;
+    if (typeof fullName !== 'string' || !fullName.includes('/')) continue;
+    const owner = fullName.split('/')[0].toLowerCase();
+    if (!owner || !Object.prototype.hasOwnProperty.call(accounts, owner)) continue;
+    registry[key] = {
+      ...entry,
+      owner_type: 'Organization',
+      github_owner_type: 'User',
+      publication_basis: 'project_account',
+    };
+  }
+  return registry;
+}

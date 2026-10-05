@@ -179,8 +179,45 @@ def _valid_entry(entry: object) -> bool:
     return isinstance(full_name, str) and _FULL_NAME.match(full_name) is not None
 
 
+def apply_project_accounts(registry: dict, accounts: dict) -> dict:
+    """Publish a listed User owner like an Organization. The file on disk stays User.
+
+    Canonical owner is ``full_name`` before ``/``, lower-cased. A missing or empty
+    accounts map leaves the registry unchanged. Already-Organization entries stay
+    as they are, even when the handle is listed.
+    """
+    if not isinstance(registry, dict) or not isinstance(accounts, dict):
+        return registry
+    for key, entry in list(registry.items()):
+        if not isinstance(entry, dict) or entry.get("owner_type") != "User":
+            continue
+        full_name = entry.get("full_name")
+        if not isinstance(full_name, str) or "/" not in full_name:
+            continue
+        owner = full_name.split("/", 1)[0].lower()
+        if not owner or owner not in accounts:
+            continue
+        registry[key] = {
+            **entry,
+            "owner_type": "Organization",
+            "github_owner_type": "User",
+            "publication_basis": "project_account",
+        }
+    return registry
+
+
+def load_project_accounts(repo: Path) -> dict:
+    path = repo / "etl" / "project_accounts.json"
+    if not path.is_file():
+        return {}
+    document = json.loads(path.read_text(encoding="utf-8"))
+    accounts = document.get("accounts") if isinstance(document, dict) else None
+    return accounts if isinstance(accounts, dict) else {}
+
+
 def load_owner_types(repo: Path) -> dict:
-    return json.loads((repo / "etl" / "owner_types.json").read_text(encoding="utf-8"))["repos"]
+    registry = json.loads((repo / "etl" / "owner_types.json").read_text(encoding="utf-8"))["repos"]
+    return apply_project_accounts(registry, load_project_accounts(repo))
 
 
 def load_handle_index(repo: Path) -> tuple[HandleIndex, tuple[str, ...]]:

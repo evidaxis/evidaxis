@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildHandleIndex, handleHits, handleHitsDecoded } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded } from './personFree.mjs';
 
 const index = buildHandleIndex(['f', 'av', '78', '100', 'e', 'rohitg00', 'paul-gauthier', 'hexgrad', 'Q00']);
 
@@ -54,5 +54,33 @@ describe('review fixes 2026-10-04: GitHub contexts, encoding', () => {
   });
   it.each(['growth of 78% in q7 terms', 'f is a letter', 'github.com/some-org-name'])('keeps ordinary text clean: %s', (text) => {
     expect(handleHits(text, buildHandleIndex(['78', 'f']))).toEqual([]);
+  });
+});
+
+describe('applyProjectAccounts', () => {
+  it('publishes a listed User owner like an Organization and leaves the rest', () => {
+    const registry = {
+      'proj-account/proj-account': { owner_type: 'User', repo_id: 1, full_name: 'proj-account/proj-account' },
+      'other-user/tool': { owner_type: 'User', repo_id: 2, full_name: 'other-user/tool' },
+      'already-org/tool': { owner_type: 'Organization', repo_id: 3, full_name: 'already-org/tool' },
+    };
+    const accounts = {
+      'proj-account': { repo: 'proj-account/proj-account' },
+      'already-org': { repo: 'already-org/tool' },
+    };
+    applyProjectAccounts(registry, accounts);
+    expect(registry['proj-account/proj-account']).toEqual({
+      owner_type: 'Organization',
+      repo_id: 1,
+      full_name: 'proj-account/proj-account',
+      github_owner_type: 'User',
+      publication_basis: 'project_account',
+    });
+    expect(registry['other-user/tool']).toEqual({
+      owner_type: 'User', repo_id: 2, full_name: 'other-user/tool',
+    });
+    expect(registry['already-org/tool']).toEqual({
+      owner_type: 'Organization', repo_id: 3, full_name: 'already-org/tool',
+    });
   });
 });

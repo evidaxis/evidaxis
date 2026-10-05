@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { REPO_ROOT, dataPath, repoDataPath } from './data-path';
 import type { Entity, Snapshot } from './data';
+import { applyProjectAccounts } from './personFree.mjs';
 import { neutralName, revealsHandle, type OwnerTypes } from './person_free';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -51,10 +52,19 @@ export function readSnapshotArtifactRaw(date: string, name: string, repoRoot = R
   }
 }
 
+function projectAccountMap(repoRoot: string): Record<string, unknown> {
+  const path = join(repoRoot, 'etl', 'project_accounts.json');
+  if (!existsSync(path)) return {};
+  const accounts = readJson(path)?.accounts;
+  if (!accounts || typeof accounts !== 'object' || Array.isArray(accounts)) return {};
+  return accounts;
+}
+
 /** Enumerate immutable snapshot payloads. Exported with a root argument for tests. */
 export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
   const snapshotsDir = repoDataPath(repoRoot, 'snapshots');
   const registry = readJson(join(repoRoot, 'etl', 'owner_types.json')) as OwnerTypes;
+  applyProjectAccounts(registry.repos, projectAccountMap(repoRoot));
   return readdirSync(snapshotsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && DATE_RE.test(entry.name))
     .map((entry) => {

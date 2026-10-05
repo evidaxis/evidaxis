@@ -2,8 +2,9 @@
  * Build-time data layer. Reads the canonical snapshot the collector wrote (git = truth);
  * the site is a pure derived view of these files. No DB, no runtime fetch.
  */
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { REPO_ROOT, dataPath } from './data-path';
+import { applyProjectAccounts } from './personFree.mjs';
 import { methodologyEntry } from './methodology';
 export { methodologyAxes } from './methodology';
 import {
@@ -126,7 +127,17 @@ export const snapshot: Snapshot = latest;
 export const provenance = readJson(`data/snapshots/${SNAP_DATE}/provenance.json`);
 export const manifest = readJson(`data/snapshots/${SNAP_DATE}/manifest.json`);
 export const taxonomy = readJson('taxonomy/nodes.json');
+
+function projectAccountMap(): Record<string, unknown> {
+  const rel = 'etl/project_accounts.json';
+  if (!existsSync(sourcePath(rel))) return {};
+  const accounts = readJson(rel)?.accounts;
+  if (!accounts || typeof accounts !== 'object' || Array.isArray(accounts)) return {};
+  return accounts;
+}
+
 export const ownerTypes = readJson('etl/owner_types.json') as OwnerTypes;
+applyProjectAccounts(ownerTypes.repos, projectAccountMap());
 export const publicRepoLabel = (e: Entity) => projectPublicRepoLabel(e, ownerTypes);
 export const publicPackageLabel = (system: string, pkg: string) => projectPublicPackageLabel(system, pkg, ownerTypes);
 export const publicOwnerType = (e: Entity) => projectPublicOwnerType(e, ownerTypes);
