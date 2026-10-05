@@ -1,0 +1,113 @@
+{
+  "schema_version": "project_accounts_1",
+  "decided_at": "2026-10-05",
+  "record": "governance/PROJECT-ACCOUNTS-2026-10-05.md",
+  "note": "GitHub User accounts that are a project's identity, not a person's. Published like an Organization repository; owner_types.json keeps the GitHub type.",
+  "accounts": {
+    "aingdesk": {
+      "repo": "aingdesk/AingDesk",
+      "entity_id": "e_7DMV2WTSBKJ",
+      "evidence": [
+        "https://github.com/aingdesk/AingDesk",
+        "https://www.aingdesk.com/en/"
+      ]
+    },
+    "alfworld": {
+      "repo": "alfworld/alfworld",
+      "entity_id": "e_7CXB9Y3BZH0",
+      "evidence": [
+        "https://github.com/alfworld/alfworld",
+        "https://alfworld.github.io"
+      ]
+    },
+    "cliport": {
+      "repo": "cliport/cliport",
+      "entity_id": "e_D159CF3F7FZ",
+      "evidence": [
+        "https://github.com/cliport/cliport",
+        "https://cliport.github.io"
+      ]
+    },
+    "dreamgaussian": {
+      "repo": "dreamgaussian/dreamgaussian",
+      "entity_id": "e_7QJ98KQC5B7",
+      "evidence": [
+        "https://github.com/dreamgaussian/dreamgaussian",
+        "https://dreamgaussian.github.io"
+      ]
+    },
+    "helicalinsight": {
+      "repo": "helicalinsight/helicalinsight",
+      "entity_id": "e_8GMMSSE18AK",
+      "evidence": [
+        "https://github.com/helicalinsight/helicalinsight",
+        "https://helicaltech.com/"
+      ]
+    },
+    "jax-md": {
+      "repo": "jax-md/jax-md",
+      "entity_id": "e_J64DJ64DX9R",
+      "evidence": [
+        "https://github.com/jax-md/jax-md",
+        "https://pypi.org/project/jax-md/"
+      ]
+    },
+    "jittor": {
+      "repo": "Jittor/jittor",
+      "entity_id": "e_P92PNF1YVYK",
+      "evidence": [
+        "https://github.com/Jittor/jittor",
+        "https://cg.cs.tsinghua.edu.cn/jittor/about/"
+      ]
+    },
+    "joeynmt": {
+      "repo": "joeynmt/joeynmt",
+      "entity_id": "e_SBVTM8B0ET8",
+      "evidence": [
+        "https://github.com/joeynmt/joeynmt",
+        "https://www.cl.uni-heidelberg.de/statnlpgroup/blog/joey/"
+      ]
+    },
+    "lycheemem": {
+      "repo": "LycheeMem/LycheeMem",
+      "entity_id": "e_RPY41Z0Z0AS",
+      "evidence": [
+        "https://github.com/LycheeMem",
+        "https://github.com/HITsz-TMG",
+        "https://lycheemem.github.io"
+      ]
+    },
+    "openakita": {
+      "repo": "openakita/openakita",
+      "entity_id": "e_9B2SG4JEKTG",
+      "evidence": [
+        "https://github.com/openakita/openakita",
+        "https://openakita.ai"
+      ]
+    },
+    "recursivemas": {
+      "repo": "RecursiveMAS/RecursiveMAS",
+      "entity_id": "e_T6V72ZAQRPJ",
+      "evidence": [
+        "https://github.com/RecursiveMAS/RecursiveMAS",
+        "https://recursivemas.github.io"
+      ]
+    },
+    "sentrux": {
+      "repo": "sentrux/sentrux",
+      "entity_id": "e_829ME9NJC4N",
+      "evidence": [
+        "https://github.com/sentrux/sentrux",
+        "https://sentrux.dev/"
+      ]
+    },
+    "voxelmorph": {
+      "repo": "voxelmorph/voxelmorph",
+      "entity_id": "e_YXYMXZ5BWRD",
+      "evidence": [
+        "https://github.com/voxelmorph/voxelmorph",
+        "http://voxelmorph.mit.edu"
+      ]
+    }
+  }
+}
