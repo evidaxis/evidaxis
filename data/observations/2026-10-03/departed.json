@@ -1,0 +1,9 @@
+{
+  "schema_version": "departed_1",
+  "date": "2026-10-03",
+  "recorded_on": "2026-10-05",
+  "evidence": "Retrospective record from commit f8d803ea83af893f21a7fc0ed832312af7956e8f, which reports GitHub 404 for this removed seed. No new network check.",
+  "departed": [
+    {"date": "2026-10-03", "github_repo": "Vincentwei1021/video-shotcraft", "github_status": 404}
+  ]
+}

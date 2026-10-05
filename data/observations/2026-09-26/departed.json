@@ -1,0 +1,10 @@
+{
+  "schema_version": "departed_1",
+  "date": "2026-09-26",
+  "recorded_on": "2026-10-05",
+  "evidence": "Retrospective record from commit 1a87bc0e36cc37d43dbb4e7a6de6882f3ef441e0, which reports GitHub 404 for both removed seeds. No new network check.",
+  "departed": [
+    {"date": "2026-09-26", "github_repo": "aitytech/agentkits-marketing", "github_status": 404},
+    {"date": "2026-09-26", "github_repo": "Saganaki22/ComfyUI-OmniVoice-TTS", "github_status": 404}
+  ]
+}
