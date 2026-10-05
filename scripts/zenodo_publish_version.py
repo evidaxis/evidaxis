@@ -61,8 +61,15 @@ def run(out: Path, token: str, publish: bool) -> int:
     latest = call("GET", f"{API}/deposit/depositions/{LATEST_RECORD}", token)
     if owner_of(latest) != EVIDAXIS_OWNER:
         raise SystemExit(f"token owner {owner_of(latest)} is not the Evidaxis account {EVIDAXIS_OWNER}; refusing")
-    draft_url = latest.get("links", {}).get("latest_draft")
-    if not draft_url or draft_url.rstrip("/").endswith(str(LATEST_RECORD)):
+    # An open new-version draft of this concept is reused; the record's own latest_draft link
+    # keeps pointing at the record, so look the draft up among unsubmitted depositions.
+    open_drafts = [d for d in call("GET", f"{API}/deposit/depositions?size=50", token)
+                   if str(d.get("conceptrecid")) == str(latest.get("conceptrecid")) and not d.get("submitted")]
+    if len(open_drafts) > 1:
+        raise SystemExit(f"more than one open draft of concept {latest.get('conceptrecid')}: {[d['id'] for d in open_drafts]}")
+    if open_drafts:
+        draft_url = open_drafts[0]["links"]["self"]
+    else:
         draft_url = call("POST", f"{API}/deposit/depositions/{LATEST_RECORD}/actions/newversion", token)["links"]["latest_draft"]
     draft = call("GET", draft_url, token)
     inherited = check_metadata(draft.get("metadata", {}))
