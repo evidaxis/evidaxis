@@ -99,6 +99,12 @@ def classification_from_graphql(repo: str, node: dict[str, Any]) -> dict[str, An
     })
 
 
+class RepositoryHTTPError(RuntimeError):
+    def __init__(self, repo: str, status: int):
+        self.status = status
+        super().__init__(f"{repo}: GitHub REST answered {status}")
+
+
 def _rest_classification(repo: str) -> dict[str, Any]:
     """REST fallback through the shared GitHub path (auth header, rate-limit waits)."""
     import gh_http
@@ -118,20 +124,22 @@ def _rest_classification(repo: str) -> dict[str, Any]:
         if status < 500:
             break
         time.sleep(2 ** attempt)
+    if isinstance(last, int):
+        raise RepositoryHTTPError(repo, last)
     raise RuntimeError(f"{repo}: GitHub REST answered {last}")
 
 
-def graphql_fetcher(repos: list[str]) -> Callable[[str, str], dict[str, Any]]:
+def graphql_fetcher(repos: list[str], *, fresh: bool = False) -> Callable[[str, str], dict[str, Any]]:
     """Fetcher for refresh(): GraphQL cache/batch first, REST only for misses."""
     import gh_graphql
 
     try:
-        meta = gh_graphql.load_cache()
+        meta = {} if fresh else gh_graphql.load_cache()
     except Exception:
         meta = {}
     missing = [repo for repo in repos if repo.lower() not in meta]
     if missing:
-        meta.update(gh_graphql.prefetch(missing))
+        meta.update(gh_graphql.prefetch(missing, fresh=True) if fresh else gh_graphql.prefetch(missing))
     stats = {"graphql": 0, "rest": 0}
 
     def fetch(repo: str, _token: str) -> dict[str, Any]:

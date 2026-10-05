@@ -286,7 +286,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   const orgOwners = new Set();    // owners that are Organizations today
   // The shared floor survives transfers and cache changes, just as on the cards.
   for (const h of FLOOR_HANDLES) bannedOwners.set(h, 'substring');
-  for (const storedRepo of internalRepos) {
+  for (const storedRepo of classifiedRepos) {
     const entry = registry[storedRepo];
     if (!entry || !['Organization', 'User'].includes(entry.owner_type)
       || !Number.isInteger(entry.repo_id) || entry.repo_id <= 0
@@ -324,11 +324,9 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce
     // accidental matches such as "@f"; they carry no repository metadata.
     if (/\.(woff2?|ttf|otf|png|jpe?g|gif|webp|avif|ico|pdf|zip|gz)$/i.test(r)) continue;
-    // WP-H: verification-bundle artifacts are frozen raw pass-through of the
-    // archive (hash-pinned provenance / dropped lists). They intentionally
-    // retain historical github_repo strings for auditability. Person-free is
-    // enforced on derived HTML/JSON-LD surfaces, not on the integrity files.
-    if (/(^|\/)(provenance\.json|dropped\.json|SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
+    // Provenance is a public projection even for old snapshots. Only the other
+    // canonical integrity artifacts retain their existing raw-byte exemption.
+    if (/(^|\/)(dropped\.json|SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
       continue;
     }
     const raw = readFileSync(file, 'utf8');

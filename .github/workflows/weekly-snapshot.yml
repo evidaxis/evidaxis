@@ -64,7 +64,7 @@ jobs:
           echo "EVX_RUN_STARTED=$(date -u +%s)" >> "$GITHUB_ENV"
           echo "snapshot date pinned: $D (dry_run=${{ inputs.dry_run == true }})"
 
-      - name: Prefetch repository metadata over GraphQL (100 repositories per query)
+      - name: Preflight all seeds for departures and moves (GraphQL batches)
         # One aliased GraphQL query answers stars / created_at / database id / owner type
         # for 100 repositories, replacing ~12,000 REST `repos/{repo}` calls (collector +
         # owner classification). Cache lives in the runner temp dir, never in the repo.
@@ -73,10 +73,15 @@ jobs:
           COLLECT_APP_ID: ${{ secrets.COLLECT_APP_ID }}
           COLLECT_APP_KEY: ${{ secrets.COLLECT_APP_KEY }}
           EVX_GH_CACHE_DIR: ${{ runner.temp }}/evx-gh
-          # A seed that is gone on GitHub (404) makes owner_classify fail AFTER the whole
-          # collection; fail here in minutes instead. A dry run only warns.
-          EVX_ALLOW_DEAD_SEEDS: ${{ inputs.dry_run == true && '1' || '0' }}
-        run: python3 collectors/gh_graphql.py
+        run: python3 collectors/preflight.py
+
+      - name: Preserve the preflight remediation report even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: preflight-report
+          path: ${{ runner.temp }}/evx-gh/preflight.json
+          if-no-files-found: ignore
 
       - name: Warm GitHub /stats caches (one request per repository)
         # /stats/commit_activity answers 202 while GitHub computes; this pass fires the

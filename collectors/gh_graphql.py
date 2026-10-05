@@ -233,10 +233,11 @@ def fetch_batch(repos: list[str]) -> dict[str, dict | None]:
     return out
 
 
-def prefetch(repos: list[str], path: Path | None = None, batch_size: int = BATCH_SIZE) -> dict[str, dict | None]:
+def prefetch(repos: list[str], path: Path | None = None, batch_size: int = BATCH_SIZE,
+             *, fresh: bool = False) -> dict[str, dict | None]:
     """Fill the metadata cache for `repos` (resumable: fresh cached entries are kept)."""
     path = path or cache_dir() / META_FILE
-    cache = load_cache(path)
+    cache = {} if fresh else load_cache(path)
     created_at = time.time()
     if cache:
         try:

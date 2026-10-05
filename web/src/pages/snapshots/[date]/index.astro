@@ -51,14 +51,14 @@ const fmt = (n: number | null | undefined, digits = 2) => n == null ? 'n/a' : n.
 
       <div class="panel verify-bundle" style="padding:18px 20px;margin-bottom:2rem">
         <div class="eyebrow">Verification bundle</div>
-        <p class="mono" style="font-size:12px;max-width:72ch;color:var(--ink-mute)">SHA256SUMS pins the canonical archive bytes (the public git repository files). The site's snapshot.json applies the person-free publication projection and intentionally differs; to hash-verify, fetch the raw files from the git archive.</p>
+        <p class="mono" style="font-size:12px;max-width:72ch;color:var(--ink-mute)">SHA256SUMS pins the canonical archive bytes (the public git repository files). The site's snapshot.json and provenance.json apply the person-free publication projection and intentionally differ; to hash-verify, fetch the raw files from the git archive.</p>
         <p style="font-size:.9rem;margin:.5rem 0 .9rem;color:var(--ink-soft);max-width:70ch">
-          Frozen, hash-pinned inputs for this snapshot. Download the checksums file, then each
-          listed artifact, and verify with <span class="mono">sha256sum -c SHA256SUMS</span>.
+          For hash verification, download SHA256SUMS and its listed artifacts from the git archive,
+          then verify with <span class="mono">sha256sum -c SHA256SUMS</span>.
         </p>
         <ul class="verify-list mono">
           <li><a href={`/snapshots/${date}/manifest.json`}>manifest.json</a> <span class="muted">input pin list</span></li>
-          <li><a href={`/snapshots/${date}/provenance.json`}>provenance.json</a> <span class="muted">raw source provenance</span></li>
+          <li><a href={`/snapshots/${date}/provenance.json`}>provenance.json</a> <span class="muted">person-free source provenance</span></li>
           <li><a href={`/snapshots/${date}/SHA256SUMS/`}>SHA256SUMS</a> <span class="muted">text/plain checksums</span></li>
           {hasDropped && (
             <li><a href={`/snapshots/${date}/dropped.json`}>dropped.json</a> <span class="muted">entities dropped this run</span></li>

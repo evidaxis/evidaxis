@@ -69,26 +69,13 @@ jobs:
           fi
           echo "integrity witnesses untouched or append-only in this push"
 
-      - name: Universe expansion requires a discovery-frontier manifest
-        # The candidate-pool denominator is un-backfillable: adding/removing a tracked
-        # system without a paired dated frontier manifest repeats the 19->103 loss.
-        # Trigger ONLY on an actual universe change (added/removed "github_repo" lines),
-        # NOT on cosmetic seeds.json edits (a meta note, a label) — those need no manifest.
+      - name: Universe changes require paired discovery or departure evidence
+        # Additions retain the discovery denominator; removals need per-repo evidence.
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
-        run: |
-          UNIVERSE_CHANGED=$(git diff "${{ github.event.before }}" "${{ github.sha }}" -- etl/seeds.json | grep -E '^[+-][[:space:]]*"github_repo"' || true)
-          if [ -n "$UNIVERSE_CHANGED" ]; then
-            FRONTIER=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/discovery-frontier*' || true)
-            if [ -z "$FRONTIER" ]; then
-              echo "etl/seeds.json tracked-system set changed WITHOUT a paired discovery-frontier"
-              echo "manifest — the candidate-pool denominator would be lost forever. Run"
-              echo "collectors/frontier_manifest.py in the same push."
-              exit 1
-            fi
-            echo "universe change is paired with a frontier manifest: $FRONTIER"
-          else
-            echo "no tracked-system change in this push (cosmetic seeds edits need no manifest)"
-          fi
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: python3 collectors/universe_integrity.py --base "$BASE_SHA" --head "$HEAD_SHA"
 
       - name: Genesis snapshot is byte-identical to the immutable deposit
         run: |
