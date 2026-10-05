@@ -53,6 +53,7 @@ MIN_POINTS = 14
 DEPS_FLOOR = 5
 Z_FLOOR = 1.0
 Z_CLAMP = 3.0
+RESIDUE_TOL = 1e-9   # relative; rounding residue is ~1e-16, a real slope spread is >= 1e-6
 MIN_FLIP_DENOM = 5
 CANARY_AGREEMENT_FLOOR = 0.8   # declared governance constant (GLM canary; provisional
                                # pending empirical calibration, stated in the record)
@@ -163,7 +164,10 @@ def _theil_sen_slope(ys: list) -> float:
     return slopes[m // 2] if m % 2 else (slopes[m // 2 - 1] + slopes[m // 2]) / 2
 
 
-def _robust_z(values: dict) -> dict:
+def _robust_z(values: dict, *, snap_residue: bool = False) -> dict:
+    """snap_residue: a residual within RESIDUE_TOL of the largest slope is rounding, not
+    signal, and counts as 0. Two members always fit exactly; without it the z of the
+    lower one is -1/1.4826 or 0 depending on the platform's libm (erratum 2026-10-05)."""
     if len(values) < 2:
         return {k: 0.0 for k in values}
     xs = [x for x, _ in values.values()]
@@ -172,6 +176,9 @@ def _robust_z(values: dict) -> dict:
     den = sum((x - xbar) ** 2 for x in xs)
     beta = (sum((x - xbar) * (y - ybar) for x, y in zip(xs, ys, strict=True)) / den) if den else 0.0
     resid = {k: y - (ybar + beta * (x - xbar)) for k, (x, y) in values.items()}
+    if snap_residue:
+        tol = RESIDUE_TOL * max(abs(y) for y in ys)
+        resid = {k: 0.0 if abs(v) <= tol else v for k, v in resid.items()}
     med = sorted(resid.values())[len(resid) // 2]
     mad = sorted(abs(v - med) for v in resid.values())[len(resid) // 2]
     scale = 1.4826 * mad
@@ -179,7 +186,7 @@ def _robust_z(values: dict) -> dict:
             for k, v in resid.items()}
 
 
-def votes_at_cutoff(series: dict, cohorts: dict, clean_snaps: list) -> tuple:
+def votes_at_cutoff(series: dict, cohorts: dict, clean_snaps: list, *, snap_residue: bool = False) -> tuple:
     """Votes using ONLY the given confirmed-clean snapshots (ordered)."""
     allowed = set(clean_snaps)
     per_cohort, latest, logs = defaultdict(dict), {}, {}
@@ -196,7 +203,7 @@ def votes_at_cutoff(series: dict, cohorts: dict, clean_snaps: list) -> tuple:
         per_cohort[cohorts.get(eid, "unknown")][eid] = (math.log1p(lat), _ols_slope(ys))
     eligible, rising, per_entity = set(), set(), {}
     for coh, vals in per_cohort.items():
-        zs = _robust_z(vals)
+        zs = _robust_z(vals, snap_residue=snap_residue)
         for eid, (_sz, slope) in vals.items():
             eligible.add(eid)
             upto, ys = logs[eid]

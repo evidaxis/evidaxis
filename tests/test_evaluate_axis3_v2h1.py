@@ -87,3 +87,26 @@ def test_canary_passes_on_agreement():
 def test_theil_sen_matches_ols_on_clean_linear():
     ys = [math.log1p(100 + 10 * i) for i in range(10)]
     assert (_ols_slope(ys) > 0) == (_theil_sen_slope(ys) > 0)
+
+
+def test_two_member_cohort_rounding_residue_is_zero():
+    # Two members: residualising the slope on log1p(latest) fits both exactly, so the
+    # within-cohort z is 0 for both. A one-ulp residue (it depends on the platform's
+    # libm) must not become -1/1.4826 = -0.674 (2026-10-03 snapshot, Kokoro-82M).
+    from evaluate_axis3_v2h1 import _robust_z
+    vals = {"a": (4.77912349311153, 0.03605302477819057), "b": (5.942799375126701, 0.00864513421882937)}
+    for eid in vals:
+        for direction in (math.inf, -math.inf):
+            nudged = dict(vals)
+            x, y = nudged[eid]
+            nudged[eid] = (x, math.nextafter(y, direction))
+            assert _robust_z(nudged, snap_residue=True) == {"a": 0.0, "b": 0.0}
+    # published m3 snapshots keep the old arithmetic; the flag is off by default
+    lo = dict(vals, a=(vals["a"][0], math.nextafter(vals["a"][1], -math.inf)))
+    assert round(_robust_z(lo)["a"], 3) == -0.674
+
+
+def test_residue_snap_keeps_real_spread():
+    from evaluate_axis3_v2h1 import _robust_z
+    vals = {"a": (4.0, 0.03), "b": (5.0, 0.01), "c": (6.0, 0.05), "d": (4.5, 0.02)}
+    assert _robust_z(vals, snap_residue=True) == _robust_z(vals)

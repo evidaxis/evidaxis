@@ -109,6 +109,13 @@ Two clarifications that close open seams in the pre-spine interim, forward-only:
 
 ## Errata (documentation-only; frozen files are never edited)
 
+- **2026-10-05 — axis-3 z of two-member cohorts was rounding residue.** In a cohort with two
+  scored systems both residuals are zero in exact arithmetic; a one-ulp platform difference in
+  `log1p` gave the lower system z = -0.674. Five published m3 values carry it (Kokoro-82M on
+  2026-09-19 and 2026-10-03, Diffusers and Browser Use on 2026-09-26, Browser Use on 2026-10-03);
+  no Rising flag changes. The snapshots stay as published; from 2026-10-10 the residue counts as
+  zero. Record: `governance/ERRATUM-2026-10-05-axis3-two-member-rounding.md`.
+
 - **2026-10-04 — m3 axis 3 is not "linkage-verified".** `methodology/m3.json` and the
   axis-3 text on cards describe the package union as linkage-verified. The frozen rule
   admitted a package when one of that NAME existed on deps.dev; 158 of 614 admitted
