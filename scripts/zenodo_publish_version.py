@@ -41,6 +41,9 @@ def call(method: str, url: str, token: str, body: bytes | None = None, ctype: st
 
 
 def owner_of(record: dict) -> int | None:
+    """The deposit API answers `owner` (an id); the records API answers `owners` (a list)."""
+    if record.get("owner") is not None:
+        return int(record["owner"])
     owners = record.get("owners") or []
     first = owners[0] if owners else None
     return int(first["id"]) if isinstance(first, dict) else (int(first) if first is not None else None)
