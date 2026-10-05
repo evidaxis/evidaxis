@@ -1,0 +1,31 @@
+{
+  "watchers_count": 878,
+  "disabled": false,
+  "stargazers_count": 878,
+  "size": 1972,
+  "id": 32356864,
+  "created_at": "2015-03-16T22:30:15Z",
+  "subscribers_count": 117,
+  "private": false,
+  "fork": false,
+  "name": "dmlc-core",
+  "pushed_at": "2026-09-28T21:25:17Z",
+  "topics": [
+    "dmlc"
+  ],
+  "default_branch": "main",
+  "visibility": "public",
+  "forks_count": 525,
+  "homepage": "",
+  "network_count": 525,
+  "archived": false,
+  "language": "C++",
+  "full_name": "dmlc/dmlc-core",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMjM1Njg2NA==",
+  "updated_at": "2026-09-02T00:42:27Z",
+  "open_issues_count": 31,
+  "description": "A common bricks library  for building scalable and portable distributed machine learning.",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

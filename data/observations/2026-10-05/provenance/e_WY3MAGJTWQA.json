@@ -1,0 +1,33 @@
+{
+  "watchers_count": 1840,
+  "disabled": false,
+  "stargazers_count": 1840,
+  "size": 3525,
+  "id": 894988451,
+  "created_at": "2024-11-27T11:09:38Z",
+  "subscribers_count": 30,
+  "private": false,
+  "fork": false,
+  "name": "mattergen",
+  "pushed_at": "2026-08-27T16:29:17Z",
+  "topics": [
+    "generative-ai",
+    "materials-design",
+    "materials-science"
+  ],
+  "default_branch": "main",
+  "visibility": "public",
+  "forks_count": 354,
+  "homepage": "https://www.nature.com/articles/s41586-025-08628-5",
+  "network_count": 354,
+  "archived": false,
+  "language": "Python",
+  "full_name": "microsoft/mattergen",
+  "node_id": "R_kgDONVhwow",
+  "updated_at": "2026-10-05T11:12:06Z",
+  "open_issues_count": 14,
+  "description": "Official implementation of MatterGen -- a generative model for inorganic materials design across the periodic table that can be fine-tuned to steer the generation towards a wide range of property constraints.",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

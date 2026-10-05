@@ -1,0 +1,33 @@
+{
+  "watchers_count": 1422,
+  "disabled": false,
+  "stargazers_count": 1422,
+  "size": 22132,
+  "id": 11170365,
+  "created_at": "2013-07-04T07:56:35Z",
+  "subscribers_count": 30,
+  "private": false,
+  "fork": false,
+  "name": "search-index",
+  "pushed_at": "2026-10-05T05:53:30Z",
+  "topics": [
+    "nlp",
+    "offline-first",
+    "search"
+  ],
+  "default_branch": "master",
+  "visibility": "public",
+  "forks_count": 147,
+  "homepage": "",
+  "network_count": 147,
+  "archived": false,
+  "language": "JavaScript",
+  "full_name": "fergiemcdowall/search-index",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMTE3MDM2NQ==",
+  "updated_at": "2026-10-04T21:25:49Z",
+  "open_issues_count": 9,
+  "description": "A persistent, network resilient, full text search library for the browser and Node.js",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "watchers_count": 3880,
+  "disabled": false,
+  "stargazers_count": 3880,
+  "size": 844909,
+  "id": 739562545,
+  "created_at": "2024-01-05T21:49:14Z",
+  "subscribers_count": 55,
+  "private": false,
+  "fork": false,
+  "name": "ComfyUI-3D-Pack",
+  "pushed_at": "2025-12-29T08:06:02Z",
+  "topics": [
+    "comfy",
+    "comfyui",
+    "machine-learning"
+  ],
+  "default_branch": "main",
+  "visibility": "public",
+  "forks_count": 375,
+  "homepage": "",
+  "network_count": 375,
+  "archived": false,
+  "language": "Python",
+  "full_name": "MrForExample/ComfyUI-3D-Pack",
+  "node_id": "R_kgDOLBTUMQ",
+  "updated_at": "2026-10-05T11:08:43Z",
+  "open_issues_count": 25,
+  "description": "An extensive node suite that enables ComfyUI to process 3D inputs (Mesh & UV Texture, etc) using cutting edge algorithms (3DGS, NeRF, etc.)",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

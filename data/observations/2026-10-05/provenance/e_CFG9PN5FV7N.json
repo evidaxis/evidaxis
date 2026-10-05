@@ -1,0 +1,33 @@
+{
+  "watchers_count": 8156,
+  "disabled": false,
+  "stargazers_count": 8156,
+  "size": 8011,
+  "id": 1276665883,
+  "created_at": "2026-06-22T07:24:40Z",
+  "subscribers_count": 20,
+  "private": false,
+  "fork": false,
+  "name": "BrowserSkill",
+  "pushed_at": "2026-09-30T04:52:55Z",
+  "topics": [
+    "agent",
+    "browser-use",
+    "dsh-plugin"
+  ],
+  "default_branch": "main",
+  "visibility": "public",
+  "forks_count": 584,
+  "homepage": "",
+  "network_count": 584,
+  "archived": false,
+  "language": "TypeScript",
+  "full_name": "Tencent/BrowserSkill",
+  "node_id": "R_kgDOTBhgGw",
+  "updated_at": "2026-10-05T14:53:45Z",
+  "open_issues_count": 69,
+  "description": "Let AI agents use your real, logged-in browser without interrupting your work. CLI + extension for browser automation across any shell-capable AI agent.",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
