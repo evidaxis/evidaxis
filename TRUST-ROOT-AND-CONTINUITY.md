@@ -42,3 +42,10 @@ Where the archive actually exists, so continuity is a fact, not a hope:
 
 Planned next layer (by rotation, when acted on): a quarterly `git bundle`
 deposit to Zenodo as a versioned record.
+
+**2026-10-05 — quarterly Zenodo versions are live, not as a git bundle.** The raw tree and commit
+messages carry personal owner handles, so a bundle cannot go into a CC0 DOI (invariant 1). A
+quarterly version is the strict person-free projection of one weekly snapshot (every personal-account
+name masked) plus the methodology and governance documents, built by `scripts/zenodo_quarterly_stage.py`
+and published from the Evidaxis account by `scripts/zenodo_publish_version.py`. First one: snapshot
+2026-10-03, DOI 10.5281/zenodo.23165118 (concept 10.5281/zenodo.21076011).
