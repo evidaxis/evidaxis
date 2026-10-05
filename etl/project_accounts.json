@@ -2,16 +2,8 @@
   "schema_version": "project_accounts_1",
   "decided_at": "2026-10-05",
   "record": "governance/PROJECT-ACCOUNTS-2026-10-05.md",
-  "note": "GitHub User accounts that are a project's identity, not a person's. Published like an Organization repository; owner_types.json keeps the GitHub type.",
+  "note": "GitHub User accounts that are a project's identity, not a person's. Published like an Organization repository; owner_types.json keeps the GitHub type. Review 2026-10-05 (second opinion): an account needs a positive link to a team or organisation; aingdesk, sentrux and jax-md stay masked until one exists.",
   "accounts": {
-    "aingdesk": {
-      "repo": "aingdesk/AingDesk",
-      "entity_id": "e_7DMV2WTSBKJ",
-      "evidence": [
-        "https://github.com/aingdesk/AingDesk",
-        "https://www.aingdesk.com/en/"
-      ]
-    },
     "alfworld": {
       "repo": "alfworld/alfworld",
       "entity_id": "e_7CXB9Y3BZH0",
@@ -42,14 +34,6 @@
       "evidence": [
         "https://github.com/helicalinsight/helicalinsight",
         "https://helicaltech.com/"
-      ]
-    },
-    "jax-md": {
-      "repo": "jax-md/jax-md",
-      "entity_id": "e_J64DJ64DX9R",
-      "evidence": [
-        "https://github.com/jax-md/jax-md",
-        "https://pypi.org/project/jax-md/"
       ]
     },
     "jittor": {
@@ -91,14 +75,6 @@
       "evidence": [
         "https://github.com/RecursiveMAS/RecursiveMAS",
         "https://recursivemas.github.io"
-      ]
-    },
-    "sentrux": {
-      "repo": "sentrux/sentrux",
-      "entity_id": "e_829ME9NJC4N",
-      "evidence": [
-        "https://github.com/sentrux/sentrux",
-        "https://sentrux.dev/"
       ]
     },
     "voxelmorph": {
