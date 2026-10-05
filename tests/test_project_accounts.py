@@ -20,6 +20,8 @@ def _accounts() -> dict:
 def test_load_owner_types_marks_each_project_account():
     accounts = _accounts()
     assert len(accounts) == 10
+    # loaders match the lower-cased canonical owner; a mixed-case key would silently stay masked
+    assert all(handle == handle.lower() for handle in accounts)
     registry = load_owner_types(REPO)
     raw = json.loads((REPO / "etl" / "owner_types.json").read_text(encoding="utf-8"))["repos"]
     for meta in accounts.values():
