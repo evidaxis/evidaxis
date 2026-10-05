@@ -113,8 +113,9 @@ Two clarifications that close open seams in the pre-spine interim, forward-only:
   scored systems both residuals are zero in exact arithmetic; a one-ulp platform difference in
   `log1p` gave the lower system z = -0.674. Five published m3 values carry it (Kokoro-82M on
   2026-09-19 and 2026-10-03, Diffusers and Browser Use on 2026-09-26, Browser Use on 2026-10-03);
-  no Rising flag changes. The snapshots stay as published; from 2026-10-10 the residue counts as
-  zero. Record: `governance/ERRATUM-2026-10-05-axis3-two-member-rounding.md`.
+  no Rising flag changes. The snapshots stay as published; m4 is pinned to the same arithmetic,
+  and the exact two-member rule ships as a PATCH version (planned from 2026-10-17). Record:
+  `governance/ERRATUM-2026-10-05-axis3-two-member-rounding.md`.
 
 - **2026-10-04 — m3 axis 3 is not "linkage-verified".** `methodology/m3.json` and the
   axis-3 text on cards describe the package union as linkage-verified. The frozen rule

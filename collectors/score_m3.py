@@ -84,10 +84,7 @@ def axis3_records(snapshot: dict, series: dict, states: dict, panel: set,
     # axis cannot be scored, which is stale, not a per-system shortfall (below_floor).
     stale = cutoff is None or (date.fromisoformat(snapshot["snapshot_date"]) - date.fromisoformat(cutoff)).days > 28
     cohorts = {e["entity_id"]: e["cohort"] for e in snapshot["entities"]}
-    # Erratum 2026-10-05: from the first m4 snapshot the two-member rounding residue is 0 on
-    # every platform. Published snapshots before it keep the arithmetic they were built with.
-    snap = snapshot["snapshot_date"] >= identity.M4_ACTIVATION
-    _eligible, _rising, per = evaluator.votes_at_cutoff(series, cohorts, clean, snap_residue=snap)
+    _eligible, _rising, per = evaluator.votes_at_cutoff(series, cohorts, clean)
     held = {c for c, row in evaluator.canary(per).items() if row["hold"]}
     records = {}
     for entity in snapshot["entities"]:

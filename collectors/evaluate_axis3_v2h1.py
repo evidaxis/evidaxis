@@ -53,7 +53,6 @@ MIN_POINTS = 14
 DEPS_FLOOR = 5
 Z_FLOOR = 1.0
 Z_CLAMP = 3.0
-RESIDUE_TOL = 1e-9   # relative; rounding residue is ~1e-16, a real slope spread is >= 1e-6
 MIN_FLIP_DENOM = 5
 CANARY_AGREEMENT_FLOOR = 0.8   # declared governance constant (GLM canary; provisional
                                # pending empirical calibration, stated in the record)
@@ -164,10 +163,10 @@ def _theil_sen_slope(ys: list) -> float:
     return slopes[m // 2] if m % 2 else (slopes[m // 2 - 1] + slopes[m // 2]) / 2
 
 
-def _robust_z(values: dict, *, snap_residue: bool = False) -> dict:
-    """snap_residue: a residual within RESIDUE_TOL of the largest slope is rounding, not
-    signal, and counts as 0. Two members always fit exactly; without it the z of the
-    lower one is -1/1.4826 or 0 depending on the platform's libm (erratum 2026-10-05)."""
+def _robust_z(values: dict, *, exact_pair: bool = False) -> dict:
+    """exact_pair: two members of different size fit the residualizing line exactly, so
+    both z are 0. Without it a one-ulp libm residue makes the lower one -1/1.4826 on some
+    platforms (erratum 2026-10-05). Off until a methodology version pins it."""
     if len(values) < 2:
         return {k: 0.0 for k in values}
     xs = [x for x, _ in values.values()]
@@ -175,10 +174,9 @@ def _robust_z(values: dict, *, snap_residue: bool = False) -> dict:
     xbar, ybar = sum(xs) / len(xs), sum(ys) / len(ys)
     den = sum((x - xbar) ** 2 for x in xs)
     beta = (sum((x - xbar) * (y - ybar) for x, y in zip(xs, ys, strict=True)) / den) if den else 0.0
+    if exact_pair and len(values) == 2 and den:
+        return {k: 0.0 for k in values}
     resid = {k: y - (ybar + beta * (x - xbar)) for k, (x, y) in values.items()}
-    if snap_residue:
-        tol = RESIDUE_TOL * max(abs(y) for y in ys)
-        resid = {k: 0.0 if abs(v) <= tol else v for k, v in resid.items()}
     med = sorted(resid.values())[len(resid) // 2]
     mad = sorted(abs(v - med) for v in resid.values())[len(resid) // 2]
     scale = 1.4826 * mad
@@ -186,7 +184,7 @@ def _robust_z(values: dict, *, snap_residue: bool = False) -> dict:
             for k, v in resid.items()}
 
 
-def votes_at_cutoff(series: dict, cohorts: dict, clean_snaps: list, *, snap_residue: bool = False) -> tuple:
+def votes_at_cutoff(series: dict, cohorts: dict, clean_snaps: list, *, exact_pair: bool = False) -> tuple:
     """Votes using ONLY the given confirmed-clean snapshots (ordered)."""
     allowed = set(clean_snaps)
     per_cohort, latest, logs = defaultdict(dict), {}, {}
@@ -203,7 +201,7 @@ def votes_at_cutoff(series: dict, cohorts: dict, clean_snaps: list, *, snap_resi
         per_cohort[cohorts.get(eid, "unknown")][eid] = (math.log1p(lat), _ols_slope(ys))
     eligible, rising, per_entity = set(), set(), {}
     for coh, vals in per_cohort.items():
-        zs = _robust_z(vals, snap_residue=snap_residue)
+        zs = _robust_z(vals, exact_pair=exact_pair)
         for eid, (_sz, slope) in vals.items():
             eligible.add(eid)
             upto, ys = logs[eid]

@@ -35,14 +35,20 @@ more scored systems are not affected: on the 2026-10-03 inputs the fix changes o
 (Browser Use), and every other record is identical.
 
 ## Fix
-`evaluate_axis3_v2h1._robust_z(..., snap_residue=True)` counts a residual within 1e-9 of the
-largest slope magnitude as zero (rounding residue is about 1e-16; a real spread of slopes is
-1e-6 or more). `score_m3.axis3_records` turns it on for snapshots dated on or after 2026-10-10,
-the first m4 snapshot. Earlier snapshots keep the arithmetic they were published with, so CI
-verification of them still reproduces the published bytes on the CI platform; on other platforms
-the 2026-10-03 snapshot keeps showing this known drift until 2026-10-10 becomes the latest.
-Regression test: `tests/test_evaluate_axis3_v2h1.py::test_two_member_cohort_rounding_residue_is_zero`
-(red with the tolerance set to 0).
+`evaluate_axis3_v2h1._robust_z(..., exact_pair=True)` returns z = 0 for both members of a
+two-member cohort whose sizes differ — the exact result, with no tolerance. Cohorts of three or
+more and two members of the same size are untouched (a review on 2026-10-05 showed that a
+residual tolerance would also zero real, nearly collinear residuals in larger cohorts).
+Regression tests: `tests/test_evaluate_axis3_v2h1.py::test_two_member_cohort_rounding_residue_is_zero`
+(red when the flag is ignored) and `::test_exact_pair_leaves_larger_and_same_size_cohorts_alone`.
+
+The flag is off in scoring. Methodology m4 (effective 2026-10-10) is pinned to code commit
+514beb6c0, which carries the old arithmetic, and a published registry row is frozen
+(METHODOLOGY-VERSIONING.md, rules 2 and 4). The corrected arithmetic therefore ships as its own
+PATCH version, planned from the 2026-10-17 snapshot; until then two-member cohorts keep the
+platform-dependent value, and the m4 snapshots it touches will be listed in that version's
+record. On a platform other than the one that built a snapshot, `score_m3.py --verify` can show
+this drift for such a cohort.
 
 ## Not changed
 The m4 estimand and formula text; thresholds; the published 2026-09-19, 2026-09-26 and
