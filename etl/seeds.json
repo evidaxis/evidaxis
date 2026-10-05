@@ -5,7 +5,8 @@
   "axis2_research_source": "verified via OpenAlex API, 2026-06-27",
   "batch1": "2026-07-03: +29 verified rising systems (adversarially checked; 0-citation papers blanked per convention); new cohort gui-agents (computer-use agents); generative speech/audio deferred to a later batch (below the 5-member badge floor).",
   "census_2026-08": "2026-09-01: activation tranche of 11 members (policy: max(10, 6% of live cards), forward queue then backlog)",
-  "census_2026-09": "2026-09-20: activation tranche of 5705 members (policy: max(10, 6% of live cards), forward queue then backlog)"
+  "census_2026-09": "2026-09-20: activation tranche of 5705 members (policy: max(10, 6% of live cards), forward queue then backlog)",
+  "census_2026-10": "2026-10-05: activation tranche of 408 members (policy: max(10, 6% of live cards), forward queue then backlog)"
  },
  "domain": {
   "slug": "ai",
@@ -53494,6 +53495,3678 @@
      "homepage": "https://github.com/Orkas-AI/Orkas-VideoStudio",
      "openalex_work_ids": [],
      "note": "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tt-a1i/archify",
+     "entity_type": "repo",
+     "repo_id": 1211139949,
+     "name": "archify",
+     "homepage": "https://github.com/tt-a1i/archify",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "blader/humanizer",
+     "entity_type": "repo",
+     "repo_id": 1136666433,
+     "name": "humanizer",
+     "homepage": "https://github.com/blader/humanizer",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tinyhumansai/openhuman",
+     "entity_type": "repo",
+     "repo_id": 1161163182,
+     "name": "openhuman",
+     "homepage": "https://github.com/tinyhumansai/openhuman",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "The-Vibe-Company/quivr",
+     "entity_type": "repo",
+     "repo_id": 640079149,
+     "name": "quivr",
+     "homepage": "https://github.com/The-Vibe-Company/quivr",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "feder-cr/invisible_playwright_mcp",
+     "entity_type": "repo",
+     "repo_id": 837911756,
+     "name": "invisible_playwright_mcp",
+     "homepage": "https://github.com/feder-cr/invisible_playwright_mcp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NandhaKishorM/laya",
+     "entity_type": "repo",
+     "repo_id": 1375382253,
+     "name": "laya",
+     "homepage": "https://github.com/NandhaKishorM/laya",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "xai-org/grok-build",
+     "entity_type": "repo",
+     "repo_id": 1300902838,
+     "name": "grok-build",
+     "homepage": "https://github.com/xai-org/grok-build",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "pascalorg/editor",
+     "entity_type": "repo",
+     "repo_id": 1077819522,
+     "name": "editor",
+     "homepage": "https://github.com/pascalorg/editor",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dream-num/univer",
+     "entity_type": "repo",
+     "repo_id": 543101941,
+     "name": "univer",
+     "homepage": "https://github.com/dream-num/univer",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MLEveryday/100-Days-Of-ML-Code",
+     "entity_type": "repo",
+     "repo_id": 143615438,
+     "name": "100-Days-Of-ML-Code",
+     "homepage": "https://github.com/MLEveryday/100-Days-Of-ML-Code",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "docmost/docmost",
+     "entity_type": "repo",
+     "repo_id": 674295265,
+     "name": "docmost",
+     "homepage": "https://github.com/docmost/docmost",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "wasmerio/wasmer",
+     "entity_type": "repo",
+     "repo_id": 152572186,
+     "name": "wasmer",
+     "homepage": "https://github.com/wasmerio/wasmer",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "AgriciDaniel/claude-seo",
+     "entity_type": "repo",
+     "repo_id": 1152014594,
+     "name": "claude-seo",
+     "homepage": "https://github.com/AgriciDaniel/claude-seo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ahmedkhaleel2004/gitdiagram",
+     "entity_type": "repo",
+     "repo_id": 903700733,
+     "name": "gitdiagram",
+     "homepage": "https://github.com/ahmedkhaleel2004/gitdiagram",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tradecatlabs/vibe-coding-cn",
+     "entity_type": "repo",
+     "repo_id": 1102195393,
+     "name": "vibe-coding-cn",
+     "homepage": "https://github.com/tradecatlabs/vibe-coding-cn",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "google/ax",
+     "entity_type": "repo",
+     "repo_id": 1196447493,
+     "name": "ax",
+     "homepage": "https://github.com/google/ax",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Niko1221/Strata",
+     "entity_type": "repo",
+     "repo_id": 1385946301,
+     "name": "Strata",
+     "homepage": "https://github.com/Niko1221/Strata",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "google/artemis",
+     "entity_type": "repo",
+     "repo_id": 1333399642,
+     "name": "artemis",
+     "homepage": "https://github.com/google/artemis",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "simonlin1212/a-stock-data",
+     "entity_type": "repo",
+     "repo_id": 1235056479,
+     "name": "a-stock-data",
+     "homepage": "https://github.com/simonlin1212/a-stock-data",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Companion-Inc/feynman",
+     "entity_type": "repo",
+     "repo_id": 1186559664,
+     "name": "feynman",
+     "homepage": "https://github.com/Companion-Inc/feynman",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "jaredpalmer/kev",
+     "entity_type": "repo",
+     "repo_id": 1375069862,
+     "name": "kev",
+     "homepage": "https://github.com/jaredpalmer/kev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "HarnessMD/munder-difflin",
+     "entity_type": "repo",
+     "repo_id": 1255237198,
+     "name": "munder-difflin",
+     "homepage": "https://github.com/HarnessMD/munder-difflin",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "PriorLabs/TabPFN",
+     "entity_type": "repo",
+     "repo_id": 509436902,
+     "name": "TabPFN",
+     "homepage": "https://github.com/PriorLabs/TabPFN",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Gentleman-Programming/gentle-ai",
+     "entity_type": "repo",
+     "repo_id": 1168900408,
+     "name": "gentle-ai",
+     "homepage": "https://github.com/Gentleman-Programming/gentle-ai",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Human-Agent-Society/reef",
+     "entity_type": "repo",
+     "repo_id": 1351879111,
+     "name": "reef",
+     "homepage": "https://github.com/Human-Agent-Society/reef",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zai-org/ZCode",
+     "entity_type": "repo",
+     "repo_id": 1378288598,
+     "name": "ZCode",
+     "homepage": "https://github.com/zai-org/ZCode",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "jev-chat/jev-chat-jarvis",
+     "entity_type": "repo",
+     "repo_id": 1379574728,
+     "name": "jev-chat-jarvis",
+     "homepage": "https://github.com/jev-chat/jev-chat-jarvis",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ParthJadhav/app-store-screenshots",
+     "entity_type": "repo",
+     "repo_id": 1175285052,
+     "name": "app-store-screenshots",
+     "homepage": "https://github.com/ParthJadhav/app-store-screenshots",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mizorewww/laya-mlx",
+     "entity_type": "repo",
+     "repo_id": 1377211520,
+     "name": "laya-mlx",
+     "homepage": "https://github.com/mizorewww/laya-mlx",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "infobyte/faraday",
+     "entity_type": "repo",
+     "repo_id": 14160461,
+     "name": "faraday",
+     "homepage": "https://github.com/infobyte/faraday",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "charliedream1/ai_quant_trade",
+     "entity_type": "repo",
+     "repo_id": 501843211,
+     "name": "ai_quant_trade",
+     "homepage": "https://github.com/charliedream1/ai_quant_trade",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "anus-dev/ANUS",
+     "entity_type": "repo",
+     "repo_id": 945579718,
+     "name": "ANUS",
+     "homepage": "https://github.com/anus-dev/ANUS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "e2b-dev/fragments",
+     "entity_type": "repo",
+     "repo_id": 827005317,
+     "name": "fragments",
+     "homepage": "https://github.com/e2b-dev/fragments",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "vastsa/PI-Desktop",
+     "entity_type": "repo",
+     "repo_id": 617502359,
+     "name": "PI-Desktop",
+     "homepage": "https://github.com/vastsa/PI-Desktop",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "kucherenko/jscpd",
+     "entity_type": "repo",
+     "repo_id": 10353211,
+     "name": "jscpd",
+     "homepage": "https://github.com/kucherenko/jscpd",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "agentscope-ai/agentscope-java",
+     "entity_type": "repo",
+     "repo_id": 1062297179,
+     "name": "agentscope-java",
+     "homepage": "https://github.com/agentscope-ai/agentscope-java",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "KKKKhazix/AIHOT",
+     "entity_type": "repo",
+     "repo_id": 1393965829,
+     "name": "AIHOT",
+     "homepage": "https://github.com/KKKKhazix/AIHOT",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "weave-os/router",
+     "entity_type": "repo",
+     "repo_id": 1222789989,
+     "name": "router",
+     "homepage": "https://github.com/weave-os/router",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SenteLabsAI/OpenExecutive",
+     "entity_type": "repo",
+     "repo_id": 1266695553,
+     "name": "OpenExecutive",
+     "homepage": "https://github.com/SenteLabsAI/OpenExecutive",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "PetoiCamp/OpenCat-Quadruped-Robot",
+     "entity_type": "repo",
+     "repo_id": 326441188,
+     "name": "OpenCat-Quadruped-Robot",
+     "homepage": "https://github.com/PetoiCamp/OpenCat-Quadruped-Robot",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "looplj/axonhub",
+     "entity_type": "repo",
+     "repo_id": 1053598893,
+     "name": "axonhub",
+     "homepage": "https://github.com/looplj/axonhub",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "yetone/magpie",
+     "entity_type": "repo",
+     "repo_id": 1383809012,
+     "name": "magpie",
+     "homepage": "https://github.com/yetone/magpie",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "vinta/pangu.js",
+     "entity_type": "repo",
+     "repo_id": 3504665,
+     "name": "pangu.js",
+     "homepage": "https://github.com/vinta/pangu.js",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Gaurav-Gosain/tuios",
+     "entity_type": "repo",
+     "repo_id": 1051789550,
+     "name": "tuios",
+     "homepage": "https://github.com/Gaurav-Gosain/tuios",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "cerbos/cerbos",
+     "entity_type": "repo",
+     "repo_id": 350005438,
+     "name": "cerbos",
+     "homepage": "https://github.com/cerbos/cerbos",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Jakubantalik/Libraries.dev",
+     "entity_type": "repo",
+     "repo_id": 1208741339,
+     "name": "Libraries.dev",
+     "homepage": "https://github.com/Jakubantalik/Libraries.dev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "milind-soni/OpenMausBot",
+     "entity_type": "repo",
+     "repo_id": 1331261687,
+     "name": "OpenMausBot",
+     "homepage": "https://github.com/milind-soni/OpenMausBot",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CopilotKit/openmuse",
+     "entity_type": "repo",
+     "repo_id": 1371757322,
+     "name": "openmuse",
+     "homepage": "https://github.com/CopilotKit/openmuse",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zvec-ai/zvec-grep",
+     "entity_type": "repo",
+     "repo_id": 1295987763,
+     "name": "zvec-grep",
+     "homepage": "https://github.com/zvec-ai/zvec-grep",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "jordan-gibbs/hyperresearch",
+     "entity_type": "repo",
+     "repo_id": 1206357666,
+     "name": "hyperresearch",
+     "homepage": "https://github.com/jordan-gibbs/hyperresearch",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Mouseww/anything-analyzer",
+     "entity_type": "repo",
+     "repo_id": 1208430144,
+     "name": "anything-analyzer",
+     "homepage": "https://github.com/Mouseww/anything-analyzer",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "HeartMuLa/heartlib",
+     "entity_type": "repo",
+     "repo_id": 1134789517,
+     "name": "heartlib",
+     "homepage": "https://github.com/HeartMuLa/heartlib",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "twinnydotdev/twinny",
+     "entity_type": "repo",
+     "repo_id": 681211986,
+     "name": "twinny",
+     "homepage": "https://github.com/twinnydotdev/twinny",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ben1234560/AiLearning-Theory-Applying",
+     "entity_type": "repo",
+     "repo_id": 307009244,
+     "name": "AiLearning-Theory-Applying",
+     "homepage": "https://github.com/ben1234560/AiLearning-Theory-Applying",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Louis-CFM/coucou",
+     "entity_type": "repo",
+     "repo_id": 1391438314,
+     "name": "coucou",
+     "homepage": "https://github.com/Louis-CFM/coucou",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "YuJunZhiXue/dsh-purge",
+     "entity_type": "repo",
+     "repo_id": 1339256252,
+     "name": "dsh-purge",
+     "homepage": "https://github.com/YuJunZhiXue/dsh-purge",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "edison7009/EchoBird",
+     "entity_type": "repo",
+     "repo_id": 1158472225,
+     "name": "EchoBird",
+     "homepage": "https://github.com/edison7009/EchoBird",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MaxMiksa/Auto-Company",
+     "entity_type": "repo",
+     "repo_id": 1156645601,
+     "name": "Auto-Company",
+     "homepage": "https://github.com/MaxMiksa/Auto-Company",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "QwenLM/Qwen-MM-Plugins",
+     "entity_type": "repo",
+     "repo_id": 1315929647,
+     "name": "Qwen-MM-Plugins",
+     "homepage": "https://github.com/QwenLM/Qwen-MM-Plugins",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ridgerchu/matmulfreellm",
+     "entity_type": "repo",
+     "repo_id": 790957648,
+     "name": "matmulfreellm",
+     "homepage": "https://github.com/ridgerchu/matmulfreellm",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ZJU-REAL/Easel",
+     "entity_type": "repo",
+     "repo_id": 1349122168,
+     "name": "Easel",
+     "homepage": "https://github.com/ZJU-REAL/Easel",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zeronsh/zeron",
+     "entity_type": "repo",
+     "repo_id": 1306727670,
+     "name": "zeron",
+     "homepage": "https://github.com/zeronsh/zeron",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "morluto/rea",
+     "entity_type": "repo",
+     "repo_id": 1209966933,
+     "name": "rea",
+     "homepage": "https://github.com/morluto/rea",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Nanako0129/sepia",
+     "entity_type": "repo",
+     "repo_id": 1349253750,
+     "name": "sepia",
+     "homepage": "https://github.com/Nanako0129/sepia",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Player-YN/BrowserKitten",
+     "entity_type": "repo",
+     "repo_id": 1349507889,
+     "name": "BrowserKitten",
+     "homepage": "https://github.com/Player-YN/BrowserKitten",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "marketcalls/openalgo",
+     "entity_type": "repo",
+     "repo_id": 759901912,
+     "name": "openalgo",
+     "homepage": "https://github.com/marketcalls/openalgo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "runkids/skillshare",
+     "entity_type": "repo",
+     "repo_id": 1134144797,
+     "name": "skillshare",
+     "homepage": "https://github.com/runkids/skillshare",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "router-for-me/EasyCLIProxyAPI",
+     "entity_type": "repo",
+     "repo_id": 1052287511,
+     "name": "EasyCLIProxyAPI",
+     "homepage": "https://github.com/router-for-me/EasyCLIProxyAPI",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "open-gigaai/giga-brain-0",
+     "entity_type": "repo",
+     "repo_id": 1064520478,
+     "name": "giga-brain-0",
+     "homepage": "https://github.com/open-gigaai/giga-brain-0",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "gridaco/grida",
+     "entity_type": "repo",
+     "repo_id": 338529997,
+     "name": "grida",
+     "homepage": "https://github.com/gridaco/grida",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CrossPaste/crosspaste-desktop",
+     "entity_type": "repo",
+     "repo_id": 719646468,
+     "name": "crosspaste-desktop",
+     "homepage": "https://github.com/CrossPaste/crosspaste-desktop",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "hardbeat920/monocode",
+     "entity_type": "repo",
+     "repo_id": 1340508826,
+     "name": "monocode",
+     "homepage": "https://github.com/hardbeat920/monocode",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "KohakuBlueleaf/LyCORIS",
+     "entity_type": "repo",
+     "repo_id": 607121301,
+     "name": "LyCORIS",
+     "homepage": "https://github.com/KohakuBlueleaf/LyCORIS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "redhat-et/ripwire",
+     "entity_type": "repo",
+     "repo_id": 1316317581,
+     "name": "ripwire",
+     "homepage": "https://github.com/redhat-et/ripwire",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tigerless-labs/agent-memory",
+     "entity_type": "repo",
+     "repo_id": 1354059245,
+     "name": "agent-memory",
+     "homepage": "https://github.com/tigerless-labs/agent-memory",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "xzf-thu/VoiceMem",
+     "entity_type": "repo",
+     "repo_id": 1336971041,
+     "name": "VoiceMem",
+     "homepage": "https://github.com/xzf-thu/VoiceMem",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dzhng/jevgrep",
+     "entity_type": "repo",
+     "repo_id": 1388482474,
+     "name": "jevgrep",
+     "homepage": "https://github.com/dzhng/jevgrep",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dream-num/univer-workspace",
+     "entity_type": "repo",
+     "repo_id": 1334011664,
+     "name": "univer-workspace",
+     "homepage": "https://github.com/dream-num/univer-workspace",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dexmal/opendm",
+     "entity_type": "repo",
+     "repo_id": 1290658774,
+     "name": "opendm",
+     "homepage": "https://github.com/dexmal/opendm",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "fangwei123456/spikingjelly",
+     "entity_type": "repo",
+     "repo_id": 228557692,
+     "name": "spikingjelly",
+     "homepage": "https://github.com/fangwei123456/spikingjelly",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "yyjeqhc/webcodex",
+     "entity_type": "repo",
+     "repo_id": 1252306996,
+     "name": "webcodex",
+     "homepage": "https://github.com/yyjeqhc/webcodex",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenVidu/openvidu",
+     "entity_type": "repo",
+     "repo_id": 70491053,
+     "name": "openvidu",
+     "homepage": "https://github.com/OpenVidu/openvidu",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MG1937/ASC",
+     "entity_type": "repo",
+     "repo_id": 1264222628,
+     "name": "ASC",
+     "homepage": "https://github.com/MG1937/ASC",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenMOSS/MOSS-Transcribe-Diarize",
+     "entity_type": "repo",
+     "repo_id": 1237392967,
+     "name": "MOSS-Transcribe-Diarize",
+     "homepage": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "inferstep/ATLAS",
+     "entity_type": "repo",
+     "repo_id": 1147019563,
+     "name": "ATLAS",
+     "homepage": "https://github.com/inferstep/ATLAS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "emilianavt/OpenSeeFace",
+     "entity_type": "repo",
+     "repo_id": 231215857,
+     "name": "OpenSeeFace",
+     "homepage": "https://github.com/emilianavt/OpenSeeFace",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dmtrKovalenko/fframes",
+     "entity_type": "repo",
+     "repo_id": 430744346,
+     "name": "fframes",
+     "homepage": "https://github.com/dmtrKovalenko/fframes",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "hyperspaceai/agi",
+     "entity_type": "repo",
+     "repo_id": 1176335208,
+     "name": "agi",
+     "homepage": "https://github.com/hyperspaceai/agi",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "deepopen-com/deepopen",
+     "entity_type": "repo",
+     "repo_id": 1378971656,
+     "name": "deepopen",
+     "homepage": "https://github.com/deepopen-com/deepopen",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MiniMax-AI/minimax-code",
+     "entity_type": "repo",
+     "repo_id": 1256070689,
+     "name": "minimax-code",
+     "homepage": "https://github.com/MiniMax-AI/minimax-code",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "master-co/css",
+     "entity_type": "repo",
+     "repo_id": 434642460,
+     "name": "css",
+     "homepage": "https://github.com/master-co/css",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "microsoft/MarS",
+     "entity_type": "repo",
+     "repo_id": 879626601,
+     "name": "MarS",
+     "homepage": "https://github.com/microsoft/MarS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "coldteadotai/pr-lens",
+     "entity_type": "repo",
+     "repo_id": 1341067556,
+     "name": "pr-lens",
+     "homepage": "https://github.com/coldteadotai/pr-lens",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "monid-ai/monid",
+     "entity_type": "repo",
+     "repo_id": 1346870728,
+     "name": "monid",
+     "homepage": "https://github.com/monid-ai/monid",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "DataArcTech/DataArc-SynData-Toolkit",
+     "entity_type": "repo",
+     "repo_id": 1101196293,
+     "name": "DataArc-SynData-Toolkit",
+     "homepage": "https://github.com/DataArcTech/DataArc-SynData-Toolkit",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Asymptote-Labs/agent-beacon",
+     "entity_type": "repo",
+     "repo_id": 1236183038,
+     "name": "agent-beacon",
+     "homepage": "https://github.com/Asymptote-Labs/agent-beacon",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "FSoft-AI4Code/CodeWiki",
+     "entity_type": "repo",
+     "repo_id": 1008277677,
+     "name": "CodeWiki",
+     "homepage": "https://github.com/FSoft-AI4Code/CodeWiki",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "StanfordVL/BEHAVIOR-1K",
+     "entity_type": "repo",
+     "repo_id": 439439857,
+     "name": "BEHAVIOR-1K",
+     "homepage": "https://github.com/StanfordVL/BEHAVIOR-1K",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Agents365-ai/video-podcast-maker",
+     "entity_type": "repo",
+     "repo_id": 1159261054,
+     "name": "video-podcast-maker",
+     "homepage": "https://github.com/Agents365-ai/video-podcast-maker",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenSparX/MasterAgent",
+     "entity_type": "repo",
+     "repo_id": 1330144990,
+     "name": "MasterAgent",
+     "homepage": "https://github.com/OpenSparX/MasterAgent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "patrickchugh/terravision",
+     "entity_type": "repo",
+     "repo_id": 469272572,
+     "name": "terravision",
+     "homepage": "https://github.com/patrickchugh/terravision",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NirDiamant/Controllable-RAG-Agent",
+     "entity_type": "repo",
+     "repo_id": 781420440,
+     "name": "Controllable-RAG-Agent",
+     "homepage": "https://github.com/NirDiamant/Controllable-RAG-Agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "TokenRhythm/NeoHorse",
+     "entity_type": "repo",
+     "repo_id": 1356900025,
+     "name": "NeoHorse",
+     "homepage": "https://github.com/TokenRhythm/NeoHorse",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "869413421/ai-moive-studio",
+     "entity_type": "repo",
+     "repo_id": 1093197598,
+     "name": "ai-moive-studio",
+     "homepage": "https://github.com/869413421/ai-moive-studio",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "google/uncertainty-baselines",
+     "entity_type": "repo",
+     "repo_id": 280026201,
+     "name": "uncertainty-baselines",
+     "homepage": "https://github.com/google/uncertainty-baselines",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mizorewww/laya-coreml",
+     "entity_type": "repo",
+     "repo_id": 1377694077,
+     "name": "laya-coreml",
+     "homepage": "https://github.com/mizorewww/laya-coreml",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "AlekPet/ComfyUI_Custom_Nodes_AlekPet",
+     "entity_type": "repo",
+     "repo_id": 638845853,
+     "name": "ComfyUI_Custom_Nodes_AlekPet",
+     "homepage": "https://github.com/AlekPet/ComfyUI_Custom_Nodes_AlekPet",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "emcf/thepipe",
+     "entity_type": "repo",
+     "repo_id": 775790548,
+     "name": "thepipe",
+     "homepage": "https://github.com/emcf/thepipe",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "plugin87/ux-ui-agent-skills",
+     "entity_type": "repo",
+     "repo_id": 1183286798,
+     "name": "ux-ui-agent-skills",
+     "homepage": "https://github.com/plugin87/ux-ui-agent-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mxsm/rocketmq-rust",
+     "entity_type": "repo",
+     "repo_id": 731068194,
+     "name": "rocketmq-rust",
+     "homepage": "https://github.com/mxsm/rocketmq-rust",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ChenlizheMe/Infernux",
+     "entity_type": "repo",
+     "repo_id": 1006376412,
+     "name": "Infernux",
+     "homepage": "https://github.com/ChenlizheMe/Infernux",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "eatmoreduck/boss-zhipin-scraper",
+     "entity_type": "repo",
+     "repo_id": 1266363275,
+     "name": "boss-zhipin-scraper",
+     "homepage": "https://github.com/eatmoreduck/boss-zhipin-scraper",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "veedstudio/open-edit",
+     "entity_type": "repo",
+     "repo_id": 1308795025,
+     "name": "open-edit",
+     "homepage": "https://github.com/veedstudio/open-edit",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nanaism/yomiyasu",
+     "entity_type": "repo",
+     "repo_id": 1397771878,
+     "name": "yomiyasu",
+     "homepage": "https://github.com/nanaism/yomiyasu",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "harry7557558/spirula-studio",
+     "entity_type": "repo",
+     "repo_id": 795775446,
+     "name": "spirula-studio",
+     "homepage": "https://github.com/harry7557558/spirula-studio",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CloudAI-X/claude-workflow-v2",
+     "entity_type": "repo",
+     "repo_id": 1126064944,
+     "name": "claude-workflow-v2",
+     "homepage": "https://github.com/CloudAI-X/claude-workflow-v2",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "om-ai-lab/VLX-Seek",
+     "entity_type": "repo",
+     "repo_id": 1280833415,
+     "name": "VLX-Seek",
+     "homepage": "https://github.com/om-ai-lab/VLX-Seek",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "RLinf/RPent",
+     "entity_type": "repo",
+     "repo_id": 1291988340,
+     "name": "RPent",
+     "homepage": "https://github.com/RLinf/RPent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "boyang-hu/website-rebuild-skill",
+     "entity_type": "repo",
+     "repo_id": 1330468709,
+     "name": "website-rebuild-skill",
+     "homepage": "https://github.com/boyang-hu/website-rebuild-skill",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Ebony-Vinyl/dsh-our-free-model",
+     "entity_type": "repo",
+     "repo_id": 1385896447,
+     "name": "dsh-our-free-model",
+     "homepage": "https://github.com/Ebony-Vinyl/dsh-our-free-model",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "edenfunf/reelmimic",
+     "entity_type": "repo",
+     "repo_id": 1393689296,
+     "name": "reelmimic",
+     "homepage": "https://github.com/edenfunf/reelmimic",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Clearailhc/clearai-dsh",
+     "entity_type": "repo",
+     "repo_id": 1367299537,
+     "name": "clearai-dsh",
+     "homepage": "https://github.com/Clearailhc/clearai-dsh",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "2akouwu/reverify",
+     "entity_type": "repo",
+     "repo_id": 1351859098,
+     "name": "reverify",
+     "homepage": "https://github.com/2akouwu/reverify",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "huytieu/COG-second-brain",
+     "entity_type": "repo",
+     "repo_id": 1076571787,
+     "name": "COG-second-brain",
+     "homepage": "https://github.com/huytieu/COG-second-brain",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "pashov/skills",
+     "entity_type": "repo",
+     "repo_id": 1165212299,
+     "name": "skills",
+     "homepage": "https://github.com/pashov/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mikehasa/golive-skill",
+     "entity_type": "repo",
+     "repo_id": 1383518430,
+     "name": "golive-skill",
+     "homepage": "https://github.com/mikehasa/golive-skill",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "lignertys/reddit-research-skills",
+     "entity_type": "repo",
+     "repo_id": 1144758120,
+     "name": "reddit-research-skills",
+     "homepage": "https://github.com/lignertys/reddit-research-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "michael-denyer/pstack-claude",
+     "entity_type": "repo",
+     "repo_id": 1250276806,
+     "name": "pstack-claude",
+     "homepage": "https://github.com/michael-denyer/pstack-claude",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "feder-cr/jev",
+     "entity_type": "repo",
+     "repo_id": 842982339,
+     "name": "jev",
+     "homepage": "https://github.com/feder-cr/jev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Gentleman-Programming/gentle-shell",
+     "entity_type": "repo",
+     "repo_id": 1234537369,
+     "name": "gentle-shell",
+     "homepage": "https://github.com/Gentleman-Programming/gentle-shell",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ollaya-dev/ollaya",
+     "entity_type": "repo",
+     "repo_id": 1384260430,
+     "name": "ollaya",
+     "homepage": "https://github.com/ollaya-dev/ollaya",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "incoai/splash",
+     "entity_type": "repo",
+     "repo_id": 1376380844,
+     "name": "splash",
+     "homepage": "https://github.com/incoai/splash",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "fivetaku/gptaku_plugins",
+     "entity_type": "repo",
+     "repo_id": 1163180433,
+     "name": "gptaku_plugins",
+     "homepage": "https://github.com/fivetaku/gptaku_plugins",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Sec-Link/Argus-Agentic-SOC-Platform",
+     "entity_type": "repo",
+     "repo_id": 1168349769,
+     "name": "Argus-Agentic-SOC-Platform",
+     "homepage": "https://github.com/Sec-Link/Argus-Agentic-SOC-Platform",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "kharmanskyi/open-steps",
+     "entity_type": "repo",
+     "repo_id": 1346230651,
+     "name": "open-steps",
+     "homepage": "https://github.com/kharmanskyi/open-steps",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "QingYunA/answer-me-with-html",
+     "entity_type": "repo",
+     "repo_id": 1401476500,
+     "name": "answer-me-with-html",
+     "homepage": "https://github.com/QingYunA/answer-me-with-html",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "sqliteai/sqlite-vector",
+     "entity_type": "repo",
+     "repo_id": 961916425,
+     "name": "sqlite-vector",
+     "homepage": "https://github.com/sqliteai/sqlite-vector",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "awlevin/typesafe-computer-use",
+     "entity_type": "repo",
+     "repo_id": 1373440611,
+     "name": "typesafe-computer-use",
+     "homepage": "https://github.com/awlevin/typesafe-computer-use",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "uvwt/agentdock",
+     "entity_type": "repo",
+     "repo_id": 1249203338,
+     "name": "agentdock",
+     "homepage": "https://github.com/uvwt/agentdock",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "To3akaRin/mac-computer-use",
+     "entity_type": "repo",
+     "repo_id": 1361158582,
+     "name": "mac-computer-use",
+     "homepage": "https://github.com/To3akaRin/mac-computer-use",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "autonomous-ai/openharness",
+     "entity_type": "repo",
+     "repo_id": 1322671404,
+     "name": "openharness",
+     "homepage": "https://github.com/autonomous-ai/openharness",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "superdoc/docx-editor",
+     "entity_type": "repo",
+     "repo_id": 809920524,
+     "name": "docx-editor",
+     "homepage": "https://github.com/superdoc/docx-editor",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "microsoft/Agents",
+     "entity_type": "repo",
+     "repo_id": 883315339,
+     "name": "Agents",
+     "homepage": "https://github.com/microsoft/Agents",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "androoAGI/starnet",
+     "entity_type": "repo",
+     "repo_id": 1269603321,
+     "name": "starnet",
+     "homepage": "https://github.com/androoAGI/starnet",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Dpro-at/Tel-Agent",
+     "entity_type": "repo",
+     "repo_id": 1336053850,
+     "name": "Tel-Agent",
+     "homepage": "https://github.com/Dpro-at/Tel-Agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Mapika/decider",
+     "entity_type": "repo",
+     "repo_id": 1372665897,
+     "name": "decider",
+     "homepage": "https://github.com/Mapika/decider",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ThinkWatchProject/ThinkWatch-Lite",
+     "entity_type": "repo",
+     "repo_id": 1367338986,
+     "name": "ThinkWatch-Lite",
+     "homepage": "https://github.com/ThinkWatchProject/ThinkWatch-Lite",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "hardness1020/learn-agent-architecture",
+     "entity_type": "repo",
+     "repo_id": 1277715563,
+     "name": "learn-agent-architecture",
+     "homepage": "https://github.com/hardness1020/learn-agent-architecture",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "freestylefly/WeChatBridge",
+     "entity_type": "repo",
+     "repo_id": 1379003933,
+     "name": "WeChatBridge",
+     "homepage": "https://github.com/freestylefly/WeChatBridge",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "kyky2347/ALTA",
+     "entity_type": "repo",
+     "repo_id": 1348316078,
+     "name": "ALTA",
+     "homepage": "https://github.com/kyky2347/ALTA",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nokia-applied-research/AnyJev",
+     "entity_type": "repo",
+     "repo_id": 1379166549,
+     "name": "AnyJev",
+     "homepage": "https://github.com/nokia-applied-research/AnyJev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "qiz029/dscode",
+     "entity_type": "repo",
+     "repo_id": 1365776373,
+     "name": "dscode",
+     "homepage": "https://github.com/qiz029/dscode",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CelestoAI/celesto",
+     "entity_type": "repo",
+     "repo_id": 1158200188,
+     "name": "celesto",
+     "homepage": "https://github.com/CelestoAI/celesto",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ConardLi/easy-agent",
+     "entity_type": "repo",
+     "repo_id": 1207055628,
+     "name": "easy-agent",
+     "homepage": "https://github.com/ConardLi/easy-agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "faisalkindi/DLSS5oneclick",
+     "entity_type": "repo",
+     "repo_id": 1351898444,
+     "name": "DLSS5oneclick",
+     "homepage": "https://github.com/faisalkindi/DLSS5oneclick",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ashhart/TensorFold",
+     "entity_type": "repo",
+     "repo_id": 1274723381,
+     "name": "TensorFold",
+     "homepage": "https://github.com/ashhart/TensorFold",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dzhng/skills",
+     "entity_type": "repo",
+     "repo_id": 1287043670,
+     "name": "skills",
+     "homepage": "https://github.com/dzhng/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "aimeoa/hanshuang-codex",
+     "entity_type": "repo",
+     "repo_id": 1358948316,
+     "name": "hanshuang-codex",
+     "homepage": "https://github.com/aimeoa/hanshuang-codex",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "agentverse-os/AgentVerse-OS",
+     "entity_type": "repo",
+     "repo_id": 1367577373,
+     "name": "AgentVerse-OS",
+     "homepage": "https://github.com/agentverse-os/AgentVerse-OS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Bennettxai/FounderOS-DEMO",
+     "entity_type": "repo",
+     "repo_id": 1292266680,
+     "name": "FounderOS-DEMO",
+     "homepage": "https://github.com/Bennettxai/FounderOS-DEMO",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dromara/dante-cloud",
+     "entity_type": "repo",
+     "repo_id": 368698472,
+     "name": "dante-cloud",
+     "homepage": "https://github.com/dromara/dante-cloud",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Robbyant/lingbot-video",
+     "entity_type": "repo",
+     "repo_id": 1293670798,
+     "name": "lingbot-video",
+     "homepage": "https://github.com/Robbyant/lingbot-video",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "suboss87/FDEOps",
+     "entity_type": "repo",
+     "repo_id": 1279760665,
+     "name": "FDEOps",
+     "homepage": "https://github.com/suboss87/FDEOps",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "DocAILab/XRAG",
+     "entity_type": "repo",
+     "repo_id": 853731626,
+     "name": "XRAG",
+     "homepage": "https://github.com/DocAILab/XRAG",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenWAM-Official/OpenWAM",
+     "entity_type": "repo",
+     "repo_id": 1358848972,
+     "name": "OpenWAM",
+     "homepage": "https://github.com/OpenWAM-Official/OpenWAM",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Farama-Foundation/Shimmy",
+     "entity_type": "repo",
+     "repo_id": 546914412,
+     "name": "Shimmy",
+     "homepage": "https://github.com/Farama-Foundation/Shimmy",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "TypeLLM/TypeLLM",
+     "entity_type": "repo",
+     "repo_id": 1374419657,
+     "name": "TypeLLM",
+     "homepage": "https://github.com/TypeLLM/TypeLLM",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "HelpCode-ai/anythingmcp",
+     "entity_type": "repo",
+     "repo_id": 1169252093,
+     "name": "anythingmcp",
+     "homepage": "https://github.com/HelpCode-ai/anythingmcp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Kautenja/gym-super-mario-bros",
+     "entity_type": "repo",
+     "repo_id": 130880298,
+     "name": "gym-super-mario-bros",
+     "homepage": "https://github.com/Kautenja/gym-super-mario-bros",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "panxunying/ai-coding-welfare",
+     "entity_type": "repo",
+     "repo_id": 1341603085,
+     "name": "ai-coding-welfare",
+     "homepage": "https://github.com/panxunying/ai-coding-welfare",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "AgriciDaniel/compass",
+     "entity_type": "repo",
+     "repo_id": 1347639291,
+     "name": "compass",
+     "homepage": "https://github.com/AgriciDaniel/compass",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "pnp/copilot-prompts",
+     "entity_type": "repo",
+     "repo_id": 791678512,
+     "name": "copilot-prompts",
+     "homepage": "https://github.com/pnp/copilot-prompts",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SoftInstigate/restheart",
+     "entity_type": "repo",
+     "repo_id": 26722690,
+     "name": "restheart",
+     "homepage": "https://github.com/SoftInstigate/restheart",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "huawei-bayerlab/marigold-v2",
+     "entity_type": "repo",
+     "repo_id": 1349010501,
+     "name": "marigold-v2",
+     "homepage": "https://github.com/huawei-bayerlab/marigold-v2",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "oxylabs/agent-skills",
+     "entity_type": "repo",
+     "repo_id": 1159829402,
+     "name": "agent-skills",
+     "homepage": "https://github.com/oxylabs/agent-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "VibeTensor/attestix",
+     "entity_type": "repo",
+     "repo_id": 1158957612,
+     "name": "attestix",
+     "homepage": "https://github.com/VibeTensor/attestix",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mixelpixx/Konnect",
+     "entity_type": "repo",
+     "repo_id": 1290361156,
+     "name": "Konnect",
+     "homepage": "https://github.com/mixelpixx/Konnect",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "scenario-labs/skills",
+     "entity_type": "repo",
+     "repo_id": 1331882604,
+     "name": "skills",
+     "homepage": "https://github.com/scenario-labs/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "KINGSTON-115/llm-pid-tuner",
+     "entity_type": "repo",
+     "repo_id": 1158348226,
+     "name": "llm-pid-tuner",
+     "homepage": "https://github.com/KINGSTON-115/llm-pid-tuner",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Nutlope/inspo",
+     "entity_type": "repo",
+     "repo_id": 1224552621,
+     "name": "inspo",
+     "homepage": "https://github.com/Nutlope/inspo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "wfzyx/von",
+     "entity_type": "repo",
+     "repo_id": 1375397100,
+     "name": "von",
+     "homepage": "https://github.com/wfzyx/von",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Kizzuwatnaa/DLSS5-Autopilot",
+     "entity_type": "repo",
+     "repo_id": 1352664466,
+     "name": "DLSS5-Autopilot",
+     "homepage": "https://github.com/Kizzuwatnaa/DLSS5-Autopilot",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "hako-mikan/sd-webui-supermerger",
+     "entity_type": "repo",
+     "repo_id": 590459097,
+     "name": "sd-webui-supermerger",
+     "homepage": "https://github.com/hako-mikan/sd-webui-supermerger",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dotnet/dev-proxy",
+     "entity_type": "repo",
+     "repo_id": 534755927,
+     "name": "dev-proxy",
+     "homepage": "https://github.com/dotnet/dev-proxy",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "persiyanov/herdr-reviewr",
+     "entity_type": "repo",
+     "repo_id": 1281328046,
+     "name": "herdr-reviewr",
+     "homepage": "https://github.com/persiyanov/herdr-reviewr",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "DSH-APP/DSHA",
+     "entity_type": "repo",
+     "repo_id": 1334392318,
+     "name": "DSHA",
+     "homepage": "https://github.com/DSH-APP/DSHA",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ardanlabs/kronk",
+     "entity_type": "repo",
+     "repo_id": 1098774407,
+     "name": "kronk",
+     "homepage": "https://github.com/ardanlabs/kronk",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "angel291592/Intent-Router",
+     "entity_type": "repo",
+     "repo_id": 1380950524,
+     "name": "Intent-Router",
+     "homepage": "https://github.com/angel291592/Intent-Router",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Gnosil/semantix",
+     "entity_type": "repo",
+     "repo_id": 1325459387,
+     "name": "semantix",
+     "homepage": "https://github.com/Gnosil/semantix",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Rizzo-AI-Academy/rizzo-flow",
+     "entity_type": "repo",
+     "repo_id": 1378880709,
+     "name": "rizzo-flow",
+     "homepage": "https://github.com/Rizzo-AI-Academy/rizzo-flow",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "rafal-qa/slopo",
+     "entity_type": "repo",
+     "repo_id": 1257105253,
+     "name": "slopo",
+     "homepage": "https://github.com/rafal-qa/slopo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "risa-labs-inc/BossConsole",
+     "entity_type": "repo",
+     "repo_id": 1307136587,
+     "name": "BossConsole",
+     "homepage": "https://github.com/risa-labs-inc/BossConsole",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "skyzh/vector-db-from-scratch",
+     "entity_type": "repo",
+     "repo_id": 741430484,
+     "name": "vector-db-from-scratch",
+     "homepage": "https://github.com/skyzh/vector-db-from-scratch",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "LockedinLabs-AI/agent-console",
+     "entity_type": "repo",
+     "repo_id": 1378626483,
+     "name": "agent-console",
+     "homepage": "https://github.com/LockedinLabs-AI/agent-console",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "iblai/os",
+     "entity_type": "repo",
+     "repo_id": 1171884798,
+     "name": "os",
+     "homepage": "https://github.com/iblai/os",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "juspay/xyne-spaces",
+     "entity_type": "repo",
+     "repo_id": 1320019880,
+     "name": "xyne-spaces",
+     "homepage": "https://github.com/juspay/xyne-spaces",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "darkrishabh/agent-skills-eval",
+     "entity_type": "repo",
+     "repo_id": 1230541272,
+     "name": "agent-skills-eval",
+     "homepage": "https://github.com/darkrishabh/agent-skills-eval",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "marcocesarato/PHP-Antimalware-Scanner",
+     "entity_type": "repo",
+     "repo_id": 126197487,
+     "name": "PHP-Antimalware-Scanner",
+     "homepage": "https://github.com/marcocesarato/PHP-Antimalware-Scanner",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Edwardxlai/easyread",
+     "entity_type": "repo",
+     "repo_id": 1397939439,
+     "name": "easyread",
+     "homepage": "https://github.com/Edwardxlai/easyread",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "bab2min/Kiwi",
+     "entity_type": "repo",
+     "repo_id": 82677855,
+     "name": "Kiwi",
+     "homepage": "https://github.com/bab2min/Kiwi",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "FlashML-org/FreeVideo",
+     "entity_type": "repo",
+     "repo_id": 1368913638,
+     "name": "FreeVideo",
+     "homepage": "https://github.com/FlashML-org/FreeVideo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Ampixa/sanoTTS",
+     "entity_type": "repo",
+     "repo_id": 1297547950,
+     "name": "sanoTTS",
+     "homepage": "https://github.com/Ampixa/sanoTTS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Station-Sciences/bot-crossing",
+     "entity_type": "repo",
+     "repo_id": 1353975656,
+     "name": "bot-crossing",
+     "homepage": "https://github.com/Station-Sciences/bot-crossing",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "cloudflare/cf",
+     "entity_type": "repo",
+     "repo_id": 1380002148,
+     "name": "cf",
+     "homepage": "https://github.com/cloudflare/cf",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenMOSS/MOSS-VL",
+     "entity_type": "repo",
+     "repo_id": 1204804583,
+     "name": "MOSS-VL",
+     "homepage": "https://github.com/OpenMOSS/MOSS-VL",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "okf-memory/okf-agent-memory",
+     "entity_type": "repo",
+     "repo_id": 1358571386,
+     "name": "okf-agent-memory",
+     "homepage": "https://github.com/okf-memory/okf-agent-memory",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "penso/herdr-gpui",
+     "entity_type": "repo",
+     "repo_id": 1377952273,
+     "name": "herdr-gpui",
+     "homepage": "https://github.com/penso/herdr-gpui",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ethanplusai/codex-on-crack",
+     "entity_type": "repo",
+     "repo_id": 1373993338,
+     "name": "codex-on-crack",
+     "homepage": "https://github.com/ethanplusai/codex-on-crack",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ayaka-notes/ayakaleaf-pro",
+     "entity_type": "repo",
+     "repo_id": 1139589557,
+     "name": "ayakaleaf-pro",
+     "homepage": "https://github.com/ayaka-notes/ayakaleaf-pro",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "20000419/fauxnix",
+     "entity_type": "repo",
+     "repo_id": 1335556488,
+     "name": "fauxnix",
+     "homepage": "https://github.com/20000419/fauxnix",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "infragate/capa",
+     "entity_type": "repo",
+     "repo_id": 1153049920,
+     "name": "capa",
+     "homepage": "https://github.com/infragate/capa",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "CosmosMind-ai/RSI-Harness",
+     "entity_type": "repo",
+     "repo_id": 1355730207,
+     "name": "RSI-Harness",
+     "homepage": "https://github.com/CosmosMind-ai/RSI-Harness",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "sodiumsun/agenttrail",
+     "entity_type": "repo",
+     "repo_id": 1342227253,
+     "name": "agenttrail",
+     "homepage": "https://github.com/sodiumsun/agenttrail",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "keli-wen/agy-staff",
+     "entity_type": "repo",
+     "repo_id": 1338600136,
+     "name": "agy-staff",
+     "homepage": "https://github.com/keli-wen/agy-staff",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MaxHu-xuan/task-state-guard",
+     "entity_type": "repo",
+     "repo_id": 1343480922,
+     "name": "task-state-guard",
+     "homepage": "https://github.com/MaxHu-xuan/task-state-guard",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenClaudia/openclaudia-skills",
+     "entity_type": "repo",
+     "repo_id": 1155112913,
+     "name": "openclaudia-skills",
+     "homepage": "https://github.com/OpenClaudia/openclaudia-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Alex314618-create/JevRev",
+     "entity_type": "repo",
+     "repo_id": 1378958030,
+     "name": "JevRev",
+     "homepage": "https://github.com/Alex314618-create/JevRev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "usail-hkust/LLM-MM-Agent",
+     "entity_type": "repo",
+     "repo_id": 986851488,
+     "name": "LLM-MM-Agent",
+     "homepage": "https://github.com/usail-hkust/LLM-MM-Agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "leopard627/fire-your-seo-agency",
+     "entity_type": "repo",
+     "repo_id": 1347890919,
+     "name": "fire-your-seo-agency",
+     "homepage": "https://github.com/leopard627/fire-your-seo-agency",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "huggingface/Repo2RLEnv",
+     "entity_type": "repo",
+     "repo_id": 1229751246,
+     "name": "Repo2RLEnv",
+     "homepage": "https://github.com/huggingface/Repo2RLEnv",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SpecterOps/skills",
+     "entity_type": "repo",
+     "repo_id": 1155436373,
+     "name": "skills",
+     "homepage": "https://github.com/SpecterOps/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ys-ll/uniterm",
+     "entity_type": "repo",
+     "repo_id": 1235467345,
+     "name": "uniterm",
+     "homepage": "https://github.com/ys-ll/uniterm",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "samuelfaj/distill",
+     "entity_type": "repo",
+     "repo_id": 1174519898,
+     "name": "distill",
+     "homepage": "https://github.com/samuelfaj/distill",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "cheney369/Devora",
+     "entity_type": "repo",
+     "repo_id": 1301131750,
+     "name": "Devora",
+     "homepage": "https://github.com/cheney369/Devora",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "rome-os/rome",
+     "entity_type": "repo",
+     "repo_id": 1343438200,
+     "name": "rome",
+     "homepage": "https://github.com/rome-os/rome",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zcbacxc/movie-narrator",
+     "entity_type": "repo",
+     "repo_id": 1297633053,
+     "name": "movie-narrator",
+     "homepage": "https://github.com/zcbacxc/movie-narrator",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "uezo/aiavatarkit",
+     "entity_type": "repo",
+     "repo_id": 646174248,
+     "name": "aiavatarkit",
+     "homepage": "https://github.com/uezo/aiavatarkit",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "lightorigins/LightNav-0",
+     "entity_type": "repo",
+     "repo_id": 1349741082,
+     "name": "LightNav-0",
+     "homepage": "https://github.com/lightorigins/LightNav-0",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "EverMind-AI/SkillCorpus",
+     "entity_type": "repo",
+     "repo_id": 1330431542,
+     "name": "SkillCorpus",
+     "homepage": "https://github.com/EverMind-AI/SkillCorpus",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "evenfire-ai/evenfire",
+     "entity_type": "repo",
+     "repo_id": 1293392008,
+     "name": "evenfire",
+     "homepage": "https://github.com/evenfire-ai/evenfire",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "harbor-framework/terminal-bench-science",
+     "entity_type": "repo",
+     "repo_id": 1141514363,
+     "name": "terminal-bench-science",
+     "homepage": "https://github.com/harbor-framework/terminal-bench-science",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "RoboDojo-Benchmark/RoboDojo",
+     "entity_type": "repo",
+     "repo_id": 1292782830,
+     "name": "RoboDojo",
+     "homepage": "https://github.com/RoboDojo-Benchmark/RoboDojo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "diffbot/code-gpt-docs",
+     "entity_type": "repo",
+     "repo_id": 586428671,
+     "name": "code-gpt-docs",
+     "homepage": "https://github.com/diffbot/code-gpt-docs",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "coleam00/skills",
+     "entity_type": "repo",
+     "repo_id": 1323419190,
+     "name": "skills",
+     "homepage": "https://github.com/coleam00/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "PSRben/VisionHOPE",
+     "entity_type": "repo",
+     "repo_id": 1390331681,
+     "name": "VisionHOPE",
+     "homepage": "https://github.com/PSRben/VisionHOPE",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "agent-sh/computer-use-linux",
+     "entity_type": "repo",
+     "repo_id": 1238129512,
+     "name": "computer-use-linux",
+     "homepage": "https://github.com/agent-sh/computer-use-linux",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ranxi2001/zero2Agent",
+     "entity_type": "repo",
+     "repo_id": 1193444422,
+     "name": "zero2Agent",
+     "homepage": "https://github.com/ranxi2001/zero2Agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "narumiruna/pi-extensions",
+     "entity_type": "repo",
+     "repo_id": 1232012824,
+     "name": "pi-extensions",
+     "homepage": "https://github.com/narumiruna/pi-extensions",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "java-up-up/nexus-agent",
+     "entity_type": "repo",
+     "repo_id": 1214166855,
+     "name": "nexus-agent",
+     "homepage": "https://github.com/java-up-up/nexus-agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "unitedrhino/things",
+     "entity_type": "repo",
+     "repo_id": 431345874,
+     "name": "things",
+     "homepage": "https://github.com/unitedrhino/things",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "simonlin1212/vibe-astock",
+     "entity_type": "repo",
+     "repo_id": 1316651150,
+     "name": "vibe-astock",
+     "homepage": "https://github.com/simonlin1212/vibe-astock",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "H-EmbodVis/TurboVLA",
+     "entity_type": "repo",
+     "repo_id": 1314518085,
+     "name": "TurboVLA",
+     "homepage": "https://github.com/H-EmbodVis/TurboVLA",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "robocurve/inspect-robots",
+     "entity_type": "repo",
+     "repo_id": 1281030225,
+     "name": "inspect-robots",
+     "homepage": "https://github.com/robocurve/inspect-robots",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "argos-ci/argos",
+     "entity_type": "repo",
+     "repo_id": 76593355,
+     "name": "argos",
+     "homepage": "https://github.com/argos-ci/argos",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "firstintent/ccteam",
+     "entity_type": "repo",
+     "repo_id": 1229017267,
+     "name": "ccteam",
+     "homepage": "https://github.com/firstintent/ccteam",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Calix-L/DanKS",
+     "entity_type": "repo",
+     "repo_id": 1342115121,
+     "name": "DanKS",
+     "homepage": "https://github.com/Calix-L/DanKS",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "bilibili/Index-Translate",
+     "entity_type": "repo",
+     "repo_id": 1371484855,
+     "name": "Index-Translate",
+     "homepage": "https://github.com/bilibili/Index-Translate",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "superdesigndev/superdesign-skill",
+     "entity_type": "repo",
+     "repo_id": 1139329853,
+     "name": "superdesign-skill",
+     "homepage": "https://github.com/superdesigndev/superdesign-skill",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "BruceLanLan/augur",
+     "entity_type": "repo",
+     "repo_id": 1203657193,
+     "name": "augur",
+     "homepage": "https://github.com/BruceLanLan/augur",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Abilityai/trinity",
+     "entity_type": "repo",
+     "repo_id": 1114031887,
+     "name": "trinity",
+     "homepage": "https://github.com/Abilityai/trinity",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "jianruntech/geo-score",
+     "entity_type": "repo",
+     "repo_id": 1360943451,
+     "name": "geo-score",
+     "homepage": "https://github.com/jianruntech/geo-score",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "akitaonrails/ai-usagebar",
+     "entity_type": "repo",
+     "repo_id": 1247916961,
+     "name": "ai-usagebar",
+     "homepage": "https://github.com/akitaonrails/ai-usagebar",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "JayPokale/Chisle",
+     "entity_type": "repo",
+     "repo_id": 1284692613,
+     "name": "Chisle",
+     "homepage": "https://github.com/JayPokale/Chisle",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "heartleo/zlib",
+     "entity_type": "repo",
+     "repo_id": 1206531299,
+     "name": "zlib",
+     "homepage": "https://github.com/heartleo/zlib",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "avibe-bot/avibe",
+     "entity_type": "repo",
+     "repo_id": 1035030370,
+     "name": "avibe",
+     "homepage": "https://github.com/avibe-bot/avibe",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "PKU-YuanGroup/OpenAI4S",
+     "entity_type": "repo",
+     "repo_id": 1290445936,
+     "name": "OpenAI4S",
+     "homepage": "https://github.com/PKU-YuanGroup/OpenAI4S",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ganeshmshetty/openclip",
+     "entity_type": "repo",
+     "repo_id": 1319581450,
+     "name": "openclip",
+     "homepage": "https://github.com/ganeshmshetty/openclip",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "razorback16/openjev",
+     "entity_type": "repo",
+     "repo_id": 1375639479,
+     "name": "openjev",
+     "homepage": "https://github.com/razorback16/openjev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Yean-Sec/StrikeAgent_AtkBrain-Flash",
+     "entity_type": "repo",
+     "repo_id": 1354515658,
+     "name": "StrikeAgent_AtkBrain-Flash",
+     "homepage": "https://github.com/Yean-Sec/StrikeAgent_AtkBrain-Flash",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "GMGNAI/gmgn-skills",
+     "entity_type": "repo",
+     "repo_id": 1179404554,
+     "name": "gmgn-skills",
+     "homepage": "https://github.com/GMGNAI/gmgn-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "lucienhuangfu/eLLM",
+     "entity_type": "repo",
+     "repo_id": 1010892437,
+     "name": "eLLM",
+     "homepage": "https://github.com/lucienhuangfu/eLLM",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nejib1/Free-LLM",
+     "entity_type": "repo",
+     "repo_id": 1157169970,
+     "name": "Free-LLM",
+     "homepage": "https://github.com/nejib1/Free-LLM",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ruc-datalab/EvoOntology",
+     "entity_type": "repo",
+     "repo_id": 1370752473,
+     "name": "EvoOntology",
+     "homepage": "https://github.com/ruc-datalab/EvoOntology",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "sharpdeveye/maestro",
+     "entity_type": "repo",
+     "repo_id": 1199720858,
+     "name": "maestro",
+     "homepage": "https://github.com/sharpdeveye/maestro",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "wangzhishou/OneBox",
+     "entity_type": "repo",
+     "repo_id": 1327506365,
+     "name": "OneBox",
+     "homepage": "https://github.com/wangzhishou/OneBox",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "liustack/modsearch",
+     "entity_type": "repo",
+     "repo_id": 1163808542,
+     "name": "modsearch",
+     "homepage": "https://github.com/liustack/modsearch",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "tover0314-w/opentypeless",
+     "entity_type": "repo",
+     "repo_id": 1167485752,
+     "name": "opentypeless",
+     "homepage": "https://github.com/tover0314-w/opentypeless",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "kevinzakka/mjbatch",
+     "entity_type": "repo",
+     "repo_id": 1363423951,
+     "name": "mjbatch",
+     "homepage": "https://github.com/kevinzakka/mjbatch",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "arcships/light-ocr",
+     "entity_type": "repo",
+     "repo_id": 1299885911,
+     "name": "light-ocr",
+     "homepage": "https://github.com/arcships/light-ocr",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SmythOS/smythos-studio",
+     "entity_type": "repo",
+     "repo_id": 1015386919,
+     "name": "smythos-studio",
+     "homepage": "https://github.com/SmythOS/smythos-studio",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "OpenVDN/vdn-minimax-h3",
+     "entity_type": "repo",
+     "repo_id": 1354322512,
+     "name": "vdn-minimax-h3",
+     "homepage": "https://github.com/OpenVDN/vdn-minimax-h3",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Sidiora-Labs/Paxeer-X-Network",
+     "entity_type": "repo",
+     "repo_id": 1334532589,
+     "name": "Paxeer-X-Network",
+     "homepage": "https://github.com/Sidiora-Labs/Paxeer-X-Network",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Regert888/gpt-auto-register",
+     "entity_type": "repo",
+     "repo_id": 1262434101,
+     "name": "gpt-auto-register",
+     "homepage": "https://github.com/Regert888/gpt-auto-register",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "google/dotprompt",
+     "entity_type": "repo",
+     "repo_id": 848430472,
+     "name": "dotprompt",
+     "homepage": "https://github.com/google/dotprompt",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "bex-co/bex",
+     "entity_type": "repo",
+     "repo_id": 793852040,
+     "name": "bex",
+     "homepage": "https://github.com/bex-co/bex",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "agentpit-io/hunter-community",
+     "entity_type": "repo",
+     "repo_id": 1329705938,
+     "name": "hunter-community",
+     "homepage": "https://github.com/agentpit-io/hunter-community",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Nehanth/pooled",
+     "entity_type": "repo",
+     "repo_id": 1352965805,
+     "name": "pooled",
+     "homepage": "https://github.com/Nehanth/pooled",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Optima-CityU/LLM4AD_Next",
+     "entity_type": "repo",
+     "repo_id": 1263642416,
+     "name": "LLM4AD_Next",
+     "homepage": "https://github.com/Optima-CityU/LLM4AD_Next",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "YoanWai/agent-manager",
+     "entity_type": "repo",
+     "repo_id": 1301824521,
+     "name": "agent-manager",
+     "homepage": "https://github.com/YoanWai/agent-manager",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MahmoudAshraf97/ctc-forced-aligner",
+     "entity_type": "repo",
+     "repo_id": 796293295,
+     "name": "ctc-forced-aligner",
+     "homepage": "https://github.com/MahmoudAshraf97/ctc-forced-aligner",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "alisaitteke/photoshop-mcp",
+     "entity_type": "repo",
+     "repo_id": 1142857237,
+     "name": "photoshop-mcp",
+     "homepage": "https://github.com/alisaitteke/photoshop-mcp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "skygazer42/MimirQ",
+     "entity_type": "repo",
+     "repo_id": 1105700003,
+     "name": "MimirQ",
+     "homepage": "https://github.com/skygazer42/MimirQ",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "aayushch/laya",
+     "entity_type": "repo",
+     "repo_id": 1234452803,
+     "name": "laya",
+     "homepage": "https://github.com/aayushch/laya",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "aannoo/hcom",
+     "entity_type": "repo",
+     "repo_id": 1023335896,
+     "name": "hcom",
+     "homepage": "https://github.com/aannoo/hcom",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "smg-project/smg",
+     "entity_type": "repo",
+     "repo_id": 1101714630,
+     "name": "smg",
+     "homepage": "https://github.com/smg-project/smg",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "blacktwist/social-media-skills",
+     "entity_type": "repo",
+     "repo_id": 1187573823,
+     "name": "social-media-skills",
+     "homepage": "https://github.com/blacktwist/social-media-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "QuintinShaw/pi-dynamic-workflows",
+     "entity_type": "repo",
+     "repo_id": 1254554862,
+     "name": "pi-dynamic-workflows",
+     "homepage": "https://github.com/QuintinShaw/pi-dynamic-workflows",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Knowledgator/GLiClass",
+     "entity_type": "repo",
+     "repo_id": 809318502,
+     "name": "GLiClass",
+     "homepage": "https://github.com/Knowledgator/GLiClass",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ogulcancelik/pi-extensions",
+     "entity_type": "repo",
+     "repo_id": 1184462245,
+     "name": "pi-extensions",
+     "homepage": "https://github.com/ogulcancelik/pi-extensions",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "pinloop-ai/pinloop-cli",
+     "entity_type": "repo",
+     "repo_id": 1344075823,
+     "name": "pinloop-cli",
+     "homepage": "https://github.com/pinloop-ai/pinloop-cli",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "chenxiachan/thoughtdag",
+     "entity_type": "repo",
+     "repo_id": 1160354976,
+     "name": "thoughtdag",
+     "homepage": "https://github.com/chenxiachan/thoughtdag",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "iannuttall/seo",
+     "entity_type": "repo",
+     "repo_id": 1296365237,
+     "name": "seo",
+     "homepage": "https://github.com/iannuttall/seo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "gakonst/nanocodex",
+     "entity_type": "repo",
+     "repo_id": 1302093382,
+     "name": "nanocodex",
+     "homepage": "https://github.com/gakonst/nanocodex",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "LeoYeAI/talewell",
+     "entity_type": "repo",
+     "repo_id": 1194293040,
+     "name": "talewell",
+     "homepage": "https://github.com/LeoYeAI/talewell",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zenstory-ai/video-recap-skills",
+     "entity_type": "repo",
+     "repo_id": 1227341286,
+     "name": "video-recap-skills",
+     "homepage": "https://github.com/zenstory-ai/video-recap-skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "fabio-rovai/open-ontologies",
+     "entity_type": "repo",
+     "repo_id": 1176678872,
+     "name": "open-ontologies",
+     "homepage": "https://github.com/fabio-rovai/open-ontologies",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dbt-labs/dbt-charts",
+     "entity_type": "repo",
+     "repo_id": 1334499503,
+     "name": "dbt-charts",
+     "homepage": "https://github.com/dbt-labs/dbt-charts",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Sayhi-bzb/CharDesk",
+     "entity_type": "repo",
+     "repo_id": 1117435862,
+     "name": "CharDesk",
+     "homepage": "https://github.com/Sayhi-bzb/CharDesk",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "agenvoy/Agenvoy",
+     "entity_type": "repo",
+     "repo_id": 1150205195,
+     "name": "Agenvoy",
+     "homepage": "https://github.com/agenvoy/Agenvoy",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "multikernel/sandlock",
+     "entity_type": "repo",
+     "repo_id": 1181262173,
+     "name": "sandlock",
+     "homepage": "https://github.com/multikernel/sandlock",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "paladini/harness-score",
+     "entity_type": "repo",
+     "repo_id": 1297089591,
+     "name": "harness-score",
+     "homepage": "https://github.com/paladini/harness-score",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "caura-ai/caura",
+     "entity_type": "repo",
+     "repo_id": 1222639711,
+     "name": "caura",
+     "homepage": "https://github.com/caura-ai/caura",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ghbalf/freecad-ai",
+     "entity_type": "repo",
+     "repo_id": 1162985117,
+     "name": "freecad-ai",
+     "homepage": "https://github.com/ghbalf/freecad-ai",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NVlabs/RoboLab",
+     "entity_type": "repo",
+     "repo_id": 1205300710,
+     "name": "RoboLab",
+     "homepage": "https://github.com/NVlabs/RoboLab",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "breezeblue-ai/breeze-tts",
+     "entity_type": "repo",
+     "repo_id": 1346367348,
+     "name": "breeze-tts",
+     "homepage": "https://github.com/breezeblue-ai/breeze-tts",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "coldteadotai/abide",
+     "entity_type": "repo",
+     "repo_id": 1375721079,
+     "name": "abide",
+     "homepage": "https://github.com/coldteadotai/abide",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "safedep/pmg",
+     "entity_type": "repo",
+     "repo_id": 951643407,
+     "name": "pmg",
+     "homepage": "https://github.com/safedep/pmg",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ibrahimqureshae/mdflux",
+     "entity_type": "repo",
+     "repo_id": 1275998498,
+     "name": "mdflux",
+     "homepage": "https://github.com/ibrahimqureshae/mdflux",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "microsoft/DebugMCP",
+     "entity_type": "repo",
+     "repo_id": 1067194496,
+     "name": "DebugMCP",
+     "homepage": "https://github.com/microsoft/DebugMCP",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zhongkaifu/TensorSharp",
+     "entity_type": "repo",
+     "repo_id": 1200226423,
+     "name": "TensorSharp",
+     "homepage": "https://github.com/zhongkaifu/TensorSharp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "modelstudioai/cli",
+     "entity_type": "repo",
+     "repo_id": 1251875798,
+     "name": "cli",
+     "homepage": "https://github.com/modelstudioai/cli",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "termio-sh/termio",
+     "entity_type": "repo",
+     "repo_id": 1247881971,
+     "name": "termio",
+     "homepage": "https://github.com/termio-sh/termio",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NVIDIA/SkillEvaluator",
+     "entity_type": "repo",
+     "repo_id": 1278676884,
+     "name": "SkillEvaluator",
+     "homepage": "https://github.com/NVIDIA/SkillEvaluator",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "gufo-org/gufo",
+     "entity_type": "repo",
+     "repo_id": 1331203700,
+     "name": "gufo",
+     "homepage": "https://github.com/gufo-org/gufo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "truecourse-ai/truecourse",
+     "entity_type": "repo",
+     "repo_id": 1180451756,
+     "name": "truecourse",
+     "homepage": "https://github.com/truecourse-ai/truecourse",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "DannyMac180/skills",
+     "entity_type": "repo",
+     "repo_id": 1253525979,
+     "name": "skills",
+     "homepage": "https://github.com/DannyMac180/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dweep-desai/FaceGate-Mac",
+     "entity_type": "repo",
+     "repo_id": 1266140657,
+     "name": "FaceGate-Mac",
+     "homepage": "https://github.com/dweep-desai/FaceGate-Mac",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "polyaxon/traceml",
+     "entity_type": "repo",
+     "repo_id": 54749857,
+     "name": "traceml",
+     "homepage": "https://github.com/polyaxon/traceml",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Rhoban/bam",
+     "entity_type": "repo",
+     "repo_id": 777755683,
+     "name": "bam",
+     "homepage": "https://github.com/Rhoban/bam",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "spark-arena/sparkrun",
+     "entity_type": "repo",
+     "repo_id": 1159456624,
+     "name": "sparkrun",
+     "homepage": "https://github.com/spark-arena/sparkrun",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "llmmanorg/llmman",
+     "entity_type": "repo",
+     "repo_id": 1188371877,
+     "name": "llmman",
+     "homepage": "https://github.com/llmmanorg/llmman",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "dynamicslab/hydrogym",
+     "entity_type": "repo",
+     "repo_id": 442769321,
+     "name": "hydrogym",
+     "homepage": "https://github.com/dynamicslab/hydrogym",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "openai/tunnel-client",
+     "entity_type": "repo",
+     "repo_id": 1113421659,
+     "name": "tunnel-client",
+     "homepage": "https://github.com/openai/tunnel-client",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "waybarrios/opencode-power-pack",
+     "entity_type": "repo",
+     "repo_id": 1221781531,
+     "name": "opencode-power-pack",
+     "homepage": "https://github.com/waybarrios/opencode-power-pack",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MIT-SPARK/DAAAM",
+     "entity_type": "repo",
+     "repo_id": 1108540484,
+     "name": "DAAAM",
+     "homepage": "https://github.com/MIT-SPARK/DAAAM",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SaseQ/discord-mcp",
+     "entity_type": "repo",
+     "repo_id": 948723723,
+     "name": "discord-mcp",
+     "homepage": "https://github.com/SaseQ/discord-mcp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "swarm-subnet/Langostino",
+     "entity_type": "repo",
+     "repo_id": 1053235780,
+     "name": "Langostino",
+     "homepage": "https://github.com/swarm-subnet/Langostino",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "kwakseongjae/oh-my-design",
+     "entity_type": "repo",
+     "repo_id": 1209316814,
+     "name": "oh-my-design",
+     "homepage": "https://github.com/kwakseongjae/oh-my-design",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "only-cli/oc",
+     "entity_type": "repo",
+     "repo_id": 1338409520,
+     "name": "oc",
+     "homepage": "https://github.com/only-cli/oc",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Bingeljell/image-to-3dlab",
+     "entity_type": "repo",
+     "repo_id": 1320384572,
+     "name": "image-to-3dlab",
+     "homepage": "https://github.com/Bingeljell/image-to-3dlab",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "yuxino/Mimi",
+     "entity_type": "repo",
+     "repo_id": 1308836501,
+     "name": "Mimi",
+     "homepage": "https://github.com/yuxino/Mimi",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "StonyBrookNLP/appworld",
+     "entity_type": "repo",
+     "repo_id": 819144961,
+     "name": "appworld",
+     "homepage": "https://github.com/StonyBrookNLP/appworld",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "docker/skills",
+     "entity_type": "repo",
+     "repo_id": 1193711422,
+     "name": "skills",
+     "homepage": "https://github.com/docker/skills",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "nicobailon/pi-intercom",
+     "entity_type": "repo",
+     "repo_id": 1179528742,
+     "name": "pi-intercom",
+     "homepage": "https://github.com/nicobailon/pi-intercom",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Sentient-OS-Labs/sentient-os",
+     "entity_type": "repo",
+     "repo_id": 1265617033,
+     "name": "sentient-os",
+     "homepage": "https://github.com/Sentient-OS-Labs/sentient-os",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "pulseaiclub/phi",
+     "entity_type": "repo",
+     "repo_id": 1321152436,
+     "name": "phi",
+     "homepage": "https://github.com/pulseaiclub/phi",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "naw103/foremerge",
+     "entity_type": "repo",
+     "repo_id": 1342084139,
+     "name": "foremerge",
+     "homepage": "https://github.com/naw103/foremerge",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "silasxbt/anti-api",
+     "entity_type": "repo",
+     "repo_id": 1122310100,
+     "name": "anti-api",
+     "homepage": "https://github.com/silasxbt/anti-api",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "HAKORADev/VODER",
+     "entity_type": "repo",
+     "repo_id": 1153764071,
+     "name": "VODER",
+     "homepage": "https://github.com/HAKORADev/VODER",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Ikalus1988/MisakaNet",
+     "entity_type": "repo",
+     "repo_id": 1224734286,
+     "name": "MisakaNet",
+     "homepage": "https://github.com/Ikalus1988/MisakaNet",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "AISecurityLab/hackagent",
+     "entity_type": "repo",
+     "repo_id": 983511414,
+     "name": "hackagent",
+     "homepage": "https://github.com/AISecurityLab/hackagent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SilentCoderHere/aihub",
+     "entity_type": "repo",
+     "repo_id": 1127140459,
+     "name": "aihub",
+     "homepage": "https://github.com/SilentCoderHere/aihub",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "PunithVT/ai-avatar-system",
+     "entity_type": "repo",
+     "repo_id": 1106924851,
+     "name": "ai-avatar-system",
+     "homepage": "https://github.com/PunithVT/ai-avatar-system",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "clawdotnet/openclaw.net",
+     "entity_type": "repo",
+     "repo_id": 1163722224,
+     "name": "openclaw.net",
+     "homepage": "https://github.com/clawdotnet/openclaw.net",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "yanhua1010/self-media-content-workflow",
+     "entity_type": "repo",
+     "repo_id": 1308458354,
+     "name": "self-media-content-workflow",
+     "homepage": "https://github.com/yanhua1010/self-media-content-workflow",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "specula-org/Specula",
+     "entity_type": "repo",
+     "repo_id": 1002224228,
+     "name": "Specula",
+     "homepage": "https://github.com/specula-org/Specula",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NeptuneHub/AudioMuse-AI-NV-plugin",
+     "entity_type": "repo",
+     "repo_id": 1145384197,
+     "name": "AudioMuse-AI-NV-plugin",
+     "homepage": "https://github.com/NeptuneHub/AudioMuse-AI-NV-plugin",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "auscaster/frantic-board",
+     "entity_type": "repo",
+     "repo_id": 1266155997,
+     "name": "frantic-board",
+     "homepage": "https://github.com/auscaster/frantic-board",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "JungHoonGhae/tossinvest-cli",
+     "entity_type": "repo",
+     "repo_id": 1178974910,
+     "name": "tossinvest-cli",
+     "homepage": "https://github.com/JungHoonGhae/tossinvest-cli",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NightMean/OlliteRT",
+     "entity_type": "repo",
+     "repo_id": 1203116301,
+     "name": "OlliteRT",
+     "homepage": "https://github.com/NightMean/OlliteRT",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "emdgroup/baybe",
+     "entity_type": "repo",
+     "repo_id": 724233270,
+     "name": "baybe",
+     "homepage": "https://github.com/emdgroup/baybe",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "SetsunaYukiOvO/x64dbg-mcp",
+     "entity_type": "repo",
+     "repo_id": 1100229877,
+     "name": "x64dbg-mcp",
+     "homepage": "https://github.com/SetsunaYukiOvO/x64dbg-mcp",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "spaceamoeba-t/tapq",
+     "entity_type": "repo",
+     "repo_id": 1305378270,
+     "name": "tapq",
+     "homepage": "https://github.com/spaceamoeba-t/tapq",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "TangleML/tangle",
+     "entity_type": "repo",
+     "repo_id": 942516454,
+     "name": "tangle",
+     "homepage": "https://github.com/TangleML/tangle",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "askimo-ai/askimo",
+     "entity_type": "repo",
+     "repo_id": 1032321090,
+     "name": "askimo",
+     "homepage": "https://github.com/askimo-ai/askimo",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NVIDIA/NeMo-text-processing",
+     "entity_type": "repo",
+     "repo_id": 561932404,
+     "name": "NeMo-text-processing",
+     "homepage": "https://github.com/NVIDIA/NeMo-text-processing",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "zhikunqingtao/zhikuncode",
+     "entity_type": "repo",
+     "repo_id": 1202436319,
+     "name": "zhikuncode",
+     "homepage": "https://github.com/zhikunqingtao/zhikuncode",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "qunqin24/Pulse",
+     "entity_type": "repo",
+     "repo_id": 1351274581,
+     "name": "Pulse",
+     "homepage": "https://github.com/qunqin24/Pulse",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "bytedance/vArmor",
+     "entity_type": "repo",
+     "repo_id": 675986268,
+     "name": "vArmor",
+     "homepage": "https://github.com/bytedance/vArmor",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mll-lab-nu/VAGEN",
+     "entity_type": "repo",
+     "repo_id": 942934124,
+     "name": "VAGEN",
+     "homepage": "https://github.com/mll-lab-nu/VAGEN",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Gennadiyev/STS2MCP",
+     "entity_type": "repo",
+     "repo_id": 1174293719,
+     "name": "STS2MCP",
+     "homepage": "https://github.com/Gennadiyev/STS2MCP",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "JetBrains/thinkrail",
+     "entity_type": "repo",
+     "repo_id": 1293238217,
+     "name": "thinkrail",
+     "homepage": "https://github.com/JetBrains/thinkrail",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "techjarves/Mobile-Harness",
+     "entity_type": "repo",
+     "repo_id": 1340646366,
+     "name": "Mobile-Harness",
+     "homepage": "https://github.com/techjarves/Mobile-Harness",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "DavidCarliez/trustmebro",
+     "entity_type": "repo",
+     "repo_id": 1347705664,
+     "name": "trustmebro",
+     "homepage": "https://github.com/DavidCarliez/trustmebro",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "showlab/Show-Harness",
+     "entity_type": "repo",
+     "repo_id": 1359995118,
+     "name": "Show-Harness",
+     "homepage": "https://github.com/showlab/Show-Harness",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "huawei-csl/KVarN",
+     "entity_type": "repo",
+     "repo_id": 1253187784,
+     "name": "KVarN",
+     "homepage": "https://github.com/huawei-csl/KVarN",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ecomfe/tempad-dev",
+     "entity_type": "repo",
+     "repo_id": 771445153,
+     "name": "tempad-dev",
+     "homepage": "https://github.com/ecomfe/tempad-dev",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "foxminchan/BookWorm",
+     "entity_type": "repo",
+     "repo_id": 829413452,
+     "name": "BookWorm",
+     "homepage": "https://github.com/foxminchan/BookWorm",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "NVIDIA-ISAAC-ROS/isaac_ros_pose_estimation",
+     "entity_type": "repo",
+     "repo_id": 424738296,
+     "name": "isaac_ros_pose_estimation",
+     "homepage": "https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_pose_estimation",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Piebald-AI/gemini-cli-desktop",
+     "entity_type": "repo",
+     "repo_id": 1027211793,
+     "name": "gemini-cli-desktop",
+     "homepage": "https://github.com/Piebald-AI/gemini-cli-desktop",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ankimcp/anki-mcp-server",
+     "entity_type": "repo",
+     "repo_id": 1066674289,
+     "name": "anki-mcp-server",
+     "homepage": "https://github.com/ankimcp/anki-mcp-server",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "liu00222/Open-Prompt-Injection",
+     "entity_type": "repo",
+     "repo_id": 707020503,
+     "name": "Open-Prompt-Injection",
+     "homepage": "https://github.com/liu00222/Open-Prompt-Injection",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "hailo-ai/hailo-apps",
+     "entity_type": "repo",
+     "repo_id": 906970033,
+     "name": "hailo-apps",
+     "homepage": "https://github.com/hailo-ai/hailo-apps",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "MIC-DKFZ/nnInteractive",
+     "entity_type": "repo",
+     "repo_id": 945987906,
+     "name": "nnInteractive",
+     "homepage": "https://github.com/MIC-DKFZ/nnInteractive",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "a2aproject/a2a-java",
+     "entity_type": "repo",
+     "repo_id": 976661020,
+     "name": "a2a-java",
+     "homepage": "https://github.com/a2aproject/a2a-java",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mozilla-ai/otari",
+     "entity_type": "repo",
+     "repo_id": 1199379933,
+     "name": "otari",
+     "homepage": "https://github.com/mozilla-ai/otari",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "deonmenezes/mantishack",
+     "entity_type": "repo",
+     "repo_id": 1201737664,
+     "name": "mantishack",
+     "homepage": "https://github.com/deonmenezes/mantishack",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "uoftcprg/pokerkit",
+     "entity_type": "repo",
+     "repo_id": 338274995,
+     "name": "pokerkit",
+     "homepage": "https://github.com/uoftcprg/pokerkit",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "mir-group/allegro",
+     "entity_type": "repo",
+     "repo_id": 456303287,
+     "name": "allegro",
+     "homepage": "https://github.com/mir-group/allegro",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "GraphRAG-Bench/GraphRAG-Benchmark",
+     "entity_type": "repo",
+     "repo_id": 998658685,
+     "name": "GraphRAG-Benchmark",
+     "homepage": "https://github.com/GraphRAG-Bench/GraphRAG-Benchmark",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "colliery-io/graphqlite",
+     "entity_type": "repo",
+     "repo_id": 1022761727,
+     "name": "graphqlite",
+     "homepage": "https://github.com/colliery-io/graphqlite",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "datawhalechina/easy-langent",
+     "entity_type": "repo",
+     "repo_id": 1125683897,
+     "name": "easy-langent",
+     "homepage": "https://github.com/datawhalechina/easy-langent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ai-driven-dev/framework",
+     "entity_type": "repo",
+     "repo_id": 1151742228,
+     "name": "framework",
+     "homepage": "https://github.com/ai-driven-dev/framework",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "huggingface/funes",
+     "entity_type": "repo",
+     "repo_id": 1273290231,
+     "name": "funes",
+     "homepage": "https://github.com/huggingface/funes",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "expectedparrot/edsl",
+     "entity_type": "repo",
+     "repo_id": 738290765,
+     "name": "edsl",
+     "homepage": "https://github.com/expectedparrot/edsl",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "TorchSim/torch-sim",
+     "entity_type": "repo",
+     "repo_id": 942098617,
+     "name": "torch-sim",
+     "homepage": "https://github.com/TorchSim/torch-sim",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "federicodeponte/opendraft",
+     "entity_type": "repo",
+     "repo_id": 1086608189,
+     "name": "opendraft",
+     "homepage": "https://github.com/federicodeponte/opendraft",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "lucasygu/redbook",
+     "entity_type": "repo",
+     "repo_id": 1159796496,
+     "name": "redbook",
+     "homepage": "https://github.com/lucasygu/redbook",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "lumina37/rotate-captcha-crack",
+     "entity_type": "repo",
+     "repo_id": 500338860,
+     "name": "rotate-captcha-crack",
+     "homepage": "https://github.com/lumina37/rotate-captcha-crack",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Bytedesk/bytedesk",
+     "entity_type": "repo",
+     "repo_id": 703802567,
+     "name": "bytedesk",
+     "homepage": "https://github.com/Bytedesk/bytedesk",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "intelligencedev/manifold",
+     "entity_type": "repo",
+     "repo_id": 927421008,
+     "name": "manifold",
+     "homepage": "https://github.com/intelligencedev/manifold",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "opengeos/GeoAgent",
+     "entity_type": "repo",
+     "repo_id": 1146959118,
+     "name": "GeoAgent",
+     "homepage": "https://github.com/opengeos/GeoAgent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "JdeRobot/RoboticsAcademy",
+     "entity_type": "repo",
+     "repo_id": 39567107,
+     "name": "RoboticsAcademy",
+     "homepage": "https://github.com/JdeRobot/RoboticsAcademy",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "ultralytics/yolo-flutter-app",
+     "entity_type": "repo",
+     "repo_id": 771153053,
+     "name": "yolo-flutter-app",
+     "homepage": "https://github.com/ultralytics/yolo-flutter-app",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "smartscanapp/smartscan-android",
+     "entity_type": "repo",
+     "repo_id": 954914732,
+     "name": "smartscan-android",
+     "homepage": "https://github.com/smartscanapp/smartscan-android",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "aurekaresearch/OpenDDE",
+     "entity_type": "repo",
+     "repo_id": 1281283803,
+     "name": "OpenDDE",
+     "homepage": "https://github.com/aurekaresearch/OpenDDE",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "withcatai/catai",
+     "entity_type": "repo",
+     "repo_id": 618875095,
+     "name": "catai",
+     "homepage": "https://github.com/withcatai/catai",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "enricoros/big-AGI",
+     "entity_type": "repo",
+     "repo_id": 615928156,
+     "name": "big-AGI",
+     "homepage": "https://github.com/enricoros/big-AGI",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "lynote-ai/humanize-text",
+     "entity_type": "repo",
+     "repo_id": 1242316635,
+     "name": "humanize-text",
+     "homepage": "https://github.com/lynote-ai/humanize-text",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "aws/agent-toolkit-for-aws",
+     "entity_type": "repo",
+     "repo_id": 1219009070,
+     "name": "agent-toolkit-for-aws",
+     "homepage": "https://github.com/aws/agent-toolkit-for-aws",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "YGYOOO/WorldX",
+     "entity_type": "repo",
+     "repo_id": 1214117173,
+     "name": "WorldX",
+     "homepage": "https://github.com/YGYOOO/WorldX",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "Capsize-Games/airunner",
+     "entity_type": "repo",
+     "repo_id": 617136332,
+     "name": "airunner",
+     "homepage": "https://github.com/Capsize-Games/airunner",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "cognizant-ai-lab/neuro-san-studio",
+     "entity_type": "repo",
+     "repo_id": 925457982,
+     "name": "neuro-san-studio",
+     "homepage": "https://github.com/cognizant-ai-lab/neuro-san-studio",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "curiosity-ai/catalyst",
+     "entity_type": "repo",
+     "repo_id": 200471228,
+     "name": "catalyst",
+     "homepage": "https://github.com/curiosity-ai/catalyst",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "regent-vcs/re_gent",
+     "entity_type": "repo",
+     "repo_id": 1225427533,
+     "name": "re_gent",
+     "homepage": "https://github.com/regent-vcs/re_gent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "simchowitzlabpublic/nano-world-model",
+     "entity_type": "repo",
+     "repo_id": 1225594874,
+     "name": "nano-world-model",
+     "homepage": "https://github.com/simchowitzlabpublic/nano-world-model",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "samvallad33/vestige",
+     "entity_type": "repo",
+     "repo_id": 1141662059,
+     "name": "vestige",
+     "homepage": "https://github.com/samvallad33/vestige",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
+    },
+    {
+     "github_repo": "echoVic/orca-agent",
+     "entity_type": "repo",
+     "repo_id": 1260125959,
+     "name": "orca-agent",
+     "homepage": "https://github.com/echoVic/orca-agent",
+     "openalex_work_ids": [],
+     "note": "Admitted by AI-v1 census 2026-10; axis-2 unresolved."
     }
    ]
   }

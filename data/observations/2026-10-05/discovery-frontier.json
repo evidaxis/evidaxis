@@ -1,0 +1,2878 @@
+{
+  "v": "frontier_1",
+  "date": "2026-10-05",
+  "recorded_at": "2026-10-05T06:35:49Z",
+  "method": "AI-v1 monthly census -> weekly activation tranche (mechanical: max(10, 6% live), current stars desc)",
+  "sources": [
+    "github-search-api",
+    "github-graphql"
+  ],
+  "examined_estimate": 409,
+  "candidates_returned": 409,
+  "candidates": [
+    {
+      "repo": "tt-a1i/archify",
+      "cohort": "unassigned-v1",
+      "stars": 77648,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "blader/humanizer",
+      "cohort": "unassigned-v1",
+      "stars": 54007,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "tinyhumansai/openhuman",
+      "cohort": "unassigned-v1",
+      "stars": 40646,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "The-Vibe-Company/quivr",
+      "cohort": "unassigned-v1",
+      "stars": 39579,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "feder-cr/invisible_playwright_mcp",
+      "cohort": "unassigned-v1",
+      "stars": 31776,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NandhaKishorM/laya",
+      "cohort": "unassigned-v1",
+      "stars": 30758,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "xai-org/grok-build",
+      "cohort": "unassigned-v1",
+      "stars": 27226,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "pascalorg/editor",
+      "cohort": "unassigned-v1",
+      "stars": 24630,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dream-num/univer",
+      "cohort": "unassigned-v1",
+      "stars": 22370,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MLEveryday/100-Days-Of-ML-Code",
+      "cohort": "unassigned-v1",
+      "stars": 22243,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "docmost/docmost",
+      "cohort": "unassigned-v1",
+      "stars": 21872,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "wasmerio/wasmer",
+      "cohort": "unassigned-v1",
+      "stars": 21126,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "AgriciDaniel/claude-seo",
+      "cohort": "unassigned-v1",
+      "stars": 18290,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ahmedkhaleel2004/gitdiagram",
+      "cohort": "unassigned-v1",
+      "stars": 17848,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "tradecatlabs/vibe-coding-cn",
+      "cohort": "unassigned-v1",
+      "stars": 17112,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "google/ax",
+      "cohort": "unassigned-v1",
+      "stars": 13072,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Niko1221/Strata",
+      "cohort": "unassigned-v1",
+      "stars": 11746,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "google/artemis",
+      "cohort": "unassigned-v1",
+      "stars": 10973,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "simonlin1212/a-stock-data",
+      "cohort": "unassigned-v1",
+      "stars": 10555,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Companion-Inc/feynman",
+      "cohort": "unassigned-v1",
+      "stars": 9884,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "jaredpalmer/kev",
+      "cohort": "unassigned-v1",
+      "stars": 8449,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "HarnessMD/munder-difflin",
+      "cohort": "unassigned-v1",
+      "stars": 8432,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "PriorLabs/TabPFN",
+      "cohort": "unassigned-v1",
+      "stars": 8118,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Gentleman-Programming/gentle-ai",
+      "cohort": "unassigned-v1",
+      "stars": 7544,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Human-Agent-Society/reef",
+      "cohort": "unassigned-v1",
+      "stars": 7486,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zai-org/ZCode",
+      "cohort": "unassigned-v1",
+      "stars": 7412,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "jev-chat/jev-chat-jarvis",
+      "cohort": "unassigned-v1",
+      "stars": 7346,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ParthJadhav/app-store-screenshots",
+      "cohort": "unassigned-v1",
+      "stars": 7146,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mizorewww/laya-mlx",
+      "cohort": "unassigned-v1",
+      "stars": 6765,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "infobyte/faraday",
+      "cohort": "unassigned-v1",
+      "stars": 6764,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "charliedream1/ai_quant_trade",
+      "cohort": "unassigned-v1",
+      "stars": 6592,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "anus-dev/ANUS",
+      "cohort": "unassigned-v1",
+      "stars": 6547,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "e2b-dev/fragments",
+      "cohort": "unassigned-v1",
+      "stars": 6382,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "vastsa/PI-Desktop",
+      "cohort": "unassigned-v1",
+      "stars": 6365,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "kucherenko/jscpd",
+      "cohort": "unassigned-v1",
+      "stars": 6333,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "agentscope-ai/agentscope-java",
+      "cohort": "unassigned-v1",
+      "stars": 5871,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "KKKKhazix/AIHOT",
+      "cohort": "unassigned-v1",
+      "stars": 5846,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "weave-os/router",
+      "cohort": "unassigned-v1",
+      "stars": 5568,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SenteLabsAI/OpenExecutive",
+      "cohort": "unassigned-v1",
+      "stars": 5489,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "PetoiCamp/OpenCat-Quadruped-Robot",
+      "cohort": "unassigned-v1",
+      "stars": 5417,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "looplj/axonhub",
+      "cohort": "unassigned-v1",
+      "stars": 5335,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "yetone/magpie",
+      "cohort": "unassigned-v1",
+      "stars": 4930,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "vinta/pangu.js",
+      "cohort": "unassigned-v1",
+      "stars": 4839,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Gaurav-Gosain/tuios",
+      "cohort": "unassigned-v1",
+      "stars": 4719,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "cerbos/cerbos",
+      "cohort": "unassigned-v1",
+      "stars": 4609,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Jakubantalik/Libraries.dev",
+      "cohort": "unassigned-v1",
+      "stars": 4069,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "milind-soni/OpenMausBot",
+      "cohort": "unassigned-v1",
+      "stars": 4043,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "CopilotKit/openmuse",
+      "cohort": "unassigned-v1",
+      "stars": 3945,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zvec-ai/zvec-grep",
+      "cohort": "unassigned-v1",
+      "stars": 3920,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "jordan-gibbs/hyperresearch",
+      "cohort": "unassigned-v1",
+      "stars": 3775,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Mouseww/anything-analyzer",
+      "cohort": "unassigned-v1",
+      "stars": 3732,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "HeartMuLa/heartlib",
+      "cohort": "unassigned-v1",
+      "stars": 3724,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "twinnydotdev/twinny",
+      "cohort": "unassigned-v1",
+      "stars": 3662,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ben1234560/AiLearning-Theory-Applying",
+      "cohort": "unassigned-v1",
+      "stars": 3579,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Louis-CFM/coucou",
+      "cohort": "unassigned-v1",
+      "stars": 3517,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "YuJunZhiXue/dsh-purge",
+      "cohort": "unassigned-v1",
+      "stars": 3331,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "edison7009/EchoBird",
+      "cohort": "unassigned-v1",
+      "stars": 3290,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MaxMiksa/Auto-Company",
+      "cohort": "unassigned-v1",
+      "stars": 3116,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "QwenLM/Qwen-MM-Plugins",
+      "cohort": "unassigned-v1",
+      "stars": 3108,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ridgerchu/matmulfreellm",
+      "cohort": "unassigned-v1",
+      "stars": 3090,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ZJU-REAL/Easel",
+      "cohort": "unassigned-v1",
+      "stars": 3084,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zeronsh/zeron",
+      "cohort": "unassigned-v1",
+      "stars": 3022,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "morluto/rea",
+      "cohort": "unassigned-v1",
+      "stars": 2989,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Nanako0129/sepia",
+      "cohort": "unassigned-v1",
+      "stars": 2956,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Player-YN/BrowserKitten",
+      "cohort": "unassigned-v1",
+      "stars": 2881,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "marketcalls/openalgo",
+      "cohort": "unassigned-v1",
+      "stars": 2781,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "runkids/skillshare",
+      "cohort": "unassigned-v1",
+      "stars": 2713,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "router-for-me/EasyCLIProxyAPI",
+      "cohort": "unassigned-v1",
+      "stars": 2691,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "open-gigaai/giga-brain-0",
+      "cohort": "unassigned-v1",
+      "stars": 2664,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "gridaco/grida",
+      "cohort": "unassigned-v1",
+      "stars": 2656,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "CrossPaste/crosspaste-desktop",
+      "cohort": "unassigned-v1",
+      "stars": 2610,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "hardbeat920/monocode",
+      "cohort": "unassigned-v1",
+      "stars": 2564,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "KohakuBlueleaf/LyCORIS",
+      "cohort": "unassigned-v1",
+      "stars": 2525,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "redhat-et/ripwire",
+      "cohort": "unassigned-v1",
+      "stars": 2394,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "tigerless-labs/agent-memory",
+      "cohort": "unassigned-v1",
+      "stars": 2392,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "xzf-thu/VoiceMem",
+      "cohort": "unassigned-v1",
+      "stars": 2342,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dzhng/jevgrep",
+      "cohort": "unassigned-v1",
+      "stars": 2268,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dream-num/univer-workspace",
+      "cohort": "unassigned-v1",
+      "stars": 2242,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dexmal/opendm",
+      "cohort": "unassigned-v1",
+      "stars": 2205,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "fangwei123456/spikingjelly",
+      "cohort": "unassigned-v1",
+      "stars": 2151,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "yyjeqhc/webcodex",
+      "cohort": "unassigned-v1",
+      "stars": 2151,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenVidu/openvidu",
+      "cohort": "unassigned-v1",
+      "stars": 2135,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MG1937/ASC",
+      "cohort": "unassigned-v1",
+      "stars": 2125,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenMOSS/MOSS-Transcribe-Diarize",
+      "cohort": "unassigned-v1",
+      "stars": 2104,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "inferstep/ATLAS",
+      "cohort": "unassigned-v1",
+      "stars": 2099,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "emilianavt/OpenSeeFace",
+      "cohort": "unassigned-v1",
+      "stars": 2082,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dmtrKovalenko/fframes",
+      "cohort": "unassigned-v1",
+      "stars": 2076,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "hyperspaceai/agi",
+      "cohort": "unassigned-v1",
+      "stars": 2067,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "deepopen-com/deepopen",
+      "cohort": "unassigned-v1",
+      "stars": 2059,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MiniMax-AI/minimax-code",
+      "cohort": "unassigned-v1",
+      "stars": 1966,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "master-co/css",
+      "cohort": "unassigned-v1",
+      "stars": 1948,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "microsoft/MarS",
+      "cohort": "unassigned-v1",
+      "stars": 1873,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "coldteadotai/pr-lens",
+      "cohort": "unassigned-v1",
+      "stars": 1856,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "monid-ai/monid",
+      "cohort": "unassigned-v1",
+      "stars": 1833,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "DataArcTech/DataArc-SynData-Toolkit",
+      "cohort": "unassigned-v1",
+      "stars": 1782,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Asymptote-Labs/agent-beacon",
+      "cohort": "unassigned-v1",
+      "stars": 1768,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "FSoft-AI4Code/CodeWiki",
+      "cohort": "unassigned-v1",
+      "stars": 1754,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "StanfordVL/BEHAVIOR-1K",
+      "cohort": "unassigned-v1",
+      "stars": 1735,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Agents365-ai/video-podcast-maker",
+      "cohort": "unassigned-v1",
+      "stars": 1652,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenSparX/MasterAgent",
+      "cohort": "unassigned-v1",
+      "stars": 1645,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "patrickchugh/terravision",
+      "cohort": "unassigned-v1",
+      "stars": 1642,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NirDiamant/Controllable-RAG-Agent",
+      "cohort": "unassigned-v1",
+      "stars": 1627,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "TokenRhythm/NeoHorse",
+      "cohort": "unassigned-v1",
+      "stars": 1616,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "869413421/ai-moive-studio",
+      "cohort": "unassigned-v1",
+      "stars": 1608,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "google/uncertainty-baselines",
+      "cohort": "unassigned-v1",
+      "stars": 1598,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mizorewww/laya-coreml",
+      "cohort": "unassigned-v1",
+      "stars": 1546,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "AlekPet/ComfyUI_Custom_Nodes_AlekPet",
+      "cohort": "unassigned-v1",
+      "stars": 1533,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "emcf/thepipe",
+      "cohort": "unassigned-v1",
+      "stars": 1530,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "plugin87/ux-ui-agent-skills",
+      "cohort": "unassigned-v1",
+      "stars": 1528,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mxsm/rocketmq-rust",
+      "cohort": "unassigned-v1",
+      "stars": 1523,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ChenlizheMe/Infernux",
+      "cohort": "unassigned-v1",
+      "stars": 1519,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "eatmoreduck/boss-zhipin-scraper",
+      "cohort": "unassigned-v1",
+      "stars": 1509,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "veedstudio/open-edit",
+      "cohort": "unassigned-v1",
+      "stars": 1509,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "nanaism/yomiyasu",
+      "cohort": "unassigned-v1",
+      "stars": 1432,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "harry7557558/spirula-studio",
+      "cohort": "unassigned-v1",
+      "stars": 1424,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "CloudAI-X/claude-workflow-v2",
+      "cohort": "unassigned-v1",
+      "stars": 1418,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "om-ai-lab/VLX-Seek",
+      "cohort": "unassigned-v1",
+      "stars": 1389,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "RLinf/RPent",
+      "cohort": "unassigned-v1",
+      "stars": 1375,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "boyang-hu/website-rebuild-skill",
+      "cohort": "unassigned-v1",
+      "stars": 1352,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Ebony-Vinyl/dsh-our-free-model",
+      "cohort": "unassigned-v1",
+      "stars": 1287,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "edenfunf/reelmimic",
+      "cohort": "unassigned-v1",
+      "stars": 1279,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Clearailhc/clearai-dsh",
+      "cohort": "unassigned-v1",
+      "stars": 1264,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "2akouwu/reverify",
+      "cohort": "unassigned-v1",
+      "stars": 1258,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "huytieu/COG-second-brain",
+      "cohort": "unassigned-v1",
+      "stars": 1255,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "pashov/skills",
+      "cohort": "unassigned-v1",
+      "stars": 1224,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mikehasa/golive-skill",
+      "cohort": "unassigned-v1",
+      "stars": 1222,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "lignertys/reddit-research-skills",
+      "cohort": "unassigned-v1",
+      "stars": 1220,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "michael-denyer/pstack-claude",
+      "cohort": "unassigned-v1",
+      "stars": 1216,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "feder-cr/jev",
+      "cohort": "unassigned-v1",
+      "stars": 1203,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Gentleman-Programming/gentle-shell",
+      "cohort": "unassigned-v1",
+      "stars": 1199,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ollaya-dev/ollaya",
+      "cohort": "unassigned-v1",
+      "stars": 1193,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "incoai/splash",
+      "cohort": "unassigned-v1",
+      "stars": 1188,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "fivetaku/gptaku_plugins",
+      "cohort": "unassigned-v1",
+      "stars": 1184,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Sec-Link/Argus-Agentic-SOC-Platform",
+      "cohort": "unassigned-v1",
+      "stars": 1176,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "kharmanskyi/open-steps",
+      "cohort": "unassigned-v1",
+      "stars": 1172,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "QingYunA/answer-me-with-html",
+      "cohort": "unassigned-v1",
+      "stars": 1171,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "sqliteai/sqlite-vector",
+      "cohort": "unassigned-v1",
+      "stars": 1170,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "awlevin/typesafe-computer-use",
+      "cohort": "unassigned-v1",
+      "stars": 1166,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "uvwt/agentdock",
+      "cohort": "unassigned-v1",
+      "stars": 1164,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "To3akaRin/mac-computer-use",
+      "cohort": "unassigned-v1",
+      "stars": 1128,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "autonomous-ai/openharness",
+      "cohort": "unassigned-v1",
+      "stars": 1105,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "superdoc/docx-editor",
+      "cohort": "unassigned-v1",
+      "stars": 1082,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "microsoft/Agents",
+      "cohort": "unassigned-v1",
+      "stars": 1080,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "androoAGI/starnet",
+      "cohort": "unassigned-v1",
+      "stars": 1078,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Dpro-at/Tel-Agent",
+      "cohort": "unassigned-v1",
+      "stars": 1076,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Mapika/decider",
+      "cohort": "unassigned-v1",
+      "stars": 1065,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ThinkWatchProject/ThinkWatch-Lite",
+      "cohort": "unassigned-v1",
+      "stars": 1053,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "hardness1020/learn-agent-architecture",
+      "cohort": "unassigned-v1",
+      "stars": 1045,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "freestylefly/WeChatBridge",
+      "cohort": "unassigned-v1",
+      "stars": 1045,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "kyky2347/ALTA",
+      "cohort": "unassigned-v1",
+      "stars": 1041,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "nokia-applied-research/AnyJev",
+      "cohort": "unassigned-v1",
+      "stars": 1036,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "qiz029/dscode",
+      "cohort": "unassigned-v1",
+      "stars": 1020,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "CelestoAI/celesto",
+      "cohort": "unassigned-v1",
+      "stars": 1010,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ConardLi/easy-agent",
+      "cohort": "unassigned-v1",
+      "stars": 1008,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "faisalkindi/DLSS5oneclick",
+      "cohort": "unassigned-v1",
+      "stars": 997,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ashhart/TensorFold",
+      "cohort": "unassigned-v1",
+      "stars": 996,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dzhng/skills",
+      "cohort": "unassigned-v1",
+      "stars": 978,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "aimeoa/hanshuang-codex",
+      "cohort": "unassigned-v1",
+      "stars": 977,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "agentverse-os/AgentVerse-OS",
+      "cohort": "unassigned-v1",
+      "stars": 976,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Bennettxai/FounderOS-DEMO",
+      "cohort": "unassigned-v1",
+      "stars": 969,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dromara/dante-cloud",
+      "cohort": "unassigned-v1",
+      "stars": 965,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Robbyant/lingbot-video",
+      "cohort": "unassigned-v1",
+      "stars": 964,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "suboss87/FDEOps",
+      "cohort": "unassigned-v1",
+      "stars": 950,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "DocAILab/XRAG",
+      "cohort": "unassigned-v1",
+      "stars": 946,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenWAM-Official/OpenWAM",
+      "cohort": "unassigned-v1",
+      "stars": 946,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Farama-Foundation/Shimmy",
+      "cohort": "unassigned-v1",
+      "stars": 942,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "TypeLLM/TypeLLM",
+      "cohort": "unassigned-v1",
+      "stars": 925,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "HelpCode-ai/anythingmcp",
+      "cohort": "unassigned-v1",
+      "stars": 915,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Kautenja/gym-super-mario-bros",
+      "cohort": "unassigned-v1",
+      "stars": 900,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "panxunying/ai-coding-welfare",
+      "cohort": "unassigned-v1",
+      "stars": 893,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "AgriciDaniel/compass",
+      "cohort": "unassigned-v1",
+      "stars": 892,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "pnp/copilot-prompts",
+      "cohort": "unassigned-v1",
+      "stars": 890,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SoftInstigate/restheart",
+      "cohort": "unassigned-v1",
+      "stars": 889,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "huawei-bayerlab/marigold-v2",
+      "cohort": "unassigned-v1",
+      "stars": 881,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "oxylabs/agent-skills",
+      "cohort": "unassigned-v1",
+      "stars": 876,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "VibeTensor/attestix",
+      "cohort": "unassigned-v1",
+      "stars": 875,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mixelpixx/Konnect",
+      "cohort": "unassigned-v1",
+      "stars": 875,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "scenario-labs/skills",
+      "cohort": "unassigned-v1",
+      "stars": 875,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "KINGSTON-115/llm-pid-tuner",
+      "cohort": "unassigned-v1",
+      "stars": 864,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Nutlope/inspo",
+      "cohort": "unassigned-v1",
+      "stars": 847,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "wfzyx/von",
+      "cohort": "unassigned-v1",
+      "stars": 844,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Kizzuwatnaa/DLSS5-Autopilot",
+      "cohort": "unassigned-v1",
+      "stars": 839,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "hako-mikan/sd-webui-supermerger",
+      "cohort": "unassigned-v1",
+      "stars": 835,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dotnet/dev-proxy",
+      "cohort": "unassigned-v1",
+      "stars": 832,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "persiyanov/herdr-reviewr",
+      "cohort": "unassigned-v1",
+      "stars": 832,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "DSH-APP/DSHA",
+      "cohort": "unassigned-v1",
+      "stars": 832,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ardanlabs/kronk",
+      "cohort": "unassigned-v1",
+      "stars": 831,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "angel291592/Intent-Router",
+      "cohort": "unassigned-v1",
+      "stars": 823,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Gnosil/semantix",
+      "cohort": "unassigned-v1",
+      "stars": 821,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Rizzo-AI-Academy/rizzo-flow",
+      "cohort": "unassigned-v1",
+      "stars": 820,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "rafal-qa/slopo",
+      "cohort": "unassigned-v1",
+      "stars": 812,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "risa-labs-inc/BossConsole",
+      "cohort": "unassigned-v1",
+      "stars": 809,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "skyzh/vector-db-from-scratch",
+      "cohort": "unassigned-v1",
+      "stars": 805,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "LockedinLabs-AI/agent-console",
+      "cohort": "unassigned-v1",
+      "stars": 802,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "iblai/os",
+      "cohort": "unassigned-v1",
+      "stars": 801,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "juspay/xyne-spaces",
+      "cohort": "unassigned-v1",
+      "stars": 798,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "darkrishabh/agent-skills-eval",
+      "cohort": "unassigned-v1",
+      "stars": 797,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "marcocesarato/PHP-Antimalware-Scanner",
+      "cohort": "unassigned-v1",
+      "stars": 792,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Edwardxlai/easyread",
+      "cohort": "unassigned-v1",
+      "stars": 791,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "bab2min/Kiwi",
+      "cohort": "unassigned-v1",
+      "stars": 789,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "FlashML-org/FreeVideo",
+      "cohort": "unassigned-v1",
+      "stars": 788,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Ampixa/sanoTTS",
+      "cohort": "unassigned-v1",
+      "stars": 774,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Station-Sciences/bot-crossing",
+      "cohort": "unassigned-v1",
+      "stars": 770,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "cloudflare/cf",
+      "cohort": "unassigned-v1",
+      "stars": 767,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenMOSS/MOSS-VL",
+      "cohort": "unassigned-v1",
+      "stars": 752,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "okf-memory/okf-agent-memory",
+      "cohort": "unassigned-v1",
+      "stars": 752,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "penso/herdr-gpui",
+      "cohort": "unassigned-v1",
+      "stars": 752,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ethanplusai/codex-on-crack",
+      "cohort": "unassigned-v1",
+      "stars": 736,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ayaka-notes/ayakaleaf-pro",
+      "cohort": "unassigned-v1",
+      "stars": 730,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "20000419/fauxnix",
+      "cohort": "unassigned-v1",
+      "stars": 727,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "infragate/capa",
+      "cohort": "unassigned-v1",
+      "stars": 726,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "CosmosMind-ai/RSI-Harness",
+      "cohort": "unassigned-v1",
+      "stars": 725,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "sodiumsun/agenttrail",
+      "cohort": "unassigned-v1",
+      "stars": 716,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "keli-wen/agy-staff",
+      "cohort": "unassigned-v1",
+      "stars": 715,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MaxHu-xuan/task-state-guard",
+      "cohort": "unassigned-v1",
+      "stars": 713,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenClaudia/openclaudia-skills",
+      "cohort": "unassigned-v1",
+      "stars": 706,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Alex314618-create/JevRev",
+      "cohort": "unassigned-v1",
+      "stars": 703,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "usail-hkust/LLM-MM-Agent",
+      "cohort": "unassigned-v1",
+      "stars": 699,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "leopard627/fire-your-seo-agency",
+      "cohort": "unassigned-v1",
+      "stars": 698,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "huggingface/Repo2RLEnv",
+      "cohort": "unassigned-v1",
+      "stars": 696,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SpecterOps/skills",
+      "cohort": "unassigned-v1",
+      "stars": 695,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ys-ll/uniterm",
+      "cohort": "unassigned-v1",
+      "stars": 692,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "samuelfaj/distill",
+      "cohort": "unassigned-v1",
+      "stars": 691,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "cheney369/Devora",
+      "cohort": "unassigned-v1",
+      "stars": 691,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "rome-os/rome",
+      "cohort": "unassigned-v1",
+      "stars": 691,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zcbacxc/movie-narrator",
+      "cohort": "unassigned-v1",
+      "stars": 690,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "uezo/aiavatarkit",
+      "cohort": "unassigned-v1",
+      "stars": 687,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "lightorigins/LightNav-0",
+      "cohort": "unassigned-v1",
+      "stars": 683,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "EverMind-AI/SkillCorpus",
+      "cohort": "unassigned-v1",
+      "stars": 678,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "evenfire-ai/evenfire",
+      "cohort": "unassigned-v1",
+      "stars": 676,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "harbor-framework/terminal-bench-science",
+      "cohort": "unassigned-v1",
+      "stars": 675,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "RoboDojo-Benchmark/RoboDojo",
+      "cohort": "unassigned-v1",
+      "stars": 671,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "diffbot/code-gpt-docs",
+      "cohort": "unassigned-v1",
+      "stars": 670,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "coleam00/skills",
+      "cohort": "unassigned-v1",
+      "stars": 663,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "PSRben/VisionHOPE",
+      "cohort": "unassigned-v1",
+      "stars": 662,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "agent-sh/computer-use-linux",
+      "cohort": "unassigned-v1",
+      "stars": 655,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ranxi2001/zero2Agent",
+      "cohort": "unassigned-v1",
+      "stars": 652,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "narumiruna/pi-extensions",
+      "cohort": "unassigned-v1",
+      "stars": 652,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "java-up-up/nexus-agent",
+      "cohort": "unassigned-v1",
+      "stars": 650,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "unitedrhino/things",
+      "cohort": "unassigned-v1",
+      "stars": 646,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "simonlin1212/vibe-astock",
+      "cohort": "unassigned-v1",
+      "stars": 645,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "H-EmbodVis/TurboVLA",
+      "cohort": "unassigned-v1",
+      "stars": 641,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "robocurve/inspect-robots",
+      "cohort": "unassigned-v1",
+      "stars": 639,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "argos-ci/argos",
+      "cohort": "unassigned-v1",
+      "stars": 637,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "firstintent/ccteam",
+      "cohort": "unassigned-v1",
+      "stars": 634,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Calix-L/DanKS",
+      "cohort": "unassigned-v1",
+      "stars": 634,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "bilibili/Index-Translate",
+      "cohort": "unassigned-v1",
+      "stars": 632,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "superdesigndev/superdesign-skill",
+      "cohort": "unassigned-v1",
+      "stars": 624,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "BruceLanLan/augur",
+      "cohort": "unassigned-v1",
+      "stars": 623,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Abilityai/trinity",
+      "cohort": "unassigned-v1",
+      "stars": 619,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "jianruntech/geo-score",
+      "cohort": "unassigned-v1",
+      "stars": 619,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "akitaonrails/ai-usagebar",
+      "cohort": "unassigned-v1",
+      "stars": 618,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "JayPokale/Chisle",
+      "cohort": "unassigned-v1",
+      "stars": 612,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "heartleo/zlib",
+      "cohort": "unassigned-v1",
+      "stars": 610,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "avibe-bot/avibe",
+      "cohort": "unassigned-v1",
+      "stars": 608,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "PKU-YuanGroup/OpenAI4S",
+      "cohort": "unassigned-v1",
+      "stars": 608,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ganeshmshetty/openclip",
+      "cohort": "unassigned-v1",
+      "stars": 604,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "razorback16/openjev",
+      "cohort": "unassigned-v1",
+      "stars": 604,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Yean-Sec/StrikeAgent_AtkBrain-Flash",
+      "cohort": "unassigned-v1",
+      "stars": 596,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "GMGNAI/gmgn-skills",
+      "cohort": "unassigned-v1",
+      "stars": 595,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "lucienhuangfu/eLLM",
+      "cohort": "unassigned-v1",
+      "stars": 594,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "nejib1/Free-LLM",
+      "cohort": "unassigned-v1",
+      "stars": 594,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ruc-datalab/EvoOntology",
+      "cohort": "unassigned-v1",
+      "stars": 593,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "sharpdeveye/maestro",
+      "cohort": "unassigned-v1",
+      "stars": 592,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "wangzhishou/OneBox",
+      "cohort": "unassigned-v1",
+      "stars": 591,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "liustack/modsearch",
+      "cohort": "unassigned-v1",
+      "stars": 590,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "tover0314-w/opentypeless",
+      "cohort": "unassigned-v1",
+      "stars": 588,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "kevinzakka/mjbatch",
+      "cohort": "unassigned-v1",
+      "stars": 585,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "arcships/light-ocr",
+      "cohort": "unassigned-v1",
+      "stars": 580,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SmythOS/smythos-studio",
+      "cohort": "unassigned-v1",
+      "stars": 578,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "OpenVDN/vdn-minimax-h3",
+      "cohort": "unassigned-v1",
+      "stars": 578,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Sidiora-Labs/Paxeer-X-Network",
+      "cohort": "unassigned-v1",
+      "stars": 575,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Regert888/gpt-auto-register",
+      "cohort": "unassigned-v1",
+      "stars": 572,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "google/dotprompt",
+      "cohort": "unassigned-v1",
+      "stars": 570,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "bex-co/bex",
+      "cohort": "unassigned-v1",
+      "stars": 569,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "agentpit-io/hunter-community",
+      "cohort": "unassigned-v1",
+      "stars": 568,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Nehanth/pooled",
+      "cohort": "unassigned-v1",
+      "stars": 568,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Optima-CityU/LLM4AD_Next",
+      "cohort": "unassigned-v1",
+      "stars": 567,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "YoanWai/agent-manager",
+      "cohort": "unassigned-v1",
+      "stars": 567,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MahmoudAshraf97/ctc-forced-aligner",
+      "cohort": "unassigned-v1",
+      "stars": 566,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "alisaitteke/photoshop-mcp",
+      "cohort": "unassigned-v1",
+      "stars": 566,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "skygazer42/MimirQ",
+      "cohort": "unassigned-v1",
+      "stars": 561,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "aayushch/laya",
+      "cohort": "unassigned-v1",
+      "stars": 560,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "aannoo/hcom",
+      "cohort": "unassigned-v1",
+      "stars": 557,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "smg-project/smg",
+      "cohort": "unassigned-v1",
+      "stars": 555,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "blacktwist/social-media-skills",
+      "cohort": "unassigned-v1",
+      "stars": 554,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "QuintinShaw/pi-dynamic-workflows",
+      "cohort": "unassigned-v1",
+      "stars": 554,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Knowledgator/GLiClass",
+      "cohort": "unassigned-v1",
+      "stars": 553,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ogulcancelik/pi-extensions",
+      "cohort": "unassigned-v1",
+      "stars": 552,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "pinloop-ai/pinloop-cli",
+      "cohort": "unassigned-v1",
+      "stars": 552,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "chenxiachan/thoughtdag",
+      "cohort": "unassigned-v1",
+      "stars": 550,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "iannuttall/seo",
+      "cohort": "unassigned-v1",
+      "stars": 550,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "gakonst/nanocodex",
+      "cohort": "unassigned-v1",
+      "stars": 550,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "LeoYeAI/talewell",
+      "cohort": "unassigned-v1",
+      "stars": 549,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zenstory-ai/video-recap-skills",
+      "cohort": "unassigned-v1",
+      "stars": 549,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "fabio-rovai/open-ontologies",
+      "cohort": "unassigned-v1",
+      "stars": 548,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dbt-labs/dbt-charts",
+      "cohort": "unassigned-v1",
+      "stars": 548,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Sayhi-bzb/CharDesk",
+      "cohort": "unassigned-v1",
+      "stars": 547,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "agenvoy/Agenvoy",
+      "cohort": "unassigned-v1",
+      "stars": 546,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "multikernel/sandlock",
+      "cohort": "unassigned-v1",
+      "stars": 545,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "paladini/harness-score",
+      "cohort": "unassigned-v1",
+      "stars": 545,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "caura-ai/caura",
+      "cohort": "unassigned-v1",
+      "stars": 544,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ghbalf/freecad-ai",
+      "cohort": "unassigned-v1",
+      "stars": 543,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NVlabs/RoboLab",
+      "cohort": "unassigned-v1",
+      "stars": 542,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "breezeblue-ai/breeze-tts",
+      "cohort": "unassigned-v1",
+      "stars": 542,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "coldteadotai/abide",
+      "cohort": "unassigned-v1",
+      "stars": 542,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "safedep/pmg",
+      "cohort": "unassigned-v1",
+      "stars": 541,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ibrahimqureshae/mdflux",
+      "cohort": "unassigned-v1",
+      "stars": 541,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "microsoft/DebugMCP",
+      "cohort": "unassigned-v1",
+      "stars": 540,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zhongkaifu/TensorSharp",
+      "cohort": "unassigned-v1",
+      "stars": 540,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "modelstudioai/cli",
+      "cohort": "unassigned-v1",
+      "stars": 540,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "termio-sh/termio",
+      "cohort": "unassigned-v1",
+      "stars": 538,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NVIDIA/SkillEvaluator",
+      "cohort": "unassigned-v1",
+      "stars": 538,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "gufo-org/gufo",
+      "cohort": "unassigned-v1",
+      "stars": 537,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "truecourse-ai/truecourse",
+      "cohort": "unassigned-v1",
+      "stars": 536,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "DannyMac180/skills",
+      "cohort": "unassigned-v1",
+      "stars": 536,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dweep-desai/FaceGate-Mac",
+      "cohort": "unassigned-v1",
+      "stars": 536,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "polyaxon/traceml",
+      "cohort": "unassigned-v1",
+      "stars": 534,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Rhoban/bam",
+      "cohort": "unassigned-v1",
+      "stars": 534,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "spark-arena/sparkrun",
+      "cohort": "unassigned-v1",
+      "stars": 533,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "llmmanorg/llmman",
+      "cohort": "unassigned-v1",
+      "stars": 533,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "dynamicslab/hydrogym",
+      "cohort": "unassigned-v1",
+      "stars": 532,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "openai/tunnel-client",
+      "cohort": "unassigned-v1",
+      "stars": 531,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "waybarrios/opencode-power-pack",
+      "cohort": "unassigned-v1",
+      "stars": 531,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MIT-SPARK/DAAAM",
+      "cohort": "unassigned-v1",
+      "stars": 530,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SaseQ/discord-mcp",
+      "cohort": "unassigned-v1",
+      "stars": 529,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "swarm-subnet/Langostino",
+      "cohort": "unassigned-v1",
+      "stars": 529,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "kwakseongjae/oh-my-design",
+      "cohort": "unassigned-v1",
+      "stars": 529,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "only-cli/oc",
+      "cohort": "unassigned-v1",
+      "stars": 529,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Bingeljell/image-to-3dlab",
+      "cohort": "unassigned-v1",
+      "stars": 528,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "yuxino/Mimi",
+      "cohort": "unassigned-v1",
+      "stars": 527,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "StonyBrookNLP/appworld",
+      "cohort": "unassigned-v1",
+      "stars": 526,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "docker/skills",
+      "cohort": "unassigned-v1",
+      "stars": 526,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "nicobailon/pi-intercom",
+      "cohort": "unassigned-v1",
+      "stars": 525,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Sentient-OS-Labs/sentient-os",
+      "cohort": "unassigned-v1",
+      "stars": 525,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "pulseaiclub/phi",
+      "cohort": "unassigned-v1",
+      "stars": 524,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "naw103/foremerge",
+      "cohort": "unassigned-v1",
+      "stars": 523,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "silasxbt/anti-api",
+      "cohort": "unassigned-v1",
+      "stars": 522,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "HAKORADev/VODER",
+      "cohort": "unassigned-v1",
+      "stars": 521,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Ikalus1988/MisakaNet",
+      "cohort": "unassigned-v1",
+      "stars": 521,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "AISecurityLab/hackagent",
+      "cohort": "unassigned-v1",
+      "stars": 520,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SilentCoderHere/aihub",
+      "cohort": "unassigned-v1",
+      "stars": 520,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "PunithVT/ai-avatar-system",
+      "cohort": "unassigned-v1",
+      "stars": 519,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "clawdotnet/openclaw.net",
+      "cohort": "unassigned-v1",
+      "stars": 518,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "yanhua1010/self-media-content-workflow",
+      "cohort": "unassigned-v1",
+      "stars": 517,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "specula-org/Specula",
+      "cohort": "unassigned-v1",
+      "stars": 516,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NeptuneHub/AudioMuse-AI-NV-plugin",
+      "cohort": "unassigned-v1",
+      "stars": 516,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "auscaster/frantic-board",
+      "cohort": "unassigned-v1",
+      "stars": 515,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "JungHoonGhae/tossinvest-cli",
+      "cohort": "unassigned-v1",
+      "stars": 514,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NightMean/OlliteRT",
+      "cohort": "unassigned-v1",
+      "stars": 514,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "emdgroup/baybe",
+      "cohort": "unassigned-v1",
+      "stars": 513,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "SetsunaYukiOvO/x64dbg-mcp",
+      "cohort": "unassigned-v1",
+      "stars": 513,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "spaceamoeba-t/tapq",
+      "cohort": "unassigned-v1",
+      "stars": 513,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "TangleML/tangle",
+      "cohort": "unassigned-v1",
+      "stars": 512,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "askimo-ai/askimo",
+      "cohort": "unassigned-v1",
+      "stars": 512,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NVIDIA/NeMo-text-processing",
+      "cohort": "unassigned-v1",
+      "stars": 510,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "zhikunqingtao/zhikuncode",
+      "cohort": "unassigned-v1",
+      "stars": 509,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "qunqin24/Pulse",
+      "cohort": "unassigned-v1",
+      "stars": 509,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "bytedance/vArmor",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mll-lab-nu/VAGEN",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Gennadiyev/STS2MCP",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "JetBrains/thinkrail",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "techjarves/Mobile-Harness",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "DavidCarliez/trustmebro",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "showlab/Show-Harness",
+      "cohort": "unassigned-v1",
+      "stars": 508,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "huawei-csl/KVarN",
+      "cohort": "unassigned-v1",
+      "stars": 507,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ecomfe/tempad-dev",
+      "cohort": "unassigned-v1",
+      "stars": 506,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "foxminchan/BookWorm",
+      "cohort": "unassigned-v1",
+      "stars": 506,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "NVIDIA-ISAAC-ROS/isaac_ros_pose_estimation",
+      "cohort": "unassigned-v1",
+      "stars": 505,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Piebald-AI/gemini-cli-desktop",
+      "cohort": "unassigned-v1",
+      "stars": 505,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ankimcp/anki-mcp-server",
+      "cohort": "unassigned-v1",
+      "stars": 505,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "liu00222/Open-Prompt-Injection",
+      "cohort": "unassigned-v1",
+      "stars": 504,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "hailo-ai/hailo-apps",
+      "cohort": "unassigned-v1",
+      "stars": 504,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "MIC-DKFZ/nnInteractive",
+      "cohort": "unassigned-v1",
+      "stars": 504,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "a2aproject/a2a-java",
+      "cohort": "unassigned-v1",
+      "stars": 504,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mozilla-ai/otari",
+      "cohort": "unassigned-v1",
+      "stars": 504,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "deonmenezes/mantishack",
+      "cohort": "unassigned-v1",
+      "stars": 504,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "uoftcprg/pokerkit",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "mir-group/allegro",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "GraphRAG-Bench/GraphRAG-Benchmark",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "colliery-io/graphqlite",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "datawhalechina/easy-langent",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ai-driven-dev/framework",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "huggingface/funes",
+      "cohort": "unassigned-v1",
+      "stars": 503,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "expectedparrot/edsl",
+      "cohort": "unassigned-v1",
+      "stars": 502,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "TorchSim/torch-sim",
+      "cohort": "unassigned-v1",
+      "stars": 502,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "federicodeponte/opendraft",
+      "cohort": "unassigned-v1",
+      "stars": 502,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "lucasygu/redbook",
+      "cohort": "unassigned-v1",
+      "stars": 502,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "lumina37/rotate-captcha-crack",
+      "cohort": "unassigned-v1",
+      "stars": 501,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Bytedesk/bytedesk",
+      "cohort": "unassigned-v1",
+      "stars": 501,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "intelligencedev/manifold",
+      "cohort": "unassigned-v1",
+      "stars": 501,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "opengeos/GeoAgent",
+      "cohort": "unassigned-v1",
+      "stars": 501,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "JdeRobot/RoboticsAcademy",
+      "cohort": "unassigned-v1",
+      "stars": 500,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "ultralytics/yolo-flutter-app",
+      "cohort": "unassigned-v1",
+      "stars": 500,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "smartscanapp/smartscan-android",
+      "cohort": "unassigned-v1",
+      "stars": 500,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "aurekaresearch/OpenDDE",
+      "cohort": "unassigned-v1",
+      "stars": 500,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "withcatai/catai",
+      "cohort": "unassigned-v1",
+      "stars": 499,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "enricoros/big-AGI",
+      "cohort": "unassigned-v1",
+      "stars": 7138,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "lynote-ai/humanize-text",
+      "cohort": "unassigned-v1",
+      "stars": 3199,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "aws/agent-toolkit-for-aws",
+      "cohort": "unassigned-v1",
+      "stars": 2802,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "YGYOOO/WorldX",
+      "cohort": "unassigned-v1",
+      "stars": 1517,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "Capsize-Games/airunner",
+      "cohort": "unassigned-v1",
+      "stars": 1317,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "puppyone-ai/puppyone-cloud",
+      "cohort": "unassigned-v1",
+      "stars": 1303,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "cognizant-ai-lab/neuro-san-studio",
+      "cohort": "unassigned-v1",
+      "stars": 1130,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "curiosity-ai/catalyst",
+      "cohort": "unassigned-v1",
+      "stars": 859,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "regent-vcs/re_gent",
+      "cohort": "unassigned-v1",
+      "stars": 797,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "simchowitzlabpublic/nano-world-model",
+      "cohort": "unassigned-v1",
+      "stars": 754,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "samvallad33/vestige",
+      "cohort": "unassigned-v1",
+      "stars": 645,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    },
+    {
+      "repo": "echoVic/orca-agent",
+      "cohort": "unassigned-v1",
+      "stars": 509,
+      "axes_observed": "github",
+      "note": "activated from pending manifest"
+    }
+  ],
+  "note": "Discovery-frontier denominator (un-backfillable). Candidates are systems CONSIDERED at scan time, not judgments; admission happens via a paired seeds.json change (CI enforces the pairing). Positive-only: no per-system negatives are recorded."
+}
