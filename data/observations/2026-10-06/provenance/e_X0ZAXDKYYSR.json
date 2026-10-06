@@ -1,0 +1,33 @@
+{
+  "created_at": "2022-06-30T07:10:15Z",
+  "private": false,
+  "size": 1920421,
+  "full_name": "huggingface/setfit",
+  "archived": false,
+  "stargazers_count": 2833,
+  "forks_count": 270,
+  "disabled": false,
+  "node_id": "R_kgDOHlZMGw",
+  "default_branch": "main",
+  "network_count": 270,
+  "visibility": "public",
+  "description": "Efficient few-shot learning with Sentence Transformers",
+  "open_issues_count": 158,
+  "id": 508972059,
+  "updated_at": "2026-10-06T11:03:46Z",
+  "subscribers_count": 19,
+  "fork": false,
+  "topics": [
+    "few-shot-learning",
+    "nlp",
+    "sentence-transformers"
+  ],
+  "watchers_count": 2833,
+  "homepage": "https://hf.co/docs/setfit",
+  "pushed_at": "2026-10-06T09:45:42Z",
+  "language": "Jupyter Notebook",
+  "name": "setfit",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

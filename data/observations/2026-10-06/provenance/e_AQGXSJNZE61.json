@@ -1,0 +1,33 @@
+{
+  "created_at": "2018-03-05T14:35:19Z",
+  "private": false,
+  "size": 24737,
+  "full_name": "basler/pypylon",
+  "archived": false,
+  "stargazers_count": 714,
+  "forks_count": 217,
+  "disabled": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMjM5MzIzNzU=",
+  "default_branch": "master",
+  "network_count": 217,
+  "visibility": "public",
+  "description": "The official Python language binding for the Basler pylon C++ APIs ",
+  "open_issues_count": 207,
+  "id": 123932375,
+  "updated_at": "2026-09-24T14:11:46Z",
+  "subscribers_count": 27,
+  "fork": false,
+  "topics": [
+    "camera",
+    "computer-vision",
+    "machine-vision"
+  ],
+  "watchers_count": 714,
+  "homepage": "http://www.baslerweb.com",
+  "pushed_at": "2026-09-29T13:50:42Z",
+  "language": "Python",
+  "name": "pypylon",
+  "owner_type": "Organization",
+  "license_spdx_id": "BSD-3-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

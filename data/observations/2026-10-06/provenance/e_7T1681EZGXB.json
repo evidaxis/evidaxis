@@ -1,0 +1,33 @@
+{
+  "created_at": "2025-04-14T21:00:20Z",
+  "private": false,
+  "size": 881066,
+  "full_name": "google-ai-edge/LiteRT-LM",
+  "archived": false,
+  "stargazers_count": 6587,
+  "forks_count": 740,
+  "disabled": false,
+  "node_id": "R_kgDOOZnjNg",
+  "default_branch": "main",
+  "network_count": 740,
+  "visibility": "public",
+  "description": "LiteRT-LM is Google's production-ready, high-performance, open-source inference framework for deploying Large Language Models on edge devices.",
+  "open_issues_count": 681,
+  "id": 966386486,
+  "updated_at": "2026-10-06T05:08:37Z",
+  "subscribers_count": 72,
+  "fork": false,
+  "topics": [
+    "edge-ai",
+    "on-device-ai",
+    "on-device-llm"
+  ],
+  "watchers_count": 6587,
+  "homepage": "https://ai.google.dev/edge/litert-lm",
+  "pushed_at": "2026-10-06T05:08:34Z",
+  "language": "C++",
+  "name": "LiteRT-LM",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
