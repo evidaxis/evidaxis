@@ -1,0 +1,32 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T14:35:08Z",
+  "fork": false,
+  "homepage": "https://arxiv.org/abs/2606.07649",
+  "network_count": 1887,
+  "node_id": "R_kgDOORH-ow",
+  "size": 186624,
+  "stargazers_count": 12562,
+  "full_name": "HKUDS/ViMax",
+  "name": "ViMax",
+  "created_at": "2025-03-30T13:36:35Z",
+  "private": false,
+  "id": 957480611,
+  "forks_count": 1887,
+  "subscribers_count": 86,
+  "topics": [
+    "agentic-aigc",
+    "video-generation"
+  ],
+  "archived": false,
+  "watchers_count": 12562,
+  "language": "Python",
+  "description": "\"ViMax: Agentic Video Generation (Director, Screenwriter, Producer, and Video Generator All-in-One)\"",
+  "updated_at": "2026-10-07T12:50:40Z",
+  "disabled": false,
+  "open_issues_count": 52,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

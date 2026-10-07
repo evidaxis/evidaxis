@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "pushed_at": "2026-10-07T12:46:53Z",
+  "fork": false,
+  "homepage": "https://heretic-project.org",
+  "network_count": 3772,
+  "node_id": "R_kgDOPz41qA",
+  "size": 1861,
+  "stargazers_count": 33810,
+  "full_name": "p-e-w/heretic",
+  "name": "heretic",
+  "created_at": "2025-09-21T05:46:16Z",
+  "private": false,
+  "id": 1061041576,
+  "forks_count": 3772,
+  "subscribers_count": 167,
+  "topics": [
+    "abliteration",
+    "llm",
+    "transformer"
+  ],
+  "archived": false,
+  "watchers_count": 33810,
+  "language": "Python",
+  "description": "Fully automatic censorship removal for language models",
+  "updated_at": "2026-10-07T13:33:28Z",
+  "disabled": false,
+  "open_issues_count": 89,
+  "owner_type": "User",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

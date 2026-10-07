@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2025-07-05T01:05:05Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 149,
+  "node_id": "R_kgDOOMfJjA",
+  "size": 13494,
+  "stargazers_count": 720,
+  "full_name": "Lex-au/Orpheus-FastAPI",
+  "name": "Orpheus-FastAPI",
+  "created_at": "2025-03-21T15:24:16Z",
+  "private": false,
+  "id": 952617356,
+  "forks_count": 149,
+  "subscribers_count": 16,
+  "topics": [
+    "ai-text-to-speech",
+    "ai-voice",
+    "artificial-intelligence"
+  ],
+  "archived": false,
+  "watchers_count": 720,
+  "language": "Python",
+  "description": "High-performance Text-to-Speech server with OpenAI-compatible API, 8 voices, emotion tags, and modern web UI. Optimized for RTX GPUs.",
+  "updated_at": "2026-09-28T10:31:19Z",
+  "disabled": false,
+  "open_issues_count": 18,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

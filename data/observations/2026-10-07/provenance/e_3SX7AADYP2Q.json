@@ -1,0 +1,32 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2024-05-15T13:32:52Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 432,
+  "node_id": "R_kgDOHyiINg",
+  "size": 403,
+  "stargazers_count": 2985,
+  "full_name": "pharmapsychotic/clip-interrogator",
+  "name": "clip-interrogator",
+  "created_at": "2022-08-09T00:31:16Z",
+  "private": false,
+  "id": 522750006,
+  "forks_count": 432,
+  "subscribers_count": 30,
+  "topics": [
+    "clip",
+    "pytorch"
+  ],
+  "archived": false,
+  "watchers_count": 2985,
+  "language": "Python",
+  "description": "Image to prompt with BLIP and CLIP",
+  "updated_at": "2026-10-05T11:08:01Z",
+  "disabled": false,
+  "open_issues_count": 60,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

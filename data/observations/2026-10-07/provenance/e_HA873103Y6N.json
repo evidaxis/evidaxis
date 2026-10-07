@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "pushed_at": "2026-05-06T14:59:54Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 60,
+  "node_id": "R_kgDOQgJbDw",
+  "size": 138833,
+  "stargazers_count": 1054,
+  "full_name": "zai-org/SCAIL",
+  "name": "SCAIL",
+  "created_at": "2025-12-01T06:42:54Z",
+  "private": false,
+  "id": 1107450639,
+  "forks_count": 60,
+  "subscribers_count": 19,
+  "topics": [
+    "character-animation",
+    "video-generation",
+    "video2video"
+  ],
+  "archived": false,
+  "watchers_count": 1054,
+  "language": "Python",
+  "description": "SCAIL: Towards Studio-Grade Character Animation via In-Context Learning of 3D-Consistent Pose Representations (CVPR 2026 Findings)",
+  "updated_at": "2026-10-06T11:37:11Z",
+  "disabled": false,
+  "open_issues_count": 7,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2025-07-29T12:11:31Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 365,
+  "node_id": "R_kgDOKMfHjA",
+  "size": 46346,
+  "stargazers_count": 4125,
+  "full_name": "XPixelGroup/DiffBIR",
+  "name": "DiffBIR",
+  "created_at": "2023-08-28T16:11:58Z",
+  "private": false,
+  "id": 684181388,
+  "forks_count": 365,
+  "subscribers_count": 33,
+  "topics": [
+    "image-enhancement",
+    "image-restoration"
+  ],
+  "archived": false,
+  "watchers_count": 4125,
+  "language": "Python",
+  "description": "[ECCV 2024] codes of DiffBIR: Towards Blind Image Restoration with Generative Diffusion Prior",
+  "updated_at": "2026-10-05T19:22:10Z",
+  "disabled": false,
+  "open_issues_count": 121,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2024-03-15T10:33:38Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 36,
+  "node_id": "R_kgDOK4SQOw",
+  "size": 8007,
+  "stargazers_count": 825,
+  "full_name": "aymenfurter/microagents",
+  "name": "microagents",
+  "created_at": "2023-12-11T08:17:09Z",
+  "private": false,
+  "id": 730107963,
+  "forks_count": 36,
+  "subscribers_count": 6,
+  "topics": [
+    "gpt-4-turbo",
+    "llm",
+    "openai"
+  ],
+  "archived": false,
+  "watchers_count": 825,
+  "language": "Python",
+  "description": "Self-improving Agents",
+  "updated_at": "2026-10-07T10:52:12Z",
+  "disabled": false,
+  "open_issues_count": 5,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

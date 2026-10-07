@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "develop",
+  "pushed_at": "2026-09-30T08:21:48Z",
+  "fork": false,
+  "homepage": "https://parl.readthedocs.io/",
+  "network_count": 812,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzEwNDQxMjg=",
+  "size": 48475,
+  "stargazers_count": 3458,
+  "full_name": "PaddlePaddle/PARL",
+  "name": "PARL",
+  "created_at": "2018-04-25T17:54:22Z",
+  "private": false,
+  "id": 131044128,
+  "forks_count": 812,
+  "subscribers_count": 59,
+  "topics": [
+    "large-scale",
+    "parallelization",
+    "reinforcement-learning"
+  ],
+  "archived": false,
+  "watchers_count": 3458,
+  "language": "Python",
+  "description": "A high-performance distributed training framework for Reinforcement Learning ",
+  "updated_at": "2026-09-30T08:21:55Z",
+  "disabled": false,
+  "open_issues_count": 134,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

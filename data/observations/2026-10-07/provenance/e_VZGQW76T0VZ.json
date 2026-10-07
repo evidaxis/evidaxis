@@ -1,0 +1,31 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-08-26T05:58:23Z",
+  "fork": false,
+  "homepage": "https://openbench.dev",
+  "network_count": 105,
+  "node_id": "R_kgDOPV2xKw",
+  "size": 175134,
+  "stargazers_count": 820,
+  "full_name": "groq/openbench",
+  "name": "openbench",
+  "created_at": "2025-07-31T08:02:49Z",
+  "private": false,
+  "id": 1029550379,
+  "forks_count": 105,
+  "subscribers_count": 4,
+  "topics": [
+    "managed-by-terraform"
+  ],
+  "archived": false,
+  "watchers_count": 820,
+  "language": "Python",
+  "description": "Provider-agnostic, open-source evaluation infrastructure for language models",
+  "updated_at": "2026-09-23T17:57:01Z",
+  "disabled": false,
+  "open_issues_count": 3,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

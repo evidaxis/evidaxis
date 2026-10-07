@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-04-15T02:47:09Z",
+  "fork": false,
+  "homepage": "https://arxiv.org/abs/2504.16084",
+  "network_count": 81,
+  "node_id": "R_kgDOOeGsdA",
+  "size": 9521,
+  "stargazers_count": 1126,
+  "full_name": "PRIME-RL/TTRL",
+  "name": "TTRL",
+  "created_at": "2025-04-23T02:15:03Z",
+  "private": false,
+  "id": 971091060,
+  "forks_count": 81,
+  "subscribers_count": 17,
+  "topics": [
+    "llm",
+    "reasoning",
+    "rl"
+  ],
+  "archived": false,
+  "watchers_count": 1126,
+  "language": "Python",
+  "description": "[NeurIPS 2025] TTRL: Test-Time Reinforcement Learning",
+  "updated_at": "2026-09-29T03:13:28Z",
+  "disabled": false,
+  "open_issues_count": 17,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

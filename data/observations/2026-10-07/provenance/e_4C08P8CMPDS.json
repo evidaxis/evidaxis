@@ -1,0 +1,31 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-10-07T07:33:53Z",
+  "fork": false,
+  "homepage": "https://flax.readthedocs.io",
+  "network_count": 845,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMzMwMTYyOTk=",
+  "size": 45766,
+  "stargazers_count": 7336,
+  "full_name": "google/flax",
+  "name": "flax",
+  "created_at": "2020-01-10T09:48:37Z",
+  "private": false,
+  "id": 233016299,
+  "forks_count": 845,
+  "subscribers_count": 82,
+  "topics": [
+    "jax"
+  ],
+  "archived": false,
+  "watchers_count": 7336,
+  "language": "Jupyter Notebook",
+  "description": "Flax is a neural network library for JAX that is designed for flexibility.",
+  "updated_at": "2026-10-07T09:39:22Z",
+  "disabled": false,
+  "open_issues_count": 531,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

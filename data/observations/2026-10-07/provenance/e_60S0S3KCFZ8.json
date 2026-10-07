@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T20:57:57Z",
+  "fork": false,
+  "homepage": "https://xiaozhi.me",
+  "network_count": 7138,
+  "node_id": "R_kgDOMq4NxA",
+  "size": 11106,
+  "stargazers_count": 30474,
+  "full_name": "78/xiaozhi-esp32",
+  "name": "xiaozhi-esp32",
+  "created_at": "2024-08-31T10:08:16Z",
+  "private": false,
+  "id": 850267588,
+  "forks_count": 7138,
+  "subscribers_count": 253,
+  "topics": [
+    "chatbot",
+    "esp32",
+    "mcp"
+  ],
+  "archived": false,
+  "watchers_count": 30474,
+  "language": "C++",
+  "description": "An MCP-based chatbot | 一个基于MCP的聊天机器人",
+  "updated_at": "2026-10-07T12:45:09Z",
+  "disabled": false,
+  "open_issues_count": 672,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

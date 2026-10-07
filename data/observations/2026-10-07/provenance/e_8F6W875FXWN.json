@@ -1,0 +1,32 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "pushed_at": "2024-06-12T19:34:23Z",
+  "fork": false,
+  "homepage": "https://cortexlabs.com/",
+  "network_count": 591,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNjczMDQ0NjQ=",
+  "size": 11550,
+  "stargazers_count": 8010,
+  "full_name": "cortexlabs/cortex",
+  "name": "cortex",
+  "created_at": "2019-01-24T04:43:14Z",
+  "private": false,
+  "id": 167304464,
+  "forks_count": 591,
+  "subscribers_count": 140,
+  "topics": [
+    "infrastructure",
+    "machine-learning"
+  ],
+  "archived": false,
+  "watchers_count": 8010,
+  "language": "Go",
+  "description": "Production infrastructure for machine learning at scale",
+  "updated_at": "2026-10-07T01:59:31Z",
+  "disabled": false,
+  "open_issues_count": 132,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

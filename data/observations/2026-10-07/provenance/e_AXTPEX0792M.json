@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-09-16T10:56:52Z",
+  "fork": false,
+  "homepage": "https://www.n8n-skills.com",
+  "network_count": 1054,
+  "node_id": "R_kgDOQFmuYA",
+  "size": 5695,
+  "stargazers_count": 6387,
+  "full_name": "czlonkowski/n8n-skills",
+  "name": "n8n-skills",
+  "created_at": "2025-10-20T05:51:27Z",
+  "private": false,
+  "id": 1079619168,
+  "forks_count": 1054,
+  "subscribers_count": 67,
+  "topics": [
+    "ai-agents",
+    "n8n",
+    "workflow-automation"
+  ],
+  "archived": false,
+  "watchers_count": 6387,
+  "language": "Shell",
+  "description": "n8n skillset for Claude Code to build flawless n8n workflows",
+  "updated_at": "2026-10-07T00:02:42Z",
+  "disabled": false,
+  "open_issues_count": 16,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

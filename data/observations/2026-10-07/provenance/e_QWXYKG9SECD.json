@@ -1,0 +1,31 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-10-06T10:27:08Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 164,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzODY1Nzc1OTk=",
+  "size": 211763,
+  "stargazers_count": 887,
+  "full_name": "google-deepmind/meltingpot",
+  "name": "meltingpot",
+  "created_at": "2021-07-16T09:12:01Z",
+  "private": false,
+  "id": 386577599,
+  "forks_count": 164,
+  "subscribers_count": 13,
+  "topics": [
+    "multiagent-reinforcement-learning"
+  ],
+  "archived": false,
+  "watchers_count": 887,
+  "language": "Python",
+  "description": "A suite of test scenarios for multi-agent reinforcement learning.",
+  "updated_at": "2026-10-06T11:53:56Z",
+  "disabled": false,
+  "open_issues_count": 116,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

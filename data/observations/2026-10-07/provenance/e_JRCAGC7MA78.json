@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2026-04-28T18:31:29Z",
+  "fork": false,
+  "homepage": "https://www.evalite.dev/",
+  "network_count": 103,
+  "node_id": "R_kgDONOKZAg",
+  "size": 2970,
+  "stargazers_count": 1707,
+  "full_name": "mattpocock/evalite",
+  "name": "evalite",
+  "created_at": "2024-11-12T13:00:20Z",
+  "private": false,
+  "id": 887265538,
+  "forks_count": 103,
+  "subscribers_count": 17,
+  "topics": [
+    "ai",
+    "evals",
+    "typescript"
+  ],
+  "archived": false,
+  "watchers_count": 1707,
+  "language": "TypeScript",
+  "description": "Evaluate your LLM-powered apps with TypeScript",
+  "updated_at": "2026-10-06T02:26:32Z",
+  "disabled": false,
+  "open_issues_count": 65,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

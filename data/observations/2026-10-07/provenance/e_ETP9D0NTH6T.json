@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "pushed_at": "2025-08-26T00:25:29Z",
+  "fork": false,
+  "homepage": "https://fluxml.ai/FastAI.jl",
+  "network_count": 49,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNjU3MDQ4MjI=",
+  "size": 1235949,
+  "stargazers_count": 592,
+  "full_name": "FluxML/FastAI.jl",
+  "name": "FastAI.jl",
+  "created_at": "2020-05-20T23:06:49Z",
+  "private": false,
+  "id": 265704822,
+  "forks_count": 49,
+  "subscribers_count": 21,
+  "topics": [
+    "deep-learning",
+    "fastai",
+    "julia"
+  ],
+  "archived": false,
+  "watchers_count": 592,
+  "language": "Julia",
+  "description": "Repository of best practices for deep learning in Julia, inspired by fastai",
+  "updated_at": "2026-10-04T20:41:41Z",
+  "disabled": false,
+  "open_issues_count": 32,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

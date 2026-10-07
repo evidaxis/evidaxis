@@ -1,0 +1,32 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "pushed_at": "2022-10-21T07:40:38Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 235,
+  "node_id": "MDEwOlJlcG9zaXRvcnk0NDc4MTA2Mg==",
+  "size": 41,
+  "stargazers_count": 1092,
+  "full_name": "MatthewJA/Inverse-Reinforcement-Learning",
+  "name": "Inverse-Reinforcement-Learning",
+  "created_at": "2015-10-23T00:22:52Z",
+  "private": false,
+  "id": 44781062,
+  "forks_count": 235,
+  "subscribers_count": 35,
+  "topics": [
+    "inverse-reinforcement-learning",
+    "reinforcement-learning"
+  ],
+  "archived": false,
+  "watchers_count": 1092,
+  "language": "Python",
+  "description": "Implementations of selected inverse reinforcement learning algorithms.",
+  "updated_at": "2026-09-17T12:07:20Z",
+  "disabled": false,
+  "open_issues_count": 9,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

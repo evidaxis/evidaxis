@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "pushed_at": "2025-11-26T07:22:07Z",
+  "fork": false,
+  "homepage": "",
+  "network_count": 94,
+  "node_id": "R_kgDOKJ4txg",
+  "size": 8546,
+  "stargazers_count": 958,
+  "full_name": "OpenGVLab/OmniQuant",
+  "name": "OmniQuant",
+  "created_at": "2023-08-22T03:55:46Z",
+  "private": false,
+  "id": 681455046,
+  "forks_count": 94,
+  "subscribers_count": 16,
+  "topics": [
+    "large-language-models",
+    "llm",
+    "quantization"
+  ],
+  "archived": false,
+  "watchers_count": 958,
+  "language": "Python",
+  "description": "[ICLR2024 spotlight] OmniQuant is a simple and powerful quantization technique for LLMs. ",
+  "updated_at": "2026-10-06T15:09:17Z",
+  "disabled": false,
+  "open_issues_count": 33,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
