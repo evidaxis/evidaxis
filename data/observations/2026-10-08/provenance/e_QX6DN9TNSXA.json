@@ -1,0 +1,33 @@
+{
+  "description": "Visibility into AI agent activity on endpoints, with on-device detection, optional pre-action blocking, and forensic reconstruction.",
+  "disabled": false,
+  "watchers_count": 1103,
+  "updated_at": "2026-10-07T21:20:03Z",
+  "size": 1820,
+  "homepage": "",
+  "language": "Go",
+  "created_at": "2026-07-24T06:07:59Z",
+  "subscribers_count": 8,
+  "network_count": 116,
+  "visibility": "public",
+  "forks_count": 116,
+  "open_issues_count": 19,
+  "name": "numbat",
+  "full_name": "perplexityai/numbat",
+  "private": false,
+  "pushed_at": "2026-10-07T04:45:02Z",
+  "id": 1310691580,
+  "archived": false,
+  "node_id": "R_kgDOTh-Q_A",
+  "default_branch": "main",
+  "fork": false,
+  "stargazers_count": 1103,
+  "topics": [
+    "agent-security",
+    "ai-agent-security",
+    "ai-agents"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

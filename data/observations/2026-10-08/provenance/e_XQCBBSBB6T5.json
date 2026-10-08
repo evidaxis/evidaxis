@@ -1,0 +1,32 @@
+{
+  "description": "Reference implementations of MLPerf® training benchmarks",
+  "disabled": false,
+  "watchers_count": 1775,
+  "updated_at": "2026-10-07T05:11:11Z",
+  "size": 100680,
+  "homepage": "https://mlcommons.org/en/groups/training",
+  "language": "Python",
+  "created_at": "2018-03-29T21:56:06Z",
+  "subscribers_count": 112,
+  "network_count": 595,
+  "visibility": "public",
+  "forks_count": 595,
+  "open_issues_count": 15,
+  "name": "training",
+  "full_name": "mlcommons/training",
+  "private": false,
+  "pushed_at": "2026-09-28T18:24:34Z",
+  "id": 127351529,
+  "archived": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMjczNTE1Mjk=",
+  "default_branch": "master",
+  "fork": false,
+  "stargazers_count": 1775,
+  "topics": [
+    "benchmark",
+    "machine-learning"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

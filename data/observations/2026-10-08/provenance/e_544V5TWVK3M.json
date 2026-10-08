@@ -1,0 +1,33 @@
+{
+  "description": "CLIP + FFT/DWT/RGB = text to image/video",
+  "disabled": false,
+  "watchers_count": 788,
+  "updated_at": "2026-10-02T12:35:47Z",
+  "size": 36962,
+  "homepage": "",
+  "language": "Python",
+  "created_at": "2021-02-28T03:12:55Z",
+  "subscribers_count": 21,
+  "network_count": 102,
+  "visibility": "public",
+  "forks_count": 102,
+  "open_issues_count": 0,
+  "name": "aphantasia",
+  "full_name": "eps696/aphantasia",
+  "private": false,
+  "pushed_at": "2025-02-13T17:46:34Z",
+  "id": 343009832,
+  "archived": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNDMwMDk4MzI=",
+  "default_branch": "master",
+  "fork": false,
+  "stargazers_count": 788,
+  "topics": [
+    "clip",
+    "text-to-image",
+    "text-to-video"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,31 @@
+{
+  "description": "Real-time end-to-end singing voice conversion system based on DDSP (Differentiable Digital Signal Processing)",
+  "disabled": false,
+  "watchers_count": 2685,
+  "updated_at": "2026-10-07T10:56:24Z",
+  "size": 28942,
+  "homepage": "",
+  "language": "Python",
+  "created_at": "2023-03-04T16:56:39Z",
+  "subscribers_count": 23,
+  "network_count": 287,
+  "visibility": "public",
+  "forks_count": 287,
+  "open_issues_count": 38,
+  "name": "DDSP-SVC",
+  "full_name": "yxlllc/DDSP-SVC",
+  "private": false,
+  "pushed_at": "2026-10-04T06:13:13Z",
+  "id": 609597306,
+  "archived": false,
+  "node_id": "R_kgDOJFW3eg",
+  "default_branch": "6.3",
+  "fork": false,
+  "stargazers_count": 2685,
+  "topics": [
+    "pytorch"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

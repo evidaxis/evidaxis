@@ -1,0 +1,32 @@
+{
+  "description": "LeaderWorkerSet: An API for deploying a group of pods as a unit of replication",
+  "disabled": false,
+  "watchers_count": 850,
+  "updated_at": "2026-10-07T22:06:09Z",
+  "size": 11402,
+  "homepage": "https://lws.sigs.k8s.io",
+  "language": "Go",
+  "created_at": "2024-02-22T05:07:17Z",
+  "subscribers_count": 7,
+  "network_count": 192,
+  "visibility": "public",
+  "forks_count": 192,
+  "open_issues_count": 33,
+  "name": "lws",
+  "full_name": "kubernetes-sigs/lws",
+  "private": false,
+  "pushed_at": "2026-10-07T22:06:03Z",
+  "id": 761580012,
+  "archived": false,
+  "node_id": "R_kgDOLWTJ7A",
+  "default_branch": "main",
+  "fork": false,
+  "stargazers_count": 850,
+  "topics": [
+    "llm-inference",
+    "sig-apps"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "description": "Implementation of 'lightweight' GAN, proposed in ICLR 2021, in Pytorch. High resolution image generations that can be trained within a day or two",
+  "disabled": false,
+  "watchers_count": 1687,
+  "updated_at": "2026-10-06T13:34:25Z",
+  "size": 12462,
+  "homepage": "",
+  "language": "Python",
+  "created_at": "2020-11-11T17:31:33Z",
+  "subscribers_count": 33,
+  "network_count": 218,
+  "visibility": "public",
+  "forks_count": 218,
+  "open_issues_count": 61,
+  "name": "lightweight-gan",
+  "full_name": "lucidrains/lightweight-gan",
+  "private": false,
+  "pushed_at": "2025-01-12T02:11:34Z",
+  "id": 312042527,
+  "archived": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMTIwNDI1Mjc=",
+  "default_branch": "main",
+  "fork": false,
+  "stargazers_count": 1687,
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "generative-adversarial-network"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

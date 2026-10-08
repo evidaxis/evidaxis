@@ -1,0 +1,33 @@
+{
+  "description": "Multi-LLM peer review for code decisions. Bring your own CLI; Chorus convenes 2-4 other LLMs to review the work before you ship.",
+  "disabled": false,
+  "watchers_count": 534,
+  "updated_at": "2026-10-05T17:59:18Z",
+  "size": 10042,
+  "homepage": "https://chorus.codes",
+  "language": "TypeScript",
+  "created_at": "2026-04-30T10:33:16Z",
+  "subscribers_count": 6,
+  "network_count": 56,
+  "visibility": "public",
+  "forks_count": 56,
+  "open_issues_count": 2,
+  "name": "chorus",
+  "full_name": "chorus-codes/chorus",
+  "private": false,
+  "pushed_at": "2026-08-13T00:11:48Z",
+  "id": 1225492439,
+  "archived": false,
+  "node_id": "R_kgDOSQuH1w",
+  "default_branch": "main",
+  "fork": false,
+  "stargazers_count": 534,
+  "topics": [
+    "claude-code",
+    "codex",
+    "llm"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

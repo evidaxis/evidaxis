@@ -1266,6 +1266,11 @@
       "package": "yt-fts",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "NucleoidAI/Nucleoid": {
+      "system": "cargo",
+      "package": "nucleoid",
+      "pinned_at": "2026-10-08T14:52:04Z"
+    },
     "OML-Team/open-metric-learning": {
       "system": "pypi",
       "package": "open-metric-learning",
@@ -5580,6 +5585,11 @@
       "system": "npm",
       "package": "mcp-use",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "mdtraj/mdtraj": {
+      "system": "pypi",
+      "package": "mdtraj",
+      "pinned_at": "2026-10-08T14:52:04Z"
     },
     "mediar-ai/terminator": {
       "system": "pypi",
