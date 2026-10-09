@@ -1,0 +1,32 @@
+{
+  "language": "TypeScript",
+  "size": 248,
+  "description": "AI-powered git commit message rewriter using Ollama or GPT",
+  "private": false,
+  "homepage": "https://blog.fka.dev/git-rewrite-commits/",
+  "watchers_count": 1423,
+  "created_at": "2025-11-10T00:16:19Z",
+  "name": "git-rewrite-commits",
+  "archived": false,
+  "topics": [
+    "git",
+    "pre-commit-hook"
+  ],
+  "default_branch": "master",
+  "disabled": false,
+  "full_name": "f/git-rewrite-commits",
+  "node_id": "R_kgDOQSfb7A",
+  "visibility": "public",
+  "pushed_at": "2026-06-21T14:23:53Z",
+  "open_issues_count": 10,
+  "forks_count": 59,
+  "network_count": 59,
+  "updated_at": "2026-10-07T14:51:36Z",
+  "id": 1093131244,
+  "stargazers_count": 1423,
+  "subscribers_count": 6,
+  "fork": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "language": "Python",
+  "size": 3698,
+  "description": "Deep learning-based outlier/anomaly detection",
+  "private": false,
+  "homepage": "https://deepod.readthedocs.io/",
+  "watchers_count": 577,
+  "created_at": "2022-10-28T08:45:59Z",
+  "name": "DeepOD",
+  "archived": false,
+  "topics": [
+    "anomaly-detection",
+    "deep-anomaly-detection",
+    "outlier-detection"
+  ],
+  "default_branch": "main",
+  "disabled": false,
+  "full_name": "xuhongzuo/DeepOD",
+  "node_id": "R_kgDOIU4YLA",
+  "visibility": "public",
+  "pushed_at": "2025-07-24T13:43:54Z",
+  "open_issues_count": 10,
+  "forks_count": 70,
+  "network_count": 70,
+  "updated_at": "2026-10-01T00:32:51Z",
+  "id": 558766124,
+  "stargazers_count": 577,
+  "subscribers_count": 10,
+  "fork": false,
+  "owner_type": "User",
+  "license_spdx_id": "BSD-2-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "language": "Python",
+  "size": 6267,
+  "description": "A robust, efficient, low-latency speech-to-text library with advanced voice activity detection, wake word activation and instant transcription.",
+  "private": false,
+  "homepage": "",
+  "watchers_count": 10169,
+  "created_at": "2023-08-29T17:58:28Z",
+  "name": "RealtimeSTT",
+  "archived": false,
+  "topics": [
+    "python",
+    "realtime",
+    "speech-to-text"
+  ],
+  "default_branch": "master",
+  "disabled": false,
+  "full_name": "KoljaB/RealtimeSTT",
+  "node_id": "R_kgDOKM_6LA",
+  "visibility": "public",
+  "pushed_at": "2026-09-17T18:49:24Z",
+  "open_issues_count": 148,
+  "forks_count": 859,
+  "network_count": 859,
+  "updated_at": "2026-10-09T03:57:01Z",
+  "id": 684718636,
+  "stargazers_count": 10169,
+  "subscribers_count": 74,
+  "fork": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

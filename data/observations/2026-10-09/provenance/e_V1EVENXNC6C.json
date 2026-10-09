@@ -1,0 +1,33 @@
+{
+  "language": "Lua",
+  "size": 24649,
+  "description": "Face recognition with deep neural networks.",
+  "private": false,
+  "homepage": "http://cmusatyalab.github.io/openface/",
+  "watchers_count": 15446,
+  "created_at": "2015-09-16T12:47:27Z",
+  "name": "openface",
+  "archived": false,
+  "topics": [
+    "deep-learning",
+    "face-recognition",
+    "facenet"
+  ],
+  "default_branch": "master",
+  "disabled": false,
+  "full_name": "cmusatyalab/openface",
+  "node_id": "MDEwOlJlcG9zaXRvcnk0MjU4NjYxMg==",
+  "visibility": "public",
+  "pushed_at": "2026-09-22T20:38:43Z",
+  "open_issues_count": 2,
+  "forks_count": 3558,
+  "network_count": 3558,
+  "updated_at": "2026-10-09T03:40:54Z",
+  "id": 42586612,
+  "stargazers_count": 15446,
+  "subscribers_count": 741,
+  "fork": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "language": "Go",
+  "size": 2141,
+  "description": "Go library for accessing and embedding Tor clients and servers",
+  "private": false,
+  "homepage": "",
+  "watchers_count": 828,
+  "created_at": "2018-05-10T14:49:46Z",
+  "name": "bine",
+  "archived": false,
+  "topics": [
+    "go",
+    "tor"
+  ],
+  "default_branch": "master",
+  "disabled": false,
+  "full_name": "cretz/bine",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzI5MTQ2Njc=",
+  "visibility": "public",
+  "pushed_at": "2023-07-28T08:24:22Z",
+  "open_issues_count": 27,
+  "forks_count": 77,
+  "network_count": 77,
+  "updated_at": "2026-10-02T19:12:55Z",
+  "id": 132914667,
+  "stargazers_count": 828,
+  "subscribers_count": 16,
+  "fork": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

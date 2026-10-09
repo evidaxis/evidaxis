@@ -1,0 +1,33 @@
+{
+  "language": "Jupyter Notebook",
+  "size": 723,
+  "description": ":art: Semantic segmentation models, datasets and losses implemented in PyTorch.",
+  "private": false,
+  "homepage": "",
+  "watchers_count": 1818,
+  "created_at": "2019-07-14T23:00:30Z",
+  "name": "pytorch-segmentation",
+  "archived": false,
+  "topics": [
+    "computer-vision",
+    "deep-learning",
+    "semantic-segmentation"
+  ],
+  "default_branch": "master",
+  "disabled": false,
+  "full_name": "yassouali/pytorch-segmentation",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxOTY4OTE0Mjg=",
+  "visibility": "public",
+  "pushed_at": "2025-02-23T19:05:28Z",
+  "open_issues_count": 16,
+  "forks_count": 388,
+  "network_count": 388,
+  "updated_at": "2026-09-20T09:43:14Z",
+  "id": 196891428,
+  "stargazers_count": 1818,
+  "subscribers_count": 20,
+  "fork": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

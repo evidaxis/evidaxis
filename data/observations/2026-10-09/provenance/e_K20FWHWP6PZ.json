@@ -1,0 +1,31 @@
+{
+  "language": "C",
+  "size": 24682,
+  "description": "这是一个用C++实现ASR推理的项目，它依赖很少，安装也很简单，推理速度很快，在树莓派4B等ARM平台也可以流畅的运行。 支持的模型是由Google的Transformer模型中优化而来，数据集是开源wenetspeech(10000+小时)或阿里私有数据集(60000+小时)， 所以识别效果也很好，可以媲美许多商用的ASR软件。",
+  "private": false,
+  "homepage": "",
+  "watchers_count": 554,
+  "created_at": "2022-07-08T09:10:30Z",
+  "name": "FastASR",
+  "archived": false,
+  "topics": [
+    "speech-recognition"
+  ],
+  "default_branch": "main",
+  "disabled": false,
+  "full_name": "chenkui164/FastASR",
+  "node_id": "R_kgDOHoHzNQ",
+  "visibility": "public",
+  "pushed_at": "2023-03-19T01:31:57Z",
+  "open_issues_count": 28,
+  "forks_count": 79,
+  "network_count": 79,
+  "updated_at": "2026-10-08T03:11:00Z",
+  "id": 511832885,
+  "stargazers_count": 554,
+  "subscribers_count": 22,
+  "fork": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "language": "Python",
+  "size": 42408,
+  "description": "[EMNLP 2021] SimCSE: Simple Contrastive Learning of Sentence Embeddings https://arxiv.org/abs/2104.08821",
+  "private": false,
+  "homepage": "",
+  "watchers_count": 3654,
+  "created_at": "2021-04-16T02:57:04Z",
+  "name": "SimCSE",
+  "archived": false,
+  "topics": [
+    "nlp",
+    "sentence-embeddings"
+  ],
+  "default_branch": "main",
+  "disabled": false,
+  "full_name": "princeton-nlp/SimCSE",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNTg0NTgwNTA=",
+  "visibility": "public",
+  "pushed_at": "2024-10-16T14:35:29Z",
+  "open_issues_count": 4,
+  "forks_count": 533,
+  "network_count": 533,
+  "updated_at": "2026-10-07T20:29:36Z",
+  "id": 358458050,
+  "stargazers_count": 3654,
+  "subscribers_count": 23,
+  "fork": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

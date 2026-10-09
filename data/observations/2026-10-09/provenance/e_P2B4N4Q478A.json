@@ -1,0 +1,33 @@
+{
+  "language": "C++",
+  "size": 2328,
+  "description": "common in-memory tensor structure ",
+  "private": false,
+  "homepage": "https://dmlc.github.io/dlpack/latest",
+  "watchers_count": 1253,
+  "created_at": "2017-02-24T16:56:47Z",
+  "name": "dlpack",
+  "archived": false,
+  "topics": [
+    "deep-learning",
+    "operator",
+    "tensor"
+  ],
+  "default_branch": "main",
+  "disabled": false,
+  "full_name": "dmlc/dlpack",
+  "node_id": "MDEwOlJlcG9zaXRvcnk4MzA2MzUyNg==",
+  "visibility": "public",
+  "pushed_at": "2026-08-11T23:59:21Z",
+  "open_issues_count": 26,
+  "forks_count": 168,
+  "network_count": 168,
+  "updated_at": "2026-10-04T22:06:55Z",
+  "id": 83063526,
+  "stargazers_count": 1253,
+  "subscribers_count": 47,
+  "fork": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
