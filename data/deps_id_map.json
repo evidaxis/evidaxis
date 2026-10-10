@@ -1171,6 +1171,11 @@
       "package": "cuda-quantum",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "NVIDIA/cuvs": {
+      "system": "cargo",
+      "package": "cuvs",
+      "pinned_at": "2026-10-10T13:57:29Z"
+    },
     "NVIDIA/earth2studio": {
       "system": "pypi",
       "package": "earth2studio",
@@ -5641,6 +5646,11 @@
       "package": "torchopt",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "mflux-community/mflux": {
+      "system": "pypi",
+      "package": "mflux",
+      "pinned_at": "2026-10-10T13:57:29Z"
+    },
     "microsoft/DeBERTa": {
       "system": "pypi",
       "package": "deberta",
@@ -7099,6 +7109,11 @@
       "system": "pypi",
       "package": "img2dataset",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "ronak-create/FableCut": {
+      "system": "npm",
+      "package": "fablecut",
+      "pinned_at": "2026-10-10T13:57:29Z"
     },
     "roshan-research/hazm": {
       "system": "pypi",

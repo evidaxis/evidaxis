@@ -1,0 +1,33 @@
+{
+  "id": 715778092,
+  "fork": false,
+  "size": 496,
+  "created_at": "2023-11-07T20:15:00Z",
+  "network_count": 93,
+  "language": "Python",
+  "disabled": false,
+  "subscribers_count": 15,
+  "pushed_at": "2026-02-26T12:50:29Z",
+  "private": false,
+  "homepage": "https://dropbox.github.io/hqq_blog/",
+  "full_name": "dropbox/hqq",
+  "topics": [
+    "llm",
+    "machine-learning",
+    "quantization"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-05T11:09:15Z",
+  "description": "Official implementation of Half-Quadratic Quantization (HQQ)",
+  "watchers_count": 959,
+  "node_id": "R_kgDOKqnoLA",
+  "default_branch": "master",
+  "forks_count": 93,
+  "stargazers_count": 959,
+  "name": "hqq",
+  "archived": false,
+  "open_issues_count": 2,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

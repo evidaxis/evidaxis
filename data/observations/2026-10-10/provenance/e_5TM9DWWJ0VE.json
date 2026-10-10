@@ -1,0 +1,33 @@
+{
+  "id": 612275000,
+  "fork": false,
+  "size": 1088,
+  "created_at": "2023-03-10T15:21:25Z",
+  "network_count": 106,
+  "language": "Python",
+  "disabled": false,
+  "subscribers_count": 70,
+  "pushed_at": "2025-01-12T14:26:17Z",
+  "private": false,
+  "homepage": "",
+  "full_name": "lucidrains/gigagan-pytorch",
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "generative-adversarial-network"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-10T05:05:28Z",
+  "description": "Implementation of GigaGAN, new SOTA GAN out of Adobe. Culmination of nearly a decade of research into GANs",
+  "watchers_count": 1945,
+  "node_id": "R_kgDOJH6TOA",
+  "default_branch": "main",
+  "forks_count": 106,
+  "stargazers_count": 1945,
+  "name": "gigagan-pytorch",
+  "archived": false,
+  "open_issues_count": 20,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,96 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-10-10T12:51:03Z",
+  "date": "2026-10-10",
+  "period": "2026-w41",
+  "entity_count": 6333,
+  "error_count": 11,
+  "error_rate": 0.0017,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "HiThink-Tech/Financial-API",
+      "http_status": 404
+    },
+    {
+      "repo": "Jwuthri/Tracely-ai",
+      "http_status": 404
+    },
+    {
+      "repo": "henrywoo/pyllama",
+      "http_status": 404
+    },
+    {
+      "repo": "wrtnlabs/autobe",
+      "http_status": 404
+    },
+    {
+      "repo": "LycheeMem/LycheeMem",
+      "http_status": 404
+    },
+    {
+      "repo": "wrtnlabs/agentica",
+      "http_status": 404
+    },
+    {
+      "repo": "Scottcjn/Rustchain",
+      "http_status": 404
+    },
+    {
+      "repo": "archie0732/healthy-diet-ai-agent",
+      "http_status": 404
+    },
+    {
+      "repo": "aimeoa/hanshuang-codex",
+      "http_status": 404
+    },
+    {
+      "repo": "LockedinLabs-AI/agent-console",
+      "http_status": 404
+    },
+    {
+      "repo": "QuintinShaw/pi-dynamic-workflows",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "b0b962719c49994636664534c75b26d7f05514426f1e197cd987f83573d4a627",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}

@@ -1,0 +1,32 @@
+{
+  "id": 475932672,
+  "fork": false,
+  "size": 2186,
+  "created_at": "2022-03-30T15:08:26Z",
+  "network_count": 347,
+  "language": "Python",
+  "disabled": false,
+  "subscribers_count": 42,
+  "pushed_at": "2026-10-06T09:34:54Z",
+  "private": false,
+  "homepage": "https://huggingface.co/docs/evaluate",
+  "full_name": "huggingface/evaluate",
+  "topics": [
+    "evaluation",
+    "machine-learning"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-08T14:13:49Z",
+  "description": "🤗 Evaluate: A library for easily evaluating machine learning models and datasets.",
+  "watchers_count": 2491,
+  "node_id": "R_kgDOHF4oAA",
+  "default_branch": "main",
+  "forks_count": 347,
+  "stargazers_count": 2491,
+  "name": "evaluate",
+  "archived": false,
+  "open_issues_count": 315,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

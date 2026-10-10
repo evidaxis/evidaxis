@@ -1,0 +1,33 @@
+{
+  "id": 763774926,
+  "fork": false,
+  "size": 227587,
+  "created_at": "2024-02-26T22:30:06Z",
+  "network_count": 727,
+  "language": "Rust",
+  "disabled": false,
+  "subscribers_count": 48,
+  "pushed_at": "2026-10-01T04:18:43Z",
+  "private": false,
+  "homepage": "",
+  "full_name": "EricLBuehler/mistral.rs",
+  "topics": [
+    "llm",
+    "rust",
+    "uqff"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-10T12:23:14Z",
+  "description": "Fast, flexible LLM inference",
+  "watchers_count": 7735,
+  "node_id": "R_kgDOLYZHzg",
+  "default_branch": "master",
+  "forks_count": 727,
+  "stargazers_count": 7735,
+  "name": "mistral.rs",
+  "archived": false,
+  "open_issues_count": 406,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

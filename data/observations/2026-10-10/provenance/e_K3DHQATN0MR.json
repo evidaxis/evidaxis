@@ -1,0 +1,33 @@
+{
+  "id": 586840235,
+  "fork": false,
+  "size": 64404,
+  "created_at": "2023-01-09T11:01:24Z",
+  "network_count": 107,
+  "language": "Python",
+  "disabled": false,
+  "subscribers_count": 20,
+  "pushed_at": "2026-10-05T20:31:08Z",
+  "private": false,
+  "homepage": "https://diff.fish.audio",
+  "full_name": "fishaudio/fish-diffusion",
+  "topics": [
+    "diffusion",
+    "pytorch",
+    "soundgenerator"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-09T03:28:34Z",
+  "description": "An easy to understand TTS / SVS / SVC framework",
+  "watchers_count": 760,
+  "node_id": "R_kgDOIvp4qw",
+  "default_branch": "main",
+  "forks_count": 107,
+  "stargazers_count": 760,
+  "name": "fish-diffusion",
+  "archived": false,
+  "open_issues_count": 10,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

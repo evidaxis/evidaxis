@@ -1,0 +1,32 @@
+{
+  "id": 205957008,
+  "fork": false,
+  "size": 91,
+  "created_at": "2019-09-03T00:30:33Z",
+  "network_count": 46,
+  "language": "Python",
+  "disabled": false,
+  "subscribers_count": 10,
+  "pushed_at": "2026-03-11T07:24:37Z",
+  "private": false,
+  "homepage": "https://pypi.org/project/torchprofile/",
+  "full_name": "zhijian-liu/torchprofile",
+  "topics": [
+    "profiler",
+    "pytorch"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-09T11:50:00Z",
+  "description": "Count the MACs / FLOPs of PyTorch models",
+  "watchers_count": 649,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMDU5NTcwMDg=",
+  "default_branch": "main",
+  "forks_count": 46,
+  "stargazers_count": 649,
+  "name": "torchprofile",
+  "archived": false,
+  "open_issues_count": 0,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

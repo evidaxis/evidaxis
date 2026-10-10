@@ -1,0 +1,32 @@
+{
+  "id": 1130872806,
+  "fork": false,
+  "size": 17375,
+  "created_at": "2026-01-09T06:16:55Z",
+  "network_count": 98,
+  "language": "Python",
+  "disabled": false,
+  "subscribers_count": 9,
+  "pushed_at": "2026-03-20T03:10:16Z",
+  "private": false,
+  "homepage": "https://z.ai/blog/glm-image",
+  "full_name": "zai-org/GLM-Image",
+  "topics": [
+    "image2image",
+    "text2image"
+  ],
+  "visibility": "public",
+  "updated_at": "2026-10-08T21:49:48Z",
+  "description": "GLM-Image: Auto-regressive for Dense-knowledge and High-fidelity Image Generation.",
+  "watchers_count": 1058,
+  "node_id": "R_kgDOQ2e_5g",
+  "default_branch": "main",
+  "forks_count": 98,
+  "stargazers_count": 1058,
+  "name": "GLM-Image",
+  "archived": false,
+  "open_issues_count": 25,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
