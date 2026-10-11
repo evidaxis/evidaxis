@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 44,
+  "homepage": "https://highway-env.farama.org/",
+  "full_name": "Farama-Foundation/HighwayEnv",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMTA4NTI0MTI=",
+  "network_count": 899,
+  "id": 110852412,
+  "subscribers_count": 27,
+  "fork": false,
+  "private": false,
+  "name": "HighwayEnv",
+  "watchers_count": 3323,
+  "stargazers_count": 3323,
+  "forks_count": 899,
+  "description": "A collection of environments for autonomous driving and tactical decision-making tasks",
+  "archived": false,
+  "updated_at": "2026-10-10T13:22:23Z",
+  "topics": [
+    "autonomous-driving",
+    "gymnasium-environment",
+    "reinforcement-learning"
+  ],
+  "visibility": "public",
+  "disabled": false,
+  "size": 63855,
+  "default_branch": "main",
+  "language": "Python",
+  "pushed_at": "2026-10-10T13:23:40Z",
+  "created_at": "2017-11-15T15:38:46Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
