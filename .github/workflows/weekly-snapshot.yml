@@ -73,8 +73,12 @@ jobs:
           COLLECT_APP_ID: ${{ secrets.COLLECT_APP_ID }}
           COLLECT_APP_KEY: ${{ secrets.COLLECT_APP_KEY }}
           EVX_GH_CACHE_DIR: ${{ runner.temp }}/evx-gh
-          # A seed that is gone on GitHub (404) makes owner_classify fail AFTER the whole
-          # collection; fail here in minutes instead. A dry run only warns.
+          # A seed that is gone on GitHub (404/410/451) or whose name now resolves to another
+          # repository id is retired here, before collection: removed from etl/seeds.json and
+          # recorded in data/observations/<date>/seed-departures.json (committed with the
+          # snapshot). Weekly churn in a 6,000-system universe must not cost the week
+          # (2026-09-26, 10-03, 10-10 each stopped on it). Only more departures than the cap
+          # (token or API trouble) fail the step. A dry run only warns and edits nothing.
           EVX_ALLOW_DEAD_SEEDS: ${{ inputs.dry_run == true && '1' || '0' }}
         run: python3 collectors/gh_graphql.py
 

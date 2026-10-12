@@ -83,20 +83,43 @@ def test_refresh_is_atomic_across_fetch_errors(tmp_path):
     assert cache.read_text() == original
 
 
-def test_refresh_requires_manual_confirmation_for_user_to_org(tmp_path):
+def test_user_to_org_transitions_are_queued_masked_and_do_not_stop_the_run(tmp_path):
+    # 2026-10-03: two such transitions stopped the weekly run twice, each after ~2 h.
     id_map = tmp_path / "id_map.json"
     cache = tmp_path / "owner_types.json"
-    id_map.write_text(json.dumps({"owner/repo": "e_1"}))
-    cache.write_text(json.dumps({
-        "schema_version": "owner_types_1",
-        "repos": {"owner/repo": {"owner_type": "User", "repo_id": 1, "full_name": "owner/repo"}},
-    }))
-    with pytest.raises(RuntimeError, match="manual confirmation"):
-        owner_classify.refresh(
-            id_map, cache, token="token",
-            fetcher=lambda *_args: {"owner_type": "Organization", "repo_id": 1, "full_name": "Org/repo"},
-        )
+    id_map.write_text(json.dumps({"alice/one": "e_1", "bob/two": "e_2", "org/three": "e_3"}))
+    old = {
+        "alice/one": {"owner_type": "User", "repo_id": 1, "full_name": "alice/one"},
+        "bob/two": {"owner_type": "User", "repo_id": 2, "full_name": "bob/two"},
+        "org/three": {"owner_type": "Organization", "repo_id": 3, "full_name": "org/three"},
+    }
+    cache.write_text(json.dumps({"schema_version": "owner_types_1", "repos": old}))
+    moved = {"alice/one": "AliceLab/one", "bob/two": "BobCo/two", "org/three": "org/three"}
 
+    def fetcher(repo, _token):
+        return {"owner_type": "Organization", "repo_id": old[repo]["repo_id"], "full_name": moved[repo]}
+
+    assert owner_classify.refresh(id_map, cache, token="token", fetcher=fetcher)
+    assert json.loads(cache.read_text())["repos"] == old          # both stay User: owner stays masked
+    pending = json.loads((tmp_path / owner_classify.PENDING_FILE).read_text())
+    assert sorted(pending) == ["alice/one", "bob/two"]
+    assert pending["alice/one"]["new_full_name"] == "AliceLab/one"
+    assert pending["bob/two"]["repo_id"] == 2
+
+
+def test_confirmed_transition_leaves_the_pending_queue(tmp_path):
+    id_map = tmp_path / "id_map.json"
+    cache = tmp_path / "owner_types.json"
+    pending = tmp_path / owner_classify.PENDING_FILE
+    id_map.write_text(json.dumps({"alice/one": "e_1"}))
+    confirmed = {"owner_type": "Organization", "repo_id": 1, "full_name": "AliceLab/one"}
+    cache.write_text(json.dumps({"schema_version": "owner_types_1", "repos": {"alice/one": confirmed}}))
+    pending.write_text(json.dumps({"alice/one": {"old_full_name": "alice/one", "new_full_name": "AliceLab/one",
+                                                 "repo_id": 1, "detected_at": "2026-10-10T00:00:00Z"},
+                                   "departed/repo": {"old_full_name": "departed/repo", "new_full_name": "X/repo",
+                                                     "repo_id": 9, "detected_at": "2026-10-10T00:00:00Z"}}))
+    assert owner_classify.refresh(id_map, cache, token="token", fetcher=lambda *_a: dict(confirmed))
+    assert json.loads(pending.read_text()) == {}
 
 @pytest.mark.parametrize("fetched_id", [1129585228, 1129585229])
 def test_confirmed_transfer_preserves_internal_key_and_identity(tmp_path, fetched_id):

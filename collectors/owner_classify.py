@@ -17,6 +17,8 @@ if str(REPO / "collectors") not in sys.path:
     sys.path.insert(0, str(REPO / "collectors"))
 ID_MAP_PATH = REPO / "etl/id_map.json"
 CACHE_PATH = REPO / "etl/owner_types.json"
+# User -> Organization transitions waiting for the confirmation procedure (owner stays masked)
+PENDING_FILE = "owner_transitions_pending.json"
 SCHEMA_VERSION = "owner_types_1"
 ALLOWED_FIELDS = {"owner_type", "repo_id", "full_name"}
 ALLOWED_TYPES = {"Organization", "User"}
@@ -160,6 +162,7 @@ def refresh(
     cache_path: Path = CACHE_PATH,
     token: str | None = None,
     fetcher: Callable[[str, str], dict[str, Any]] = fetch_classification,
+    pending_path: Path | None = None,
 ) -> bool:
     id_map = _read_json(id_map_path)
     old_cache = _read_json(cache_path) if cache_path.exists() else {"schema_version": SCHEMA_VERSION, "repos": {}}
@@ -167,6 +170,8 @@ def refresh(
         print("owner classification refresh skipped: GITHUB_TOKEN is unavailable; existing cache retained", file=sys.stderr)
         return False
 
+    pending_path = pending_path or cache_path.parent / PENDING_FILE
+    pending = _read_json(pending_path) if pending_path.exists() else {}
     old_repos = old_cache.get("repos", {}) if isinstance(old_cache, dict) else {}
     refreshed: dict[str, dict[str, Any]] = {}
     for repo in id_map:
@@ -175,7 +180,19 @@ def refresh(
         if isinstance(old_entry, dict) and isinstance(old_entry.get("repo_id"), int) and old_entry["repo_id"] != entry["repo_id"]:
             raise RuntimeError(f"{repo}: GitHub repository identity does not match the cached repo_id")
         if old_entry.get("owner_type") == "User" and entry["owner_type"] == "Organization":
-            raise RuntimeError(f"{repo}: User to Organization transition requires manual confirmation")
+            # Publishing an owner that used to be a person needs the confirmation procedure
+            # (governance/OWNER-TRANSFER-2026-10-03.md). Until then the owner stays masked:
+            # keep the User entry and queue the transition, but do not cost the week's
+            # snapshot (2026-10-03: two such stops, each after ~2 h of collection).
+            if pending.get(repo, {}).get("new_full_name") != entry["full_name"]:
+                pending[repo] = {"old_full_name": old_entry.get("full_name"), "new_full_name": entry["full_name"],
+                                 "repo_id": entry["repo_id"],
+                                 "detected_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+            print(f"::warning::{repo}: User to Organization transition to {entry['full_name']} queued in "
+                  f"{pending_path.name}; the owner stays masked until confirmed", file=sys.stderr)
+            refreshed[repo] = old_entry
+            continue
+        pending.pop(repo, None)
         refreshed[repo] = entry
     # A seed removed from id_map (e.g. its repository is gone on GitHub) keeps its
     # last confirmed classification: archived snapshots still publish its card, and
@@ -188,6 +205,9 @@ def refresh(
     if errors:
         raise ValueError("; ".join(errors))
     _atomic_write(cache_path, payload)
+    pending = {repo: item for repo, item in pending.items() if repo in id_map}
+    if pending or pending_path.exists():
+        _atomic_write(pending_path, pending)
     return True
 
 

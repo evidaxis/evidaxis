@@ -77,7 +77,13 @@ jobs:
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
         run: |
           UNIVERSE_CHANGED=$(git diff "${{ github.event.before }}" "${{ github.sha }}" -- etl/seeds.json | grep -E '^[+-][[:space:]]*"github_repo"' || true)
-          if [ -n "$UNIVERSE_CHANGED" ]; then
+          # Removals only (repositories gone from GitHub) are paired with the weekly
+          # preflight's declared departures record instead: no candidate pool was scanned.
+          ADDED=$(printf '%s\n' "$UNIVERSE_CHANGED" | grep -E '^\+' || true)
+          DEPARTURES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/seed-departures.json' || true)
+          if [ -n "$UNIVERSE_CHANGED" ] && [ -z "$ADDED" ] && [ -n "$DEPARTURES" ]; then
+            echo "tracked systems only removed, paired with declared departures: $DEPARTURES"
+          elif [ -n "$UNIVERSE_CHANGED" ]; then
             FRONTIER=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/discovery-frontier*' || true)
             if [ -z "$FRONTIER" ]; then
               echo "etl/seeds.json tracked-system set changed WITHOUT a paired discovery-frontier"

@@ -9,7 +9,10 @@ Fetched per repository: nameWithOwner databaseId stargazerCount createdAt
 owner{__typename}. Written to a cache file outside the repo tree
 (env EVX_GH_CACHE_DIR, else $RUNNER_TEMP/evx-gh, else the system temp dir).
 A repository GraphQL answers null for (renamed, deleted, blocked) is cached as null
-and its consumers fall back to REST individually. The query carries
+and its consumers fall back to REST individually. A seed that is gone (GraphQL null
+and REST 404/410/451) or whose name now resolves to another repository id is retired
+from etl/seeds.json and recorded in data/observations/<date>/seed-departures.json;
+only an implausible number of departures stops the run. The query carries
 rateLimit{cost remaining resetAt}; the fetcher sleeps until resetAt when the budget
 runs low. A batch that fails is halved (a heavy batch can overrun GitHub's
 server-side time budget), down to single repositories.
@@ -36,6 +39,13 @@ import gh_http
 
 REPO = HERE.parent
 SEEDS_PATH = REPO / "etl" / "seeds.json"
+OWNER_TYPES_PATH = REPO / "etl" / "owner_types.json"
+OBSERVATIONS_DIR = REPO / "data" / "observations"
+DEPARTURES_FILE = "seed-departures.json"
+# Above this many departures in one run the cause is structural (token, API outage),
+# not repositories leaving GitHub: stop instead of shrinking the universe.
+DEPARTURE_CAP_MIN = 25
+DEPARTURE_CAP_FRAC = 0.01
 GRAPHQL_URL = "https://api.github.com/graphql"
 BATCH_SIZE = 100
 FIELDS = "nameWithOwner databaseId stargazerCount createdAt owner { __typename }"
@@ -303,6 +313,74 @@ def dead_seeds(repos: list[str], cache: dict[str, dict | None]) -> list[str]:
     return dead
 
 
+def replaced_seeds(repos: list[str], cache: dict[str, dict | None],
+                   owner_types_path: Path | None = None) -> list[tuple[str, int, int]]:
+    """Seeds whose name now resolves to a DIFFERENT repository than the classified one.
+
+    (repo, cached repo_id, resolved databaseId). A transfer or rename keeps the
+    database id, so a new id means the tracked repository is gone and its name was
+    reused; collecting it would put another project's numbers under the old entity.
+    """
+    try:
+        known = json.loads((owner_types_path or OWNER_TYPES_PATH).read_text()).get("repos", {})
+    except (OSError, ValueError):
+        return []
+    by_lower = {k.lower(): v for k, v in known.items() if isinstance(v, dict)}
+    out = []
+    for repo in repos:
+        node = cache.get(repo.lower())
+        entry = known.get(repo) if isinstance(known.get(repo), dict) else by_lower.get(repo.lower())
+        if not node or not entry or not isinstance(entry.get("repo_id"), int):
+            continue
+        if node["databaseId"] != entry["repo_id"]:
+            out.append((repo, entry["repo_id"], node["databaseId"]))
+    return out
+
+
+def departure_cap(n_seeds: int) -> int:
+    return max(DEPARTURE_CAP_MIN, int(n_seeds * DEPARTURE_CAP_FRAC))
+
+
+def retire_seeds(departures: list[dict], snapshot_date: str,
+                 seeds_path: Path | None = None, observations_dir: Path | None = None) -> Path:
+    """Drop departed repositories from seeds.json and record them as declared departures.
+
+    The record lands in data/observations/<date>/ next to the snapshot it explains,
+    so the universe never shrinks silently (archive-integrity pairs a removal-only
+    seeds.json change with it). Same remedy as the hand edits of 2026-09-26 and
+    2026-10-03, without the stop.
+    """
+    seeds_path = seeds_path or SEEDS_PATH
+    gone = {d["github_repo"].lower() for d in departures}
+    raw = seeds_path.read_text(encoding="utf-8")
+    seeds = json.loads(raw)
+    for vertical in seeds["verticals"].values():
+        vertical["entities"] = [e for e in vertical["entities"] if e["github_repo"].lower() not in gone]
+    out = json.dumps(seeds, ensure_ascii=False, indent=1) + ("\n" if raw.endswith("\n") else "")
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=seeds_path.parent,
+                                     prefix=seeds_path.name + ".", delete=False) as tmp:
+        tmp.write(out)
+        tmp_path = Path(tmp.name)
+    os.replace(tmp_path, seeds_path)
+
+    record_path = (observations_dir or OBSERVATIONS_DIR) / snapshot_date / DEPARTURES_FILE
+    record: dict[str, Any] = {"snapshot_date": snapshot_date, "departures": []}
+    if record_path.exists():
+        try:
+            record = json.loads(record_path.read_text())
+        except ValueError:
+            pass
+    have = {d["github_repo"].lower() for d in record.get("departures", [])}
+    record.setdefault("departures", []).extend(d for d in departures if d["github_repo"].lower() not in have)
+    record["departures"].sort(key=lambda d: d["github_repo"].lower())
+    record["note"] = ("Seeds retired by the weekly preflight (collectors/gh_graphql.py): the repository is gone "
+                      "on GitHub or its name now resolves to a different repository id. Their history and "
+                      "archived cards stay; they are no longer collected.")
+    record_path.parent.mkdir(parents=True, exist_ok=True)
+    record_path.write_text(json.dumps(record, ensure_ascii=False, indent=1) + "\n")
+    return record_path
+
+
 def main() -> int:
     repos = seed_repos()
     budget = report_budget()
@@ -312,17 +390,29 @@ def main() -> int:
     except gh_http.RateLimited as exc:
         print(f"[gh_graphql] rate limit could not be waited out ({exc}); consumers fall back to REST")
         return 0
+    replaced = replaced_seeds(repos, cache)
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    departures = [{"github_repo": r, "reason": "gone", "detected_at": now} for r in dead]
+    departures += [{"github_repo": r, "reason": "repo_id_changed", "old_repo_id": old, "new_repo_id": new,
+                    "detected_at": now} for r, old, new in replaced]
     if dead:
         atomic_write_json(cache_dir() / "dead-seeds.json", dead)
-        msg = (f"{len(dead)} seeded repositories are gone on GitHub (REST 404/410/451): {', '.join(dead)}. "
-               "The collector will drop them (declared gaps), but owner_classify cannot classify them and "
-               "fails the run after collection. Remove them from etl/seeds.json before a real run.")
-        if os.environ.get("EVX_ALLOW_DEAD_SEEDS", "").strip() == "1":
-            print(f"::warning::{msg}", flush=True)
-        else:
-            print(f"::error::{msg}", flush=True)
+    if departures:
+        names = ", ".join(f"{d['github_repo']} ({d['reason']})" for d in departures)
+        cap = departure_cap(len(repos))
+        if len(departures) > cap:
+            print(f"::error::{len(departures)} seeded repositories left GitHub in one run (cap {cap}): {names}. "
+                  "That many is a token or API problem, not churn; nothing was retired.", flush=True)
             return 1
-    summary = {"budget_at_start": budget, "dead_seeds": dead, "repos": len(repos), "resolved": sum(1 for r in repos if cache.get(r.lower())),
+        if os.environ.get("EVX_ALLOW_DEAD_SEEDS", "").strip() == "1":
+            print(f"::warning::dry run: {len(departures)} seeds would be retired: {names}", flush=True)
+        else:
+            snapshot_date = os.environ.get("SNAPSHOT_DATE", "").strip() or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            record = retire_seeds(departures, snapshot_date)
+            print(f"::warning::{len(departures)} seeds retired as declared departures ({record}): {names}",
+                  flush=True)
+    summary = {"budget_at_start": budget, "dead_seeds": dead, "departed": departures,
+               "repos": len(repos), "resolved": sum(1 for r in repos if cache.get(r.lower())),
                "graphql_requests": gh_http.STATS["graphql"], "rest_requests": gh_http.STATS["rest"],
                "rate_waits": gh_http.STATS["rate_waits"], "elapsed_s": int(time.time() - gh_http.STATS["started"])}
     atomic_write_json(cache_dir() / "summary-graphql.json", summary)

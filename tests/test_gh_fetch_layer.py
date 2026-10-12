@@ -517,19 +517,73 @@ def test_t2_fetch_keeps_explicit_token_without_app(monkeypatch):
     assert net.requests[0].get_header("Authorization") == "Bearer tok"
 
 
-def test_dead_seeds_fail_fast_unless_allowed(monkeypatch, tmp_path):
-    seeds = tmp_path / "seeds.json"
-    seeds.write_text(json.dumps({"verticals": {"v": {"entities": [
-        {"github_repo": "live/one"}, {"github_repo": "renamed/two"}, {"github_repo": "gone/three"}]}}}))
+def _preflight(monkeypatch, tmp_path, seeds_list, gql, rest, owner_types=None):
+    """Point gh_graphql.main at tmp seeds/owner_types/observations with scripted GitHub answers."""
+    seeds = tmp_path / "etl" / "seeds.json"
+    seeds.parent.mkdir(parents=True, exist_ok=True)
+    seeds.write_text(json.dumps({"meta": {"v": "x"}, "verticals": {"v": {"entities": [
+        {"github_repo": r, "name": "Ünïcode"} for r in seeds_list]}}}, ensure_ascii=False, indent=1))
+    owners = tmp_path / "etl" / "owner_types.json"
+    owners.write_text(json.dumps({"schema_version": "owner_types_1", "repos": owner_types or {}}))
     monkeypatch.setattr(gh_graphql, "SEEDS_PATH", seeds)
+    monkeypatch.setattr(gh_graphql, "OWNER_TYPES_PATH", owners)
+    monkeypatch.setattr(gh_graphql, "OBSERVATIONS_DIR", tmp_path / "observations")
+    monkeypatch.setattr(gh_graphql.seed_repos, "__defaults__", (seeds,))
     monkeypatch.setattr(gh_graphql, "report_budget", lambda: {"auth_mode": "token"})
     monkeypatch.setattr(gh_graphql, "post_query", lambda q: (
-        {"r0": _gql_node("live/one", 1), "r1": None, "r2": None}, [{"type": "NOT_FOUND"}]))
-    monkeypatch.setattr(gh_graphql.seed_repos, "__defaults__", (seeds,))
-    net = FakeNet([(200, {"id": 2}, {}), (404, {"message": "Not Found"}, {})] * 2)
-    monkeypatch.setattr(urllib.request, "urlopen", net)
+        {f"r{i}": gql(r) for i, r in enumerate(seeds_list) if f"r{i}:" in q}, []))
+    monkeypatch.setattr(urllib.request, "urlopen", FakeNet(rest))
+    monkeypatch.setenv("SNAPSHOT_DATE", "2026-10-10")
+    return seeds
+
+
+def _seed_names(seeds):
+    return [e["github_repo"] for v in json.loads(seeds.read_text())["verticals"].values() for e in v["entities"]]
+
+
+def test_dead_seeds_are_retired_with_a_declared_departure_and_the_run_continues(monkeypatch, tmp_path):
+    # 2026-10-10: 11 of ~6,000 seeds were gone and the whole weekly run stopped.
+    live = [f"live/r{i}" for i in range(40)]
+    dead = [f"gone/r{i}" for i in range(11)]
+    seeds = _preflight(monkeypatch, tmp_path, live + dead,
+                       gql=lambda r: _gql_node(r, int(r.split("r")[-1])) if r.startswith("live") else None,
+                       rest=[(404, {"message": "Not Found"}, {})] * 11)
+    assert gh_graphql.main() == 0
+    assert _seed_names(seeds) == live
+    assert "Ünïcode" in seeds.read_text()          # ensure_ascii=False kept, like the activation writer
+    record = json.loads((tmp_path / "observations" / "2026-10-10" / "seed-departures.json").read_text())
+    assert [d["github_repo"] for d in record["departures"]] == sorted(dead)
+    assert {d["reason"] for d in record["departures"]} == {"gone"}
+    assert json.loads((Path(os.environ["EVX_GH_CACHE_DIR"]) / "dead-seeds.json").read_text()) == dead
+
+
+def test_seed_whose_name_now_points_at_another_repository_is_retired(monkeypatch, tmp_path):
+    seeds = _preflight(monkeypatch, tmp_path, ["keep/a", "reused/b"],
+                       gql=lambda r: _gql_node(r, 1 if r == "keep/a" else 2), rest=[],
+                       owner_types={"keep/a": {"owner_type": "User", "repo_id": 1001, "full_name": "keep/a"},
+                                    "reused/b": {"owner_type": "User", "repo_id": 555, "full_name": "reused/b"}})
+    assert gh_graphql.main() == 0
+    assert _seed_names(seeds) == ["keep/a"]
+    (dep,) = json.loads((tmp_path / "observations" / "2026-10-10" / "seed-departures.json").read_text())["departures"]
+    assert (dep["github_repo"], dep["reason"], dep["old_repo_id"], dep["new_repo_id"]) == ("reused/b", "repo_id_changed", 555, 1002)
+
+
+def test_departures_above_the_cap_stop_the_run_and_retire_nothing(monkeypatch, tmp_path):
+    repos = [f"gone/r{i}" for i in range(30)]          # cap is max(25, 1%)
+    seeds = _preflight(monkeypatch, tmp_path, repos, gql=lambda r: None,
+                       rest=[(404, {"message": "Not Found"}, {})] * 30)
+    before = seeds.read_bytes()
     assert gh_graphql.main() == 1
-    cache = Path(os.environ["EVX_GH_CACHE_DIR"])
-    assert json.loads((cache / "dead-seeds.json").read_text()) == ["gone/three"]
+    assert seeds.read_bytes() == before
+    assert not (tmp_path / "observations").exists()
+
+
+def test_dry_run_only_warns_about_departures(monkeypatch, tmp_path):
+    seeds = _preflight(monkeypatch, tmp_path, ["live/r1", "gone/r2"],
+                       gql=lambda r: _gql_node(r, 1) if r == "live/r1" else None,
+                       rest=[(404, {"message": "Not Found"}, {})])
+    before = seeds.read_bytes()
     monkeypatch.setenv("EVX_ALLOW_DEAD_SEEDS", "1")
     assert gh_graphql.main() == 0
+    assert seeds.read_bytes() == before
+    assert not (tmp_path / "observations").exists()
