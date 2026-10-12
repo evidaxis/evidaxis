@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "python",
+    "pytorch"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 48,
+  "homepage": "",
+  "id": 154848329,
+  "pushed_at": "2023-03-19T03:13:59Z",
+  "description": "Model analyzer in PyTorch",
+  "name": "torchstat",
+  "created_at": "2018-10-26T14:36:14Z",
+  "open_issues_count": 45,
+  "updated_at": "2026-10-01T16:54:50Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNTQ4NDgzMjk=",
+  "default_branch": "master",
+  "forks_count": 139,
+  "full_name": "Swall0w/torchstat",
+  "language": "Python",
+  "watchers_count": 1501,
+  "subscribers_count": 11,
+  "stargazers_count": 1501,
+  "archived": false,
+  "network_count": 139,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

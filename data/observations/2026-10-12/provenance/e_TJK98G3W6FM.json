@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "android",
+    "camera",
+    "face-detection"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 42956,
+  "homepage": "",
+  "id": 96151836,
+  "pushed_at": "2018-03-02T23:33:57Z",
+  "description": "Face detection for your Android app",
+  "name": "FaceDetector",
+  "created_at": "2017-07-03T21:27:59Z",
+  "open_issues_count": 23,
+  "updated_at": "2026-10-08T17:19:02Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnk5NjE1MTgzNg==",
+  "default_branch": "master",
+  "forks_count": 198,
+  "full_name": "RedApparat/FaceDetector",
+  "language": "Java",
+  "watchers_count": 1179,
+  "subscribers_count": 39,
+  "stargazers_count": 1179,
+  "archived": false,
+  "network_count": 198,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

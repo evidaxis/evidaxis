@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "ai-chat",
+    "llm-inference"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 44678,
+  "homepage": "https://nomic.ai/gpt4all",
+  "id": 619959033,
+  "pushed_at": "2025-05-27T20:05:19Z",
+  "description": "GPT4All: Run Local LLMs on Any Device. Open-source and available for commercial use.",
+  "name": "gpt4all",
+  "created_at": "2023-03-27T18:49:32Z",
+  "open_issues_count": 774,
+  "updated_at": "2026-10-12T14:55:04Z",
+  "node_id": "R_kgDOJPPS-Q",
+  "default_branch": "main",
+  "forks_count": 8261,
+  "full_name": "nomic-ai/gpt4all",
+  "language": "C++",
+  "watchers_count": 77365,
+  "subscribers_count": 700,
+  "stargazers_count": 77365,
+  "archived": false,
+  "network_count": 8261,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

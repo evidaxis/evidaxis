@@ -1,0 +1,31 @@
+{
+  "private": false,
+  "topics": [
+    "machine-learning"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 35275,
+  "homepage": "https://github.com/ggml-org",
+  "id": 538180525,
+  "pushed_at": "2026-10-12T10:11:13Z",
+  "description": "Tensor library for machine learning",
+  "name": "ggml",
+  "created_at": "2022-09-18T17:07:19Z",
+  "open_issues_count": 367,
+  "updated_at": "2026-10-12T10:59:09Z",
+  "node_id": "R_kgDOIBP7rQ",
+  "default_branch": "master",
+  "forks_count": 1872,
+  "full_name": "ggml-org/ggml",
+  "language": "C++",
+  "watchers_count": 15473,
+  "subscribers_count": 157,
+  "stargazers_count": 15473,
+  "archived": false,
+  "network_count": 1872,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

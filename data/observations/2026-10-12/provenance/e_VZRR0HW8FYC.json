@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "mahjong-ai",
+    "majsoul"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 23321,
+  "homepage": "https://mjcopilot.com",
+  "id": 778050757,
+  "pushed_at": "2025-03-22T20:00:26Z",
+  "description": "雀魂游戏实时 AI 指导 / In-game step-by-step AI Assistant for Maj-soul",
+  "name": "MahjongCopilot",
+  "created_at": "2024-03-27T01:28:26Z",
+  "open_issues_count": 42,
+  "updated_at": "2026-10-12T15:52:52Z",
+  "node_id": "R_kgDOLmAcxQ",
+  "default_branch": "main",
+  "forks_count": 150,
+  "full_name": "latorc/MahjongCopilot",
+  "language": "Python",
+  "watchers_count": 1087,
+  "subscribers_count": 6,
+  "stargazers_count": 1087,
+  "archived": false,
+  "network_count": 150,
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

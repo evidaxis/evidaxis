@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "artificial-intelligence",
+    "large-language-model"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 39502,
+  "homepage": "https://jingyaogong.github.io/minimind",
+  "id": 834369920,
+  "pushed_at": "2026-09-22T16:07:34Z",
+  "description": "🧠 Train a 64M-parameter LLM from scratch in just 2h!",
+  "name": "minimind",
+  "created_at": "2024-07-27T04:34:12Z",
+  "open_issues_count": 65,
+  "updated_at": "2026-10-12T14:31:50Z",
+  "node_id": "R_kgDOMbt5gA",
+  "default_branch": "master",
+  "forks_count": 8260,
+  "full_name": "jingyaogong/minimind",
+  "language": "Python",
+  "watchers_count": 63597,
+  "subscribers_count": 287,
+  "stargazers_count": 63597,
+  "archived": false,
+  "network_count": 8260,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

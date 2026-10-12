@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "danbooru",
+    "machine-learning",
+    "tensorflow"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 82,
+  "homepage": "",
+  "id": 229250747,
+  "pushed_at": "2026-07-04T00:17:04Z",
+  "description": "AI based multi-label girl image classification system, implemented by using TensorFlow.",
+  "name": "DeepDanbooru",
+  "created_at": "2019-12-20T11:15:08Z",
+  "open_issues_count": 27,
+  "updated_at": "2026-10-11T09:48:42Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMjkyNTA3NDc=",
+  "default_branch": "master",
+  "forks_count": 266,
+  "full_name": "KichangKim/DeepDanbooru",
+  "language": "Python",
+  "watchers_count": 2948,
+  "subscribers_count": 35,
+  "stargazers_count": 2948,
+  "archived": false,
+  "network_count": 266,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

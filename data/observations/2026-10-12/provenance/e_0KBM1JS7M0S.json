@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "benchmark",
+    "manipulation",
+    "robotics"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 222,
+  "homepage": "https://robodojo-benchmark.com/",
+  "id": 1292782830,
+  "pushed_at": "2026-10-12T08:27:05Z",
+  "description": "Official repository for RoboDojo",
+  "name": "RoboDojo",
+  "created_at": "2026-07-07T21:02:32Z",
+  "open_issues_count": 31,
+  "updated_at": "2026-10-12T13:28:12Z",
+  "node_id": "R_kgDOTQ5M7g",
+  "default_branch": "main",
+  "forks_count": 96,
+  "full_name": "RoboDojo-Benchmark/RoboDojo",
+  "language": "Python",
+  "watchers_count": 723,
+  "subscribers_count": 4,
+  "stargazers_count": 723,
+  "archived": false,
+  "network_count": 96,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

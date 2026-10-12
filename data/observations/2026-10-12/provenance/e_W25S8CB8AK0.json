@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "artificial-intelligence",
+    "chatgpt",
+    "vision-language-model"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 33702,
+  "homepage": "https://jingyaogong.github.io/minimind-v",
+  "id": 855588588,
+  "pushed_at": "2026-09-22T16:07:32Z",
+  "description": "👀 Train a 65M-parameter VLM from scratch in just 2h! ",
+  "name": "minimind-v",
+  "created_at": "2024-09-11T05:53:54Z",
+  "open_issues_count": 22,
+  "updated_at": "2026-10-12T13:30:27Z",
+  "node_id": "R_kgDOMv8-7A",
+  "default_branch": "master",
+  "forks_count": 979,
+  "full_name": "jingyaogong/minimind-v",
+  "language": "Python",
+  "watchers_count": 8742,
+  "subscribers_count": 52,
+  "stargazers_count": 8742,
+  "archived": false,
+  "network_count": 979,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

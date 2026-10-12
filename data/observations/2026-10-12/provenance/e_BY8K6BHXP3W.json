@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "llm",
+    "lmstudio",
+    "python"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 1234,
+  "homepage": "https://lmstudio.ai/docs/python",
+  "id": 931855846,
+  "pushed_at": "2025-10-27T02:07:44Z",
+  "description": "LM Studio Python SDK",
+  "name": "lmstudio-python",
+  "created_at": "2025-02-13T00:55:05Z",
+  "open_issues_count": 40,
+  "updated_at": "2026-10-09T15:00:54Z",
+  "node_id": "R_kgDON4r95g",
+  "default_branch": "main",
+  "forks_count": 166,
+  "full_name": "lmstudio-ai/lmstudio-python",
+  "language": "Python",
+  "watchers_count": 880,
+  "subscribers_count": 12,
+  "stargazers_count": 880,
+  "archived": false,
+  "network_count": 166,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

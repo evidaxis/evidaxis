@@ -1,0 +1,51 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-10-12T15:46:12Z",
+  "date": "2026-10-12",
+  "period": "2026-w42",
+  "entity_count": 6328,
+  "error_count": 0,
+  "error_rate": 0.0,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [],
+  "observations_sha256": "da01cc11c88578ab69afd7804d66da8d6c39cf1d531f91711062c49e127b8746",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}

@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "android",
+    "crop-image",
+    "machine-learning"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 19909,
+  "homepage": "",
+  "id": 169598303,
+  "pushed_at": "2020-02-02T11:04:54Z",
+  "description": "A content-aware cropping library for Android",
+  "name": "glimpse-android",
+  "created_at": "2019-02-07T15:58:01Z",
+  "open_issues_count": 0,
+  "updated_at": "2026-08-09T08:26:09Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNjk1OTgzMDM=",
+  "default_branch": "master",
+  "forks_count": 30,
+  "full_name": "the-super-toys/glimpse-android",
+  "language": "Kotlin",
+  "watchers_count": 589,
+  "subscribers_count": 19,
+  "stargazers_count": 589,
+  "archived": false,
+  "network_count": 30,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

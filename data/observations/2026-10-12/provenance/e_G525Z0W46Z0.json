@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "large-language-models",
+    "neurosymbolic-ai",
+    "probabilistic-programming"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 50506,
+  "homepage": "",
+  "id": 572620767,
+  "pushed_at": "2026-10-01T15:17:10Z",
+  "description": "A neurosymbolic perspective on LLMs",
+  "name": "symbolicai",
+  "created_at": "2022-11-30T17:03:09Z",
+  "open_issues_count": 0,
+  "updated_at": "2026-10-11T05:42:49Z",
+  "node_id": "R_kgDOIiF_3w",
+  "default_branch": "main",
+  "forks_count": 96,
+  "full_name": "ExtensityAI/symbolicai",
+  "language": "Python",
+  "watchers_count": 1777,
+  "subscribers_count": 30,
+  "stargazers_count": 1777,
+  "archived": false,
+  "network_count": 96,
+  "owner_type": "Organization",
+  "license_spdx_id": "BSD-3-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

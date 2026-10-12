@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "super-resolution",
+    "vr",
+    "waifu2x"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 12971,
+  "homepage": "",
+  "id": 202088108,
+  "pushed_at": "2026-10-12T10:15:14Z",
+  "description": "Misc; latest version of waifu2x;  2D video to stereo 3D video conversion",
+  "name": "nunif",
+  "created_at": "2019-08-13T07:23:32Z",
+  "open_issues_count": 44,
+  "updated_at": "2026-10-12T13:21:23Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMDIwODgxMDg=",
+  "default_branch": "master",
+  "forks_count": 289,
+  "full_name": "nagadomi/nunif",
+  "language": "Python",
+  "watchers_count": 3498,
+  "subscribers_count": 35,
+  "stargazers_count": 3498,
+  "archived": false,
+  "network_count": 289,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "claude-code",
+    "mobile-ide"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 5782,
+  "homepage": "https://techjarves.github.io/Mobile-Harness/",
+  "id": 1340646366,
+  "pushed_at": "2026-10-11T07:10:44Z",
+  "description": "Claude Code on Android:  AI-powered mobile coding IDE for Android — chat with a coding agent, run Linux commands, edit files, review diffs, and preview web apps directly from your phone. No root required.",
+  "name": "Mobile-Harness",
+  "created_at": "2026-08-20T11:55:29Z",
+  "open_issues_count": 10,
+  "updated_at": "2026-10-12T15:07:54Z",
+  "node_id": "R_kgDOT-ij3g",
+  "default_branch": "main",
+  "forks_count": 182,
+  "full_name": "techjarves/Mobile-Harness",
+  "language": "Kotlin",
+  "watchers_count": 589,
+  "subscribers_count": 15,
+  "stargazers_count": 589,
+  "archived": false,
+  "network_count": 182,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

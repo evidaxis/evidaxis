@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "ai-agents",
+    "weixin"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 1647,
+  "homepage": "https://wechatbot.dev",
+  "id": 1189005012,
+  "pushed_at": "2026-09-29T17:18:16Z",
+  "description": "微信 iLink Bot SDK for OpenClaw/AI Agent",
+  "name": "wechatbot",
+  "created_at": "2026-03-22T21:39:30Z",
+  "open_issues_count": 19,
+  "updated_at": "2026-10-12T07:47:42Z",
+  "node_id": "R_kgDORt7G1A",
+  "default_branch": "main",
+  "forks_count": 91,
+  "full_name": "corespeed-io/wechatbot",
+  "language": "TypeScript",
+  "watchers_count": 672,
+  "subscribers_count": 0,
+  "stargazers_count": 672,
+  "archived": false,
+  "network_count": 91,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

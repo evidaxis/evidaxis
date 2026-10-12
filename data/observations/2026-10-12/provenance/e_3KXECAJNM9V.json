@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "deep-learning",
+    "vision"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 118,
+  "homepage": "",
+  "id": 364623340,
+  "pushed_at": "2025-07-07T15:59:57Z",
+  "description": "An All-MLP solution for Vision, from Google AI",
+  "name": "mlp-mixer-pytorch",
+  "created_at": "2021-05-05T15:29:05Z",
+  "open_issues_count": 4,
+  "updated_at": "2026-10-06T08:12:02Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNjQ2MjMzNDA=",
+  "default_branch": "main",
+  "forks_count": 107,
+  "full_name": "lucidrains/mlp-mixer-pytorch",
+  "language": "Python",
+  "watchers_count": 1068,
+  "subscribers_count": 10,
+  "stargazers_count": 1068,
+  "archived": false,
+  "network_count": 107,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

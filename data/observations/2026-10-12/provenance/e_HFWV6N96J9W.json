@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "fish-plugin",
+    "fisher"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 956,
+  "homepage": "",
+  "id": 739358043,
+  "pushed_at": "2026-10-12T14:28:33Z",
+  "description": "Supercharge your command line with LLMs and get shell scripting assistance in Fish. 💪",
+  "name": "fish-ai",
+  "created_at": "2024-01-05T11:22:49Z",
+  "open_issues_count": 1,
+  "updated_at": "2026-10-12T14:28:36Z",
+  "node_id": "R_kgDOLBG1Ww",
+  "default_branch": "main",
+  "forks_count": 47,
+  "full_name": "Realiserad/fish-ai",
+  "language": "Python",
+  "watchers_count": 562,
+  "subscribers_count": 2,
+  "stargazers_count": 562,
+  "archived": false,
+  "network_count": 47,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

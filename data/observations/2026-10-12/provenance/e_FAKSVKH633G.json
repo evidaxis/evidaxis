@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "common-sense",
+    "machine-learning",
+    "scikit-learn"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 33207,
+  "homepage": "https://koaning.github.io/scikit-lego/",
+  "id": 166836939,
+  "pushed_at": "2026-10-10T00:19:58Z",
+  "description": "Extra blocks for scikit-learn pipelines.",
+  "name": "scikit-lego",
+  "created_at": "2019-01-21T15:30:15Z",
+  "open_issues_count": 33,
+  "updated_at": "2026-10-09T18:45:37Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNjY4MzY5Mzk=",
+  "default_branch": "main",
+  "forks_count": 133,
+  "full_name": "koaning/scikit-lego",
+  "language": "Python",
+  "watchers_count": 1411,
+  "subscribers_count": 17,
+  "stargazers_count": 1411,
+  "archived": false,
+  "network_count": 133,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "agent",
+    "chatbot",
+    "llm"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 9953,
+  "homepage": "",
+  "id": 948663423,
+  "pushed_at": "2026-06-10T00:01:09Z",
+  "description": "智能闲鱼客服机器人系统：专为闲鱼平台打造的AI值守解决方案，实现闲鱼平台7×24小时自动化值守，支持多专家协同决策、智能议价和上下文感知对话。",
+  "name": "XianyuAutoAgent",
+  "created_at": "2025-03-14T18:22:25Z",
+  "open_issues_count": 56,
+  "updated_at": "2026-10-12T14:59:36Z",
+  "node_id": "R_kgDOOIt0fw",
+  "default_branch": "main",
+  "forks_count": 1648,
+  "full_name": "shaxiu/XianyuAutoAgent",
+  "language": "Python",
+  "watchers_count": 9348,
+  "subscribers_count": 53,
+  "stargazers_count": 9348,
+  "archived": false,
+  "network_count": 1648,
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

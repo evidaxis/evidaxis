@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "evaluation",
+    "llm",
+    "llmops"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 47555,
+  "homepage": "https://docs.ragas.io",
+  "id": 637924634,
+  "pushed_at": "2026-02-24T07:47:19Z",
+  "description": "Supercharge Your LLM Application Evaluations 🚀",
+  "name": "ragas",
+  "created_at": "2023-05-08T17:48:04Z",
+  "open_issues_count": 634,
+  "updated_at": "2026-10-12T15:23:07Z",
+  "node_id": "R_kgDOJgX1Gg",
+  "default_branch": "main",
+  "forks_count": 1755,
+  "full_name": "vibrantlabsai/ragas",
+  "language": "Python",
+  "watchers_count": 16001,
+  "subscribers_count": 66,
+  "stargazers_count": 16001,
+  "archived": false,
+  "network_count": 1755,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

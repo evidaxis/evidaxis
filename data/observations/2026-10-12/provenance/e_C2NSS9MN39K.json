@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "nlp",
+    "offline-first",
+    "search"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 22132,
+  "homepage": "",
+  "id": 11170365,
+  "pushed_at": "2026-10-05T05:53:30Z",
+  "description": "A persistent, network resilient, full text search library for the browser and Node.js",
+  "name": "search-index",
+  "created_at": "2013-07-04T07:56:35Z",
+  "open_issues_count": 9,
+  "updated_at": "2026-10-09T17:49:31Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMTE3MDM2NQ==",
+  "default_branch": "master",
+  "forks_count": 146,
+  "full_name": "fergiemcdowall/search-index",
+  "language": "JavaScript",
+  "watchers_count": 1421,
+  "subscribers_count": 30,
+  "stargazers_count": 1421,
+  "archived": false,
+  "network_count": 146,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

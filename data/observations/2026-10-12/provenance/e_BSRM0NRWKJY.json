@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "machine-learning",
+    "optimization"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 11162,
+  "homepage": "https://optax.readthedocs.io",
+  "id": 271834742,
+  "pushed_at": "2026-10-09T16:14:53Z",
+  "description": "Optax is a gradient processing and optimization library for JAX.",
+  "name": "optax",
+  "created_at": "2020-06-12T15:45:35Z",
+  "open_issues_count": 138,
+  "updated_at": "2026-10-12T14:23:10Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNzE4MzQ3NDI=",
+  "default_branch": "main",
+  "forks_count": 376,
+  "full_name": "google-deepmind/optax",
+  "language": "Python",
+  "watchers_count": 2348,
+  "subscribers_count": 32,
+  "stargazers_count": 2348,
+  "archived": false,
+  "network_count": 376,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

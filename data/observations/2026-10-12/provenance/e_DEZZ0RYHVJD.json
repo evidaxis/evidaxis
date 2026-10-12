@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "evaluation",
+    "language-model",
+    "nlp"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 79928,
+  "homepage": "",
+  "id": 244234547,
+  "pushed_at": "2026-09-02T03:20:17Z",
+  "description": "AutoPrompt: Automatic Prompt Construction for Masked Language Models.",
+  "name": "autoprompt",
+  "created_at": "2020-03-01T22:35:04Z",
+  "open_issues_count": 12,
+  "updated_at": "2026-10-03T03:36:38Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNDQyMzQ1NDc=",
+  "default_branch": "master",
+  "forks_count": 86,
+  "full_name": "ucinlp/autoprompt",
+  "language": "Python",
+  "watchers_count": 642,
+  "subscribers_count": 10,
+  "stargazers_count": 642,
+  "archived": false,
+  "network_count": 86,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

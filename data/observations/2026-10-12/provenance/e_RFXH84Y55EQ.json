@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "agent",
+    "markdown",
+    "note-taking"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 47225,
+  "homepage": "",
+  "id": 1263494700,
+  "pushed_at": "2026-10-12T16:03:52Z",
+  "description": "Open-source Reflect rewrite: A local-first AI agent-friendly Markdown note-taking app",
+  "name": "reflect-open",
+  "created_at": "2026-06-09T02:23:15Z",
+  "open_issues_count": 105,
+  "updated_at": "2026-10-12T12:27:58Z",
+  "node_id": "R_kgDOS09mLA",
+  "default_branch": "master",
+  "forks_count": 133,
+  "full_name": "team-reflect/reflect-open",
+  "language": "TypeScript",
+  "watchers_count": 1576,
+  "subscribers_count": 6,
+  "stargazers_count": 1576,
+  "archived": false,
+  "network_count": 133,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

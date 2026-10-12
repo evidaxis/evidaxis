@@ -1,0 +1,31 @@
+{
+  "private": false,
+  "topics": [
+    "ai-agents"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 2390,
+  "homepage": "https://steipete.me",
+  "id": 1092116209,
+  "pushed_at": "2026-10-12T07:41:44Z",
+  "description": "Scripts for agents, shared between my repositories.",
+  "name": "agent-scripts",
+  "created_at": "2025-11-08T02:55:55Z",
+  "open_issues_count": 0,
+  "updated_at": "2026-10-12T12:29:50Z",
+  "node_id": "R_kgDOQRhe8Q",
+  "default_branch": "main",
+  "forks_count": 642,
+  "full_name": "steipete/agent-scripts",
+  "language": "Shell",
+  "watchers_count": 7347,
+  "subscribers_count": 65,
+  "stargazers_count": 7347,
+  "archived": false,
+  "network_count": 642,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

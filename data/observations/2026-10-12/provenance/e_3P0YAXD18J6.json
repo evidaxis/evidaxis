@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "deep-learning",
+    "deep-reinforcement-learning"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 176,
+  "homepage": null,
+  "id": 106249690,
+  "pushed_at": "2022-01-13T01:24:38Z",
+  "description": "Rainbow: Combining Improvements in Deep Reinforcement Learning",
+  "name": "Rainbow",
+  "created_at": "2017-10-09T07:21:24Z",
+  "open_issues_count": 9,
+  "updated_at": "2026-10-06T18:38:09Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMDYyNDk2OTA=",
+  "default_branch": "master",
+  "forks_count": 294,
+  "full_name": "Kaixhin/Rainbow",
+  "language": "Python",
+  "watchers_count": 1673,
+  "subscribers_count": 37,
+  "stargazers_count": 1673,
+  "archived": false,
+  "network_count": 294,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

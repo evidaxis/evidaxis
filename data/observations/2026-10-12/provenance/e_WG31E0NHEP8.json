@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "english-language",
+    "language-model",
+    "machine-learning"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 237,
+  "homepage": "",
+  "id": 583172165,
+  "pushed_at": "2024-06-13T07:56:48Z",
+  "description": "Cramming the training of a (BERT-type) language model into limited compute.",
+  "name": "cramming",
+  "created_at": "2022-12-29T01:29:41Z",
+  "open_issues_count": 0,
+  "updated_at": "2026-10-09T18:45:58Z",
+  "node_id": "R_kgDOIsKARQ",
+  "default_branch": "main",
+  "forks_count": 105,
+  "full_name": "JonasGeiping/cramming",
+  "language": "Python",
+  "watchers_count": 1368,
+  "subscribers_count": 19,
+  "stargazers_count": 1368,
+  "archived": false,
+  "network_count": 105,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

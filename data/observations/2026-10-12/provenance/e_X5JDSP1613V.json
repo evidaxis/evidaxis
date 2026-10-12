@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "topics": [
+    "literature-review",
+    "mcp-server",
+    "zotero"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 10139,
+  "homepage": "",
+  "id": 1037892603,
+  "pushed_at": "2026-09-09T14:08:09Z",
+  "description": "It's a plugin extension in Zotero.  Zotero MCP Plugin enables integration between AI assistants and Zotero through MCP. Zotero MCP Plugin 是一个 Zotero 插件，通过 MCP协议实现 AI 助手与 Zotero深度集成。插件支持文献检索、元   数据管理、全文分析和智能问答等功能，让 Claude、ChatGPT 等 AI 工具能够直接访问和操作您的文献库。",
+  "name": "zotero-mcp",
+  "created_at": "2025-08-14T09:31:55Z",
+  "open_issues_count": 20,
+  "updated_at": "2026-10-12T14:00:17Z",
+  "node_id": "R_kgDOPdz7-w",
+  "default_branch": "main",
+  "forks_count": 102,
+  "full_name": "cookjohn/zotero-mcp",
+  "language": "TypeScript",
+  "watchers_count": 1226,
+  "subscribers_count": 7,
+  "stargazers_count": 1226,
+  "archived": false,
+  "network_count": 102,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

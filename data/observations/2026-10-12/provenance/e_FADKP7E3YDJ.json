@@ -1,0 +1,31 @@
+{
+  "private": false,
+  "topics": [
+    "unsloth"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 143398,
+  "homepage": "https://unsloth.ai/docs",
+  "id": 900487856,
+  "pushed_at": "2026-10-12T14:37:26Z",
+  "description": "250+ Fine-tuning & RL Notebooks for text, vision, audio, embedding, TTS models.",
+  "name": "notebooks",
+  "created_at": "2024-12-08T22:14:50Z",
+  "open_issues_count": 70,
+  "updated_at": "2026-10-12T14:37:03Z",
+  "node_id": "R_kgDONaxasA",
+  "default_branch": "main",
+  "forks_count": 950,
+  "full_name": "unslothai/notebooks",
+  "language": "Jupyter Notebook",
+  "watchers_count": 5738,
+  "subscribers_count": 38,
+  "stargazers_count": 5738,
+  "archived": false,
+  "network_count": 950,
+  "owner_type": "Organization",
+  "license_spdx_id": "LGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

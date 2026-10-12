@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "android",
+    "reinforcement-learning"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 195677,
+  "homepage": "",
+  "id": 360111507,
+  "pushed_at": "2026-10-10T21:17:07Z",
+  "description": "RL research on Android devices.",
+  "name": "android_env",
+  "created_at": "2021-04-21T09:34:44Z",
+  "open_issues_count": 18,
+  "updated_at": "2026-10-09T09:53:48Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNjAxMTE1MDc=",
+  "default_branch": "main",
+  "forks_count": 122,
+  "full_name": "google-deepmind/android_env",
+  "language": "Python",
+  "watchers_count": 1247,
+  "subscribers_count": 28,
+  "stargazers_count": 1247,
+  "archived": false,
+  "network_count": 122,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

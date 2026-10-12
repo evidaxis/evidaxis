@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "large-language-models",
+    "structured-generation"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 15916,
+  "homepage": "https://xgrammar.mlc.ai/docs",
+  "id": 821257066,
+  "pushed_at": "2026-10-12T01:14:47Z",
+  "description": "Fast, Flexible and Portable Structured Generation",
+  "name": "xgrammar",
+  "created_at": "2024-06-28T06:34:27Z",
+  "open_issues_count": 113,
+  "updated_at": "2026-10-12T13:17:08Z",
+  "node_id": "R_kgDOMPNjag",
+  "default_branch": "main",
+  "forks_count": 228,
+  "full_name": "mlc-ai/xgrammar",
+  "language": "Python",
+  "watchers_count": 1954,
+  "subscribers_count": 17,
+  "stargazers_count": 1954,
+  "archived": false,
+  "network_count": 228,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

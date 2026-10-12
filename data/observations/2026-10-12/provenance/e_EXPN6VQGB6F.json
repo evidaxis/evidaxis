@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "generative-ai",
+    "machine-learning"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 1481326,
+  "homepage": "https://www.comfy.org/",
+  "id": 814403270,
+  "pushed_at": "2026-10-12T15:46:22Z",
+  "description": "Official front-end implementation of ComfyUI",
+  "name": "ComfyUI_frontend",
+  "created_at": "2024-06-13T00:22:24Z",
+  "open_issues_count": 2951,
+  "updated_at": "2026-10-12T15:46:28Z",
+  "node_id": "R_kgDOMIrOxg",
+  "default_branch": "main",
+  "forks_count": 733,
+  "full_name": "Comfy-Org/ComfyUI_frontend",
+  "language": "TypeScript",
+  "watchers_count": 2060,
+  "subscribers_count": 20,
+  "stargazers_count": 2060,
+  "archived": false,
+  "network_count": 733,
+  "owner_type": "Organization",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

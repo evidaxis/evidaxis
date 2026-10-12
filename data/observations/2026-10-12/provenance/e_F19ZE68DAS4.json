@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "aigc",
+    "video-generation"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 8346,
+  "homepage": "https://wan.video",
+  "id": 1027579552,
+  "pushed_at": "2026-09-21T06:16:22Z",
+  "description": "Wan: Open and Advanced Large-Scale Video Generative Models",
+  "name": "Wan2.2",
+  "created_at": "2025-07-28T08:17:01Z",
+  "open_issues_count": 317,
+  "updated_at": "2026-10-12T14:31:37Z",
+  "node_id": "R_kgDOPT-eoA",
+  "default_branch": "main",
+  "forks_count": 2314,
+  "full_name": "Wan-Video/Wan2.2",
+  "language": "Python",
+  "watchers_count": 17880,
+  "subscribers_count": 129,
+  "stargazers_count": 17880,
+  "archived": false,
+  "network_count": 2314,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

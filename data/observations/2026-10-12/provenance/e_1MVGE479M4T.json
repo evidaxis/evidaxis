@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "topics": [
+    "text-to-speech",
+    "tts"
+  ],
+  "disabled": false,
+  "visibility": "public",
+  "fork": false,
+  "size": 20121,
+  "homepage": "https://huggingface.co/spaces/ekwek/Soprano-TTS",
+  "id": 1107251597,
+  "pushed_at": "2026-01-15T16:32:56Z",
+  "description": "Soprano: Instant, Ultra-Realistic Text-to-Speech",
+  "name": "soprano",
+  "created_at": "2025-11-30T21:24:52Z",
+  "open_issues_count": 19,
+  "updated_at": "2026-10-12T08:54:09Z",
+  "node_id": "R_kgDOQf9RjQ",
+  "default_branch": "main",
+  "forks_count": 139,
+  "full_name": "ekwek1/soprano",
+  "language": "Python",
+  "watchers_count": 1614,
+  "subscribers_count": 34,
+  "stargazers_count": 1614,
+  "archived": false,
+  "network_count": 139,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
