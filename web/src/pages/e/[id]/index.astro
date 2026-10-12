@@ -49,7 +49,10 @@ const cohortRanked = isSuperseded
   ? snapshot.entities.filter((x) => x.cohort === e.cohort).sort((a, b) => (b.momentum ?? -1) - (a.momentum ?? -1))
   : entitiesInCohort(e.cohort);
 const cohortN = cohortRanked.length;
-const indLabel = isSuperseded ? cleanLabel(e.industry) : [...industries().values()].find((i) => i.slug === e.industry)?.label ?? e.industry;
+// A record absent from the latest snapshot (declared gap or departed seed) keeps its
+// field's reader label; the raw slug is only the fallback for a field that no longer
+// exists (2026-10-12: a one-week /stats gap turned "ai agents" into "ai-agents").
+const indLabel = [...industries().values()].find((i) => i.slug === e.industry)?.label ?? cleanLabel(e.industry);
 const cohortName = cleanLabel(snapshot.cohorts?.[e.cohort]?.label ?? e.sub_niche);
 const related = cohortRanked.filter((x) => x.entity_id !== e.entity_id).slice(0, 6);
 const crumbs = breadcrumb([
