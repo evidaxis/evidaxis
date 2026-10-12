@@ -13,11 +13,11 @@ classification:
   industry: ml-infrastructure
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 31.1
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 24.2
   percentile: 0
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.02297222776752933, "cohort_z": -1.516, "recent_weekly_commits": 3.3, "stars_not_scored": 75295}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 395, "by_year": {"2026": 169, "2025": 191, "2024": 35}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 4, "points": 24, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    github_commit_velocity: {"slope": -0.05263142851267536, "cohort_z": -2.065, "recent_weekly_commits": 2.7, "stars_not_scored": 75423}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 402, "by_year": {"2026": 178, "2025": 190, "2024": 34}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 4, "points": 26, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: 2403.13372; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # LLaMA-Factory
 
-Evidaxis measures **LLaMA-Factory** on methodology m3. Momentum 31.1/100; 1 axes present, 0 axes converging.
+Evidaxis measures **LLaMA-Factory** on methodology m4. Momentum 24.2/100; 1 axes present, 0 axes converging.

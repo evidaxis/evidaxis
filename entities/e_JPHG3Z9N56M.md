@@ -13,11 +13,11 @@ classification:
   industry: ai-agents
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 43.2
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 43.4
   percentile: 33
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.007887472841719761, "cohort_z": -0.541, "recent_weekly_commits": 0.0, "stars_not_scored": 1911}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 26, "by_year": {"2026": 20, "2025": 6}, "proxy": null}
+    github_commit_velocity: {"slope": -0.009389848621094952, "cohort_z": -0.531, "recent_weekly_commits": 0.0, "stars_not_scored": 1917}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 28, "by_year": {"2026": 22, "2025": 6}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # ShowUI
 
-Evidaxis measures **ShowUI** on methodology m3. Momentum 43.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **ShowUI** on methodology m4. Momentum 43.4/100; 1 axes present, 0 axes converging.

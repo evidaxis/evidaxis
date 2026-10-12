@@ -13,25 +13,25 @@ classification:
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 49.9
-  percentile: 46
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 57.6
+  percentile: 77
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: ["github_commit_velocity"]
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": 0.031605607475975656, "cohort_z": 1.166, "recent_weekly_commits": 78.3, "stars_not_scored": 6538}
+    github_commit_velocity: {"slope": 0.06065302942504479, "cohort_z": 2.182, "recent_weekly_commits": 89.3, "stars_not_scored": 6592}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 4, "by_year": {"2026": 3, "2025": 1}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.021013, "theil_sen": 0.020489, "cohort_z": -1.18, "latest": 14, "points": 24, "points_reconstructable": 15, "as_of_partition": "2026-09-14", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.022328, "theil_sen": 0.022129, "cohort_z": -0.967, "latest": 15, "points": 26, "points_reconstructable": 15, "as_of_partition": "2026-09-28", "unstable": false, "rising_vote": false}
 ---
 
 # FlashInfer
 
-Evidaxis measures **FlashInfer** on methodology m3. Momentum 49.9/100; 2 axes present, 1 axes converging.
+Evidaxis measures **FlashInfer** on methodology m4. Momentum 57.6/100; 2 axes present, 1 axes converging.
 
-This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.
+This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

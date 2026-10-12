@@ -1,0 +1,90 @@
+{
+ "snapshot_date": "2026-10-10",
+ "departures": [
+  {
+   "github_repo": "1bananachicken/MaaNTE",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "aimeoa/hanshuang-codex",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "archie0732/healthy-diet-ai-agent",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "astrio-labs/forall",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "henrywoo/pyllama",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "HiThink-Tech/Financial-API",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "Jwuthri/Tracely-ai",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "lingbol088-spec/reverse-flow-skill",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "LockedinLabs-AI/agent-console",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "LycheeMem/LycheeMem",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "QuintinShaw/pi-dynamic-workflows",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "SamurAIGPT/Generative-Media-Skills",
+   "reason": "repo_id_changed",
+   "old_repo_id": 645381450,
+   "new_repo_id": 1396148056,
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "SamurAIGPT/Text-To-Video-AI",
+   "reason": "repo_id_changed",
+   "old_repo_id": 811339757,
+   "new_repo_id": 1409906698,
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "Scottcjn/Rustchain",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "wrtnlabs/agentica",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  },
+  {
+   "github_repo": "wrtnlabs/autobe",
+   "reason": "gone",
+   "detected_at": "2026-10-12T10:58:42Z"
+  }
+ ],
+ "note": "Seeds retired by the weekly preflight (collectors/gh_graphql.py): the repository is gone on GitHub or its name now resolves to a different repository id. Their history and archived cards stay; they are no longer collected."
+}

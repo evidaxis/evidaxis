@@ -13,11 +13,11 @@ classification:
   industry: robotics
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 47.8
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 45.6
   percentile: 27
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": -0.006385097062344568, "cohort_z": -0.062, "recent_weekly_commits": 0.0, "stars_not_scored": 3146}
-    openalex_citation_momentum: {"status": "present", "slope": 0.22374984964659989, "cohort_z": -0.297, "total_citations": 1210, "by_year": {"2026": 119, "2025": 204, "2024": 195, "2023": 181, "2022": 151, "2021": 203, "2020": 124, "2019": 32, "2018": 1}, "proxy": null}
+    github_commit_velocity: {"slope": -0.007887472841719761, "cohort_z": -0.408, "recent_weekly_commits": 0.0, "stars_not_scored": 3156}
+    openalex_citation_momentum: {"status": "present", "slope": 0.22355307622477955, "cohort_z": -0.3, "total_citations": 1217, "by_year": {"2026": 127, "2025": 204, "2024": 195, "2023": 180, "2022": 151, "2021": 203, "2020": 124, "2019": 32, "2018": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "OpenAlex undercounts vs Scholar; slope direction usable, magnitude not."
 ---
 
 # Habitat-Lab
 
-Evidaxis measures **Habitat-Lab** on methodology m3. Momentum 47.8/100; 2 axes present, 0 axes converging.
+Evidaxis measures **Habitat-Lab** on methodology m4. Momentum 45.6/100; 2 axes present, 0 axes converging.

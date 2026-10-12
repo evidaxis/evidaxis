@@ -13,26 +13,26 @@ classification:
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 58.2
-  percentile: 77
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 50.5
+  percentile: 54
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
-  convergent_axes: ["github_commit_velocity"]
+  convergent_axes: []
   rising: false
-  status: watch
+  status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.010214631813385744, "cohort_z": 1.312, "recent_weekly_commits": 23.4, "stars_not_scored": 182128}
+    github_commit_velocity: {"slope": 0.009329993378416347, "cohort_z": 0.072, "recent_weekly_commits": 22.2, "stars_not_scored": 182835}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.013256, "theil_sen": 0.013413, "cohort_z": 0.0, "latest": 1087, "points": 24, "points_reconstructable": 15, "as_of_partition": "2026-09-14", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.012423, "theil_sen": 0.0125, "cohort_z": 0.0, "latest": 1097, "points": 26, "points_reconstructable": 15, "as_of_partition": "2026-09-28", "unstable": false, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Ollama
 
-Evidaxis measures **Ollama** on methodology m3. Momentum 58.2/100; 2 axes present, 1 axes converging.
+Evidaxis measures **Ollama** on methodology m4. Momentum 50.5/100; 2 axes present, 0 axes converging.
 
-This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.
+This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

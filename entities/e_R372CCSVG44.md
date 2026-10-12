@@ -13,26 +13,26 @@ classification:
   industry: ml-infrastructure
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 41.4
-  percentile: 15
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 41.7
+  percentile: 23
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
   rising: false
   status: calibration
   axes:
-    github_commit_velocity: {"slope": -0.0076680414084316535, "cohort_z": 0.427, "recent_weekly_commits": 518.1, "stars_not_scored": 93129}
-    openalex_citation_momentum: {"status": "present", "slope": 2.157910028217807, "cohort_z": null, "total_citations": 1624, "by_year": {"2026": 855, "2025": 598, "2024": 164, "2023": 7}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.008256, "theil_sen": 0.008218, "cohort_z": -1.796, "latest": 150, "points": 24, "points_reconstructable": 15, "as_of_partition": "2026-09-14", "unstable": false, "rising_vote": false}
+    github_commit_velocity: {"slope": 0.02408545386851401, "cohort_z": 0.673, "recent_weekly_commits": 582.3, "stars_not_scored": 93625}
+    openalex_citation_momentum: {"status": "present", "slope": 2.1570746061353976, "cohort_z": null, "total_citations": 1669, "by_year": {"2026": 904, "2025": 597, "2024": 161, "2023": 7}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.006725, "theil_sen": 0.007042, "cohort_z": -2.003, "latest": 152, "points": 26, "points_reconstructable": 15, "as_of_partition": "2026-09-28", "unstable": false, "rising_vote": false}
 note: "paper_ref: 2309.06180; incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # vLLM
 
-Evidaxis measures **vLLM** on methodology m3. Momentum 41.4/100; 2 axes present, 0 axes converging.
+Evidaxis measures **vLLM** on methodology m4. Momentum 41.7/100; 2 axes present, 0 axes converging.
 
-This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.
+This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

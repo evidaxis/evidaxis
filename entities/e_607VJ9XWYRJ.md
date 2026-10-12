@@ -13,24 +13,24 @@ classification:
   industry: ml-infrastructure
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 40.0
-  percentile: 20
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 36.3
+  percentile: 7
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.014752624649691713, "cohort_z": -0.804, "recent_weekly_commits": 25.8, "stars_not_scored": 23740}
+    github_commit_velocity: {"slope": -0.031455993095493746, "cohort_z": -1.098, "recent_weekly_commits": 24.1, "stars_not_scored": 23834}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 0, "points": 2, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: 2409.19256; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # verl
 
-Evidaxis measures **verl** on methodology m3. Momentum 40.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **verl** on methodology m4. Momentum 36.3/100; 1 axes present, 0 axes converging.

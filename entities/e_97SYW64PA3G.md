@@ -13,26 +13,26 @@ classification:
   industry: ai-agents
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 80.9
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 69.8
   percentile: 100
-  confidence: high
+  confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
-  convergent_axes: ["github_commit_velocity", "deps_direct_dependents_momentum"]
-  rising: true
-  status: rising
+  convergent_axes: ["github_commit_velocity"]
+  rising: false
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.08665107923507273, "cohort_z": 3.11, "recent_weekly_commits": 23.9, "stars_not_scored": 32725}
+    github_commit_velocity: {"slope": 0.06293619511634248, "cohort_z": 2.38, "recent_weekly_commits": 25.6, "stars_not_scored": 33116}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 9, "by_year": {"2026": 3, "2025": 4, "2024": 2}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.052698, "theil_sen": 0.046235, "cohort_z": 1.835, "latest": 29, "points": 24, "points_reconstructable": 15, "as_of_partition": "2026-09-14", "unstable": false, "rising_vote": true}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.047849, "theil_sen": 0.041764, "cohort_z": 0.787, "latest": 31, "points": 26, "points_reconstructable": 15, "as_of_partition": "2026-09-28", "unstable": false, "rising_vote": false}
 note: "paper_ref: 2402.14034; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # AgentScope
 
-Evidaxis measures **AgentScope** on methodology m3. Momentum 80.9/100; 2 axes present, 2 axes converging.
+Evidaxis measures **AgentScope** on methodology m4. Momentum 69.8/100; 2 axes present, 1 axes converging.
 
-This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.
+This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

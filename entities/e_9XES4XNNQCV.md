@@ -13,23 +13,23 @@ classification:
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 56.6
-  percentile: 78
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 58.0
+  percentile: 94
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: ["openalex_citation_momentum"]
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.047, "recent_weekly_commits": 0.0, "stars_not_scored": 637}
-    openalex_citation_momentum: {"status": "present", "slope": 1.3772851083685516, "cohort_z": 1.11, "total_citations": 253, "by_year": {"2026": 76, "2025": 109, "2024": 62, "2023": 6}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.602, "recent_weekly_commits": 0.0, "stars_not_scored": 638}
+    openalex_citation_momentum: {"status": "present", "slope": 1.787108272896898, "cohort_z": 1.89, "total_citations": 240, "by_year": {"2026": 77, "2025": 106, "2024": 55, "2023": 2}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # SaProt
 
-Evidaxis measures **SaProt** on methodology m3. Momentum 56.6/100; 2 axes present, 1 axes converging.
+Evidaxis measures **SaProt** on methodology m4. Momentum 58.0/100; 2 axes present, 1 axes converging.

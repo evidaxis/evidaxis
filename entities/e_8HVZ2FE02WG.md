@@ -13,24 +13,24 @@ classification:
   industry: ai-for-science
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 67.5
-  percentile: 83
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 67.9
+  percentile: 100
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.010996595460534938, "cohort_z": 3.012, "recent_weekly_commits": 0.3, "stars_not_scored": 2477}
-    openalex_citation_momentum: {"status": "present", "slope": 0.08229747358323843, "cohort_z": -0.209, "total_citations": 130, "by_year": {"2026": 8, "2025": 22, "2024": 26, "2023": 29, "2022": 31, "2021": 13, "2020": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.007847761145329405, "cohort_z": 3.154, "recent_weekly_commits": 0.3, "stars_not_scored": 2481}
+    openalex_citation_momentum: {"status": "present", "slope": 0.10720968454482742, "cohort_z": -0.296, "total_citations": 125, "by_year": {"2026": 8, "2025": 22, "2024": 27, "2023": 26, "2022": 29, "2021": 12, "2020": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "OpenAlex undercounts; slope declining post-2022."
 ---
 
 # Graphormer
 
-Evidaxis measures **Graphormer** on methodology m3. Momentum 67.5/100; 2 axes present, 0 axes converging.
+Evidaxis measures **Graphormer** on methodology m4. Momentum 67.9/100; 2 axes present, 0 axes converging.

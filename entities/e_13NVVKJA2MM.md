@@ -13,26 +13,24 @@ classification:
   industry: ai-agents
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 40.5
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 29.8
   percentile: 0
-  confidence: medium
-  axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
+  confidence: low
+  axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: calibration
   axes:
-    github_commit_velocity: {"slope": -0.04836931620048213, "cohort_z": -1.777, "recent_weekly_commits": 10.7, "stars_not_scored": 42680}
+    github_commit_velocity: {"slope": -0.04398228851983088, "cohort_z": -1.618, "recent_weekly_commits": 12.2, "stars_not_scored": 43122}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.026315, "theil_sen": 0.025565, "cohort_z": 0.258, "latest": 1759, "points": 24, "points_reconstructable": 15, "as_of_partition": "2026-09-14", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "incumbent (calibration); batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # LangGraph
 
-Evidaxis measures **LangGraph** on methodology m3. Momentum 40.5/100; 2 axes present, 0 axes converging.
-
-This axis measures the frozen-panel trajectory of the package set selected and linkage-verified as of 2026-07-21. Systems outside that panel are not measured on this axis. Residual survivorship beyond the frozen universe is disclosed, not denied.
+Evidaxis measures **LangGraph** on methodology m4. Momentum 29.8/100; 1 axes present, 0 axes converging.

@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 9d2fe956adbc
-  captured_at: 2026-09-26T22:11:54+00:00
-  period: 2026-w39
-  momentum: 13.0
-  percentile: 11
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
+  momentum: 62.0
+  percentile: 80
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.05158344002463988, "cohort_z": -2.958, "recent_weekly_commits": 16.0, "stars_not_scored": 759}
+    github_commit_velocity: {"slope": 0.013348879397749, "cohort_z": 0.96, "recent_weekly_commits": 63.6, "stars_not_scored": 776}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # hippo-memory
 
-Evidaxis measures **hippo-memory** on methodology m3. Momentum 13.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **hippo-memory** on methodology m4. Momentum 62.0/100; 1 axes present, 0 axes converging.

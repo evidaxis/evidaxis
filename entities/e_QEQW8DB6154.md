@@ -13,12 +13,12 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
+  methodology_version: m4
+  snapshot_id: ad5e404d4f82
+  captured_at: 2026-10-12T12:11:36+00:00
+  period: 2026-w41
   momentum: 50.0
-  percentile: 46
+  percentile: 48
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # claw-compactor
 
-Evidaxis measures **claw-compactor** on methodology m3. Momentum 50.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **claw-compactor** on methodology m4. Momentum 50.0/100; 1 axes present, 0 axes converging.
