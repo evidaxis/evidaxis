@@ -629,3 +629,46 @@ captured after the snapshot's `captured_at` (2026-10-04T02:32Z), and the new san
 uncommitted, so `sanity_as_of` cannot see it. Candidates not checked here: the 6ac880704 card repair
 (run crossing 00:00 UTC), the October census activation (b160809ce). The published snapshot is left
 untouched (immutable); diagnosis routed to a separate session.
+
+## 2026-10-12 — tact: partition 2026-10-05, 6/6; score_m3 --verify DRIFT (same known case)
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-10-05` — panel **90 systems / 628 packages**,
+**64/90 matched**, 10 canaries, manifest `026eaa45377a…`, job `bqjob_r1e9b93d4aef93e09…` (6 min 13 s).
+Same frozen panel and match count as the three previous partitions. The partition is dated before
+the m4 activation (2026-10-10), so it uses the v2h.1 mapping (METHODOLOGY-M4 §4: the switch follows
+the partition date).
+
+**Sidecar** (`--sidecar 2026-10-05`): PV2P 1154 rows, Projects 4244 rows, retention tripwire
+{earliest 20230410 · latest 20261005 · n 181 · rows_total 1,077,185,065,428}.
+
+**Sanity gate** (same calibration, `--series v2h1`): 29 partitions checked; **2026-09-28 promoted
+CLEAN** (cov=64); 2026-10-05 PROVISIONAL (cov=64). KILL-BAR PASS, flagged exactly the two
+known-bad partitions. Artifact `data/quarantine/axis3-deps-v2/sanity-check-375341ddb0de.json`.
+
+**Evaluation** (`--as-of 2026-09-28 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-09-28**, 48 voting / 7 rising, 0 unstable-vetoed.
+**c1–c6 PASS — 6/6.** Rising set vs the 2026-09-21 evaluation: MuJoCo in, OpenCode out, six kept.
+Artifact `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-09-28-c517699fa382.json`.
+
+**`score_m3.py --verify`: DRIFT** on the latest published snapshot, 2026-10-03 (same 4 files as the
+2026-10-05 tact). Recomputation differs in exactly the case of
+`ERRATUM-2026-10-05-axis3-two-member-rounding.md`: Kokoro-82M (`e_MB6DQ5PDDKH`) axis-3 `cohort_z`
+-0.674 published vs 0.0, momentum 46.6 vs 50.8, and the FLUX.1 (`e_R2KZCZM6TGV`) percentile 36 vs 29;
+no other record, no snapshot-level field. The erratum states that on a platform other than the one
+that built a snapshot `--verify` can show this drift for a two-member cohort, and that the exact
+arithmetic ships as a PATCH version from the 2026-10-17 snapshot. Nothing new; the published
+snapshot is untouched.
+
+**m4 check.** No record in `governance/` or `methodology/` changes a tact command. METHODOLOGY-M4
+§7: "m3 keeps `score_m3.py --verify` over 2026-09-19 … 2026-10-03"; `score_m3.py` is the same
+entrypoint for m4 snapshots dated 2026-10-10 and later. No such snapshot exists yet (see below), so
+verify ran on 2026-10-03. Next tact: the partition 2026-10-12 is the first one captured under the m4
+mapping (`panel_for_partition` switches at 2026-10-10).
+
+**Off-tact finding.** The weekly snapshot run for 2026-10-10 (the first m4 snapshot, run
+38052906586) failed: "11 seeded repositories are gone on GitHub (REST 404/410/451)". The latest
+published snapshot is still 2026-10-03; the feed and capture-freshness checks on the repository
+are alerting (feed.json 8 days old, newest archive snapshot over budget). Not part of this tact and
+not touched; uncommitted edits in `.github/workflows/weekly-snapshot.yml`, `collectors/gh_graphql.py`
+and `collectors/owner_classify.py` in the working tree belong to another session and are not in
+this commit. Artifacts of this tact are committed in the same tact.
