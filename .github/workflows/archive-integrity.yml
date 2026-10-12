@@ -72,29 +72,13 @@ jobs:
       - name: Universe expansion requires a discovery-frontier manifest
         # The candidate-pool denominator is un-backfillable: adding/removing a tracked
         # system without a paired dated frontier manifest repeats the 19->103 loss.
-        # Trigger ONLY on an actual universe change (added/removed "github_repo" lines),
+        # Trigger ONLY on an actual universe change (the tracked repository set differs),
         # NOT on cosmetic seeds.json edits (a meta note, a label) — those need no manifest.
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
-        run: |
-          UNIVERSE_CHANGED=$(git diff "${{ github.event.before }}" "${{ github.sha }}" -- etl/seeds.json | grep -E '^[+-][[:space:]]*"github_repo"' || true)
-          # Removals only (repositories gone from GitHub) are paired with the weekly
-          # preflight's declared departures record instead: no candidate pool was scanned.
-          ADDED=$(printf '%s\n' "$UNIVERSE_CHANGED" | grep -E '^\+' || true)
-          DEPARTURES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/seed-departures.json' || true)
-          if [ -n "$UNIVERSE_CHANGED" ] && [ -z "$ADDED" ] && [ -n "$DEPARTURES" ]; then
-            echo "tracked systems only removed, paired with declared departures: $DEPARTURES"
-          elif [ -n "$UNIVERSE_CHANGED" ]; then
-            FRONTIER=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- 'data/observations/*/discovery-frontier*' || true)
-            if [ -z "$FRONTIER" ]; then
-              echo "etl/seeds.json tracked-system set changed WITHOUT a paired discovery-frontier"
-              echo "manifest — the candidate-pool denominator would be lost forever. Run"
-              echo "collectors/frontier_manifest.py in the same push."
-              exit 1
-            fi
-            echo "universe change is paired with a frontier manifest: $FRONTIER"
-          else
-            echo "no tracked-system change in this push (cosmetic seeds edits need no manifest)"
-          fi
+        # Removals may instead be declared in data/observations/<date>/seed-departures.json
+        # (weekly preflight, collectors/gh_graphql.py). Sets are compared from both
+        # revisions of seeds.json; deleted records do not count.
+        run: python3 collectors/universe_change_check.py "${{ github.event.before }}" "${{ github.sha }}"
 
       - name: Genesis snapshot is byte-identical to the immutable deposit
         run: |
