@@ -41,7 +41,9 @@ def tracked(repo: Path, rev: str) -> set[str]:
 
 def present_records(repo: Path, before: str, after: str, pattern: str) -> list[str]:
     """Paths matching `pattern` that this push added or modified (deleted ones do not pair)."""
-    out = _git(repo, "diff", "--name-only", "--diff-filter=AM", before, after, "--", pattern)
+    # --no-renames: a record moved to another date folder is its new path (A), not an R the
+    # filter would drop; the deleted source stays excluded (D).
+    out = _git(repo, "diff", "--name-only", "--no-renames", "--diff-filter=AM", before, after, "--", pattern)
     return [p for p in out.splitlines() if p]
 
 

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { controlShellHash, maskWeeklyTokens } from '../../scripts/canary-shell.mjs';
 import registry from './methodology-registry.json';
 import baseline from '../data/canary-control-baseline.json';
+import assignment from '../data/canary-assignment.json';
 
 const html = '<title>Example, Evidaxis measurement</title><div class="receipt mono"><span>methodology <b>m2</b></span><span>snapshot <b>deadbeef</b></span><span>2026-w37</span></div><p class="cite-urn mono muted">urn:evidaxis:claim:e_EXAMPLE:m2:2026-09-12</p><div>axis z: 1.2</div>';
 
@@ -20,8 +21,13 @@ describe('control shell boundary', () => {
     const versions = baseline.versions as Record<string, { controls?: Record<string, string> }>;
     const current = (registry.versions as { version: string; status: string }[]).filter((row) => row.status === 'current');
     expect(current.length).toBe(1);
+    // Exact assigned control ids, not a count: a control absent from the snapshot is checked
+    // against its older version, so a wrong key here would only fail when it returns.
+    const assigned = assignment.pairs.map((pair: { control: string }) => new URL(pair.control).pathname.split('/')[2]).sort();
     for (const row of current) {
-      expect(Object.keys(versions[row.version]?.controls ?? {}).length, `canary baseline for ${row.version}`).toBe(24);
+      const controls = versions[row.version]?.controls ?? {};
+      expect(Object.keys(controls).sort(), `canary baseline for ${row.version}`).toEqual(assigned);
+      for (const hash of Object.values(controls)) expect(hash).toMatch(/^[0-9a-f]{64}$/);
     }
   });
   it('retains structure and non-weekly numbers', () => {

@@ -89,6 +89,18 @@ def test_deleted_departures_record_does_not_pair(tmp_path):
     assert not ok and "b/two" in msg
 
 
+def test_record_moved_to_another_date_still_pairs(tmp_path):
+    # Codex review 2026-10-12: a moved and edited record showed up as R and was dropped.
+    _repo(tmp_path, ["a/one", "b/two", "c/three"])
+    _departures(tmp_path, "2026-10-09", ["b/two"])
+    before = _commit(tmp_path, "record under the wrong date")
+    _seeds(tmp_path, ["a/one", "c/three"])
+    (tmp_path / "data" / "observations" / "2026-10-09" / "seed-departures.json").unlink()
+    _departures(tmp_path, "2026-10-10", ["b/two"])
+    ok, msg = ucc.check(tmp_path, before, _commit(tmp_path, "move record, retire b/two"))
+    assert ok, msg
+
+
 def test_frontier_manifest_still_pairs_additions(tmp_path):
     before = _repo(tmp_path, ["a/one"])
     _seeds(tmp_path, ["a/one", "new/two"])
