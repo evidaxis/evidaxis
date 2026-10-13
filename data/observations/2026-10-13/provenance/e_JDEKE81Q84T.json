@@ -1,0 +1,33 @@
+{
+  "created_at": "2024-08-04T23:13:44Z",
+  "archived": false,
+  "full_name": "JoshuaC215/agent-service-toolkit",
+  "size": 3293,
+  "private": false,
+  "forks_count": 790,
+  "homepage": "https://agent-service-toolkit.streamlit.app",
+  "open_issues_count": 6,
+  "stargazers_count": 4521,
+  "watchers_count": 4521,
+  "disabled": false,
+  "id": 838093526,
+  "pushed_at": "2026-10-13T09:29:53Z",
+  "language": "Python",
+  "default_branch": "main",
+  "subscribers_count": 34,
+  "node_id": "R_kgDOMfRK1g",
+  "description": "Full toolkit for running an AI agent service built with LangGraph, FastAPI and Streamlit",
+  "visibility": "public",
+  "fork": false,
+  "name": "agent-service-toolkit",
+  "topics": [
+    "agents",
+    "langgraph",
+    "streamlit"
+  ],
+  "updated_at": "2026-10-13T13:31:46Z",
+  "network_count": 790,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

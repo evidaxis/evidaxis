@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-05-31T16:42:47Z",
+  "archived": false,
+  "full_name": "RUC-NLPIR/Arbor",
+  "size": 38650,
+  "private": false,
+  "forks_count": 128,
+  "homepage": "https://ruc-nlpir.github.io/Arbor/",
+  "open_issues_count": 2,
+  "stargazers_count": 1110,
+  "watchers_count": 1110,
+  "disabled": false,
+  "id": 1255291036,
+  "pushed_at": "2026-09-08T01:57:32Z",
+  "language": "Python",
+  "default_branch": "main",
+  "subscribers_count": 10,
+  "node_id": "R_kgDOStI4nA",
+  "description": "A generalist autonomous research agent — runs experiments, researches, and iteratively optimizes, autonomously.",
+  "visibility": "public",
+  "fork": false,
+  "name": "Arbor",
+  "topics": [
+    "agents",
+    "autonomous-agents",
+    "autoresearch"
+  ],
+  "updated_at": "2026-10-13T12:32:45Z",
+  "network_count": 128,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

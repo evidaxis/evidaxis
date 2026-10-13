@@ -1,0 +1,33 @@
+{
+  "created_at": "2018-05-09T22:43:22Z",
+  "archived": false,
+  "full_name": "dougsm/ggcnn",
+  "size": 48,
+  "private": false,
+  "forks_count": 155,
+  "homepage": null,
+  "open_issues_count": 17,
+  "stargazers_count": 629,
+  "watchers_count": 629,
+  "disabled": false,
+  "id": 132820235,
+  "pushed_at": "2020-07-21T00:34:15Z",
+  "language": "Python",
+  "default_branch": "master",
+  "subscribers_count": 9,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzI4MjAyMzU=",
+  "description": "Generative Grasping CNN from \"Closing the Loop for Robotic Grasping: A Real-time, Generative Grasp Synthesis Approach\" (RSS 2018)",
+  "visibility": "public",
+  "fork": false,
+  "name": "ggcnn",
+  "topics": [
+    "deep-learning",
+    "grasping",
+    "robotics"
+  ],
+  "updated_at": "2026-09-30T06:44:34Z",
+  "network_count": 155,
+  "owner_type": "User",
+  "license_spdx_id": "BSD-3-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "created_at": "2019-02-04T17:14:36Z",
+  "archived": false,
+  "full_name": "tensorflow/tfx",
+  "size": 247213,
+  "private": false,
+  "forks_count": 727,
+  "homepage": "https://tensorflow.github.io/tfx/",
+  "open_issues_count": 256,
+  "stargazers_count": 2191,
+  "watchers_count": 2191,
+  "disabled": false,
+  "id": 169116405,
+  "pushed_at": "2026-10-07T10:29:32Z",
+  "language": "Python",
+  "default_branch": "master",
+  "subscribers_count": 83,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNjkxMTY0MDU=",
+  "description": " TFX is an end-to-end platform for deploying production ML pipelines",
+  "visibility": "public",
+  "fork": false,
+  "name": "tfx",
+  "topics": [
+    "apache-beam",
+    "machine-learning",
+    "tensorflow"
+  ],
+  "updated_at": "2026-10-12T22:03:03Z",
+  "network_count": 727,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
