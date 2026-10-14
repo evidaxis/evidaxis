@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-10-14T07:38:34Z",
+  "visibility": "public",
+  "open_issues_count": 470,
+  "private": false,
+  "fork": false,
+  "default_branch": "master",
+  "subscribers_count": 782,
+  "pushed_at": "2026-10-13T11:43:17Z",
+  "language": "C++",
+  "id": 102343794,
+  "network_count": 4150,
+  "created_at": "2017-09-04T09:28:47Z",
+  "watchers_count": 17630,
+  "full_name": "apache/brpc",
+  "forks_count": 4150,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMDIzNDM3OTQ=",
+  "size": 45744,
+  "stargazers_count": 17630,
+  "disabled": false,
+  "homepage": "https://brpc.apache.org",
+  "description": "brpc is an Industrial-grade RPC framework using C++ Language, which is often used in high performance system such as Search, Storage, Machine learning, Advertisement, Recommendation etc. \"brpc\" means \"better RPC\".",
+  "topics": [
+    "rpc"
+  ],
+  "name": "brpc",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

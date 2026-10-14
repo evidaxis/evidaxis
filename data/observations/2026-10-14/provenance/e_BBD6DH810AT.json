@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-10-14T11:32:26Z",
+  "visibility": "public",
+  "open_issues_count": 120,
+  "private": false,
+  "fork": false,
+  "default_branch": "main",
+  "subscribers_count": 38,
+  "pushed_at": "2026-10-14T12:05:19Z",
+  "language": "C#",
+  "id": 1149257427,
+  "network_count": 440,
+  "created_at": "2026-02-03T22:51:09Z",
+  "watchers_count": 5627,
+  "full_name": "dotnet/skills",
+  "forks_count": 440,
+  "node_id": "R_kgDORIBG0w",
+  "size": 364480,
+  "stargazers_count": 5627,
+  "disabled": false,
+  "homepage": "",
+  "description": "Repository for skills to assist AI coding agents with .NET and C#",
+  "topics": [
+    "agent-skills"
+  ],
+  "name": "skills",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-10-10T17:50:08Z",
+  "visibility": "public",
+  "open_issues_count": 17,
+  "private": false,
+  "fork": false,
+  "default_branch": "master",
+  "subscribers_count": 30,
+  "pushed_at": "2026-06-07T02:25:23Z",
+  "language": "Python",
+  "id": 30792770,
+  "network_count": 55,
+  "created_at": "2015-02-14T09:47:00Z",
+  "watchers_count": 918,
+  "full_name": "mocobeta/janome",
+  "forks_count": 55,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMDc5Mjc3MA==",
+  "size": 422509,
+  "stargazers_count": 918,
+  "disabled": false,
+  "homepage": "https://janome.mocobeta.dev",
+  "description": "Japanese morphological analysis engine written in pure Python",
+  "topics": [
+    "japanese-language",
+    "nlp-library",
+    "python"
+  ],
+  "name": "janome",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

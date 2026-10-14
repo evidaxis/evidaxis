@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-10-14T11:55:54Z",
+  "visibility": "public",
+  "open_issues_count": 27,
+  "private": false,
+  "fork": false,
+  "default_branch": "main",
+  "subscribers_count": 114,
+  "pushed_at": "2026-10-11T14:27:54Z",
+  "language": "Python",
+  "id": 540842713,
+  "network_count": 1630,
+  "created_at": "2022-09-24T13:43:23Z",
+  "watchers_count": 21989,
+  "full_name": "chidiwilliams/buzz",
+  "forks_count": 1630,
+  "node_id": "R_kgDOIDya2Q",
+  "size": 49508,
+  "stargazers_count": 21989,
+  "disabled": false,
+  "homepage": "https://chidiwilliams.github.io/buzz",
+  "description": "Buzz transcribes and translates audio offline on your personal computer. Powered by OpenAI's Whisper.",
+  "topics": [
+    "whisper"
+  ],
+  "name": "buzz",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

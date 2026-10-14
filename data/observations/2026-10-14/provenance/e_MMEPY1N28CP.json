@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-10-13T04:20:39Z",
+  "visibility": "public",
+  "open_issues_count": 41,
+  "private": false,
+  "fork": false,
+  "default_branch": "master",
+  "subscribers_count": 23,
+  "pushed_at": "2026-04-27T20:33:48Z",
+  "language": "Python",
+  "id": 272785290,
+  "network_count": 248,
+  "created_at": "2020-06-16T18:38:32Z",
+  "watchers_count": 1900,
+  "full_name": "lucidrains/byol-pytorch",
+  "forks_count": 248,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNzI3ODUyOTA=",
+  "size": 77,
+  "stargazers_count": 1900,
+  "disabled": false,
+  "homepage": "",
+  "description": "Usable Implementation of \"Bootstrap Your Own Latent\" self-supervised learning, from Deepmind, in Pytorch",
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "self-supervised-learning"
+  ],
+  "name": "byol-pytorch",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

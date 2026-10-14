@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-10-13T13:03:58Z",
+  "visibility": "public",
+  "open_issues_count": 20,
+  "private": false,
+  "fork": false,
+  "default_branch": "master",
+  "subscribers_count": 30,
+  "pushed_at": "2026-10-08T11:45:45Z",
+  "language": "Python",
+  "id": 331706754,
+  "network_count": 82,
+  "created_at": "2021-01-21T17:44:51Z",
+  "watchers_count": 671,
+  "full_name": "trailofbits/fickling",
+  "forks_count": 82,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMzE3MDY3NTQ=",
+  "size": 6157,
+  "stargazers_count": 671,
+  "disabled": false,
+  "homepage": "",
+  "description": "A Python pickling decompiler and static analyzer",
+  "topics": [
+    "machine-learning",
+    "python",
+    "security"
+  ],
+  "name": "fickling",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "LGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

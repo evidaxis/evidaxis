@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-10-14T08:42:53Z",
+  "visibility": "public",
+  "open_issues_count": 42,
+  "private": false,
+  "fork": false,
+  "default_branch": "main",
+  "subscribers_count": 51,
+  "pushed_at": "2026-10-14T10:21:35Z",
+  "language": "Python",
+  "id": 619143361,
+  "network_count": 456,
+  "created_at": "2023-03-26T11:59:52Z",
+  "watchers_count": 3143,
+  "full_name": "elevenlabs/elevenlabs-python",
+  "forks_count": 456,
+  "node_id": "R_kgDOJOdgwQ",
+  "size": 11444,
+  "stargazers_count": 3143,
+  "disabled": false,
+  "homepage": "https://elevenlabs.io/docs/api-reference/overview",
+  "description": "The official Python SDK for the ElevenLabs API.",
+  "topics": [
+    "artificial-intelligence",
+    "conversational-ai",
+    "text-to-speech"
+  ],
+  "name": "elevenlabs-python",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
