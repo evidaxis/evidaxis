@@ -1,0 +1,64 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-10-15T11:44:52Z",
+  "date": "2026-10-15",
+  "period": "2026-w42",
+  "entity_count": 6325,
+  "error_count": 3,
+  "error_rate": 0.0005,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "FuzzingLabs/mcp-security-hub",
+      "http_status": 404
+    },
+    {
+      "repo": "To3akaRin/mac-computer-use",
+      "http_status": 404
+    },
+    {
+      "repo": "Alex314618-create/JevRev",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "69fb0ed2270122094dc6c6c2517121d48c0dccd8e860ba72d0bac4da7151f226",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}

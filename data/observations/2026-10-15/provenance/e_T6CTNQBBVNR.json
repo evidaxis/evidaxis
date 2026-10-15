@@ -1,0 +1,33 @@
+{
+  "created_at": "2024-09-05T09:35:30Z",
+  "network_count": 68,
+  "forks_count": 68,
+  "description": "GeoCalib: Learning Single-image Calibration with Geometric Optimization (ECCV 2024)",
+  "visibility": "public",
+  "language": "Python",
+  "topics": [
+    "camera-calibration",
+    "deep-learning",
+    "optimization"
+  ],
+  "archived": false,
+  "size": 24100,
+  "id": 852711648,
+  "homepage": "",
+  "full_name": "cvg/GeoCalib",
+  "node_id": "R_kgDOMtNY4A",
+  "open_issues_count": 26,
+  "subscribers_count": 15,
+  "name": "GeoCalib",
+  "default_branch": "main",
+  "updated_at": "2026-10-14T19:24:31Z",
+  "fork": false,
+  "stargazers_count": 943,
+  "disabled": false,
+  "watchers_count": 943,
+  "pushed_at": "2026-10-14T11:32:32Z",
+  "private": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
