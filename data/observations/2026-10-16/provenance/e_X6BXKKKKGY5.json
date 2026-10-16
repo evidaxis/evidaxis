@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 84,
+  "default_branch": "main",
+  "private": false,
+  "topics": [
+    "flux2-klein",
+    "parallelism",
+    "svdquant"
+  ],
+  "created_at": "2025-06-12T07:54:30Z",
+  "forks_count": 92,
+  "node_id": "R_kgDOO6WnCg",
+  "homepage": "https://cache-dit.readthedocs.io",
+  "subscribers_count": 9,
+  "full_name": "vipshop/cache-dit",
+  "watchers_count": 1291,
+  "size": 604888,
+  "network_count": 92,
+  "archived": false,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-16T11:34:01Z",
+  "language": "Python",
+  "description": "A PyTorch-native inference engine with cache, parallelism, quantization and cpu offload for DiTs.",
+  "disabled": false,
+  "name": "cache-dit",
+  "id": 1000711946,
+  "stargazers_count": 1291,
+  "pushed_at": "2026-10-16T06:06:14Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -518,6 +518,11 @@
       "package": "pytextrank",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "DingTalk-Real-AI/dingtalk-workspace-cli": {
+      "system": "npm",
+      "package": "dingtalk-workspace-cli",
+      "pinned_at": "2026-10-16T12:48:03Z"
+    },
     "DistrictDataLabs/yellowbrick": {
       "system": "pypi",
       "package": "yellowbrick",
@@ -5747,6 +5752,11 @@
       "system": "pypi",
       "package": "json_repair",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "manojmallick/sigmap": {
+      "system": "npm",
+      "package": "sigmap",
+      "pinned_at": "2026-10-16T12:48:03Z"
     },
     "mantoni/beads-ui": {
       "system": "npm",
