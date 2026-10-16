@@ -7,7 +7,12 @@ import type { Entity } from './data';
 import { entityGraph, snapshotDataset } from './jsonld';
 import { deriveMeasurementState, measurementPhrases } from './measurement';
 import { computePowerFunnel, computeSensitivity } from './power';
-import { CITATION_AXIS as C, DEVELOPMENT_AXIS as D, DEPENDENTS_AXIS as A, axis3Estimand, methodologyAxes } from './methodology';
+import { CITATION_AXIS as C, DEVELOPMENT_AXIS as D, DEPENDENTS_AXIS as A, axis3Estimand, methodologyAxes,
+  axis3History, axis3Permalink, axis3Short, axis3GapLabel, axis3MethodLabel, axis3ReadingDefinition,
+  axis3ChartSource, dailyDependentsDescription, methodologyRegistryFor } from './methodology';
+import { glossarySectionsFor } from './glossary';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import MethodologyBody from '../components/MethodologyBody.astro';
 import { GET } from '../pages/methodology-registry.json';
 
 const repoRoot = fileURLToPath(new URL('../../..', import.meta.url));
@@ -31,6 +36,7 @@ describe('methodology-specific axes', () => {
     expect(methodologyAxes('m2')).toEqual([D, C]);
     expect(methodologyAxes('m3')).toEqual([D, C, A]);
     expect(methodologyAxes('m4')).toEqual([D, C, A]);
+    expect(methodologyAxes('m5')).toEqual([D, C, A]);
     expect(() => methodologyAxes('m999')).toThrow('not in registry');
     expect(() => entityGraph(candidate, { ...fixture, methodology_version: 'm999' })).toThrow('not in registry');
   });
@@ -132,7 +138,8 @@ describe('methodology-specific axes', () => {
     const fingerprint = 'sha256:5de15c3a55c026487205c67d09c71efa18ec006103e9653a7f59ee9424d0cad4';
     expect(m4).toMatchObject({
       version: 'm4',
-      status: 'current',
+      status: 'superseded',
+      superseded_at: '2026-10-17',
       formula_fingerprint: fingerprint,
       code_commit: expect.stringMatching(/^514beb6c02[0-9a-f]{30}$/),
       effective_at: '2026-10-10',
@@ -161,5 +168,62 @@ describe('methodology-specific axes', () => {
       .find(node => node['@type'] === 'Dataset')
       .variableMeasured.find((v: { name: string }) => v.name === 'Direct-dependents momentum (deps.dev)').description;
     expect(m3Description).toContain('linkage-verified');
+  });
+
+  it.each(['m4', 'm5'])('uses own-package definitions throughout %s', (version) => {
+    const spec = JSON.parse(readFileSync(resolve(repoRoot, `methodology/${version}.json`), 'utf8'));
+    expect(axis3Estimand(version)).toBe(spec.estimand);
+    expect(axis3History(version)).toBe(spec.history_origin);
+    expect(axis3Permalink(version)).toBe(`/methodology/${version}/#dependents`);
+    expect(axis3MethodLabel(version)).toBe(`${version} own packages`);
+    expect(axis3Short(version)).toContain("system's own packages");
+    expect(axis3GapLabel(version)).toBe('Own packages.');
+    expect(axis3ReadingDefinition(version)).toContain("system's own packages");
+    expect(axis3ChartSource(version)).toBe('deps.dev weekly own-package counts');
+    expect(dailyDependentsDescription(version)).toContain(`axis in ${version} uses weekly partitions`);
+    const terms = glossarySectionsFor(version).flatMap(s => s.terms);
+    expect(terms.find(t => t.id === 'direct-dependents-momentum')?.def).toContain(`Axis 3 in ${version}`);
+    expect(terms.find(t => t.id === 'direct-dependents-momentum')?.def).toContain('own packages');
+    expect(terms.find(t => t.id === 'residualization')?.def).toContain(`Axis 3 in ${version}`);
+    const snap = { ...fixture, methodology_version: version };
+    const dataset = entityGraph(candidate, snap)['@graph'].find(n => n['@type'] === 'Dataset');
+    expect(dataset.variableMeasured.find((v: { name: string }) => v.name === 'Direct-dependents momentum (deps.dev)').description).toContain(spec.estimand);
+    for (const status of ['out_of_panel', 'below_floor'] as const) {
+      const entity = { ...candidate, rising: false, axes_present: [D], convergent_axes: [D], axes: {
+        ...candidate.axes, [A]: { ...candidate.axes[A], status, cohort_z: null, slope: null, rising_vote: false },
+      } };
+      const phrases = measurementPhrases(deriveMeasurementState(entity, snap, 8), version);
+      expect(phrases.dependents_axis).toContain(status === 'out_of_panel' ? 'no admitted own package' : '14 usable points');
+    }
+  });
+
+  it('resolves m5 current only from a published m5 snapshot', () => {
+    const before = methodologyRegistryFor({ methodology_version: 'm4', snapshot_date: '2026-10-10' });
+    expect(before.current).toBe('m4');
+    expect(before.versions.find(r => r.version === 'm5')?.status).toBe('scheduled');
+    const after = methodologyRegistryFor({ methodology_version: 'm5', snapshot_date: '2026-10-17' });
+    expect(after.current).toBe('m5');
+    expect(after.versions.find(r => r.version === 'm4')).toMatchObject({ status: 'superseded', superseded_at: '2026-10-17' });
+    expect(after.versions.find(r => r.version === 'm5')).toMatchObject({
+      status: 'current', effective_at: '2026-10-17', parent_version: 'm4', page: '/methodology/m5/',
+      formula_fingerprint: 'sha256:5fa8d57ae1625f9ade844b2b2c11d411389852c424265c976fc7732683bb4c4d',
+      code_commit: 'c18024b9206b33f4b4e674ae7f5ce13991267688',
+    });
+    expect(axis3Permalink('m2')).toBe('/methodology/m3/#dependents');
+    expect(() => axis3Short('m999')).toThrow('not in registry');
+  });
+
+  it('renders the m5 correction and its dated permalink', async () => {
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(MethodologyBody, { props: { version: 'm5' } });
+    expect(html).toContain('Methodology m5');
+    expect(html).toContain('exactly two eligible systems');
+    expect(html).toContain('No tolerance is used');
+    expect(html).toContain('governance/METHODOLOGY-M5-2026-10-16.md');
+    expect(html).toContain('methodology/m5.json');
+    expect(html).not.toContain('\u2014');
+    const page = readFileSync(resolve(repoRoot, 'web/src/pages/methodology/m5/index.astro'), 'utf8');
+    expect(page).toContain('This is the m5 permalink. It supersedes');
+    expect(page).toContain('for new snapshots from 2026-10-17.');
   });
 });

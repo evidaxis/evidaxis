@@ -61,3 +61,10 @@ def test_m5_fingerprint_and_patch_scope():
     assert spec["axes"][:2] == before["axes"][:2]
     assert {k: v for k, v in spec["axes"][2].items() if k != "normalization"} == {
         k: v for k, v in before["axes"][2].items() if k != "normalization"}
+
+
+def test_m5_registry_pin():
+    registry = json.loads((M5_SPEC.parent.parent / "web/src/lib/methodology-registry.json").read_text())
+    entry = next(row for row in registry["versions"] if row["version"] == "m5")
+    assert entry["formula_fingerprint"] == fingerprint("m5")
+    assert entry["effective_at"] == score_m3.M5_ACTIVATION

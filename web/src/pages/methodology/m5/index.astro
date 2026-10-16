@@ -1,0 +1,16 @@
+---
+import Base from '../../../layouts/Base.astro';
+import MethodologyBody from '../../../components/MethodologyBody.astro';
+import { methodologyGraph } from '../../../lib/jsonld';
+const desc = 'Evidaxis Methodology m5: exact normalization for two-member axis-3 cohorts; own-package counts are unchanged. Any two of three axes converge. Effective for new snapshots from 2026-10-17.';
+---
+<Base title="Methodology m5 | Evidaxis" description={desc} canonical="/methodology/m5/" jsonLd={methodologyGraph('m5', '/methodology/m5/')}>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Methodology · m5 · effective 2026-10-17</p>
+      <h1>How Evidaxis measures momentum</h1>
+      <MethodologyBody version="m5" />
+      <p class="mono muted" style="font-size:.74rem;margin-top:2rem">This is the m5 permalink. It supersedes <a href="/methodology/m4/">m4</a> for new snapshots from 2026-10-17. Methodology prose is licensed CC-BY-4.0.</p>
+    </div>
+  </section>
+</Base>

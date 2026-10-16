@@ -4,7 +4,7 @@ import type { MeasurementState } from '../measurement';
 import { measurementPhrases } from '../measurement';
 import { claimUrnForEntity } from '../claim_urn';
 import { TEMPLATE_VERSION } from './config';
-import { axis3ReadingDefinition } from '../methodology';
+import { axis3OwnPackages, axis3ReadingDefinition } from '../methodology';
 import { assertPublicText, copy, facet, revealsBannedHandle, selectClasses } from './facets';
 
 export const numeric = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
@@ -144,7 +144,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     dependents: { ...rawFacets.dependents, text: rawFacets.dependents.answer },
     standing: { ...rawFacets.standing, text: rawFacets.standing.answer },
   };
-  if (snap.methodology_version === 'm4' && classes.dependents === 'C11') {
+  if (axis3OwnPackages(snap.methodology_version) && classes.dependents === 'C11') {
     const answer = 'Dependents: no admitted own package.';
     const text = nicheAssigned
       ? `Dependents: no admitted own package, a coverage state, not a measured zero. Unscored daily count: ${fmt(ctx.daily?.value ?? null)} (${ctx.dailySeries.at(-1)?.period ?? date}).`

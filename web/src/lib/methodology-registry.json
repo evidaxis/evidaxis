@@ -38,13 +38,24 @@
     },
     {
       "version": "m4",
-      "status": "current",
+      "status": "superseded",
       "formula_fingerprint": "sha256:5de15c3a55c026487205c67d09c71efa18ec006103e9653a7f59ee9424d0cad4",
       "code_commit": "514beb6c02fe1175afe4a05c0f4a787fd9327b2a",
       "effective_at": "2026-10-10",
       "parent_version": "m3",
       "page": "/methodology/m4/",
-      "changelog": "MAJOR: axis 3 counts only a system's own packages. History is exactly derived from stored per-package weekly rows, or the series restarts. The self-name exclusion list is fixed. Published m3 snapshots are never recomputed. Record: governance/METHODOLOGY-M4-2026-10-04.md. Erratum: METHODOLOGY-VERSIONING.md#errata. Canonical specification: methodology/m4.json."
+      "changelog": "MAJOR: axis 3 counts only a system's own packages. History is exactly derived from stored per-package weekly rows, or the series restarts. The self-name exclusion list is fixed. Published m3 snapshots are never recomputed. Record: governance/METHODOLOGY-M4-2026-10-04.md. Erratum: METHODOLOGY-VERSIONING.md#errata. Canonical specification: methodology/m4.json.",
+      "superseded_at": "2026-10-17"
+    },
+    {
+      "version": "m5",
+      "status": "current",
+      "formula_fingerprint": "sha256:5fa8d57ae1625f9ade844b2b2c11d411389852c424265c976fc7732683bb4c4d",
+      "code_commit": "c18024b9206b33f4b4e674ae7f5ce13991267688",
+      "effective_at": "2026-10-17",
+      "parent_version": "m4",
+      "page": "/methodology/m5/",
+      "changelog": "PATCH: exact zero axis-3 residual z for two eligible systems of different sizes. Equal-size pairs, larger cohorts, the m4 own-package measurand, history derivation and all thresholds are unchanged. Published snapshots are never recomputed. Record: governance/METHODOLOGY-M5-2026-10-16.md. Erratum: governance/ERRATUM-2026-10-05-axis3-two-member-rounding.md. Canonical specification: methodology/m5.json."
     }
   ]
 }

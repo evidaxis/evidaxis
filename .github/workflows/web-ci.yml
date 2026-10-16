@@ -14,6 +14,7 @@ on:
   push:
     paths:
       - "web/**"
+      - "methodology/**"
       - "data/**"
       - "taxonomy/**"
       - "redirects.yaml"
@@ -22,6 +23,7 @@ on:
   pull_request:
     paths:
       - "web/**"
+      - "methodology/**"
       - "data/**"
       - "taxonomy/**"
   workflow_dispatch:
@@ -48,10 +50,6 @@ jobs:
         working-directory: web
         run: npm ci
 
-      - name: Unit tests (vitest)
-        working-directory: web
-        run: npm run test:run
-
       - name: Unit tests (prod sensors, plain node)
         # The liveness and freshness sensors are the only code that decides
         # whether a human is told publication broke. They were unit-tested but
@@ -59,10 +57,6 @@ jobs:
         # nobody is watching.
         run: node --test scripts/liveness.test.mjs scripts/freshness.test.mjs scripts/workflow-watchdog.test.mjs scripts/alert-gate.test.mjs
 
-      - name: Build (astro, reads ../data + ../taxonomy)
+      - name: Verify web publication (tests, build, dist, Card B, badges)
         working-directory: web
-        run: npm run build
-
-      - name: Verify dist invariants (GEO / em-dash / JSON-LD / a11y head)
-        working-directory: web
-        run: npm run check
+        run: npm run verify

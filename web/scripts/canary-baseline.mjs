@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Regenerate one version's control hashes from an explicitly selected build. */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { controlShellHash, controlShellPatterns } from './canary-shell.mjs';
@@ -12,6 +12,7 @@ const dist = process.env.EVIDAXIS_DIST ? resolve(process.env.EVIDAXIS_DIST) : ne
 const assignment = JSON.parse(readFileSync(new URL('../src/data/canary-assignment.json', import.meta.url), 'utf8'));
 const baselinePath = new URL('../src/data/canary-control-baseline.json', import.meta.url);
 const baseline = JSON.parse(readFileSync(baselinePath, 'utf8'));
+if (baseline.versions[values.version]) throw new Error('Frozen experiment baselines cannot be rewritten');
 const known = registry.versions.map(row => row.version);
 const controls = {};
 const derived = [];
@@ -35,6 +36,7 @@ for (const pair of assignment.pairs) {
   controls[id] = controlShellHash(html);
 }
 if (derived.length) console.log(`derived from an earlier-version render: ${derived.join(', ')}`);
-baseline.versions[values.version] = { controls };
-writeFileSync(baselinePath, JSON.stringify(baseline, null, 2) + '\n');
+const additions = new URL('../src/data/methodology-control-baselines/', import.meta.url);
+mkdirSync(additions, { recursive: true });
+writeFileSync(new URL(`${values.version}.json`, additions), JSON.stringify({ controls }, null, 2) + '\n');
 console.log(`canary baseline ${values.version}: ${Object.keys(controls).length} controls from ${dist}`);

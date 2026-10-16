@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { controlShellHash, maskWeeklyTokens } from '../../scripts/canary-shell.mjs';
 import registry from './methodology-registry.json';
-import baseline from '../data/canary-control-baseline.json';
+import baseline from '../../scripts/control-baselines.mjs';
 import assignment from '../data/canary-assignment.json';
 
 const html = '<title>Example, Evidaxis measurement</title><div class="receipt mono"><span>methodology <b>m2</b></span><span>snapshot <b>deadbeef</b></span><span>2026-w37</span></div><p class="cite-urn mono muted">urn:evidaxis:claim:e_EXAMPLE:m2:2026-09-12</p><div>axis z: 1.2</div>';

@@ -1,3 +1,5 @@
+import { axis3OwnPackages } from './methodology';
+
 /**
  * Glossary vocabulary. Two sections, reading order preserved:
  *  1. Terms on every page: plain wording for the words people meet on cards,
@@ -60,10 +62,10 @@ const M4_GLOSSARY: Record<string, string> = {
 
 /** m3 and earlier keep the published definitions. m4 replaces only the axis-3 sentences. */
 export function glossarySectionsFor(version: string) {
-  if (version !== 'm4') return GLOSSARY_SECTIONS;
+  if (!axis3OwnPackages(version)) return GLOSSARY_SECTIONS;
   return GLOSSARY_SECTIONS.map((section) => ({
     ...section,
-    terms: section.terms.map((term) => M4_GLOSSARY[term.id] ? { ...term, def: M4_GLOSSARY[term.id] } : term),
+    terms: section.terms.map((term) => M4_GLOSSARY[term.id] ? { ...term, def: M4_GLOSSARY[term.id].replaceAll('m4', version) } : term),
   }));
 }
 export const ALL_TERMS: GlossaryTerm[] = [...PLAIN_TERMS, ...COMPUTED_TERMS];

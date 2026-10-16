@@ -83,8 +83,7 @@ jobs:
         run: |
           cd web
           npm ci
-          npm run build
-          npm run check
+          npm run verify
 
       - name: Deploy prebuilt dist to Vercel production
         env:

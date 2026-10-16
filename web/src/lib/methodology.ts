@@ -12,12 +12,22 @@ const axesByVersion: Record<string, AxisKey[]> = {
   m2: [DEVELOPMENT_AXIS, CITATION_AXIS],
   m3: [DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS],
   m4: [DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS],
+  m5: [DEVELOPMENT_AXIS, CITATION_AXIS, DEPENDENTS_AXIS],
 };
 
 export function methodologyEntry(version: string) {
   const entry = registry.versions.find((row) => row.version === version);
   if (!entry) throw new Error(`methodology ${version} not in registry`);
   return entry;
+}
+
+export function methodologyRegistryFor(snapshot: { methodology_version: string; snapshot_date: string }) {
+  const current = methodologyEntry(snapshot.methodology_version).version;
+  const versions = registry.versions.map((row) => ({
+    ...row,
+    status: row.version === current ? 'current' : row.effective_at > snapshot.snapshot_date ? 'scheduled' : row.status,
+  }));
+  return { ...registry, current, versions };
 }
 
 export function methodologyAxes(version: string): readonly AxisKey[] {
@@ -36,46 +46,57 @@ const AXIS3_HISTORY_M4 = 'The earliest weekly points of each series were read fr
 export const AXIS3_ESTIMAND = AXIS3_ESTIMAND_M3;
 export const AXIS3_ATTRIBUTION = 'Source: deps.dev (Google), CC-BY 4.0. Modified: aggregated to system-level counts and momentum scores.';
 
+/** m5 corrects normalization and inherits m4 package admission and history. */
+export function axis3OwnPackages(version: string): boolean {
+  methodologyEntry(version);
+  return version === 'm4' || version === 'm5';
+}
+
+/** Versions without a scored third axis retain the historical m3 reference. */
+export function axis3Version(version: string): string {
+  return methodologyAxes(version).includes(DEPENDENTS_AXIS) ? version : 'm3';
+}
+
 export function axis3Estimand(version: string): string {
   if (version === 'm3') return AXIS3_ESTIMAND_M3;
-  if (version === 'm4') return AXIS3_ESTIMAND_M4;
+  if (axis3OwnPackages(version)) return AXIS3_ESTIMAND_M4;
   throw new Error(`axis-3 estimand missing for methodology ${version}`);
 }
 
 export function axis3History(version: string): string {
   if (version === 'm3') return AXIS3_HISTORY_M3;
-  if (version === 'm4') return AXIS3_HISTORY_M4;
+  if (axis3OwnPackages(version)) return AXIS3_HISTORY_M4.replace('m4 does', `${version} does`);
   throw new Error(`axis-3 history missing for methodology ${version}`);
 }
 
 /** Scored-axis permalink. Versions without axis 3 keep the existing m3 link. */
 export function axis3Permalink(version: string): string {
-  return version === 'm4' ? '/methodology/m4/#dependents' : '/methodology/m3/#dependents';
+  return `${methodologyEntry(axis3Version(version)).page}#dependents`;
 }
 
 export function axis3Short(version: string): string {
-  if (version === 'm4') return 'Weekly counts of a system\'s own packages: declared in its own tree, published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified.';
+  if (axis3OwnPackages(version)) return 'Weekly counts of a system\'s own packages: declared in its own tree, published under that name and not attributed by deps.dev to another repository. Packages without repository metadata are unverified.';
   return 'Confirmed-clean weekly package-union counts, measured as a size-adjusted log-slope within the frozen panel.';
 }
 
 export function axis3GapLabel(version: string): string {
-  return version === 'm4' ? 'Own packages.' : 'Frozen package panel.';
+  return axis3OwnPackages(version) ? 'Own packages.' : 'Frozen package panel.';
 }
 
 export function axis3MethodLabel(version: string): string {
-  return version === 'm4' ? 'm4 own packages' : 'm3 package union';
+  return axis3OwnPackages(version) ? `${version} own packages` : 'm3 package union';
 }
 
 export function axis3ReadingDefinition(version: string): string {
-  if (version === 'm4') return 'deps.dev weekly direct dependents of the system\'s own packages. A package counts when it is declared in the system\'s own tree, published under that name and not attributed by deps.dev to another repository. Partition dates can repeat across snapshots.';
+  if (axis3OwnPackages(version)) return 'deps.dev weekly direct dependents of the system\'s own packages. A package counts when it is declared in the system\'s own tree, published under that name and not attributed by deps.dev to another repository. Partition dates can repeat across snapshots.';
   return 'deps.dev weekly package-union direct dependents, frozen m3 panel; partition dates can repeat across snapshots.';
 }
 
 export function axis3ChartSource(version: string): string {
-  return version === 'm4' ? 'deps.dev weekly own-package counts' : 'deps.dev weekly package union';
+  return axis3OwnPackages(version) ? 'deps.dev weekly own-package counts' : 'deps.dev weekly package union';
 }
 
 export function dailyDependentsDescription(version: string): string {
-  const named = version === 'm4' ? 'm4' : 'm3';
+  const named = axis3Version(version);
   return `Daily deps.dev REST count, captured point-in-time. The scored direct-dependents axis in ${named} uses weekly partitions.`;
 }

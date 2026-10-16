@@ -6,7 +6,7 @@
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { REPO_ROOT as ROOT, dataPath, repoDataPath } from './data-path';
-import { CITATION_AXIS, DEVELOPMENT_AXIS, DEPENDENTS_AXIS, methodologyAxes, type AxisKey, type VersionedAxes } from './methodology';
+import { CITATION_AXIS, DEVELOPMENT_AXIS, DEPENDENTS_AXIS, methodologyAxes, axis3OwnPackages, type AxisKey, type VersionedAxes } from './methodology';
 export { CITATION_AXIS, DEVELOPMENT_AXIS, DEPENDENTS_AXIS, type AxisKey } from './methodology';
 
 export const HISTORY_REQUIRED = 4;
@@ -417,12 +417,12 @@ function axisPhrase(
   version = 'm3',
 ): string {
   if (state === 'out_of_panel') {
-    return version === 'm4'
+    return axis3OwnPackages(version)
       ? `${axis} axis: no admitted own package; not measured.`
       : `${axis} axis: outside the frozen panel; not measured.`;
   }
   if (state === 'below_floor') {
-    return version === 'm4'
+    return axis3OwnPackages(version)
       ? `${axis} axis: minimum of 14 usable points of the new quantity and 5 latest dependents not met.`
       : `${axis} axis: minimum of 14 clean points and 5 latest dependents not met.`;
   }

@@ -21,7 +21,7 @@ import { measurementPhrases, measurementStateFor } from '../../../lib/measuremen
 import { canaryGroup, treatmentAnswerFirst, treatmentTitle } from '../../../lib/canary';
 import CitationBlock from '../../../components/CitationBlock.astro';
 import Axis3Details from '../../../components/Axis3Details.astro';
-import { DEPENDENTS_AXIS, methodologyAxes } from '../../../lib/methodology';
+import { DEPENDENTS_AXIS, methodologyAxes, axis3Permalink, axis3Version } from '../../../lib/methodology';
 import CardB from '../../../components/cardB/CardB.astro';
 import { cardBFor } from '../../../lib/cardB/context';
 import { cardBGraphs } from '../../../lib/cardB/jsonld';
@@ -191,7 +191,7 @@ const cardDescription = card?.nicheAssigned
             <DepsSparkline series={dSeries} label={`${e.name} dependents over time`} />
             <p class="ad-cap mono">
               Downstream packages depending on <b>{publicPackageLabel(dep.system, dep.package)}</b> (deps.dev), captured point-in-time each snapshot.
-              This daily series is unscored. The <a href={snapshot.methodology_version === 'm4' ? '/methodology/m4/#dependents' : '/methodology/m3/#dependents'}>{snapshot.methodology_version === 'm4' ? 'scored axis in m4 uses weekly partitions' : 'scored axis in m3 uses weekly partitions'}</a>.
+              This daily series is unscored. The <a href={axis3Permalink(snapshot.methodology_version)}>{`scored axis in ${axis3Version(snapshot.methodology_version)} uses weekly partitions`}</a>.
             </p>
           </div>
         </div>

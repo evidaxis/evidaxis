@@ -4,11 +4,28 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import CardB from '../../components/cardB/CardB.astro';
 import EntityCard from '../../components/EntityCard.astro';
 import { archiveEntityById } from '../archive';
-import { cardBFor } from './context';
+import { cardBFor, contextFor } from './context';
+import { buildCardB } from './build';
 import { scanEntityLexicon, scanEntityPageWide } from '../../../scripts/entity-lexicon.mjs';
 
 const ids = ['e_S7DQ1QJCCMT', 'e_88YAM3PXK4S', 'e_X33782S1M13', 'e_97SYW64PA3G', 'e_03QFRGK7VQX', 'e_093XKS44M6Q', 'e_Y3HMWAG1BQZ', 'e_7ZJR0NT1B6H', 'e_9SWWW2SWASG', 'e_KR3M8ESKAEW', 'e_H6PPP8CA9RR', 'e_QTVWFV6FJ2V'];
 describe('actual Astro Card B render', () => {
+  it('renders and exports m5 own-package coverage without falling back to m3', async () => {
+    const original = [...archiveEntityById.values()].find(record =>
+      record.entity.axes.deps_direct_dependents_momentum?.status === 'out_of_panel')!;
+    const record = { ...original, snapshot: { ...original.snapshot, methodology_version: 'm5' } };
+    const model = buildCardB(record, contextFor(record));
+    expect(model.facets.dependents.answer).toBe('Dependents: no admitted own package.');
+    expect(model.readings.find(r => r.key === 'dependents')?.definition).toContain("system's own packages");
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(CardB, { props: {
+      model, industry: record.entity.industry, industryLabel: record.entity.industry, subNiche: record.entity.sub_niche,
+    }, slots: { measurement: '<p>Measurement fixture</p>' } });
+    expect(html).toContain('/methodology/m5/#dependents');
+    expect(html).toContain('m5 own packages');
+    expect(html).not.toContain('/methodology/m3/#dependents');
+  });
+
   it('renders all twelve fixtures twice, preserving raw numeric HTML and the old instruments', async () => {
     const container = await AstroContainer.create();
     const directory = new URL('../../../.foundation-check/fixtures/', import.meta.url);

@@ -6,6 +6,7 @@ import { assertPublicText } from '../../lib/cardB/facets';
 import { CARD_B_CLIENT } from '../../lib/cardB/client';
 import { archiveEntityById } from '../../lib/archive';
 import { badgeData } from '../../lib/badges';
+import { axis3Permalink, axis3MethodLabel } from '../../lib/methodology';
 import Chart from './Chart.astro';
 import Number from './Number.astro';
 import Sentence from './Sentence.astro';
@@ -13,8 +14,8 @@ import Provenance from './Provenance.astro';
 
 export interface Props { model: CardBModel; industry: string; industryLabel: string; subNiche: string }
 const { model: m, industry, industryLabel, subNiche } = Astro.props;
-const axis3Href = m.methodology === 'm4' ? '/methodology/m4/#dependents' : '/methodology/m3/#dependents';
-const axis3Method = m.methodology === 'm4' ? 'm4 own packages' : 'm3 package union';
+const axis3Href = axis3Permalink(m.methodology);
+const axis3Method = axis3MethodLabel(m.methodology);
 const charts = chartsFor(m), readings = m.readings.filter(r => !r.key.endsWith('_series'));
 const tileKeys = ['commits', 'citations', 'dependents', 'stars'];
 const report = `mailto:hello@evidaxis.org?subject=${encodeURIComponent(`Measurement correction: ${m.entity.id} / ${m.release}`)}`;

@@ -12,8 +12,7 @@ REPO="$(cd "$(dirname "$0")" && pwd)"
 : "${VERCEL_PROJECT_ID:?set VERCEL_PROJECT_ID in deploy.env (repo root) or the environment}"
 : "${VERCEL_ORG_ID:?set VERCEL_ORG_ID in deploy.env (repo root) or the environment}"
 cd "$REPO/web"
-npm run build
-npm run check                       # dist invariant gate (em-dash / SSR charts / JSON-LD / headings) before prod
+npm run verify                      # Same publication gate as web-ci and deploy-web.
 cp vercel.json dist/vercel.json
 mkdir -p dist/.vercel
 cat > dist/.vercel/project.json <<JSON

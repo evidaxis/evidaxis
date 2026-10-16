@@ -9,11 +9,12 @@
 // interpolation that drifts when "current" advances).
 import MethodologyM3 from './MethodologyM3.astro';
 import MethodologyM4 from './MethodologyM4.astro';
+import MethodologyM5 from './MethodologyM5.astro';
 export interface Props { version?: string }
 const { version = 'm1' } = Astro.props;
 const isM2 = version === 'm2';
 ---
-{version === 'm4' ? <MethodologyM4 /> : version === 'm3' ? <MethodologyM3 /> : <>
+{version === 'm5' ? <MethodologyM5 /> : version === 'm4' ? <MethodologyM4 /> : version === 'm3' ? <MethodologyM3 /> : <>
 <p class="lead" style="max-width:64ch">
   Evidaxis is a survey telescope pointed at open-source AI. It records each tracked system’s momentum week
   after week, builds the baseline, and recognizes a system as rising only when two independent axes

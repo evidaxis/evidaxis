@@ -80,7 +80,7 @@ for (const { id, name } of entityRecords) {
 // Matched-control isolation: controls retain the baseline title and receive no
 // treatment-only answer block, citation UI, feed head links, or analytics tags.
 const CANARY = JSON.parse(readFileSync(new URL('../src/data/canary-assignment.json', import.meta.url), 'utf8'));
-const CONTROL_BASELINE = JSON.parse(readFileSync(new URL('../src/data/canary-control-baseline.json', import.meta.url), 'utf8'));
+const { default: CONTROL_BASELINE } = await import('./control-baselines.mjs');
 if (CANARY.pairs?.length !== 24) errors.push('canary assignment must contain exactly 24 pairs');
 if (existsSync(new URL('../../canary-assignment.input.json', import.meta.url))) {
   errors.push('root canary-assignment.input.json must be removed after the permanent data move');
