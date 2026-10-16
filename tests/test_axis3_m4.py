@@ -177,12 +177,13 @@ def test_pre_activation_snapshot_stays_m3(tmp_path):
     assert "linkage-verified" in scored["axes"][m3.AXIS3]
 
 
-def test_m4_snapshot_carries_m4(tmp_path, monkeypatch):
+@pytest.mark.parametrize("day,version", [("2026-10-10", "m4"), ("2026-10-17", "m5")])
+def test_own_package_snapshot_carries_version(tmp_path, monkeypatch, day, version):
     evidence = {"relative": "fixture.json", "sha256": "fixture", "commit": "fixture",
                 "committed_at": "2026-10-10T12:00:00Z", "states": {}}
-    snap = _snapshot("2026-10-10")
+    snap = _snapshot(day)
     scored = m3.score_snapshot(snap, observations=tmp_path, evidence=evidence, panel={"e_0"})
-    assert scored["methodology_version"] == "m4"
+    assert scored["methodology_version"] == version
     description = scored["axes"][m3.AXIS3]
     assert "declared in its own tree" in description
     assert "published under that name" in description
@@ -208,14 +209,14 @@ def test_m4_snapshot_carries_m4(tmp_path, monkeypatch):
     assert m3.run() == 0
     assert m3.run(verify=True) == 0
     published = json.loads((bundle / "snapshot.json").read_text())
-    assert published["methodology_version"] == "m4"
-    assert json.loads((bundle / "manifest.json").read_text())["methodology_version"] == "m4"
-    assert json.loads((bundle / "provenance.json").read_text())["methodology_version"] == "m4"
-    assert json.loads((data / "latest.json").read_text())["methodology_version"] == "m4"
+    assert published["methodology_version"] == version
+    assert json.loads((bundle / "manifest.json").read_text())["methodology_version"] == version
+    assert json.loads((bundle / "provenance.json").read_text())["methodology_version"] == version
+    assert json.loads((data / "latest.json").read_text())["methodology_version"] == version
     card = (cards / "e_0.md").read_text()
-    assert "methodology_version: m4" in card and "methodology m4" in card
+    assert f"methodology_version: {version}" in card and f"methodology {version}" in card
     row = json.loads((data / "history" / "e_0.jsonl").read_text().splitlines()[-1])
-    assert row["methodology_version"] == "m4"
+    assert row["methodology_version"] == version
 
 
 def test_build_query_fixed_self_names_drop_excluded_from_case():

@@ -1,7 +1,8 @@
 """Weekly score post-step over the frozen collector's output. Standard library only.
 
 Snapshots before 2026-10-10 are m3. From that date the same entrypoint scores m4:
-own-package axis 3, exactly derived history. Published m3 snapshots stay on the m3 path.
+own-package axis 3, exactly derived history. From 2026-10-17 m5 also removes
+rounding residue in two-member cohorts. Earlier snapshots keep their arithmetic.
 
 Run after taxonomy/redirect restoration and before snapshot_identity/refresh_sums.
 --dry-run --out-dir DIR copies data/ into DIR and cards into DIR/entities/, then
@@ -48,6 +49,9 @@ AXIS3 = "deps_direct_dependents_momentum"
 AXES = (AXIS1, AXIS2, AXIS3)
 SPEC = json.loads((REPO / "methodology/m3.json").read_text(encoding="utf-8"))
 M4_DOC = json.loads((REPO / "methodology/m4.json").read_text(encoding="utf-8"))
+M5_DOC = json.loads((REPO / "methodology/m5.json").read_text(encoding="utf-8"))
+SPECS = {doc["methodology_version"]: doc for doc in (SPEC, M4_DOC, M5_DOC)}
+M5_ACTIVATION = M5_DOC["activation_date"]
 AXIS3_DESCRIPTION = (
     "Unique direct dependents over each frozen-panel system's linkage-verified package union "
     "(deps.dev BigQuery Dependents, weekly; intra-panel self-dependents excluded). "
@@ -84,7 +88,8 @@ def axis3_records(snapshot: dict, series: dict, states: dict, panel: set,
     # axis cannot be scored, which is stale, not a per-system shortfall (below_floor).
     stale = cutoff is None or (date.fromisoformat(snapshot["snapshot_date"]) - date.fromisoformat(cutoff)).days > 28
     cohorts = {e["entity_id"]: e["cohort"] for e in snapshot["entities"]}
-    _eligible, _rising, per = evaluator.votes_at_cutoff(series, cohorts, clean)
+    _eligible, _rising, per = evaluator.votes_at_cutoff(
+        series, cohorts, clean, exact_pair=snapshot["snapshot_date"] >= M5_ACTIVATION)
     held = {c for c, row in evaluator.canary(per).items() if row["hold"]}
     records = {}
     for entity in snapshot["entities"]:
@@ -185,7 +190,10 @@ def score_snapshot(snapshot: dict, *, observations: Path, evidence: dict, panel:
                      if status == "CLEAN" and day <= snapshot["snapshot_date"]}
         series = identity.derive_m4_series(snapshot["snapshot_date"], observations, snapshot["captured_at"], confirmed=confirmed)
         panel = set(identity.load_panel_m4()[0])
-        version, description = "m4", AXIS3_DESCRIPTION_M4
+        version = "m5" if snapshot["snapshot_date"] >= M5_ACTIVATION else "m4"
+        description = AXIS3_DESCRIPTION_M4
+        if version == "m5":
+            description += " Two eligible systems with different latest sizes have exact residual z = 0."
     else:
         series = evaluator.load_series(snapshot["snapshot_date"], observations=observations, captured_at=snapshot["captured_at"])
         version, description = "m3", AXIS3_DESCRIPTION
@@ -225,7 +233,7 @@ def historical_card(entity: dict, snapshot: dict) -> str:
 
 def card_text(text: str, entity: dict, snapshot: dict) -> str:
     version = snapshot.get("methodology_version", "m3")
-    spec = M4_DOC if version == "m4" else SPEC
+    spec = SPECS[version]
     score = {"methodology_version": version, "snapshot_id": snapshot["snapshot_id"],
              "captured_at": snapshot["captured_at"], "period": snapshot["period"],
              **{key: entity[key] for key in ENTITY_FIELDS}}

@@ -166,7 +166,8 @@ def _theil_sen_slope(ys: list) -> float:
 def _robust_z(values: dict, *, exact_pair: bool = False) -> dict:
     """exact_pair: two members of different size fit the residualizing line exactly, so
     both z are 0. Without it a one-ulp libm residue makes the lower one -1/1.4826 on some
-    platforms (erratum 2026-10-05). Off until a methodology version pins it."""
+    platforms (erratum 2026-10-05). Scoring enables it from m5; historical
+    evaluator calls keep the default arithmetic."""
     if len(values) < 2:
         return {k: 0.0 for k in values}
     xs = [x for x, _ in values.values()]
