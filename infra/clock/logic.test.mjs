@@ -1,12 +1,32 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { tick, findRuns, needsDispatch } from './logic.mjs';
-import { runTick } from './worker.js';
+import { tick, findRuns, needsDispatch, validDispatchToken } from './logic.mjs';
+import worker, { runTick } from './worker.js';
 
 const release = { mode: 'release', release_date: '2026-10-24' };
 const run = { id: 1, display_title: 'weekly release 2026-10-24', head_branch: 'main', status: 'queued', conclusion: null };
 const controller = { cron: '17 2 * * SAT', scheduledTime: Date.parse('2026-10-24T02:17:00Z') };
-const env = { GH_DISPATCH_TOKEN: 'test-token', GH_REPOSITORY: 'evidaxis/evidaxis', GH_REF: 'main' };
+const env = { GH_DISPATCH_TOKEN: 'ghp_testToken123', GH_REPOSITORY: 'evidaxis/evidaxis', GH_REF: 'main' };
+
+test('invalid token is rejected before fetch and its value never enters the log', async (t) => {
+  const logs = [];
+  let fetches = 0;
+  t.mock.method(globalThis, 'fetch', async () => { fetches++; throw new Error('unexpected fetch'); });
+  t.mock.method(console, 'error', (...args) => logs.push(args));
+  for (const token of [undefined, '', 'ghp_ secret', 'ghp_secret\n', 'ghp_\tsecret', 'ghp_é', 'ghp_雪', 'ghp_\0', 'ghp_-']) {
+    await assert.rejects(worker.scheduled(controller, { ...env, GH_DISPATCH_TOKEN: token }),
+      { message: 'GH_DISPATCH_TOKEN has invalid format' });
+    assert.deepEqual(logs.pop(), ['GH_DISPATCH_TOKEN has invalid format']);
+  }
+  assert.equal(fetches, 0);
+});
+
+test('dispatch token accepts PAT ASCII alphabets only', () => {
+  for (const token of ['ghp_abc123XYZ', 'github_pat_123_abcXYZ']) assert.equal(validDispatchToken(token), true);
+  for (const token of [null, 123, '', 'ghp_ abc', 'ghp_é', 'ghp_abc\n', 'ghp_abc\r', 'ghp_-']) {
+    assert.equal(validDispatchToken(token), false);
+  }
+});
 
 test('all Saturday ticks keep the scheduled UTC date; Wednesday targets next Saturday', () => {
   for (const cron of ['17 2 * * SAT', '17 4 * * SAT', '47 6 * * SAT']) {

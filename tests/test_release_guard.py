@@ -2,10 +2,22 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
+import yaml
 
 from scripts import release_guard as guard
 
 NOW = datetime(2026, 10, 17, 2, 17, tzinfo=timezone.utc)
+
+
+def test_current_workflow_names_manual_defaults_and_schedule_as_routers():
+    workflow = yaml.safe_load(Path(".github/workflows/weekly-snapshot.yml").read_text())
+    # Both events have empty date inputs; bare `weekly-snapshot` titles are legacy.
+    assert workflow["run-name"] == "weekly ${{ inputs.mode || 'release' }} ${{ inputs.release_date || 'resolve-date' }}"
+    triggers = workflow[True]  # PyYAML's YAML 1.1 parser reads the Actions `on` key as True.
+    inputs = triggers["workflow_dispatch"]["inputs"]
+    assert inputs["mode"]["default"] == "release"
+    assert inputs["release_date"]["default"] == ""
+    assert triggers["schedule"] == [{"cron": "17 6 * * 6"}]
 
 
 def test_default_date_uses_last_saturday_in_utc():

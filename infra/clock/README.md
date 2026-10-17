@@ -20,6 +20,10 @@ The backup schedule and empty-date manual entry therefore create a short
 Saturday UTC, checks the archive and dispatches a dated child. The routing run
 cannot collect or deploy. Only the dated child's result represents collection.
 Observers must ignore `resolve-date` when identifying a release attempt.
+For dated successes, observers also read Jobs API: a skipped `snapshot` job or
+skipped `Collect snapshot (keyed OpenAlex; capture pass + completeness gate)`
+step means the guard admitted no collection. Such a green no-op cannot clear
+an earlier release failure. Unavailable job evidence is unknown, never success.
 
 The workflow serializes both modes by date, rechecks the archive after waiting
 for `data-commits`, and refuses a new release outside main. Rehearsal uses the

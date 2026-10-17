@@ -20,6 +20,8 @@
 // sensor's fact, and two sensors shouting about one outage teach the keeper to
 // mute both. Dependency-free aside from the pure daily gate in alert-gate.mjs.
 import { inReminderWindow, shouldPush } from './alert-gate.mjs';
+import { releaseRunDate, releaseRunKind, weeklyReleaseDay } from './weekly-release.mjs';
+export { weeklyReleaseDay } from './weekly-release.mjs';
 
 /** @typedef {'ok'|'publishing'|'stale'|'unknown'} FreshnessStatus */
 /** @typedef {'ok'|'released'|'running'|'publishing'|'failed'|'not_started'|'unknown'} ReleaseStatus */
@@ -35,15 +37,6 @@ const WEEKLY_WORKFLOW_URL = 'https://github.com/evidaxis/evidaxis/actions/workfl
 // waiting/pending/requested count as running: weekly-snapshot sits on the data-commits lock, and that wait is not "the schedule did not start".
 const IN_FLIGHT = new Set(['queued', 'in_progress', 'waiting', 'pending', 'requested']);
 const BAD_CONCLUSION = new Set(['failure', 'cancelled', 'timed_out']);
-
-/** @param {string} nowIso @returns {string|null} YYYY-MM-DD of the last Saturday at or before now (UTC). */
-export function weeklyReleaseDay(nowIso) {
-  const now = new Date(nowIso);
-  if (Number.isNaN(now.getTime())) return null;
-  const back = (now.getUTCDay() + 1) % 7;
-  const midnight = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-  return new Date(midnight - back * DAY_MS).toISOString().slice(0, 10);
-}
 
 /** @param {string} iso @returns {string|null} */
 function clock(iso) {
@@ -89,21 +82,7 @@ function runsForWeek(runs, week, nowMs) {
 
 /** @param {object[]} runs @param {string} week @param {number} nowMs */
 function runsForRelease(runs, week, nowMs) {
-  return runsUntilNow(runs, nowMs, (run) => releaseWeekOf(run) === week);
-}
-
-/**
- * `present` / `absent` come from the contents API for data/snapshots/D/snapshot.json on main.
- * Local archiveDate is only a spare fact when that request did not answer.
- * A newer or older latest.json does not mean the Saturday file is missing.
- * @param {{ snapshotOnMain?: string, archiveDate?: string }} i
- * @param {string} week
- * @returns {'present'|'absent'|'unknown'}
- */
-function snapshotOfWeek(i, week) {
-  if (i.snapshotOnMain === 'present' || i.snapshotOnMain === 'absent') return i.snapshotOnMain;
-  if (i.archiveDate === week) return 'present';
-  return 'unknown';
+  return runsUntilNow(runs, nowMs, (run) => releaseRunDate(run) === week && releaseRunKind(run) !== 'ignore');
 }
 
 /** @param {object|undefined} run */
@@ -119,18 +98,6 @@ function isSuccess(run) {
 /** @param {object|undefined} run */
 function isBad(run) {
   return BAD_CONCLUSION.has(run?.conclusion);
-}
-
-// A rehearsal is not a release. A dated title belongs to that date. `weekly release resolve-date` and any title that does not start with `weekly ` belong to the Saturday of created_at.
-function releaseWeekOf(run) {
-  const title = String(run?.display_title ?? '').trim();
-  if (title.startsWith('weekly rehearsal')) return null;
-  const dated = /^weekly release (\d{4}-\d{2}-\d{2})$/.exec(title);
-  if (dated) return dated[1];
-  if (title === 'weekly release resolve-date' || !title.startsWith('weekly ')) {
-    return weeklyReleaseDay(run?.created_at);
-  }
-  return null;
 }
 
 /** @param {object} a @param {object} b */
@@ -262,14 +229,36 @@ function releasedMessage(week, weeklies, deploys) {
 
 /**
  * State of the Saturday release. `D` is the last Saturday at or before `nowIso`.
- * A run is "for D" when GitHub created it at or after D 00:00 UTC.
+ * Dated release titles identify D; routers, guard skips and rehearsals are excluded.
  * File age is not an input: a live run must not read as a missed capture.
+ *
+ * Truth table, first matching row wins. A = snapshot D on main, S = public JSON
+ * at /snapshots/D/snapshot.json with snapshot_date D; + present, - absent, ? unknown.
+ * W = real release attempts for D; P = deployments since D; late = at/after 12:00 UTC.
+ * Row | A S | W                 | P          | Result (alert / human needed)
+ * U0  | invalid observation time           | unknown (yes / no)
+ * R1  | + + | any               | any        | released (once / no)
+ * U1  | any | API/identity ?    | any        | unknown (yes / no)
+ * R2  | any | active            | any        | running (late / no)
+ * F1  | any | failed, no retry  | any        | failed (yes / yes)
+ * U2  | ? * or * ?             | any        | unknown (yes / no)
+ * U3  | - + | any               | any        | unknown: contradictory observations
+ * P1  | + - | no active/failure | active     | publishing (late / no)
+ * F2  | + - | no active/failure | failed     | failed (yes / yes)
+ * P2  | + - | no active/failure | none/done  | publishing before noon (quiet)
+ * F3  | + - | no active/failure | none/done  | failed after noon: publication missing
+ * N1  | - - | none              | any        | not_started (late / late)
+ * O1  | - - | success           | any        | ok before noon (quiet)
+ * F4  | - - | success           | any        | failed after noon: archive missing
+ * U4  | remaining/incomplete facts          | unknown (yes / no)
+ * An unknown required fact never buys `ok`. Running/failure describe a known
+ * attempt even when publication probes are unknown. R1 proves site publication,
+ * not the HF mirror; weekly/HF readback failures remain visible to the watchdog.
  *
  * @param {{
  *   nowIso: string,
- *   archiveDate: string,
- *   prodDate: string|null,
  *   snapshotOnMain?: 'present'|'absent'|'unknown',
+ *   snapshotOnSite?: 'present'|'absent'|'unknown',
  *   weeklyRuns?: object[],
  *   deployRuns?: object[],
  *   apiError?: string|null,
@@ -284,21 +273,25 @@ export function evaluateWeeklyRelease(i) {
       'Не могу проверить выпуск: время проверки некорректно. Нужен человек: нет, проверю в следующий раз.',
       true);
   }
-  if (apiError) {
-    return verdict(week, 'unknown', true,
-      `Не могу проверить выпуск ${week}: GitHub API ответил ${apiError}. Нужен человек: нет, проверю в следующий раз.`,
-      true);
-  }
-
   const nowMs = Date.parse(i.nowIso);
   const past = nowMs >= deadlineMs(week);
   const weeklies = runsForRelease(i.weeklyRuns, week, nowMs);
   const deploys = runsForWeek(i.deployRuns, week, nowMs);
-  const snapshot = snapshotOfWeek(i, week);
-  const inArchive = snapshot === 'present';
+  const snapshot = i.snapshotOnMain;
+  const site = i.snapshotOnSite;
+  const unknown = detail => verdict(week, 'unknown', true,
+    `Не могу проверить выпуск ${week}: ${detail}. Нужен человек: нет, проверю в следующий раз.`, true);
 
-  if (inArchive && i.prodDate === week) {
-    return verdict(week, 'released', true, releasedMessage(week, weeklies, deploys), false);
+  if (snapshot === 'present' && site === 'present') {
+    return verdict(week, 'released', true,
+      releasedMessage(week, weeklies.filter(run => releaseRunKind(run) === 'release'), deploys), false);
+  }
+  if (apiError) {
+    return unknown(`GitHub API ответил ${apiError}`);
+  }
+  if (!Array.isArray(i.weeklyRuns) || !Array.isArray(i.deployRuns) ||
+      weeklies.some(run => releaseRunKind(run) === 'unknown')) {
+    return unknown('неизвестно состояние запусков или пропуска сбора');
   }
 
   const live = weeklies.find(isInFlight);
@@ -310,15 +303,30 @@ export function evaluateWeeklyRelease(i) {
   const weeklyFail = blockingFailure(weeklies);
   if (weeklyFail) return verdict(week, 'failed', true, failedMessage(week, 'weekly', weeklyFail), true);
 
+  if (![snapshot, site].every(value => value === 'present' || value === 'absent')) {
+    return unknown('не удалось проверить субботний срез в main или на сайте');
+  }
+  if (snapshot === 'absent' && site === 'present') return unknown('срез есть на сайте, но отсутствует в main');
+  const inArchive = snapshot === 'present';
+
   const deployLive = deploys.find(isInFlight);
-  if (inArchive && i.prodDate !== week && deployLive) {
+  if (inArchive && deployLive) {
     if (!past) return verdict(week, 'publishing', false, '', false);
     return verdict(week, 'publishing', true, publishingMessage(week, deployLive), false);
   }
 
   const deployFail = blockingFailure(deploys);
-  if (inArchive && i.prodDate !== week && deployFail) {
+  if (inArchive && deployFail) {
     return verdict(week, 'failed', true, failedMessage(week, 'deploy', deployFail), true);
+  }
+
+  if (deploys.some(run => !isInFlight(run) && !isSuccess(run) && !isBad(run))) {
+    return unknown('неизвестен результат выкладки');
+  }
+  if (inArchive) {
+    if (!past) return verdict(week, 'publishing', false, '', false);
+    return verdict(week, 'failed', true,
+      `Срез ${week} не вышел: срез есть в main, но сайт его не отдаёт и активной выкладки нет. Нужен человек: да.`, true);
   }
 
   if (weeklies.length === 0) {
@@ -337,7 +345,8 @@ export function evaluateWeeklyRelease(i) {
     return verdict(week, 'failed', true, `${withRun(sentence, latest.html_url)} Нужен человек: да.`, true);
   }
 
-  return verdict(week, 'ok', false, '', false);
+  if (isSuccess(latest)) return verdict(week, 'ok', false, '', false);
+  return unknown('неизвестен результат сбора');
 }
 
 /**

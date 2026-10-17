@@ -155,3 +155,179 @@ job budget with its new web checks and holds the data-write queue for that job.
 Simultaneous clock deliveries can race between listing and dispatching; the
 dated workflow lock and archive guard prevent a second capture even if both
 requests create queued runs. The Worker has no distributed lock or durable state.
+
+## Fix 1
+
+This revision addresses the review and conductor acceptance findings on top of
+`af7efc3274` and the three imported freshness commits. The evidence below
+supersedes the original dependency pins and the original license-coverage claim.
+No Git index operations, commits, pushes, workflow runs, Telegram messages or
+deployments were performed in this revision. The conductor will commit the files.
+
+Changed files:
+
+| Files | Change |
+| --- | --- |
+| `infra/clock/logic.mjs`, `worker.js`, `logic.test.mjs` | Validate a nonempty ASCII token alphabet before fetch; reject whitespace, control characters and non-ASCII. Log only `GH_DISPATCH_TOKEN has invalid format` for invalid tokens. |
+| `scripts/weekly-release.mjs` (new) | Shared release identity and complete Jobs API evidence for both sensors. |
+| `scripts/release_guard.py`, `infra/clock/README.md` | Document how a successful guard skip is distinguished from collection through Jobs API. |
+| `scripts/workflow-watchdog.mjs`, `workflow-watchdog-check.mjs`, `workflow-watchdog.test.mjs` | Select real release attempts before judging health. A successful skip/router cannot replace an earlier failure. Unreadable required job evidence gives `unknown`. |
+| `scripts/freshness.mjs`, `freshness-check.mjs`, `freshness.test.mjs` | Explicit state table; independent Saturday public-content probe; no inference of Saturday publication from `latest.json`; unknown API/content facts remain unknown. Importable observation function permits network-free runner tests. |
+| `tests/test_release_guard.py` | Assert the workflow name contract for default manual inputs and schedule. |
+| `.github/workflows/weekly-snapshot.yml`, `.github/workflows/hf-mirror.yml` | Pin HF to 2.2.0 with the requested rationale. |
+| `scripts/vercel-deploy.mjs`, `scripts/deploy-receipt.test.mjs` | Pin the invoked CLI to 64.5.0 with the requested rationale; keep transport retry/output suppression. |
+| `REUSE.toml` | Apache annotations for all `infra/clock/**`, this report and the new release-schedule record. Existing `scripts/**` and `tests/**` annotations already cover the other P2 files. |
+| This report | Review regressions, truth table, validation, mutation evidence and remaining limits. |
+
+The initial license test failure was reproduced on tracked files: `logic.mjs`,
+`logic.test.mjs` and `worker.js` lacked a matching annotation. Markdown had been
+exempted by that test; this revision explicitly annotates the requested report
+and governance record too, without editing the immutable governance file.
+
+The guard still exits successfully on an existing date. REST does not expose
+step outputs, so both sensors inspect the existing Jobs API conclusions: a
+skipped `snapshot` job identifies the first guard; a skipped
+`Collect snapshot (keyed OpenAlex; capture pass + completeness gate)` step in a
+successful run identifies the guard after queueing. A real successful collection
+has that step marked `success`. Missing or incomplete job evidence is unknown.
+Failed guard/preflight attempts remain failures. Routers, rehearsals, PRs and
+non-main branches cannot recover release health.
+
+The current workflow already has the required run-name expression. Empty manual
+inputs and the fallback schedule resolve to `weekly release resolve-date`; the
+dated child gets `weekly release D`. Bare `weekly-snapshot` is supported only as
+the legacy title. The new workflow-contract test goes red when the expression is
+replaced by that old title. No live workflow was started to check GitHub rendering.
+
+The Sunday regression now has both a pure state test and a mocked runner test:
+on 2026-10-18, a newer latest pointer and a failed Sunday deploy do not override
+the separately confirmed `https://evidaxis.org/snapshots/2026-10-17/snapshot.json`.
+At Saturday 14:00, successful collection plus an unknown Contents API result
+(timeout, HTTP 403 or 500) produces `unknown`, not `ok`. Four focused regression
+tests were observed red before their fixes, in addition to the license failure.
+
+Truth table: first matching row wins. D is the last Saturday UTC. A is the
+snapshot D on current main; S is JSON from `/snapshots/D/snapshot.json` whose
+`snapshot_date` equals D. `+` means present, `-` means absent, `?` means unknown.
+W contains real release attempts for D; P contains main-branch deployments since
+D. The existing deadline is 12:00 UTC. `released` is a site receipt; HF delivery
+remains checked by the weekly/mirror readback and is not inferred from this state.
+
+| Row | A / S | Other required facts | State | Alert / human needed |
+| --- | --- | --- | --- | --- |
+| U0 | any | Invalid observation time | unknown | yes / no |
+| R1 | + / + | Site publication proved, regardless of later workflow failures | released | once / no |
+| U1 | any | Required workflow history or release/skip identity unknown | unknown | yes / no |
+| R2 | any | W active | running | at/after noon / no |
+| F1 | any | W failed, no newer real retry or success | failed | yes / yes |
+| U2 | ? / any, or any / ? | Publication fact required by subsequent rows unknown | unknown | yes / no |
+| U3 | - / + | Contradictory main/site observations | unknown | yes / no |
+| P1 | + / - | No active/failed W; P active | publishing | at/after noon / no |
+| F2 | + / - | No active/failed W; P failed without recovery | failed | yes / yes |
+| P2 | + / - | No active/failed W; no active/failed P; before noon | publishing | no / no |
+| F3 | + / - | Same facts at/after noon: site publication missing | failed | yes / yes |
+| N1 | - / - | No W | not_started | at/after noon / yes when late |
+| O1 | - / - | W successful, before noon | ok | no / no |
+| F4 | - / - | W successful at/after noon: archive missing | failed | yes / yes |
+| U4 | remaining | Unsupported result or incomplete required facts | unknown | yes / no |
+
+There are 22 table cases, including both sides of the deadline and separate
+unknown facts. Running/failure describe a known attempt even if a publication
+probe is unknown. No unknown fact required for an `ok` verdict can buy silence.
+The Telegram state messages retain Russian wording and `Нужен человек: да/нет`;
+existing reminder windows and deduplication keys are unchanged.
+
+Validation after restoring all deliberate defects:
+
+```text
+PYTHONPATH=. .venv/bin/pytest tests/ -q
+exit 0; 6,938 collected cases, 6,937 passed, one expected skip
+SKIPPED tests/test_recall_fixture.py:49: census working data absent (gitignored)
+
+.venv/bin/ruff check etl tests collectors scripts
+All checks passed!
+
+node --test scripts/*.test.mjs infra/clock/*.test.mjs
+tests 116; pass 116; fail 0; skipped 0
+
+node --test scripts/liveness.test.mjs scripts/freshness.test.mjs scripts/workflow-watchdog.test.mjs scripts/alert-gate.test.mjs
+tests 102; pass 102; fail 0; skipped 0
+
+python3 -c 'import pathlib,yaml; files=sorted(pathlib.Path(".github/workflows").glob("*.yml"))+sorted(pathlib.Path(".github/workflows").glob("*.yaml")); [yaml.safe_load(f.read_text()) for f in files]; print(f"YAML: {len(files)} workflows parsed")'
+YAML: 14 workflows parsed
+
+PYTHONPATH=. .venv/bin/pytest tests/test_hf_upload_snapshot.py -q -o addopts=''
+38 passed in 13.12s
+
+PYTHONPATH=. .venv/bin/pytest tests/test_license_coverage.py::test_every_tracked_file_has_a_license_annotation -q -o addopts=''
+1 passed in 8.39s
+
+.venv/bin/python -c 'import huggingface_hub; print(huggingface_hub.__version__)'
+2.2.0
+.venv/bin/hf --version
+2.2.0
+.venv/bin/hf upload --help
+exit 0; upload positional arguments and --repo-type remain supported
+.venv/bin/python -m pip check
+No broken requirements found.
+
+git diff --check
+exit 0
+```
+
+The network pip attempt failed at DNS resolution. The actual HF 2.2.0 package
+and required dependencies were installed offline into this checkout's existing
+`.venv` from the local package cache. No package source or dependency lockfile
+was changed. HF tests ran with that version installed; they mock upload/network
+operations. CLI help/version checks also ran against the installed 2.2.0 CLI.
+
+All 17 deliberate defects below caused assertion failures, not syntax/import
+errors. Each source file was restored in a `finally` block. All **41 new Node
+tests**, **two revised/renamed Node tests**, and the **one new pytest case** went
+red under at least one mutation. The existing license and Vercel tests also
+caught the regressions. The final unmodified acceptance commands passed again.
+
+| Deliberate defect | Evidence |
+| --- | --- |
+| Accept malformed tokens | Both new token tests failed, including no-fetch/log assertions |
+| Collapse release verdicts to `ok` | 37 new/revised Node tests failed |
+| Fail a known successful pre-deadline observation | O1 failed |
+| Treat dated skips as real successes | Five new/revised tests failed, including watchdog health |
+| Ignore Jobs enrichment | Two new tests failed |
+| Accept incomplete Jobs evidence | Jobs response test failed |
+| Treat resolve-date routers as releases | Three new tests failed |
+| Probe Sunday instead of Saturday | Sunday runner regression failed |
+| Interpret unknown Contents API evidence as absent | Timeout, 403 and 500 cases all failed |
+| Accept the wrong public snapshot date | Public-content comparison test failed |
+| Accept malformed public JSON content | Both missing-date/null tests failed |
+| Treat public HTTP failure as publication | HTTP 503 case failed |
+| Treat truncated workflow history as empty | Truncated-history case failed |
+| Treat invalid workflow metadata as empty | Invalid-history case failed |
+| Restore Vercel 48.2.9 | Existing deployment test failed |
+| Restore the bare weekly workflow title | New pytest workflow-contract case failed |
+| Remove infrastructure license mapping | Existing tracked-file license test failed |
+
+No existing timeouts, retry counts, schedules, reminder windows or history page
+sizes were changed. The requested version comments next to the pins are:
+
+- `64.5.0 deployed production on 2026-10-17 (run 39037255164); 48.2.9 would roll back a year.`
+- `2.2.0 was released on 2026-10-08 and used by the unpinned 2026-10-17 release.`
+
+For live acceptance, use the existing Worker commands and secrets in the
+[clock README](../infra/clock/README.md). Sensors require GitHub Actions read
+access, including Jobs API; their existing GitHub token supplies it. Confirm a
+real guard skip has the job/step conclusions described above and cannot clear a
+failed release. Check the Saturday URL independently from latest, then verify the
+HF public files. No additional secret is introduced by Fix 1.
+
+Not checked live: GitHub event titles/Jobs responses after rollout, dispatches,
+Cloudflare ticks, Telegram delivery, Vercel 64.5.0 deployment or HF 2.2.0 upload.
+Local runtimes remain Python 3.14 and Node 25; CI uses 3.12/22. Web verification
+was not repeated because no web input or source changed in Fix 1.
+Known limits and risks: skip identification depends on the existing job/step
+names; missing evidence gives an alerting `unknown`. The existing bounded run
+history may be insufficient during a burst, which now fails closed. A site
+`released` receipt does not independently certify HF; weekly/HF readback and the
+watchdog retain that failure. Recovery after a committed snapshot still uses
+manual HF mirror/deploy workflows; no-op reruns cannot clear the failed weekly
+attempt. The coordinator and automatic recovery remain outside P2.

@@ -13,6 +13,12 @@ SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
+path = ["infra/clock/**", "docs/release-clock-acceptance-2026-10-17.md", "governance/RELEASE-SCHEDULE-2026-10-18.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
 path = ["data/**", "entities/**", "taxonomy/**", "relationships.tsv", "redirects.yaml"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "NONE"

@@ -4,6 +4,8 @@
 // failed, or out, and pings Telegram only for a new state of that release.
 // Runs under plain `node` — no npm install (see freshness.mjs).
 import { readFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
+import { attachReleaseJobs, releaseRunDate } from './weekly-release.mjs';
 import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import {
   decideFeedPush,
@@ -99,16 +101,25 @@ function githubError(error) {
 }
 
 /** @param {string} workflowFile @returns {Promise<{ runs?: object[], error?: string }>} */
-async function workflowRuns(workflowFile) {
+async function workflowRuns(workflowFile, week) {
   const repo = process.env.GITHUB_REPOSITORY;
   const headers = ghHeaders();
   if (!headers || !repo) return { error: 'нет GH_TOKEN или GITHUB_REPOSITORY' };
-  const url = `${API}/repos/${repo}/actions/workflows/${workflowFile}/runs?per_page=${GH_PAGE}`;
+  const url = `${API}/repos/${repo}/actions/workflows/${workflowFile}/runs?per_page=${GH_PAGE}&branch=main`;
   try {
     const res = await fetch(url, { headers, signal: AbortSignal.timeout(10_000) });
     if (!res.ok) return { error: `HTTP ${res.status}` };
     const body = await res.json();
-    const runs = (body.workflow_runs ?? []).map((run) => ({
+    if (!Array.isArray(body.workflow_runs) || !Number.isInteger(body.total_count)) return { error: 'неполный список запусков' };
+    if (body.workflow_runs.some(run => !run || !Number.isFinite(Date.parse(run.created_at)) ||
+        typeof run.display_title !== 'string' || typeof run.head_branch !== 'string' || typeof run.status !== 'string')) {
+      return { error: 'некорректные сведения о запуске' };
+    }
+    const oldest = body.workflow_runs.at(-1)?.created_at;
+    if (body.total_count > body.workflow_runs.length && (!oldest || oldest.slice(0, 10) >= week)) {
+      return { error: 'неполный список запусков субботы' };
+    }
+    const runs = body.workflow_runs.map((run) => ({
       id: run.id,
       status: run.status,
       conclusion: run.conclusion,
@@ -118,6 +129,7 @@ async function workflowRuns(workflowFile) {
       html_url: run.html_url,
       event: run.event,
       display_title: run.display_title,
+      head_branch: run.head_branch,
     }));
     return { runs };
   } catch (error) {
@@ -225,134 +237,150 @@ async function snapshotOnMain(date) {
   }
 }
 
-const site = (process.env.SITE_URL || '').replace(/\/+$/, '');
-const label = process.env.SITE_LABEL || site;
-const latestPath = process.env.LATEST_JSON || 'data/latest.json';
-if (!site) {
-  console.error('[freshness] SITE_URL not set');
-  process.exit(2);
+async function snapshotOnSite(site, date) {
+  try {
+    const res = await fetch(`${site}/snapshots/${date}/snapshot.json`, {
+      redirect: 'follow',
+      headers: { 'user-agent': 'freshness-sensor/1', 'cache-control': 'no-cache' },
+      signal: AbortSignal.timeout(12_000),
+    });
+    if (res.status === 404) return 'absent';
+    if (res.status !== 200) return 'unknown';
+    const body = await res.json();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(body?.snapshot_date ?? '')) return 'unknown';
+    return body.snapshot_date === date ? 'present' : 'absent';
+  } catch {
+    return 'unknown';
+  }
 }
 
-let snapshotDate;
-try {
-  snapshotDate = JSON.parse(readFileSync(latestPath, 'utf8')).snapshot_date;
-} catch (e) {
-  // A missing or broken pointer file is itself a publication defect: nothing
-  // downstream can know what prod is supposed to be serving.
-  console.error(`[freshness] cannot read ${latestPath}`, e);
-  process.exit(2);
-}
-
-const url = `${site}/snapshots/${snapshotDate}/snapshot.json`;
-const p = await probe(url);
-const now = new Date();
-const nowIso = now.toISOString();
-const result = evaluateFreshness({ site, snapshotDate, now, ...p });
-const feedUrl = `${site}/feed.json`;
-const feedProbe = await probeFeed(feedUrl);
-const feedResult = evaluateFeedFreshness({ site, now, ...feedProbe });
-
-const [weeklyPack, deployPack, previousKeys] = await Promise.all([
-  workflowRuns('weekly-snapshot.yml'),
-  workflowRuns('deploy-web.yml'),
-  previousSensorKeys(),
-]);
-const apiError = [
-  weeklyPack.error ? `weekly-snapshot: ${weeklyPack.error}` : '',
-  deployPack.error ? `deploy-web: ${deployPack.error}` : '',
-].filter(Boolean).join('; ');
-const weeklyRuns = weeklyPack.runs ?? [];
-const deployRuns = deployPack.runs ?? [];
-if (!apiError) {
+export async function readWeeklyFacts(site, nowIso) {
   const week = weeklyReleaseDay(nowIso);
-  const weekStart = week ? Date.parse(`${week}T00:00:00Z`) : Number.POSITIVE_INFINITY;
-  await Promise.all([
-    attachFailedSteps(weeklyRuns, weekStart),
-    attachFailedSteps(deployRuns, weekStart),
+  const [weekly, deploy, main, publicSnapshot] = await Promise.all([
+    workflowRuns('weekly-snapshot.yml', week),
+    workflowRuns('deploy-web.yml', week),
+    snapshotOnMain(week),
+    // latest.json may already point at Sunday; Saturday publication is a separate fact.
+    snapshotOnSite(site, week),
   ]);
+  const weeklyRuns = weekly.runs ?? [];
+  const deployRuns = deploy.runs ?? [];
+  await attachReleaseJobs(weeklyRuns.filter(run => releaseRunDate(run) === week), async id => {
+    const res = await fetch(`${API}/repos/${process.env.GITHUB_REPOSITORY}/actions/runs/${id}/jobs?per_page=${GH_PAGE}`,
+      { headers: ghHeaders(), signal: AbortSignal.timeout(10_000) });
+    if (!res.ok) throw new Error('Jobs API unavailable');
+    return res.json();
+  });
+  const weekStart = Date.parse(`${week}T00:00:00Z`);
+  await Promise.all([attachFailedSteps(weeklyRuns, weekStart), attachFailedSteps(deployRuns, weekStart)]);
+  return { nowIso, weeklyRuns, deployRuns, snapshotOnMain: main, snapshotOnSite: publicSnapshot,
+    apiError: [weekly.error, deploy.error].filter(Boolean).join('; ') };
 }
 
-// 200 on the archive snapshot is the same fact evaluateFreshness calls "prod matches the repo".
-const prodDate = p.reached && p.status === 200 ? snapshotDate : null;
-// After the run list: the Saturday file on current main, not the checkout copy of latest.json.
-const snapshotState = await snapshotOnMain(weeklyReleaseDay(nowIso));
-const release = evaluateWeeklyRelease({
-  nowIso,
-  archiveDate: snapshotDate,
-  prodDate,
-  snapshotOnMain: snapshotState,
-  weeklyRuns,
-  deployRuns,
-  apiError: apiError || null,
-});
-const gated = gateFreshnessAlerts({
-  archiveDate: snapshotDate,
-  release,
-  snapshot: result,
-  feed: feedResult,
-});
-const prevConclusion = (release.alert || gated.snapshot)
-  ? await previousConclusion()
-  : null;
-const previousKey = previousKeys.release;
-const decision = decideWeeklyPush({
-  release,
-  previousKey,
-  previousConclusion: prevConclusion,
-  nowIso,
-});
-const feedDecision = decideFeedPush({
-  alert: gated.feed,
-  key: `feed:${feedResult.reason || 'stale'}`,
-  previousKey: previousKeys.feed,
-  nowIso,
-});
+async function main() {
+  const site = (process.env.SITE_URL || '').replace(/\/+$/, '');
+  const label = process.env.SITE_LABEL || site;
+  const latestPath = process.env.LATEST_JSON || 'data/latest.json';
+  if (!site) {
+    console.error('[freshness] SITE_URL not set');
+    process.exit(2);
+  }
 
-console.log(JSON.stringify({
-  snapshot: { url, snapshotDate, prodDate, httpStatus: p.status, ...result },
-  feed: { url: feedUrl, httpStatus: feedProbe.status, latestEntryAt: feedProbe.latestEntryAt, ...feedResult },
-  release,
-  label,
-}));
+  let snapshotDate;
+  try {
+    snapshotDate = JSON.parse(readFileSync(latestPath, 'utf8')).snapshot_date;
+  } catch (e) {
+    // A missing or broken pointer file is itself a publication defect: nothing
+    // downstream can know what prod is supposed to be serving.
+    console.error(`[freshness] cannot read ${latestPath}`, e);
+    process.exit(2);
+  }
 
-const parts = [];
-if (decision.push && release.message) parts.push(release.message);
-if (feedDecision.push && feedResult.message) parts.push(feedResult.message);
-const legacy = gated.snapshot && shouldPush({ previousConclusion: prevConclusion, nowIso });
-if (legacy) {
-  parts.push(
-    `🟠 На сайте Evidaxis не обновились данные: посетители видят устаревший снимок.\n` +
-      `Что сделать: открой чат по Evidaxis и скажи «данные на сайте не обновились, почини».`,
-  );
-}
+  const url = `${site}/snapshots/${snapshotDate}/snapshot.json`;
+  const p = await probe(url);
+  const now = new Date();
+  const nowIso = now.toISOString();
+  const result = evaluateFreshness({ site, snapshotDate, now, ...p });
+  const feedUrl = `${site}/feed.json`;
+  const feedProbe = await probeFeed(feedUrl);
+  const feedResult = evaluateFeedFreshness({ site, now, ...feedProbe });
 
-// A failed send must not consume the key, or the next run would treat a message the keeper never got as delivered.
-let sent = false;
-if (parts.length) {
-  sent = await sendTelegram(parts.join('\n\n'));
-} else if ((release.alert && release.remind) || gated.snapshot || gated.feed) {
-  console.log('[freshness] (тихо · повтор) уже отправлено, напоминание — утром');
-} else if (release.alert) {
-  console.log(`[freshness] состояние ${release.key} уже сообщено`);
-}
-const notifiedKey = releaseKeyToPrint({
-  push: decision.push,
-  notifiedKey: decision.notifiedKey,
-  previousKey,
-  sent,
-});
-const feedKey = gated.feed
-  ? releaseKeyToPrint({
-    push: feedDecision.push,
-    notifiedKey: feedDecision.notifiedKey,
+  const [weeklyFacts, previousKeys] = await Promise.all([
+    readWeeklyFacts(site, nowIso),
+    previousSensorKeys(),
+  ]);
+  const release = evaluateWeeklyRelease(weeklyFacts);
+  const gated = gateFreshnessAlerts({
+    archiveDate: snapshotDate,
+    release,
+    snapshot: result,
+    feed: feedResult,
+  });
+  const prevConclusion = (release.alert || gated.snapshot)
+    ? await previousConclusion()
+    : null;
+  const previousKey = previousKeys.release;
+  const decision = decideWeeklyPush({
+    release,
+    previousKey,
+    previousConclusion: prevConclusion,
+    nowIso,
+  });
+  const feedDecision = decideFeedPush({
+    alert: gated.feed,
+    key: `feed:${feedResult.reason || 'stale'}`,
     previousKey: previousKeys.feed,
-    sent,
-  })
-  : '';
-console.log(`RELEASE_KEY ${notifiedKey || '-'}`);
-console.log(`FEED_KEY ${feedKey || '-'}`);
+    nowIso,
+  });
 
-// Human-needed states keep the run red so alert-gate repeats them at most once a day.
-// Late-but-moving and the receipt stay green: the keeper was told nobody is needed.
-const fail = decision.exitCode === 1 || feedDecision.exitCode === 1 || gated.snapshot;
-process.exit(fail ? 1 : 0);
+  console.log(JSON.stringify({
+    snapshot: { url, snapshotDate, httpStatus: p.status, ...result },
+    feed: { url: feedUrl, httpStatus: feedProbe.status, latestEntryAt: feedProbe.latestEntryAt, ...feedResult },
+    release,
+    label,
+  }));
+
+  const parts = [];
+  if (decision.push && release.message) parts.push(release.message);
+  if (feedDecision.push && feedResult.message) parts.push(feedResult.message);
+  const legacy = gated.snapshot && shouldPush({ previousConclusion: prevConclusion, nowIso });
+  if (legacy) {
+    parts.push(
+      `🟠 На сайте Evidaxis не обновились данные: посетители видят устаревший снимок.\n` +
+        `Что сделать: открой чат по Evidaxis и скажи «данные на сайте не обновились, почини».`,
+    );
+  }
+
+  // A failed send must not consume the key, or the next run would treat a message the keeper never got as delivered.
+  let sent = false;
+  if (parts.length) {
+    sent = await sendTelegram(parts.join('\n\n'));
+  } else if ((release.alert && release.remind) || gated.snapshot || gated.feed) {
+    console.log('[freshness] (тихо · повтор) уже отправлено, напоминание — утром');
+  } else if (release.alert) {
+    console.log(`[freshness] состояние ${release.key} уже сообщено`);
+  }
+  const notifiedKey = releaseKeyToPrint({
+    push: decision.push,
+    notifiedKey: decision.notifiedKey,
+    previousKey,
+    sent,
+  });
+  const feedKey = gated.feed
+    ? releaseKeyToPrint({
+      push: feedDecision.push,
+      notifiedKey: feedDecision.notifiedKey,
+      previousKey: previousKeys.feed,
+      sent,
+    })
+    : '';
+  console.log(`RELEASE_KEY ${notifiedKey || '-'}`);
+  console.log(`FEED_KEY ${feedKey || '-'}`);
+
+  // Human-needed states keep the run red so alert-gate repeats them at most once a day.
+  // Late-but-moving and the receipt stay green: the keeper was told nobody is needed.
+  const fail = decision.exitCode === 1 || feedDecision.exitCode === 1 || gated.snapshot;
+  process.exit(fail ? 1 : 0);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await main();

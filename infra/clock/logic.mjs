@@ -21,3 +21,7 @@ export function needsDispatch(runs, inputs, ref) {
   return !findRuns(runs, inputs, ref).some(run =>
     run.status !== 'completed' || run.conclusion === 'success' || !run.conclusion);
 }
+
+export function validDispatchToken(token) {
+  return typeof token === 'string' && token.length > 0 && !/[^A-Za-z0-9_]/.test(token);
+}

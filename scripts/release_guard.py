@@ -79,6 +79,8 @@ def main() -> None:
     if mode == "release" and not skip:
         skip = already_exists(data, day, mode, successful_runs(), os.environ.get("GITHUB_RUN_ID", ""))
     if skip:
+        # Sensors read the skipped snapshot job/collection step via Jobs API;
+        # this green no-op must never stand in for a successful publication.
         print(f"already exists (уже есть): {day}; no collection or commit")
     elif mode == "release" and os.environ["GITHUB_REF_NAME"] != "main":
         raise ValueError("new releases must run on main; use rehearsal on a test branch")

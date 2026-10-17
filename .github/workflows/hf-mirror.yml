@@ -29,7 +29,8 @@ jobs:
           python-version: "3.12"
 
       - name: Install huggingface_hub
-        run: python -m pip install --quiet "huggingface_hub==2.1.1"
+        # 2.2.0 was released on 2026-10-08 and used by the unpinned 2026-10-17 release.
+        run: python -m pip install --quiet "huggingface_hub==2.2.0"
 
       - name: Mirror selected snapshots
         env:

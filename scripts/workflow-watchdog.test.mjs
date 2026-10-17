@@ -10,6 +10,45 @@ const actionsUrl = 'https://github.com/evidaxis/evidaxis/actions';
 const nowIso = '2026-08-23T12:00:00Z';
 const scheduled = [{ name: 'weekly-snapshot', kind: 'scheduled', budgetHours: 204 }];
 
+test('a failed release followed by successful skips and a router still alerts', () => {
+  const failure = { id: 1, status: 'completed', conclusion: 'failure', head_branch: 'main',
+    display_title: 'weekly release 2026-10-17', created_at: '2026-10-17T02:17:00Z' };
+  const skips = [
+    { ...failure, id: 2, conclusion: 'success', created_at: '2026-10-17T04:17:00Z',
+      jobs: [{ name: 'snapshot', conclusion: 'skipped', steps: [] }] },
+    { ...failure, id: 3, conclusion: 'success', created_at: '2026-10-17T05:00:00Z',
+      jobs: [{ name: 'snapshot', conclusion: 'success', steps: [
+        { name: 'Collect snapshot (keyed OpenAlex; capture pass + completeness gate)', conclusion: 'skipped' },
+      ] }] },
+    { ...failure, id: 4, conclusion: 'success', created_at: '2026-10-17T06:17:00Z',
+      display_title: 'weekly release resolve-date' },
+  ];
+  for (const noop of skips) {
+    const [result] = evaluateWorkflowHealth({
+      roster: scheduled, nowIso: '2026-10-17T14:00:00Z',
+      latestCompleted: { 'weekly-snapshot': noop }, latestSuccess: { 'weekly-snapshot': noop },
+      weeklyRuns: [noop, failure],
+    });
+    assert.equal(result.alert, true);
+    assert.equal(result.status, 'red');
+  }
+});
+
+test('watchdog requires Jobs evidence for dated success, but real recovery clears the failure', () => {
+  const current = { id: 2, status: 'completed', conclusion: 'success', head_branch: 'main',
+    display_title: 'weekly release 2026-10-17', created_at: '2026-10-17T10:00:00Z' };
+  const previous = { ...current, id: 1, conclusion: 'failure', created_at: '2026-10-17T02:17:00Z' };
+  const judge = weeklyRuns => evaluateWorkflowHealth({ roster: scheduled, weeklyRuns,
+    latestCompleted: {}, latestSuccess: {}, nowIso: '2026-10-17T14:00:00Z' })[0];
+  assert.equal(judge([current, previous]).status, 'unknown');
+  assert.equal(judge([current, previous]).alert, true);
+  const real = { ...current, jobs: [{ name: 'snapshot', steps: [
+    { name: 'Collect snapshot (keyed OpenAlex; capture pass + completeness gate)', conclusion: 'success' },
+  ] }] };
+  assert.equal(judge([real, previous]).alert, false);
+  assert.equal(judge([real, { ...previous, conclusion: 'success' }]).alert, false);
+});
+
 test('red latest run alerts and keeps the actions link at the end', () => {
   const [result] = evaluateWorkflowHealth({
     roster: scheduled,

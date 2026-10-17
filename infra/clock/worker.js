@@ -1,8 +1,9 @@
-import { findRuns, needsDispatch, tick } from './logic.mjs';
+import { findRuns, needsDispatch, tick, validDispatchToken } from './logic.mjs';
 
 export async function runTick(controller, env, fetcher = fetch, pause = ms => new Promise(resolve => setTimeout(resolve, ms))) {
   const inputs = tick(controller.cron, controller.scheduledTime);
-  if (!env.GH_DISPATCH_TOKEN) throw new Error('GH_DISPATCH_TOKEN missing');
+  // Header construction can echo malformed values in exceptions; reject before any fetch.
+  if (!validDispatchToken(env.GH_DISPATCH_TOKEN)) throw new Error('GH_DISPATCH_TOKEN has invalid format');
   if (inputs.mode === 'release' && env.GH_REF !== 'main') throw new Error('release requires main');
   const base = `https://api.github.com/repos/${env.GH_REPOSITORY}/actions/workflows/weekly-snapshot.yml`;
   async function request(path, body) {
@@ -60,7 +61,8 @@ export default {
     try {
       await runTick(controller, env);
     } catch (error) {
-      console.error(JSON.stringify({ outcome: 'clock_error', message: error.message }));
+      if (!validDispatchToken(env.GH_DISPATCH_TOKEN)) console.error('GH_DISPATCH_TOKEN has invalid format');
+      else console.error(JSON.stringify({ outcome: 'clock_error', message: error.message }));
       throw error;
     }
   },

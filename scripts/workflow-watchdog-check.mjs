@@ -10,6 +10,7 @@ import {
   evaluateWorkflowHealth,
 } from './workflow-watchdog.mjs';
 import { evaluateLiveness } from './liveness.mjs';
+import { attachReleaseJobs } from './weekly-release.mjs';
 
 const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
 const WORKFLOW_DIR = '.github/workflows';
@@ -144,6 +145,7 @@ async function evaluate() {
   const latestCompleted = {};
   const latestSuccess = {};
   const latestAnyRun = {};
+  let weeklyRuns;
   for (const item of ROSTER) {
     const workflow = byKey.get(item.name);
     if (!workflow) continue;
@@ -152,6 +154,10 @@ async function evaluate() {
       `${api}/actions/workflows/${workflow.id}/runs?per_page=15${branch}`,
     );
     const runs = (body.workflow_runs ?? []).filter((run) => run.event !== 'pull_request');
+    if (item.name === 'weekly-snapshot') {
+      await attachReleaseJobs(runs, id => githubJson(`${api}/actions/runs/${id}/jobs?per_page=100`));
+      weeklyRuns = runs;
+    }
     latestCompleted[item.name] = runs.find((run) => run.status === 'completed');
     latestSuccess[item.name] = runs.find((run) => run.conclusion === 'success');
     latestAnyRun[item.name] = runs[0];
@@ -162,6 +168,7 @@ async function evaluate() {
     roster: ROSTER,
     latestCompleted,
     latestSuccess,
+    weeklyRuns,
     nowIso,
   });
   // Fact BEFORE drought: an archive that is actually down must survive a platform
@@ -186,6 +193,7 @@ async function evaluate() {
 
 /** The push the keeper reads: what happened in plain words, then what to do. @param {any} result */
 function keeperText(result) {
+  if (result.status === 'unknown') return result.message;
   if (result.kind === 'platform') {
     return `🟠 Причина, похоже, на стороне GitHub: плановые задачи Evidaxis не запускаются.\n` +
       `Что сделать: ничего отдельно — это причина сообщения выше.`;

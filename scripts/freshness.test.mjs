@@ -1,5 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readWeeklyFacts } from './freshness-check.mjs';
+import { attachReleaseJobs, COLLECT_STEP, releaseRunDate, releaseRunKind } from './weekly-release.mjs';
 import {
   decideFeedPush,
   decideWeeklyPush,
@@ -106,6 +108,11 @@ function run(over) {
     updated_at: '2026-10-17T13:36:25Z',
     html_url: 'https://github.com/evidaxis/evidaxis/actions/runs/39026676364',
     event: 'schedule',
+    display_title: 'weekly-snapshot',
+    head_branch: 'main',
+    jobs: [{ name: 'snapshot', conclusion: 'success', steps: [{
+      name: 'Collect snapshot (keyed OpenAlex; capture pass + completeness gate)', conclusion: 'success',
+    }] }],
     ...over,
   };
 }
@@ -127,8 +134,8 @@ test('17 Oct 13:33 UTC in-progress weekly run is late, not a missed capture', ()
   // File age at this minute is past the old 174 h budget. The run is alive.
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:33:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [liveWeekly],
     deployRuns: [],
   });
@@ -145,8 +152,8 @@ test('17 Oct 13:33 UTC in-progress weekly run is late, not a missed capture', ()
 test('17 Oct 10:00 UTC in-progress run is running and still quiet', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T10:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       status: 'in_progress',
       conclusion: null,
@@ -172,15 +179,15 @@ test('noon UTC is the moment a running release becomes late', () => {
   })];
   const before = evaluateWeeklyRelease({
     nowIso: '2026-10-17T11:59:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns,
     deployRuns: [],
   });
   const noon = evaluateWeeklyRelease({
     nowIso: '2026-10-17T12:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns,
     deployRuns: [],
   });
@@ -192,8 +199,8 @@ test('noon UTC is the moment a running release becomes late', () => {
 test('17 Oct 13:50 UTC archive is out and deploy is still running → publishing', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:50:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       status: 'completed',
       conclusion: 'success',
@@ -221,8 +228,8 @@ test('17 Oct 13:50 UTC archive is out and deploy is still running → publishing
 test('17 Oct 14:05 UTC both dates are the Saturday → one receipt with times', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T14:05:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-17',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'present',
     weeklyRuns: [liveWeekly, run({
       status: 'completed',
       conclusion: 'success',
@@ -251,8 +258,8 @@ test('17 Oct 14:05 UTC both dates are the Saturday → one receipt with times', 
 test('10 Oct 12:57 UTC failed weekly run names the step and asks for a human', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-10T12:57:00Z',
-    archiveDate: '2026-10-03',
-    prodDate: '2026-10-03',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       id: 10,
       status: 'completed',
@@ -278,8 +285,8 @@ test('10 Oct 12:57 UTC failed weekly run names the step and asks for a human', (
 test('a failed Saturday run alerts before the noon deadline', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-10T08:00:00Z',
-    archiveDate: '2026-10-03',
-    prodDate: '2026-10-03',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       status: 'completed',
       conclusion: 'failure',
@@ -298,8 +305,8 @@ test('a failed Saturday run alerts before the noon deadline', () => {
 test('03 Oct 15:13 UTC failed weekly run is a failed release', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-03T15:13:00Z',
-    archiveDate: '2026-09-26',
-    prodDate: '2026-09-26',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       id: 3,
       status: 'completed',
@@ -323,8 +330,8 @@ test('cancelled and timed_out count as a failed release', () => {
   for (const conclusion of ['cancelled', 'timed_out']) {
     const r = evaluateWeeklyRelease({
       nowIso: '2026-10-17T13:00:00Z',
-      archiveDate: '2026-10-10',
-      prodDate: '2026-10-10',
+      snapshotOnMain: 'absent',
+      snapshotOnSite: 'absent',
       weeklyRuns: [run({
         status: 'completed',
         conclusion,
@@ -358,8 +365,8 @@ test('Saturday 13:00 a rehearsal is not the release and does not clear a failure
   });
   const stillFailed = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [failure, rehearsal],
     deployRuns: [],
   });
@@ -369,8 +376,8 @@ test('Saturday 13:00 a rehearsal is not the release and does not clear a failure
 
   const base = {
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     deployRuns: [],
   };
   for (const weeklyRuns of [
@@ -397,8 +404,7 @@ test('Saturday 13:00 a rehearsal is not the release and does not clear a failure
 test('Saturday 13:00 a successful release with no snapshot file for that Saturday has failed', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnSite: 'absent',
     snapshotOnMain: 'absent',
     weeklyRuns: [run({
       conclusion: 'success',
@@ -414,11 +420,11 @@ test('Saturday 13:00 a successful release with no snapshot file for that Saturda
   assert.match(r.message, /Нужен человек: да/);
 });
 
-test('a newer success clears an earlier failure', () => {
+test('a newer real success clears a collection failure while publication is active', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:10:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'absent',
     weeklyRuns: [
       run({
         id: 1,
@@ -436,17 +442,17 @@ test('a newer success clears an earlier failure', () => {
         updated_at: '2026-10-17T13:00:00Z',
       }),
     ],
-    deployRuns: [],
+    deployRuns: [run({ status: 'queued', conclusion: null })],
   });
   assert.notEqual(r.status, 'failed');
-  assert.equal(r.alert, false);
+  assert.equal(r.status, 'publishing');
 });
 
 test('Saturday 13:00 UTC with no run for that Saturday has not started', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       id: 2,
       created_at: '2026-10-10T10:00:00Z',
@@ -467,8 +473,8 @@ test('Saturday 13:00 UTC with no run for that Saturday has not started', () => {
 test('an API error is unknown, not a missed or failed release', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [],
     deployRuns: [],
     apiError: 'HTTP 502',
@@ -486,8 +492,8 @@ test('an API error is unknown, not a missed or failed release', () => {
 test('a failed deploy names the step and asks for a human', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T14:20:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({ conclusion: 'success', status: 'completed' })],
     deployRuns: [run({
       id: 8,
@@ -535,8 +541,8 @@ test('the release key is the last RELEASE_KEY line in the job log', () => {
 test('a quiet run does not consume the key, and late then released each send once', () => {
   const early = evaluateWeeklyRelease({
     nowIso: '2026-10-17T10:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({
       status: 'in_progress',
       conclusion: null,
@@ -556,8 +562,8 @@ test('a quiet run does not consume the key, and late then released each send onc
 
   const late = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:33:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [liveWeekly],
     deployRuns: [],
   });
@@ -579,8 +585,8 @@ test('a quiet run does not consume the key, and late then released each send onc
 
   const done = evaluateWeeklyRelease({
     nowIso: '2026-10-17T14:05:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-17',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'present',
     weeklyRuns: [run({ conclusion: 'success', status: 'completed' })],
     deployRuns: [run({
       id: 11,
@@ -612,8 +618,8 @@ test('a quiet run does not consume the key, and late then released each send onc
 test('an unreadable previous key still sends, and the key is stored only after the send', () => {
   const release = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [],
     deployRuns: [],
   });
@@ -641,8 +647,8 @@ test('an unreadable previous key still sends, and the key is stored only after t
 test('unknown repeats through the daily gate, not on every check', () => {
   const release = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [],
     deployRuns: [],
     apiError: 'HTTP 502',
@@ -674,8 +680,8 @@ test('unknown repeats through the daily gate, not on every check', () => {
 test('the weekly-release alert replaces the same-Saturday snapshot and feed alarms', () => {
   const release = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:50:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'absent',
     weeklyRuns: [run({ conclusion: 'success', status: 'completed' })],
     deployRuns: [run({
       id: 9,
@@ -704,8 +710,8 @@ test('the weekly-release alert replaces the same-Saturday snapshot and feed alar
 
   const unknown = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: null,
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'unknown',
     weeklyRuns: [],
     deployRuns: [],
     apiError: 'HTTP 502',
@@ -721,8 +727,8 @@ test('the weekly-release alert replaces the same-Saturday snapshot and feed alar
 
   const released = evaluateWeeklyRelease({
     nowIso: '2026-10-21T09:00:00Z',
-    archiveDate: '2026-10-17',
-    prodDate: '2026-10-17',
+    snapshotOnMain: 'present',
+    snapshotOnSite: 'present',
     weeklyRuns: [],
     deployRuns: [],
   });
@@ -738,8 +744,8 @@ test('the weekly-release alert replaces the same-Saturday snapshot and feed alar
 test('a running release still sends a feed 404 or a broken feed', () => {
   const release = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:33:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [liveWeekly],
     deployRuns: [],
   });
@@ -765,8 +771,7 @@ test('a running release still sends a feed 404 or a broken feed', () => {
 test('a weekly release titled for another date is not this Saturday release', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnSite: 'absent',
     snapshotOnMain: 'absent',
     weeklyRuns: [run({
       conclusion: 'success',
@@ -783,8 +788,7 @@ test('a weekly release titled for another date is not this Saturday release', ()
 test('a stale checkout is not a failed release when main already has this Saturday snapshot', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnSite: 'present',
     snapshotOnMain: 'present',
     weeklyRuns: [run({
       conclusion: 'success',
@@ -797,11 +801,11 @@ test('a stale checkout is not a failed release when main already has this Saturd
   assert.notEqual(r.status, 'failed');
 });
 
-test('a newer Sunday snapshot does not mean the Saturday snapshot is missing', () => {
+test('Sunday latest and a failed Sunday deploy cannot undo the Saturday publication', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-18T15:00:00Z',
-    archiveDate: '2026-10-18',
-    prodDate: '2026-10-18',
+    archiveDate: '2026-10-18', // Deliberately ignored: latest.json is not the Saturday fact.
+    snapshotOnSite: 'present',
     snapshotOnMain: 'present',
     weeklyRuns: [run({
       conclusion: 'success',
@@ -810,18 +814,17 @@ test('a newer Sunday snapshot does not mean the Saturday snapshot is missing', (
       created_at: '2026-10-17T06:20:00Z',
       updated_at: '2026-10-17T12:40:00Z',
     })],
-    deployRuns: [],
+    deployRuns: [run({ id: 9, conclusion: 'failure', created_at: '2026-10-18T14:00:00Z' })],
   });
-  assert.notEqual(r.status, 'failed');
-  assert.ok(r.status === 'ok' || r.status === 'released');
+  assert.equal(r.status, 'released');
 });
 
 test('a new feed failure still sends after a run that failed on the GitHub API', () => {
   const nowIso = '2026-10-17T15:00:00Z';
   const release = evaluateWeeklyRelease({
     nowIso,
-    archiveDate: '2026-10-10',
-    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    snapshotOnSite: 'absent',
     weeklyRuns: [],
     deployRuns: [],
     apiError: 'HTTP 502',
@@ -856,4 +859,178 @@ test('a new feed failure still sends after a run that failed on the GitHub API',
     nowIso,
   });
   assert.equal(repeat.push, false);
+});
+
+test('a successful release with an unknown main snapshot cannot be ok', () => {
+  const r = evaluateWeeklyRelease({ nowIso: '2026-10-17T14:00:00Z',
+    snapshotOnSite: 'absent', snapshotOnMain: 'unknown',
+    weeklyRuns: [run({})], deployRuns: [] });
+  assert.equal(r.status, 'unknown');
+  assert.equal(r.alert, true);
+});
+
+test('a successful date router does not replace a failed release', () => {
+  const r = evaluateWeeklyRelease({ nowIso: '2026-10-17T14:00:00Z',
+    snapshotOnMain: 'present', snapshotOnSite: 'absent',
+    weeklyRuns: [run({ conclusion: 'failure' }), run({ id: 2,
+      created_at: '2026-10-17T12:00:00Z', display_title: 'weekly release resolve-date' })],
+    deployRuns: [] });
+  assert.equal(r.status, 'failed');
+  assert.match(r.message, /weekly-snapshot упал/);
+});
+
+const completed = run({ display_title: 'weekly release 2026-10-17', created_at: '2026-10-17T02:17:00Z' });
+const active = { ...completed, status: 'in_progress', conclusion: null };
+const failed = { ...completed, conclusion: 'failure' };
+const truthBase = { nowIso: '2026-10-17T14:00:00Z', snapshotOnMain: 'absent', snapshotOnSite: 'absent',
+  weeklyRuns: [completed], deployRuns: [] };
+const early = '2026-10-17T11:00:00Z';
+const truthTable = [
+  ['U0', { nowIso: 'invalid' }, 'unknown', true, true],
+  ['R1', { snapshotOnMain: 'present', snapshotOnSite: 'present', deployRuns: [failed] }, 'released', true, false],
+  ['U1-api', { apiError: 'HTTP 503' }, 'unknown', true, true],
+  ['U1-jobs', { weeklyRuns: [{ ...completed, jobs: undefined }] }, 'unknown', true, true],
+  ['U1-history', { weeklyRuns: undefined }, 'unknown', true, true],
+  ['R2-early', { weeklyRuns: [active], nowIso: early }, 'running', false, false],
+  ['R2-late', { weeklyRuns: [active] }, 'running', true, false],
+  ['F1', { weeklyRuns: [failed] }, 'failed', true, true],
+  ['U2-main', { snapshotOnMain: 'unknown' }, 'unknown', true, true],
+  ['U2-site', { snapshotOnSite: 'unknown' }, 'unknown', true, true],
+  ['U3', { snapshotOnSite: 'present' }, 'unknown', true, true],
+  ['P1-early', { snapshotOnMain: 'present', deployRuns: [active], nowIso: early }, 'publishing', false, false],
+  ['P1-late', { snapshotOnMain: 'present', deployRuns: [active] }, 'publishing', true, false],
+  ['F2', { snapshotOnMain: 'present', deployRuns: [failed] }, 'failed', true, true],
+  ['P2', { snapshotOnMain: 'present', nowIso: early }, 'publishing', false, false],
+  ['F3', { snapshotOnMain: 'present' }, 'failed', true, true],
+  ['N1-early', { weeklyRuns: [], nowIso: early }, 'not_started', false, false],
+  ['N1-late', { weeklyRuns: [] }, 'not_started', true, true],
+  ['O1', { nowIso: early }, 'ok', false, false],
+  ['F4', {}, 'failed', true, true],
+  ['U4', { weeklyRuns: [{ ...completed, conclusion: 'neutral' }] }, 'unknown', true, true],
+  ['U4-deploy', { snapshotOnMain: 'present', deployRuns: [{ ...completed, conclusion: 'neutral' }] }, 'unknown', true, true],
+];
+for (const [row, facts, status, alert, remind] of truthTable) {
+  test(`release truth table ${row}: ${status}`, () => {
+    const result = evaluateWeeklyRelease({ ...truthBase, ...facts });
+    assert.deepEqual([result.status, result.alert, result.remind], [status, alert, remind]);
+    if (alert) assert.match(result.message, /Нужен человек: (да|нет)/);
+  });
+}
+
+test('both guard skip locations and rehearsals are excluded from release identity', () => {
+  for (const run of [
+    { ...completed, display_title: 'weekly release resolve-date' },
+    { ...completed, display_title: 'weekly rehearsal 2026-10-17' },
+    { ...completed, head_branch: 'test' },
+    { ...completed, event: 'pull_request' },
+    { ...completed, jobs: [{ name: 'snapshot', conclusion: 'skipped' }] },
+    { ...completed, jobs: [{ name: 'snapshot', steps: [{ name: COLLECT_STEP, conclusion: 'skipped' }] }] },
+  ]) {
+    assert.equal(releaseRunKind(run), 'ignore');
+    const result = evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [failed, { ...run, id: 2,
+      created_at: '2026-10-17T06:17:00Z' }] });
+    assert.equal(result.status, 'failed');
+    assert.match(result.message, /weekly-snapshot упал/);
+  }
+  assert.equal(releaseRunDate(run({})), '2026-10-17', 'old bare weekly-snapshot titles remain readable');
+  assert.equal(releaseRunDate({ ...completed, display_title: 'unrelated workflow' }), null);
+});
+
+test('Jobs API enrichment accepts only a complete response and leaves failures unknown', async () => {
+  for (const body of [null, {}, { total_count: 2, jobs: completed.jobs }, { total_count: 0, jobs: [] }]) {
+    const candidate = { ...completed, jobs: undefined };
+    await attachReleaseJobs([candidate], async () => {
+      if (body === null) throw new Error('timeout');
+      return body;
+    });
+    assert.equal(releaseRunKind(candidate), 'unknown');
+  }
+  const candidate = { ...completed, jobs: undefined };
+  const calls = [];
+  await attachReleaseJobs([candidate, failed], async id => {
+    calls.push(id);
+    return { total_count: 1, jobs: completed.jobs };
+  });
+  assert.deepEqual(calls, [completed.id]);
+  assert.equal(releaseRunKind(candidate), 'release');
+});
+
+function mockWeeklyApi(t, { mainStatus = 200, mainTimeout = false, siteStatus = 200,
+  siteBody = { snapshot_date: '2026-10-17' }, deployRuns = [], weeklyBody } = {}) {
+  const oldToken = process.env.GH_TOKEN;
+  const oldRepo = process.env.GITHUB_REPOSITORY;
+  process.env.GH_TOKEN = 'test_token';
+  process.env.GITHUB_REPOSITORY = 'evidaxis/evidaxis';
+  t.after(() => {
+    if (oldToken === undefined) delete process.env.GH_TOKEN; else process.env.GH_TOKEN = oldToken;
+    if (oldRepo === undefined) delete process.env.GITHUB_REPOSITORY; else process.env.GITHUB_REPOSITORY = oldRepo;
+  });
+  const requests = [];
+  t.mock.method(globalThis, 'fetch', async url => {
+    requests.push(String(url));
+    const parsed = new URL(url);
+    if (parsed.hostname === 'evidaxis.org') {
+      assert.equal(parsed.pathname, '/snapshots/2026-10-17/snapshot.json');
+      return Response.json(siteBody, { status: siteStatus });
+    }
+    if (parsed.pathname.includes('/contents/')) {
+      assert.equal(parsed.pathname, '/repos/evidaxis/evidaxis/contents/data/snapshots/2026-10-17/snapshot.json');
+      assert.equal(parsed.searchParams.get('ref'), 'main');
+      if (mainTimeout) throw new DOMException('timeout', 'TimeoutError');
+      return Response.json({}, { status: mainStatus });
+    }
+    if (parsed.pathname.includes('/workflows/')) {
+      assert.equal(parsed.searchParams.get('branch'), 'main');
+      if (parsed.pathname.includes('weekly-snapshot')) return Response.json(weeklyBody ?? { total_count: 1, workflow_runs: [completed] });
+      return Response.json({ total_count: deployRuns.length, workflow_runs: deployRuns });
+    }
+    if (parsed.pathname.endsWith('/jobs')) return Response.json({ total_count: 1, jobs: completed.jobs });
+    throw new Error('unexpected request');
+  });
+  return requests;
+}
+
+test('Sunday runner probes Saturday content independently of latest and Sunday deploy failure', async (t) => {
+  const requests = mockWeeklyApi(t, { deployRuns: [{ ...failed, id: 9, created_at: '2026-10-18T14:00:00Z' }] });
+  const facts = await readWeeklyFacts('https://evidaxis.org', '2026-10-18T15:00:00Z');
+  const result = evaluateWeeklyRelease({ ...facts, archiveDate: '2026-10-18', prodDate: '2026-10-18' });
+  assert.equal(result.status, 'released');
+  assert.equal(requests.filter(url => url === 'https://evidaxis.org/snapshots/2026-10-17/snapshot.json').length, 1);
+});
+
+for (const failure of [{ mainTimeout: true }, { mainStatus: 403 }, { mainStatus: 500 }]) {
+  test(`main API ${failure.mainStatus ?? 'timeout'} after successful collection stays unknown`, async (t) => {
+    mockWeeklyApi(t, { ...failure, siteStatus: 404 });
+    const facts = await readWeeklyFacts('https://evidaxis.org', '2026-10-17T14:00:00Z');
+    assert.equal(facts.snapshotOnMain, 'unknown');
+    const result = evaluateWeeklyRelease(facts);
+    assert.equal(result.status, 'unknown');
+    assert.equal(result.alert, true);
+  });
+}
+
+for (const [label, options] of [['HTTP 503', { siteStatus: 503 }], ['no date', { siteBody: {} }], ['null', { siteBody: null }]]) {
+  test(`public ${label} cannot confirm publication`, async (t) => {
+    mockWeeklyApi(t, options);
+    const facts = await readWeeklyFacts('https://evidaxis.org', '2026-10-17T14:00:00Z');
+    assert.equal(facts.snapshotOnSite, 'unknown');
+    assert.equal(evaluateWeeklyRelease(facts).status, 'unknown');
+  });
+}
+
+for (const [label, weeklyBody] of [['missing', {}], ['truncated', { total_count: 2, workflow_runs: [completed] }],
+  ['invalid', { total_count: 1, workflow_runs: [{ ...completed, created_at: null }] }]]) {
+  test(`${label} workflow history is unknown rather than an empty successful history`, async (t) => {
+    mockWeeklyApi(t, { weeklyBody, mainStatus: 404, siteStatus: 404 });
+    const facts = await readWeeklyFacts('https://evidaxis.org', '2026-10-17T14:00:00Z');
+    assert.equal(evaluateWeeklyRelease(facts).status, 'unknown');
+  });
+}
+
+test('a confirmed main 404 and public content for a different date mean absent, not unknown', async (t) => {
+  mockWeeklyApi(t, { mainStatus: 404, siteBody: { snapshot_date: '2026-10-10' } });
+  const facts = await readWeeklyFacts('https://evidaxis.org', '2026-10-17T14:00:00Z');
+  assert.equal(facts.snapshotOnMain, 'absent');
+  assert.equal(facts.snapshotOnSite, 'absent');
+  assert.equal(evaluateWeeklyRelease(facts).status, 'failed');
 });

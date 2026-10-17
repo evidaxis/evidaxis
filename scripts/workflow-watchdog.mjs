@@ -21,7 +21,9 @@
 //                  (`dataLoss`) stay loud through it — a lost observation hour is
 //                  never recoverable, which is the asymmetry the whole sensor exists for.
 
-/** @typedef {'ok'|'red'|'stale'|'missing'|'drought'} WorkflowStatus */
+import { releaseRunKind } from './weekly-release.mjs';
+
+/** @typedef {'ok'|'red'|'stale'|'missing'|'drought'|'unknown'} WorkflowStatus */
 
 const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
 const HOUR_MS = 3600_000;
@@ -60,6 +62,16 @@ function isOverdue(result) {
  * @param {number} now
  */
 function judge(workflow, i, now) {
+  if (workflow.name === 'weekly-snapshot' && i.weeklyRuns) {
+    const runs = i.weeklyRuns.filter(run => releaseRunKind(run) !== 'ignore');
+    const completed = runs.find(run => run.status === 'completed');
+    if (completed && releaseRunKind(completed) === 'unknown') {
+      return { status: 'unknown', alert: true,
+        message: `weekly-snapshot: Jobs API не подтвердил, был ли сбор пропущен. Нужен человек: нет, проверю снова.\n${ACTIONS_URL}` };
+    }
+    i = { latestCompleted: { 'weekly-snapshot': completed },
+      latestSuccess: { 'weekly-snapshot': runs.find(run => run.conclusion === 'success' && releaseRunKind(run) === 'release') } };
+  }
   const completed = runFor(i.latestCompleted, workflow.name);
   if (!completed) {
     return {
@@ -139,6 +151,7 @@ function silenceSelf(result) {
  *   roster: Array<{name: string, kind: 'scheduled'|'event', budgetHours?: number, self?: boolean, factGate?: string, dataLoss?: boolean}>,
  *   latestCompleted: Map<string, object>|Record<string, object>,
  *   latestSuccess: Map<string, object>|Record<string, object>,
+ *   weeklyRuns?: object[],
  *   nowIso: string,
  * }} i
  */

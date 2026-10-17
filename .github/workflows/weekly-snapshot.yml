@@ -333,7 +333,8 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           if [ -z "$HF_TOKEN" ]; then echo "::error::HF_TOKEN missing"; exit 1; fi
-          python -m pip install --quiet "huggingface_hub==2.1.1"
+          # 2.2.0 was released on 2026-10-08 and used by the unpinned 2026-10-17 release.
+          python -m pip install --quiet "huggingface_hub==2.2.0"
           python3 scripts/hf_upload_snapshot.py --date "$SNAPSHOT_DATE"
 
       - name: Ask Software Heritage to re-archive the repository

@@ -25,7 +25,7 @@ test('deployment retries transport once and keeps both CLI streams private', () 
     let calls = 0;
     deploy((command, args, options) => {
       assert.equal(command, 'npx');
-      assert.ok(args.includes('vercel@48.2.9'));
+      assert.ok(args.includes('vercel@64.5.0'));
       assert.deepEqual(options.stdio, ['ignore', 'pipe', 'pipe']);
       calls++;
       return calls === 1 ? { status: 1, stderr: 'ECONNRESET secret-preview.vercel.app' }

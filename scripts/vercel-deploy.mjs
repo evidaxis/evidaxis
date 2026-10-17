@@ -8,7 +8,8 @@ export function transportFailure(text) {
 export function deploy(run = spawnSync) {
   // One transport retry is allowed; configuration and build failures stop immediately.
   for (let attempt = 1; attempt <= 2; attempt++) {
-    const result = run('npx', ['--yes', 'vercel@48.2.9', 'deploy', '--prod', '--yes', '--archive=tgz', '--token', process.env.VERCEL_TOKEN],
+    // 64.5.0 deployed production on 2026-10-17 (run 39037255164); 48.2.9 would roll back a year.
+    const result = run('npx', ['--yes', 'vercel@64.5.0', 'deploy', '--prod', '--yes', '--archive=tgz', '--token', process.env.VERCEL_TOKEN],
       { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     // CLI output includes private deployment hostnames; neither stream belongs in public logs.
     if (result.status === 0) {
