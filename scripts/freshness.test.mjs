@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readWeeklyFacts } from './freshness-check.mjs';
-import { attachReleaseJobs, COLLECT_STEP, releaseRunDate, releaseRunKind } from './weekly-release.mjs';
+import { evaluateWorkflowHealth } from './workflow-watchdog.mjs';
+import { attachReleaseJobs, COLLECT_STEP, compareAttempts, effectiveRun, releaseRunDate, releaseRunKind } from './weekly-release.mjs';
 import {
   decideFeedPush,
   decideWeeklyPush,
@@ -1033,4 +1034,184 @@ test('a confirmed main 404 and public content for a different date mean absent, 
   assert.equal(facts.snapshotOnMain, 'absent');
   assert.equal(facts.snapshotOnSite, 'absent');
   assert.equal(evaluateWeeklyRelease(facts).status, 'failed');
+});
+
+const hfStep = 'Mirror the dated snapshot to HF and verify public contents';
+function attempt(number, conclusion, steps, over = {}) {
+  const hour = number === 1 ? '02:17' : '09:00';
+  return { ...completed, id: 101, run_attempt: number, status: 'completed', conclusion,
+    created_at: '2026-10-17T02:17:00Z', run_started_at: `2026-10-17T${hour}:00Z`,
+    updated_at: `2026-10-17T${number === 1 ? '04:00' : '11:00'}:00Z`,
+    jobs: [{ name: 'snapshot', conclusion, steps }], ...over };
+}
+const hfFailure = attempt(1, 'failure', [
+  { name: COLLECT_STEP, conclusion: 'success' }, { name: hfStep, conclusion: 'failure' },
+]);
+const skippedRetry = attempt(2, 'success', [
+  { name: COLLECT_STEP, conclusion: 'skipped' }, { name: hfStep, conclusion: 'skipped' },
+]);
+function watchdogFor(weeklyRuns) {
+  return evaluateWorkflowHealth({ roster: [{ name: 'weekly-snapshot', kind: 'scheduled', budgetHours: 204 }],
+    weeklyRuns, latestCompleted: {}, latestSuccess: {}, nowIso: '2026-10-17T13:00:00Z' })[0];
+}
+
+test('a successful no-op rerun retains the same run ID HF failure in both sensors', async () => {
+  const retry = { ...skippedRetry };
+  const history = [hfFailure, skippedRetry];
+  await attachReleaseJobs([retry], async (id, number = 2) => ({ total_count: 1, jobs: history[number - 1].jobs }),
+    async (id, number) => history[number - 1]);
+  const olderSuccess = { ...completed, id: 99, created_at: '2026-10-17T01:00:00Z', run_started_at: '2026-10-17T01:00:00Z' };
+  const health = watchdogFor([retry, olderSuccess]);
+  assert.equal(health.status, 'red');
+  assert.equal(health.alert, true);
+  const release = evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [retry],
+    snapshotOnMain: 'present', snapshotOnSite: 'present' });
+  assert.equal(release.status, 'failed');
+  assert.match(release.message, /Mirror the dated snapshot to HF/);
+  assert.match(release.message, /попытка 1/);
+});
+
+test('a skipped deployment is absent work, so an unstarted Saturday stays not_started', () => {
+  const release = evaluateWeeklyRelease({ ...truthBase, nowIso: '2026-10-17T13:00:00Z', weeklyRuns: [],
+    deployRuns: [{ ...completed, conclusion: 'skipped' }] });
+  assert.equal(release.status, 'not_started');
+  assert.equal(release.alert, true);
+});
+
+test('a successful 09:00 rerun of A supersedes the failed 04:17 B despite the original ID and creation time', async () => {
+  const success = attempt(2, 'success', [
+    { name: COLLECT_STEP, conclusion: 'success' }, { name: hfStep, conclusion: 'success' },
+  ]);
+  await attachReleaseJobs([success], async (id, number = 2) => ({ total_count: 1, jobs: [hfFailure, success][number - 1].jobs }),
+    async () => hfFailure);
+  const b = { ...failed, id: 102, created_at: '2026-10-17T04:17:00Z', run_started_at: '2026-10-17T04:17:00Z' };
+  const release = evaluateWeeklyRelease({ ...truthBase, nowIso: '2026-10-17T11:30:00Z',
+    snapshotOnMain: 'present', weeklyRuns: [b, success],
+    deployRuns: [{ ...active, id: 103, run_started_at: '2026-10-17T11:10:00Z' }] });
+  assert.equal(release.status, 'publishing');
+  assert.equal(release.alert, false);
+  assert.equal(watchdogFor([b, success]).alert, false);
+});
+
+async function withAttempts(history) {
+  const latest = { ...history.at(-1) };
+  await attachReleaseJobs([latest], async (id, number) => ({ total_count: 1, jobs: history[number - 1].jobs }),
+    async (id, number) => history[number - 1]);
+  return latest;
+}
+
+test('collection success cannot recover HF; only the same failed step in the same job can', async () => {
+  for (const jobs of [
+    [{ name: 'snapshot', conclusion: 'success', steps: [{ name: COLLECT_STEP, conclusion: 'success' }] }],
+    [{ name: 'other job', conclusion: 'success', steps: [{ name: hfStep, conclusion: 'success' }] }],
+  ]) {
+    const latest = await withAttempts([hfFailure, { ...skippedRetry, jobs }]);
+    assert.equal(watchdogFor([latest]).status, 'red');
+    assert.equal(evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [latest],
+      snapshotOnMain: 'present', snapshotOnSite: 'present' }).status, 'failed');
+  }
+  const recovered = await withAttempts([hfFailure, attempt(2, 'success', [
+    { name: COLLECT_STEP, conclusion: 'skipped' }, { name: hfStep, conclusion: 'success' },
+  ])]);
+  assert.equal(watchdogFor([recovered]).alert, false);
+  assert.equal(evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [recovered],
+    snapshotOnMain: 'present', snapshotOnSite: 'present' }).status, 'released');
+});
+
+test('several skipped attempts preserve failure until recovery and do not refresh success time', async () => {
+  const thirdSkip = { ...skippedRetry, run_attempt: 3, run_started_at: '2026-10-17T11:10:00Z' };
+  const skipped = await withAttempts([hfFailure, skippedRetry, thirdSkip]);
+  assert.equal(watchdogFor([skipped]).status, 'red');
+  const recovery = attempt(2, 'success', [{ name: hfStep, conclusion: 'success' }]);
+  const recovered = await withAttempts([hfFailure, recovery, thirdSkip]);
+  assert.equal(watchdogFor([recovered]).alert, false);
+  assert.equal(effectiveRun(recovered).run_attempt, 2);
+  assert.equal(effectiveRun(recovered).run_started_at, '2026-10-17T09:00:00Z');
+});
+
+test('a different run must actually repair the retained failed stage before clearing it', async () => {
+  const retry = await withAttempts([hfFailure, skippedRetry]);
+  const newer = { ...completed, id: 102, run_started_at: '2026-10-17T11:00:00Z' };
+  for (const candidate of [{ ...newer, status: 'in_progress', conclusion: null }, newer]) {
+    const weeklyRuns = [retry, candidate];
+    assert.equal(watchdogFor(weeklyRuns).status, 'red');
+    assert.equal(evaluateWeeklyRelease({ ...truthBase, weeklyRuns, snapshotOnMain: 'present',
+      snapshotOnSite: 'present' }).status, 'failed');
+  }
+  const repaired = { ...newer, jobs: [{ name: 'snapshot', steps: [{ name: hfStep, conclusion: 'success' },
+    { name: COLLECT_STEP, conclusion: 'success' }] }] };
+  assert.equal(watchdogFor([retry, repaired]).alert, false);
+  assert.equal(evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [retry, repaired],
+    snapshotOnMain: 'present', snapshotOnSite: 'present' }).status, 'released');
+});
+
+test('a skipped deploy rerun preserves its earlier failed deployment step', async () => {
+  const first = { ...hfFailure, display_title: 'deploy-web', jobs: [{ name: 'deploy', conclusion: 'failure',
+    steps: [{ name: 'Deploy prebuilt dist to Vercel production', conclusion: 'failure' }] }] };
+  const latest = { ...skippedRetry, display_title: 'deploy-web', conclusion: 'skipped',
+    jobs: [{ name: 'deploy', conclusion: 'skipped', steps: [] }] };
+  const run = await withAttempts([first, latest]);
+  const release = evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [completed],
+    snapshotOnMain: 'present', snapshotOnSite: 'present', deployRuns: [run] });
+  assert.equal(release.status, 'failed');
+  assert.match(release.message, /Deploy prebuilt dist to Vercel production/);
+  const [health] = evaluateWorkflowHealth({ roster: [{ name: 'deploy-web', kind: 'event' }],
+    latestCompleted: { 'deploy-web': effectiveRun(run) }, latestSuccess: {}, nowIso: truthBase.nowIso });
+  assert.equal(health.status, 'red');
+  const repaired = await withAttempts([first, { ...latest, conclusion: 'success', jobs: [{ name: 'deploy',
+    conclusion: 'success', steps: [{ name: 'Deploy prebuilt dist to Vercel production', conclusion: 'success' }] }] }]);
+  assert.equal(evaluateWeeklyRelease({ ...truthBase, snapshotOnMain: 'present', snapshotOnSite: 'present',
+    deployRuns: [repaired] }).status, 'released');
+});
+
+for (const fault of ['timeout', 'incomplete jobs', 'wrong attempt', 'reused jobs', 'missing start']) {
+  test(`rerun evidence ${fault} is unknown even when the site has the snapshot`, async () => {
+    const latest = { ...skippedRetry, ...(fault === 'missing start' ? { run_started_at: undefined } : {}) };
+    await attachReleaseJobs([latest], async (id, number) => {
+      const jobs = [hfFailure, skippedRetry][number - 1].jobs;
+      return { total_count: fault === 'incomplete jobs' ? 2 : 1,
+        jobs: fault === 'reused jobs' ? jobs.map(job => ({ ...job, run_attempt: 99 })) : jobs };
+    }, async () => {
+      if (fault === 'timeout') throw new Error('timeout');
+      return fault === 'wrong attempt' ? { ...hfFailure, run_attempt: 2 } : hfFailure;
+    });
+    assert.equal(watchdogFor([latest]).status, 'unknown');
+    assert.equal(evaluateWeeklyRelease({ ...truthBase, weeklyRuns: [latest],
+      snapshotOnMain: 'present', snapshotOnSite: 'present' }).status, 'unknown');
+  });
+}
+
+test('equal attempt start times use run_attempt before the stable run ID', () => {
+  const retry = { ...skippedRetry, id: 1 };
+  const original = { ...completed, id: 9, run_attempt: 1, run_started_at: retry.run_started_at };
+  assert.ok(compareAttempts(retry, original) < 0);
+  assert.deepEqual([original, retry].sort(compareAttempts), [retry, original]);
+});
+
+test('runner fetches explicit attempt summaries and jobs rather than losing HF failure to latest success', async (t) => {
+  const requests = mockWeeklyApi(t, { weeklyBody: { total_count: 1, workflow_runs: [skippedRetry] } });
+  const baseFetch = globalThis.fetch;
+  t.mock.method(globalThis, 'fetch', async url => {
+    const path = new URL(url).pathname;
+    if (path.includes('/actions/runs/')) {
+      requests.push(String(url));
+      const match = /\/runs\/101\/attempts\/(1|2)(\/jobs)?$/.exec(path);
+      assert.ok(match, 'attempt endpoints are required');
+      const run = [hfFailure, skippedRetry][Number(match[1]) - 1];
+      return Response.json(match[2] ? { total_count: 1, jobs: run.jobs } : run);
+    }
+    return baseFetch(url);
+  });
+  const facts = await readWeeklyFacts('https://evidaxis.org', truthBase.nowIso);
+  assert.equal(evaluateWeeklyRelease(facts).status, 'failed');
+  assert.ok(requests.some(url => url.endsWith('/attempts/1')));
+  assert.ok(requests.some(url => url.includes('/attempts/1/jobs?per_page=100')));
+  assert.ok(requests.some(url => url.includes('/attempts/2/jobs?per_page=100')));
+});
+
+test('a site receipt cannot certify recovery when run history is unavailable', () => {
+  const release = evaluateWeeklyRelease({ ...truthBase, snapshotOnMain: 'present', snapshotOnSite: 'present',
+    weeklyRuns: [], apiError: 'HTTP 503' });
+  assert.equal(release.status, 'unknown');
+  assert.equal(release.alert, true);
 });

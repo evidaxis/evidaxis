@@ -21,7 +21,7 @@
 //                  (`dataLoss`) stay loud through it — a lost observation hour is
 //                  never recoverable, which is the asymmetry the whole sensor exists for.
 
-import { releaseRunKind } from './weekly-release.mjs';
+import { compareAttempts, effectiveRun, releaseRunKind, supersedesFailure } from './weekly-release.mjs';
 
 /** @typedef {'ok'|'red'|'stale'|'missing'|'drought'|'unknown'} WorkflowStatus */
 
@@ -58,21 +58,26 @@ function isOverdue(result) {
 
 /**
  * @param {{name: string, kind: 'scheduled'|'event', budgetHours?: number, self?: boolean, factGate?: string, dataLoss?: boolean}} workflow
- * @param {{latestCompleted: any, latestSuccess: any}} i
+ * @param {{latestCompleted: any, latestSuccess: any, weeklyRuns?: object[]}} i
  * @param {number} now
  */
 function judge(workflow, i, now) {
   if (workflow.name === 'weekly-snapshot' && i.weeklyRuns) {
-    const runs = i.weeklyRuns.filter(run => releaseRunKind(run) !== 'ignore');
-    const completed = runs.find(run => run.status === 'completed');
-    if (completed && releaseRunKind(completed) === 'unknown') {
+    const runs = i.weeklyRuns.map(effectiveRun).filter(run => releaseRunKind(run) !== 'ignore').sort(compareAttempts);
+    const retained = runs.find(run => run.retainedFailure && !runs.some(other => supersedesFailure(other, run)));
+    const completed = retained ?? runs.find(run => run.status === 'completed');
+    if (runs.some(run => run.attemptEvidenceUnknown) || (completed && releaseRunKind(completed) === 'unknown')) {
       return { status: 'unknown', alert: true,
-        message: `weekly-snapshot: Jobs API не подтвердил, был ли сбор пропущен. Нужен человек: нет, проверю снова.\n${ACTIONS_URL}` };
+        message: `weekly-snapshot: API не подтвердил пропуск сбора или восстановление прошлых попыток. Нужен человек: нет, проверю снова.\n${ACTIONS_URL}` };
     }
     i = { latestCompleted: { 'weekly-snapshot': completed },
       latestSuccess: { 'weekly-snapshot': runs.find(run => run.conclusion === 'success' && releaseRunKind(run) === 'release') } };
   }
   const completed = runFor(i.latestCompleted, workflow.name);
+  if (completed?.attemptEvidenceUnknown) {
+    return { status: 'unknown', alert: true,
+      message: `${workflow.name}: API не подтвердил восстановление прошлых попыток. Нужен человек: нет, проверю снова.\n${ACTIONS_URL}` };
+  }
   if (!completed) {
     return {
       status: /** @type {WorkflowStatus} */ ('missing'),

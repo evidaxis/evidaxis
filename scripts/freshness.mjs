@@ -20,7 +20,7 @@
 // sensor's fact, and two sensors shouting about one outage teach the keeper to
 // mute both. Dependency-free aside from the pure daily gate in alert-gate.mjs.
 import { inReminderWindow, shouldPush } from './alert-gate.mjs';
-import { releaseRunDate, releaseRunKind, weeklyReleaseDay } from './weekly-release.mjs';
+import { attemptTime, compareAttempts, effectiveRun, isInFlight, releaseRunDate, releaseRunKind, supersedesFailure, weeklyReleaseDay } from './weekly-release.mjs';
 export { weeklyReleaseDay } from './weekly-release.mjs';
 
 /** @typedef {'ok'|'publishing'|'stale'|'unknown'} FreshnessStatus */
@@ -34,8 +34,6 @@ const SCHEDULE_MINUTE_UTC = 17;
 // 12:00 UTC Saturday is when a still-running or still-missing release is worth one message: the old 174 h file-age budget expired near this hour and paged while the run was alive.
 const DEADLINE_HOUR_UTC = 12;
 const WEEKLY_WORKFLOW_URL = 'https://github.com/evidaxis/evidaxis/actions/workflows/weekly-snapshot.yml';
-// waiting/pending/requested count as running: weekly-snapshot sits on the data-commits lock, and that wait is not "the schedule did not start".
-const IN_FLIGHT = new Set(['queued', 'in_progress', 'waiting', 'pending', 'requested']);
 const BAD_CONCLUSION = new Set(['failure', 'cancelled', 'timed_out']);
 
 /** @param {string} iso @returns {string|null} */
@@ -63,31 +61,24 @@ function scheduleMs(week) {
 /** @param {object[]} runs @param {number} nowMs @param {(run: object) => boolean} keep */
 function runsUntilNow(runs, nowMs, keep) {
   return (Array.isArray(runs) ? runs : [])
+    .map(effectiveRun)
     .filter((run) => {
-      const created = Date.parse(run?.created_at ?? '');
-      return !Number.isNaN(created) && created <= nowMs && keep(run);
+      const started = attemptTime(run);
+      return (run.attemptEvidenceUnknown || (!Number.isNaN(started) && started <= nowMs)) && keep(run);
     })
-    .sort((a, b) => {
-      const delta = Date.parse(b.created_at) - Date.parse(a.created_at);
-      if (delta) return delta;
-      return Number(b.id) - Number(a.id);
-    });
+    .sort(compareAttempts);
 }
 
-/** Deploy runs have no weekly title. They count for D when GitHub created them on or after D. @param {object[]} runs @param {string} week @param {number} nowMs */
+/** Deploy runs have no weekly title. Count attempts started since D, excluding known skips. @param {object[]} runs @param {string} week @param {number} nowMs */
 function runsForWeek(runs, week, nowMs) {
   const start = Date.parse(`${week}T00:00:00Z`);
-  return runsUntilNow(runs, nowMs, (run) => Date.parse(run?.created_at ?? '') >= start);
+  return runsUntilNow(runs, nowMs, (run) => (run.attemptEvidenceUnknown || attemptTime(run) >= start) &&
+    (run.conclusion !== 'skipped' || run.attemptEvidenceUnknown));
 }
 
 /** @param {object[]} runs @param {string} week @param {number} nowMs */
 function runsForRelease(runs, week, nowMs) {
   return runsUntilNow(runs, nowMs, (run) => releaseRunDate(run) === week && releaseRunKind(run) !== 'ignore');
-}
-
-/** @param {object|undefined} run */
-function isInFlight(run) {
-  return Boolean(run) && IN_FLIGHT.has(run.status) && !run.conclusion;
 }
 
 /** @param {object|undefined} run */
@@ -100,18 +91,11 @@ function isBad(run) {
   return BAD_CONCLUSION.has(run?.conclusion);
 }
 
-/** @param {object} a @param {object} b */
-function isNewer(a, b) {
-  const delta = Date.parse(a.created_at) - Date.parse(b.created_at);
-  if (delta) return delta > 0;
-  return Number(a.id) > Number(b.id);
-}
-
 /** Newest failed run for the week that no later run has replaced with success or work in progress. @param {object[]} runs */
 function blockingFailure(runs) {
   for (const run of runs) {
     if (!isBad(run)) continue;
-    const replaced = runs.some((other) => isNewer(other, run) && (isInFlight(other) || isSuccess(other)));
+    const replaced = runs.some(other => supersedesFailure(other, run));
     if (!replaced) return run;
   }
   return null;
@@ -207,7 +191,8 @@ function failedMessage(week, kind, run) {
   const step = run.failedStep ? `на шаге «${run.failedStep}»` : 'на неизвестном шаге';
   const when = clock(run.updated_at || run.run_started_at) ?? 'неизвестное время';
   const what = kind === 'deploy' ? `выкладка упала ${step}` : `weekly-snapshot упал ${step}`;
-  const sentence = `Срез ${week} не вышел: ${what} в ${when} UTC.`;
+  const attempt = run.retainedFailure ? ` (попытка ${run.run_attempt})` : '';
+  const sentence = `Срез ${week} не вышел: ${what} в ${when} UTC${attempt}.`;
   return `${withRun(sentence, run.html_url)} Нужен человек: да.`;
 }
 
@@ -229,16 +214,22 @@ function releasedMessage(week, weeklies, deploys) {
 
 /**
  * State of the Saturday release. `D` is the last Saturday at or before `nowIso`.
- * Dated release titles identify D; routers, guard skips and rehearsals are excluded.
+ * Dated release titles identify D; attempt evidence is resolved before excluding
+ * routers, guard skips, rehearsals or skipped deployments. A no-op rerun retains
+ * any earlier failure until the same failed job/step actually succeeds.
  * File age is not an input: a live run must not read as a missed capture.
  *
  * Truth table, first matching row wins. A = snapshot D on main, S = public JSON
  * at /snapshots/D/snapshot.json with snapshot_date D; + present, - absent, ? unknown.
- * W = real release attempts for D; P = deployments since D; late = at/after 12:00 UTC.
+ * W = effective release attempts for D; P = effective non-skipped deploy attempts
+ * started since D. Ordering uses run_started_at, then run_attempt and ID; a skipped
+ * retry keeps the earlier meaningful attempt's time. late = at/after 12:00 UTC.
  * Row | A S | W                 | P          | Result (alert / human needed)
  * U0  | invalid observation time           | unknown (yes / no)
- * R1  | + + | any               | any        | released (once / no)
+ * U5  | any | required attempt history ?   | any        | unknown (yes / no)
+ * F0  | any | retained failed step in W/P  | unrepaired | failed (yes / yes)
  * U1  | any | API/identity ?    | any        | unknown (yes / no)
+ * R1  | + + | no retained failure or unknown evidence | released (once / no)
  * R2  | any | active            | any        | running (late / no)
  * F1  | any | failed, no retry  | any        | failed (yes / yes)
  * U2  | ? * or * ?             | any        | unknown (yes / no)
@@ -252,8 +243,8 @@ function releasedMessage(week, weeklies, deploys) {
  * F4  | - - | success           | any        | failed after noon: archive missing
  * U4  | remaining/incomplete facts          | unknown (yes / no)
  * An unknown required fact never buys `ok`. Running/failure describe a known
- * attempt even when publication probes are unknown. R1 proves site publication,
- * not the HF mirror; weekly/HF readback failures remain visible to the watchdog.
+ * attempt even when publication probes are unknown. F0/U5 precede R1: a site
+ * receipt cannot establish that HF or a failed deployment step was repaired.
  *
  * @param {{
  *   nowIso: string,
@@ -282,10 +273,15 @@ export function evaluateWeeklyRelease(i) {
   const unknown = detail => verdict(week, 'unknown', true,
     `Не могу проверить выпуск ${week}: ${detail}. Нужен человек: нет, проверю в следующий раз.`, true);
 
-  if (snapshot === 'present' && site === 'present') {
-    return verdict(week, 'released', true,
-      releasedMessage(week, weeklies.filter(run => releaseRunKind(run) === 'release'), deploys), false);
+  if ([...weeklies, ...deploys].some(run => run.attemptEvidenceUnknown)) {
+    return unknown('не удалось проверить предыдущие попытки и восстановление упавших шагов');
   }
+  const weeklyFail = blockingFailure(weeklies);
+  const deployFail = blockingFailure(deploys);
+  // A site receipt cannot prove that a skipped HF stage recovered on rerun.
+  if (weeklyFail?.retainedFailure) return verdict(week, 'failed', true, failedMessage(week, 'weekly', weeklyFail), true);
+  if (deployFail?.retainedFailure) return verdict(week, 'failed', true, failedMessage(week, 'deploy', deployFail), true);
+
   if (apiError) {
     return unknown(`GitHub API ответил ${apiError}`);
   }
@@ -294,13 +290,17 @@ export function evaluateWeeklyRelease(i) {
     return unknown('неизвестно состояние запусков или пропуска сбора');
   }
 
+  if (snapshot === 'present' && site === 'present') {
+    return verdict(week, 'released', true,
+      releasedMessage(week, weeklies.filter(run => releaseRunKind(run) === 'release'), deploys), false);
+  }
+
   const live = weeklies.find(isInFlight);
   if (live) {
     if (!past) return verdict(week, 'running', false, '', false);
     return verdict(week, 'running', true, runningMessage(week, live), false);
   }
 
-  const weeklyFail = blockingFailure(weeklies);
   if (weeklyFail) return verdict(week, 'failed', true, failedMessage(week, 'weekly', weeklyFail), true);
 
   if (![snapshot, site].every(value => value === 'present' || value === 'absent')) {
@@ -315,7 +315,6 @@ export function evaluateWeeklyRelease(i) {
     return verdict(week, 'publishing', true, publishingMessage(week, deployLive), false);
   }
 
-  const deployFail = blockingFailure(deploys);
   if (inArchive && deployFail) {
     return verdict(week, 'failed', true, failedMessage(week, 'deploy', deployFail), true);
   }

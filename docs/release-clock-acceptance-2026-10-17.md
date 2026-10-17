@@ -156,88 +156,101 @@ Simultaneous clock deliveries can race between listing and dispatching; the
 dated workflow lock and archive guard prevent a second capture even if both
 requests create queued runs. The Worker has no distributed lock or durable state.
 
-## Fix 1
+## Fix 2
 
-This revision addresses the review and conductor acceptance findings on top of
-`af7efc3274` and the three imported freshness commits. The evidence below
-supersedes the original dependency pins and the original license-coverage claim.
-No Git index operations, commits, pushes, workflow runs, Telegram messages or
-deployments were performed in this revision. The conductor will commit the files.
+This revision closes the three findings against `b64ecaaf61` and replaces the
+Fix 1 section with current acceptance evidence. The earlier token, license and
+dependency corrections remain in place. No Git index operations, commits,
+pushes, workflow dispatches, Telegram messages or production writes were made.
+The conductor will commit the changes.
 
 Changed files:
 
 | Files | Change |
 | --- | --- |
-| `infra/clock/logic.mjs`, `worker.js`, `logic.test.mjs` | Validate a nonempty ASCII token alphabet before fetch; reject whitespace, control characters and non-ASCII. Log only `GH_DISPATCH_TOKEN has invalid format` for invalid tokens. |
-| `scripts/weekly-release.mjs` (new) | Shared release identity and complete Jobs API evidence for both sensors. |
-| `scripts/release_guard.py`, `infra/clock/README.md` | Document how a successful guard skip is distinguished from collection through Jobs API. |
-| `scripts/workflow-watchdog.mjs`, `workflow-watchdog-check.mjs`, `workflow-watchdog.test.mjs` | Select real release attempts before judging health. A successful skip/router cannot replace an earlier failure. Unreadable required job evidence gives `unknown`. |
-| `scripts/freshness.mjs`, `freshness-check.mjs`, `freshness.test.mjs` | Explicit state table; independent Saturday public-content probe; no inference of Saturday publication from `latest.json`; unknown API/content facts remain unknown. Importable observation function permits network-free runner tests. |
-| `tests/test_release_guard.py` | Assert the workflow name contract for default manual inputs and schedule. |
-| `.github/workflows/weekly-snapshot.yml`, `.github/workflows/hf-mirror.yml` | Pin HF to 2.2.0 with the requested rationale. |
-| `scripts/vercel-deploy.mjs`, `scripts/deploy-receipt.test.mjs` | Pin the invoked CLI to 64.5.0 with the requested rationale; keep transport retry/output suppression. |
-| `REUSE.toml` | Apache annotations for all `infra/clock/**`, this report and the new release-schedule record. Existing `scripts/**` and `tests/**` annotations already cover the other P2 files. |
-| This report | Review regressions, truth table, validation, mutation evidence and remaining limits. |
+| `scripts/weekly-release.mjs` | Shared attempt ordering, attempt history, failed-step recovery and selection of the effective attempt. |
+| `scripts/freshness-check.mjs` | Preserve `run_attempt`; read explicit attempt summaries and jobs for weekly and deploy reruns. |
+| `scripts/freshness.mjs` | Preserve unrecovered attempt failures before considering the site receipt; exclude known skipped deploys; order retries by their actual start; update the truth table. |
+| `scripts/workflow-watchdog-check.mjs`, `scripts/workflow-watchdog.mjs` | Use the same attempt evidence and recovery rule for weekly/deploy health. |
+| `scripts/freshness.test.mjs` | Fifteen new cases, including both sensors, the network-free runner and all three reported regressions. |
+| This report | Updated state table, acceptance, deliberate defects and limits. |
 
-The initial license test failure was reproduced on tracked files: `logic.mjs`,
-`logic.test.mjs` and `worker.js` lacked a matching annotation. Markdown had been
-exempted by that test; this revision explicitly annotates the requested report
-and governance record too, without editing the immutable governance file.
+All three requested regressions were observed red on the original code:
 
-The guard still exits successfully on an existing date. REST does not expose
-step outputs, so both sensors inspect the existing Jobs API conclusions: a
-skipped `snapshot` job identifies the first guard; a skipped
-`Collect snapshot (keyed OpenAlex; capture pass + completeness gate)` step in a
-successful run identifies the guard after queueing. A real successful collection
-has that step marked `success`. Missing or incomplete job evidence is unknown.
-Failed guard/preflight attempts remain failures. Routers, rehearsals, PRs and
-non-main branches cannot recover release health.
+```text
+Successful no-op rerun after HF failure: watchdog ok, expected red
+No weekly run plus a skipped deploy at 13:00: unknown, expected not_started
+A rerun at 09:00 after B failed at 04:17: failed, expected publishing
+tests 3; pass 0; fail 3
+```
 
-The current workflow already has the required run-name expression. Empty manual
-inputs and the fallback schedule resolve to `weekly release resolve-date`; the
-dated child gets `weekly release D`. Bare `weekly-snapshot` is supported only as
-the legacy title. The new workflow-contract test goes red when the expression is
-replaced by that old title. No live workflow was started to check GitHub rendering.
+They pass after the fixes. A related regression was also reproduced: a site
+receipt with unavailable workflow history returned `released`; it now returns
+`unknown`, because the receipt cannot establish whether an earlier failed step
+was repaired.
 
-The Sunday regression now has both a pure state test and a mocked runner test:
-on 2026-10-18, a newer latest pointer and a failed Sunday deploy do not override
-the separately confirmed `https://evidaxis.org/snapshots/2026-10-17/snapshot.json`.
-At Saturday 14:00, successful collection plus an unknown Contents API result
-(timeout, HTTP 403 or 500) produces `unknown`, not `ok`. Four focused regression
-tests were observed red before their fixes, in addition to the license failure.
+For reruns, both sensors read each previous
+[workflow run attempt](https://docs.github.com/en/rest/actions/workflow-runs#get-a-workflow-run-attempt)
+and [jobs for that attempt](https://docs.github.com/en/rest/actions/workflow-jobs#list-jobs-for-a-workflow-run-attempt).
+The latest attempt metadata comes from the run listing; its jobs are also read
+through the explicit attempt endpoint. The code does not combine a previous
+attempt with the default latest-jobs response.
 
-Truth table: first matching row wins. D is the last Saturday UTC. A is the
-snapshot D on current main; S is JSON from `/snapshots/D/snapshot.json` whose
-`snapshot_date` equals D. `+` means present, `-` means absent, `?` means unknown.
-W contains real release attempts for D; P contains main-branch deployments since
-D. The existing deadline is 12:00 UTC. `released` is a site receipt; HF delivery
-remains checked by the weekly/mirror readback and is not inferred from this state.
+The pure shared resolver tracks failed `(job name, step name)` pairs across
+attempts. A later `success` for the same step clears that failure; a skipped
+step, a green guard/job, or collection alone cannot clear an HF/deploy failure.
+Several successive skips retain the original failure and its time. Actual HF
+recovery can succeed without collecting again. A subsequent no-op preserves the
+time of that recovery, so it cannot refresh the watchdog's success age. Another
+run must also supply actual successful-step evidence to clear a retained failure.
+Alerts identify the failed step and original attempt number.
 
-| Row | A / S | Other required facts | State | Alert / human needed |
+Absent, incomplete or mismatched attempt evidence produces `unknown`, including
+when main and the public site already have the snapshot. A failed attempt with
+no identifiable failed step also remains unknown, since recovery cannot be
+verified. `run_started_at` orders attempts; `run_attempt` and ID break ties. The
+original `created_at` remains the date label for legacy weekly runs, not their
+retry ordering. Only a first attempt may fall back to `created_at` if its start
+time is absent.
+
+A completed deploy with `conclusion: skipped` means no deployment occurred. It
+is removed before evaluating the state table, after resolving any earlier
+attempts. Thus an ordinary skipped deploy cannot create `unknown` or replace a
+real deployment, while a skipped rerun cannot erase its earlier failed stage.
+
+Truth table, first matching row wins. D is the last Saturday UTC. A is snapshot
+D on current main; S is JSON at `/snapshots/D/snapshot.json` with snapshot_date D.
+`+` means present, `-` absent and `?` unknown. W is the effective release attempts
+for D; P is effective non-skipped deploy attempts started since D. Attempts are
+resolved before filtering skips and before applying the table. The deadline
+remains 12:00 UTC.
+
+| Row | A / S | Required facts | State | Alert / human needed |
 | --- | --- | --- | --- | --- |
 | U0 | any | Invalid observation time | unknown | yes / no |
-| R1 | + / + | Site publication proved, regardless of later workflow failures | released | once / no |
+| U5 | any | Required attempt history or recovery evidence unavailable | unknown | yes / no |
+| F0 | any | Retained failed step in W/P, no verified repair | failed | yes / yes |
 | U1 | any | Required workflow history or release/skip identity unknown | unknown | yes / no |
+| R1 | + / + | No retained failure or unknown evidence from the preceding rows | released | once / no |
 | R2 | any | W active | running | at/after noon / no |
 | F1 | any | W failed, no newer real retry or success | failed | yes / yes |
-| U2 | ? / any, or any / ? | Publication fact required by subsequent rows unknown | unknown | yes / no |
+| U2 | ? / any, or any / ? | Publication fact needed by later rows unknown | unknown | yes / no |
 | U3 | - / + | Contradictory main/site observations | unknown | yes / no |
 | P1 | + / - | No active/failed W; P active | publishing | at/after noon / no |
 | F2 | + / - | No active/failed W; P failed without recovery | failed | yes / yes |
-| P2 | + / - | No active/failed W; no active/failed P; before noon | publishing | no / no |
+| P2 | + / - | No active/failed W or P; before noon | publishing | no / no |
 | F3 | + / - | Same facts at/after noon: site publication missing | failed | yes / yes |
-| N1 | - / - | No W | not_started | at/after noon / yes when late |
+| N1 | - / - | No W; an ordinary skipped deploy contributes no P | not_started | at/after noon / yes when late |
 | O1 | - / - | W successful, before noon | ok | no / no |
 | F4 | - / - | W successful at/after noon: archive missing | failed | yes / yes |
 | U4 | remaining | Unsupported result or incomplete required facts | unknown | yes / no |
 
-There are 22 table cases, including both sides of the deadline and separate
-unknown facts. Running/failure describe a known attempt even if a publication
-probe is unknown. No unknown fact required for an `ok` verdict can buy silence.
-The Telegram state messages retain Russian wording and `Нужен человек: да/нет`;
-existing reminder windows and deduplication keys are unchanged.
+The original 22 table cases still pass. New cases cover U5/F0, the skipped-deploy
+N1 row, actual HF/deploy recovery, several successive skips, job identity,
+attempt ordering, incomplete/mismatched responses and explicit API endpoint
+wiring. Messages remain Russian and keep `Нужен человек: да/нет`.
 
-Validation after restoring all deliberate defects:
+Acceptance after restoring deliberate defects:
 
 ```text
 PYTHONPATH=. .venv/bin/pytest tests/ -q
@@ -248,86 +261,54 @@ SKIPPED tests/test_recall_fixture.py:49: census working data absent (gitignored)
 All checks passed!
 
 node --test scripts/*.test.mjs infra/clock/*.test.mjs
-tests 116; pass 116; fail 0; skipped 0
-
-node --test scripts/liveness.test.mjs scripts/freshness.test.mjs scripts/workflow-watchdog.test.mjs scripts/alert-gate.test.mjs
-tests 102; pass 102; fail 0; skipped 0
+tests 131; pass 131; fail 0; skipped 0
 
 python3 -c 'import pathlib,yaml; files=sorted(pathlib.Path(".github/workflows").glob("*.yml"))+sorted(pathlib.Path(".github/workflows").glob("*.yaml")); [yaml.safe_load(f.read_text()) for f in files]; print(f"YAML: {len(files)} workflows parsed")'
 YAML: 14 workflows parsed
-
-PYTHONPATH=. .venv/bin/pytest tests/test_hf_upload_snapshot.py -q -o addopts=''
-38 passed in 13.12s
-
-PYTHONPATH=. .venv/bin/pytest tests/test_license_coverage.py::test_every_tracked_file_has_a_license_annotation -q -o addopts=''
-1 passed in 8.39s
-
-.venv/bin/python -c 'import huggingface_hub; print(huggingface_hub.__version__)'
-2.2.0
-.venv/bin/hf --version
-2.2.0
-.venv/bin/hf upload --help
-exit 0; upload positional arguments and --repo-type remain supported
-.venv/bin/python -m pip check
-No broken requirements found.
 
 git diff --check
 exit 0
 ```
 
-The network pip attempt failed at DNS resolution. The actual HF 2.2.0 package
-and required dependencies were installed offline into this checkout's existing
-`.venv` from the local package cache. No package source or dependency lockfile
-was changed. HF tests ran with that version installed; they mock upload/network
-operations. CLI help/version checks also ran against the installed 2.2.0 CLI.
+Mutation evidence: implementation files were temporarily changed and restored
+in `finally` blocks. Every one of the **15 new tests** failed under at least one
+of **10 deliberate defects**. Failures were assertions, not syntax/import errors.
 
-All 17 deliberate defects below caused assertion failures, not syntax/import
-errors. Each source file was restored in a `finally` block. All **41 new Node
-tests**, **two revised/renamed Node tests**, and the **one new pytest case** went
-red under at least one mutation. The existing license and Vercel tests also
-caught the regressions. The final unmodified acceptance commands passed again.
+| Deliberate defect | New cases that failed |
+| --- | ---: |
+| Ignore attempt history | 11 |
+| Treat skipped deployments as unknown work | 1 |
+| Restore ordering by original created_at and ID | 2 |
+| Never clear a genuinely recovered step | 4 |
+| Accept the same step name in the wrong job | 1 |
+| Read only the latest attempt | 6 |
+| Let a site receipt hide retained HF failure | 4 |
+| Read latest-run endpoints instead of explicit attempts | 1 |
+| Let another run clear failure without successful-stage evidence | 1 |
+| Ignore unavailable run history when the site is published | 1 |
 
-| Deliberate defect | Evidence |
-| --- | --- |
-| Accept malformed tokens | Both new token tests failed, including no-fetch/log assertions |
-| Collapse release verdicts to `ok` | 37 new/revised Node tests failed |
-| Fail a known successful pre-deadline observation | O1 failed |
-| Treat dated skips as real successes | Five new/revised tests failed, including watchdog health |
-| Ignore Jobs enrichment | Two new tests failed |
-| Accept incomplete Jobs evidence | Jobs response test failed |
-| Treat resolve-date routers as releases | Three new tests failed |
-| Probe Sunday instead of Saturday | Sunday runner regression failed |
-| Interpret unknown Contents API evidence as absent | Timeout, 403 and 500 cases all failed |
-| Accept the wrong public snapshot date | Public-content comparison test failed |
-| Accept malformed public JSON content | Both missing-date/null tests failed |
-| Treat public HTTP failure as publication | HTTP 503 case failed |
-| Treat truncated workflow history as empty | Truncated-history case failed |
-| Treat invalid workflow metadata as empty | Invalid-history case failed |
-| Restore Vercel 48.2.9 | Existing deployment test failed |
-| Restore the bare weekly workflow title | New pytest workflow-contract case failed |
-| Remove infrastructure license mapping | Existing tracked-file license test failed |
+Some tests detect multiple defects; the counts are not additive. The three
+reported defects were reproduced before implementation, independently of these
+mutation checks.
 
-No existing timeouts, retry counts, schedules, reminder windows or history page
-sizes were changed. The requested version comments next to the pins are:
+No dependency, workflow, collection logic, methodology or web file changed.
+No existing timeout, retry count, schedule, reminder window, threshold or page
+size changed. Attempt reads reuse the existing GitHub request timeouts and
+100-job page size. No coordinator, persistence or automatic recovery was added.
 
-- `64.5.0 deployed production on 2026-10-17 (run 39037255164); 48.2.9 would roll back a year.`
-- `2.2.0 was released on 2026-10-08 and used by the unpinned 2026-10-17 release.`
+For live acceptance, the existing sensor GitHub token needs Actions read access
+to attempt summaries and jobs; there are no new secrets. The conductor should
+inspect a controlled failed HF/deploy attempt followed by a skipped rerun and
+confirm both sensors retain the failure. Then verify that successful execution
+of the failed step clears it, and that an ordinary skipped deployment does not
+change an otherwise unstarted release. The local tests performed no live calls
+to GitHub, HF, Vercel or Telegram.
 
-For live acceptance, use the existing Worker commands and secrets in the
-[clock README](../infra/clock/README.md). Sensors require GitHub Actions read
-access, including Jobs API; their existing GitHub token supplies it. Confirm a
-real guard skip has the job/step conclusions described above and cannot clear a
-failed release. Check the Saturday URL independently from latest, then verify the
-HF public files. No additional secret is introduced by Fix 1.
-
-Not checked live: GitHub event titles/Jobs responses after rollout, dispatches,
-Cloudflare ticks, Telegram delivery, Vercel 64.5.0 deployment or HF 2.2.0 upload.
-Local runtimes remain Python 3.14 and Node 25; CI uses 3.12/22. Web verification
-was not repeated because no web input or source changed in Fix 1.
-Known limits and risks: skip identification depends on the existing job/step
-names; missing evidence gives an alerting `unknown`. The existing bounded run
-history may be insufficient during a burst, which now fails closed. A site
-`released` receipt does not independently certify HF; weekly/HF readback and the
-watchdog retain that failure. Recovery after a committed snapshot still uses
-manual HF mirror/deploy workflows; no-op reruns cannot clear the failed weekly
-attempt. The coordinator and automatic recovery remain outside P2.
+Not checked live: actual GitHub rerun/job payloads, queue races, notifications,
+HF repair or deployment; local tests use Python 3.14/Node 25, not CI 3.12/22.
+Risks and limits: recovery relies on stable job/step names and complete attempt
+evidence. Missing evidence alerts as unknown. The existing bounded run listing
+can omit older runs; its page sizes were deliberately preserved. Repair through
+a separate workflow such as hf-mirror is not inferred as success of a failed
+weekly step, so the retained alert can remain after an external repair. Observing
+that recovery independently and automatic continuation remain outside P2.

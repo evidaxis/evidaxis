@@ -112,7 +112,8 @@ async function workflowRuns(workflowFile, week) {
     const body = await res.json();
     if (!Array.isArray(body.workflow_runs) || !Number.isInteger(body.total_count)) return { error: 'неполный список запусков' };
     if (body.workflow_runs.some(run => !run || !Number.isFinite(Date.parse(run.created_at)) ||
-        typeof run.display_title !== 'string' || typeof run.head_branch !== 'string' || typeof run.status !== 'string')) {
+        typeof run.display_title !== 'string' || typeof run.head_branch !== 'string' || typeof run.status !== 'string' ||
+        (run.run_attempt != null && (!Number.isInteger(run.run_attempt) || run.run_attempt < 1)))) {
       return { error: 'некорректные сведения о запуске' };
     }
     const oldest = body.workflow_runs.at(-1)?.created_at;
@@ -123,6 +124,7 @@ async function workflowRuns(workflowFile, week) {
       id: run.id,
       status: run.status,
       conclusion: run.conclusion,
+      run_attempt: run.run_attempt ?? 1,
       created_at: run.created_at,
       run_started_at: run.run_started_at,
       updated_at: run.updated_at,
@@ -147,7 +149,7 @@ async function attachFailedSteps(runs, weekStart) {
     const created = Date.parse(run.created_at ?? '');
     if (Number.isNaN(created) || created < weekStart) return;
     try {
-      const url = `${API}/repos/${repo}/actions/runs/${run.id}/jobs?per_page=${GH_PAGE}`;
+      const url = `${API}/repos/${repo}/actions/runs/${run.id}/attempts/${run.run_attempt ?? 1}/jobs?per_page=${GH_PAGE}`;
       const res = await fetch(url, { headers, signal: AbortSignal.timeout(10_000) });
       if (!res.ok) return;
       const body = await res.json();
@@ -265,12 +267,14 @@ export async function readWeeklyFacts(site, nowIso) {
   ]);
   const weeklyRuns = weekly.runs ?? [];
   const deployRuns = deploy.runs ?? [];
-  await attachReleaseJobs(weeklyRuns.filter(run => releaseRunDate(run) === week), async id => {
-    const res = await fetch(`${API}/repos/${process.env.GITHUB_REPOSITORY}/actions/runs/${id}/jobs?per_page=${GH_PAGE}`,
+  const attemptJson = async (id, number, suffix = '') => {
+    const res = await fetch(`${API}/repos/${process.env.GITHUB_REPOSITORY}/actions/runs/${id}/attempts/${number}${suffix}`,
       { headers: ghHeaders(), signal: AbortSignal.timeout(10_000) });
-    if (!res.ok) throw new Error('Jobs API unavailable');
+    if (!res.ok) throw new Error('Attempt API unavailable');
     return res.json();
-  });
+  };
+  await attachReleaseJobs([...weeklyRuns.filter(run => releaseRunDate(run) === week), ...deployRuns],
+    (id, number) => attemptJson(id, number, `/jobs?per_page=${GH_PAGE}`), attemptJson);
   const weekStart = Date.parse(`${week}T00:00:00Z`);
   await Promise.all([attachFailedSteps(weeklyRuns, weekStart), attachFailedSteps(deployRuns, weekStart)]);
   return { nowIso, weeklyRuns, deployRuns, snapshotOnMain: main, snapshotOnSite: publicSnapshot,
