@@ -62,3 +62,18 @@ def test_manual_hf_repair_uses_the_same_receipt_writer():
     assert 'node scripts/release-status.mjs hf "$date"' in steps[-1]["run"]
     assert steps[-1]["env"]["GH_TOKEN"] == "${{ github.token }}"
     assert any('"huggingface_hub==2.2.0"' in step.get("run", "") for step in steps)
+
+
+def test_deploy_exposes_actual_checkout_before_resolving_or_publishing():
+    steps = workflow("deploy-web")["jobs"]["deploy"]["steps"]
+    record = next(step for step in steps if step.get("id") == "checkout")
+    artifact = next(step for step in steps if step.get("name") == "Expose the actual checkout to release sensors")
+    resolve = next(step for step in steps if step.get("id") == "release")
+    assert steps.index(record) < steps.index(artifact) < steps.index(resolve)
+    assert "SHA=$(git rev-parse HEAD)" in record["run"]
+    assert 'echo "sha=$SHA" >> "$GITHUB_OUTPUT"' in record["run"]
+    assert 'echo "$SHA" > "$RUNNER_TEMP/release-checkout.txt"' in record["run"]
+    assert artifact["uses"] == "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
+    assert artifact["with"]["name"] == "deploy-checkout-${{ github.run_attempt }}-${{ steps.checkout.outputs.sha }}"
+    assert artifact["with"]["path"] == "${{ runner.temp }}/release-checkout.txt"
+    assert artifact["with"]["if-no-files-found"] == "error"

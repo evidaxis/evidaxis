@@ -1,6 +1,6 @@
 // Thin GitHub reader shared by freshness and the watchdog. No jobs or attempt
 // history is needed: the release chain writes its own receipts on the commit.
-import { isInFlight, isWeeklyRelease, RELEASE_CONTEXTS, releaseStatuses, weeklyReleaseDay } from './weekly-release.mjs';
+import { ACTIVE_RUN_STATES, isInFlight, isWeeklyRelease, RELEASE_CONTEXTS, releaseStatuses, weeklyReleaseDay } from './weekly-release.mjs';
 
 export async function githubJson(path, body) {
   const { GH_TOKEN, GITHUB_REPOSITORY } = process.env;
@@ -25,7 +25,7 @@ export async function snapshotCommit(date, get = githubJson, ref = 'main') {
 }
 
 async function activeRuns(workflow, get) {
-  const groups = await Promise.all(['queued', 'in_progress'].map(async status => {
+  const groups = await Promise.all(ACTIVE_RUN_STATES.map(async status => {
     const body = await get(`actions/workflows/${workflow}.yml/runs?per_page=100&branch=main&status=${status}`);
     if (!Array.isArray(body?.workflow_runs) || !Number.isInteger(body.total_count) ||
         body.total_count !== body.workflow_runs.length) throw new Error('Incomplete active runs');
@@ -36,6 +36,19 @@ async function activeRuns(workflow, get) {
     return body.workflow_runs.filter(run => isInFlight(run) && run.head_branch === 'main' && run.event !== 'pull_request');
   }));
   return groups.flat();
+}
+
+// Artifact names expose the recorded SHA without downloading or parsing ZIPs.
+// The attempt suffix only identifies this checkout; no attempt outcomes are read.
+function checkoutArtifactSha(body, attempt) {
+  if (!Array.isArray(body?.artifacts) || body.total_count !== body.artifacts.length ||
+      !Number.isInteger(attempt) || attempt < 1) throw new Error('Incomplete checkout artifacts');
+  const prefix = `deploy-checkout-${attempt}-`;
+  const matches = body.artifacts.filter(artifact => artifact?.name?.startsWith(prefix));
+  if (matches.length !== 1 || matches[0].expired !== false) throw new Error('Checkout artifact unavailable');
+  const sha = matches[0].name.slice(prefix.length);
+  if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Invalid checkout SHA');
+  return sha;
 }
 
 export async function readReleaseFacts(nowIso, get = githubJson) {
@@ -59,10 +72,14 @@ export async function readReleaseFacts(nowIso, get = githubJson) {
     ]);
     let active = weekly.some(run => isWeeklyRelease(run, date));
     for (const run of deploys) {
-      // deploy-web publishes the whole archive. workflow_run checks out main;
-      // push/manual uses head_sha. Require D in that tree, never a start time.
-      const ref = run.event === 'workflow_run' ? 'main' : run.head_sha;
-      if (!ref) throw new Error('Missing deployment tree');
+      // Before checkout, a queued main deployment will refresh the whole archive.
+      // Once executing, only its own recorded checkout can identify that tree.
+      if (run.status !== 'in_progress') {
+        active = true;
+        continue;
+      }
+      const body = await get(`actions/runs/${run.id}/artifacts?per_page=100`);
+      const ref = checkoutArtifactSha(body, run.run_attempt);
       if (await snapshotCommit(date, get, ref) === sha) active = true;
     }
     return { nowIso, record, active };

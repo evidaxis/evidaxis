@@ -451,13 +451,33 @@ aggregate state do not decide release health.
 | Context | Writer and evidence |
 | --- | --- |
 | `evidaxis/release-captured` | Weekly, after the snapshot commit is pushed. Success description is exactly D. The lookup uses the checked-out HEAD after rebase, not the workflow's original SHA. |
-| `evidaxis/release-deployed` | Deploy finalizer records success only after public JSON matches D and methodology_version. Failure identifies the failing secrets/setup/build/deploy/receipt step. |
-| `evidaxis/release-hf` | Weekly HF finalizer, or manual hf-mirror, records success only after the uploader's existing public JSON/CSV readback. A failed upload, configuration check or readback records failure with the HF step name. |
+| `evidaxis/release-deployed` | Deploy finalizer records success only after public JSON matches D and methodology_version. Failure identifies the failing step, subject to the prior-receipt rule below. |
+| `evidaxis/release-hf` | Weekly HF finalizer, or manual hf-mirror, records success only after the uploader's existing public JSON/CSV readback. Failure uses the HF step name and the same prior-receipt rule. |
 
 A skipped retry writes nothing. Another actual receipt writes success to the
 same context on the same snapshot commit, whether it came from a rerun, a new
-deploy or manual hf-mirror. Failure remains failure during a retry. The writers
-use current step outcomes supplied directly by the workflow, never historical
+deploy or manual hf-mirror. Failure remains failure during a retry. A confirmed
+success survives an attempt that failed before publishing anything. The shared
+writer reads the current context before such a failure write and leaves success
+untouched; unavailable or malformed prior evidence aborts the write. A failure
+after publication can replace success, including a failed content receipt.
+
+| Existing context | Event | Context write | Release consequence |
+| --- | --- | --- | --- |
+| Missing or failure | Failure before publication | failure | First delivery still failed |
+| Success | Failure before publication | None | Confirmed release remains released; deploy workflow still fails in the watchdog |
+| Any | Failure after publication | failure | Publication is no longer confirmed |
+| Any | Successful content receipt | success | Stage confirmed or repaired |
+| Any | Skipped stage | None | Prior fact retained |
+
+Deploy publication is established by its deploy step completing successfully.
+HF emits `published=true` to the current step output only after the dated data
+upload succeeds, before the card upload and public readback. Weekly's finalizer
+reads that output. Manual HF uses a fresh temporary output file for each selected
+date, so an earlier date's upload cannot label a later configuration failure as
+publication. This adds no dependency and changes no collection logic.
+
+The writers use current step outcomes supplied directly by the workflow, never historical
 Jobs API responses. Failure/cancellation finalizers run with `always()` after
 identity resolution. If checkout, commit lookup, status delivery or the runner
 itself fails before a status can be recorded, the missing-stage rule applies.
@@ -475,6 +495,22 @@ without that input retain the local latest date. The receipt checks that resolve
 date, and the writer resolves its snapshot commit in the checked-out tree.
 Deployment still publishes the entire archive.
 
+Checkout remains a branch refresh after the deployment queue. Immediately after
+checkout, the workflow records `git rev-parse HEAD` and uploads a small temporary
+file as `deploy-checkout-{attempt}-{sha}`. Both the writer's snapshot lookup and
+the executing-run reader therefore use the actual checked-out tree. The reader
+gets that SHA from the artifact name through the run's artifact listing, without
+downloading ZIP content. The attempt identifies the current checkout only; it
+does not supply an outcome or history-based verdict. Old-attempt artifacts,
+expired/ambiguous records and missing checkout evidence cannot substitute for it.
+
+The artifact carries checkout identity only; the three commit-status contexts
+remain the release record. This reuses the existing upload-artifact v4 action,
+whose [artifacts are immediately available through REST after upload](https://github.com/actions/toolkit/blob/main/packages/artifact/README.md).
+It requires no new token permission or dependency and adds no repository file or
+commit. A workflow_run event's original producer SHA is unsuitable here because
+it predates the snapshot commit.
+
 The pure evaluator in `scripts/weekly-release.mjs` and the thin reader in
 `scripts/release-record.mjs` are shared by freshness and workflow-watchdog. The
 watchdog's weekly row never falls back to completed/success or its previous
@@ -484,13 +520,14 @@ receipt, so the watchdog does not duplicate them.
 
 Truth table, first matching row wins. D is the last Saturday UTC. S means success,
 F means failure (an API `error` state is also a failure), and M means missing or
-pending. A means a relevant queued/in_progress run; late starts at 12:00 UTC.
+pending. A means a relevant queued/in_progress/pending/waiting/requested run;
+late starts at 12:00 UTC. The API queries and pure predicate share this same list.
 
 | Row | Record / three contexts | A / time / API | Result | Notification / human |
 | --- | --- | --- | --- | --- |
 | U | Any | Required request failed, incomplete response, invalid record or time | unknown | Daily-gated / no |
 | F | Any F | Any activity or time | failed, named step | Daily-gated / yes |
-| R | S / S / S | No activity query needed | released | Receipt once / no |
+| R | S / S / S, including a later attempt that failed before publication | No activity query needed | released | Receipt once / no |
 | C1 | Capture M, or no snapshot commit | A, before noon | running | Quiet / no |
 | C2 | Capture M, or no snapshot commit | A, at/after noon | running | Late notice once / no |
 | P1 | Capture S, delivery M | A, before noon | publishing | Quiet / no |
@@ -500,15 +537,28 @@ pending. A means a relevant queued/in_progress run; late starts at 12:00 UTC.
 | W | Commit exists, some M | No A, before noon | running/publishing, waiting for the missing stage | Quiet / no |
 | M | Commit exists, some M | No A, at/after noon | failed: did not reach the named missing stages | Daily-gated / yes |
 
-Activity requests are filtered at the API to queued and in_progress. Capture
-needs the explicit weekly release D on main. HF needs that same weekly run;
-deployment needs an active deploy whose input archive contains the same snapshot
-commit. Push/manual activity checks head_sha; workflow_run uses its declared
-main checkout. A completed/skipped deploy contributes no activity. A missing
-capture never borrows activity from deploy. Failure or three complete receipts
+Activity requests cover all five states listed above. Capture needs the explicit
+weekly release D on main, and HF needs that same weekly run. A main deployment
+still queued/pending/waiting/requested counts as publication work awaiting its
+branch checkout. An in_progress deployment must expose the actual checkout
+artifact for its current attempt; D must resolve to the same snapshot commit in
+that immutable tree. Neither event head_sha nor a new view of current main can
+replace the recorded checkout. A completed/skipped deploy contributes no
+activity. A missing capture never borrows activity from deploy. Failure or three complete receipts
 requires no Actions history request, so an outage of unused attempt/history
 endpoints cannot change those verdicts. Any failure in a needed activity query
 produces unknown even if another query found active work.
+
+| Deploy observation when captured and HF are success | D in actual checkout | Result after noon |
+| --- | --- | --- |
+| Queued/pending/waiting/requested on main, checkout still ahead | Not yet fixed | publishing |
+| In progress, current checkout artifact available | Same snapshot commit | publishing |
+| In progress, current checkout artifact available | Absent or different snapshot commit, no other relevant activity | failed: did not reach deployed |
+| In progress, checkout artifact unavailable/incomplete/expired | Unknown | unknown |
+
+Thus a push created before D can wait in the queue, check out main after D was
+captured, and be publishing D. Conversely, advancing main cannot make an older
+already-running checkout count as publication of D.
 
 Running and publishing share a late-notice key. The existing notification-log
 mechanism now also carries `RELEASE_ACTIVE` and `RELEASE_RECEIPT` dates across
@@ -537,8 +587,8 @@ adapters with mocks, writer ordering, receipt dates, notification memory and
 workflow permission/rehearsal/finalizer wiring. The production reader and writer
 have no dependencies beyond Node's standard library and GitHub APIs.
 
-Mutation checks temporarily edited implementation/workflow files and restored
-each in `finally`. All **29 deliberate defects** caused assertion failures;
+The initial implementation's mutation checks temporarily edited files and
+restored each in `finally`. Its **29 deliberate defects** caused assertion failures;
 none relied on a syntax or import failure.
 
 | Deliberate defect | Tests that detected it |
@@ -573,7 +623,7 @@ none relied on a syntax or import failure.
 | Allow the captured writer in rehearsal | 1 |
 | Drop a writer's statuses permission | 1 |
 
-Acceptance on the restored files:
+Initial e5cc8471dd acceptance (follow-up acceptance below):
 
 ```text
 node --test scripts/*.test.mjs infra/clock/*.test.mjs
@@ -619,10 +669,90 @@ CI's Node 22 and Python 3.12. YAML parsing and workflow invariant tests ran;
 actionlint was not installed. No production writes or notifications were sent.
 
 Risks and limits: historic releases need explicit receipt migration; missing
-status writes remain incomplete even after content arrived. Activity attribution
-for workflow_run uses its declared main checkout, so advancement of main while
-an older deploy is already running can temporarily overstate relevant activity;
-it cannot create released without the three recorded successes. The existing
-bounded notification-log lookup cannot guarantee exactly-once delivery if logs
-are unavailable or concurrent sensors race, and a lost log can repeat a notice.
-No workaround substitutes a green workflow for a missing receipt.
+status writes remain incomplete even after content arrived. An executing deploy
+before its checkout artifact becomes available now yields unknown; it never
+falls back to event head_sha or moving main. The existing bounded notification-log
+lookup cannot guarantee exactly-once delivery if logs are unavailable or
+concurrent sensors race, and a lost log can repeat a notice. No workaround
+substitutes a green workflow for a missing receipt.
+
+### Follow-up on e5cc8471dd: three P2 review findings
+
+The three requested reproductions were run against the original implementation
+with only the new tests and mocked API fixtures present. All three failed:
+
+```text
+Failed build after three receipts: wrote failure, expected no status write
+15:00 weekly pending without a snapshot commit: not_started, expected running
+Push queued before D, actual later checkout contains D: failed, expected publishing
+3 tests; 0 passed; 3 failed
+```
+
+The repaired tests cover the inverse cases as well. A post-publication receipt
+failure must retract success; a first-publication failure must still be recorded;
+unreadable prior statuses cannot authorize a destructive write. Both HF callers
+carry the same publication event. The queued deployment test covers push,
+workflow_dispatch and workflow_run attribution, pending queue states, moving
+main, missing checkout artifacts and artifacts from a previous attempt. The
+artifact is merely an actual-checkout identifier: release outcomes still come
+only from the three commit-status contexts.
+
+No new dependency, timeout, retry, cache lifetime, schedule, threshold, page size
+or batch limit was introduced or changed. The requested active-state coverage
+expands the two status-filtered requests to five. Artifact listing uses the
+existing 100-entry GitHub page size and the caller's existing HTTP timeout.
+The uploader adds one publication output after its existing successful data
+upload; its upload order, public verification and return codes are unchanged.
+The pinned upload-artifact action was already used by weekly-snapshot.
+
+All **18 new test cases** (11 Node, six parametrized HF cases and one workflow
+wiring case) failed under at least one of **17 deliberate defects**. Each defect
+was restored in `finally`; all detections included assertion failures, not syntax
+or import failures. Counts overlap because a case may catch several defects.
+
+| Deliberate defect | New cases detecting it |
+| --- | ---: |
+| Overwrite prior success before publication | 4 |
+| Preserve success even after publication failed | 2 |
+| Treat a failed build as publication | 3 |
+| Ignore weekly HF publication output | 1 |
+| Ignore manual HF publication output | 1 |
+| Query only queued and in_progress | 4 |
+| Filter out pending, waiting and requested | 4 |
+| Lose all active states | 7 |
+| Use event head_sha instead of recorded checkout | 2 |
+| Use moving main instead of recorded checkout | 2 |
+| Reuse an earlier attempt's checkout | 1 |
+| Accept an expired checkout artifact | 1 |
+| Accept prior statuses from a different commit | 1 |
+| Accept incomplete prior status evidence | 1 |
+| Omit the HF publication event | 3 |
+| Mark HF published before configuration and upload | 6 |
+| Put event SHA in the artifact instead of checkout SHA | 1 |
+
+Acceptance after restoring every deliberate defect:
+
+```text
+node --test scripts/*.test.mjs infra/clock/*.test.mjs
+314 tests; 314 passed
+
+PYTHONPATH=. .venv/bin/pytest tests/ -q
+exit 0; 6,949 cases: 6,948 passed, one expected skip
+SKIPPED tests/test_recall_fixture.py:49: census working data absent (gitignored)
+
+.venv/bin/ruff check etl tests collectors scripts
+All checks passed!
+
+YAML: all 14 workflows parsed with yaml.safe_load
+git diff --check: exit 0
+```
+
+Not checked live: GitHub artifact availability and permissions, Vercel/HF
+publication, Telegram delivery or overlapping workflow executions. The local
+Node/Python versions and unavailable census fixture remain as documented above.
+No production writes, notifications, commits or pushes were made.
+
+Risks and limits: an executing deployment reports unknown until its own checkout
+artifact is available. The prior-success guard reads before writing; GitHub
+statuses provide no atomic compare-and-set, so independent simultaneous writers
+can still race. This patch does not change workflow concurrency settings.

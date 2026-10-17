@@ -1,5 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync, writeFileSync } from 'node:fs';
+import { evaluateWorkflowHealth } from './workflow-watchdog.mjs';
 import { readWeeklyFacts } from './freshness-check.mjs';
 import { evaluate as watchdog } from './workflow-watchdog-check.mjs';
 import { readReleaseFacts, githubJson, snapshotCommit } from './release-record.mjs';
@@ -10,7 +12,8 @@ const date = '2026-10-17';
 const nowIso = `${date}T13:33:00Z`;
 const sha = 'a'.repeat(40);
 const older = 'b'.repeat(40);
-const weekly = { id: 1, status: 'in_progress', head_branch: 'main', event: 'workflow_dispatch',
+const checkoutSha = 'c'.repeat(40);
+const weekly = { id: 1, run_attempt: 1, status: 'in_progress', head_branch: 'main', event: 'workflow_dispatch',
   display_title: `weekly release ${date}` };
 const deploy = { ...weekly, display_title: 'deploy-web', event: 'push', head_sha: sha };
 const status = (stage, state = 'success') => ({ context: `evidaxis/release-${stage}`, state,
@@ -35,10 +38,14 @@ function api({ commit = sha, statuses = complete, weeklies = [], deploys = [], t
       const query = new URLSearchParams(path.split('?')[1]);
       assert.equal(query.get('per_page'), '100');
       assert.equal(query.get('branch'), 'main');
-      assert.ok(['queued', 'in_progress'].includes(query.get('status')));
+      assert.ok(['queued', 'in_progress', 'pending', 'waiting', 'requested'].includes(query.get('status')));
       const list = path.includes('weekly-snapshot') ? weeklies : deploys;
       const workflow_runs = list.filter(run => run.status === query.get('status'));
       return { workflow_runs, total_count: workflow_runs.length };
+    }
+    if (/^actions\/runs\/\d+\/artifacts\?per_page=100$/.test(path)) {
+      const run = deploys.find(run => path.includes(`/runs/${run.id}/`));
+      return { total_count: 1, artifacts: [{ name: `deploy-checkout-${run?.run_attempt ?? 1}-${checkoutSha}`, expired: false }] };
     }
     assert.fail(`Unexpected API call: ${path}`);
   };
@@ -94,7 +101,7 @@ test('publication activity is scoped to the missing stage and snapshot tree, nev
     const { result, calls } = await verdict({ statuses: [status('captured'), status('hf')],
       deploys: [{ ...deploy, event, head_sha: older, run_attempt: 4, created_at: '2020-01-01T00:00:00Z' }] });
     assert.equal(result.status, 'publishing');
-    assert.ok(calls.includes(`commits?path=data/snapshots/${date}/snapshot.json&per_page=1&sha=${event === 'workflow_run' ? 'main' : older}`));
+    assert.ok(calls.includes(`commits?path=data/snapshots/${date}/snapshot.json&per_page=1&sha=${checkoutSha}`));
     assert.ok(calls.every(path => !path.includes('weekly-snapshot')));
   }
   assert.equal((await verdict({ statuses: [status('captured'), status('hf')], deploys: [deploy], tree: null })).result.status, 'failed');
@@ -117,7 +124,7 @@ test('rerun after HF failure and repair by another workflow use only the last HF
 });
 
 test('503 for every required read is unknown, including with active work or apparent receipts', async () => {
-  for (const failing of ['commits?', '/status?', 'weekly-snapshot', 'deploy-web', `sha=${older}`]) {
+  for (const failing of ['commits?', '/status?', 'weekly-snapshot', 'deploy-web', '/artifacts?', `sha=${checkoutSha}`]) {
     const { result } = await verdict({ statuses: [status('captured')], weeklies: [weekly],
       deploys: [{ ...deploy, head_sha: older }],
       override: path => { if (path.includes(failing)) throw new Error('HTTP 503'); } });
@@ -134,9 +141,10 @@ test('incomplete or malformed API responses fail closed', async () => {
     path => path.includes('/status?') ? { sha, statuses: complete, total_count: 4 } : undefined,
     path => path.includes('weekly-snapshot') ? { workflow_runs: [weekly], total_count: 2 } : undefined,
     path => path.includes('weekly-snapshot') ? { workflow_runs: [{}], total_count: 1 } : undefined,
-    path => path.includes('deploy-web') ? { workflow_runs: [{ ...deploy, head_sha: undefined }], total_count: 1 } : undefined,
+    path => path.includes('/artifacts?') ? { total_count: 1, artifacts: [] } : undefined,
+    path => path.includes('deploy-web') ? { total_count: 1, workflow_runs: [{ ...deploy, run_attempt: undefined }] } : undefined,
   ];
-  for (const override of overrides) assert.equal((await verdict({ statuses: [status('captured')], override })).result.status, 'unknown');
+  for (const override of overrides) assert.equal((await verdict({ statuses: [status('captured')], deploys: [deploy], override })).result.status, 'unknown');
   await assert.rejects(snapshotCommit('../bad', async () => assert.fail('invalid date must not reach API')));
 });
 
@@ -198,6 +206,7 @@ test('HTTP errors and JSON/network errors stay unknown through the actual fetch 
 test('writer POSTs only the named context on the snapshot commit and preserves failure on a skip', async t => {
   const calls = [];
   mockTransport(t, async (path, options) => {
+    if (options.method === 'GET') return Response.json({ sha, statuses: [], total_count: 0 });
     calls.push({ path, method: options.method, body: JSON.parse(options.body) });
     return Response.json({});
   });
@@ -269,4 +278,132 @@ test('unrelated failing commit contexts do not veto three release receipts', asy
   const { result } = await verdict({ override: path => path.includes('/status?') ? { sha, state: 'failure',
     statuses: [...complete, { context: 'other-ci', state: 'failure' }], total_count: 4 } : undefined });
   assert.equal(result.status, 'released');
+});
+
+function statusStore(initial = complete) {
+  const statuses = [...initial];
+  const writes = [];
+  const request = async (path, body) => {
+    if (!body) {
+      assert.equal(path, `commits/${sha}/status?per_page=100`);
+      return { sha, statuses, total_count: statuses.length };
+    }
+    assert.equal(path, `statuses/${sha}`);
+    writes.push(body);
+    const old = statuses.findIndex(status => status.context === body.context);
+    if (old >= 0) statuses.splice(old, 1);
+    statuses.push(body);
+  };
+  const facts = () => ({ nowIso, record: { sha, date, statuses, total_count: statuses.length } });
+  return { request, writes, facts };
+}
+
+test('P2: a failed build after three receipts preserves released and remains a deploy watchdog failure', async () => {
+  const store = statusStore();
+  const result = stageResult('deployed', { build: { outcome: 'failure' } });
+  await writeReleaseStatus({ sha, date, stage: 'deployed', ...result }, store.request, {});
+  assert.equal(store.writes.length, 0);
+  assert.equal(evaluateWeeklyRelease(store.facts()).status, 'released');
+  const rows = evaluateWorkflowHealth({ nowIso, releaseFacts: store.facts(), roster: [
+    { name: 'weekly-snapshot', kind: 'scheduled' }, { name: 'deploy-web', kind: 'event' },
+  ], latestCompleted: { 'deploy-web': { conclusion: 'failure' } }, latestSuccess: {} });
+  assert.equal(rows[0].releaseStatus, 'released');
+  assert.equal(rows[1].status, 'red');
+});
+
+test('P2: deployment and HF failure writes depend on a prior receipt and actual publication', async () => {
+  for (const stage of ['deployed', 'hf']) for (const succeeded of [false, true]) for (const published of [false, true]) {
+    const store = statusStore(succeeded ? complete : complete.filter(status => status.context !== `evidaxis/release-${stage}`));
+    const steps = stage === 'deployed'
+      ? { deploy: { outcome: published ? 'success' : 'failure' }, receipt: { outcome: published ? 'failure' : 'skipped' } }
+      : { hf: { outcome: 'failure', outputs: { published: String(published) } } };
+    const result = stageResult(stage, steps);
+    assert.equal(result?.published, published);
+    await writeReleaseStatus({ sha, date, stage, ...result }, store.request, {});
+    assert.equal(store.writes.length, !succeeded || published ? 1 : 0, `${stage}/${succeeded}/${published}`);
+    assert.equal(evaluateWeeklyRelease(store.facts()).status, succeeded && !published ? 'released' : 'failed');
+  }
+  for (const id of ['secrets', 'node', 'build', 'deploy']) {
+    const store = statusStore();
+    await writeReleaseStatus({ sha, date, stage: 'deployed', ...stageResult('deployed', { [id]: { outcome: 'failure' } }) }, store.request, {});
+    assert.equal(store.writes.length, 0, id);
+  }
+});
+
+test('P2: unavailable prior status cannot authorize overwriting a confirmed release', async () => {
+  for (const previous of [null, { sha: older, statuses: complete, total_count: 3 },
+    { sha, statuses: complete, total_count: 4 }]) {
+    let writes = 0;
+    await assert.rejects(writeReleaseStatus({ sha, date, stage: 'deployed',
+      ...stageResult('deployed', { build: { outcome: 'failure' } }) }, async (path, body) => {
+      if (body) { writes++; return; }
+      if (!previous) throw new Error('HTTP 503');
+      return previous;
+    }, {}));
+    assert.equal(writes, 0);
+  }
+});
+
+test('P2: manual HF isolates publication evidence for each date and retracts only after upload', async () => {
+  const outputs = [];
+  for (const published of [true, false]) {
+    const store = statusStore();
+    await assert.rejects(mirrorSnapshot(date, {
+      target: async () => ({ sha, date }),
+      run: (command, args, options) => {
+        const output = options.env.GITHUB_OUTPUT;
+        outputs.push(output);
+        assert.equal(existsSync(output), false);
+        if (published) writeFileSync(output, 'published=true\n');
+        return { status: 5 };
+      },
+      write: payload => writeReleaseStatus(payload, store.request, {}),
+    }), /HF publication failed/);
+    assert.equal(store.writes.length, published ? 1 : 0);
+    assert.equal(evaluateWeeklyRelease(store.facts()).status, published ? 'failed' : 'released');
+  }
+  assert.notEqual(outputs[0], outputs[1]);
+  assert.ok(outputs.every(path => !existsSync(path)));
+});
+
+for (const activity of ['queued', 'in_progress', 'pending', 'waiting', 'requested']) {
+  test(`P2: 15:00 weekly ${activity} is running without a snapshot commit`, async () => {
+    const { result, calls } = await verdict({ commit: null, weeklies: [{ ...weekly, status: activity }] }, `${date}T15:00:00Z`);
+    assert.equal(result.status, 'running');
+    assert.equal(result.alert, true);
+    assert.equal(result.remind, false);
+    assert.match(result.message, /Нужен человек: нет/);
+    assert.ok(calls.some(path => path.endsWith(`status=${activity}`)));
+  });
+}
+
+test('P2: a push queued before D publishes the later actual checkout containing D', async () => {
+  const run = { ...deploy, head_sha: older };
+  const options = { statuses: [status('captured'), status('hf')], deploys: [run], override: path => {
+    if (path.startsWith('commits?') && path.endsWith(`sha=${older}`)) return [];
+  } };
+  const active = await verdict(options);
+  assert.equal(active.result.status, 'publishing');
+  assert.ok(active.calls.some(path => path.endsWith(`sha=${checkoutSha}`)));
+  assert.ok(active.calls.every(path => !path.endsWith(`sha=${older}`)));
+  for (const status of ['queued', 'pending', 'waiting', 'requested']) {
+    const queued = await verdict({ ...options, deploys: [{ ...run, status }] });
+    assert.equal(queued.result.status, 'publishing');
+    assert.ok(queued.calls.every(path => !path.includes('/artifacts?')));
+  }
+});
+
+test('P2: main advancement and a previous attempt artifact cannot replace the actual checkout', async () => {
+  for (const event of ['push', 'workflow_dispatch', 'workflow_run']) {
+    const active = await verdict({ statuses: [status('captured'), status('hf')], deploys: [{ ...deploy, event }], tree: null });
+    assert.equal(active.result.status, 'failed');
+  }
+  for (const artifacts of [[], [{ name: `deploy-checkout-1-${checkoutSha}`, expired: false }],
+    [{ name: `deploy-checkout-2-${checkoutSha}`, expired: true }],
+    [{ name: 'deploy-checkout-2-invalid', expired: false }],
+    [{ name: `deploy-checkout-2-${checkoutSha}`, expired: false }, { name: `deploy-checkout-2-${older}`, expired: false }]]) {
+    const { result } = await verdict({ statuses: [status('captured'), status('hf')],
+      deploys: [{ ...deploy, run_attempt: 2 }], override: path => path.includes('/artifacts?') ? { total_count: artifacts.length, artifacts } : undefined });
+    assert.equal(result.status, 'unknown');
+  }
 });

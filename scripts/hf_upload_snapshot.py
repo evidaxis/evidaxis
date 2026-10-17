@@ -289,6 +289,11 @@ def main(argv: list[str] | None = None) -> int:
             if result.returncode != 0:
                 print("upload failed")
                 return 5
+            # Only the dated data upload changes the release fact. Expose that
+            # event before the card/readback, so later failures can retract it.
+            if upload_args[1] == date and os.environ.get("GITHUB_OUTPUT"):
+                with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+                    output.write("published=true\n")
         try:
             verify_public_upload(stage)
         except (OSError, ValueError):

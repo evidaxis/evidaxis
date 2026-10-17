@@ -72,6 +72,20 @@ jobs:
           # republish last week verbatim and look like a successful publication.
           ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
 
+      - name: Record the actual checkout SHA
+        id: checkout
+        run: |
+          SHA=$(git rev-parse HEAD)
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "$SHA" > "$RUNNER_TEMP/release-checkout.txt"
+
+      - name: Expose the actual checkout to release sensors
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: deploy-checkout-${{ github.run_attempt }}-${{ steps.checkout.outputs.sha }}
+          path: ${{ runner.temp }}/release-checkout.txt
+          if-no-files-found: error
+
       - name: Resolve the snapshot commit in this tree
         id: release
         env:

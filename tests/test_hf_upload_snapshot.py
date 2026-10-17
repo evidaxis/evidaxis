@@ -298,3 +298,47 @@ def test_hf_upload_and_receipt_failures_stay_nonzero(publication_repo, tmp_path,
     assert hf.main(["--date", "2026-10-24"]) == 5
     monkeypatch.setattr(hf, "verify_public_upload", lambda stage: None)
     assert hf.main(["--date", "2026-10-24"]) == 0
+
+
+@pytest.mark.parametrize("failure", ["configuration", "data", "card", "receipt", "none", "dry-run"])
+def test_publication_marker_distinguishes_pre_upload_and_readback_failures(publication_repo, tmp_path, monkeypatch, failure):
+    from types import SimpleNamespace
+
+    date = "2026-10-24"
+    folder = tmp_path / "snapshots" / date
+    folder.mkdir(parents=True)
+    (folder / "snapshot.json").write_text(json.dumps({"snapshot_date": date, "entities": [
+        {"entity_id": "e_FIXTURE", "name": "Fixture"}]}))
+    output = tmp_path / "step-output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    monkeypatch.setattr(hf, "SNAPSHOTS", folder.parent)
+    monkeypatch.setattr(hf, "_load_token", lambda: "" if failure == "configuration" else "test-token")
+    monkeypatch.setattr(hf.shutil, "which", lambda name: "/bin/hf")
+    monkeypatch.setattr(hf, "_person_free_hits", lambda path: [])
+    calls = []
+
+    def upload(command, **kwargs):
+        calls.append(command)
+        if len(calls) == 1:
+            assert not output.exists(), "no publication before the dated upload succeeds"
+        else:
+            assert output.is_file(), "publication marker must precede card upload"
+            assert output.read_text() == "published=true\n", "publication precedes card and receipt"
+        failed = (failure == "data" and len(calls) == 1) or (failure == "card" and len(calls) == 2)
+        return SimpleNamespace(returncode=1 if failed else 0)
+
+    def receipt(stage):
+        assert output.is_file(), "publication marker must precede readback"
+        assert output.read_text() == "published=true\n"
+        if failure == "receipt":
+            raise ValueError("HF public content differs")
+
+    monkeypatch.setattr(hf.subprocess, "run", upload)
+    monkeypatch.setattr(hf, "verify_public_upload", receipt)
+    code = hf.main(["--date", date] + (["--dry-run"] if failure == "dry-run" else []))
+    assert code == (0 if failure in {"none", "dry-run"} else 4 if failure == "configuration" else 5)
+    if failure in {"card", "receipt", "none"}:
+        assert output.is_file()
+        assert output.read_text() == "published=true\n"
+    else:
+        assert not output.exists()

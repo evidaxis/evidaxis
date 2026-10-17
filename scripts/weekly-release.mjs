@@ -1,6 +1,7 @@
 // Release outcomes belong to the snapshot commit. Actions only describes work
 // still in flight; a completed run cannot establish or repair publication.
 export const RELEASE_CONTEXTS = ['captured', 'deployed', 'hf'];
+export const ACTIVE_RUN_STATES = ['queued', 'in_progress', 'pending', 'waiting', 'requested'];
 
 export function weeklyReleaseDay(nowIso) {
   if (typeof nowIso !== 'string') return null;
@@ -11,7 +12,7 @@ export function weeklyReleaseDay(nowIso) {
 }
 
 export function isInFlight(run) {
-  return run?.status === 'queued' || run?.status === 'in_progress';
+  return ACTIVE_RUN_STATES.includes(run?.status);
 }
 
 export function isWeeklyRelease(run, date) {
