@@ -13,6 +13,7 @@ import {
   gateFreshnessAlerts,
   parseReleaseKey,
   pickFailedStep,
+  releaseKeyToPrint,
   weeklyReleaseDay,
 } from './freshness.mjs';
 
@@ -114,6 +115,7 @@ async function workflowRuns(workflowFile) {
       updated_at: run.updated_at,
       html_url: run.html_url,
       event: run.event,
+      display_title: run.display_title,
     }));
     return { runs };
   } catch (error) {
@@ -290,15 +292,20 @@ if (legacy) {
 }
 
 // A failed send must not consume the key, or the next run would treat a message the keeper never got as delivered.
-let notifiedKey = decision.push ? (previousKey ?? '') : decision.notifiedKey;
+let sent = false;
 if (parts.length) {
-  const sent = await sendTelegram(parts.join('\n\n'));
-  if (sent && decision.push) notifiedKey = decision.notifiedKey;
+  sent = await sendTelegram(parts.join('\n\n'));
 } else if ((release.alert && release.remind) || gated.snapshot || gated.feed) {
   console.log('[freshness] (тихо · повтор) уже отправлено, напоминание — утром');
 } else if (release.alert) {
   console.log(`[freshness] состояние ${release.key} уже сообщено`);
 }
+const notifiedKey = releaseKeyToPrint({
+  push: decision.push,
+  notifiedKey: decision.notifiedKey,
+  previousKey,
+  sent,
+});
 console.log(`RELEASE_KEY ${notifiedKey || '-'}`);
 
 // Human-needed states keep the run red so alert-gate repeats them at most once a day.

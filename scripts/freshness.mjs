@@ -97,6 +97,15 @@ function isBad(run) {
   return BAD_CONCLUSION.has(run?.conclusion);
 }
 
+// Rehearsal (`weekly rehearsal …`) and a dry-run do not publish the Saturday snapshot, so they are not release runs and must not clear an earlier failure.
+function isReleaseRun(run) {
+  const title = String(run?.display_title ?? '').trim();
+  if (title.startsWith('weekly rehearsal')) return false;
+  if (/\bdry[-_ ]run\b/i.test(title)) return false;
+  if (run?.dry_run === true) return false;
+  return true;
+}
+
 /** @param {object} a @param {object} b */
 function isNewer(a, b) {
   const delta = Date.parse(a.created_at) - Date.parse(b.created_at);
@@ -244,7 +253,7 @@ export function evaluateWeeklyRelease(i) {
 
   const nowMs = Date.parse(i.nowIso);
   const past = nowMs >= deadlineMs(week);
-  const weeklies = runsForWeek(i.weeklyRuns, week, nowMs);
+  const weeklies = runsForWeek(i.weeklyRuns, week, nowMs).filter(isReleaseRun);
   const deploys = runsForWeek(i.deployRuns, week, nowMs);
 
   if (i.archiveDate === week && i.prodDate === week) {
@@ -280,6 +289,13 @@ export function evaluateWeeklyRelease(i) {
       true);
   }
 
+  const latest = weeklies[0];
+  if (past && i.archiveDate !== week && isSuccess(latest)) {
+    const when = clock(latest.updated_at || latest.run_started_at) ?? 'неизвестное время';
+    const sentence = `Срез ${week} не вышел: сбор завершился в ${when} UTC, но среза ${week} в архиве нет.`;
+    return verdict(week, 'failed', true, `${withRun(sentence, latest.html_url)} Нужен человек: да.`, true);
+  }
+
   return verdict(week, 'ok', false, '', false);
 }
 
@@ -306,26 +322,38 @@ export function decideWeeklyPush(i) {
     return { push: false, exitCode: 0, notifiedKey: previousKey ?? '' };
   }
   const same = previousKey === release.key;
-  const red = Boolean(i.previousConclusion) && i.previousConclusion !== 'success';
   const gateOpen = shouldPush({ previousConclusion: i.previousConclusion, nowIso: i.nowIso });
-  let push;
-  if (same) push = Boolean(release.remind) && gateOpen;
-  else if (previousKey === null && release.remind && red) push = gateOpen;
-  else push = true;
+  // A missing key means we do not know whether this state was sent. A red previous run may be liveness, not this release, so send.
+  const push = same ? Boolean(release.remind) && gateOpen : true;
   return { push, exitCode: release.remind ? 1 : 0, notifiedKey: release.key };
+}
+
+/**
+ * Line value for `RELEASE_KEY`. A push that Telegram did not accept must not
+ * look delivered: until `sent`, keep the previous key (empty when it was unreadable).
+ * @param {{ push: boolean, notifiedKey: string, previousKey?: string|null, sent: boolean }} i
+ * @returns {string}
+ */
+export function releaseKeyToPrint(i) {
+  const pending = typeof i.previousKey === 'string' && i.previousKey && i.previousKey !== '-'
+    ? i.previousKey
+    : '';
+  if (!i.push) return i.notifiedKey || pending;
+  return i.sent ? i.notifiedKey : pending;
 }
 
 /**
  * Snapshot and feed alarms that only repeat the weekly-release message stay in
  * the log. The release verdict is the one the keeper sees for that Saturday.
- * A released week does not swallow a later feed fault. An API miss does not
- * swallow a prod fault the probe already measured.
+ * Only an ageing feed is explained by a release that is not out yet. HTTP errors,
+ * a dead feed, and a broken feed still go out. A released week does not swallow
+ * a later feed fault. An API miss does not swallow a prod fault the probe already measured.
  *
  * @param {{
  *   archiveDate: string,
  *   release: { alert?: boolean, status?: string, week?: string },
  *   snapshot: { alert?: boolean },
- *   feed: { alert?: boolean },
+ *   feed: { alert?: boolean, reason?: string },
  * }} i
  * @returns {{ snapshot: boolean, feed: boolean }}
  */
@@ -333,9 +361,10 @@ export function gateFreshnessAlerts(i) {
   const release = i.release ?? {};
   const owns = Boolean(release.alert) && release.status !== 'unknown' && release.status !== 'released';
   const sameArchive = owns && i.archiveDate === release.week;
+  const feedAgeExplained = owns && i.feed?.reason === 'age';
   return {
     snapshot: Boolean(i.snapshot?.alert) && !sameArchive,
-    feed: Boolean(i.feed?.alert) && !owns,
+    feed: Boolean(i.feed?.alert) && !feedAgeExplained,
   };
 }
 
@@ -413,6 +442,7 @@ export function evaluateFeedFreshness(i) {
     return {
       status: 'unknown',
       alert: false,
+      reason: 'down',
       message: `${url} не ответил — свежесть фида не проверялась.`,
     };
   }
@@ -420,6 +450,7 @@ export function evaluateFeedFreshness(i) {
     return {
       status: 'stale',
       alert: true,
+      reason: 'http',
       message: `${url} отдаёт HTTP ${i.status}; последняя запись фида не проверена.`,
     };
   }
@@ -428,6 +459,7 @@ export function evaluateFeedFreshness(i) {
     return {
       status: 'stale',
       alert: true,
+      reason: 'invalid',
       message: `${url} не содержит корректную дату последней записи.`,
     };
   }
@@ -436,12 +468,14 @@ export function evaluateFeedFreshness(i) {
     return {
       status: 'ok',
       alert: false,
+      reason: 'fresh',
       message: `Последняя запись ${url} имеет возраст ${Math.max(0, Math.floor(ageDays))} дн.`,
     };
   }
   return {
     status: 'stale',
     alert: true,
+    reason: 'age',
     message: `Последняя запись ${url} старше ${maxAgeDays} дн. (${Math.floor(ageDays)} дн.).`,
   };
 }

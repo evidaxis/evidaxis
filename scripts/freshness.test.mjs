@@ -8,6 +8,7 @@ import {
   gateFreshnessAlerts,
   parseReleaseKey,
   pickFailedStep,
+  releaseKeyToPrint,
 } from './freshness.mjs';
 
 const base = { site: 'https://evidaxis.org', snapshotDate: '2026-08-08' };
@@ -337,10 +338,85 @@ test('cancelled and timed_out count as a failed release', () => {
   }
 });
 
+test('Saturday 13:00 rehearsal or dry-run is not the release and does not clear a failure', () => {
+  const failure = run({
+    id: 1,
+    conclusion: 'failure',
+    status: 'completed',
+    created_at: '2026-10-17T06:30:00Z',
+    updated_at: '2026-10-17T08:00:00Z',
+    failedStep: 'Collect',
+  });
+  const rehearsal = run({
+    id: 2,
+    conclusion: 'success',
+    status: 'completed',
+    created_at: '2026-10-17T09:00:00Z',
+    updated_at: '2026-10-17T12:00:00Z',
+    display_title: 'weekly rehearsal 2026-10-17',
+  });
+  const stillFailed = evaluateWeeklyRelease({
+    nowIso: '2026-10-17T13:00:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    weeklyRuns: [failure, rehearsal],
+    deployRuns: [],
+  });
+  assert.equal(stillFailed.status, 'failed');
+  assert.match(stillFailed.message, /Collect/);
+  assert.doesNotMatch(stillFailed.message, /в архиве нет/);
+
+  const base = {
+    nowIso: '2026-10-17T13:00:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    deployRuns: [],
+  };
+  for (const weeklyRuns of [
+    [rehearsal],
+    [run({ conclusion: 'success', status: 'completed', dry_run: true, display_title: 'weekly-snapshot' })],
+    [run({
+      conclusion: 'failure',
+      status: 'completed',
+      display_title: 'weekly rehearsal 2026-10-17',
+      failedStep: 'Collect',
+    })],
+  ]) {
+    const r = evaluateWeeklyRelease({ ...base, weeklyRuns });
+    assert.notEqual(r.status, 'ok');
+    assert.equal(r.status, 'not_started');
+  }
+
+  const running = evaluateWeeklyRelease({
+    ...base,
+    weeklyRuns: [liveWeekly, rehearsal],
+  });
+  assert.equal(running.status, 'running');
+});
+
+test('Saturday 13:00 a successful release with last week still in the archive has failed', () => {
+  const r = evaluateWeeklyRelease({
+    nowIso: '2026-10-17T13:00:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    weeklyRuns: [run({
+      conclusion: 'success',
+      status: 'completed',
+      display_title: 'weekly release 2026-10-17',
+      updated_at: '2026-10-17T12:40:00Z',
+    })],
+    deployRuns: [],
+  });
+  assert.equal(r.status, 'failed');
+  assert.equal(r.alert, true);
+  assert.match(r.message, /Срез 2026-10-17 не вышел: сбор завершился в 12:40 UTC, но среза 2026-10-17 в архиве нет/);
+  assert.match(r.message, /Нужен человек: да/);
+});
+
 test('a newer success clears an earlier failure', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:10:00Z',
-    archiveDate: '2026-10-10',
+    archiveDate: '2026-10-17',
     prodDate: '2026-10-10',
     weeklyRuns: [
       run({
@@ -532,6 +608,35 @@ test('a quiet run does not consume the key, and late then released each send onc
   assert.equal(weekday.exitCode, 0);
 });
 
+test('an unreadable previous key still sends, and the key is stored only after the send', () => {
+  const release = evaluateWeeklyRelease({
+    nowIso: '2026-10-17T13:00:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    weeklyRuns: [],
+    deployRuns: [],
+  });
+  const decision = decideWeeklyPush({
+    release,
+    previousKey: null,
+    previousConclusion: 'failure',
+    nowIso: '2026-10-17T13:00:00Z',
+  });
+  assert.equal(decision.push, true);
+  assert.equal(releaseKeyToPrint({
+    push: decision.push,
+    notifiedKey: decision.notifiedKey,
+    previousKey: null,
+    sent: false,
+  }), '');
+  assert.equal(releaseKeyToPrint({
+    push: decision.push,
+    notifiedKey: decision.notifiedKey,
+    previousKey: null,
+    sent: true,
+  }), release.key);
+});
+
 test('unknown repeats through the daily gate, not on every check', () => {
   const release = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
@@ -580,11 +685,18 @@ test('the weekly-release alert replaces the same-Saturday snapshot and feed alar
       event: 'workflow_run',
     })],
   });
+  const agedFeed = evaluateFeedFreshness({
+    site: 'https://evidaxis.org',
+    reached: true,
+    status: 200,
+    latestEntryAt: '2026-10-01T00:00:00Z',
+    now: new Date('2026-10-17T13:50:00Z'),
+  });
   const gated = gateFreshnessAlerts({
     archiveDate: '2026-10-17',
     release,
     snapshot: { alert: true },
-    feed: { alert: true },
+    feed: agedFeed,
   });
   assert.equal(gated.snapshot, false);
   assert.equal(gated.feed, false);
@@ -620,4 +732,31 @@ test('the weekly-release alert replaces the same-Saturday snapshot and feed alar
     feed: { alert: true },
   });
   assert.equal(feed.feed, true);
+});
+
+test('a running release still sends a feed 404 or a broken feed', () => {
+  const release = evaluateWeeklyRelease({
+    nowIso: '2026-10-17T13:33:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    weeklyRuns: [liveWeekly],
+    deployRuns: [],
+  });
+  assert.equal(release.status, 'running');
+  const now = new Date('2026-10-17T13:33:00Z');
+  const missing = evaluateFeedFreshness({
+    site: 'https://evidaxis.org', reached: true, status: 404, latestEntryAt: null, now,
+  });
+  const broken = evaluateFeedFreshness({
+    site: 'https://evidaxis.org', reached: true, status: 200, latestEntryAt: 'not-a-date', now,
+  });
+  const aged = evaluateFeedFreshness({
+    site: 'https://evidaxis.org', reached: true, status: 200, latestEntryAt: '2026-10-01T00:00:00Z', now,
+  });
+  const gate = (feed) => gateFreshnessAlerts({
+    archiveDate: '2026-10-10', release, snapshot: { alert: false }, feed,
+  });
+  assert.equal(gate(missing).feed, true);
+  assert.equal(gate(broken).feed, true);
+  assert.equal(gate(aged).feed, false);
 });
