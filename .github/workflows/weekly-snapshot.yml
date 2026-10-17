@@ -1,4 +1,5 @@
 name: weekly-snapshot
+run-name: weekly ${{ inputs.mode || 'release' }} ${{ inputs.release_date || 'resolve-date' }}
 
 # Evidaxis heartbeat — laptop-independent. Runs on GitHub's servers, not the keeper's machine.
 # Interim (pre-spine): re-snapshots the current set with the v2 collector, then re-classes the
@@ -15,56 +16,95 @@ on:
     - cron: "17 6 * * 6"   # Saturdays 06:17 UTC, weekly
   workflow_dispatch:        # allow manual run from the Actions tab
     inputs:
-      snapshot_date:
-        description: "Snapshot date YYYY-MM-DD (empty = today UTC). Pins the label even if the run crosses midnight."
+      release_date:
+        description: "Saturday YYYY-MM-DD (empty = last Saturday UTC); release cannot use a future date."
         required: false
         default: ""
         type: string
-      dry_run:
-        description: "Collect and run every check, but skip commit/push, HF mirror and Software Heritage; upload the snapshot + request summary as an artifact."
+      mode:
+        description: "Release or full rehearsal without publication"
         required: false
-        default: false
-        type: boolean
+        default: release
+        type: choice
+        options: [release, rehearsal]
 
 permissions:
-  contents: write           # commit the new snapshot back to the repo
+  contents: read
+  actions: read
 
 concurrency:
-  group: data-commits       # shared with t2-daily-snapshot: serializes data/ pushes
+  group: weekly-${{ inputs.release_date || github.run_id }}
   cancel-in-progress: false
+  queue: max               # Keep dated duplicates waiting for the archive guard.
 
 jobs:
-  snapshot:
+  guard:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write       # The date resolver dispatches the same workflow with an explicit date.
+    outputs:
+      date: ${{ steps.guard.outputs.date }}
+      mode: ${{ steps.guard.outputs.mode }}
+      skip: ${{ steps.guard.outputs.skip }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: false
+      - name: Already exists guard and date resolution
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MODE: ${{ inputs.mode || 'release' }}
+          INPUT_DATE: ${{ inputs.release_date }}
+        run: |
+          if [ -z "$INPUT_DATE" ]; then
+            python3 scripts/release_guard.py --route
+          else
+            python3 scripts/release_guard.py
+          fi
+
+  snapshot:
+    needs: guard
+    if: inputs.release_date != '' && needs.guard.outputs.skip == 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: data-commits
+      cancel-in-progress: false
+      queue: max           # Weekly must not evict a pending T2 write, including during rehearsal.
+    env:
+      SNAPSHOT_DATE: ${{ needs.guard.outputs.date }}
+      MODE: ${{ needs.guard.outputs.mode }}
     # 5,939 systems (2026-09-26): GraphQL metadata + two /stats passes on the GitHub App
     # budget, with rate-limit waits, fit in ~3-4 h; 350 min keeps a margin under the 6 h cap.
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
+          ref: ${{ github.ref_name }}  # Refresh the archive after waiting for the write queue.
           fetch-depth: 0   # m3 sanity confirmation uses first-add commit times
           persist-credentials: false   # push happens via explicit token URL in the commit step
 
+      - name: Recheck already exists after waiting
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_DATE: ${{ needs.guard.outputs.date }}
+        run: |
+          python3 scripts/release_guard.py
+          echo "EVX_RUN_STARTED=$(date -u +%s)" >> "$GITHUB_ENV"
+
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         with:
           python-version: "3.12"
 
-      - name: Pin the snapshot date (computed ONCE; every later step uses $SNAPSHOT_DATE)
-        # A multi-hour collection can cross 00:00 UTC; recomputing `date -u` per step
-        # would split one snapshot across two dates. The collector itself is pinned via
-        # SNAPSHOT_DATE (collectors/openalex_keyed_fetch.py); captured_at stays real time.
-        env:
-          INPUT_DATE: ${{ inputs.snapshot_date }}
-        run: |
-          D="${INPUT_DATE:-$(date -u +%F)}"
-          if ! printf '%s' "$D" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'; then
-            echo "::error::snapshot_date must be YYYY-MM-DD, got '$D'"; exit 1
-          fi
-          echo "SNAPSHOT_DATE=$D" >> "$GITHUB_ENV"
-          echo "EVX_RUN_STARTED=$(date -u +%s)" >> "$GITHUB_ENV"
-          echo "snapshot date pinned: $D (dry_run=${{ inputs.dry_run == true }})"
-
       - name: Prefetch repository metadata over GraphQL (100 repositories per query)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # One aliased GraphQL query answers stars / created_at / database id / owner type
         # for 100 repositories, replacing ~12,000 REST `repos/{repo}` calls (collector +
         # owner classification). Cache lives in the runner temp dir, never in the repo.
@@ -78,11 +118,13 @@ jobs:
           # recorded in data/observations/<date>/seed-departures.json (committed with the
           # snapshot). Weekly churn in a 6,000-system universe must not cost the week
           # (2026-09-26, 10-03, 10-10 each stopped on it). Only more departures than the cap
-          # (token or API trouble) fail the step. A dry run only warns and edits nothing.
-          EVX_ALLOW_DEAD_SEEDS: ${{ inputs.dry_run == true && '1' || '0' }}
+          # (token or API trouble) fail the step. Rehearsal uses the same retirement
+          # path in this disposable checkout; publication steps alone are disabled.
+          EVX_ALLOW_DEAD_SEEDS: '0'
         run: python3 collectors/gh_graphql.py
 
       - name: Warm GitHub /stats caches (one request per repository)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # /stats/commit_activity answers 202 while GitHub computes; this pass fires the
         # computation for every repository and caches every 200 body. It does not run
         # the collector and writes nothing to the repository.
@@ -95,6 +137,7 @@ jobs:
         run: python3 collectors/openalex_keyed_fetch.py
 
       - name: Collect snapshot (keyed OpenAlex; capture pass + completeness gate)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # Entrypoint is the fetch-layer wrapper (collectors/openalex_keyed_fetch.py):
         # the frozen etl/collect.py runs unmodified inside it, with the dead mailto
         # param replaced by api_key auth and HTTP 409 credit exhaustion failing LOUDLY.
@@ -119,15 +162,18 @@ jobs:
           python3 collectors/completeness_gate.py --date "$SNAPSHOT_DATE"
 
       - name: Re-class as PROVISIONAL (pre-spine, idempotent)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         run: python3 etl/reclass_pre_spine.py
 
       - name: Map snapshot onto taxonomy v2 (frozen collect.py emits tax_1)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # collect.py is byte-frozen and emits the v1 taxonomy + tax_1 nodes.json; this
         # deterministic post-step remaps the fresh snapshot to the locked v2 (field/cohort)
         # and restores the canonical v2 nodes.json, so the heartbeat stays v2-consistent.
         run: python3 collectors/taxonomy_v2.py --date "$SNAPSHOT_DATE"
 
       - name: Refresh the owner-publication cache for newly seeded repositories
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # The person-free guard fails CLOSED: the site refuses to render a card
         # whose owner is unclassified, which is correct and was also the reason
         # the whole build died once the first census tranche seeded ten repos
@@ -146,16 +192,19 @@ jobs:
           python3 collectors/owner_classify.py --verify
 
       - name: Restore public redirects mirror (frozen collector writes a stale one)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # etl/collect.py is byte-frozen and re-emits the genesis redirects.yaml every
         # run; regenerate it from web/vercel.json (the config that actually executes)
         # so `git add -A` does not revert the maintained mirror. web-ci enforces 1:1.
         run: python3 collectors/gen_redirects.py
 
       - name: Score methodology m3 (forward from 2026-09-19)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # Reuse confirmed-clean weekly deps inputs without modifying frozen etl/.
         run: python3 collectors/score_m3.py --date "$SNAPSHOT_DATE"
 
       - name: Content-addressed snapshot_id (post-step; frozen collect.py seeds-only mint)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # collect.py mints snapshot_id from methodology + seed-manifest only, so two
         # days with the same seeds can share an id while payloads differ (ERRATA
         # 2026-07-10, f1f2495d518d). Rewrite to sha256(canonical payload)[:12] BEFORE
@@ -164,6 +213,7 @@ jobs:
         run: python3 collectors/snapshot_identity.py --date "$SNAPSHOT_DATE"
 
       - name: Refresh snapshot checksums (mandatory FINAL content step)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # collect.py writes SHA256SUMS, but reclass_pre_spine.py, taxonomy_v2.py, and
         # snapshot_identity.py mutate snapshot.json/manifest.json AFTER the sums are
         # written. Re-hash the bundle so published sums match published bytes
@@ -173,23 +223,48 @@ jobs:
           python3 collectors/refresh_sums.py --verify
 
       - name: History ledger must resolve (no phantom snapshot ids)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         run: python3 collectors/history_ledger_check.py
 
       - name: Merkle-anchor the archive (integrity root + OpenTimestamps)
+        if: ${{ steps.guard.outputs.skip == 'false' }}
         # Compact, un-forgeable witness that the WHOLE data/ archive existed as-is
         # at time T. Roots are APPEND-ONLY (timestamped files, chained via prev_root);
         # an integrity witness is never rewritten in place.
         run: |
           python3 collectors/merkle_root.py
           python3 collectors/merkle_root.py --verify
+          if [ "$MODE" = "rehearsal" ]; then exit 0; fi
           pip install --quiet "opentimestamps-client==0.7.2" || echo "ots install failed; stamp skipped this run"
           FILE=$(ls data/integrity/archive-root-*.json | sort | tail -1)
           if [ -f "$FILE" ] && command -v ots >/dev/null 2>&1; then
             ots stamp "$FILE" || echo "ots stamp deferred (calendar unreachable)"
           fi
 
+      - name: Check the HF publication projection
+        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode == 'rehearsal') }}
+        run: python3 scripts/hf_upload_snapshot.py --date "$SNAPSHOT_DATE" --dry-run
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode == 'rehearsal') }}
+        with:
+          node-version: "22"
+
+      - name: Verify the site against this rehearsal candidate
+        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode == 'rehearsal') }}
+        env:
+          EVIDAXIS_DATA_DIR: ${{ github.workspace }}/data
+          PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
+          PUBLIC_CLARITY_ID: ${{ vars.PUBLIC_CLARITY_ID }}
+          PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
+          PUBLIC_POSTHOG_HOST: ${{ vars.PUBLIC_POSTHOG_HOST }}
+        run: |
+          cd web
+          npm ci
+          npm run verify
+
       - name: Timing and request summary
-        if: ${{ always() }}
+        if: ${{ steps.guard.outputs.skip == 'false' && (always()) }}
         env:
           EVX_GH_CACHE_DIR: ${{ runner.temp }}/evx-gh
         run: |
@@ -197,13 +272,23 @@ jobs:
           mkdir -p "$OUT"
           cp "$EVX_GH_CACHE_DIR"/summary-*.json "$EVX_GH_CACHE_DIR"/warm-202.json "$OUT"/ 2>/dev/null || true
           NOW=$(date -u +%s)
-          printf '{"snapshot_date":"%s","dry_run":%s,"started_epoch":%s,"finished_epoch":%s,"elapsed_min":%s}\n' \
-            "$SNAPSHOT_DATE" "${{ inputs.dry_run == true }}" "${EVX_RUN_STARTED:-0}" "$NOW" \
+          printf '{"snapshot_date":"%s","mode":"%s","started_epoch":%s,"finished_epoch":%s,"elapsed_min":%s}\n' \
+            "$SNAPSHOT_DATE" "$MODE" "${EVX_RUN_STARTED:-0}" "$NOW" \
             "$(( (NOW - ${EVX_RUN_STARTED:-$NOW}) / 60 ))" > "$OUT/timing.json"
-          cat "$OUT"/summary-*.json "$OUT/timing.json" 2>/dev/null || true
+          cat "$OUT/timing.json"
 
-      - name: Upload snapshot + summary (dry run, or any failed run)
-        if: ${{ always() && (inputs.dry_run == true || failure()) }}
+      - name: Rehearsal report
+        if: ${{ steps.guard.outputs.skip == 'false' && (always() && inputs.mode == 'rehearsal') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUT="${{ runner.temp }}/evx-summary"
+          # Missing job metadata must still leave a red, incomplete report artifact.
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" > "$OUT/jobs.json" || rm -f "$OUT/jobs.json"
+          python3 scripts/rehearsal_report.py --date "$SNAPSHOT_DATE" --summary-dir "$OUT"
+
+      - name: Upload snapshot + summary (rehearsal, or any failed run)
+        if: ${{ steps.guard.outputs.skip == 'false' && (always() && (inputs.mode == 'rehearsal' || failure())) }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: snapshot-${{ env.SNAPSHOT_DATE }}-${{ github.run_id }}
@@ -214,7 +299,8 @@ jobs:
           retention-days: 14
 
       - name: Commit snapshot if changed (rebase-retry against concurrent data pushes)
-        if: ${{ inputs.dry_run != true }}
+        id: commit
+        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode != 'rehearsal') }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -241,33 +327,18 @@ jobs:
           echo "push failed after 3 rebase attempts"
           exit 1
 
-      - name: Mirror latest snapshot to the HF dataset (best-effort)
-        if: ${{ inputs.dry_run != true }}
-        # Publication projection only (person-free fail-closed guard inside the script).
-        # Only an upload/network failure (exit 5) is a warning: the canonical archive is
-        # git + Zenodo. A person-free abort (3), a projection or classification failure (4)
-        # or any crash fails this step, so the dataset can never go stale silently again.
+      - name: Mirror the dated snapshot to HF and verify public contents
+        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode != 'rehearsal') }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          if [ -z "$HF_TOKEN" ]; then echo "HF_TOKEN absent - skip"; exit 0; fi
-          python -m pip install --quiet "huggingface_hub[cli]" || { echo "hf lib install failed"; exit 0; }
-          set +e
-          python3 scripts/hf_upload_snapshot.py
-          code=$?
-          set -e
-          if [ "$code" -eq 5 ]; then
-            echo "::warning::HF upload deferred (network or upload failure, exit 5)"
-            exit 0
-          fi
-          if [ "$code" -ne 0 ]; then
-            echo "::error::HF mirror failed (exit $code: 3 person-free abort, 4 projection/classification, other = crash)"
-            exit "$code"
-          fi
+          if [ -z "$HF_TOKEN" ]; then echo "::error::HF_TOKEN missing"; exit 1; fi
+          python -m pip install --quiet "huggingface_hub==2.1.1"
+          python3 scripts/hf_upload_snapshot.py --date "$SNAPSHOT_DATE"
 
       - name: Ask Software Heritage to re-archive the repository
         # Independent of the HF mirror: still runs when that step failed.
-        if: ${{ always() && inputs.dry_run != true }}
+        if: ${{ steps.guard.outputs.skip == 'false' && (always() && inputs.mode != 'rehearsal' && steps.commit.outcome == 'success') }}
         # Keeps an independent off-GitHub copy of the full git history current.
         run: |
           curl -fsS -X POST "https://archive.softwareheritage.org/api/1/origin/save/git/url/https://github.com/${GITHUB_REPOSITORY}/" \

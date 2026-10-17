@@ -39,11 +39,21 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+  queue: max               # Keep pending production publications instead of replacing them.
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     # A failed or cancelled producer must not publish a half-written snapshot.
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       startsWith(github.event.workflow_run.display_title, 'weekly release ') &&
+       !endsWith(github.event.workflow_run.display_title, 'resolve-date'))
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
@@ -99,31 +109,10 @@ jobs:
           # --archive=tgz: Vercel rejects CLI uploads above 15,000 files ("files should NOT have more than
           # 15000 items"; probed 2026-09-24 with 20,002 files). The 2026-09-26 snapshot grows the site from
           # ~10k to ~290k files; one archive upload keeps the deploy inside the limit (same probe passed).
-          npx vercel@latest deploy --prod --yes --archive=tgz --token "$VERCEL_TOKEN"
+          node ../../scripts/vercel-deploy.mjs
 
       - name: Verify prod serves the snapshot this tree holds
         # A deploy whose CLI exited 0 while the live host keeps serving last
         # week's snapshot is exactly the silent failure this chain exists to
         # prevent, so publication is confirmed against evidaxis.org itself.
-        run: |
-          DATE=$(python3 -c "import json;print(json.load(open('data/latest.json'))['snapshot_date'])")
-          URL="https://evidaxis.org/snapshots/$DATE/snapshot.json"
-          for i in $(seq 1 12); do
-            CODE=$(curl -s -o /dev/null -w '%{http_code}' -H 'cache-control: no-cache' "$URL" || echo 000)
-            if [ "$CODE" = "200" ]; then
-              echo "prod serves $DATE"
-              for EXTRA in /coverage/power/ /feed.atom; do
-                EXTRA_CODE=$(curl -s -o /dev/null -w '%{http_code}' -H 'cache-control: no-cache' "https://evidaxis.org$EXTRA" || echo 000)
-                if [ "$EXTRA_CODE" != "200" ]; then
-                  echo "::error::post-deploy check failed: $EXTRA -> $EXTRA_CODE"
-                  exit 1
-                fi
-                echo "prod serves $EXTRA"
-              done
-              exit 0
-            fi
-            echo "attempt $i: $URL -> $CODE"
-            sleep 15
-          done
-          echo "::error::prod does not serve $DATE although the deploy reported success"
-          exit 1
+        run: node scripts/deploy-receipt.mjs

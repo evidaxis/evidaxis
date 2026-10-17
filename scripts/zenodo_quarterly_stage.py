@@ -23,7 +23,7 @@ REPO = Path(__file__).resolve().parent.parent
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
-from scripts.hf_upload_snapshot import _person_free_hits, entities_csv, project_person_free  # noqa: E402
+from scripts.hf_upload_snapshot import _person_free_hits, entities_csv, project_person_free
 
 SNAPSHOTS = REPO / "data" / "snapshots"
 DOCS = ("CONSTITUTION.md", "CLAIM-URN.md", "METHODOLOGY-VERSIONING.md", "LICENSE-data.md",

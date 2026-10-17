@@ -22,7 +22,7 @@ REPO = Path(__file__).resolve().parent.parent
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
-from scripts.zenodo_quarterly_stage import check_metadata  # noqa: E402
+from scripts.zenodo_quarterly_stage import check_metadata
 
 API = "https://zenodo.org/api"
 LATEST_RECORD = 21307528        # version 2026-07-11 under concept 21076011

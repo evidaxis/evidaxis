@@ -21,6 +21,7 @@ permissions:
 concurrency:
   group: data-commits       # shared with weekly-snapshot: serializes data/ pushes
   cancel-in-progress: false
+  queue: max               # Preserve pending daily writes when weekly releases join the queue.
 
 jobs:
   capture:

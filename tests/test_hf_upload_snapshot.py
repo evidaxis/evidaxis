@@ -253,3 +253,48 @@ def test_unclassified_repo_exits_4_not_a_warning(publication_repo, tmp_path, mon
         {"entity_id": "e_SYNTH0000001", "name": "tool", "github_repo": "unknown-owner/tool"}]}))
     monkeypatch.setattr(hf, "SNAPSHOTS", tmp_path / "snaps")
     assert hf.main(["--date", "2026-10-03", "--dry-run"]) == 4
+
+
+def test_public_hf_receipt_reads_both_projected_files(tmp_path, monkeypatch):
+    import io
+
+    stage = tmp_path / "2026-10-24"
+    stage.mkdir()
+    for name in ("snapshot.json", "entities.csv"):
+        (stage / name).write_bytes(b"projected bytes")
+    urls = []
+
+    def fetch(request, timeout):
+        urls.append(request.full_url)
+        return io.BytesIO(b"projected bytes")
+
+    monkeypatch.setattr(hf, "urlopen", fetch)
+    hf.verify_public_upload(stage)
+    assert urls == [f"https://huggingface.co/datasets/{hf.DATASET}/resolve/main/2026-10-24/{name}"
+                    for name in ("snapshot.json", "entities.csv")]
+    monkeypatch.setattr(hf, "urlopen", lambda *args, **kwargs: io.BytesIO(b"old bytes"))
+    with pytest.raises(ValueError, match="content differs"):
+        hf.verify_public_upload(stage)
+
+
+def test_hf_upload_and_receipt_failures_stay_nonzero(publication_repo, tmp_path, monkeypatch):
+    from types import SimpleNamespace
+
+    folder = tmp_path / "snapshots/2026-10-24"
+    folder.mkdir(parents=True)
+    (folder / "snapshot.json").write_text('{"snapshot_date":"2026-10-24","entities":[{"entity_id":"e_FIXTURE","name":"Fixture"}]}')
+    monkeypatch.setattr(hf, "SNAPSHOTS", folder.parent)
+    monkeypatch.setattr(hf, "_load_token", lambda: "test-token")
+    monkeypatch.setattr(hf.shutil, "which", lambda name: "/bin/hf")
+    monkeypatch.setattr(hf, "_person_free_hits", lambda path: [])
+    monkeypatch.setattr(hf.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(returncode=1))
+    assert hf.main(["--date", "2026-10-24"]) == 5
+    monkeypatch.setattr(hf.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(returncode=0))
+
+    def unavailable(stage):
+        raise OSError("unavailable")
+
+    monkeypatch.setattr(hf, "verify_public_upload", unavailable)
+    assert hf.main(["--date", "2026-10-24"]) == 5
+    monkeypatch.setattr(hf, "verify_public_upload", lambda stage: None)
+    assert hf.main(["--date", "2026-10-24"]) == 0

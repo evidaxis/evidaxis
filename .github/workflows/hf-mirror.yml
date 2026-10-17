@@ -29,7 +29,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install huggingface_hub
-        run: python -m pip install --quiet "huggingface_hub[cli]"
+        run: python -m pip install --quiet "huggingface_hub==2.1.1"
 
       - name: Mirror selected snapshots
         env:

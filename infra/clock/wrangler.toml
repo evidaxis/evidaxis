@@ -1,0 +1,14 @@
+name = "evidaxis-release-clock"
+main = "worker.js"
+compatibility_date = "2026-10-17"
+workers_dev = false
+
+[vars]
+GH_REPOSITORY = "evidaxis/evidaxis"
+GH_REF = "main"
+
+[triggers]
+crons = ["17 2 * * SAT", "17 4 * * SAT", "47 6 * * SAT", "17 2 * * WED"]
+
+[observability]
+enabled = true

@@ -7,7 +7,8 @@ that date's folder only.
 
     python3 scripts/hf_upload_snapshot.py [--date YYYY-MM-DD] [--dry-run]
 
-Exit 0 on success, 3 when the person-free guard finds a handle, 1 on any other error.
+Exit 0 on success, 3 for guard findings, 4 for configuration/projection errors,
+5 for upload or public receipt failures; every nonzero exit fails publication.
 --dry-run builds the stage and runs the guard. It does not upload and needs no token.
 """
 from __future__ import annotations
@@ -22,6 +23,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from urllib.request import Request, urlopen
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(_REPO_ROOT) not in sys.path:
@@ -219,6 +221,17 @@ def _summary(date: str, stats: dict, guard_hits: int) -> str:
     )
 
 
+def verify_public_upload(stage: Path) -> None:
+    """Read the public projection, not raw archive bytes or an upload acknowledgement."""
+    for name in ("snapshot.json", "entities.csv"):
+        request = Request(f"https://huggingface.co/datasets/{DATASET}/resolve/main/{stage.name}/{name}",
+                          headers={"Cache-Control": "no-cache"})
+        # Bound a new receipt read; an unavailable mirror is a failed delivery.
+        with urlopen(request, timeout=30) as response:
+            if response.read() != (stage / name).read_bytes():
+                raise ValueError(f"HF public content differs: {name}")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None)
@@ -276,12 +289,17 @@ def main(argv: list[str] | None = None) -> int:
             if result.returncode != 0:
                 print("upload failed")
                 return 5
+        try:
+            verify_public_upload(stage)
+        except (OSError, ValueError):
+            print("HF public content receipt failed")
+            return 5
     print(f"uploaded {date} + card to hf.co/datasets/{DATASET}")
     return 0
 
 
 if __name__ == "__main__":
-    # Exit codes: 0 ok · 5 upload/network failure (the only warning in CI) · 3 person-free
+    # Exit codes: 0 ok · 5 upload/network/receipt failure · 3 person-free
     # abort · 4 classification/projection/configuration failure · 2 usage error. Python's
     # own crash code (1, e.g. an import error) therefore also fails CI, never warns.
     try:
