@@ -11,69 +11,331 @@
 // snapshot the repository holds? A snapshot that exists only in git is not
 // published, and a sensor that cannot say so is what makes the failure silent.
 //
+// The Saturday release is a third fact. File age cannot tell "GitHub started
+// the cron late" from "the capture did not happen". On 2026-10-17 that confusion
+// paged the keeper while weekly-snapshot was still running. evaluateWeeklyRelease
+// names the state of the release instead. It does no I/O.
+//
 // Deliberately NOT an alarm about being down: unreachable is the liveness
 // sensor's fact, and two sensors shouting about one outage teach the keeper to
-// mute both. Dependency-free and side-effect-free; unit-tested in
-// freshness.test.mjs.
+// mute both. Dependency-free aside from the pure daily gate in alert-gate.mjs.
+import { shouldPush } from './alert-gate.mjs';
 
 /** @typedef {'ok'|'publishing'|'stale'|'unknown'} FreshnessStatus */
+/** @typedef {'ok'|'released'|'running'|'publishing'|'failed'|'not_started'|'unknown'} ReleaseStatus */
 
 const HOUR_MS = 3600_000;
 const DAY_MS = 24 * HOUR_MS;
-const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
+// 06:17 UTC is the weekly-snapshot cron (`17 6 * * 6`); the delay sentence measures from that minute, not from a file-age budget.
+const SCHEDULE_HOUR_UTC = 6;
+const SCHEDULE_MINUTE_UTC = 17;
+// 12:00 UTC Saturday is when a still-running or still-missing release is worth one message: the old 174 h file-age budget expired near this hour and paged while the run was alive.
+const DEADLINE_HOUR_UTC = 12;
+const WEEKLY_WORKFLOW_URL = 'https://github.com/evidaxis/evidaxis/actions/workflows/weekly-snapshot.yml';
+// waiting/pending/requested count as running: weekly-snapshot sits on the data-commits lock, and that wait is not "the schedule did not start".
+const IN_FLIGHT = new Set(['queued', 'in_progress', 'waiting', 'pending', 'requested']);
+const BAD_CONCLUSION = new Set(['failure', 'cancelled', 'timed_out']);
 
-/** @param {string} snapshotDate */
-function captureTime(snapshotDate) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(snapshotDate)) return Number.NaN;
-  // snapshot_date has day precision, so anchor it to the scheduled 06:17 UTC
-  // capture. The 174-hour budget then expires at 12:17 the next Saturday.
-  const timestamp = Date.parse(`${snapshotDate}T06:17:00Z`);
-  if (Number.isNaN(timestamp)) return Number.NaN;
-  return new Date(timestamp).toISOString().slice(0, 10) === snapshotDate
-    ? timestamp
-    : Number.NaN;
+/** @param {string} nowIso @returns {string|null} YYYY-MM-DD of the last Saturday at or before now (UTC). */
+export function weeklyReleaseDay(nowIso) {
+  const now = new Date(nowIso);
+  if (Number.isNaN(now.getTime())) return null;
+  const back = (now.getUTCDay() + 1) % 7;
+  const midnight = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  return new Date(midnight - back * DAY_MS).toISOString().slice(0, 10);
 }
 
-/** @param {number} ageHours */
-function archiveAge(ageHours) {
-  const hours = Math.max(0, Math.floor(ageHours));
-  return `${hours} ч (${(hours / 24).toFixed(1)} дн.)`;
+/** @param {string} iso @returns {string|null} */
+function clock(iso) {
+  const parsed = Date.parse(iso ?? '');
+  if (Number.isNaN(parsed)) return null;
+  const date = new Date(parsed);
+  const hour = String(date.getUTCHours()).padStart(2, '0');
+  const minute = String(date.getUTCMinutes()).padStart(2, '0');
+  return `${hour}:${minute}`;
+}
+
+/** @param {string} week */
+function deadlineMs(week) {
+  return Date.parse(`${week}T${String(DEADLINE_HOUR_UTC).padStart(2, '0')}:00:00Z`);
+}
+
+/** @param {string} week */
+function scheduleMs(week) {
+  const hour = String(SCHEDULE_HOUR_UTC).padStart(2, '0');
+  const minute = String(SCHEDULE_MINUTE_UTC).padStart(2, '0');
+  return Date.parse(`${week}T${hour}:${minute}:00Z`);
+}
+
+/** @param {object[]} runs @param {string} week @param {number} nowMs */
+function runsForWeek(runs, week, nowMs) {
+  const start = Date.parse(`${week}T00:00:00Z`);
+  return (Array.isArray(runs) ? runs : [])
+    .filter((run) => {
+      const created = Date.parse(run?.created_at ?? '');
+      return !Number.isNaN(created) && created >= start && created <= nowMs;
+    })
+    .sort((a, b) => {
+      const delta = Date.parse(b.created_at) - Date.parse(a.created_at);
+      if (delta) return delta;
+      return Number(b.id) - Number(a.id);
+    });
+}
+
+/** @param {object|undefined} run */
+function isInFlight(run) {
+  return Boolean(run) && IN_FLIGHT.has(run.status) && !run.conclusion;
+}
+
+/** @param {object|undefined} run */
+function isSuccess(run) {
+  return run?.conclusion === 'success';
+}
+
+/** @param {object|undefined} run */
+function isBad(run) {
+  return BAD_CONCLUSION.has(run?.conclusion);
+}
+
+/** @param {object} a @param {object} b */
+function isNewer(a, b) {
+  const delta = Date.parse(a.created_at) - Date.parse(b.created_at);
+  if (delta) return delta > 0;
+  return Number(a.id) > Number(b.id);
+}
+
+/** Newest failed run for the week that no later run has replaced with success or work in progress. @param {object[]} runs */
+function blockingFailure(runs) {
+  for (const run of runs) {
+    if (!isBad(run)) continue;
+    const replaced = runs.some((other) => isNewer(other, run) && (isInFlight(other) || isSuccess(other)));
+    if (!replaced) return run;
+  }
+  return null;
 }
 
 /**
- * @param {{ snapshotDate: string, nowIso: string, budgetHours?: number }} i
- * @returns {{ status: FreshnessStatus, alert: boolean, message: string }}
+ * First step whose conclusion is failure, in job order. The runner passes the
+ * jobs payload from the GitHub API; the wording of the alert stays here.
+ * @param {{ steps?: { name?: string, conclusion?: string }[] }[]|undefined} jobs
+ * @returns {string|undefined}
  */
-export function evaluateArchiveFreshness(i) {
-  const budgetHours = i.budgetHours ?? 174;
-  const capturedAt = captureTime(i.snapshotDate);
-  const now = Date.parse(i.nowIso);
-  if (Number.isNaN(capturedAt) || Number.isNaN(now)) {
-    return {
-      status: 'stale',
-      alert: true,
-      message:
-        `Дата архивного снапшота «${i.snapshotDate}» некорректна: нельзя подтвердить, ` +
-        `что сам CAPTURE состоялся.\n${ACTIONS_URL}`,
-    };
+export function pickFailedStep(jobs) {
+  for (const job of jobs ?? []) {
+    for (const step of job?.steps ?? []) {
+      if (step?.conclusion === 'failure' && step.name) return step.name;
+    }
+  }
+  return undefined;
+}
+
+/** Last `RELEASE_KEY` line in a job log. `-` and a missing line mean "nothing sent yet". @param {string} logText */
+export function parseReleaseKey(logText) {
+  let found = null;
+  for (const line of String(logText ?? '').split(/\r?\n/)) {
+    const mark = line.match(/RELEASE_KEY (\S+)\s*$/);
+    if (!mark) continue;
+    found = mark[1] === '-' ? null : mark[1];
+  }
+  return found;
+}
+
+/**
+ * @param {string} week
+ * @param {ReleaseStatus} status
+ * @param {boolean} alert
+ * @param {string} message
+ * @param {boolean} remind
+ */
+function verdict(week, status, alert, message, remind) {
+  return {
+    status,
+    alert,
+    message,
+    key: `${week}:${status}`,
+    remind: Boolean(alert && remind),
+    week,
+  };
+}
+
+/** @param {string} text @param {string|undefined} url */
+function withRun(text, url) {
+  return url ? `${text} ${url}` : text;
+}
+
+/** @param {object} run @param {string} week */
+function scheduleDelay(run, week) {
+  if (run.event !== 'schedule') return '';
+  const started = Date.parse(run.run_started_at || run.created_at || '');
+  const planned = scheduleMs(week);
+  if (Number.isNaN(started) || Number.isNaN(planned)) return '';
+  const minutes = Math.floor((started - planned) / 60_000);
+  if (minutes < 1) return '';
+  return ` (GitHub запустил расписание на ${Math.floor(minutes / 60)} ч ${minutes % 60} мин позже)`;
+}
+
+/** @param {string} week @param {object} run */
+function runningMessage(week, run) {
+  const started = clock(run.run_started_at || run.created_at) ?? 'неизвестное время';
+  const sentence = `Срез ${week} опаздывает, но идёт: сбор начался в ${started} UTC${scheduleDelay(run, week)}.`;
+  return `${withRun(sentence, run.html_url)} Нужен человек: нет. Следующее сообщение — когда выйдет или упадёт.`;
+}
+
+/** @param {string} week @param {object} run */
+function publishingMessage(week, run) {
+  const started = clock(run.run_started_at || run.created_at) ?? 'неизвестное время';
+  const sentence = `Срез ${week}: сбор готов, идёт выкладка с ${started} UTC.`;
+  return `${withRun(sentence, run.html_url)} Нужен человек: нет.`;
+}
+
+/** @param {string} week @param {'weekly'|'deploy'} kind @param {object} run */
+function failedMessage(week, kind, run) {
+  const step = run.failedStep ? `на шаге «${run.failedStep}»` : 'на неизвестном шаге';
+  const when = clock(run.updated_at || run.run_started_at) ?? 'неизвестное время';
+  const what = kind === 'deploy' ? `выкладка упала ${step}` : `weekly-snapshot упал ${step}`;
+  const sentence = `Срез ${week} не вышел: ${what} в ${when} UTC.`;
+  return `${withRun(sentence, run.html_url)} Нужен человек: да.`;
+}
+
+/** @param {string} week @param {object[]} weeklies @param {object[]} deploys */
+function releasedMessage(week, weeklies, deploys) {
+  const weekly = weeklies.find(isSuccess);
+  const deploy = deploys.find(isSuccess);
+  const start = clock(weekly?.run_started_at || weekly?.created_at);
+  const end = clock(weekly?.updated_at);
+  const published = clock(deploy?.updated_at);
+  let sentence = `✅ Срез ${week} на сайте.`;
+  if (start && end && published) {
+    sentence = `✅ Срез ${week} на сайте. Сбор шёл ${start}–${end} UTC, выкладка закончилась в ${published} UTC.`;
+  } else if (start && end) {
+    sentence = `✅ Срез ${week} на сайте. Сбор шёл ${start}–${end} UTC.`;
+  }
+  return `${withRun(sentence, weekly?.html_url || deploy?.html_url)} Нужен человек: нет.`;
+}
+
+/**
+ * State of the Saturday release. `D` is the last Saturday at or before `nowIso`.
+ * A run is "for D" when GitHub created it at or after D 00:00 UTC.
+ * File age is not an input: a live run must not read as a missed capture.
+ *
+ * @param {{
+ *   nowIso: string,
+ *   archiveDate: string,
+ *   prodDate: string|null,
+ *   weeklyRuns?: object[],
+ *   deployRuns?: object[],
+ *   apiError?: string|null,
+ * }} i
+ * @returns {{ status: ReleaseStatus, alert: boolean, message: string, key: string, remind: boolean, week: string }}
+ */
+export function evaluateWeeklyRelease(i) {
+  const week = weeklyReleaseDay(i.nowIso);
+  const apiError = typeof i.apiError === 'string' ? i.apiError.replace(/\s+/g, ' ').trim() : '';
+  if (!week) {
+    return verdict('unknown', 'unknown', true,
+      'Не могу проверить выпуск: время проверки некорректно. Нужен человек: нет, проверю в следующий раз.',
+      true);
+  }
+  if (apiError) {
+    return verdict(week, 'unknown', true,
+      `Не могу проверить выпуск ${week}: GitHub API ответил ${apiError}. Нужен человек: нет, проверю в следующий раз.`,
+      true);
   }
 
-  const ageHours = (now - capturedAt) / HOUR_MS;
-  if (ageHours <= budgetHours) {
-    return {
-      status: 'ok',
-      alert: false,
-      message:
-        `Архивный снапшот ${i.snapshotDate} имеет возраст ${archiveAge(ageHours)}, ` +
-        `бюджет ${budgetHours} ч не исчерпан.\n${ACTIONS_URL}`,
-    };
+  const nowMs = Date.parse(i.nowIso);
+  const past = nowMs >= deadlineMs(week);
+  const weeklies = runsForWeek(i.weeklyRuns, week, nowMs);
+  const deploys = runsForWeek(i.deployRuns, week, nowMs);
+
+  if (i.archiveDate === week && i.prodDate === week) {
+    return verdict(week, 'released', true, releasedMessage(week, weeklies, deploys), false);
   }
+
+  const live = weeklies.find(isInFlight);
+  if (live) {
+    if (!past) return verdict(week, 'running', false, '', false);
+    return verdict(week, 'running', true, runningMessage(week, live), false);
+  }
+
+  const weeklyFail = blockingFailure(weeklies);
+  if (weeklyFail) return verdict(week, 'failed', true, failedMessage(week, 'weekly', weeklyFail), true);
+
+  const deployLive = deploys.find(isInFlight);
+  if (i.archiveDate === week && i.prodDate !== week && deployLive) {
+    if (!past) return verdict(week, 'publishing', false, '', false);
+    return verdict(week, 'publishing', true, publishingMessage(week, deployLive), false);
+  }
+
+  const deployFail = blockingFailure(deploys);
+  if (i.archiveDate === week && i.prodDate !== week && deployFail) {
+    return verdict(week, 'failed', true, failedMessage(week, 'deploy', deployFail), true);
+  }
+
+  if (weeklies.length === 0) {
+    if (!past) return verdict(week, 'not_started', false, '', false);
+    const deadline = `${String(DEADLINE_HOUR_UTC).padStart(2, '0')}:00`;
+    return verdict(week, 'not_started', true,
+      `Срез ${week} не стартовал к ${deadline} UTC: GitHub не запустил расписание. ` +
+        `Нужен человек: да — запустить weekly-snapshot вручную: ${WEEKLY_WORKFLOW_URL}`,
+      true);
+  }
+
+  return verdict(week, 'ok', false, '', false);
+}
+
+/**
+ * One Telegram push per (week, state). The same state uses alert-gate's daily
+ * reminder only when a human is needed or the API could not be read (`remind`).
+ * A quiet observation must not overwrite the key of the message already sent,
+ * or the late alarm would think it had already fired.
+ *
+ * @param {{
+ *   release: { alert: boolean, key: string, remind: boolean },
+ *   previousKey?: string|null,
+ *   previousConclusion?: string|null,
+ *   nowIso: string,
+ * }} i
+ * @returns {{ push: boolean, exitCode: 0|1, notifiedKey: string }}
+ */
+export function decideWeeklyPush(i) {
+  const previousKey = typeof i.previousKey === 'string' && i.previousKey && i.previousKey !== '-'
+    ? i.previousKey
+    : null;
+  const release = i.release;
+  if (!release?.alert) {
+    return { push: false, exitCode: 0, notifiedKey: previousKey ?? '' };
+  }
+  const same = previousKey === release.key;
+  const red = Boolean(i.previousConclusion) && i.previousConclusion !== 'success';
+  const gateOpen = shouldPush({ previousConclusion: i.previousConclusion, nowIso: i.nowIso });
+  let push;
+  if (same) push = Boolean(release.remind) && gateOpen;
+  else if (previousKey === null && release.remind && red) push = gateOpen;
+  else push = true;
+  return { push, exitCode: release.remind ? 1 : 0, notifiedKey: release.key };
+}
+
+/**
+ * Snapshot and feed alarms that only repeat the weekly-release message stay in
+ * the log. The release verdict is the one the keeper sees for that Saturday.
+ * A released week does not swallow a later feed fault. An API miss does not
+ * swallow a prod fault the probe already measured.
+ *
+ * @param {{
+ *   archiveDate: string,
+ *   release: { alert?: boolean, status?: string, week?: string },
+ *   snapshot: { alert?: boolean },
+ *   feed: { alert?: boolean },
+ * }} i
+ * @returns {{ snapshot: boolean, feed: boolean }}
+ */
+export function gateFreshnessAlerts(i) {
+  const release = i.release ?? {};
+  const owns = Boolean(release.alert) && release.status !== 'unknown' && release.status !== 'released';
+  const sameArchive = owns && i.archiveDate === release.week;
   return {
-    status: 'stale',
-    alert: true,
-    message:
-      `Сам CAPTURE не состоялся: новейшему архивному снапшоту ${i.snapshotDate} уже ` +
-      `${archiveAge(ageHours)}, бюджет ${budgetHours} ч исчерпан.\n${ACTIONS_URL}`,
+    snapshot: Boolean(i.snapshot?.alert) && !sameArchive,
+    feed: Boolean(i.feed?.alert) && !owns,
   };
 }
 
