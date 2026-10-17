@@ -19,7 +19,7 @@
 // Deliberately NOT an alarm about being down: unreachable is the liveness
 // sensor's fact, and two sensors shouting about one outage teach the keeper to
 // mute both. Dependency-free aside from the pure daily gate in alert-gate.mjs.
-import { shouldPush } from './alert-gate.mjs';
+import { inReminderWindow, shouldPush } from './alert-gate.mjs';
 
 /** @typedef {'ok'|'publishing'|'stale'|'unknown'} FreshnessStatus */
 /** @typedef {'ok'|'released'|'running'|'publishing'|'failed'|'not_started'|'unknown'} ReleaseStatus */
@@ -67,19 +67,43 @@ function scheduleMs(week) {
   return Date.parse(`${week}T${hour}:${minute}:00Z`);
 }
 
-/** @param {object[]} runs @param {string} week @param {number} nowMs */
-function runsForWeek(runs, week, nowMs) {
-  const start = Date.parse(`${week}T00:00:00Z`);
+/** @param {object[]} runs @param {number} nowMs @param {(run: object) => boolean} keep */
+function runsUntilNow(runs, nowMs, keep) {
   return (Array.isArray(runs) ? runs : [])
     .filter((run) => {
       const created = Date.parse(run?.created_at ?? '');
-      return !Number.isNaN(created) && created >= start && created <= nowMs;
+      return !Number.isNaN(created) && created <= nowMs && keep(run);
     })
     .sort((a, b) => {
       const delta = Date.parse(b.created_at) - Date.parse(a.created_at);
       if (delta) return delta;
       return Number(b.id) - Number(a.id);
     });
+}
+
+/** Deploy runs have no weekly title. They count for D when GitHub created them on or after D. @param {object[]} runs @param {string} week @param {number} nowMs */
+function runsForWeek(runs, week, nowMs) {
+  const start = Date.parse(`${week}T00:00:00Z`);
+  return runsUntilNow(runs, nowMs, (run) => Date.parse(run?.created_at ?? '') >= start);
+}
+
+/** @param {object[]} runs @param {string} week @param {number} nowMs */
+function runsForRelease(runs, week, nowMs) {
+  return runsUntilNow(runs, nowMs, (run) => releaseWeekOf(run) === week);
+}
+
+/**
+ * `present` / `absent` come from the contents API for data/snapshots/D/snapshot.json on main.
+ * Local archiveDate is only a spare fact when that request did not answer.
+ * A newer or older latest.json does not mean the Saturday file is missing.
+ * @param {{ snapshotOnMain?: string, archiveDate?: string }} i
+ * @param {string} week
+ * @returns {'present'|'absent'|'unknown'}
+ */
+function snapshotOfWeek(i, week) {
+  if (i.snapshotOnMain === 'present' || i.snapshotOnMain === 'absent') return i.snapshotOnMain;
+  if (i.archiveDate === week) return 'present';
+  return 'unknown';
 }
 
 /** @param {object|undefined} run */
@@ -97,13 +121,16 @@ function isBad(run) {
   return BAD_CONCLUSION.has(run?.conclusion);
 }
 
-// Rehearsal (`weekly rehearsal …`) and a dry-run do not publish the Saturday snapshot, so they are not release runs and must not clear an earlier failure.
-function isReleaseRun(run) {
+// A rehearsal is not a release. A dated title belongs to that date. `weekly release resolve-date` and any title that does not start with `weekly ` belong to the Saturday of created_at.
+function releaseWeekOf(run) {
   const title = String(run?.display_title ?? '').trim();
-  if (title.startsWith('weekly rehearsal')) return false;
-  if (/\bdry[-_ ]run\b/i.test(title)) return false;
-  if (run?.dry_run === true) return false;
-  return true;
+  if (title.startsWith('weekly rehearsal')) return null;
+  const dated = /^weekly release (\d{4}-\d{2}-\d{2})$/.exec(title);
+  if (dated) return dated[1];
+  if (title === 'weekly release resolve-date' || !title.startsWith('weekly ')) {
+    return weeklyReleaseDay(run?.created_at);
+  }
+  return null;
 }
 
 /** @param {object} a @param {object} b */
@@ -138,15 +165,26 @@ export function pickFailedStep(jobs) {
   return undefined;
 }
 
-/** Last `RELEASE_KEY` line in a job log. `-` and a missing line mean "nothing sent yet". @param {string} logText */
-export function parseReleaseKey(logText) {
+/** Last marked key in a job log. `-` and a missing line mean "nothing sent yet". @param {string} logText @param {string} marker */
+function lastMarkedKey(logText, marker) {
   let found = null;
+  const markLine = new RegExp(`${marker} (\\S+)\\s*$`);
   for (const line of String(logText ?? '').split(/\r?\n/)) {
-    const mark = line.match(/RELEASE_KEY (\S+)\s*$/);
+    const mark = line.match(markLine);
     if (!mark) continue;
     found = mark[1] === '-' ? null : mark[1];
   }
   return found;
+}
+
+/** @param {string} logText */
+export function parseReleaseKey(logText) {
+  return lastMarkedKey(logText, 'RELEASE_KEY');
+}
+
+/** @param {string} logText */
+export function parseFeedKey(logText) {
+  return lastMarkedKey(logText, 'FEED_KEY');
 }
 
 /**
@@ -231,6 +269,7 @@ function releasedMessage(week, weeklies, deploys) {
  *   nowIso: string,
  *   archiveDate: string,
  *   prodDate: string|null,
+ *   snapshotOnMain?: 'present'|'absent'|'unknown',
  *   weeklyRuns?: object[],
  *   deployRuns?: object[],
  *   apiError?: string|null,
@@ -253,10 +292,12 @@ export function evaluateWeeklyRelease(i) {
 
   const nowMs = Date.parse(i.nowIso);
   const past = nowMs >= deadlineMs(week);
-  const weeklies = runsForWeek(i.weeklyRuns, week, nowMs).filter(isReleaseRun);
+  const weeklies = runsForRelease(i.weeklyRuns, week, nowMs);
   const deploys = runsForWeek(i.deployRuns, week, nowMs);
+  const snapshot = snapshotOfWeek(i, week);
+  const inArchive = snapshot === 'present';
 
-  if (i.archiveDate === week && i.prodDate === week) {
+  if (inArchive && i.prodDate === week) {
     return verdict(week, 'released', true, releasedMessage(week, weeklies, deploys), false);
   }
 
@@ -270,13 +311,13 @@ export function evaluateWeeklyRelease(i) {
   if (weeklyFail) return verdict(week, 'failed', true, failedMessage(week, 'weekly', weeklyFail), true);
 
   const deployLive = deploys.find(isInFlight);
-  if (i.archiveDate === week && i.prodDate !== week && deployLive) {
+  if (inArchive && i.prodDate !== week && deployLive) {
     if (!past) return verdict(week, 'publishing', false, '', false);
     return verdict(week, 'publishing', true, publishingMessage(week, deployLive), false);
   }
 
   const deployFail = blockingFailure(deploys);
-  if (i.archiveDate === week && i.prodDate !== week && deployFail) {
+  if (inArchive && i.prodDate !== week && deployFail) {
     return verdict(week, 'failed', true, failedMessage(week, 'deploy', deployFail), true);
   }
 
@@ -290,7 +331,7 @@ export function evaluateWeeklyRelease(i) {
   }
 
   const latest = weeklies[0];
-  if (past && i.archiveDate !== week && isSuccess(latest)) {
+  if (past && snapshot === 'absent' && isSuccess(latest)) {
     const when = clock(latest.updated_at || latest.run_started_at) ?? 'неизвестное время';
     const sentence = `Срез ${week} не вышел: сбор завершился в ${when} UTC, но среза ${week} в архиве нет.`;
     return verdict(week, 'failed', true, `${withRun(sentence, latest.html_url)} Нужен человек: да.`, true);
@@ -313,6 +354,33 @@ export function evaluateWeeklyRelease(i) {
  * }} i
  * @returns {{ push: boolean, exitCode: 0|1, notifiedKey: string }}
  */
+/**
+ * One push per feed state. The previous workflow conclusion is not an input:
+ * a new feed key is sent even when the last run failed while reading GitHub.
+ * The same key is repeated only inside the morning window.
+ * A healthy feed clears the key, so the next failure is new.
+ *
+ * @param {{
+ *   alert: boolean,
+ *   key: string,
+ *   previousKey?: string|null,
+ *   nowIso: string,
+ * }} i
+ * @returns {{ push: boolean, exitCode: 0|1, notifiedKey: string }}
+ */
+export function decideFeedPush(i) {
+  const previousKey = typeof i.previousKey === 'string' && i.previousKey && i.previousKey !== '-'
+    ? i.previousKey
+    : null;
+  if (!i.alert) return { push: false, exitCode: 0, notifiedKey: '' };
+  const same = previousKey === i.key;
+  return {
+    push: same ? inReminderWindow(i.nowIso) : true,
+    exitCode: 1,
+    notifiedKey: i.key,
+  };
+}
+
 export function decideWeeklyPush(i) {
   const previousKey = typeof i.previousKey === 'string' && i.previousKey && i.previousKey !== '-'
     ? i.previousKey

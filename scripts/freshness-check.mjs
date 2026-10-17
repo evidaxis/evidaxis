@@ -6,11 +6,13 @@
 import { readFileSync } from 'node:fs';
 import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import {
+  decideFeedPush,
   decideWeeklyPush,
   evaluateFeedFreshness,
   evaluateFreshness,
   evaluateWeeklyRelease,
   gateFreshnessAlerts,
+  parseFeedKey,
   parseReleaseKey,
   pickFailedStep,
   releaseKeyToPrint,
@@ -165,38 +167,61 @@ async function jobLog(jobId, headers) {
   return res.text();
 }
 
-/** Key of the last weekly-release message this workflow actually sent. Null if it cannot be read. */
-async function previousReleaseKey() {
+/** Keys of the last release and feed messages this workflow actually sent. Nulls if a log cannot be read. */
+async function previousSensorKeys() {
   const headers = ghHeaders();
   const repo = process.env.GITHUB_REPOSITORY;
   const runId = process.env.GITHUB_RUN_ID;
-  if (!headers || !repo || !runId) return null;
+  const empty = { release: null, feed: null };
+  if (!headers || !repo || !runId) return empty;
   try {
     const api = `${API}/repos/${repo}/actions`;
     const runRes = await fetch(`${api}/runs/${runId}`, { headers, signal: AbortSignal.timeout(10_000) });
-    if (!runRes.ok) return null;
+    if (!runRes.ok) return empty;
     const { workflow_id: workflowId } = await runRes.json();
     const listRes = await fetch(`${api}/workflows/${workflowId}/runs?status=completed&per_page=5`, {
       headers,
       signal: AbortSignal.timeout(10_000),
     });
-    if (!listRes.ok) return null;
+    if (!listRes.ok) return empty;
     const body = await listRes.json();
     const previous = (body.workflow_runs ?? []).find((run) => String(run.id) !== String(runId));
-    if (!previous) return null;
+    if (!previous) return empty;
     const jobsRes = await fetch(`${api}/runs/${previous.id}/jobs?per_page=${GH_PAGE}`, {
       headers,
       signal: AbortSignal.timeout(10_000),
     });
-    if (!jobsRes.ok) return null;
+    if (!jobsRes.ok) return empty;
     const jobsBody = await jobsRes.json();
+    let release = null;
+    let feed = null;
     for (const job of jobsBody.jobs ?? []) {
-      const key = parseReleaseKey(await jobLog(job.id, headers));
-      if (key) return key;
+      const text = await jobLog(job.id, headers);
+      if (!release) release = parseReleaseKey(text);
+      if (!feed) feed = parseFeedKey(text);
+      if (release && feed) break;
     }
-    return null;
+    return { release, feed };
   } catch {
-    return null;
+    return empty;
+  }
+}
+
+/** Whether data/snapshots/D/snapshot.json is on main right now. @param {string|null} date @returns {Promise<'present'|'absent'|'unknown'>} */
+async function snapshotOnMain(date) {
+  const repo = process.env.GITHUB_REPOSITORY;
+  const headers = ghHeaders();
+  if (!headers || !repo || !date) return 'unknown';
+  const url = `${API}/repos/${repo}/contents/data/snapshots/${date}/snapshot.json?ref=main`;
+  try {
+    const res = await fetch(url, { headers, signal: AbortSignal.timeout(10_000) });
+    const status = res.status;
+    await res.body?.cancel().catch(() => {});
+    if (status === 200) return 'present';
+    if (status === 404) return 'absent';
+    return 'unknown';
+  } catch {
+    return 'unknown';
   }
 }
 
@@ -227,10 +252,10 @@ const feedUrl = `${site}/feed.json`;
 const feedProbe = await probeFeed(feedUrl);
 const feedResult = evaluateFeedFreshness({ site, now, ...feedProbe });
 
-const [weeklyPack, deployPack, previousKey] = await Promise.all([
+const [weeklyPack, deployPack, previousKeys] = await Promise.all([
   workflowRuns('weekly-snapshot.yml'),
   workflowRuns('deploy-web.yml'),
-  previousReleaseKey(),
+  previousSensorKeys(),
 ]);
 const apiError = [
   weeklyPack.error ? `weekly-snapshot: ${weeklyPack.error}` : '',
@@ -249,10 +274,13 @@ if (!apiError) {
 
 // 200 on the archive snapshot is the same fact evaluateFreshness calls "prod matches the repo".
 const prodDate = p.reached && p.status === 200 ? snapshotDate : null;
+// After the run list: the Saturday file on current main, not the checkout copy of latest.json.
+const snapshotState = await snapshotOnMain(weeklyReleaseDay(nowIso));
 const release = evaluateWeeklyRelease({
   nowIso,
   archiveDate: snapshotDate,
   prodDate,
+  snapshotOnMain: snapshotState,
   weeklyRuns,
   deployRuns,
   apiError: apiError || null,
@@ -263,13 +291,20 @@ const gated = gateFreshnessAlerts({
   snapshot: result,
   feed: feedResult,
 });
-const prevConclusion = (release.alert || gated.snapshot || gated.feed)
+const prevConclusion = (release.alert || gated.snapshot)
   ? await previousConclusion()
   : null;
+const previousKey = previousKeys.release;
 const decision = decideWeeklyPush({
   release,
   previousKey,
   previousConclusion: prevConclusion,
+  nowIso,
+});
+const feedDecision = decideFeedPush({
+  alert: gated.feed,
+  key: `feed:${feedResult.reason || 'stale'}`,
+  previousKey: previousKeys.feed,
   nowIso,
 });
 
@@ -282,8 +317,8 @@ console.log(JSON.stringify({
 
 const parts = [];
 if (decision.push && release.message) parts.push(release.message);
-const legacy = (gated.snapshot || gated.feed)
-  && shouldPush({ previousConclusion: prevConclusion, nowIso });
+if (feedDecision.push && feedResult.message) parts.push(feedResult.message);
+const legacy = gated.snapshot && shouldPush({ previousConclusion: prevConclusion, nowIso });
 if (legacy) {
   parts.push(
     `🟠 На сайте Evidaxis не обновились данные: посетители видят устаревший снимок.\n` +
@@ -306,9 +341,18 @@ const notifiedKey = releaseKeyToPrint({
   previousKey,
   sent,
 });
+const feedKey = gated.feed
+  ? releaseKeyToPrint({
+    push: feedDecision.push,
+    notifiedKey: feedDecision.notifiedKey,
+    previousKey: previousKeys.feed,
+    sent,
+  })
+  : '';
 console.log(`RELEASE_KEY ${notifiedKey || '-'}`);
+console.log(`FEED_KEY ${feedKey || '-'}`);
 
 // Human-needed states keep the run red so alert-gate repeats them at most once a day.
 // Late-but-moving and the receipt stay green: the keeper was told nobody is needed.
-const fail = decision.exitCode === 1 || gated.snapshot || gated.feed;
+const fail = decision.exitCode === 1 || feedDecision.exitCode === 1 || gated.snapshot;
 process.exit(fail ? 1 : 0);

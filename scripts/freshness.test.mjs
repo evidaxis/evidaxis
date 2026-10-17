@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  decideFeedPush,
   decideWeeklyPush,
   evaluateFeedFreshness,
   evaluateFreshness,
@@ -338,7 +339,7 @@ test('cancelled and timed_out count as a failed release', () => {
   }
 });
 
-test('Saturday 13:00 rehearsal or dry-run is not the release and does not clear a failure', () => {
+test('Saturday 13:00 a rehearsal is not the release and does not clear a failure', () => {
   const failure = run({
     id: 1,
     conclusion: 'failure',
@@ -374,7 +375,6 @@ test('Saturday 13:00 rehearsal or dry-run is not the release and does not clear 
   };
   for (const weeklyRuns of [
     [rehearsal],
-    [run({ conclusion: 'success', status: 'completed', dry_run: true, display_title: 'weekly-snapshot' })],
     [run({
       conclusion: 'failure',
       status: 'completed',
@@ -394,11 +394,12 @@ test('Saturday 13:00 rehearsal or dry-run is not the release and does not clear 
   assert.equal(running.status, 'running');
 });
 
-test('Saturday 13:00 a successful release with last week still in the archive has failed', () => {
+test('Saturday 13:00 a successful release with no snapshot file for that Saturday has failed', () => {
   const r = evaluateWeeklyRelease({
     nowIso: '2026-10-17T13:00:00Z',
     archiveDate: '2026-10-10',
     prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
     weeklyRuns: [run({
       conclusion: 'success',
       status: 'completed',
@@ -759,4 +760,100 @@ test('a running release still sends a feed 404 or a broken feed', () => {
   assert.equal(gate(missing).feed, true);
   assert.equal(gate(broken).feed, true);
   assert.equal(gate(aged).feed, false);
+});
+
+test('a weekly release titled for another date is not this Saturday release', () => {
+  const r = evaluateWeeklyRelease({
+    nowIso: '2026-10-17T13:00:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    snapshotOnMain: 'absent',
+    weeklyRuns: [run({
+      conclusion: 'success',
+      status: 'completed',
+      display_title: 'weekly release 2026-10-24',
+      created_at: '2026-10-17T09:00:00Z',
+      updated_at: '2026-10-17T12:00:00Z',
+    })],
+    deployRuns: [],
+  });
+  assert.equal(r.status, 'not_started');
+});
+
+test('a stale checkout is not a failed release when main already has this Saturday snapshot', () => {
+  const r = evaluateWeeklyRelease({
+    nowIso: '2026-10-17T13:00:00Z',
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    snapshotOnMain: 'present',
+    weeklyRuns: [run({
+      conclusion: 'success',
+      status: 'completed',
+      display_title: 'weekly release 2026-10-17',
+      updated_at: '2026-10-17T12:40:00Z',
+    })],
+    deployRuns: [],
+  });
+  assert.notEqual(r.status, 'failed');
+});
+
+test('a newer Sunday snapshot does not mean the Saturday snapshot is missing', () => {
+  const r = evaluateWeeklyRelease({
+    nowIso: '2026-10-18T15:00:00Z',
+    archiveDate: '2026-10-18',
+    prodDate: '2026-10-18',
+    snapshotOnMain: 'present',
+    weeklyRuns: [run({
+      conclusion: 'success',
+      status: 'completed',
+      display_title: 'weekly release 2026-10-17',
+      created_at: '2026-10-17T06:20:00Z',
+      updated_at: '2026-10-17T12:40:00Z',
+    })],
+    deployRuns: [],
+  });
+  assert.notEqual(r.status, 'failed');
+  assert.ok(r.status === 'ok' || r.status === 'released');
+});
+
+test('a new feed failure still sends after a run that failed on the GitHub API', () => {
+  const nowIso = '2026-10-17T15:00:00Z';
+  const release = evaluateWeeklyRelease({
+    nowIso,
+    archiveDate: '2026-10-10',
+    prodDate: '2026-10-10',
+    weeklyRuns: [],
+    deployRuns: [],
+    apiError: 'HTTP 502',
+  });
+  const feed = evaluateFeedFreshness({
+    site: 'https://evidaxis.org',
+    reached: true,
+    status: 404,
+    latestEntryAt: null,
+    now: new Date(nowIso),
+  });
+  const gated = gateFreshnessAlerts({
+    archiveDate: '2026-10-10',
+    release,
+    snapshot: { alert: false },
+    feed,
+  });
+  assert.equal(gated.feed, true);
+  const decision = decideFeedPush({
+    alert: gated.feed,
+    key: `feed:${feed.reason}`,
+    previousKey: null,
+    previousConclusion: 'failure',
+    nowIso,
+  });
+  assert.equal(decision.push, true);
+  const repeat = decideFeedPush({
+    alert: true,
+    key: `feed:${feed.reason}`,
+    previousKey: decision.notifiedKey,
+    previousConclusion: 'failure',
+    nowIso,
+  });
+  assert.equal(repeat.push, false);
 });
