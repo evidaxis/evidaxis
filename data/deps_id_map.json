@@ -208,6 +208,11 @@
       "package": "evo2",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "ArcadeData/arcadedb": {
+      "system": "pypi",
+      "package": "arcadedb",
+      "pinned_at": "2026-10-17T15:03:50Z"
+    },
     "Artelnics/opennn": {
       "system": "pypi",
       "package": "opennn",
@@ -4295,6 +4300,11 @@
       "package": "autocontext",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "gridaco/grida": {
+      "system": "npm",
+      "package": "grida",
+      "pinned_at": "2026-10-17T15:03:50Z"
+    },
     "griptape-ai/griptape": {
       "system": "pypi",
       "package": "griptape",
@@ -5366,6 +5376,11 @@
       "system": "pypi",
       "package": "llm-workflow-engine",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "llmmanorg/llmman": {
+      "system": "cargo",
+      "package": "llmman",
+      "pinned_at": "2026-10-17T15:03:50Z"
     },
     "llmsresearch/paperbanana": {
       "system": "pypi",
