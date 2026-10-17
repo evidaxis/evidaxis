@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
-  momentum: 64.0
-  percentile: 81
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 75.8
+  percentile: 83
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.015618507697372115, "cohort_z": 1.121, "recent_weekly_commits": 0.8, "stars_not_scored": 6817}
+    github_commit_velocity: {"slope": 0.029374387290825962, "cohort_z": 2.068, "recent_weekly_commits": 1.1, "stars_not_scored": 6819}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # annyang
 
-Evidaxis measures **annyang** on methodology m4. Momentum 64.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **annyang** on methodology m5. Momentum 75.8/100; 1 axes present, 0 axes converging.

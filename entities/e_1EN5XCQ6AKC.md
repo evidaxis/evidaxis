@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
-  momentum: 50.5
-  percentile: 71
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 50.6
+  percentile: 50
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.000550235183738154, "cohort_z": 0.04, "recent_weekly_commits": 0.0, "stars_not_scored": 1765}
+    github_commit_velocity: {"slope": 0.000550235183738154, "cohort_z": 0.047, "recent_weekly_commits": 0.0, "stars_not_scored": 1766}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # Comparative-analysis-of-hourly-load-forecasting-using-PatchTST-TFT-NHiTS-and-CatBoost
 
-Evidaxis measures **Comparative-analysis-of-hourly-load-forecasting-using-PatchTST-TFT-NHiTS-and-CatBoost** on methodology m4. Momentum 50.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Comparative-analysis-of-hourly-load-forecasting-using-PatchTST-TFT-NHiTS-and-CatBoost** on methodology m5. Momentum 50.6/100; 1 axes present, 0 axes converging.

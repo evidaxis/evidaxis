@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 87.6
-  percentile: 99
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 88.7
+  percentile: 98
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: ["github_commit_velocity"]
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": 0.12782727086574802, "cohort_z": 3.008, "recent_weekly_commits": 31.8, "stars_not_scored": 630}
+    github_commit_velocity: {"slope": 0.13137743258284668, "cohort_z": 3.098, "recent_weekly_commits": 51.8, "stars_not_scored": 636}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # Pandrator
 
-Evidaxis measures **Pandrator** on methodology m3. Momentum 87.6/100; 1 axes present, 1 axes converging.
+Evidaxis measures **Pandrator** on methodology m5. Momentum 88.7/100; 1 axes present, 1 axes converging.

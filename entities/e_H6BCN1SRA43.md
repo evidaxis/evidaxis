@@ -13,11 +13,11 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
-  momentum: 12.5
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 10.9
   percentile: 2
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.07537685673961105, "cohort_z": -3.001, "recent_weekly_commits": 37.2, "stars_not_scored": 7569}
+    github_commit_velocity: {"slope": -0.04821400348877391, "cohort_z": -3.124, "recent_weekly_commits": 39.1, "stars_not_scored": 7584}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # llm-gateway
 
-Evidaxis measures **llm-gateway** on methodology m4. Momentum 12.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **llm-gateway** on methodology m5. Momentum 10.9/100; 1 axes present, 0 axes converging.

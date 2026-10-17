@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
-  momentum: 51.2
-  percentile: 71
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 77.1
+  percentile: 83
   confidence: low
   axes_present: ["github_commit_velocity"]
-  convergent_axes: []
+  convergent_axes: ["github_commit_velocity"]
   rising: false
-  status: single-axis
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.001306646928476237, "cohort_z": 0.094, "recent_weekly_commits": 54.1, "stars_not_scored": 1315}
+    github_commit_velocity: {"slope": 0.028727782721162526, "cohort_z": 2.166, "recent_weekly_commits": 60.0, "stars_not_scored": 1336}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # sashiko
 
-Evidaxis measures **sashiko** on methodology m4. Momentum 51.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **sashiko** on methodology m5. Momentum 77.1/100; 1 axes present, 1 axes converging.

@@ -13,10 +13,10 @@ classification:
   industry: multimodal-ai
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
   momentum: 58.2
   percentile: 75
   confidence: low
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: calibration
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.656, "recent_weekly_commits": 0.0, "stars_not_scored": 25061}
-    openalex_citation_momentum: {"status": "present", "slope": 0.7273657613365598, "cohort_z": null, "total_citations": 694, "by_year": {"2026": 41, "2025": 256, "2024": 337, "2023": 59, "2021": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.657, "recent_weekly_commits": 0.0, "stars_not_scored": 25070}
+    openalex_citation_momentum: {"status": "present", "slope": 0.7239577476130319, "cohort_z": null, "total_citations": 682, "by_year": {"2026": 43, "2025": 250, "2024": 330, "2023": 58, "2021": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2310.03744; incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # LLaVA
 
-Evidaxis measures **LLaVA** on methodology m4. Momentum 58.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **LLaVA** on methodology m5. Momentum 58.2/100; 1 axes present, 0 axes converging.

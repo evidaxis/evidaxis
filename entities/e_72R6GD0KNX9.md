@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
-  momentum: 60.9
-  percentile: 79
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 85.6
+  percentile: 88
   confidence: low
   axes_present: ["github_commit_velocity"]
-  convergent_axes: []
+  convergent_axes: ["github_commit_velocity"]
   rising: false
-  status: single-axis
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.012144508900723692, "cohort_z": 0.873, "recent_weekly_commits": 11.8, "stars_not_scored": 810}
+    github_commit_velocity: {"slope": 0.037310654021804376, "cohort_z": 2.849, "recent_weekly_commits": 13.3, "stars_not_scored": 811}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # altimate-code
 
-Evidaxis measures **altimate-code** on methodology m4. Momentum 60.9/100; 1 axes present, 0 axes converging.
+Evidaxis measures **altimate-code** on methodology m5. Momentum 85.6/100; 1 axes present, 1 axes converging.

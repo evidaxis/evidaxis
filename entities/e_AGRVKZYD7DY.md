@@ -13,12 +13,12 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
   momentum: 51.5
-  percentile: 72
+  percentile: 66
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # AISuperDomain
 
-Evidaxis measures **AISuperDomain** on methodology m4. Momentum 51.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **AISuperDomain** on methodology m5. Momentum 51.5/100; 1 axes present, 0 axes converging.

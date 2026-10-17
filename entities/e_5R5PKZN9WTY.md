@@ -13,19 +13,19 @@ classification:
   industry: generative-media
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m4
-  snapshot_id: ad5e404d4f82
-  captured_at: 2026-10-12T12:11:36+00:00
-  period: 2026-w41
-  momentum: 46.8
-  percentile: 43
+  methodology_version: m5
+  snapshot_id: 4d9867e6f218
+  captured_at: 2026-10-17T12:13:42+00:00
+  period: 2026-w42
+  momentum: 49.5
+  percentile: 29
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.254, "recent_weekly_commits": 0.0, "stars_not_scored": 8396}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.043, "recent_weekly_commits": 0.0, "stars_not_scored": 8407}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 3, "by_year": {"2026": 3}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
@@ -33,4 +33,4 @@ note: "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisiona
 
 # Qwen-Image
 
-Evidaxis measures **Qwen-Image** on methodology m4. Momentum 46.8/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Qwen-Image** on methodology m5. Momentum 49.5/100; 1 axes present, 0 axes converging.
