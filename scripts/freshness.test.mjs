@@ -1215,3 +1215,57 @@ test('a site receipt cannot certify recovery when run history is unavailable', (
   assert.equal(release.status, 'unknown');
   assert.equal(release.alert, true);
 });
+
+test('runner loads first-attempt deploy jobs to verify repair of another run with two failures', async (t) => {
+  const deployStep = 'Deploy prebuilt dist to Vercel production';
+  const jobs = conclusion => [{ name: 'deploy', conclusion,
+    steps: [{ name: deployStep, conclusion }] }];
+  const first = attempt(1, 'failure', [], { display_title: 'deploy-web', jobs: jobs('failure') });
+  const second = { ...first, run_attempt: 2, run_started_at: '2026-10-17T09:00:00Z',
+    updated_at: '2026-10-17T10:00:00Z' };
+  const repair = { ...first, id: 102, run_attempt: 1, conclusion: 'success',
+    created_at: '2026-10-17T11:00:00Z', run_started_at: '2026-10-17T11:00:00Z',
+    updated_at: '2026-10-17T12:00:00Z', jobs: jobs('success') };
+  const requests = mockWeeklyApi(t, { deployRuns: [repair, second] });
+  const baseFetch = globalThis.fetch;
+  t.mock.method(globalThis, 'fetch', async url => {
+    const match = /\/runs\/(101|102)\/attempts\/(1|2)(\/jobs)?$/.exec(new URL(url).pathname);
+    if (!match) return baseFetch(url);
+    requests.push(String(url));
+    const observed = match[1] === '102' ? repair : [first, second][Number(match[2]) - 1];
+    return Response.json(match[3] ? { total_count: 1, jobs: observed.jobs } : observed);
+  });
+  const facts = await readWeeklyFacts('https://evidaxis.org', truthBase.nowIso);
+  assert.equal(evaluateWeeklyRelease(facts).status, 'released');
+  assert.ok(requests.some(url => url.includes('/runs/102/attempts/1/jobs?per_page=100')));
+
+  // A green job with a skipped delivery step is still not a repair.
+  repair.jobs[0].steps[0].conclusion = 'skipped';
+  const skipped = await readWeeklyFacts('https://evidaxis.org', truthBase.nowIso);
+  assert.equal(evaluateWeeklyRelease(skipped).status, 'failed');
+});
+
+test('runner excludes wholly previous-week reruns before reading unavailable attempt history', async (t) => {
+  const old = { ...completed, id: 103, display_title: 'deploy-web', run_attempt: 2,
+    created_at: '2026-10-10T02:17:00Z', run_started_at: '2026-10-10T04:00:00Z' };
+  const requests = mockWeeklyApi(t, { deployRuns: [old] });
+  const baseFetch = globalThis.fetch;
+  t.mock.method(globalThis, 'fetch', async url => {
+    if (new URL(url).pathname.includes('/runs/103/')) {
+      requests.push(String(url));
+      return Response.json({}, { status: 503 });
+    }
+    return baseFetch(url);
+  });
+  const facts = await readWeeklyFacts('https://evidaxis.org', truthBase.nowIso);
+  assert.equal(evaluateWeeklyRelease(facts).status, 'released');
+  assert.equal(requests.some(url => url.includes('/runs/103/')), false);
+  // The pure model applies the same scope even with raw, unenriched run facts.
+  assert.equal(evaluateWeeklyRelease({ ...facts, deployRuns: [old] }).status, 'released');
+
+  for (const started of ['2026-10-17T04:00:00Z', undefined]) {
+    old.run_started_at = started;
+    const unknown = await readWeeklyFacts('https://evidaxis.org', truthBase.nowIso);
+    assert.equal(evaluateWeeklyRelease(unknown).status, 'unknown');
+  }
+});

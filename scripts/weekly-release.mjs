@@ -12,6 +12,12 @@ export function attemptTime(run) {
   return Date.parse(run.run_started_at || run.created_at || '');
 }
 
+export function allAttemptsBefore(run, startMs) {
+  // The latest attempt bounds all earlier ones. Unknown start times cannot
+  // exclude a rerun: its unchanged created_at may belong to a previous week.
+  return attemptTime(run) < startMs;
+}
+
 // GitHub keeps created_at and ID on rerun; use the attempt's start in both sensors.
 export function compareAttempts(a, b) {
   return attemptTime(b) - attemptTime(a) ||
@@ -114,7 +120,9 @@ export async function attachReleaseJobs(runs, getJobs, getAttempt) {
   }
   await Promise.all(runs.map(async run => {
     const count = run.run_attempt ?? 1;
-    if (count === 1 && releaseRunKind(run) !== 'unknown') return;
+    // A new successful deploy can repair another run's retained failure; both
+    // sensors need its step evidence even though it has no weekly release title.
+    if (count === 1 && run.conclusion !== 'success' && releaseRunKind(run) !== 'unknown') return;
     try {
       if (count === 1) {
         run.jobs = await jobs(run.id, 1);

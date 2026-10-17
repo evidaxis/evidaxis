@@ -312,3 +312,122 @@ can omit older runs; its page sizes were deliberately preserved. Repair through
 a separate workflow such as hf-mirror is not inferred as success of a failed
 weekly step, so the retained alert can remain after an external repair. Observing
 that recovery independently and automatic continuation remain outside P2.
+
+## Fix 3
+
+This follow-up closes both findings against `29e1e8b6ec` on
+`ops/release-followup`. No Git index operations, commits, pushes, workflow
+dispatches or production writes were made. The conductor will commit the changes.
+
+Changed files:
+
+| File | Change |
+| --- | --- |
+| `scripts/weekly-release.mjs` | Fetch jobs for successful first attempts, including deploys that can repair another run; share the predicate for attempts wholly before a cutoff. |
+| `scripts/freshness-check.mjs` | Exclude wholly previous-week deploy runs before requesting their attempt history. |
+| `scripts/freshness.mjs` | Apply the same scope in the pure evaluator and update the state table comments. |
+| `scripts/freshness.test.mjs` | Two mocked-API regression tests through `readWeeklyFacts()`, with negative recovery and unknown-history checks. |
+| This report | Fix 3 behavior, state table, acceptance and mutation evidence. |
+
+The shared jobs loader now supplies successful first-attempt step evidence to
+both freshness and the watchdog. Deploy A's retained failure clears when newer
+deploy B actually succeeded at the same failed job/step. A green job with that
+step skipped still leaves A failed. Existing stage matching and attempt ordering
+are unchanged.
+
+For freshness, the latest known attempt start bounds all previous attempt starts.
+If it is before Saturday D at 00:00 UTC, the deploy is outside D's evaluation:
+neither its attempt summaries nor its jobs are requested. The pure evaluator
+also excludes it before resolving attempts. Missing or invalid rerun start times
+cannot exclude a run using its unchanged creation date. Current-week or unknown
+start times with unavailable attempt history still produce `unknown`.
+
+Updated truth table: first matching row wins. D is the last Saturday UTC; A is
+snapshot D on main; S is `/snapshots/D/snapshot.json` with snapshot_date D.
+`+` means present, `-` absent and `?` unknown. W is effective release attempts for
+D; P is effective non-skipped deploy attempts started since D. Wholly older
+deploys are excluded before history reads and resolution. Skips are filtered
+after resolution so they cannot hide an earlier failed attempt. Repair requires
+successful execution of every retained failed job/step, including when the repair
+is a different run's first attempt. The deadline remains 12:00 UTC.
+
+| Row | A / S | Required facts | State | Alert / human needed |
+| --- | --- | --- | --- | --- |
+| U0 | any | Invalid observation time | unknown | yes / no |
+| U5 | any | Required in-scope attempt history unavailable; wholly old history is irrelevant | unknown | yes / no |
+| F0 | any | Retained failed step in W/P without verified repair | failed | yes / yes |
+| U1 | any | Required workflow history or release/skip identity unknown | unknown | yes / no |
+| R1 | + / + | No retained failure or unknown evidence after scope and repair checks | released | once / no |
+| R2 | any | W active | running | at/after noon / no |
+| F1 | any | W failed, no newer real retry or success | failed | yes / yes |
+| U2 | ? / any, or any / ? | Publication fact needed by later rows unknown | unknown | yes / no |
+| U3 | - / + | Contradictory main/site observations | unknown | yes / no |
+| P1 | + / - | No active/failed W; P active | publishing | at/after noon / no |
+| F2 | + / - | No active/failed W; P failed without recovery | failed | yes / yes |
+| P2 | + / - | No active/failed W or P; before noon | publishing | no / no |
+| F3 | + / - | Same facts at/after noon: site publication missing | failed | yes / yes |
+| N1 | - / - | No W; an ordinary skipped deploy contributes no P | not_started | at/after noon / yes when late |
+| O1 | - / - | W successful, before noon | ok | no / no |
+| F4 | - / - | W successful at/after noon: archive missing | failed | yes / yes |
+| U4 | remaining | Unsupported result or incomplete required facts | unknown | yes / no |
+
+Both new regressions failed on the original implementation:
+
+```text
+Deploy A failed twice, deploy B repaired the step: failed, expected released
+Only previous-week deploy rerun, history HTTP 503: unknown, expected released
+tests 2; pass 0; fail 2
+```
+
+The repaired cases reach R1. The first test also checks that B's skipped step
+leaves F0. The second asserts no history request for the old run, checks the pure
+model independently, and checks U5 for current-week and missing start times.
+
+Five deliberate implementation defects were applied separately and restored in
+`finally` blocks. Both new tests failed under deliberate defects, with assertion
+failures rather than syntax or import errors:
+
+| Deliberate defect | Regression test that failed |
+| --- | --- |
+| Restore the omission of successful first-attempt deploy jobs | New-run repair |
+| Request old history in the reader | Old-run exclusion: unexpected API request |
+| Include old unknown attempts in the pure model | Old-run exclusion: unknown instead of released |
+| Exclude current/unknown attempts as well as old ones | Both tests; unknown evidence must remain in scope |
+| Accept a skipped repair step | New-run repair: false recovery |
+
+Acceptance after restoring all deliberate defects:
+
+```text
+node --test scripts/*.test.mjs infra/clock/*.test.mjs
+tests 133; pass 133; fail 0; skipped 0
+
+PYTHONPATH=. .venv/bin/pytest tests/ -q
+exit 0; 6,938 cases, 6,937 passed, one expected skip
+SKIPPED tests/test_recall_fixture.py:49: census working data absent (gitignored)
+
+.venv/bin/ruff check etl tests collectors scripts
+All checks passed!
+
+git diff --check
+exit 0
+```
+
+No dependencies, workflow settings, timeouts, retry counts, schedules, thresholds
+or page sizes changed. No collection, methodology, web or governance files changed.
+Successful first attempts now incur a jobs read even when no retained failure
+ultimately needs repair. This keeps recovery evidence in the shared path used by
+both sensors; wholly old deploys avoid those reads in freshness.
+
+For live acceptance, use the existing Actions-read token; no new secrets are
+needed. Check a deploy that failed twice followed by a new successful deploy of
+the same failed stage. Both sensors should clear the retained failure. Confirm
+that an already published current release stays released when only an old rerun's
+attempt endpoint is unavailable. Local regression tests mock all such requests.
+
+Not checked live: GitHub attempt payloads, sensor notifications or production
+deployment recovery; local validation uses Python 3.14/Node 25, not CI 3.12/22.
+Risks and limits: extra jobs reads consume API quota; stage recovery still relies
+on stable job/step names and complete evidence within the existing bounded run
+listing. An external repair through another workflow is not inferred. No automatic
+recovery or workaround for missing required evidence was added; such evidence
+continues to block a confirmed release verdict.

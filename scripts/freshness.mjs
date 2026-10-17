@@ -20,7 +20,7 @@
 // sensor's fact, and two sensors shouting about one outage teach the keeper to
 // mute both. Dependency-free aside from the pure daily gate in alert-gate.mjs.
 import { inReminderWindow, shouldPush } from './alert-gate.mjs';
-import { attemptTime, compareAttempts, effectiveRun, isInFlight, releaseRunDate, releaseRunKind, supersedesFailure, weeklyReleaseDay } from './weekly-release.mjs';
+import { allAttemptsBefore, attemptTime, compareAttempts, effectiveRun, isInFlight, releaseRunDate, releaseRunKind, supersedesFailure, weeklyReleaseDay } from './weekly-release.mjs';
 export { weeklyReleaseDay } from './weekly-release.mjs';
 
 /** @typedef {'ok'|'publishing'|'stale'|'unknown'} FreshnessStatus */
@@ -72,7 +72,8 @@ function runsUntilNow(runs, nowMs, keep) {
 /** Deploy runs have no weekly title. Count attempts started since D, excluding known skips. @param {object[]} runs @param {string} week @param {number} nowMs */
 function runsForWeek(runs, week, nowMs) {
   const start = Date.parse(`${week}T00:00:00Z`);
-  return runsUntilNow(runs, nowMs, (run) => (run.attemptEvidenceUnknown || attemptTime(run) >= start) &&
+  const candidates = (Array.isArray(runs) ? runs : []).filter(run => !allAttemptsBefore(run, start));
+  return runsUntilNow(candidates, nowMs, (run) => (run.attemptEvidenceUnknown || attemptTime(run) >= start) &&
     (run.conclusion !== 'skipped' || run.attemptEvidenceUnknown));
 }
 
@@ -215,7 +216,9 @@ function releasedMessage(week, weeklies, deploys) {
 /**
  * State of the Saturday release. `D` is the last Saturday at or before `nowIso`.
  * Dated release titles identify D; attempt evidence is resolved before excluding
- * routers, guard skips, rehearsals or skipped deployments. A no-op rerun retains
+ * routers, guard skips, rehearsals or skipped deployments. Deploys whose latest
+ * known attempt started before D are excluded without reading attempt history;
+ * an unknown start cannot exclude a run. A no-op rerun retains
  * any earlier failure until the same failed job/step actually succeeds.
  * File age is not an input: a live run must not read as a missed capture.
  *
@@ -226,8 +229,8 @@ function releasedMessage(week, weeklies, deploys) {
  * retry keeps the earlier meaningful attempt's time. late = at/after 12:00 UTC.
  * Row | A S | W                 | P          | Result (alert / human needed)
  * U0  | invalid observation time           | unknown (yes / no)
- * U5  | any | required attempt history ?   | any        | unknown (yes / no)
- * F0  | any | retained failed step in W/P  | unrepaired | failed (yes / yes)
+ * U5  | any | required in-scope attempt history ?      | unknown (yes / no)
+ * F0  | any | retained failed step in W/P  | no verified repair | failed (yes / yes)
  * U1  | any | API/identity ?    | any        | unknown (yes / no)
  * R1  | + + | no retained failure or unknown evidence | released (once / no)
  * R2  | any | active            | any        | running (late / no)
@@ -245,6 +248,9 @@ function releasedMessage(week, weeklies, deploys) {
  * An unknown required fact never buys `ok`. Running/failure describe a known
  * attempt even when publication probes are unknown. F0/U5 precede R1: a site
  * receipt cannot establish that HF or a failed deployment step was repaired.
+ * Repair can come from a new run's first attempt: fetch its jobs and require
+ * success of every retained failed job/step; a green run or skipped step alone
+ * does not clear F0. An unrelated old rerun's missing history does not enter U5.
  *
  * @param {{
  *   nowIso: string,

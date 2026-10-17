@@ -5,7 +5,7 @@
 // Runs under plain `node` — no npm install (see freshness.mjs).
 import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { attachReleaseJobs, releaseRunDate } from './weekly-release.mjs';
+import { allAttemptsBefore, attachReleaseJobs, releaseRunDate } from './weekly-release.mjs';
 import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import {
   decideFeedPush,
@@ -266,7 +266,8 @@ export async function readWeeklyFacts(site, nowIso) {
     snapshotOnSite(site, week),
   ]);
   const weeklyRuns = weekly.runs ?? [];
-  const deployRuns = deploy.runs ?? [];
+  const weekStart = Date.parse(`${week}T00:00:00Z`);
+  const deployRuns = (deploy.runs ?? []).filter(run => !allAttemptsBefore(run, weekStart));
   const attemptJson = async (id, number, suffix = '') => {
     const res = await fetch(`${API}/repos/${process.env.GITHUB_REPOSITORY}/actions/runs/${id}/attempts/${number}${suffix}`,
       { headers: ghHeaders(), signal: AbortSignal.timeout(10_000) });
@@ -275,7 +276,6 @@ export async function readWeeklyFacts(site, nowIso) {
   };
   await attachReleaseJobs([...weeklyRuns.filter(run => releaseRunDate(run) === week), ...deployRuns],
     (id, number) => attemptJson(id, number, `/jobs?per_page=${GH_PAGE}`), attemptJson);
-  const weekStart = Date.parse(`${week}T00:00:00Z`);
   await Promise.all([attachFailedSteps(weeklyRuns, weekStart), attachFailedSteps(deployRuns, weekStart)]);
   return { nowIso, weeklyRuns, deployRuns, snapshotOnMain: main, snapshotOnSite: publicSnapshot,
     apiError: [weekly.error, deploy.error].filter(Boolean).join('; ') };
