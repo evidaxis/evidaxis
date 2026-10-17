@@ -10,6 +10,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
+  statuses: read
   contents: read
   actions: read   # alert-gate.mjs reads the previous run to push a problem once
 

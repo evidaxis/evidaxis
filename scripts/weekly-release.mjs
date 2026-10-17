@@ -1,147 +1,81 @@
-// Shared release identity for both sensors. A successful no-op is not recovery.
-export const COLLECT_STEP = 'Collect snapshot (keyed OpenAlex; capture pass + completeness gate)';
-const BAD = new Set(['failure', 'cancelled', 'timed_out']);
-const IN_FLIGHT = new Set(['queued', 'in_progress', 'waiting', 'pending', 'requested']);
-
-export function isInFlight(run) {
-  return Boolean(run) && IN_FLIGHT.has(run.status) && !run.conclusion;
-}
-
-export function attemptTime(run) {
-  if ((run.run_attempt ?? 1) > 1 && !run.run_started_at) return Number.NaN;
-  return Date.parse(run.run_started_at || run.created_at || '');
-}
-
-export function allAttemptsBefore(run, startMs) {
-  // The latest attempt bounds all earlier ones. Unknown start times cannot
-  // exclude a rerun: its unchanged created_at may belong to a previous week.
-  return attemptTime(run) < startMs;
-}
-
-// GitHub keeps created_at and ID on rerun; use the attempt's start in both sensors.
-export function compareAttempts(a, b) {
-  return attemptTime(b) - attemptTime(a) ||
-    (b.run_attempt ?? 1) - (a.run_attempt ?? 1) || Number(b.id) - Number(a.id);
-}
-
-export function supersedesFailure(candidate, failure) {
-  if (compareAttempts(candidate, failure) >= 0) return false;
-  if (!failure.retainedFailure) return isInFlight(candidate) || candidate.conclusion === 'success';
-  // Starting another run or collecting again does not repair the failed delivery.
-  return candidate.conclusion === 'success' && releaseRunDate(candidate) === releaseRunDate(failure) &&
-    failure.unrecoveredSteps.every(({ job, step }) => candidate.jobs?.some(value => value.name === job &&
-      value.steps?.some(value => value.name === step && value.conclusion === 'success')));
-}
+// Release outcomes belong to the snapshot commit. Actions only describes work
+// still in flight; a completed run cannot establish or repair publication.
+export const RELEASE_CONTEXTS = ['captured', 'deployed', 'hf'];
 
 export function weeklyReleaseDay(nowIso) {
+  if (typeof nowIso !== 'string') return null;
   const now = new Date(nowIso);
   if (Number.isNaN(now.getTime())) return null;
   now.setUTCDate(now.getUTCDate() - (now.getUTCDay() + 1) % 7);
   return now.toISOString().slice(0, 10);
 }
 
-export function releaseRunDate(run) {
-  if (run?.head_branch !== 'main' || run.event === 'pull_request') return null;
-  const title = run.display_title;
-  const dated = /^weekly release (\d{4}-\d{2}-\d{2})$/.exec(title ?? '');
-  if (dated) return dated[1];
-  // Only old workflows lack run-name. Current manual and scheduled entries always
-  // say `weekly release resolve-date`; routers and rehearsals never count here.
-  return title === 'weekly-snapshot' ? weeklyReleaseDay(run.created_at) : null;
+export function isInFlight(run) {
+  return run?.status === 'queued' || run?.status === 'in_progress';
 }
 
-export function releaseRunKind(run) {
-  if (!releaseRunDate(run)) return 'ignore';
-  if (run.attemptEvidenceUnknown) return 'unknown';
-  if (run.recoveryVerified) return 'release';
-  if (run.display_title === 'weekly-snapshot' || run.conclusion !== 'success') return 'release';
-  // Job outputs are not exposed by REST. On a successful dated run, guard.skip
-  // makes the snapshot job (first guard) or its collection step (second guard)
-  // skipped. Jobs API exposes both conclusions, including for the backup cron.
-  // Failed preflight/guard runs remain failures; missing job evidence is unknown.
-  const job = run.jobs?.find(job => job.name === 'snapshot');
-  if (job?.conclusion === 'skipped') return 'ignore';
-  const collect = job?.steps?.find(step => step.name === COLLECT_STEP);
-  if (collect?.conclusion === 'skipped') return 'ignore';
-  return collect?.conclusion === 'success' ? 'release' : 'unknown';
+export function isWeeklyRelease(run, date) {
+  return isInFlight(run) && run.head_branch === 'main' && run.event !== 'pull_request' &&
+    run.display_title === `weekly release ${date}`;
 }
 
-// Keep unresolved failed steps across attempts, including several green skips.
-// A job's green conclusion alone proves nothing: its previously failed step must
-// be success in a later attempt-specific Jobs response. No latest/all job mixing.
-export function effectiveRun(run) {
-  const count = run.run_attempt ?? 1;
-  if (count < 2) return run;
-  const unknown = () => ({ ...run, attemptEvidenceUnknown: true });
-  if (!Array.isArray(run.attempts) || run.attempts.length !== count) return unknown();
-  const pending = new Map();
-  let meaningful;
-  for (const attempt of run.attempts) {
-    if (!Array.isArray(attempt.jobs)) return unknown();
-    let recovered = false;
-    let failed = false;
-    for (const job of attempt.jobs) {
-      const steps = job.steps ?? [];
-      if (BAD.has(job.conclusion) && !steps.some(step => BAD.has(step.conclusion))) return unknown();
-      for (const step of steps) {
-        const key = JSON.stringify([job.name, step.name]);
-        if (step.conclusion === 'success') recovered = pending.delete(key) || recovered;
-        if (BAD.has(step.conclusion)) {
-          pending.set(key, { attempt, job: job.name, step: step.name });
-          failed = true;
-        }
-      }
+// The combined-status endpoint supplies the latest value of each context.
+export function releaseStatuses(body, date) {
+  if (!Array.isArray(body?.statuses) || !Number.isInteger(body.total_count) ||
+      body.total_count !== body.statuses.length) throw new Error('Incomplete commit statuses');
+  const statuses = {};
+  for (const status of body.statuses) {
+    if (typeof status?.context !== 'string') throw new Error('Invalid commit status');
+    const stage = RELEASE_CONTEXTS.find(name => status.context === `evidaxis/release-${name}`);
+    if (!stage) continue;
+    if (statuses[stage] || !['success', 'failure', 'error', 'pending'].includes(status.state) ||
+        typeof status.description !== 'string' || !status.description.trim()) {
+      throw new Error('Invalid release status');
     }
-    if (BAD.has(attempt.conclusion) && !failed) return unknown();
-    const observed = { ...attempt, recoveryVerified: recovered && pending.size === 0 && attempt.conclusion === 'success' };
-    // A later no-op also must not refresh the age of an earlier real success.
-    const ignored = releaseRunDate(observed)
-      ? releaseRunKind(observed) === 'ignore'
-      : observed.conclusion === 'skipped';
-    if (!ignored) meaningful = observed;
+    if (stage === 'captured' && status.state === 'success' && status.description !== date) {
+      throw new Error('Captured date mismatch');
+    }
+    statuses[stage] = status;
   }
-  if (pending.size) {
-    const unresolved = [...pending.values()];
-    const { attempt, step } = unresolved.sort((a, b) => compareAttempts(a.attempt, b.attempt))[0];
-    return { ...attempt, failedStep: step, retainedFailure: true,
-      unrecoveredSteps: unresolved.map(({ job, step }) => ({ job, step })) };
-  }
-  return meaningful ?? run.attempts.at(-1);
+  return statuses;
 }
 
-export async function attachReleaseJobs(runs, getJobs, getAttempt) {
-  async function jobs(id, number) {
-    const body = await getJobs(id, number);
-    if (!Array.isArray(body.jobs) || !Number.isInteger(body.total_count) || body.jobs.length !== body.total_count ||
-        body.jobs.some(job => job.run_attempt != null && job.run_attempt !== number)) {
-      throw new Error('Incomplete or mismatched attempt jobs');
-    }
-    return body.jobs;
+/** Pure truth table; errors precede all results, including apparent success. */
+export function evaluateWeeklyRelease(i) {
+  const week = weeklyReleaseDay(i.nowIso);
+  const verdict = (status, alert, message = '', remind = false, since) => ({
+    status, alert, message, remind, week, key: `${week ?? 'unknown'}:${['running', 'publishing'].includes(status) ? 'active' : status}`, ...(since ? { since } : {}),
+  });
+  const unknown = detail => verdict('unknown', true,
+    `Не могу проверить выпуск ${week ?? ''}: ${detail}. Нужен человек: нет, проверю в следующий раз.`, true);
+  if (!week || i.apiError) return unknown(i.apiError || 'некорректное время проверки');
+  if (!i.record || i.record.date !== week || !(i.record.sha === null || /^[a-f0-9]{40}$/.test(i.record.sha))) return unknown('нет записи выпуска');
+  let statuses;
+  try { statuses = releaseStatuses(i.record, week); } catch (error) { return unknown(error.message); }
+  if (!i.record.sha && Object.keys(statuses).length) return unknown('статусы без коммита среза');
+  const failed = RELEASE_CONTEXTS.find(stage => ['failure', 'error'].includes(statuses[stage]?.state));
+  if (failed) {
+    const status = statuses[failed];
+    return verdict('failed', true,
+      `Срез ${week} не вышел: этап ${failed}, шаг «${status.description}». Нужен человек: да.`,
+      true, status.updated_at);
   }
-  await Promise.all(runs.map(async run => {
-    const count = run.run_attempt ?? 1;
-    // A new successful deploy can repair another run's retained failure; both
-    // sensors need its step evidence even though it has no weekly release title.
-    if (count === 1 && run.conclusion !== 'success' && releaseRunKind(run) !== 'unknown') return;
-    try {
-      if (count === 1) {
-        run.jobs = await jobs(run.id, 1);
-        return;
-      }
-      const attempts = [];
-      for (let number = 1; number <= count; number++) {
-        const attempt = number === count ? { ...run } : await getAttempt(run.id, number);
-        if (attempt.id !== run.id || attempt.run_attempt !== number || !Number.isFinite(attemptTime(attempt)) ||
-            typeof attempt.status !== 'string' || (attempt.status === 'completed' && typeof attempt.conclusion !== 'string') ||
-            (number < count && attempt.status !== 'completed')) {
-          throw new Error('Mismatched workflow attempt');
-        }
-        attempts.push({ ...attempt, jobs: await jobs(run.id, number) });
-      }
-      run.attempts = attempts;
-    } catch {
-      // Missing attempt history is unknown; it cannot erase a previous HF/deploy failure.
-      if (count > 1) delete run.attempts;
-    }
-  }));
+  const missing = RELEASE_CONTEXTS.filter(stage => statuses[stage]?.state !== 'success');
+  if (!missing.length) return verdict('released', true,
+    `✅ Срез ${week} на сайте и HF: обе квитанции подтверждены. Нужен человек: нет.`);
+  if (typeof i.active !== 'boolean') return unknown('не удалось проверить активный запуск');
+  // Preserve the existing Saturday 12:00 UTC notification deadline.
+  const deadline = `${week}T12:00:00Z`;
+  const late = Date.parse(i.nowIso) >= Date.parse(deadline);
+  if (i.active) {
+    const state = missing.includes('captured') ? 'running' : 'publishing';
+    return verdict(state, late, late
+      ? `Срез ${week} опаздывает, но идёт: ${state === 'running' ? 'сбор' : 'публикация'}. Нужен человек: нет.` : '');
+  }
+  if (!i.record.sha) return verdict('not_started', late, late
+    ? `Срез ${week} не стартовал к 12:00 UTC: коммита среза нет. Нужен человек: да. https://github.com/evidaxis/evidaxis/actions/workflows/weekly-snapshot.yml`
+    : '', late, deadline);
+  if (!late) return verdict(missing.includes('captured') ? 'running' : 'publishing', false);
+  return verdict('failed', true,
+    `Срез ${week} не вышел: не дошло до этапа ${missing.join(', ')}. Нужен человек: да.`, true, deadline);
 }

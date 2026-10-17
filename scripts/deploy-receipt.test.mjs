@@ -45,3 +45,11 @@ test('deployment fails configuration immediately and stops after the second tran
   assert.equal(transportFailure('EAI_AGAIN'), true);
   assert.equal(transportFailure('build failed'), false);
 });
+
+test('a dated recovery receipt remains Saturday even if the tree latest has advanced', async () => {
+  const { expectedSnapshot } = await import('./deploy-receipt.mjs');
+  const expected = expectedSnapshot('2026-10-10');
+  assert.equal(expected.snapshot_date, '2026-10-10');
+  assert.throws(() => expectedSnapshot('../latest'));
+  assert.throws(() => verifyReceipt(expected, JSON.stringify({ ...expected, snapshot_date: '2026-10-17' })));
+});

@@ -20,6 +20,7 @@ on:
         type: boolean
 
 permissions:
+  statuses: read
   contents: read
   actions: read
 

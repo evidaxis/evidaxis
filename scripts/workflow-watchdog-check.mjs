@@ -1,7 +1,7 @@
-// Runner for the class-level workflow watchdog. GitHub Actions remains the
-// source of run outcomes; Telegram is the independent delivery channel that
-// repeats every six hours until each failed or overdue workflow is green.
+// Runner for the class-level watchdog. The weekly release uses commit receipts;
+// other workflows keep their existing run-outcome and scheduling checks.
 import { readdirSync, readFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import { inReminderWindow } from './alert-gate.mjs';
 import {
   applyAudienceGate,
@@ -10,7 +10,7 @@ import {
   evaluateWorkflowHealth,
 } from './workflow-watchdog.mjs';
 import { evaluateLiveness } from './liveness.mjs';
-import { attachReleaseJobs, compareAttempts, effectiveRun, supersedesFailure } from './weekly-release.mjs';
+import { readReleaseFacts } from './release-record.mjs';
 
 const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
 const WORKFLOW_DIR = '.github/workflows';
@@ -131,7 +131,7 @@ async function probeFacts(results) {
   return facts;
 }
 
-async function evaluate() {
+export async function evaluate() {
   const repository = process.env.GITHUB_REPOSITORY;
   if (!repository) throw new Error('GITHUB_REPOSITORY not set');
   const api = `https://api.github.com/repos/${repository}`;
@@ -145,35 +145,27 @@ async function evaluate() {
   const latestCompleted = {};
   const latestSuccess = {};
   const latestAnyRun = {};
-  let weeklyRuns;
+  const nowIso = new Date().toISOString();
+  const releaseFacts = await readReleaseFacts(nowIso, path => githubJson(`${api}/${path}`));
   for (const item of ROSTER) {
+    if (item.name === 'weekly-snapshot') continue;
     const workflow = byKey.get(item.name);
     if (!workflow) continue;
     const branch = item.kind === 'event' ? '&branch=main' : '';
     const body = await githubJson(
       `${api}/actions/workflows/${workflow.id}/runs?per_page=15${branch}`,
     );
-    let runs = (body.workflow_runs ?? []).filter((run) => run.event !== 'pull_request');
-    if (item.name === 'weekly-snapshot' || item.name === 'deploy-web') {
-      await attachReleaseJobs(runs,
-        (id, number) => githubJson(`${api}/actions/runs/${id}/attempts/${number}/jobs?per_page=100`),
-        (id, number) => githubJson(`${api}/actions/runs/${id}/attempts/${number}`));
-      if (item.name === 'weekly-snapshot') weeklyRuns = runs;
-      else runs = runs.map(effectiveRun).filter(run => run.conclusion !== 'skipped' || run.attemptEvidenceUnknown).sort(compareAttempts);
-    }
-    const retained = item.name === 'deploy-web'
-      ? runs.find(run => run.retainedFailure && !runs.some(other => supersedesFailure(other, run))) : undefined;
-    latestCompleted[item.name] = retained ?? runs.find((run) => run.status === 'completed');
+    const runs = (body.workflow_runs ?? []).filter((run) => run.event !== 'pull_request');
+    latestCompleted[item.name] = runs.find((run) => run.status === 'completed');
     latestSuccess[item.name] = runs.find((run) => run.conclusion === 'success');
     latestAnyRun[item.name] = runs[0];
   }
 
-  const nowIso = new Date().toISOString();
   const judged = evaluateWorkflowHealth({
     roster: ROSTER,
     latestCompleted,
     latestSuccess,
-    weeklyRuns,
+    releaseFacts,
     nowIso,
   });
   // Fact BEFORE drought: an archive that is actually down must survive a platform
@@ -198,7 +190,7 @@ async function evaluate() {
 
 /** The push the keeper reads: what happened in plain words, then what to do. @param {any} result */
 function keeperText(result) {
-  if (result.status === 'unknown') return result.message;
+  if (result.releaseStatus || result.status === 'unknown') return result.message;
   if (result.kind === 'platform') {
     return `🟠 Причина, похоже, на стороне GitHub: плановые задачи Evidaxis не запускаются.\n` +
       `Что сделать: ничего отдельно — это причина сообщения выше.`;
@@ -217,34 +209,38 @@ function keeperText(result) {
     `Что сделать: открой чат по Evidaxis и скажи «почини сбор данных».`;
 }
 
-if (process.argv.includes('--selftest')) {
-  await sendTelegram('🟢 evidaxis · сторож воркфлоу активен (тестовый сигнал)');
-  process.exit(0);
+async function main() {
+  if (process.argv.includes('--selftest')) {
+    await sendTelegram('🟢 evidaxis · сторож воркфлоу активен (тестовый сигнал)');
+    process.exit(0);
+  }
+
+  try {
+    const results = await evaluate();
+    console.log(JSON.stringify(results));
+    // Quiet rows are the PULL channel: they live in this run log forever and never
+    // cost attention. Only what survived all three gates is pushed — and only a push
+    // reds the run, so GitHub's own failure e-mail stops duplicating quiet noise.
+    for (const result of results.filter((r) => !r.alert && r.quiet)) {
+      console.log(`[workflow-watchdog] (тихо · ${result.quiet}) ${result.message.split('\n')[0]}`);
+    }
+    const alerts = results.filter((result) => result.alert);
+    for (const result of alerts) {
+      await sendTelegram(keeperText(result));
+    }
+    process.exit(alerts.length > 0 ? 1 : 0);
+  } catch (e) {
+    console.error('[workflow-watchdog] evaluation failed', e);
+    // A blind watchdog is the assistant's problem until it lasts: once a day, in the
+    // morning window, so a transient GitHub API error never reaches the keeper.
+    if (inReminderWindow(new Date().toISOString())) {
+      await sendTelegram(
+        `🟠 Сторож Evidaxis не смог проверить плановые задачи, поэтому сбой сбора данных сейчас может пройти незамеченным.\n` +
+          `Что сделать: открой чат по Evidaxis и скажи «почини сторож».`,
+      );
+    }
+    process.exit(1);
+  }
 }
 
-try {
-  const results = await evaluate();
-  console.log(JSON.stringify(results));
-  // Quiet rows are the PULL channel: they live in this run log forever and never
-  // cost attention. Only what survived all three gates is pushed — and only a push
-  // reds the run, so GitHub's own failure e-mail stops duplicating quiet noise.
-  for (const result of results.filter((r) => !r.alert && r.quiet)) {
-    console.log(`[workflow-watchdog] (тихо · ${result.quiet}) ${result.message.split('\n')[0]}`);
-  }
-  const alerts = results.filter((result) => result.alert);
-  for (const result of alerts) {
-    await sendTelegram(keeperText(result));
-  }
-  process.exit(alerts.length > 0 ? 1 : 0);
-} catch (e) {
-  console.error('[workflow-watchdog] evaluation failed', e);
-  // A blind watchdog is the assistant's problem until it lasts: once a day, in the
-  // morning window, so a transient GitHub API error never reaches the keeper.
-  if (inReminderWindow(new Date().toISOString())) {
-    await sendTelegram(
-      `🟠 Сторож Evidaxis не смог проверить плановые задачи, поэтому сбой сбора данных сейчас может пройти незамеченным.\n` +
-        `Что сделать: открой чат по Evidaxis и скажи «почини сторож».`,
-    );
-  }
-  process.exit(1);
-}
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await main();

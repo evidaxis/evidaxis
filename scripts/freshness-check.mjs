@@ -5,7 +5,7 @@
 // Runs under plain `node` — no npm install (see freshness.mjs).
 import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { allAttemptsBefore, attachReleaseJobs, releaseRunDate } from './weekly-release.mjs';
+import { readReleaseFacts } from './release-record.mjs';
 import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import {
   decideFeedPush,
@@ -16,13 +16,13 @@ import {
   gateFreshnessAlerts,
   parseFeedKey,
   parseReleaseKey,
-  pickFailedStep,
+  parseReceiptWeek,
+  parseActiveWeek,
   releaseKeyToPrint,
-  weeklyReleaseDay,
 } from './freshness.mjs';
 
 const API = 'https://api.github.com';
-// 100 is the GitHub page cap, so Saturday's run is still listed after a week of deploys.
+// Keep the existing GitHub page size for notification-log jobs.
 const GH_PAGE = 100;
 
 /** @param {string} url */
@@ -93,74 +93,6 @@ function ghHeaders() {
   };
 }
 
-/** @param {unknown} error */
-function githubError(error) {
-  const name = error && typeof error === 'object' && 'name' in error ? String(error.name) : '';
-  if (name === 'TimeoutError' || name === 'AbortError') return 'таймаут';
-  return 'сбой сети';
-}
-
-/** @param {string} workflowFile @returns {Promise<{ runs?: object[], error?: string }>} */
-async function workflowRuns(workflowFile, week) {
-  const repo = process.env.GITHUB_REPOSITORY;
-  const headers = ghHeaders();
-  if (!headers || !repo) return { error: 'нет GH_TOKEN или GITHUB_REPOSITORY' };
-  const url = `${API}/repos/${repo}/actions/workflows/${workflowFile}/runs?per_page=${GH_PAGE}&branch=main`;
-  try {
-    const res = await fetch(url, { headers, signal: AbortSignal.timeout(10_000) });
-    if (!res.ok) return { error: `HTTP ${res.status}` };
-    const body = await res.json();
-    if (!Array.isArray(body.workflow_runs) || !Number.isInteger(body.total_count)) return { error: 'неполный список запусков' };
-    if (body.workflow_runs.some(run => !run || !Number.isFinite(Date.parse(run.created_at)) ||
-        typeof run.display_title !== 'string' || typeof run.head_branch !== 'string' || typeof run.status !== 'string' ||
-        (run.run_attempt != null && (!Number.isInteger(run.run_attempt) || run.run_attempt < 1)))) {
-      return { error: 'некорректные сведения о запуске' };
-    }
-    const oldest = body.workflow_runs.at(-1)?.created_at;
-    if (body.total_count > body.workflow_runs.length && (!oldest || oldest.slice(0, 10) >= week)) {
-      return { error: 'неполный список запусков субботы' };
-    }
-    const runs = body.workflow_runs.map((run) => ({
-      id: run.id,
-      status: run.status,
-      conclusion: run.conclusion,
-      run_attempt: run.run_attempt ?? 1,
-      created_at: run.created_at,
-      run_started_at: run.run_started_at,
-      updated_at: run.updated_at,
-      html_url: run.html_url,
-      event: run.event,
-      display_title: run.display_title,
-      head_branch: run.head_branch,
-    }));
-    return { runs };
-  } catch (error) {
-    return { error: githubError(error) };
-  }
-}
-
-/** @param {object[]} runs @param {number} weekStart */
-async function attachFailedSteps(runs, weekStart) {
-  const headers = ghHeaders();
-  const repo = process.env.GITHUB_REPOSITORY;
-  if (!headers || !repo) return;
-  await Promise.all(runs.map(async (run) => {
-    if (!['failure', 'cancelled', 'timed_out'].includes(run.conclusion)) return;
-    const created = Date.parse(run.created_at ?? '');
-    if (Number.isNaN(created) || created < weekStart) return;
-    try {
-      const url = `${API}/repos/${repo}/actions/runs/${run.id}/attempts/${run.run_attempt ?? 1}/jobs?per_page=${GH_PAGE}`;
-      const res = await fetch(url, { headers, signal: AbortSignal.timeout(10_000) });
-      if (!res.ok) return;
-      const body = await res.json();
-      const step = pickFailedStep(body.jobs);
-      if (step) run.failedStep = step;
-    } catch {
-      // The failure is still reportable without the step name.
-    }
-  }));
-}
-
 /** @param {string} jobId @param {Record<string, string>} headers */
 async function jobLog(jobId, headers) {
   const repo = process.env.GITHUB_REPOSITORY;
@@ -186,7 +118,7 @@ async function previousSensorKeys() {
   const headers = ghHeaders();
   const repo = process.env.GITHUB_REPOSITORY;
   const runId = process.env.GITHUB_RUN_ID;
-  const empty = { release: null, feed: null };
+  const empty = { release: null, feed: null, receipt: null, active: null };
   if (!headers || !repo || !runId) return empty;
   try {
     const api = `${API}/repos/${repo}/actions`;
@@ -209,76 +141,24 @@ async function previousSensorKeys() {
     const jobsBody = await jobsRes.json();
     let release = null;
     let feed = null;
+    let receipt = null;
+    let active = null;
     for (const job of jobsBody.jobs ?? []) {
       const text = await jobLog(job.id, headers);
       if (!release) release = parseReleaseKey(text);
       if (!feed) feed = parseFeedKey(text);
-      if (release && feed) break;
+      if (!receipt) receipt = parseReceiptWeek(text);
+      if (!active) active = parseActiveWeek(text);
+      if (release && feed && receipt && active) break;
     }
-    return { release, feed };
+    return { release, feed, receipt, active };
   } catch {
     return empty;
   }
 }
 
-/** Whether data/snapshots/D/snapshot.json is on main right now. @param {string|null} date @returns {Promise<'present'|'absent'|'unknown'>} */
-async function snapshotOnMain(date) {
-  const repo = process.env.GITHUB_REPOSITORY;
-  const headers = ghHeaders();
-  if (!headers || !repo || !date) return 'unknown';
-  const url = `${API}/repos/${repo}/contents/data/snapshots/${date}/snapshot.json?ref=main`;
-  try {
-    const res = await fetch(url, { headers, signal: AbortSignal.timeout(10_000) });
-    const status = res.status;
-    await res.body?.cancel().catch(() => {});
-    if (status === 200) return 'present';
-    if (status === 404) return 'absent';
-    return 'unknown';
-  } catch {
-    return 'unknown';
-  }
-}
-
-async function snapshotOnSite(site, date) {
-  try {
-    const res = await fetch(`${site}/snapshots/${date}/snapshot.json`, {
-      redirect: 'follow',
-      headers: { 'user-agent': 'freshness-sensor/1', 'cache-control': 'no-cache' },
-      signal: AbortSignal.timeout(12_000),
-    });
-    if (res.status === 404) return 'absent';
-    if (res.status !== 200) return 'unknown';
-    const body = await res.json();
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(body?.snapshot_date ?? '')) return 'unknown';
-    return body.snapshot_date === date ? 'present' : 'absent';
-  } catch {
-    return 'unknown';
-  }
-}
-
-export async function readWeeklyFacts(site, nowIso) {
-  const week = weeklyReleaseDay(nowIso);
-  const [weekly, deploy, main, publicSnapshot] = await Promise.all([
-    workflowRuns('weekly-snapshot.yml', week),
-    workflowRuns('deploy-web.yml', week),
-    snapshotOnMain(week),
-    // latest.json may already point at Sunday; Saturday publication is a separate fact.
-    snapshotOnSite(site, week),
-  ]);
-  const weeklyRuns = weekly.runs ?? [];
-  const weekStart = Date.parse(`${week}T00:00:00Z`);
-  const deployRuns = (deploy.runs ?? []).filter(run => !allAttemptsBefore(run, weekStart));
-  const attemptJson = async (id, number, suffix = '') => {
-    const res = await fetch(`${API}/repos/${process.env.GITHUB_REPOSITORY}/actions/runs/${id}/attempts/${number}${suffix}`,
-      { headers: ghHeaders(), signal: AbortSignal.timeout(10_000) });
-    if (!res.ok) throw new Error('Attempt API unavailable');
-    return res.json();
-  };
-  await attachReleaseJobs([...weeklyRuns.filter(run => releaseRunDate(run) === week), ...deployRuns],
-    (id, number) => attemptJson(id, number, `/jobs?per_page=${GH_PAGE}`), attemptJson);
-  await Promise.all([attachFailedSteps(weeklyRuns, weekStart), attachFailedSteps(deployRuns, weekStart)]);
-  return { nowIso, weeklyRuns, deployRuns, snapshotOnMain: main, snapshotOnSite: publicSnapshot,
-    apiError: [weekly.error, deploy.error].filter(Boolean).join('; ') };
+export async function readWeeklyFacts(nowIso) {
+  return readReleaseFacts(nowIso);
 }
 
 async function main() {
@@ -310,7 +190,7 @@ async function main() {
   const feedResult = evaluateFeedFreshness({ site, now, ...feedProbe });
 
   const [weeklyFacts, previousKeys] = await Promise.all([
-    readWeeklyFacts(site, nowIso),
+    readWeeklyFacts(nowIso),
     previousSensorKeys(),
   ]);
   const release = evaluateWeeklyRelease(weeklyFacts);
@@ -327,6 +207,8 @@ async function main() {
   const decision = decideWeeklyPush({
     release,
     previousKey,
+    previousReceiptWeek: previousKeys.receipt,
+    previousActiveWeek: previousKeys.active,
     previousConclusion: prevConclusion,
     nowIso,
   });
@@ -378,6 +260,10 @@ async function main() {
       sent,
     })
     : '';
+  const receiptWeek = release.status === 'released' && decision.push && sent ? release.week : previousKeys.receipt;
+  const activeWeek = ['running', 'publishing'].includes(release.status) && decision.push && sent ? release.week : previousKeys.active;
+  console.log(`RELEASE_ACTIVE ${activeWeek || '-'}`);
+  console.log(`RELEASE_RECEIPT ${receiptWeek || '-'}`);
   console.log(`RELEASE_KEY ${notifiedKey || '-'}`);
   console.log(`FEED_KEY ${feedKey || '-'}`);
 

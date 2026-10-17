@@ -16,6 +16,9 @@ permissions:
 
 jobs:
   mirror:
+    permissions:
+      contents: read
+      statuses: write
     # HF_TOKEN is exposed to this job: run it only from main, where the guard is reviewed.
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -35,13 +38,10 @@ jobs:
       - name: Mirror selected snapshots
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
           DATES: ${{ inputs.dates }}
         run: |
           set -euo pipefail
-          if [ -z "${HF_TOKEN:-}" ]; then
-            echo "::error::HF_TOKEN missing"
-            exit 1
-          fi
           if [ -z "${DATES// /}" ]; then
             echo "::error::dates input is empty"
             exit 1
@@ -51,5 +51,5 @@ jobs:
               [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
               *) echo "::error::dates must be space-separated YYYY-MM-DD, got '$date'"; exit 1 ;;
             esac
-            python3 scripts/hf_upload_snapshot.py --date "$date"
+            node scripts/release-status.mjs hf "$date"
           done

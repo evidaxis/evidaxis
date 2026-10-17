@@ -72,6 +72,7 @@ jobs:
     permissions:
       contents: write
       actions: read
+      statuses: write
     concurrency:
       group: data-commits
       cancel-in-progress: false
@@ -327,7 +328,15 @@ jobs:
           echo "push failed after 3 rebase attempts"
           exit 1
 
+      - name: Record captured snapshot on its commit
+        id: captured
+        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode != 'rehearsal') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/release-status.mjs capture "$SNAPSHOT_DATE"
+
       - name: Mirror the dated snapshot to HF and verify public contents
+        id: hf
         if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode != 'rehearsal') }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
@@ -336,6 +345,15 @@ jobs:
           # 2.2.0 was released on 2026-10-08 and used by the unpinned 2026-10-17 release.
           python -m pip install --quiet "huggingface_hub==2.2.0"
           python3 scripts/hf_upload_snapshot.py --date "$SNAPSHOT_DATE"
+
+      - name: Record HF receipt or failed step
+        if: ${{ always() && inputs.mode != 'rehearsal' && steps.captured.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_DATE: ${{ steps.captured.outputs.date }}
+          RELEASE_SHA: ${{ steps.captured.outputs.sha }}
+          RELEASE_STEPS: ${{ toJSON(steps) }}
+        run: node scripts/release-status.mjs record hf
 
       - name: Ask Software Heritage to re-archive the repository
         # Independent of the HF mirror: still runs when that step failed.

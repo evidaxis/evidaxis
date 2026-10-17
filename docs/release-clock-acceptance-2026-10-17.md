@@ -431,3 +431,198 @@ on stable job/step names and complete evidence within the existing bounded run
 listing. An external repair through another workflow is not inferred. No automatic
 recovery or workaround for missing required evidence was added; such evidence
 continues to block a confirmed release verdict.
+
+## Reframe
+
+This section supersedes the release-verdict logic in P2 and Fix 1/2/3 above.
+Release outcomes now come from the snapshot commit, written by the production
+chain at each event. Run attempts, Jobs responses, skipped steps in completed
+runs, and attempt-time ordering are no longer release evidence. No repository
+commits, pushes, workflow dispatches or production status writes were performed
+for this implementation.
+
+The record uses GitHub Commit Statuses. The reader finds D with
+`GET /repos/{owner}/{repo}/commits?path=data/snapshots/D/snapshot.json&per_page=1&sha=main`
+and reads `GET /repos/{owner}/{repo}/commits/{sha}/status?per_page=100`.
+The [combined-status endpoint](https://docs.github.com/en/rest/commits/statuses#get-the-combined-status-for-a-specific-reference)
+returns the latest status per context. Other CI contexts and the combined
+aggregate state do not decide release health.
+
+| Context | Writer and evidence |
+| --- | --- |
+| `evidaxis/release-captured` | Weekly, after the snapshot commit is pushed. Success description is exactly D. The lookup uses the checked-out HEAD after rebase, not the workflow's original SHA. |
+| `evidaxis/release-deployed` | Deploy finalizer records success only after public JSON matches D and methodology_version. Failure identifies the failing secrets/setup/build/deploy/receipt step. |
+| `evidaxis/release-hf` | Weekly HF finalizer, or manual hf-mirror, records success only after the uploader's existing public JSON/CSV readback. A failed upload, configuration check or readback records failure with the HF step name. |
+
+A skipped retry writes nothing. Another actual receipt writes success to the
+same context on the same snapshot commit, whether it came from a rerun, a new
+deploy or manual hf-mirror. Failure remains failure during a retry. The writers
+use current step outcomes supplied directly by the workflow, never historical
+Jobs API responses. Failure/cancellation finalizers run with `always()` after
+identity resolution. If checkout, commit lookup, status delivery or the runner
+itself fails before a status can be recorded, the missing-stage rule applies.
+
+Only weekly's snapshot job, deploy's deploy job and hf-mirror's mirror job receive
+`statuses: write`. Both sensors receive `statuses: read`. Guard and rehearsal
+conditions are preserved, and the writer also refuses rehearsal before executing
+publication or posting a status. There is no deploy-generated state file or
+commit and no new push-trigger loop.
+
+Deploy resolves the intended date once. A weekly-triggered deploy takes the
+producer's explicit date; an optional `release_date` on manual dispatch supports
+repair of an older date after latest.json advances. Ordinary push/manual deploys
+without that input retain the local latest date. The receipt checks that resolved
+date, and the writer resolves its snapshot commit in the checked-out tree.
+Deployment still publishes the entire archive.
+
+The pure evaluator in `scripts/weekly-release.mjs` and the thin reader in
+`scripts/release-record.mjs` are shared by freshness and workflow-watchdog. The
+watchdog's weekly row never falls back to completed/success or its previous
+204-hour success-age heuristic. The other roster entries retain their existing
+workflow-health checks and audience gates. Freshness owns the late message and
+receipt, so the watchdog does not duplicate them.
+
+Truth table, first matching row wins. D is the last Saturday UTC. S means success,
+F means failure (an API `error` state is also a failure), and M means missing or
+pending. A means a relevant queued/in_progress run; late starts at 12:00 UTC.
+
+| Row | Record / three contexts | A / time / API | Result | Notification / human |
+| --- | --- | --- | --- | --- |
+| U | Any | Required request failed, incomplete response, invalid record or time | unknown | Daily-gated / no |
+| F | Any F | Any activity or time | failed, named step | Daily-gated / yes |
+| R | S / S / S | No activity query needed | released | Receipt once / no |
+| C1 | Capture M, or no snapshot commit | A, before noon | running | Quiet / no |
+| C2 | Capture M, or no snapshot commit | A, at/after noon | running | Late notice once / no |
+| P1 | Capture S, delivery M | A, before noon | publishing | Quiet / no |
+| P2 | Capture S, delivery M | A, at/after noon | publishing | Same late notice / no |
+| N1 | No snapshot commit | No A, before noon | not_started | Quiet / no |
+| N2 | No snapshot commit | No A, at/after noon | not_started | Daily-gated / yes |
+| W | Commit exists, some M | No A, before noon | running/publishing, waiting for the missing stage | Quiet / no |
+| M | Commit exists, some M | No A, at/after noon | failed: did not reach the named missing stages | Daily-gated / yes |
+
+Activity requests are filtered at the API to queued and in_progress. Capture
+needs the explicit weekly release D on main. HF needs that same weekly run;
+deployment needs an active deploy whose input archive contains the same snapshot
+commit. Push/manual activity checks head_sha; workflow_run uses its declared
+main checkout. A completed/skipped deploy contributes no activity. A missing
+capture never borrows activity from deploy. Failure or three complete receipts
+requires no Actions history request, so an outage of unused attempt/history
+endpoints cannot change those verdicts. Any failure in a needed activity query
+produces unknown even if another query found active work.
+
+Running and publishing share a late-notice key. The existing notification-log
+mechanism now also carries `RELEASE_ACTIVE` and `RELEASE_RECEIPT` dates across
+intervening unknown/failure observations. These are notification memory only;
+they cannot establish a release. A failed Telegram send consumes neither notice.
+
+Tests replace the old attempt-history fixtures with recorded events:
+
+- 17 October at 13:33, no snapshot commit plus an active dated weekly: running,
+  late, human not needed.
+- A Sunday latest snapshot and failed Sunday deployment leave Saturday's three
+  receipts released. An explicitly dated repair receipt does not follow latest.
+- HF failure survives green/skipped reruns; a new success in the same HF context
+  releases the snapshot without recapture or attempt sorting.
+- A skipped deployment is absent activity: no snapshot stays not_started;
+  a captured snapshot without a deployment receipt fails after noon.
+- HTTP 503 on any required commit/status/activity/tree request gives unknown.
+  Unused history returning 503 is irrelevant to a fully recorded release.
+
+The matrix covers all 27 combinations of success/failure/missing across three
+contexts, crossed with two activity states, both sides of noon and API success
+or failure: 216 cases. Eight more cover an absent commit. Every matrix case also
+checks the watchdog's release verdict. Other tests cover malformed/incomplete
+responses, unrelated CI contexts, stage-specific activity, real fetch/POST
+adapters with mocks, writer ordering, receipt dates, notification memory and
+workflow permission/rehearsal/finalizer wiring. The production reader and writer
+have no dependencies beyond Node's standard library and GitHub APIs.
+
+Mutation checks temporarily edited implementation/workflow files and restored
+each in `finally`. All **29 deliberate defects** caused assertion failures;
+none relied on a syntax or import failure.
+
+| Deliberate defect | Tests that detected it |
+| --- | ---: |
+| Ignore required API errors | 113 |
+| Release without HF receipt | 27 |
+| Reject three complete receipts | 12 |
+| Let an active retry hide failure | 39 |
+| Treat missing receipt as success | 40 |
+| Move the noon boundary by one observation | 16 |
+| Report an absent commit as failed | 4 |
+| Ignore missing-stage activity | 14 |
+| Accept incomplete status lists | 2 |
+| Use Sunday as the release day | 2 |
+| Accept another weekly date or rehearsal as active | 1 |
+| Count completed/skipped runs as active | 1 |
+| Read history despite complete receipts | 1 |
+| Let an unrelated deployment tree cover D | 2 |
+| Ignore incomplete active-run lists | 1 |
+| Treat Vercel CLI success as a content receipt | 1 |
+| Overwrite HF failure on a skipped retry | 2 |
+| Let rehearsal write production statuses | 1 |
+| Write a receipt against current main instead of the checked-out tree | 1 |
+| Record successful HF upload after failure | 1 |
+| Use latest instead of the requested receipt date | 1 |
+| Forget the receipt after unknown | 1 |
+| Send separate late capture and publication alerts | 1 |
+| Do not POST the receipt | 1 |
+| Forget the late notice after unknown | 1 |
+| Let unrelated CI failure veto release | 1 |
+| Drop deploy's always finalizer | 1 |
+| Allow the captured writer in rehearsal | 1 |
+| Drop a writer's statuses permission | 1 |
+
+Acceptance on the restored files:
+
+```text
+node --test scripts/*.test.mjs infra/clock/*.test.mjs
+303 tests; 303 passed; 0 failed
+
+PYTHONPATH=. .venv/bin/pytest tests/ -q
+exit 0; 6,942 cases: 6,941 passed, one expected skip
+SKIPPED tests/test_recall_fixture.py:49: census working data absent (gitignored)
+
+.venv/bin/ruff check etl tests collectors scripts
+All checks passed!
+
+YAML: all 14 workflows parsed with yaml.safe_load
+Workflow wiring: four additional Python tests passed
+
+git diff --check
+exit 0
+```
+
+No existing timeout, retry count, cache lifetime, cadence, schedule, threshold or
+batch limit changed. The shared reader retains the 100-entry GitHub page size;
+incomplete pages fail closed. The watchdog retains its 15-entry listings and
+15-second HTTP timeout for its other roster checks and uses that same HTTP
+adapter for release facts. Freshness retains its 10-second GitHub timeout.
+Vercel 64.5.0 and huggingface_hub 2.2.0 remain pinned. Worker, run-name, already-
+exists guard, collection logic, methodology, etl and web/src are unchanged.
+
+`governance/RELEASE-SCHEDULE-2026-10-18.md` already defines released as both public
+site and HF content receipts. That meaning is unchanged; this work records those
+receipts explicitly, so the immutable governance document was not edited.
+
+Rollout must account for releases made before these writers existed. No status
+is fabricated from old Actions conclusions. A pre-existing snapshot without
+statuses reports its missing stages. From a checkout containing the immutable
+snapshot, the capture writer can attest the existing commit; then use hf-mirror
+for D and deploy-web with release_date D to obtain fresh publication receipts.
+This is manual recovery, not an automatic historical backfill. A skipped weekly
+rerun alone cannot populate the record.
+
+Not checked live: GitHub permissions and payloads, Vercel/HF publication, Telegram
+or dispatch/queue races. Local versions were Node 25.2.1 and Python 3.14.7, not
+CI's Node 22 and Python 3.12. YAML parsing and workflow invariant tests ran;
+actionlint was not installed. No production writes or notifications were sent.
+
+Risks and limits: historic releases need explicit receipt migration; missing
+status writes remain incomplete even after content arrived. Activity attribution
+for workflow_run uses its declared main checkout, so advancement of main while
+an older deploy is already running can temporarily overstate relevant activity;
+it cannot create released without the three recorded successes. The existing
+bounded notification-log lookup cannot guarantee exactly-once delivery if logs
+are unavailable or concurrent sensors race, and a lost log can repeat a notice.
+No workaround substitutes a green workflow for a missing receipt.

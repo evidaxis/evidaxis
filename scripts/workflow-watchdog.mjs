@@ -21,9 +21,9 @@
 //                  (`dataLoss`) stay loud through it — a lost observation hour is
 //                  never recoverable, which is the asymmetry the whole sensor exists for.
 
-import { compareAttempts, effectiveRun, releaseRunKind, supersedesFailure } from './weekly-release.mjs';
+import { evaluateWeeklyRelease } from './weekly-release.mjs';
 
-/** @typedef {'ok'|'red'|'stale'|'missing'|'drought'|'unknown'} WorkflowStatus */
+/** @typedef {'ok'|'red'|'stale'|'missing'|'drought'|'unknown'|'running'|'publishing'|'not_started'} WorkflowStatus */
 
 const ACTIONS_URL = 'https://github.com/evidaxis/evidaxis/actions';
 const HOUR_MS = 3600_000;
@@ -58,26 +58,21 @@ function isOverdue(result) {
 
 /**
  * @param {{name: string, kind: 'scheduled'|'event', budgetHours?: number, self?: boolean, factGate?: string, dataLoss?: boolean}} workflow
- * @param {{latestCompleted: any, latestSuccess: any, weeklyRuns?: object[]}} i
+ * @param {{latestCompleted: any, latestSuccess: any, releaseFacts?: object}} i
  * @param {number} now
  */
 function judge(workflow, i, now) {
-  if (workflow.name === 'weekly-snapshot' && i.weeklyRuns) {
-    const runs = i.weeklyRuns.map(effectiveRun).filter(run => releaseRunKind(run) !== 'ignore').sort(compareAttempts);
-    const retained = runs.find(run => run.retainedFailure && !runs.some(other => supersedesFailure(other, run)));
-    const completed = retained ?? runs.find(run => run.status === 'completed');
-    if (runs.some(run => run.attemptEvidenceUnknown) || (completed && releaseRunKind(completed) === 'unknown')) {
-      return { status: 'unknown', alert: true,
-        message: `weekly-snapshot: API не подтвердил пропуск сбора или восстановление прошлых попыток. Нужен человек: нет, проверю снова.\n${ACTIONS_URL}` };
-    }
-    i = { latestCompleted: { 'weekly-snapshot': completed },
-      latestSuccess: { 'weekly-snapshot': runs.find(run => run.conclusion === 'success' && releaseRunKind(run) === 'release') } };
+  if (workflow.name === 'weekly-snapshot') {
+    const release = evaluateWeeklyRelease({ ...i.releaseFacts, nowIso: i.nowIso });
+    // Freshness owns the one-time late message and receipt. Keep the same fact
+    // here, with human-needed failures available to the existing watchdog gates.
+    const alert = release.alert && release.remind;
+    return { ...release, alert, releaseStatus: release.status,
+      status: release.status === 'released' ? 'ok'
+        : ['failed', 'not_started'].includes(release.status) && alert ? 'red' : release.status,
+      ...(!alert ? { quiet: 'release-sensor' } : {}) };
   }
   const completed = runFor(i.latestCompleted, workflow.name);
-  if (completed?.attemptEvidenceUnknown) {
-    return { status: 'unknown', alert: true,
-      message: `${workflow.name}: API не подтвердил восстановление прошлых попыток. Нужен человек: нет, проверю снова.\n${ACTIONS_URL}` };
-  }
   if (!completed) {
     return {
       status: /** @type {WorkflowStatus} */ ('missing'),
@@ -156,7 +151,7 @@ function silenceSelf(result) {
  *   roster: Array<{name: string, kind: 'scheduled'|'event', budgetHours?: number, self?: boolean, factGate?: string, dataLoss?: boolean}>,
  *   latestCompleted: Map<string, object>|Record<string, object>,
  *   latestSuccess: Map<string, object>|Record<string, object>,
- *   weeklyRuns?: object[],
+ *   releaseFacts?: object,
  *   nowIso: string,
  * }} i
  */
