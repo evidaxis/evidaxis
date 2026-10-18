@@ -70,7 +70,7 @@ def test_hf_handle_is_caught_and_a_clean_candidate_is_not(tmp_path, monkeypatch)
     root = _tree(tmp_path)
     card = root / "distribution/hf"
     card.mkdir(parents=True)
-    (card / "README.md").write_text("card\n")
+    (card / "README.md").write_text('configs:\n  - data_files:\n        path: "2026-10-10/entities.csv"\n')
     handles = root / "web/src/data"
     (handles / "person-free-handles.json").write_text("[]")
     monkeypatch.setattr(hf, "REPO", root)
@@ -100,7 +100,10 @@ def test_place_replay_reads_nested_and_flat_artifacts(tmp_path):
     (summary / "summary-graphql.json").write_text('{"repos": 1, "departed": []}\n')
     data = tmp_path / "data"
     out = tmp_path / "summary"
+    data.mkdir()
+    (data / "latest.json").write_text(json.dumps({"snapshot_date": "2026-10-10", "snapshot_id": "old"}))
     assert drill.place_replay(tmp_path / "nested", data, out) == "2026-10-17"
+    assert json.loads((data / "latest.json").read_text())["snapshot_date"] == "2026-10-17"
     assert (data / "snapshots/2026-10-17/manifest.json").is_file()
     assert json.loads((out / "summary-graphql.json").read_text())["repos"] == 1
 
@@ -131,8 +134,12 @@ def test_drill_verdict_phrases():
     assert drill.drill_verdict("site_test", site) == (
         "drill site_test: caught at step Verify the site against this rehearsal candidate", 0)
     assert drill.drill_verdict("hf_handle", passed) == ("drill hf_handle: NOT caught", 1)
-    assert drill.drill_verdict("canary_missing", {"hf": "failure", "verify": "failure", "report": "skipped"})[0] == (
-        "drill canary_missing: caught at step Check the HF publication projection")
+    assert drill.drill_verdict("canary_missing", {"hf": "success", "verify": "failure", "report": "failure"}) == (
+        "drill canary_missing: caught at step Verify the site against this rehearsal candidate", 0)
+    # An unrelated failure is not a catch: the HF guard must catch the leaked handle itself.
+    assert drill.drill_verdict("hf_handle", {"hf": "success", "verify": "success", "report": "failure"}) == (
+        "drill hf_handle: NOT caught", 1)
+    assert drill.drill_verdict("site_test", {"hf": "failure", "verify": "failure", "report": "success"})[1] == 1
     assert drill.drill_verdict("none", {"hf": "failure", "verify": "skipped", "report": "skipped"}) == (
         "drill none: failed at step Check the HF publication projection", 1)
 

@@ -26,6 +26,8 @@ CHECK_STEPS = (
     ("verify", "Verify the site against this rehearsal candidate"),
     ("report", "Rehearsal report"),
 )
+# The step that must catch each drill. Another failure is not a catch.
+EXPECTED = {"site_test": "verify", "canary_missing": "verify", "hf_handle": "hf"}
 _DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _ARTIFACT_DATE = re.compile(r"^snapshot-(\d{4}-\d{2}-\d{2})-\d+$")
 _SUMMARY_FILE = re.compile(r"^(jobs|timing|rehearsal-report|summary-.+)\.json$")
@@ -122,6 +124,13 @@ def place_replay(download_dir: Path, data_dir: Path, summary_dir: Path | None = 
         if summary is not None:
             summary_dir.mkdir(parents=True, exist_ok=True)
             shutil.copy2(summary, summary_dir / "summary-graphql.json")
+    # The site reads data/latest.json to pick its current snapshot; point it at the
+    # candidate, keeping the pointer's own fields, as the collector would.
+    latest = data_dir / "latest.json"
+    pointer = json.loads(latest.read_text(encoding="utf-8")) if latest.is_file() else {}
+    keys = list(pointer) or ["snapshot_date", "period", "snapshot_id", "methodology_version"]
+    latest.write_text(json.dumps({key: payload.get(key) for key in keys if key in payload or key == "snapshot_date"},
+                                 ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     env_path = os.environ.get("GITHUB_ENV")
     if env_path:
         with open(env_path, "a", encoding="utf-8") as stream:
@@ -140,9 +149,16 @@ def drill_verdict(drill: str, outcomes: dict) -> tuple[str, int]:
         if any(outcomes.get(key) != "success" for key, _name in CHECK_STEPS):
             return "drill none: checks did not run", 1
         return "drill none: checks passed", 0
-    if failed:
-        return f"drill {drill}: caught at step {failed[0]}", 0
-    return f"drill {drill}: NOT caught", 1
+    names = dict(CHECK_STEPS)
+    expected = EXPECTED[drill]
+    if outcomes.get(expected) != "failure":
+        return f"drill {drill}: NOT caught", 1
+    # The report reads the failed step, so its failure follows the catch.
+    other = [names[key] for key, _name in CHECK_STEPS
+             if key not in (expected, "report") and outcomes.get(key) == "failure"]
+    if other:
+        return f"drill {drill}: caught at step {names[expected]}, but also failed at step {other[0]}", 1
+    return f"drill {drill}: caught at step {names[expected]}", 0
 
 
 def _write_summary(line: str) -> None:
