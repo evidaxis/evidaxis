@@ -1,7 +1,7 @@
 # Evidaxis — SCALE-PLAN v2 (post spar-23)
 
 > created: 2026-06-30 · v1 built via deep-reasoning · **v2 = hardened by spar-23** (MiniMax M3 + Kimi K2.6,
-> blind dyad, $0.057). Synthesis: `AI Second Brain/lab/consilium-log/work/2026-06-30-spar-23-evidaxis-scale-plan/`.
+> blind dyad, $0.057). Synthesis: internal consilium record for spar-23, 2026-06-30 (scale plan review).
 > status: proposed, awaiting the keeper go to execute.
 > Keeper strategic input: a 19-system site looks trivial; coverage pace must exceed the market birth-rate.
 

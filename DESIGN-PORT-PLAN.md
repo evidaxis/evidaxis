@@ -1,8 +1,8 @@
 # Evidaxis — Design Port Plan (approved redesign → production Astro site)
 
 > Status: PLAN ONLY. Build + preview locally. **Do NOT deploy to production until the keeper approves the preview URL.**
-> Source of truth for design: `projects/bonsai/evidaxis/proto/{v-final.html, charts.js, data.js, cards/final-card.html}` (in the AI-Second-Brain repo).
-> Source of truth for data: `Evidaxis/web/src/lib/data.ts` reading `Evidaxis/data/snapshots/<date>/snapshot.json` + `provenance.json` + `manifest.json`.
+> Source of truth for design: the approved external prototype bundle (`v-final.html`, `charts.js`, `data.js`, `cards/final-card.html`), supplied for the design port.
+> Source of truth for data: `web/src/lib/data.ts` reading `data/snapshots/<date>/snapshot.json` + `provenance.json` + `manifest.json`.
 > Branch: `redesign/v-final`. Production (evidaxis.org) stays on the current deploy throughout.
 
 Real snapshot (2026-06-27, id `90e607b982fa`, methodology `m1`): **19 entities, 3 cohorts, counts = {rising 0, watch 5, tracked 12, calibration 2, axis2_present 9}**. Cohorts: `robotics-embodied` (Robotics & Embodied AI), `ai-drug-discovery` (AI for Science — Molecular & Drug Discovery), `ai-coding-agents` (AI Agents for Software Engineering). **All "N rising / N watch / %convergence" UI MUST read `snapshot.counts` live — never hardcode the prototype's fictional numbers.**
@@ -138,13 +138,13 @@ Preserve the mature layer (jsonld.ts `@graph`, robots allowlist, sitemap lastmod
 
 ## 5. CI + Vercel build/preview + safe cutover
 
-### CI — new workflow `Evidaxis/.github/workflows/web-ci.yml`
+### CI — new workflow `.github/workflows/web-ci.yml`
 Additive and path-scoped (`web/**`, `data/**`, `taxonomy/**`) so it does not collide with the existing `proving-run-gate.yml` data gate. It builds from **repo root** (so `../data` + `taxonomy/` resolve, same as Vercel), then runs: build → static-HTML data assertion (entity names + inline `<svg>` present, em-dash = 0, no `data-ev` survivors) → serve `web/dist` → pa11y WCAG2AA over sitemap → linkinator internal links → Lighthouse (SEO=1.0 + a11y=1.0 hard, performance soft `|| true` for the first runs, then ≥0.9 hard) → person-free grep gate → Vitest unit tests. **It does NOT deploy.** Branch protection requires `web-ci` AND `proving-run-gate` green on `main`.
 
 ### Vercel config (fixes D8 fast-follow)
 Root cause: `data.ts` resolves `ROOT` to the repo root and reads `data/`, `taxonomy/`; a Vercel project rooted at `web/` can't see `../data`. Fix:
 - **Dashboard (project `evidaxis`)**: Framework = Other; Root Directory = `./` (repo root); Build = `npm ci --prefix web && npm run build --prefix web`; Install = `npm ci --prefix web`; Output = `web/dist`; Node = 22.x.
-- **New `Evidaxis/vercel.json` at repo root** (authoritative once root = repo root): `framework:null`, the build/install/output commands, `trailingSlash:true`, `cleanUrls:false`, the 3 redirects (`/e/:id/:slug→/e/:id`, `/methodology→/methodology/current`, `/rankings/:taxon/:period→/cohorts/:taxon/:period`), and headers (immutable cache on `/_astro/*`, `X-Content-Type-Options:nosniff`, `Referrer-Policy`). **Delete the now-dead `web/vercel.json`.** Add `"engines": { "node": "22.x" }` to `web/package.json`.
+- **New `vercel.json` at repo root** (authoritative once root = repo root): `framework:null`, the build/install/output commands, `trailingSlash:true`, `cleanUrls:false`, the 3 redirects (`/e/:id/:slug→/e/:id`, `/methodology→/methodology/current`, `/rankings/:taxon/:period→/cohorts/:taxon/:period`), and headers (immutable cache on `/_astro/*`, `X-Content-Type-Options:nosniff`, `Referrer-Policy`). **Delete the now-dead `web/vercel.json`.** Add `"engines": { "node": "22.x" }` to `web/package.json`.
 - **No runtime env vars** (pure static build). Keep production alias PUBLIC; keep **Preview** deployments behind Vercel protection so the unreleased redesign is not crawled/indexed pre-cutover.
 
 ### Safe cutover checklist (never touch prod until approved)

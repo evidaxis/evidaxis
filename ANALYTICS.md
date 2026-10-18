@@ -1,6 +1,6 @@
 # Analytics & observability — Evidaxis
 
-> created 2026-07-05 · owner: Claude (Igor's second brain)
+> created 2026-07-05 · responsibility: analytics implementation and observability operations
 
 Wiring lives in [`web/src/components/Analytics.astro`](web/src/components/Analytics.astro)
 (single guarded entry, PROD-only, no-op without keys) mounted in `web/src/layouts/Base.astro`.
@@ -22,21 +22,20 @@ Load strategy: gtag `async`; Clarity self-deferring; PostHog stub now + `.init()
 Vercel scripts `defer`. **Partytown deliberately deferred** — added only if Speed Insights
 shows main-thread cost (sensors first, optimize on data).
 
-## PostHog org "Ivitskiy" — project map (split done 2026-07-05)
+## PostHog analytics workspace: project map (split done 2026-07-05)
 
 | id | project | use |
 |---|---|---|
 | 498067 | Legacy (mixed xray+checker, pre-split) | historical archive, no new ingestion |
 | 498568 | **evidaxis** | this site |
-| 498569 | **ad-xray** | app (re-point ~/Projects/ad-xray to `phc_nsaLht2xGG5GAMcfjZTzXH2Q3TsDrZjpF4ZS3BcYtaVg`) |
-| 498570 | **ai-checker** | app (re-point ~/Projects/ai-checker to `phc_tZbyq6nfwKU2nrrNbh8PCBb8T5v2rrbuBVJajHK8qvSF`) |
+| 498569, 498570 | other projects | separate workspaces outside Evidaxis; not used by this site |
 
 ## One-time settings to apply (do now, lossy if set late)
 
 **GA4** (analytics.google.com → property Evidaxis):
 1. Admin → Data Streams → Web stream → **Enhanced measurement: ON** (default; keep — free scroll/outbound/file/video events).
 2. Admin → Data Settings → **Data Retention → 14 months** (default 2; bump to max).
-3. Admin → Product Links → **BigQuery** → link. GCP project **`evidaxis-analytics`** already created + BigQuery API enabled + billing linked (2026-07-05, via gcloud). In the wizard: Choose project `evidaxis-analytics` → Data location **US** (Igor's call — targets/sells into Silicon Valley; region is locked after creation) → Export type **Daily** for BOTH Event data and User data (free at this volume, fuller ownership) → Submit. Streaming off, advertising identifiers off. (**Not retroactive** — that's why it is set up before traffic.)
+3. Admin → Product Links → **BigQuery** → link. GCP project **`evidaxis-analytics`** already created + BigQuery API enabled + billing linked (2026-07-05, via gcloud). In the wizard: Choose project `evidaxis-analytics` → Data location **US** (US audience; region is locked after creation) → Export type **Daily** for BOTH Event data and User data (free at this volume, fuller ownership) → Submit. Streaming off, advertising identifiers off. (**Not retroactive** — that's why it is set up before traffic.)
 4. Admin → Product Links → **Search Console** → link (join queries + behaviour).
 5. Admin → Product Links → **Google Ads** → link (for future paid traffic / conversion import).
 6. Optional later: **Google Signals** OFF until EU consent story is settled (avoids extra consent obligation).

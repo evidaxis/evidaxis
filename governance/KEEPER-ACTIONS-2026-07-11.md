@@ -13,7 +13,7 @@
 4. Сказать в чате новый version-DOI → я вошью в About/JSON-LD (follow-up WP-F).
 
 ## 2. HF-датасет — ✅ СДЕЛАНО (2026-07-11): huggingface.co/datasets/evidaxis/momentum-snapshots
-Залит чисто (2 person-free утечки пойманы и вычищены; fail-closed гвард вшит), авто-обновление в weekly-CI. ⚠️ ОСТАЛОСЬ: удали личный дубль https://huggingface.co/datasets/ivitskiy/momentum-snapshots (Settings → Delete). Ниже — исходная инструкция (архив):
+Залит чисто (2 person-free утечки пойманы и вычищены; fail-closed гвард вшит), авто-обновление в weekly-CI. ⚠️ ОСТАЛОСЬ: удали личный дубль [redacted: steward account identifier, see governance/REDACTION-2026-10-18-steward-identifiers.md] (Settings → Delete). Ниже — исходная инструкция (архив):
 
 ### (архив) HF-датасет `evidaxis/momentum-snapshots` (~10 мин)
 1. huggingface.co → org evidaxis → New Dataset → `momentum-snapshots`, публичный, CC0.

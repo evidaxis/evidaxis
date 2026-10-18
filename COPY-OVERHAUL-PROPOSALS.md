@@ -10,7 +10,7 @@ about the honest zero, and that nervousness was the loudest signal. Every fix mo
 MAP (coverage = the asset / baseline before the flare), make the prose as confident as the math, and demolish
 the "not X, not Y" self-definition (the founder's #1 flagged tell) by stating the positive claim instead.
 
-> ⚠ ONE JUDGMENT CALL FOR IGOR (about page, Governance): proposed line "One person built Evidaxis. No person
+> ⚠ ONE JUDGMENT CALL FOR THE KEEPER (about page, Governance): proposed line "One person built Evidaxis. No person
 > fronts it." States the founder-firewall as fact. It names no one and reinforces institution-first framing,
 > but it touches the person-free invariant. Approve, soften, or cut. Everything else preserves the existing
 > person-free posture.

@@ -3,7 +3,7 @@
 > v1 (6 parallel research workstreams) SUPERSEDED by spar-24 (MiniMax M3 + Kimi K2.6, blind, convergent):
 > it was Big Design Up Front. Layer B is a **hardening sprint to a frozen n=200 baseline**, NOT a research
 > campus. The big signal research comes AFTER the freeze, where it enriches instead of blocking.
-> Synthesis: `AI Second Brain/lab/consilium-log/work/2026-06-30-spar-24-evidaxis-layer-b-plan/`.
+> Synthesis: internal consilium record for spar-24, 2026-06-30 (Layer B plan review).
 
 ## What spar-24 changed (v1 -> v2)
 1. Facts/judgment split was false + single-model fan-out is a monoculture echo chamber -> judgments

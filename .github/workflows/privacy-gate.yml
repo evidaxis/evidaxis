@@ -1,0 +1,23 @@
+name: privacy-gate
+
+# Owner traces can enter any tracked text, including documentation-only edits,
+# so this light check runs on every push and pull request. The patterns live in
+# a repository secret, never in the public tree; forks without the secret skip.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  owner-traces:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - name: Person-free owner traces
+        env:
+          EVX_OWNER_PATTERNS: ${{ secrets.EVX_OWNER_PATTERNS }}
+        run: python3 scripts/owner_trace_check.py

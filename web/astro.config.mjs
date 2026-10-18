@@ -9,7 +9,7 @@ import { isIndexable } from './src/lib/cardB/policy.mjs';
 
 // Sentry DSN читаем на сборке (loadEnv видит .env файлы + реальный process.env).
 // Сайт статический → Sentry ловит только клиентские (браузерные) ошибки; DSN публичный.
-const { SENTRY_DSN, SENTRY_AUTH_TOKEN } = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
+const { SENTRY_DSN, SENTRY_AUTH_TOKEN, SENTRY_ORG } = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
 
 // Freshness: stamp sitemap lastmod from the real data-change date (snapshot_date)
 // for data-driven pages; a frozen date for methodology/about. Only bumps when the
@@ -84,8 +84,10 @@ export default defineConfig({
           replaysOnErrorSampleRate: 0,
           // Drop browserTracingIntegration from the generated client snippet.
           bundleSizeOptimizations: { excludeTracing: true },
-          ...(SENTRY_AUTH_TOKEN
-            ? { sourceMapsUploadOptions: { org: 'doctor-ads', project: 'evidaxis', authToken: SENTRY_AUTH_TOKEN } }
+          // The organization slug comes from the build environment, so the public
+          // config names no account; uploads need both the slug and the token.
+          ...(SENTRY_AUTH_TOKEN && SENTRY_ORG
+            ? { sourceMapsUploadOptions: { org: SENTRY_ORG, project: 'evidaxis', authToken: SENTRY_AUTH_TOKEN } }
             : {}),
         })]
       : []),
