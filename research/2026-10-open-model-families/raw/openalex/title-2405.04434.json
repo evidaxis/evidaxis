@@ -1,0 +1,5 @@
+{
+  "http_status": 0,
+  "results": [],
+  "error": "HTTP 400: {\"error\":\"Invalid request rejected at the API edge\",\"error_source\":\"openalex-api-proxy\",\"message\":\"A filter value contains an unescaped comma. Commas separate filters, so a literal comma inside a value must be percent-encoded as %2C (or the whole value wrapped in double quotes). e.g. filter=title.se"
+}

@@ -1,0 +1,378 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 23,
+    "page": 1,
+    "per_page": 5,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where DOI is https://doi.org/10.48550/arxiv.2407.21783",
+      "x_new_oql": "get works where DOI is https://doi.org/10.48550/arxiv.2407.21783",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "doi",
+            "value": "https://doi.org/10.48550/arxiv.2407.21783"
+          }
+        ]
+      },
+      "url": "/works?filter=doi:https:%2F%2Fdoi.org%2F10.48550%2Farxiv.2407.21783&per_page=5"
+    },
+    "cost_usd": 0.0001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4401306886",
+      "display_name": "Enriching Location Representation with Detailed Semantic Information",
+      "publication_year": 2024,
+      "doi": "https://doi.org/10.4230/lipics.giscience.2025.3",
+      "ids": {
+        "openalex": "https://openalex.org/W4401306886",
+        "doi": "https://doi.org/10.4230/lipics.giscience.2025.3"
+      },
+      "cited_by_count": 496,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 234
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 238
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 24
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2407.21783",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://arxiv.org/abs/2407.21783",
+          "pdf_url": "https://arxiv.org/pdf/2407.21783",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "public-domain",
+          "license_id": "https://openalex.org/licenses/public-domain",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "pmh:oai:HAL:hal-04940482v1",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://hal.science/hal-04940482",
+          "pdf_url": "https://hal.science/hal-04940482v1/file/Article_TextMine_paper7_Hal.pdf",
+          "source": {
+            "id": "https://openalex.org/S4306402512",
+            "display_name": "HAL (Le Centre pour la Communication Scientifique Directe)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I1294671590",
+            "host_organization_name": "Centre National de la Recherche Scientifique",
+            "host_organization_lineage": [
+              "https://openalex.org/I1294671590"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by-nc",
+          "license_id": "https://openalex.org/licenses/cc-by-nc",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": "https://textmine.sciencesconf.org/",
+          "raw_type": "info:eu-repo/semantics/conferenceObject"
+        },
+        {
+          "id": "pmh:oai:drops-oai.dagstuhl.de:22117",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.DX.2024.25",
+          "pdf_url": "https://drops.dagstuhl.de/storage/01oasics/oasics-vol125-dx2024/OASIcs.DX.2024.25/OASIcs.DX.2024.25.pdf",
+          "source": {
+            "id": "https://openalex.org/S4377196569",
+            "display_name": "DROPS (Schloss Dagstuhl – Leibniz Center for Informatics)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I2799853480",
+            "host_organization_name": "Schloss Dagstuhl – Leibniz Center for Informatics",
+            "host_organization_lineage": [
+              "https://openalex.org/I2799853480"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "InProceedings"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2407.21783",
+          "doi": "https://doi.org/10.48550/arxiv.2407.21783",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2407.21783",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        },
+        {
+          "id": "doi:10.4230/lipics.giscience.2025.3",
+          "doi": "https://doi.org/10.4230/lipics.giscience.2025.3",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.4230/lipics.giscience.2025.3",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4393917817",
+            "display_name": "Leibniz international proceedings in informatics",
+            "issn_l": "1868-8969",
+            "issn": [
+              "1868-8969"
+            ],
+            "is_oa": true,
+            "is_in_doaj": true,
+            "is_core": false,
+            "listed_in": [
+              "doaj",
+              "jufo-1",
+              "norway-1"
+            ],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "journal"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "ConferencePaper"
+        },
+        {
+          "id": "doi:10.4230/oasics.dx.2024.25",
+          "doi": "https://doi.org/10.4230/oasics.dx.2024.25",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.4230/oasics.dx.2024.25",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S7407061190",
+            "display_name": "OASIcs : OpenAccess Series in Informatics",
+            "issn_l": "2190-6807",
+            "issn": [
+              "2190-6807"
+            ],
+            "is_oa": true,
+            "is_in_doaj": true,
+            "is_core": false,
+            "listed_in": [
+              "doaj"
+            ],
+            "host_organization": "https://openalex.org/P4310313770",
+            "host_organization_name": "Schloss Dagstuhl — Leibniz-Zentrum fuer Informatik",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310313770"
+            ],
+            "host_organization_lineage_names": [
+              "Schloss Dagstuhl — Leibniz-Zentrum fuer Informatik"
+            ],
+            "type": "journal"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "ConferencePaper"
+        },
+        {
+          "id": "doi:10.5281/zenodo.20077377",
+          "doi": "https://doi.org/10.5281/zenodo.20077377",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.20077377",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        },
+        {
+          "id": "doi:10.5281/zenodo.20077378",
+          "doi": "https://doi.org/10.5281/zenodo.20077378",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.20077378",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        },
+        {
+          "id": "doi:10.5281/zenodo.21606267",
+          "doi": "https://doi.org/10.5281/zenodo.21606267",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.21606267",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        },
+        {
+          "id": "doi:10.5281/zenodo.21606268",
+          "doi": "https://doi.org/10.5281/zenodo.21606268",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.21606268",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

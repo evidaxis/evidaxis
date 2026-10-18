@@ -1,0 +1,103 @@
+{
+  "id": "https://openalex.org/W4322718191",
+  "display_name": "LLaMA: Open and Efficient Foundation Language Models",
+  "publication_year": 2023,
+  "doi": "https://doi.org/10.48550/arxiv.2302.13971",
+  "ids": {
+    "openalex": "https://openalex.org/W4322718191",
+    "doi": "https://doi.org/10.48550/arxiv.2302.13971"
+  },
+  "cited_by_count": 4523,
+  "counts_by_year": [
+    {
+      "year": 2026,
+      "cited_by_count": 210
+    },
+    {
+      "year": 2025,
+      "cited_by_count": 1431
+    },
+    {
+      "year": 2024,
+      "cited_by_count": 1923
+    },
+    {
+      "year": 2023,
+      "cited_by_count": 957
+    },
+    {
+      "year": 2022,
+      "cited_by_count": 2
+    }
+  ],
+  "locations": [
+    {
+      "id": "pmh:oai:arXiv.org:2302.13971",
+      "doi": null,
+      "is_oa": true,
+      "landing_page_url": "http://arxiv.org/abs/2302.13971",
+      "pdf_url": "https://arxiv.org/pdf/2302.13971",
+      "source": {
+        "id": "https://openalex.org/S4306400194",
+        "display_name": "arXiv (Cornell University)",
+        "issn_l": "2331-8422",
+        "issn": [
+          "2331-8422"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": false,
+        "listed_in": [],
+        "host_organization": "https://openalex.org/I205783295",
+        "host_organization_name": "Cornell University",
+        "host_organization_lineage": [
+          "https://openalex.org/I205783295"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": null,
+      "raw_type": "text"
+    },
+    {
+      "id": "doi:10.48550/arxiv.2302.13971",
+      "doi": "https://doi.org/10.48550/arxiv.2302.13971",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.48550/arxiv.2302.13971",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4306400194",
+        "display_name": "arXiv (Cornell University)",
+        "issn_l": "2331-8422",
+        "issn": [
+          "2331-8422"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": false,
+        "listed_in": [],
+        "host_organization": "https://openalex.org/I205783295",
+        "host_organization_name": "Cornell University",
+        "host_organization_lineage": [
+          "https://openalex.org/I205783295"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": null,
+      "is_accepted": false,
+      "is_published": null,
+      "raw_source_name": null,
+      "raw_type": "Preprint"
+    }
+  ],
+  "publication_date": "2023-02-27",
+  "type": "preprint"
+}

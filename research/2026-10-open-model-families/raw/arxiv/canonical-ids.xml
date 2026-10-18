@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/eCBHI9UxIhUBuIT4801PRHFMPUA</id>
+  <title>arXiv Query: search_query=&amp;id_list=2309.16609,2407.10671,2412.15115,2505.09388,2401.02954,2405.04434,2412.19437,2501.12948,2302.13971,2307.09288,2407.21783,2403.08295,2408.00118,2503.19786,2402.00838,2501.00656,2210.02414,2406.12793,2501.12599,2504.07491,2403.17297,2310.06825,2401.04088,2306.11644,2309.05463,2404.14219,2412.08905&amp;start=0&amp;max_results=27</title>
+  <updated>2026-10-18T20:00:40Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=27&amp;id_list=2309.16609,2407.10671,2412.15115,2505.09388,2401.02954,2405.04434,2412.19437,2501.12948,2302.13971,2307.09288,2407.21783,2403.08295,2408.00118,2503.19786,2402.00838,2501.00656,2210.02414,2406.12793,2501.12599,2504.07491,2403.17297,2310.06825,2401.04088,2306.11644,2309.05463,2404.14219,2412.08905" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>27</opensearch:itemsPerPage>
+  <opensearch:totalResults>27</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2403.17297v1</id>
+    <title>InternLM2 Technical Report</title>
+    <updated>2024-03-26T00:53:24Z</updated>
+    <link href="https://arxiv.org/abs/2403.17297v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.17297v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The evolution of Large Language Models (LLMs) like ChatGPT and GPT-4 has sparked discussions on the advent of Artificial General Intelligence (AGI). However, replicating such advancements in open-source models has been challenging. This paper introduces InternLM2, an open-source LLM that outperforms its predecessors in comprehensive evaluations across 6 dimensions and 30 benchmarks, long-context modeling, and open-ended subjective evaluations through innovative pre-training and optimization techniques. The pre-training process of InternLM2 is meticulously detailed, highlighting the preparation of diverse data types including text, code, and long-context data. InternLM2 efficiently captures long-term dependencies, initially trained on 4k tokens before advancing to 32k tokens in pre-training and fine-tuning stages, exhibiting remarkable performance on the 200k ``Needle-in-a-Haystack" test. InternLM2 is further aligned using Supervised Fine-Tuning (SFT) and a novel Conditional Online Reinforcement Learning from Human Feedback (COOL RLHF) strategy that addresses conflicting human preferences and reward hacking. By releasing InternLM2 models in different training stages and model sizes, we provide the community with insights into the model's evolution.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-26T00:53:24Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.09388v1</id>
+    <title>Qwen3 Technical Report</title>
+    <updated>2025-05-14T13:41:34Z</updated>
+    <link href="https://arxiv.org/abs/2505.09388v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.09388v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we present Qwen3, the latest version of the Qwen model family. Qwen3 comprises a series of large language models (LLMs) designed to advance performance, efficiency, and multilingual capabilities. The Qwen3 series includes models of both dense and Mixture-of-Expert (MoE) architectures, with parameter scales ranging from 0.6 to 235 billion. A key innovation in Qwen3 is the integration of thinking mode (for complex, multi-step reasoning) and non-thinking mode (for rapid, context-driven responses) into a unified framework. This eliminates the need to switch between different models--such as chat-optimized models (e.g., GPT-4o) and dedicated reasoning models (e.g., QwQ-32B)--and enables dynamic mode switching based on user queries or chat templates. Meanwhile, Qwen3 introduces a thinking budget mechanism, allowing users to allocate computational resources adaptively during inference, thereby balancing latency and performance based on task complexity. Moreover, by leveraging the knowledge from the flagship models, we significantly reduce the computational resources required to build smaller-scale models, while ensuring their highly competitive performance. Empirical evaluations demonstrate that Qwen3 achieves state-of-the-art results across diverse benchmarks, including tasks in code generation, mathematical reasoning, agent tasks, etc., competitive against larger MoE models and proprietary models. Compared to its predecessor Qwen2.5, Qwen3 expands multilingual support from 29 to 119 languages and dialects, enhancing global accessibility through improved cross-lingual understanding and generation capabilities. To facilitate reproducibility and community-driven research and development, all Qwen3 models are publicly accessible under Apache 2.0.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-14T13:41:34Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.09288v2</id>
+    <title>Llama 2: Open Foundation and Fine-Tuned Chat Models</title>
+    <updated>2023-07-19T17:08:59Z</updated>
+    <link href="https://arxiv.org/abs/2307.09288v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.09288v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we develop and release Llama 2, a collection of pretrained and fine-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Our fine-tuned LLMs, called Llama 2-Chat, are optimized for dialogue use cases. Our models outperform open-source chat models on most benchmarks we tested, and based on our human evaluations for helpfulness and safety, may be a suitable substitute for closed-source models. We provide a detailed description of our approach to fine-tuning and safety improvements of Llama 2-Chat in order to enable the community to build on our work and contribute to the responsible development of LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-18T14:31:57Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.00838v4</id>
+    <title>OLMo: Accelerating the Science of Language Models</title>
+    <updated>2024-06-07T21:59:52Z</updated>
+    <link href="https://arxiv.org/abs/2402.00838v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.00838v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Language models (LMs) have become ubiquitous in both NLP research and in commercial product offerings. As their commercial importance has surged, the most powerful models have become closed off, gated behind proprietary interfaces, with important details of their training data, architectures, and development undisclosed. Given the importance of these details in scientifically studying these models, including their biases and potential risks, we believe it is essential for the research community to have access to powerful, truly open LMs. To this end, we have built OLMo, a competitive, truly Open Language Model, to enable the scientific study of language models. Unlike most prior efforts that have only released model weights and inference code, we release OLMo alongside open training data and training and evaluation code. We hope this release will empower the open research community and inspire a new wave of innovation.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-01T18:28:55Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.04434v5</id>
+    <title>DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model</title>
+    <updated>2024-06-19T06:04:17Z</updated>
+    <link href="https://arxiv.org/abs/2405.04434v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.04434v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present DeepSeek-V2, a strong Mixture-of-Experts (MoE) language model characterized by economical training and efficient inference. It comprises 236B total parameters, of which 21B are activated for each token, and supports a context length of 128K tokens. DeepSeek-V2 adopts innovative architectures including Multi-head Latent Attention (MLA) and DeepSeekMoE. MLA guarantees efficient inference through significantly compressing the Key-Value (KV) cache into a latent vector, while DeepSeekMoE enables training strong models at an economical cost through sparse computation. Compared with DeepSeek 67B, DeepSeek-V2 achieves significantly stronger performance, and meanwhile saves 42.5% of training costs, reduces the KV cache by 93.3%, and boosts the maximum generation throughput to 5.76 times. We pretrain DeepSeek-V2 on a high-quality and multi-source corpus consisting of 8.1T tokens, and further perform Supervised Fine-Tuning (SFT) and Reinforcement Learning (RL) to fully unlock its potential. Evaluation results show that, even with only 21B activated parameters, DeepSeek-V2 and its chat versions still achieve top-tier performance among open-source models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-07T15:56:43Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.02954v1</id>
+    <title>DeepSeek LLM: Scaling Open-Source Language Models with Longtermism</title>
+    <updated>2024-01-05T18:59:13Z</updated>
+    <link href="https://arxiv.org/abs/2401.02954v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.02954v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid development of open-source large language models (LLMs) has been truly remarkable. However, the scaling law described in previous literature presents varying conclusions, which casts a dark cloud over scaling LLMs. We delve into the study of scaling laws and present our distinctive findings that facilitate scaling of large scale models in two commonly used open-source configurations, 7B and 67B. Guided by the scaling laws, we introduce DeepSeek LLM, a project dedicated to advancing open-source language models with a long-term perspective. To support the pre-training phase, we have developed a dataset that currently consists of 2 trillion tokens and is continuously expanding. We further conduct supervised fine-tuning (SFT) and Direct Preference Optimization (DPO) on DeepSeek LLM Base models, resulting in the creation of DeepSeek Chat models. Our evaluation results demonstrate that DeepSeek LLM 67B surpasses LLaMA-2 70B on various benchmarks, particularly in the domains of code, mathematics, and reasoning. Furthermore, open-ended evaluations reveal that DeepSeek LLM 67B Chat exhibits superior performance compared to GPT-3.5.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-05T18:59:13Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.21783v3</id>
+    <title>The Llama 3 Herd of Models</title>
+    <updated>2024-11-23T23:27:33Z</updated>
+    <link href="https://arxiv.org/abs/2407.21783v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.21783v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern artificial intelligence (AI) systems are powered by foundation models. This paper presents a new set of foundation models, called Llama 3. It is a herd of language models that natively support multilinguality, coding, reasoning, and tool usage. Our largest model is a dense Transformer with 405B parameters and a context window of up to 128K tokens. This paper presents an extensive empirical evaluation of Llama 3. We find that Llama 3 delivers comparable quality to leading language models such as GPT-4 on a plethora of tasks. We publicly release Llama 3, including pre-trained and post-trained versions of the 405B parameter language model and our Llama Guard 3 model for input and output safety. The paper also presents the results of experiments in which we integrate image, video, and speech capabilities into Llama 3 via a compositional approach. We observe this approach performs competitively with the state-of-the-art on image, video, and speech recognition tasks. The resulting models are not yet being broadly released as they are still under development.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-31T17:54:27Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.06825v1</id>
+    <title>Mistral 7B</title>
+    <updated>2023-10-10T17:54:58Z</updated>
+    <link href="https://arxiv.org/abs/2310.06825v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.06825v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Mistral 7B v0.1, a 7-billion-parameter language model engineered for superior performance and efficiency. Mistral 7B outperforms Llama 2 13B across all evaluated benchmarks, and Llama 1 34B in reasoning, mathematics, and code generation. Our model leverages grouped-query attention (GQA) for faster inference, coupled with sliding window attention (SWA) to effectively handle sequences of arbitrary length with a reduced inference cost. We also provide a model fine-tuned to follow instructions, Mistral 7B -- Instruct, that surpasses the Llama 2 13B -- Chat model both on human and automated benchmarks. Our models are released under the Apache 2.0 license.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-10T17:54:58Z</published>
+    <arxiv:comment>Models and code are available at https://mistral.ai/news/announcing-mistral-7b/</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.11644v2</id>
+    <title>Textbooks Are All You Need</title>
+    <updated>2023-10-02T06:12:30Z</updated>
+    <link href="https://arxiv.org/abs/2306.11644v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.11644v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce phi-1, a new large language model for code, with significantly smaller size than competing models: phi-1 is a Transformer-based model with 1.3B parameters, trained for 4 days on 8 A100s, using a selection of ``textbook quality" data from the web (6B tokens) and synthetically generated textbooks and exercises with GPT-3.5 (1B tokens). Despite this small scale, phi-1 attains pass@1 accuracy 50.6% on HumanEval and 55.5% on MBPP. It also displays surprising emergent properties compared to phi-1-base, our model before our finetuning stage on a dataset of coding exercises, and phi-1-small, a smaller model with 350M parameters trained with the same pipeline as phi-1 that still achieves 45% on HumanEval.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-20T16:14:25Z</published>
+    <arxiv:comment>26 pages; changed color scheme of plot. fixed minor typos and added couple clarifications</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.12793v2</id>
+    <title>ChatGLM: A Family of Large Language Models from GLM-130B to GLM-4 All Tools</title>
+    <updated>2024-07-30T03:58:11Z</updated>
+    <link href="https://arxiv.org/abs/2406.12793v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.12793v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce ChatGLM, an evolving family of large language models that we have been developing over time. This report primarily focuses on the GLM-4 language series, which includes GLM-4, GLM-4-Air, and GLM-4-9B. They represent our most capable models that are trained with all the insights and lessons gained from the preceding three generations of ChatGLM. To date, the GLM-4 models are pre-trained on ten trillions of tokens mostly in Chinese and English, along with a small set of corpus from 24 languages, and aligned primarily for Chinese and English usage. The high-quality alignment is achieved via a multi-stage post-training process, which involves supervised fine-tuning and learning from human feedback. Evaluations show that GLM-4 1) closely rivals or outperforms GPT-4 in terms of general metrics such as MMLU, GSM8K, MATH, BBH, GPQA, and HumanEval, 2) gets close to GPT-4-Turbo in instruction following as measured by IFEval, 3) matches GPT-4 Turbo (128K) and Claude 3 for long context tasks, and 4) outperforms GPT-4 in Chinese alignments as measured by AlignBench. The GLM-4 All Tools model is further aligned to understand user intent and autonomously decide when and which tool(s) touse -- including web browser, Python interpreter, text-to-image model, and user-defined functions -- to effectively complete complex tasks. In practical applications, it matches and even surpasses GPT-4 All Tools in tasks like accessing online information via web browsing and solving math problems using Python interpreter. Over the course, we have open-sourced a series of models, including ChatGLM-6B (three generations), GLM-4-9B (128K, 1M), GLM-4V-9B, WebGLM, and CodeGeeX, attracting over 10 million downloads on Hugging face in the year 2023 alone. The open models can be accessed through https://github.com/THUDM and https://huggingface.co/THUDM.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-18T16:58:21Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.14219v4</id>
+    <title>Phi-3 Technical Report: A Highly Capable Language Model Locally on Your Phone</title>
+    <updated>2024-08-30T21:17:17Z</updated>
+    <link href="https://arxiv.org/abs/2404.14219v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.14219v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce phi-3-mini, a 3.8 billion parameter language model trained on 3.3 trillion tokens, whose overall performance, as measured by both academic benchmarks and internal testing, rivals that of models such as Mixtral 8x7B and GPT-3.5 (e.g., phi-3-mini achieves 69% on MMLU and 8.38 on MT-bench), despite being small enough to be deployed on a phone. Our training dataset is a scaled-up version of the one used for phi-2, composed of heavily filtered publicly available web data and synthetic data. The model is also further aligned for robustness, safety, and chat format. We also provide parameter-scaling results with a 7B, 14B models trained for 4.8T tokens, called phi-3-small, phi-3-medium, both significantly more capable than phi-3-mini (e.g., respectively 75%, 78% on MMLU, and 8.7, 8.9 on MT-bench). To enhance multilingual, multimodal, and long-context capabilities, we introduce three models in the phi-3.5 series: phi-3.5-mini, phi-3.5-MoE, and phi-3.5-Vision. The phi-3.5-MoE, a 16 x 3.8B MoE model with 6.6 billion active parameters, achieves superior performance in language reasoning, math, and code tasks compared to other open-source models of similar scale, such as Llama 3.1 and the Mixtral series, and on par with Gemini-1.5-Flash and GPT-4o-mini. Meanwhile, phi-3.5-Vision, a 4.2 billion parameter model derived from phi-3.5-mini, excels in reasoning tasks and is adept at handling both single-image and text prompts, as well as multi-image and text prompts.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-22T14:32:33Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.00656v3</id>
+    <title>2 OLMo 2 Furious</title>
+    <updated>2025-10-08T07:50:45Z</updated>
+    <link href="https://arxiv.org/abs/2501.00656v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.00656v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present OLMo 2, the next generation of our fully open language models. OLMo 2 includes a family of dense autoregressive language models at 7B, 13B and 32B scales with fully released artifacts -- model weights, full training data, training code and recipes, training logs and thousands of intermediate checkpoints. In this work, we describe our modified model architecture and training recipe, focusing on techniques for achieving better training stability and improved per-token efficiency. Our updated pretraining data mixture introduces a new, specialized data mix called Dolmino Mix 1124, which significantly improves model capabilities across many downstream task benchmarks when introduced via late-stage curriculum training (i.e. specialized data during the annealing phase of pretraining). Finally, we incorporate best practices from Tülu 3 to develop OLMo 2-Instruct, focusing on permissive data and extending our final-stage reinforcement learning with verifiable rewards (RLVR). Our OLMo 2 base models sit at the Pareto frontier of performance to training compute, often matching or outperforming open-weight only models like Llama 3.1, Qwen 2.5, and Gemma 2 while using fewer FLOPs and with fully transparent training data, code, and recipe. Our fully open OLMo 2-Instruct models are competitive with open-weight only models of comparable size and even some proprietary models like GPT-3.5 Turbo and GPT 4o Mini.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-31T21:55:10Z</published>
+    <arxiv:comment>Shorter version accepted to COLM 2025. Updated to include 32B results. Model demo available at playground.allenai.org</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.00118v3</id>
+    <title>Gemma 2: Improving Open Language Models at a Practical Size</title>
+    <updated>2024-10-02T15:22:49Z</updated>
+    <link href="https://arxiv.org/abs/2408.00118v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.00118v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we introduce Gemma 2, a new addition to the Gemma family of lightweight, state-of-the-art open models, ranging in scale from 2 billion to 27 billion parameters. In this new version, we apply several known technical modifications to the Transformer architecture, such as interleaving local-global attentions (Beltagy et al., 2020a) and group-query attention (Ainslie et al., 2023). We also train the 2B and 9B models with knowledge distillation (Hinton et al., 2015) instead of next token prediction. The resulting models deliver the best performance for their size, and even offer competitive alternatives to models that are 2-3 times bigger. We release all our models to the community.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-31T19:13:07Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.07491v3</id>
+    <title>Kimi-VL Technical Report</title>
+    <updated>2025-06-23T13:45:50Z</updated>
+    <link href="https://arxiv.org/abs/2504.07491v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.07491v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present Kimi-VL, an efficient open-source Mixture-of-Experts (MoE) vision-language model (VLM) that offers advanced multimodal reasoning, long-context understanding, and strong agent capabilities - all while activating only 2.8B parameters in its language decoder (Kimi-VL-A3B). Kimi-VL demonstrates strong performance across challenging domains: as a general-purpose VLM, Kimi-VL excels in multi-turn agent tasks (e.g., OSWorld), matching flagship models. Furthermore, it exhibits remarkable capabilities across diverse challenging vision language tasks, including college-level image and video comprehension, OCR, mathematical reasoning, and multi-image understanding. In comparative evaluations, it effectively competes with cutting-edge efficient VLMs such as GPT-4o-mini, Qwen2.5-VL-7B, and Gemma-3-12B-IT, while surpassing GPT-4o in several key domains. Kimi-VL also advances in processing long contexts and perceiving clearly. With a 128K extended context window, Kimi-VL can process diverse long inputs, achieving impressive scores of 64.5 on LongVideoBench and 35.1 on MMLongBench-Doc. Its native-resolution vision encoder, MoonViT, further allows it to see and understand ultra-high-resolution visual inputs, achieving 83.2 on InfoVQA and 34.5 on ScreenSpot-Pro, while maintaining lower computational cost for common tasks. Building upon Kimi-VL, we introduce an advanced long-thinking variant: Kimi-VL-Thinking-2506. Developed through long chain-of-thought (CoT) supervised fine-tuning (SFT) and reinforcement learning (RL), the latest model exhibits strong long-horizon reasoning capabilities (64.0 on MMMU, 46.3 on MMMU-Pro, 56.9 on MathVision, 80.1 on MathVista, 65.2 on VideoMMMU) while obtaining robust general abilities. Code and models are publicly accessible at https://github.com/MoonshotAI/Kimi-VL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-10T06:48:26Z</published>
+    <arxiv:comment>Updated Kimi-VL-A3B-Thinking-2506 information</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.08295v4</id>
+    <title>Gemma: Open Models Based on Gemini Research and Technology</title>
+    <updated>2024-04-16T12:52:47Z</updated>
+    <link href="https://arxiv.org/abs/2403.08295v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.08295v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work introduces Gemma, a family of lightweight, state-of-the art open models built from the research and technology used to create Gemini models. Gemma models demonstrate strong performance across academic benchmarks for language understanding, reasoning, and safety. We release two sizes of models (2 billion and 7 billion parameters), and provide both pretrained and fine-tuned checkpoints. Gemma outperforms similarly sized open models on 11 out of 18 text-based tasks, and we present comprehensive evaluations of safety and responsibility aspects of the models, alongside a detailed description of model development. We believe the responsible release of LLMs is critical for improving the safety of frontier models, and for enabling the next wave of LLM innovations.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-13T06:59:16Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.12948v2</id>
+    <title>DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</title>
+    <updated>2026-01-04T03:57:36Z</updated>
+    <link href="https://arxiv.org/abs/2501.12948v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.12948v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>General reasoning represents a long-standing and formidable challenge in artificial intelligence. Recent breakthroughs, exemplified by large language models (LLMs) and chain-of-thought prompting, have achieved considerable success on foundational reasoning tasks. However, this success is heavily contingent upon extensive human-annotated demonstrations, and models' capabilities are still insufficient for more complex problems. Here we show that the reasoning abilities of LLMs can be incentivized through pure reinforcement learning (RL), obviating the need for human-labeled reasoning trajectories. The proposed RL framework facilitates the emergent development of advanced reasoning patterns, such as self-reflection, verification, and dynamic strategy adaptation. Consequently, the trained model achieves superior performance on verifiable tasks such as mathematics, coding competitions, and STEM fields, surpassing its counterparts trained via conventional supervised learning on human demonstrations. Moreover, the emergent reasoning patterns exhibited by these large-scale models can be systematically harnessed to guide and enhance the reasoning capabilities of smaller models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-22T15:19:35Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Nature volume 645, pages 633-638 (2025)</arxiv:journal_ref>
+    <arxiv:doi>10.1038/s41586-025-09422-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s41586-025-09422-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.19437v2</id>
+    <title>DeepSeek-V3 Technical Report</title>
+    <updated>2025-02-18T17:26:38Z</updated>
+    <link href="https://arxiv.org/abs/2412.19437v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.19437v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present DeepSeek-V3, a strong Mixture-of-Experts (MoE) language model with 671B total parameters with 37B activated for each token. To achieve efficient inference and cost-effective training, DeepSeek-V3 adopts Multi-head Latent Attention (MLA) and DeepSeekMoE architectures, which were thoroughly validated in DeepSeek-V2. Furthermore, DeepSeek-V3 pioneers an auxiliary-loss-free strategy for load balancing and sets a multi-token prediction training objective for stronger performance. We pre-train DeepSeek-V3 on 14.8 trillion diverse and high-quality tokens, followed by Supervised Fine-Tuning and Reinforcement Learning stages to fully harness its capabilities. Comprehensive evaluations reveal that DeepSeek-V3 outperforms other open-source models and achieves performance comparable to leading closed-source models. Despite its excellent performance, DeepSeek-V3 requires only 2.788M H800 GPU hours for its full training. In addition, its training process is remarkably stable. Throughout the entire training process, we did not experience any irrecoverable loss spikes or perform any rollbacks. The model checkpoints are available at https://github.com/deepseek-ai/DeepSeek-V3.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-27T04:03:16Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.16609v1</id>
+    <title>Qwen Technical Report</title>
+    <updated>2023-09-28T17:07:49Z</updated>
+    <link href="https://arxiv.org/abs/2309.16609v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.16609v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) have revolutionized the field of artificial intelligence, enabling natural language processing tasks that were previously thought to be exclusive to humans. In this work, we introduce Qwen, the first installment of our large language model series. Qwen is a comprehensive language model series that encompasses distinct models with varying parameter counts. It includes Qwen, the base pretrained language models, and Qwen-Chat, the chat models finetuned with human alignment techniques. The base language models consistently demonstrate superior performance across a multitude of downstream tasks, and the chat models, particularly those trained using Reinforcement Learning from Human Feedback (RLHF), are highly competitive. The chat models possess advanced tool-use and planning capabilities for creating agent applications, showcasing impressive performance even when compared to bigger models on complex tasks like utilizing a code interpreter. Furthermore, we have developed coding-specialized models, Code-Qwen and Code-Qwen-Chat, as well as mathematics-focused models, Math-Qwen-Chat, which are built upon base language models. These models demonstrate significantly improved performance in comparison with open-source models, and slightly fall behind the proprietary models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-28T17:07:49Z</published>
+    <arxiv:comment>59 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.15115v2</id>
+    <title>Qwen2.5 Technical Report</title>
+    <updated>2025-01-03T02:18:21Z</updated>
+    <link href="https://arxiv.org/abs/2412.15115v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.15115v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this report, we introduce Qwen2.5, a comprehensive series of large language models (LLMs) designed to meet diverse needs. Compared to previous iterations, Qwen 2.5 has been significantly improved during both the pre-training and post-training stages. In terms of pre-training, we have scaled the high-quality pre-training datasets from the previous 7 trillion tokens to 18 trillion tokens. This provides a strong foundation for common sense, expert knowledge, and reasoning capabilities. In terms of post-training, we implement intricate supervised finetuning with over 1 million samples, as well as multistage reinforcement learning. Post-training techniques enhance human preference, and notably improve long text generation, structural data analysis, and instruction following. To handle diverse and varied use cases effectively, we present Qwen2.5 LLM series in rich sizes. Open-weight offerings include base and instruction-tuned models, with quantized versions available. In addition, for hosted solutions, the proprietary models currently include two mixture-of-experts (MoE) variants: Qwen2.5-Turbo and Qwen2.5-Plus, both available from Alibaba Cloud Model Studio. Qwen2.5 has demonstrated top-tier performance on a wide range of benchmarks evaluating language understanding, reasoning, mathematics, coding, human preference alignment, etc. Specifically, the open-weight flagship Qwen2.5-72B-Instruct outperforms a number of open and proprietary models and demonstrates competitive performance to the state-of-the-art open-weight model, Llama-3-405B-Instruct, which is around 5 times larger. Qwen2.5-Turbo and Qwen2.5-Plus offer superior cost-effectiveness while performing competitively against GPT-4o-mini and GPT-4o respectively. Additionally, as the foundation, Qwen2.5 models have been instrumental in training specialized models such as Qwen2.5-Math, Qwen2.5-Coder, QwQ, and multimodal models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-19T17:56:09Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.10671v4</id>
+    <title>Qwen2 Technical Report</title>
+    <updated>2024-09-10T13:25:53Z</updated>
+    <link href="https://arxiv.org/abs/2407.10671v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.10671v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This report introduces the Qwen2 series, the latest addition to our large language models and large multimodal models. We release a comprehensive suite of foundational and instruction-tuned language models, encompassing a parameter range from 0.5 to 72 billion, featuring dense models and a Mixture-of-Experts model. Qwen2 surpasses most prior open-weight models, including its predecessor Qwen1.5, and exhibits competitive performance relative to proprietary models across diverse benchmarks on language understanding, generation, multilingual proficiency, coding, mathematics, and reasoning.
+  The flagship model, Qwen2-72B, showcases remarkable performance: 84.2 on MMLU, 37.9 on GPQA, 64.6 on HumanEval, 89.5 on GSM8K, and 82.4 on BBH as a base language model. The instruction-tuned variant, Qwen2-72B-Instruct, attains 9.1 on MT-Bench, 48.1 on Arena-Hard, and 35.7 on LiveCodeBench. Moreover, Qwen2 demonstrates robust multilingual capabilities, proficient in approximately 30 languages, spanning English, Chinese, Spanish, French, German, Arabic, Russian, Korean, Japanese, Thai, Vietnamese, and more, underscoring its versatility and global reach.
+  To foster community innovation and accessibility, we have made the Qwen2 model weights openly available on Hugging Face and ModelScope, and the supplementary materials including example code on GitHub. These platforms also include resources for quantization, fine-tuning, and deployment, facilitating a wide range of applications and research endeavors.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-15T12:35:42Z</published>
+    <arxiv:comment>26 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.13971v1</id>
+    <title>LLaMA: Open and Efficient Foundation Language Models</title>
+    <updated>2023-02-27T17:11:15Z</updated>
+    <link href="https://arxiv.org/abs/2302.13971v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.13971v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA-65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-27T17:11:15Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.12599v4</id>
+    <title>Kimi k1.5: Scaling Reinforcement Learning with LLMs</title>
+    <updated>2025-06-03T02:14:54Z</updated>
+    <link href="https://arxiv.org/abs/2501.12599v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.12599v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Language model pretraining with next token prediction has proved effective for scaling compute but is limited to the amount of available training data. Scaling reinforcement learning (RL) unlocks a new axis for the continued improvement of artificial intelligence, with the promise that large language models (LLMs) can scale their training data by learning to explore with rewards. However, prior published work has not produced competitive results. In light of this, we report on the training practice of Kimi k1.5, our latest multi-modal LLM trained with RL, including its RL training techniques, multi-modal data recipes, and infrastructure optimization. Long context scaling and improved policy optimization methods are key ingredients of our approach, which establishes a simplistic, effective RL framework without relying on more complex techniques such as Monte Carlo tree search, value functions, and process reward models. Notably, our system achieves state-of-the-art reasoning performance across multiple benchmarks and modalities -- e.g., 77.5 on AIME, 96.2 on MATH 500, 94-th percentile on Codeforces, 74.9 on MathVista -- matching OpenAI's o1. Moreover, we present effective long2short methods that use long-CoT techniques to improve short-CoT models, yielding state-of-the-art short-CoT reasoning results -- e.g., 60.8 on AIME, 94.6 on MATH500, 47.3 on LiveCodeBench -- outperforming existing short-CoT models such as GPT-4o and Claude Sonnet 3.5 by a large margin (up to +550%).</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-22T02:48:14Z</published>
+    <arxiv:comment>25 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.08905v1</id>
+    <title>Phi-4 Technical Report</title>
+    <updated>2024-12-12T03:37:41Z</updated>
+    <link href="https://arxiv.org/abs/2412.08905v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.08905v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present phi-4, a 14-billion parameter language model developed with a training recipe that is centrally focused on data quality. Unlike most language models, where pre-training is based primarily on organic data sources such as web content or code, phi-4 strategically incorporates synthetic data throughout the training process. While previous models in the Phi family largely distill the capabilities of a teacher model (specifically GPT-4), phi-4 substantially surpasses its teacher model on STEM-focused QA capabilities, giving evidence that our data-generation and post-training techniques go beyond distillation. Despite minimal changes to the phi-3 architecture, phi-4 achieves strong performance relative to its size -- especially on reasoning-focused benchmarks -- due to improved data, training curriculum, and innovations in the post-training scheme.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-12T03:37:41Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.19786v1</id>
+    <title>Gemma 3 Technical Report</title>
+    <updated>2025-03-25T15:52:34Z</updated>
+    <link href="https://arxiv.org/abs/2503.19786v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.19786v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Gemma 3, a multimodal addition to the Gemma family of lightweight open models, ranging in scale from 1 to 27 billion parameters. This version introduces vision understanding abilities, a wider coverage of languages and longer context - at least 128K tokens. We also change the architecture of the model to reduce the KV-cache memory that tends to explode with long context. This is achieved by increasing the ratio of local to global attention layers, and keeping the span on local attention short. The Gemma 3 models are trained with distillation and achieve superior performance to Gemma 2 for both pre-trained and instruction finetuned versions. In particular, our novel post-training recipe significantly improves the math, chat, instruction-following and multilingual abilities, making Gemma3-4B-IT competitive with Gemma2-27B-IT and Gemma3-27B-IT comparable to Gemini-1.5-Pro across benchmarks. We release all our models to the community.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T15:52:34Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.02414v2</id>
+    <title>GLM-130B: An Open Bilingual Pre-trained Model</title>
+    <updated>2023-10-25T05:22:43Z</updated>
+    <link href="https://arxiv.org/abs/2210.02414v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.02414v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce GLM-130B, a bilingual (English and Chinese) pre-trained language model with 130 billion parameters. It is an attempt to open-source a 100B-scale model at least as good as GPT-3 (davinci) and unveil how models of such a scale can be successfully pre-trained. Over the course of this effort, we face numerous unexpected technical and engineering challenges, particularly on loss spikes and divergence. In this paper, we introduce the training process of GLM-130B including its design choices, training strategies for both efficiency and stability, and engineering efforts. The resultant GLM-130B model offers significant outperformance over GPT-3 175B (davinci) on a wide range of popular English benchmarks while the performance advantage is not observed in OPT-175B and BLOOM-176B. It also consistently and significantly outperforms ERNIE TITAN 3.0 260B -- the largest Chinese language model -- across related benchmarks. Finally, we leverage a unique scaling property of GLM-130B to reach INT4 quantization without post training, with almost no performance loss, making it the first among 100B-scale models and more importantly, allowing its effective inference on 4$\times$RTX 3090 (24G) or 8$\times$RTX 2080 Ti (11G) GPUs, the most affordable GPUs required for using 100B-scale models. The GLM-130B model weights are publicly accessible and its code, training logs, related toolkit, and lessons learned are open-sourced at \url{https://github.com/THUDM/GLM-130B/}.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-05T17:34:44Z</published>
+    <arxiv:comment>Accepted to ICLR 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.05463v1</id>
+    <title>Textbooks Are All You Need II: phi-1.5 technical report</title>
+    <updated>2023-09-11T14:01:45Z</updated>
+    <link href="https://arxiv.org/abs/2309.05463v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.05463v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We continue the investigation into the power of smaller Transformer-based language models as initiated by \textbf{TinyStories} -- a 10 million parameter model that can produce coherent English -- and the follow-up work on \textbf{phi-1}, a 1.3 billion parameter model with Python coding performance close to the state-of-the-art. The latter work proposed to use existing Large Language Models (LLMs) to generate ``textbook quality" data as a way to enhance the learning process compared to traditional web data. We follow the ``Textbooks Are All You Need" approach, focusing this time on common sense reasoning in natural language, and create a new 1.3 billion parameter model named \textbf{phi-1.5}, with performance on natural language tasks comparable to models 5x larger, and surpassing most non-frontier LLMs on more complex reasoning tasks such as grade-school mathematics and basic coding. More generally, \textbf{phi-1.5} exhibits many of the traits of much larger LLMs, both good -- such as the ability to ``think step by step" or perform some rudimentary in-context learning -- and bad, including hallucinations and the potential for toxic and biased generations -- encouragingly though, we are seeing improvement on that front thanks to the absence of web data. We open-source \textbf{phi-1.5} to promote further research on these urgent topics.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-11T14:01:45Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.04088v1</id>
+    <title>Mixtral of Experts</title>
+    <updated>2024-01-08T18:47:34Z</updated>
+    <link href="https://arxiv.org/abs/2401.04088v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.04088v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Mixtral 8x7B, a Sparse Mixture of Experts (SMoE) language model. Mixtral has the same architecture as Mistral 7B, with the difference that each layer is composed of 8 feedforward blocks (i.e. experts). For every token, at each layer, a router network selects two experts to process the current state and combine their outputs. Even though each token only sees two experts, the selected experts can be different at each timestep. As a result, each token has access to 47B parameters, but only uses 13B active parameters during inference. Mixtral was trained with a context size of 32k tokens and it outperforms or matches Llama 2 70B and GPT-3.5 across all evaluated benchmarks. In particular, Mixtral vastly outperforms Llama 2 70B on mathematics, code generation, and multilingual benchmarks. We also provide a model fine-tuned to follow instructions, Mixtral 8x7B - Instruct, that surpasses GPT-3.5 Turbo, Claude-2.1, Gemini Pro, and Llama 2 70B - chat model on human benchmarks. Both the base and instruct models are released under the Apache 2.0 license.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-08T18:47:34Z</published>
+    <arxiv:comment>See more details at https://mistral.ai/news/mixtral-of-experts/</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+  </entry>
+</feed>

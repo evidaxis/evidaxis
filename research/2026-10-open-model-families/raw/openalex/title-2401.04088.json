@@ -1,0 +1,294 @@
+{
+  "meta": {
+    "count": 4,
+    "db_response_time_ms": 38,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (Mixtral of Experts)",
+      "x_new_oql": "get works with (Mixtral of Experts) in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "Mixtral of Experts",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:Mixtral of Experts&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4390723197",
+      "display_name": "Mixtral of Experts",
+      "publication_year": 2024,
+      "doi": "https://doi.org/10.48550/arxiv.2401.04088",
+      "ids": {
+        "openalex": "https://openalex.org/W4390723197",
+        "doi": "https://doi.org/10.48550/arxiv.2401.04088"
+      },
+      "cited_by_count": 141,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 45
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 57
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 39
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2401.04088",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2401.04088",
+          "pdf_url": "https://arxiv.org/pdf/2401.04088",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2401.04088",
+          "doi": "https://doi.org/10.48550/arxiv.2401.04088",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2401.04088",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W7118653790",
+      "display_name": "Mixtral of Experts",
+      "publication_year": 2024,
+      "doi": "https://doi.org/10.57702/xuxup38r",
+      "ids": {
+        "openalex": "https://openalex.org/W7118653790",
+        "doi": "https://doi.org/10.57702/xuxup38r"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.57702/xuxup38r",
+          "doi": "https://doi.org/10.57702/xuxup38r",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.57702/xuxup38r",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S7407053387",
+            "display_name": "TIB Data Manager",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I2802635041",
+            "host_organization_name": "Technische Informationsbibliothek (TIB)",
+            "host_organization_lineage": [
+              "https://openalex.org/I2802635041"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Dataset"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W4390214750",
+      "display_name": "Aurora:Activating Chinese chat capability for Mixtral-8x7B sparse Mixture-of-Experts through Instruction-Tuning",
+      "publication_year": 2023,
+      "doi": "https://doi.org/10.48550/arxiv.2312.14557",
+      "ids": {
+        "openalex": "https://openalex.org/W4390214750",
+        "doi": "https://doi.org/10.48550/arxiv.2312.14557"
+      },
+      "cited_by_count": 1,
+      "counts_by_year": [
+        {
+          "year": 2024,
+          "cited_by_count": 1
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2312.14557",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2312.14557",
+          "pdf_url": "https://arxiv.org/pdf/2312.14557",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2312.14557",
+          "doi": "https://doi.org/10.48550/arxiv.2312.14557",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2312.14557",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W7170055647",
+      "display_name": "The Three-Force Phase Diagram of Mixture-of Experts: Gradient Alignment Theory and Causal Veri cation on Mixtral 8×7B",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.21203/rs.3.rs-10439223/v1",
+      "ids": {
+        "openalex": "https://openalex.org/W7170055647",
+        "doi": "https://doi.org/10.21203/rs.3.rs-10439223/v1"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.21203/rs.3.rs-10439223/v1",
+          "doi": "https://doi.org/10.21203/rs.3.rs-10439223/v1",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.21203/rs.3.rs-10439223/v1",
+          "pdf_url": "https://www.researchsquare.com/article/rs-10439223/latest.pdf",
+          "source": {
+            "id": "https://openalex.org/S4306525896",
+            "display_name": "Research Square",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "acceptedVersion",
+          "is_accepted": true,
+          "is_published": false,
+          "raw_source_name": "Research Square",
+          "raw_type": "posted-content"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

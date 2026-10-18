@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "count": 3,
+    "db_response_time_ms": 9,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (Gemma 4 Technical Report)",
+      "x_new_oql": "get works with (Gemma 4 Technical Report) in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "Gemma 4 Technical Report",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:Gemma 4 Technical Report&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W7167604932",
+      "display_name": "Gemma 4 Technical Report",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.48550/arxiv.2607.02770",
+      "ids": {
+        "openalex": "https://openalex.org/W7167604932",
+        "doi": "https://doi.org/10.48550/arxiv.2607.02770"
+      },
+      "cited_by_count": 7,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 7
+        }
+      ],
+      "locations": [
+        {
+          "id": "doi:10.48550/arxiv.2607.02770",
+          "doi": "https://doi.org/10.48550/arxiv.2607.02770",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2607.02770",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W7166822909",
+      "display_name": "Ternary Foundations for Efficient, Sovereign AI: A Pre-release Technical Report on Ternary-Distilled Gemma-4-E2B",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.5281/zenodo.21110908",
+      "ids": {
+        "openalex": "https://openalex.org/W7166822909",
+        "doi": "https://doi.org/10.5281/zenodo.21110908"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "pmh:doi:10.5281/zenodo.21110908",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://huggingface.co/GoAutomateAI/terna-e2b-GGUF",
+          "pdf_url": null,
+          "source": null,
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "Report"
+        },
+        {
+          "id": "pmh:oai:zenodo.org:21110909",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://www.goautomate.institute",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "info:eu-repo/semantics/report"
+        },
+        {
+          "id": "doi:10.5281/zenodo.21110908",
+          "doi": "https://doi.org/10.5281/zenodo.21110908",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.21110908",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Report"
+        },
+        {
+          "id": "doi:10.5281/zenodo.21110909",
+          "doi": "https://doi.org/10.5281/zenodo.21110909",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.21110909",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Report"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W7154468506",
+      "display_name": "Quantitative Evolution of Cybersecurity Specialization: A Comparative Analysis Between Gemma 4 Base and MinimoSec V4 Technical Evaluation Report on Fine-Tuning for Structured Tasks",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.13140/rg.2.2.12433.19049",
+      "ids": {
+        "openalex": "https://openalex.org/W7154468506",
+        "doi": "https://doi.org/10.13140/rg.2.2.12433.19049"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.13140/rg.2.2.12433.19049",
+          "doi": "https://doi.org/10.13140/rg.2.2.12433.19049",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.13140/rg.2.2.12433.19049",
+          "pdf_url": null,
+          "source": null,
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "article-journal"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

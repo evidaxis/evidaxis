@@ -1,0 +1,555 @@
+{
+  "meta": {
+    "count": 70,
+    "db_response_time_ms": 9,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (stemmed \"Mistral 7B\")",
+      "x_new_oql": "get works with (stemmed \"Mistral 7B\") in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "\"Mistral 7B\"",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:%22Mistral 7B%22&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4387561528",
+      "display_name": "Mistral 7B",
+      "publication_year": 2023,
+      "doi": "https://doi.org/10.48550/arxiv.2310.06825",
+      "ids": {
+        "openalex": "https://openalex.org/W4387561528",
+        "doi": "https://doi.org/10.48550/arxiv.2310.06825"
+      },
+      "cited_by_count": 322,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 98
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 127
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 88
+        },
+        {
+          "year": 2023,
+          "cited_by_count": 8
+        },
+        {
+          "year": 2019,
+          "cited_by_count": 1
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2310.06825",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2310.06825",
+          "pdf_url": "https://arxiv.org/pdf/2310.06825",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2310.06825",
+          "doi": "https://doi.org/10.48550/arxiv.2310.06825",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2310.06825",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ],
+      "publication_date": "2023-10-10",
+      "type": "preprint"
+    },
+    {
+      "id": "https://openalex.org/W7113669893",
+      "display_name": "Mistral-7B",
+      "publication_year": 2024,
+      "doi": null,
+      "ids": {
+        "openalex": "https://openalex.org/W7113669893"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "pmh:oai:share.osf.io:5625e8be-1151-4129-9718-3a2c263e1c9e",
+          "doi": null,
+          "is_oa": false,
+          "landing_page_url": "https://osf.io/5fpn4",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306401127",
+            "display_name": "OSF Preprints (OSF Preprints)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I2799848540",
+            "host_organization_name": "Center for Open Science",
+            "host_organization_lineage": [
+              "https://openalex.org/I2799848540"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "ProjectComponent"
+        }
+      ],
+      "publication_date": "2024-11-04",
+      "type": "preprint"
+    },
+    {
+      "id": "https://openalex.org/W7161010555",
+      "display_name": "hancock-mistral-7b-adapter",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.57967/hf/8783",
+      "ids": {
+        "openalex": "https://openalex.org/W7161010555",
+        "doi": "https://doi.org/10.57967/hf/8783"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.57967/hf/8783",
+          "doi": "https://doi.org/10.57967/hf/8783",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.57967/hf/8783",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S7407051994",
+            "display_name": "Hugging Face",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I4387154989",
+            "host_organization_name": "Hugging Face",
+            "host_organization_lineage": [
+              "https://openalex.org/I4387154989"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Model"
+        }
+      ],
+      "publication_date": "2026-05-13",
+      "type": "dataset"
+    },
+    {
+      "id": "https://openalex.org/W7125580596",
+      "display_name": "mistral-7b-indian-university-guidance",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.57967/hf/7639",
+      "ids": {
+        "openalex": "https://openalex.org/W7125580596",
+        "doi": "https://doi.org/10.57967/hf/7639"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.57967/hf/7639",
+          "doi": "https://doi.org/10.57967/hf/7639",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.57967/hf/7639",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S7407051994",
+            "display_name": "Hugging Face",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I4387154989",
+            "host_organization_name": "Hugging Face",
+            "host_organization_lineage": [
+              "https://openalex.org/I4387154989"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Model"
+        }
+      ],
+      "publication_date": "2026-01-24",
+      "type": "dataset"
+    },
+    {
+      "id": "https://openalex.org/W4406263802",
+      "display_name": "Document Query Processing With Mistral 7B and Streamlit",
+      "publication_year": 2024,
+      "doi": "https://doi.org/10.1109/iccubea61740.2024.10774917",
+      "ids": {
+        "openalex": "https://openalex.org/W4406263802",
+        "doi": "https://doi.org/10.1109/iccubea61740.2024.10774917"
+      },
+      "cited_by_count": 2,
+      "counts_by_year": [
+        {
+          "year": 2025,
+          "cited_by_count": 2
+        }
+      ],
+      "locations": [
+        {
+          "id": "doi:10.1109/iccubea61740.2024.10774917",
+          "doi": "https://doi.org/10.1109/iccubea61740.2024.10774917",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.1109/iccubea61740.2024.10774917",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306419281",
+            "display_name": "International Conference on Computing Communication Control and automation",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "conference"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "2024 8th International Conference on Computing, Communication, Control and Automation (ICCUBEA)",
+          "raw_type": "proceedings-article"
+        }
+      ],
+      "publication_date": "2024-08-23",
+      "type": "conference-paper"
+    },
+    {
+      "id": "https://openalex.org/W7160373067",
+      "display_name": "Evaluating Mistral 7B Instruct Jailbreak Vulnerabilities",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.32473/flairs.39.1.141801",
+      "ids": {
+        "openalex": "https://openalex.org/W7160373067",
+        "doi": "https://doi.org/10.32473/flairs.39.1.141801"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.32473/flairs.39.1.141801",
+          "doi": "https://doi.org/10.32473/flairs.39.1.141801",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.32473/flairs.39.1.141801",
+          "pdf_url": "https://journals.flvc.org/FLAIRS/article/download/141801/146980",
+          "source": {
+            "id": "https://openalex.org/S4210205383",
+            "display_name": "Proceedings of the ... International Florida Artificial Intelligence Research Society Conference",
+            "issn_l": "2334-0754",
+            "issn": [
+              "2334-0754",
+              "2334-0762"
+            ],
+            "is_oa": true,
+            "is_in_doaj": true,
+            "is_core": false,
+            "listed_in": [
+              "doaj",
+              "norway-1"
+            ],
+            "host_organization": "https://openalex.org/P4310320363",
+            "host_organization_name": "George A. Smathers Libraries",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310320363"
+            ],
+            "host_organization_lineage_names": [
+              "George A. Smathers Libraries"
+            ],
+            "type": "conference"
+          },
+          "license": "cc-by-nc",
+          "license_id": "https://openalex.org/licenses/cc-by-nc",
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "The International FLAIRS Conference Proceedings",
+          "raw_type": "journal-article"
+        },
+        {
+          "id": "pmh:oai:doaj.org/article:09c44fb85c314aa2812f37fef76729da",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://doaj.org/article/09c44fb85c314aa2812f37fef76729da",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306401280",
+            "display_name": "DOAJ (DOAJ: Directory of Open Access Journals)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by-sa",
+          "license_id": "https://openalex.org/licenses/cc-by-sa",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": "Proceedings of the International Florida Artificial Intelligence Research Society Conference, Vol 39, Iss 1 (2026)",
+          "raw_type": "article"
+        },
+        {
+          "id": "pmh:oai:doaj.org/article:e5e72ce3ef9a4c35a35b78a38ff9cdb2",
+          "doi": null,
+          "is_oa": false,
+          "landing_page_url": "https://doaj.org/article/e5e72ce3ef9a4c35a35b78a38ff9cdb2",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306401280",
+            "display_name": "DOAJ (DOAJ: Directory of Open Access Journals)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": "Proceedings of the International Florida Artificial Intelligence Research Society Conference, Vol 39, Iss 1 (2026)",
+          "raw_type": "article"
+        }
+      ],
+      "publication_date": "2026-05-06",
+      "type": "conference-paper"
+    },
+    {
+      "id": "https://openalex.org/W4413401016",
+      "display_name": "Leveraging RAG and Mistral 7B for Enhanced Performance on Legal Benchmarks",
+      "publication_year": 2025,
+      "doi": "https://doi.org/10.1007/978-981-96-6297-5_30",
+      "ids": {
+        "openalex": "https://openalex.org/W4413401016",
+        "doi": "https://doi.org/10.1007/978-981-96-6297-5_30"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.1007/978-981-96-6297-5_30",
+          "doi": "https://doi.org/10.1007/978-981-96-6297-5_30",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.1007/978-981-96-6297-5_30",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4210169156",
+            "display_name": "Lecture notes in networks and systems",
+            "issn_l": "2367-3370",
+            "issn": [
+              "2367-3370",
+              "2367-3389"
+            ],
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": true,
+            "listed_in": [
+              "cwts-core",
+              "jufo-1",
+              "norway-1"
+            ],
+            "host_organization": "https://openalex.org/P4310319972",
+            "host_organization_name": "Springer International Publishing",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310319972",
+              "https://openalex.org/P4310319965"
+            ],
+            "host_organization_lineage_names": [
+              "Springer International Publishing",
+              "Springer Nature"
+            ],
+            "type": "book series"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Lecture Notes in Networks and Systems",
+          "raw_type": "book-chapter"
+        }
+      ],
+      "publication_date": "2025-01-01",
+      "type": "conference-paper"
+    },
+    {
+      "id": "https://openalex.org/W4399049946",
+      "display_name": "Domain-specialized LLM: Financial fine-tuning and utilization method using Mistral 7B",
+      "publication_year": 2024,
+      "doi": "https://doi.org/10.13088/jiis.2024.30.1.093",
+      "ids": {
+        "openalex": "https://openalex.org/W4399049946",
+        "doi": "https://doi.org/10.13088/jiis.2024.30.1.093"
+      },
+      "cited_by_count": 46,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 9
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 33
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 4
+        }
+      ],
+      "locations": [
+        {
+          "id": "doi:10.13088/jiis.2024.30.1.093",
+          "doi": "https://doi.org/10.13088/jiis.2024.30.1.093",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.13088/jiis.2024.30.1.093",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306515669",
+            "display_name": "Journal of Intelligence and Information Systems",
+            "issn_l": "2288-4866",
+            "issn": [
+              "2288-4866",
+              "2288-4882"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [
+              "kci-registered"
+            ],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "journal"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Journal of Intelligence and Information Systems",
+          "raw_type": "journal-article"
+        }
+      ],
+      "publication_date": "2024-03-31",
+      "type": "article"
+    }
+  ],
+  "group_by": []
+}

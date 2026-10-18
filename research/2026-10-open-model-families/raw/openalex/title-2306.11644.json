@@ -1,0 +1,318 @@
+{
+  "meta": {
+    "count": 4,
+    "db_response_time_ms": 12,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (Textbooks Are All You Need)",
+      "x_new_oql": "get works with (Textbooks Are All You Need) in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "Textbooks Are All You Need",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:Textbooks Are All You Need&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4381586770",
+      "display_name": "Textbooks Are All You Need",
+      "publication_year": 2023,
+      "doi": "https://doi.org/10.48550/arxiv.2306.11644",
+      "ids": {
+        "openalex": "https://openalex.org/W4381586770",
+        "doi": "https://doi.org/10.48550/arxiv.2306.11644"
+      },
+      "cited_by_count": 138,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 11
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 51
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 55
+        },
+        {
+          "year": 2023,
+          "cited_by_count": 21
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2306.11644",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2306.11644",
+          "pdf_url": "https://arxiv.org/pdf/2306.11644",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2306.11644",
+          "doi": "https://doi.org/10.48550/arxiv.2306.11644",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2306.11644",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W4386655575",
+      "display_name": "Textbooks Are All You Need II: phi-1.5 technical report",
+      "publication_year": 2023,
+      "doi": "https://doi.org/10.48550/arxiv.2309.05463",
+      "ids": {
+        "openalex": "https://openalex.org/W4386655575",
+        "doi": "https://doi.org/10.48550/arxiv.2309.05463"
+      },
+      "cited_by_count": 49,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 6
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 17
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 24
+        },
+        {
+          "year": 2023,
+          "cited_by_count": 2
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2309.05463",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2309.05463",
+          "pdf_url": "https://arxiv.org/pdf/2309.05463",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2309.05463",
+          "doi": "https://doi.org/10.48550/arxiv.2309.05463",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2309.05463",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W4408523257",
+      "display_name": "(International Law) Textbooks Are All You Need",
+      "publication_year": 2025,
+      "doi": "https://doi.org/10.2139/ssrn.5104419",
+      "ids": {
+        "openalex": "https://openalex.org/W4408523257",
+        "doi": "https://doi.org/10.2139/ssrn.5104419"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.2139/ssrn.5104419",
+          "doi": "https://doi.org/10.2139/ssrn.5104419",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.2139/ssrn.5104419",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4210172589",
+            "display_name": "SSRN Electronic Journal",
+            "issn_l": "1556-5068",
+            "issn": [
+              "1556-5068"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I1318003438",
+            "host_organization_name": "RELX Group (Netherlands)",
+            "host_organization_lineage": [
+              "https://openalex.org/I1318003438"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "acceptedVersion",
+          "is_accepted": true,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "posted-content"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W4243373857",
+      "display_name": "3.2 Stage 2: search for relevant texts The relevant texts have already been determined in this case. Normally, however, once the issues raised by the question have been discovered and preliminary reading undertaken in the textbooks, it is useful to scan the following: • handouts from tutors; • articles mentioned in the footnotes or endnotes in set textbooks; • available databases or relevant indexes of law journals; • available databases or Current Law Citator for up to date law cases, legislation and so on; • one of the article databases (such as Igenta) or indexes to various journals in years that are thought to be salient. 9.3.3 Stage 3: carefully read, note, organise and reflect on the materials collected • Precis them. • Extract arguments presented. • Reconsider the question. Here, it is relevant to turn to the limited materials used for this essay—the extracts from the two cases and the textbook by Tillotson. The first task is reading, asking the basic questions detailed below in relation to cases and texts, all the time recalling the actual issues detailed in the essay question, otherwise, relevant details could be missed. As you read texts, you need to ask yourself the following questions: • Law reports: What are the facts? What legal rules have been applied and why? What aspects of this case are of relevance to my essay? How do the arguments presented assist me in my current essay? • Textbooks: What is being described? Do I understand? Does it fit my understanding of the cases? Have I properly grasped the issues involved? What is of relevance to my essay? • Articles: What is the writer’s argument? Is it well supported by the evidence? Does the writer’s argument support or deny my argument in the essay? Is there a majority view developing in the texts concerning any of the issues raised by the question? When you have done this go back to the diagram of the question. Note beside the various issues aspects of the texts that are of relevance to the issues identified as",
+      "publication_year": 2012,
+      "doi": "https://doi.org/10.4324/9781843145103-222",
+      "ids": {
+        "openalex": "https://openalex.org/W4243373857",
+        "doi": "https://doi.org/10.4324/9781843145103-222"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.4324/9781843145103-222",
+          "doi": "https://doi.org/10.4324/9781843145103-222",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.4324/9781843145103-222",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306463855",
+            "display_name": "Routledge eBooks",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/P4310319847",
+            "host_organization_name": "Routledge",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310319847",
+              "https://openalex.org/P4310320547"
+            ],
+            "host_organization_lineage_names": [
+              "Routledge",
+              "Taylor & Francis"
+            ],
+            "type": "ebook platform"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Legal Method and Reasoning",
+          "raw_type": "book-chapter"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

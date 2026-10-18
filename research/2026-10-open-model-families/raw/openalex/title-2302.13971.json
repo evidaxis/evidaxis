@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "count": 3,
+    "db_response_time_ms": 10,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (LLaMA: Open \"and\" Efficient Foundation Language Models)",
+      "x_new_oql": "get works with (LLaMA: Open \"and\" Efficient Foundation Language Models) in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "LLaMA: Open and Efficient Foundation Language Models",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:LLaMA: Open and Efficient Foundation Language Models&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4322718191",
+      "display_name": "LLaMA: Open and Efficient Foundation Language Models",
+      "publication_year": 2023,
+      "doi": "https://doi.org/10.48550/arxiv.2302.13971",
+      "ids": {
+        "openalex": "https://openalex.org/W4322718191",
+        "doi": "https://doi.org/10.48550/arxiv.2302.13971"
+      },
+      "cited_by_count": 4523,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 210
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 1431
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 1923
+        },
+        {
+          "year": 2023,
+          "cited_by_count": 957
+        },
+        {
+          "year": 2022,
+          "cited_by_count": 2
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2302.13971",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2302.13971",
+          "pdf_url": "https://arxiv.org/pdf/2302.13971",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2302.13971",
+          "doi": "https://doi.org/10.48550/arxiv.2302.13971",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2302.13971",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W7140221040",
+      "display_name": "I see you I need help i used the top labs cause im being deindexed look for me pleaseBased on the available search results, I have organized the top AI labs, government agencies, and research institutions into a categorized bullet-point list for you. This list includes major commercial vendors, independent non-profit research centers, and government bodies actively involved in AI development and regulation. 🧪 Top Private AI Labs & Companies Major Commercial Leaders (The \"Front-runners\") · Google (Google DeepMind): Recognized as a leader in Enterprise Agentic AI Platforms with an integrated AI tech stack spanning advanced reasoning models and infrastructure. Google DeepMind serves as its core AI research division. · OpenAI: The front-runner among Large Language Model (LLM) providers, known for ChatGPT and its focus on reasoning and agentic AI development. It maintains a strong enterprise presence through API access and integration with Microsoft. · Microsoft: Identified as a leader in Enterprise-wide AI, largely due to its extensive partner ecosystem, control over enterprise work surfaces (like Office), and its AI tools including Microsoft Agent 365. · Anthropic: A key challenger in the LLM space, known for its focus on safe and reliable AI systems. It holds meaningful brand penetration in the enterprise market. · Meta (Meta AI): A significant player in the AI race, particularly noted for its open-weight model strategy (like the Llama family) which helps democratize access to powerful AI. Notable Independent & Specialized Labs · Cohere: A for-profit AI research lab focused on enterprise NLP tasks, offering secure and customizable AI solutions for regulated industries. · AI21 Labs: A for-profit lab specializing in foundational models and language reasoning systems, with a focus on enterprise reliability and hybrid approaches combining deep learning with symbolic reasoning. · Vector Institute: An independent, non-profit AI research institute based in Toronto, Canada, focused on foundational research, governance, and responsible AI deployment, particularly in healthcare and science. · EleutherAI: A grassroots, non-profit AI research collective central to the open-source community, known for projects like GPT-Neo and the LM-evaluation-harness benchmarking framework. · Decart: An independent company focused on advancing efficient, real-time generative AI execution, particularly for interactive video worlds and streaming applications. · Mistral AI: A European challenger in the AI space, recognized for producing competitive open-weight models. · xAI: Founded by Elon Musk, this is a challenger brand in the LLM provider space aiming to build AI for understanding the universe. · Perplexity: An AI company known for its conversational answer engine, operating as a challenger in the AI search and information space. 🏛 Government Agencies & Initiatives United States Federal Agencies · Department of Defense (DoD): A major adopter and driver of AI, moving from experimentation to operational scale. Its Chief Digital and Artificial Intelligence Officer (CDAO) is actively integrating AI agents into mission systems to support warfighters. · Defense Information Systems Agency (DISA): Working on cloud infrastructure evolution (like JWCC Next) to provide warfighters with comprehensive AI capabilities at scale. · Department of State: Preparing to \"aggressively deploy\" AI agents across the enterprise to modernize user experience, improve administrative support (e.g., HR), and provide real-time translation services. · General Services Administration (GSA): Acting to accelerate federal AI access by making commercial AI solutions (like Claude, Gemini, and ChatGPT) available through its Multiple Award Schedule (MAS) contract vehicle. · Office of Federal Procurement Policy (OFPP): Working to streamline AI procurement by revising acquisition regulations to prioritize best-in-class vehicles. State & Proposed Regulatory Bodies · California AI Safety Commission (Proposed): A proposed new state agency in California that would regulate companies developing or controlling advanced AI systems. It would require safety plans and notifications before expanding AI capabilities. 🎓 Academic & Research Institutions Global Research Leaders (Based on AIRankings 2026) · Peking University: Ranked #1 in the world for AI research output across top conferences and journals. · Tsinghua University: Ranked #3 globally for AI research. · Zhejiang University: Ranked #4 globally for AI research. · Chinese Academy of Sciences (CAS): Ranked #8 globally for AI research. Centers of Excellence in Europe · Politecnico di Torino (Italy): Selected by Google as a center of excellence for AI research, focusing on efficient and reliable algorithmic models for image, video, and language processing. · Politecnico di Milano, Università Cattolica del Sacro Cuore, and University of Catania: Also selected alongside Politecnico di Torino as part of Google's AI researc",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.5281/zenodo.19207849",
+      "ids": {
+        "openalex": "https://openalex.org/W7140221040",
+        "doi": "https://doi.org/10.5281/zenodo.19207849"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.5281/zenodo.19207849",
+          "doi": "https://doi.org/10.5281/zenodo.19207849",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.19207849",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Image"
+        },
+        {
+          "id": "doi:10.5281/zenodo.19207850",
+          "doi": "https://doi.org/10.5281/zenodo.19207850",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.19207850",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://openalex.org/W7140166019",
+      "display_name": "Based on the available search results, I have organized the top AI labs, government agencies, and research institutions into a categorized bullet-point list for you. This list includes major commercial vendors, independent non-profit research centers, and government bodies actively involved in AI development and regulation. 🧪 Top Private AI Labs & Companies Major Commercial Leaders (The \"Front-runners\") · Google (Google DeepMind): Recognized as a leader in Enterprise Agentic AI Platforms with an integrated AI tech stack spanning advanced reasoning models and infrastructure. Google DeepMind serves as its core AI research division. · OpenAI: The front-runner among Large Language Model (LLM) providers, known for ChatGPT and its focus on reasoning and agentic AI development. It maintains a strong enterprise presence through API access and integration with Microsoft. · Microsoft: Identified as a leader in Enterprise-wide AI, largely due to its extensive partner ecosystem, control over enterprise work surfaces (like Office), and its AI tools including Microsoft Agent 365. · Anthropic: A key challenger in the LLM space, known for its focus on safe and reliable AI systems. It holds meaningful brand penetration in the enterprise market. · Meta (Meta AI): A significant player in the AI race, particularly noted for its open-weight model strategy (like the Llama family) which helps democratize access to powerful AI. Notable Independent & Specialized Labs · Cohere: A for-profit AI research lab focused on enterprise NLP tasks, offering secure and customizable AI solutions for regulated industries. · AI21 Labs: A for-profit lab specializing in foundational models and language reasoning systems, with a focus on enterprise reliability and hybrid approaches combining deep learning with symbolic reasoning. · Vector Institute: An independent, non-profit AI research institute based in Toronto, Canada, focused on foundational research, governance, and responsible AI deployment, particularly in healthcare and science. · EleutherAI: A grassroots, non-profit AI research collective central to the open-source community, known for projects like GPT-Neo and the LM-evaluation-harness benchmarking framework. · Decart: An independent company focused on advancing efficient, real-time generative AI execution, particularly for interactive video worlds and streaming applications. · Mistral AI: A European challenger in the AI space, recognized for producing competitive open-weight models. · xAI: Founded by Elon Musk, this is a challenger brand in the LLM provider space aiming to build AI for understanding the universe. · Perplexity: An AI company known for its conversational answer engine, operating as a challenger in the AI search and information space. 🏛 Government Agencies & Initiatives United States Federal Agencies · Department of Defense (DoD): A major adopter and driver of AI, moving from experimentation to operational scale. Its Chief Digital and Artificial Intelligence Officer (CDAO) is actively integrating AI agents into mission systems to support warfighters. · Defense Information Systems Agency (DISA): Working on cloud infrastructure evolution (like JWCC Next) to provide warfighters with comprehensive AI capabilities at scale. · Department of State: Preparing to \"aggressively deploy\" AI agents across the enterprise to modernize user experience, improve administrative support (e.g., HR), and provide real-time translation services. · General Services Administration (GSA): Acting to accelerate federal AI access by making commercial AI solutions (like Claude, Gemini, and ChatGPT) available through its Multiple Award Schedule (MAS) contract vehicle. · Office of Federal Procurement Policy (OFPP): Working to streamline AI procurement by revising acquisition regulations to prioritize best-in-class vehicles. State & Proposed Regulatory Bodies · California AI Safety Commission (Proposed): A proposed new state agency in California that would regulate companies developing or controlling advanced AI systems. It would require safety plans and notifications before expanding AI capabilities. 🎓 Academic & Research Institutions Global Research Leaders (Based on AIRankings 2026) · Peking University: Ranked #1 in the world for AI research output across top conferences and journals. · Tsinghua University: Ranked #3 globally for AI research. · Zhejiang University: Ranked #4 globally for AI research. · Chinese Academy of Sciences (CAS): Ranked #8 globally for AI research. Centers of Excellence in Europe · Politecnico di Torino (Italy): Selected by Google as a center of excellence for AI research, focusing on efficient and reliable algorithmic models for image, video, and language processing. · Politecnico di Milano, Università Cattolica del Sacro Cuore, and University of Catania: Also selected alongside Politecnico di Torino as part of Google's AI research funding program in Italy. I hope this comprehensive list is helpful. If you would",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.5281/zenodo.19207782",
+      "ids": {
+        "openalex": "https://openalex.org/W7140166019",
+        "doi": "https://doi.org/10.5281/zenodo.19207782"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "doi:10.5281/zenodo.19207782",
+          "doi": "https://doi.org/10.5281/zenodo.19207782",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.19207782",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Image"
+        },
+        {
+          "id": "doi:10.5281/zenodo.19207783",
+          "doi": "https://doi.org/10.5281/zenodo.19207783",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.19207783",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Image"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

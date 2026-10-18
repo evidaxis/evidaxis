@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 12,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (stemmed \"GLM-130B: An Open Bilingual Pre-trained Model\")",
+      "x_new_oql": "get works with (stemmed \"GLM-130B: An Open Bilingual Pre-trained Model\") in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "\"GLM-130B: An Open Bilingual Pre-trained Model\"",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:%22GLM-130B: An Open Bilingual Pre-trained Model%22&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4303443398",
+      "display_name": "GLM-130B: An Open Bilingual Pre-trained Model",
+      "publication_year": 2022,
+      "doi": "https://doi.org/10.48550/arxiv.2210.02414",
+      "ids": {
+        "openalex": "https://openalex.org/W4303443398",
+        "doi": "https://doi.org/10.48550/arxiv.2210.02414"
+      },
+      "cited_by_count": 281,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 8
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 53
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 133
+        },
+        {
+          "year": 2023,
+          "cited_by_count": 85
+        },
+        {
+          "year": 2022,
+          "cited_by_count": 2
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2210.02414",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2210.02414",
+          "pdf_url": "https://arxiv.org/pdf/2210.02414",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2210.02414",
+          "doi": "https://doi.org/10.48550/arxiv.2210.02414",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2210.02414",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ],
+      "publication_date": "2022-10-05",
+      "type": "preprint"
+    }
+  ],
+  "group_by": []
+}

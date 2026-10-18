@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/TY7uzTjJWDRAxd5ubdo3gcBnhkI</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND (ti:DeepSeek OR ti:DeepSeek-V2 OR ti:DeepSeek-V3 OR ti:DeepSeek-R1)&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-10-18T20:00:47Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:DeepSeek+OR+(ti:DeepSeek-V2+OR+(ti:DeepSeek-V3+OR+ti:DeepSeek-R1)))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2412.19437v2</id>
+    <title>DeepSeek-V3 Technical Report</title>
+    <updated>2025-02-18T17:26:38Z</updated>
+    <link href="https://arxiv.org/abs/2412.19437v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.19437v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present DeepSeek-V3, a strong Mixture-of-Experts (MoE) language model with 671B total parameters with 37B activated for each token. To achieve efficient inference and cost-effective training, DeepSeek-V3 adopts Multi-head Latent Attention (MLA) and DeepSeekMoE architectures, which were thoroughly validated in DeepSeek-V2. Furthermore, DeepSeek-V3 pioneers an auxiliary-loss-free strategy for load balancing and sets a multi-token prediction training objective for stronger performance. We pre-train DeepSeek-V3 on 14.8 trillion diverse and high-quality tokens, followed by Supervised Fine-Tuning and Reinforcement Learning stages to fully harness its capabilities. Comprehensive evaluations reveal that DeepSeek-V3 outperforms other open-source models and achieves performance comparable to leading closed-source models. Despite its excellent performance, DeepSeek-V3 requires only 2.788M H800 GPU hours for its full training. In addition, its training process is remarkably stable. Throughout the entire training process, we did not experience any irrecoverable loss spikes or perform any rollbacks. The model checkpoints are available at https://github.com/deepseek-ai/DeepSeek-V3.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-27T04:03:16Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+</feed>

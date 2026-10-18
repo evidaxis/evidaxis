@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 10,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (Qwen-RobotNav Technical Report: A Scalable Navigation Model Designed for an Agentic Navigation System)",
+      "x_new_oql": "get works with (Qwen-RobotNav Technical Report: A Scalable Navigation Model Designed for an Agentic Navigation System) in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "Qwen-RobotNav Technical Report: A Scalable Navigation Model Designed for an Agentic Navigation System",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:Qwen-RobotNav Technical Report: A Scalable Navigation Model Designed for an Agentic Navigation System&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W7165037828",
+      "display_name": "Qwen-RobotNav Technical Report: A Scalable Navigation Model Designed for an Agentic Navigation System",
+      "publication_year": 2026,
+      "doi": "https://doi.org/10.48550/arxiv.2606.18112",
+      "ids": {
+        "openalex": "https://openalex.org/W7165037828",
+        "doi": "https://doi.org/10.48550/arxiv.2606.18112"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2606.18112",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://arxiv.org/abs/2606.18112",
+          "pdf_url": "https://arxiv.org/pdf/2606.18112",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2606.18112",
+          "doi": "https://doi.org/10.48550/arxiv.2606.18112",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2606.18112",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

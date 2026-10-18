@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/6jIe/xTngV2eNuFrtlRh90cPAs0</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND ti:Gemma&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-10-18T20:00:54Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+ti:Gemma&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2503.19786v1</id>
+    <title>Gemma 3 Technical Report</title>
+    <updated>2025-03-25T15:52:34Z</updated>
+    <link href="https://arxiv.org/abs/2503.19786v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.19786v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Gemma 3, a multimodal addition to the Gemma family of lightweight open models, ranging in scale from 1 to 27 billion parameters. This version introduces vision understanding abilities, a wider coverage of languages and longer context - at least 128K tokens. We also change the architecture of the model to reduce the KV-cache memory that tends to explode with long context. This is achieved by increasing the ratio of local to global attention layers, and keeping the span on local attention short. The Gemma 3 models are trained with distillation and achieve superior performance to Gemma 2 for both pre-trained and instruction finetuned versions. In particular, our novel post-training recipe significantly improves the math, chat, instruction-following and multilingual abilities, making Gemma3-4B-IT competitive with Gemma2-27B-IT and Gemma3-27B-IT comparable to Gemini-1.5-Pro across benchmarks. We release all our models to the community.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T15:52:34Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.02770v2</id>
+    <title>Gemma 4 Technical Report</title>
+    <updated>2026-07-24T13:10:45Z</updated>
+    <link href="https://arxiv.org/abs/2607.02770v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.02770v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Gemma 4, a new generation of open-weight, natively multimodal language models in the Gemma model family. Designed to advance compute efficiency and reasoning, the Gemma 4 model suite features dense and Mixture-of-Experts architectures, ranging from 2.3B to 31B parameters. Alongside improved vision and audio encoders for all model sizes, we propose a unified, encoder-free architecture for our 12B model, which ingests raw audio and image patches. Furthermore, we integrate a thinking mode, enabling Gemma models to generate reasoning traces prior to responding. We improve inference speed, memory, and compute efficiency, as well as long-context abilities through critical design choices. Gemma 4 establishes a leap in performance across STEM, multimodal, and long-context benchmarks, and rivals larger, frontier open models in human-rated tasks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-02T21:08:53Z</published>
+    <arxiv:comment>17 pages, 2 figures, technical report, updated</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+</feed>

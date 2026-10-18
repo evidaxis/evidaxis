@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 9,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (stemmed \"Qwen3 Technical Report\")",
+      "x_new_oql": "get works with (stemmed \"Qwen3 Technical Report\") in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "\"Qwen3 Technical Report\"",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:%22Qwen3 Technical Report%22&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4414939355",
+      "display_name": "Qwen3 Technical Report",
+      "publication_year": 2025,
+      "doi": "https://doi.org/10.48550/arxiv.2505.09388",
+      "ids": {
+        "openalex": "https://openalex.org/W4414939355",
+        "doi": "https://doi.org/10.48550/arxiv.2505.09388"
+      },
+      "cited_by_count": 147,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 130
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 17
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2505.09388",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2505.09388",
+          "pdf_url": "https://arxiv.org/pdf/2505.09388",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2505.09388",
+          "doi": "https://doi.org/10.48550/arxiv.2505.09388",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2505.09388",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ],
+      "publication_date": "2025-05-14",
+      "type": "preprint"
+    }
+  ],
+  "group_by": []
+}

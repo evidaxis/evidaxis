@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 15,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (The Llama 3 Herd of Models)",
+      "x_new_oql": "get works with (The Llama 3 Herd of Models) in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "The Llama 3 Herd of Models",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:The Llama 3 Herd of Models&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W7115097999",
+      "display_name": "The Llama 3 herd of models",
+      "publication_year": 2025,
+      "doi": null,
+      "ids": {
+        "openalex": "https://openalex.org/W7115097999"
+      },
+      "cited_by_count": 0,
+      "counts_by_year": [],
+      "locations": [
+        {
+          "id": "pmh:oai:HAL:hal-05414211v1",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "https://hal.science/hal-05414211",
+          "pdf_url": "http://arxiv.org/pdf/2407.21783",
+          "source": {
+            "id": "https://openalex.org/S4306402512",
+            "display_name": "HAL (Le Centre pour la Communication Scientifique Directe)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I1294671590",
+            "host_organization_name": "Centre National de la Recherche Scientifique",
+            "host_organization_lineage": [
+              "https://openalex.org/I1294671590"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "public-domain",
+          "license_id": "https://openalex.org/licenses/public-domain",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": "2025",
+          "raw_type": "info:eu-repo/semantics/preprint"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

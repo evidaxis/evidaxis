@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/iVuNxLI8uNOKXsL6OUMovIdhXXI</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND (ti:GLM OR ti:ChatGLM OR ti:GLM-4)&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-10-18T20:01:00Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:GLM+OR+(ti:ChatGLM+OR+ti:GLM-4))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2512.14291v1</id>
+    <title>GLM-TTS Technical Report</title>
+    <updated>2025-12-16T11:04:41Z</updated>
+    <link href="https://arxiv.org/abs/2512.14291v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.14291v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work proposes GLM-TTS, a production-level TTS system designed for efficiency, controllability, and high-fidelity speech generation. GLM-TTS follows a two-stage architecture, consisting of a text-to-token autoregressive model and a token-to-waveform diffusion model. With only 100k hours of training data, GLM-TTS achieves state-of-the-art performance on multiple open-source benchmarks. To meet production requirements, GLM-TTS improves speech quality through an optimized speech tokenizer with fundamental frequency constraints and a GRPO-based multi-reward reinforcement learning framework that jointly optimizes pronunciation, speaker similarity, and expressive prosody. In parallel, the system enables efficient and controllable deployment via parameter-efficient LoRA-based voice customization and a hybrid phoneme-text input scheme that provides precise pronunciation control. Our code is available at https://github.com/zai-org/GLM-TTS. Real-time speech synthesis demos are provided via Z.ai (audio.z.ai), the Zhipu Qingyan app/web (chatglm.cn).</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-16T11:04:41Z</published>
+    <arxiv:primary_category term="cs.SD"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.10910v2</id>
+    <title>GLM-OCR Technical Report</title>
+    <updated>2026-03-16T13:48:45Z</updated>
+    <link href="https://arxiv.org/abs/2603.10910v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.10910v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>GLM-OCR is an efficient 0.9B-parameter compact multimodal model designed for real-world document understanding. It combines a 0.4B-parameter CogViT visual encoder with a 0.5B-parameter GLM language decoder, achieving a strong balance between computational efficiency and recognition performance. To address the inefficiency of standard autoregressive decoding in deterministic OCR tasks, GLM-OCR introduces a Multi-Token Prediction (MTP) mechanism that predicts multiple tokens per step, significantly improving decoding throughput while keeping memory overhead low through shared parameters. At the system level, a two-stage pipeline is adopted: PP-DocLayout-V3 first performs layout analysis, followed by parallel region-level recognition. Extensive evaluations on public benchmarks and industrial scenarios show that GLM-OCR achieves competitive or state-of-the-art performance in document parsing, text and formula transcription, table structure recovery, and key information extraction. Its compact architecture and structured generation make it suitable for both resource-constrained edge deployment and large-scale production systems.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-11T15:55:47Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+</feed>

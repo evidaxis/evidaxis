@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 13,
+    "page": 1,
+    "per_page": 5,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where DOI is https://doi.org/10.48550/arxiv.2501.12948",
+      "x_new_oql": "get works where DOI is https://doi.org/10.48550/arxiv.2501.12948",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "doi",
+            "value": "https://doi.org/10.48550/arxiv.2501.12948"
+          }
+        ]
+      },
+      "url": "/works?filter=doi:https:%2F%2Fdoi.org%2F10.48550%2Farxiv.2501.12948&per_page=5"
+    },
+    "cost_usd": 0.0001
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W4406779522",
+      "display_name": "Can Open Large Language Models Catch Vulnerabilities?",
+      "publication_year": 2025,
+      "doi": "https://doi.org/10.4230/oasics.icpec.2025.4",
+      "ids": {
+        "openalex": "https://openalex.org/W4406779522",
+        "doi": "https://doi.org/10.4230/oasics.icpec.2025.4"
+      },
+      "cited_by_count": 538,
+      "counts_by_year": [
+        {
+          "year": 2026,
+          "cited_by_count": 131
+        },
+        {
+          "year": 2025,
+          "cited_by_count": 406
+        },
+        {
+          "year": 2024,
+          "cited_by_count": 1
+        }
+      ],
+      "locations": [
+        {
+          "id": "pmh:oai:arXiv.org:2501.12948",
+          "doi": null,
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2501.12948",
+          "pdf_url": "https://arxiv.org/pdf/2501.12948",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        {
+          "id": "doi:10.48550/arxiv.2501.12948",
+          "doi": "https://doi.org/10.48550/arxiv.2501.12948",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.48550/arxiv.2501.12948",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        },
+        {
+          "id": "doi:10.4230/oasics.icpec.2025.4",
+          "doi": "https://doi.org/10.4230/oasics.icpec.2025.4",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.4230/oasics.icpec.2025.4",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S7407061190",
+            "display_name": "OASIcs : OpenAccess Series in Informatics",
+            "issn_l": "2190-6807",
+            "issn": [
+              "2190-6807"
+            ],
+            "is_oa": true,
+            "is_in_doaj": true,
+            "is_core": false,
+            "listed_in": [
+              "doaj"
+            ],
+            "host_organization": "https://openalex.org/P4310313770",
+            "host_organization_name": "Schloss Dagstuhl — Leibniz-Zentrum fuer Informatik",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310313770"
+            ],
+            "host_organization_lineage_names": [
+              "Schloss Dagstuhl — Leibniz-Zentrum fuer Informatik"
+            ],
+            "type": "journal"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "ConferencePaper"
+        },
+        {
+          "id": "doi:10.5281/zenodo.16786367",
+          "doi": "https://doi.org/10.5281/zenodo.16786367",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.16786367",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        },
+        {
+          "id": "doi:10.5281/zenodo.16786368",
+          "doi": "https://doi.org/10.5281/zenodo.16786368",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5281/zenodo.16786368",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306400562",
+            "display_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I67311998",
+            "host_organization_name": "European Organization for Nuclear Research",
+            "host_organization_lineage": [
+              "https://openalex.org/I67311998"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": null,
+          "is_accepted": false,
+          "is_published": null,
+          "raw_source_name": null,
+          "raw_type": "Preprint"
+        }
+      ]
+    }
+  ],
+  "group_by": []
+}

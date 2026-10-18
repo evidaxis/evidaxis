@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/jL6qHHW4gwmrIN2PRlmt4p5pv7U</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND (ti:Llama OR ti:LLaMA)&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-10-18T20:00:51Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:Llama+OR+ti:LLaMA)&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>4</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2305.15062v2</id>
+    <title>Lawyer LLaMA Technical Report</title>
+    <updated>2023-10-14T02:14:51Z</updated>
+    <link href="https://arxiv.org/abs/2305.15062v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.15062v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs), like LLaMA, have exhibited remarkable performance across various tasks. Nevertheless, when deployed to specific domains such as law or medicine, the models still confront the challenge of a deficiency in domain-specific knowledge and an inadequate capability to leverage that knowledge to resolve domain-related problems. In this paper, we propose a new framework to adapt LLMs to specific domains and build Lawyer LLaMA, a legal domain LLM, based on this framework. Specifically, we inject domain knowledge during the continual training stage and teach the model to learn professional skills using properly designed supervised fine-tuning tasks. Moreover, to alleviate the hallucination problem during the model's generation, we add a retrieval module and extract relevant legal articles before the model answers any queries. When learning domain-specific skills, we find that experts' experience is much more useful than experiences distilled from ChatGPT, where hundreds of expert-written data outperform tens of thousands of ChatGPT-generated ones. We will release our model and data.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-24T11:52:07Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.21039v1</id>
+    <title>Llama-3.1-FoundationAI-SecurityLLM-Base-8B Technical Report</title>
+    <updated>2025-04-28T08:41:12Z</updated>
+    <link href="https://arxiv.org/abs/2504.21039v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.21039v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As transformer-based large language models (LLMs) increasingly permeate society, they have revolutionized domains such as software engineering, creative writing, and digital arts. However, their adoption in cybersecurity remains limited due to challenges like scarcity of specialized training data and complexity of representing cybersecurity-specific knowledge. To address these gaps, we present Foundation-Sec-8B, a cybersecurity-focused LLM built on the Llama 3.1 architecture and enhanced through continued pretraining on a carefully curated cybersecurity corpus. We evaluate Foundation-Sec-8B across both established and new cybersecurity benchmarks, showing that it matches Llama 3.1-70B and GPT-4o-mini in certain cybersecurity-specific tasks. By releasing our model to the public, we aim to accelerate progress and adoption of AI-driven tools in both public and private cybersecurity contexts.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-28T08:41:12Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.01059v1</id>
+    <title>Llama-3.1-FoundationAI-SecurityLLM-8B-Instruct Technical Report</title>
+    <updated>2025-08-01T20:25:57Z</updated>
+    <link href="https://arxiv.org/abs/2508.01059v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.01059v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) have shown remarkable success across many domains, yet their integration into cybersecurity applications remains limited due to a lack of general-purpose cybersecurity data, representational complexity, and safety and regulatory concerns. To address this gap, we previously introduced Foundation-Sec-8B, a cybersecurity-focused LLM suitable for fine-tuning on downstream tasks. That model, however, was not designed for chat-style interactions or instruction-following. In this report, we release Foundation-Sec-8B-Instruct: a model specifically trained for general-purpose cybersecurity dialogue. Built on Foundation-Sec-8B, it combines domain-specific knowledge with instruction-following, conversational capabilities, and alignment with human preferences to produce high-quality, relevant responses. Comprehensive evaluations show that Foundation-Sec-8B-Instruct outperforms Llama 3.1-8B-Instruct on a range of cybersecurity tasks while matching its instruction-following performance. It is also competitive with GPT-4o-mini on cyber threat intelligence and instruction-following tasks. We envision Foundation-Sec-8B-Instruct becoming an indispensable assistant in the daily workflows of cybersecurity professionals. We release the model publicly at https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Instruct.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-01T20:25:57Z</published>
+    <arxiv:comment>34 pages - Technical Report</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.21051v1</id>
+    <title>Llama-3.1-FoundationAI-SecurityLLM-Reasoning-8B Technical Report</title>
+    <updated>2026-01-28T21:15:24Z</updated>
+    <link href="https://arxiv.org/abs/2601.21051v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.21051v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present Foundation-Sec-8B-Reasoning, the first open-source native reasoning model for cybersecurity. Built upon our previously released Foundation-Sec-8B base model (derived from Llama-3.1-8B-Base), the model is trained through a two-stage process combining supervised fine-tuning (SFT) and reinforcement learning from verifiable rewards (RLVR). Our training leverages proprietary reasoning data spanning cybersecurity analysis, instruction-following, and mathematical reasoning. Evaluation across 10 cybersecurity benchmarks and 10 general-purpose benchmarks demonstrates performance competitive with significantly larger models on cybersecurity tasks while maintaining strong general capabilities. The model shows effective generalization on multi-hop reasoning tasks and strong safety performance when deployed with appropriate system prompts and guardrails. This work demonstrates that domain-specialized reasoning models can achieve strong performance on specialized tasks while maintaining broad general capabilities. We release the model publicly at https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Reasoning.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-28T21:15:24Z</published>
+    <arxiv:comment>31 pages, 5 figures, 7 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+  </entry>
+</feed>

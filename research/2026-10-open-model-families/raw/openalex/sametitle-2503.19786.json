@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "count": 0,
+    "db_response_time_ms": 5,
+    "page": 1,
+    "per_page": 8,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where title has (stemmed \"Gemma 3 Technical Report\")",
+      "x_new_oql": "get works with (stemmed \"Gemma 3 Technical Report\") in the title",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "display_name.search",
+            "value": "\"Gemma 3 Technical Report\"",
+            "operator": "has"
+          }
+        ]
+      },
+      "url": "/works?filter=display_name.search:%22Gemma 3 Technical Report%22&per_page=8"
+    },
+    "cost_usd": 0.001
+  },
+  "results": [],
+  "group_by": []
+}
