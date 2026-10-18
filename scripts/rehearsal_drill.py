@@ -28,6 +28,8 @@ CHECK_STEPS = (
 )
 # The step that must catch each drill. Another failure is not a catch.
 EXPECTED = {"site_test": "verify", "canary_missing": "verify", "hf_handle": "hf"}
+# The leaked handle also trips the site's person-free guard: a second catch, not a fault.
+ALSO_CATCHES = {"hf_handle": {"verify"}}
 _DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _ARTIFACT_DATE = re.compile(r"^snapshot-(\d{4}-\d{2}-\d{2})-\d+$")
 _SUMMARY_FILE = re.compile(r"^(jobs|timing|rehearsal-report|summary-.+)\.json$")
@@ -155,7 +157,8 @@ def drill_verdict(drill: str, outcomes: dict) -> tuple[str, int]:
         return f"drill {drill}: NOT caught", 1
     # The report reads the failed step, so its failure follows the catch.
     other = [names[key] for key, _name in CHECK_STEPS
-             if key not in (expected, "report") and outcomes.get(key) == "failure"]
+             if key not in {expected, "report", *ALSO_CATCHES.get(drill, set())}
+             and outcomes.get(key) == "failure"]
     if other:
         return f"drill {drill}: caught at step {names[expected]}, but also failed at step {other[0]}", 1
     return f"drill {drill}: caught at step {names[expected]}", 0

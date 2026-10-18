@@ -140,6 +140,9 @@ def test_drill_verdict_phrases():
     assert drill.drill_verdict("hf_handle", {"hf": "success", "verify": "success", "report": "failure"}) == (
         "drill hf_handle: NOT caught", 1)
     assert drill.drill_verdict("site_test", {"hf": "failure", "verify": "failure", "report": "success"})[1] == 1
+    # The site guard also rejects the leaked handle; that second catch keeps the drill green.
+    assert drill.drill_verdict("hf_handle", {"hf": "failure", "verify": "failure", "report": "failure"}) == (
+        "drill hf_handle: caught at step Check the HF publication projection", 0)
     assert drill.drill_verdict("none", {"hf": "failure", "verify": "skipped", "report": "skipped"}) == (
         "drill none: failed at step Check the HF publication projection", 1)
 
