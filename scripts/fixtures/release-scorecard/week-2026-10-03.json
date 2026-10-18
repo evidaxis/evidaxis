@@ -1,0 +1,87 @@
+{
+  "now": "2026-10-18T12:00:00Z",
+  "weekly": [
+    {
+      "saturday": "2026-10-03",
+      "started_at": "2026-10-03T11:48:00Z",
+      "completed_at": "2026-10-03T11:55:57Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "schedule",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    },
+    {
+      "saturday": "2026-10-03",
+      "started_at": "2026-10-03T19:59:48Z",
+      "completed_at": "2026-10-03T22:14:32Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_dispatch",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    },
+    {
+      "saturday": "2026-10-03",
+      "started_at": "2026-10-03T22:35:51Z",
+      "completed_at": "2026-10-04T00:03:32Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_dispatch",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    },
+    {
+      "saturday": "2026-10-03",
+      "started_at": "2026-10-04T00:15:57Z",
+      "completed_at": "2026-10-04T01:52:58Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_dispatch",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    },
+    {
+      "saturday": "2026-10-03",
+      "started_at": "2026-10-04T01:55:45Z",
+      "completed_at": "2026-10-04T03:10:33Z",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    }
+  ],
+  "deploys": [
+    {
+      "started_at": "2026-10-04T03:10:35Z",
+      "completed_at": "2026-10-04T03:12:13Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_run",
+      "actor": "human",
+      "branch": "main"
+    },
+    {
+      "started_at": "2026-10-04T03:48:07Z",
+      "completed_at": "2026-10-04T04:02:51Z",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "push",
+      "actor": "human",
+      "branch": "main"
+    }
+  ],
+  "statuses": { "2026-10-03": [] },
+  "edits": {}
+}

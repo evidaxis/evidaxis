@@ -1,0 +1,30 @@
+{
+  "now": "2026-10-18T12:00:00Z",
+  "weekly": [
+    {
+      "saturday": "2026-10-17",
+      "started_at": "2026-10-17T10:54:30Z",
+      "completed_at": "2026-10-17T13:36:25Z",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "schedule",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    }
+  ],
+  "deploys": [
+    {
+      "started_at": "2026-10-17T13:36:26Z",
+      "completed_at": "2026-10-17T14:00:21Z",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_run",
+      "actor": "human",
+      "branch": "main"
+    }
+  ],
+  "statuses": { "2026-10-17": [] },
+  "edits": {}
+}

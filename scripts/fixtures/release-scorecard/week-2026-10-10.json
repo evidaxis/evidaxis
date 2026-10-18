@@ -1,0 +1,60 @@
+{
+  "now": "2026-10-18T12:00:00Z",
+  "weekly": [
+    {
+      "saturday": "2026-10-10",
+      "started_at": "2026-10-10T12:41:50Z",
+      "completed_at": "2026-10-10T12:50:40Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "schedule",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    },
+    {
+      "saturday": "2026-10-10",
+      "started_at": "2026-10-12T10:50:35Z",
+      "completed_at": "2026-10-12T14:03:27Z",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "actor": "human",
+      "branch": "main",
+      "collected": true,
+      "run_attempt": 1
+    }
+  ],
+  "deploys": [
+    {
+      "started_at": "2026-10-12T14:03:28Z",
+      "completed_at": "2026-10-12T14:03:29Z",
+      "status": "completed",
+      "conclusion": "skipped",
+      "event": "workflow_run",
+      "actor": "human",
+      "branch": "main"
+    },
+    {
+      "started_at": "2026-10-12T14:03:31Z",
+      "completed_at": "2026-10-12T14:11:27Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "event": "workflow_run",
+      "actor": "human",
+      "branch": "main"
+    },
+    {
+      "started_at": "2026-10-12T14:27:59Z",
+      "completed_at": "2026-10-12T14:51:59Z",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "push",
+      "actor": "human",
+      "branch": "main"
+    }
+  ],
+  "statuses": { "2026-10-10": [] },
+  "edits": {}
+}
