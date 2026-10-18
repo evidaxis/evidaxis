@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import type { Entity, Snapshot } from './data';
-import { readSnapshotArtifactRaw, snapshots } from './archive';
+import { observationEvidence, observationStatus, recordAvailability, readSnapshotArtifactRaw, snapshots } from './archive';
 import {
   CITATION_AXIS,
   DEVELOPMENT_AXIS,
@@ -105,7 +105,7 @@ function typedObservation(
     cohort: entity.cohort,
     entity_ids: [entity.entity_id],
     source_fields: [...sourceFields].sort(),
-    state: serializeMeasurementState(state, current.methodology_version),
+    state: { ...serializeMeasurementState(state, current.methodology_version), record_status: 'measured' },
   });
 }
 
@@ -270,14 +270,23 @@ export function diffFeedEntries(
   }
 
   const rawCurrentById = new Map(current.entities.map((entity) => [entity.entity_id, entity]));
+  const evidence = observationEvidence(current.snapshot_date);
   for (const id of [...dropped].sort((a, b) => a.localeCompare(b))) {
-    const entity = previousById.get(id) ?? rawCurrentById.get(id);
+    const lastSnapshot = previousById.has(id) ? previous : snapshots.includes(previous) ? [...snapshots].reverse()
+      .find(s => s.snapshot_date < current.snapshot_date && s.entities.some(e => e.entity_id === id)) : undefined;
+    const entity = lastSnapshot?.entities.find(e => e.entity_id === id) ?? rawCurrentById.get(id);
     if (!entity) continue;
+    const status = observationStatus(entity, lastSnapshot?.snapshot_date ?? null, current.snapshot_date, evidence);
+    const observation = lastSnapshot ? recordAvailability({ entity, snapshot: lastSnapshot,
+      firstSeenSnapshot: lastSnapshot.snapshot_date, lastSeenSnapshot: lastSnapshot.snapshot_date,
+      latestSnapshot: current.snapshot_date, recordStatus: status }) : null;
     entries.push(finalize({
       schema_version: 'typed_feed_entry_1',
       type: 'observation',
       event_kind: 'collection_failed',
       title: `Collection record unavailable: ${entity.name}`,
+      // The published summary participates in the immutable event ID. Add the
+      // corrected explanation as state metadata without removing old URLs.
       summary: `No observation record was produced for ${entity.name} in ${current.period}; collection state: failed.`,
       snapshot_date: current.snapshot_date,
       period: current.period,
@@ -285,7 +294,7 @@ export function diffFeedEntries(
       cohort: entity.cohort,
       entity_ids: [id],
       source_fields: [`/dropped/${id}`],
-      state: { observation_availability: 'collection_failed', collection_status: 'failed' },
+      state: { record_status: status, observation },
     }));
   }
 
@@ -333,7 +342,24 @@ export function latestFeedEntries(allSnapshots: Snapshot[] = snapshots): FeedEnt
 
 export const SITE_FEED_LIMIT = 100;
 export function siteFeedEntries(allSnapshots: Snapshot[] = snapshots): FeedEntry[] {
-  return latestFeedEntries(allSnapshots).slice(0, SITE_FEED_LIMIT);
+  // Invariant 2: discovery contains growth and neutral milestones only.
+  // Full event history, including threshold losses, remains addressable.
+  const allowed = new Set<FeedEntry['event_kind']>(['convergence_published', 'measurement_activated', 'measurement_resumed',
+    'reference_baseline_added', 'reference_baseline_recorded', 'axis_available', 'history_sufficient',
+    'gate_eligible', 'axis_threshold_recorded', 'quiet_week']);
+  return latestFeedEntries(allSnapshots).filter(entry => allowed.has(entry.event_kind)).slice(0, SITE_FEED_LIMIT);
+}
+
+let eventsByEntity: Map<string, FeedEntry[]> | undefined;
+export function entityFeedEntries(id: string): FeedEntry[] {
+  if (!eventsByEntity) {
+    eventsByEntity = new Map();
+    for (const entry of allSignalEntries()) for (const entityId of entry.entity_ids) {
+      const entries = eventsByEntity.get(entityId) ?? [];
+      entries.push(entry); eventsByEntity.set(entityId, entries);
+    }
+  }
+  return eventsByEntity.get(id) ?? [];
 }
 
 export function jsonFeed(entries: FeedEntry[] = latestFeedEntries()) {

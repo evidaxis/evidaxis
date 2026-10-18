@@ -22,6 +22,8 @@ const report = `mailto:hello@evidaxis.org?subject=${encodeURIComponent(`Measurem
 const claim = (key: string) => `urn:evidaxis:claim:class:${key}:b1`;
 const annualSource = m.readings.find(r => r.key === 'citations')!.source;
 const codeSource = m.readings.find(r => r.key === 'commits')!.source;
+const weeklyDependents = m.readings.find(r => r.key === 'dependents')!;
+const dailyDependents = m.readings.find(r => r.key === 'daily')!;
 const citationCount = m.readings.find(r => r.key === 'citations')!.value as number | null;
 const badgeRecord = archiveEntityById.get(m.entity.id);
 const hasBadge = badgeRecord && (badgeData(badgeRecord, 'citations').offered || badgeData(badgeRecord, 'dependents').offered || badgeData(badgeRecord, 'rising').offered);
@@ -46,7 +48,7 @@ const peerOverflow = m.peers.length > peerRows.length;
   <nav class="crumb mono" aria-label="Breadcrumb">
     <a href="/coverage/">coverage</a> / {m.nicheAssigned && <><a href={`/ai/fields/${industry}/`}>{industryLabel.toLowerCase()}</a> / <a href={`/ai/cohorts/${subNiche}/`}>{m.cohortLabel}</a> / </>}<span>{m.entity.name}</span>
   </nav>
-  {m.superseded && <p>Preserved historical record; record status: superseded; last measured {m.date}.</p>}
+  {m.availability.state !== 'measured' && <p>{m.availability.message}</p>}
   <header class="card-b-hero">
     <div class="card-b-eyebrow">Dated record</div>
     <h1>{m.entity.name}</h1>
@@ -56,7 +58,7 @@ const peerOverflow = m.peers.length > peerRows.length;
       {tileKeys.map(key => { const r = readings.find(r => r.key === key)!; return <div class:list={['card-b-tile', { 'card-b-stars': key === 'stars' }]}>
         <span class="card-b-tile-label">{key === 'commits' ? 'commits/wk' : key === 'dependents' ? 'direct dependents' : key}</span>
         <strong>{r.value === null ? <span class="card-b-tile-empty">{EMPTY_LABEL[m.missing.find(x => x.key === key)?.reason ?? ''] ?? 'not captured'}</span> : <Number value={r.value as number | null} source={r.source} date={r.date} entity={m.entity.id} />}</strong>
-        <span>{key === 'commits' ? 'averaged, trailing window' : key === 'citations' ? 'all years, indexed to date' : key === 'dependents' ? `partition ${r.date}` : 'recorded, not scored'}</span>
+        <span>{key === 'commits' ? 'averaged, trailing window' : key === 'citations' ? 'all years, indexed to date' : key === 'dependents' ? `weekly axis input; partition ${r.date}` : 'recorded, not scored'}</span>
         {r.median !== null && r.n > 0 && <span>niche median <Number value={r.median} /> (n = <data value={r.n}>{r.n}</data>)</span>}
         {key === 'commits' && <span>{m.ruler.lastCommitWeek ? <>last commit week {m.ruler.lastCommitWeek}</> : <>Δ vs 26 weeks ago: <Number value={m.ruler.delta26} /></>}</span>}
         
@@ -115,7 +117,8 @@ const peerOverflow = m.peers.length > peerRows.length;
       <h2>Is anyone using {m.entity.name}?</h2><p class="answer"><Sentence text={m.facets.dependents.text} /></p>
       <Chart chart={charts.dependents} />
       <table><caption>Weekly dependents</caption><thead><tr><th>Partition</th><th>Direct dependents</th><th>Weekly points</th><th>Method</th></tr></thead><tbody><tr><td>{m.deps?.as_of_partition ?? 'no partition'}</td><td><Number value={m.deps?.latest ?? null} /></td><td><Number value={m.deps?.points ?? null} /></td><td>{axis3Method}</td></tr></tbody></table>
-      <p>Daily dependents (unscored): <Number value={m.daily?.value ?? null} />. {m.facets.stars?.text}</p>
+      <p>{weeklyDependents.definition}</p>
+      <p>{dailyDependents.label}: <Number value={dailyDependents.value as number | null} source={dailyDependents.source} date={dailyDependents.date} entity={m.entity.id} />; captured {dailyDependents.date}; package: {dailyDependents.package_scope ?? 'not captured'}. {dailyDependents.definition} {m.facets.stars?.text}</p>
       <Chart chart={charts.daily} />
       {m.dailySeries.length > 0 && <details><summary>Captured daily series</summary><table><caption>Unscored daily dependents, as captured</caption><thead><tr><th>Period</th><th>Dependents</th></tr></thead><tbody>{m.dailySeries.map(p => <tr><th>{p.period}</th><td><Number value={p.value} /></td></tr>)}</tbody></table></details>}
       <Provenance model={m} source="deps.dev" href={`/snapshots/${m.date}/snapshot.json`} period={m.deps?.as_of_partition ?? m.date} n={m.deps?.points ?? 0} unit="partitions" method={axis3Method}> · <a href={m.valuesUrl} download data-fnd="fnd_download">CSV</a></Provenance>

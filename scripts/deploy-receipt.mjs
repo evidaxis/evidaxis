@@ -3,12 +3,26 @@ import { pathToFileURL } from 'node:url';
 
 export function verifyReceipt(expected, body) {
   const actual = JSON.parse(body);
-  for (const field of ['snapshot_date', 'methodology_version']) {
+  for (const field of ['snapshot_date', 'methodology_version', 'snapshot_id']) {
     if (typeof expected[field] !== 'string' || !expected[field] || actual?.[field] !== expected[field]) {
       throw new Error(`publication receipt mismatch: ${field}`);
     }
   }
-  return { snapshot_date: actual.snapshot_date, methodology_version: actual.methodology_version };
+  if (!Array.isArray(expected.entities) || !expected.entities.length
+    || actual?.entities?.length !== expected.entities.length) {
+    throw new Error('publication receipt mismatch: entity count');
+  }
+  // Choose by stable ID, not array order; the public projection masks identity,
+  // but preserves the collected axis values used as publication controls.
+  const control = [...expected.entities].sort((a, b) => a.entity_id.localeCompare(b.entity_id))
+    .find(e => Number.isFinite(e.axes?.github_commit_velocity?.recent_weekly_commits));
+  const live = actual.entities.find(e => e.entity_id === control?.entity_id);
+  if (!control || live?.axes?.github_commit_velocity?.recent_weekly_commits !== control.axes.github_commit_velocity.recent_weekly_commits) {
+    throw new Error('publication receipt mismatch: control axis value');
+  }
+  return { snapshot_date: actual.snapshot_date, methodology_version: actual.methodology_version,
+    snapshot_id: actual.snapshot_id, entity_count: actual.entities.length,
+    control_entity_id: control.entity_id, control_value: control.axes.github_commit_velocity.recent_weekly_commits };
 }
 
 export function expectedSnapshot(date) {
@@ -20,7 +34,10 @@ export function expectedSnapshot(date) {
 }
 
 async function main() {
-  const expected = expectedSnapshot(process.env.RELEASE_DATE);
+  const canonical = expectedSnapshot(process.env.RELEASE_DATE);
+  const builtBody = readFileSync(`web/dist/snapshots/${canonical.snapshot_date}/snapshot.json`, 'utf8');
+  verifyReceipt(canonical, builtBody);
+  const expected = JSON.parse(builtBody);
   const url = `https://evidaxis.org/snapshots/${expected.snapshot_date}/snapshot.json`;
   // Preserve the existing twelve observations and fifteen-second propagation interval.
   for (let attempt = 1; attempt <= 12; attempt++) {

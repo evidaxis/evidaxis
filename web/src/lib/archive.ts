@@ -21,8 +21,57 @@ export type ArchivedEntity = {
   snapshot: Snapshot;
   firstSeenSnapshot: string;
   lastSeenSnapshot: string;
-  recordStatus: 'current' | 'superseded';
+  latestSnapshot: string;
+  recordStatus: RecordStatus;
 };
+
+export type RecordStatus = 'measured' | 'observation_skipped' | 'departure_confirmed' | 'absence_unexplained';
+type Departure = { entity_id?: string; github_repo?: string; reason: string; date: string };
+export type ObservationEvidence = { declaredGaps: Set<string>; departures: Departure[] };
+
+export function observationEvidence(date: string, repoRoot = REPO_ROOT): ObservationEvidence {
+  const dropped = readSnapshotArtifactRaw(date, 'dropped.json', repoRoot);
+  const declaredGaps = new Set<string>((dropped ? JSON.parse(dropped.toString('utf8')).dropped ?? [] : [])
+    // Every dropped.json row is a seeded system the collector produced no record
+    // for; older files (2026-07) name the cause "202-exhaustion" instead.
+    .filter((row: any) => typeof row.reason === 'string'
+      && /\bdeclared gap\b|\bno record\b|\b202\b/i.test(row.reason))
+    .map((row: any) => row.entity_id));
+  const dir = repoDataPath(repoRoot, 'observations');
+  const departures: Departure[] = [];
+  // A confirmed retirement remains evidence in later weeks, until a new
+  // measurement supersedes it. Never consult observations after the cutoff.
+  for (const day of existsSync(dir) ? readdirSync(dir).filter(d => DATE_RE.test(d) && d <= date).sort() : []) {
+    for (const name of ['seed-departures.json', 'departed.json']) {
+      const path = join(dir, day, name);
+      if (!existsSync(path)) continue;
+      const body = readJson(path);
+      for (const row of Array.isArray(body) ? body : body.departures ?? body.departed ?? []) {
+        if (['gone', 'repo_id_changed'].includes(row.reason)) departures.push({ ...row, date: day });
+      }
+    }
+  }
+  return { declaredGaps, departures };
+}
+
+export function observationStatus(entity: Entity, lastMeasured: string | null, latestDate: string, evidence: ObservationEvidence): RecordStatus {
+  if (lastMeasured === latestDate) return 'measured';
+  if (evidence.declaredGaps.has(entity.entity_id)) return 'observation_skipped';
+  if (evidence.departures.some(row => row.date >= (lastMeasured ?? '')
+    && (row.entity_id === entity.entity_id || (row.github_repo && row.github_repo.toLowerCase() === entity.github_repo?.toLowerCase())))) return 'departure_confirmed';
+  return 'absence_unexplained';
+}
+
+export function recordAvailability(record: ArchivedEntity) {
+  const date = record.lastSeenSnapshot;
+  const message = record.recordStatus === 'measured' ? `Measured in snapshot ${date}.`
+    : record.recordStatus === 'observation_skipped'
+      ? `Not measured in this snapshot: the weekly collection produced no record for this system (a declared gap). Last measured ${date}. The next attempt is the next weekly snapshot.`
+      : record.recordStatus === 'departure_confirmed'
+        ? `Preserved historical record; record status: superseded; last measured ${date}.`
+        : `Not in the latest snapshot; last measured ${date}.`;
+  return { state: record.recordStatus, latest_snapshot: record.latestSnapshot, last_measured: date, message };
+}
 
 function readJson(path: string): any {
   return JSON.parse(readFileSync(path, 'utf8'));
@@ -81,9 +130,10 @@ export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
     .sort((a, b) => a.snapshot_date.localeCompare(b.snapshot_date));
 }
 
-export function buildEntityUniverse(allSnapshots: Snapshot[], latestDate: string): ArchivedEntity[] {
+export function buildEntityUniverse(allSnapshots: Snapshot[], latestDate: string, evidence = observationEvidence(latestDate)): ArchivedEntity[] {
   const byId = new Map<string, ArchivedEntity>();
   for (const snap of [...allSnapshots].sort((a, b) => a.snapshot_date.localeCompare(b.snapshot_date))) {
+    if (snap.snapshot_date > latestDate) continue;
     for (const entity of snap.entities) {
       const existing = byId.get(entity.entity_id);
       byId.set(entity.entity_id, {
@@ -91,12 +141,13 @@ export function buildEntityUniverse(allSnapshots: Snapshot[], latestDate: string
         snapshot: snap,
         firstSeenSnapshot: existing?.firstSeenSnapshot ?? snap.snapshot_date,
         lastSeenSnapshot: snap.snapshot_date,
-        recordStatus: 'superseded',
+        latestSnapshot: latestDate,
+        recordStatus: 'absence_unexplained',
       });
     }
   }
   for (const record of byId.values()) {
-    record.recordStatus = record.lastSeenSnapshot === latestDate ? 'current' : 'superseded';
+    record.recordStatus = observationStatus(record.entity, record.lastSeenSnapshot, latestDate, evidence);
   }
   return [...byId.values()].sort((a, b) => a.entity.entity_id.localeCompare(b.entity.entity_id));
 }

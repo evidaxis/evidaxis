@@ -33,7 +33,9 @@ export function getStaticPaths() {
 const { record } = Astro.props as { record: ArchivedEntity };
 const e = record.entity;
 const snapshot = record.snapshot;
-const isSuperseded = record.recordStatus === 'superseded';
+// Template A HTML is byte-frozen through October; its legacy absence shell
+// stays intact while JSON and B use the evidence-based observation state.
+const isSuperseded = record.lastSeenSnapshot !== record.latestSnapshot;
 // Null-guard: thin/older-schema historical records may lack axes entirely
 // (review 2026-07-10)  -  a preserved record must render, never crash the build.
 const a1 = e.axes?.github_commit_velocity;

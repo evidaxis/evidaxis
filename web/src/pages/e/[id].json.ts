@@ -1,10 +1,20 @@
 import type { APIRoute } from 'astro';
-import { entityUniverse, publicEntity, publicHomepage, publicRepoUrl } from '../../lib/data';
-import type { ArchivedEntity } from '../../lib/archive';
+import { buildDepsMap, entityUniverse, publicEntity, publicHomepage, publicRepoUrl } from '../../lib/data';
+import { recordAvailability, type ArchivedEntity } from '../../lib/archive';
 import { claimUrnForEntity } from '../../lib/claim_urn';
 import { measurementStateFor, serializeMeasurementState } from '../../lib/measurement';
 import { isTemplateB } from '../../lib/cardB/policy.mjs';
 import { cardBFor } from '../../lib/cardB/context';
+import { dependentReadings } from '../../lib/dependent-readings';
+
+// One parse of each snapshot day's dependents for all JSON routes of the build.
+const depsBySnapshot = new Map<string, ReturnType<typeof buildDepsMap>>();
+function depsFor(snapshot: Parameters<typeof buildDepsMap>[0]) {
+  let map = depsBySnapshot.get(snapshot.snapshot_date);
+  if (!map) depsBySnapshot.set(snapshot.snapshot_date, map = buildDepsMap(snapshot));
+  return map;
+}
+import { entityFeedEntries } from '../../lib/feed';
 
 export function getStaticPaths() {
   return entityUniverse.map((record) => ({ params: { id: record.entity.entity_id }, props: { record } }));
@@ -26,10 +36,14 @@ export const GET: APIRoute = ({ props }) => {
     ...typedEntity
   } = projected;
   const measurementState = measurementStateFor(e, snapshot);
+  const card = isTemplateB(e.entity_id) ? cardBFor(record) : null;
   const body = {
     entity: typedEntity,
     measurement_state: serializeMeasurementState(measurementState, snapshot.methodology_version),
     record_status: record.recordStatus,
+    observation: recordAvailability(record),
+    dependent_readings: card?.dependents ?? dependentReadings(e, snapshot, depsFor(snapshot).get(e.entity_id) ?? null),
+    events: entityFeedEntries(e.entity_id),
     last_seen_snapshot: record.lastSeenSnapshot,
     // Format-independent canonical reference (CLAIM-URN.md); cite this, not the URL.
     claim_urn: claimUrnForEntity(e, snapshot),
@@ -47,7 +61,6 @@ export const GET: APIRoute = ({ props }) => {
       ...(e.openalex_work_ids?.length ? [`https://openalex.org/${e.openalex_work_ids[0]}`] : []),
     ],
   };
-  const card = isTemplateB(e.entity_id) ? cardBFor(record) : null;
   const result = card ? { ...body, display: card.display, facets: card.facets, readings: card.readings, changes: card.changes } : body;
   return new Response(JSON.stringify(result, null, 2), {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },

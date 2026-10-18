@@ -3,10 +3,24 @@ import assert from 'node:assert/strict';
 import { verifyReceipt } from './deploy-receipt.mjs';
 import { deploy, transportFailure } from './vercel-deploy.mjs';
 
-const expected = { snapshot_date: '2026-10-24', methodology_version: 'm5' };
+const expected = { snapshot_date: '2026-10-24', methodology_version: 'm5', snapshot_id: 'fixture42',
+  entities: [{ entity_id: 'e_CONTROL', axes: { github_commit_velocity: { recent_weekly_commits: 21 } } },
+    { entity_id: 'e_SECOND', axes: {} }] };
 
 test('receipt accepts the dated public projection', () => {
-  assert.deepEqual(verifyReceipt(expected, JSON.stringify({ ...expected, entities: [] })), expected);
+  assert.deepEqual(verifyReceipt(expected, JSON.stringify({ ...expected, entities: [...expected.entities].reverse() })), {
+    snapshot_date: expected.snapshot_date, methodology_version: expected.methodology_version,
+    snapshot_id: expected.snapshot_id, entity_count: 2, control_entity_id: 'e_CONTROL', control_value: 21,
+  });
+});
+
+test('receipt rejects matching dates with a different snapshot, count or control measurement', () => {
+  const changed = structuredClone(expected);
+  changed.entities[0].axes.github_commit_velocity.recent_weekly_commits = 0;
+  for (const body of [{ ...expected, snapshot_id: 'stale' }, { ...expected, entities: expected.entities.slice(0, 1) }, changed,
+    { ...expected, entities: [{ entity_id: 'e_OTHER', axes: expected.entities[0].axes }, expected.entities[1]] }]) {
+    assert.throws(() => verifyReceipt(expected, JSON.stringify(body)), /publication receipt mismatch/);
+  }
 });
 
 test('receipt rejects stale date, wrong methodology, missing fields and HTML with HTTP 200', () => {

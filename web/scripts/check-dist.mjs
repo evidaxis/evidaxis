@@ -600,8 +600,27 @@ for (const [id, date] of lastSeen) {
   const jsonPath = join(DIST, 'e', `${id}.json`);
   if (!existsSync(htmlPath)) errors.push(`e/${id}/index.html: missing permanent entity route`);
   if (!existsSync(jsonPath)) errors.push(`e/${id}.json: missing permanent entity JSON twin`);
-  if (date !== latestDate && existsSync(htmlPath) && !/superseded/i.test(readFileSync(htmlPath, 'utf8'))) {
-    errors.push(`e/${id}/index.html: superseded entity page lacks superseded status`);
+  if (!existsSync(htmlPath) || !existsSync(jsonPath)) continue;
+  const record = JSON.parse(readFileSync(jsonPath, 'utf8'));
+  const observation = record.observation;
+  const states = ['measured', 'observation_skipped', 'departure_confirmed', 'absence_unexplained'];
+  if (!states.includes(record.record_status) || observation?.state !== record.record_status
+    || observation?.last_measured !== date || observation?.latest_snapshot !== latestDate
+    || (record.record_status === 'measured') !== (date === latestDate)) {
+    errors.push(`e/${id}.json: observation state disagrees with the dated archive record`);
+  }
+  const html = readFileSync(htmlPath, 'utf8');
+  if (isTemplateB(id)) {
+    if (date !== latestDate && (typeof observation?.message !== 'string' || !html.includes(observation.message))) {
+      errors.push(`e/${id}/index.html: missing dated observation explanation`);
+    }
+    if (/record status: superseded/i.test(html) !== (record.record_status === 'departure_confirmed')) {
+      errors.push(`e/${id}/index.html: superseded label requires a confirmed departure`);
+    }
+  // Template A keeps its byte-frozen absence shell through October; its JSON
+  // already carries the evidence-based state. Canary shell checks stay intact.
+  } else if (date !== latestDate && !/superseded/i.test(html)) {
+    errors.push(`e/${id}/index.html: frozen A historical record shell changed`);
   }
 }
 

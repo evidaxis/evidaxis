@@ -140,6 +140,9 @@ export function cohortMinutesForPair(
   for (const cohort of cohortKeys) {
     const sentences: MinuteSentence[] = entries
       .filter((entry) => entry.cohort === cohort && NEWSWORTHY.has(entry.event_kind))
+      // Minutes compare this pair's members. Repeated gaps with only older
+      // observations are described by the archive and individual feeds.
+      .filter((entry) => entry.entity_ids.every(id => previousById.has(id) || currentById.has(id)))
       .map((entry) => ({
         event_kind: entry.event_kind,
         text: sentenceForEntry(entry, previousById, currentById),

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { atomFeed, diffFeedEntries, entryId, jsonFeed, SITE_FEED_LIMIT, siteFeedEntries } from './feed';
 import { CITATION_AXIS, DEVELOPMENT_AXIS, deriveMeasurementState } from './measurement';
+import { snapshots } from './archive';
 
 function entity(id: string, axes: string[], rising = false): any {
   return {
@@ -129,6 +130,18 @@ describe('typed feeds and immutable signal ids', () => {
     expect(entries.map((entry) => entry.event_kind)).toEqual(['collection_failed']);
   });
 
+  it('preserves published collection-event identities while annotating the declared gap', () => {
+    const previous = snapshots.find(s => s.snapshot_date === '2026-10-03')!;
+    const current = snapshots.find(s => s.snapshot_date === '2026-10-10')!;
+    const entry = diffFeedEntries(previous, current).find(e => e.event_kind === 'collection_failed' && e.entity_ids.includes('e_TEXN6TK2CRK'))!;
+    const name = previous.entities.find(e => e.entity_id === entry.entity_ids[0])!.name;
+    const publishedSummary = `No observation record was produced for ${name} in ${current.period}; collection state: failed.`;
+    expect(entry.id).toBe(entryId({ ...entry, summary: publishedSummary }));
+    expect(entry.state).toMatchObject({ record_status: 'observation_skipped', observation: {
+      message: 'Not measured in this snapshot: the weekly collection produced no record for this system (a declared gap). Last measured 2026-10-03. The next attempt is the next weekly snapshot.',
+    } });
+  });
+
   it('records threshold loss in feed without publishing a moment', () => {
     const priorEntity = { ...entity('e_1', [DEVELOPMENT_AXIS]), convergent_axes: [DEVELOPMENT_AXIS] };
     const currentEntity = entity('e_1', [DEVELOPMENT_AXIS]);
@@ -140,6 +153,22 @@ describe('typed feeds and immutable signal ids', () => {
     );
     expect(entries.map((entry) => entry.event_kind)).toContain('axis_threshold_lost');
     expect(entries.some((entry) => entry.type === 'moment_signal')).toBe(false);
+  });
+
+  it('excludes losses from the first 100 site entries while keeping them in the complete JSON feed', () => {
+    const rows = Array.from({ length: 140 }, (_, i) => ({ ...entity(`e_loss_${i}`, [DEVELOPMENT_AXIS]), convergent_axes: [DEVELOPMENT_AXIS] }));
+    const previous = snap('2026-08-08', '2026-w32', rows);
+    const current = snap('2026-08-15', '2026-w33', [
+      ...rows.map(e => ({ ...e, convergent_axes: [] })), ...Array.from({ length: 110 }, (_, i) => entity(`e_new_${i}`, [DEVELOPMENT_AXIS])),
+    ]);
+    const full = diffFeedEntries(previous, current);
+    expect(full.filter(e => e.event_kind === 'axis_threshold_lost')).toHaveLength(140);
+    expect(jsonFeed(full).items.some(i => i.content_text.includes('no longer recorded'))).toBe(true);
+    const site = siteFeedEntries([previous, current]);
+    expect(site).toHaveLength(100);
+    expect(JSON.stringify(site)).not.toContain('no longer recorded');
+    expect(site.every(e => e.event_kind === 'measurement_activated')).toBe(true);
+    expect(JSON.stringify(siteFeedEntries())).not.toContain('no longer recorded');
   });
 
   it('uses reference baseline events for incumbents and never publishes their convergence', () => {

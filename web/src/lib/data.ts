@@ -192,11 +192,13 @@ export const fmtSlope = (s: number | null) => (s == null ? 'n/a' : (s >= 0 ? '+'
 // series, with its own floors and custody, for direct-dependents momentum.
 export type DepsSignal = {
   value: number; direct: number; indirect: number; system: string; package: string;
+  period?: string; captured_at?: string;
 };
 
-const toDepsSignal = (s: any): DepsSignal | null =>
+const toDepsSignal = (s: any, row: any): DepsSignal | null =>
   s && typeof s.value === 'number'
-    ? { value: s.value, direct: s.direct ?? 0, indirect: s.indirect ?? 0, system: s.source_system ?? '', package: s.package ?? '' }
+    ? { value: s.value, direct: s.direct ?? 0, indirect: s.indirect ?? 0, system: s.source_system ?? '', package: s.package ?? '',
+      period: row.period, captured_at: row.captured_at }
     : null;
 
 // Verified package-identity pins (data/deps_id_map.json): a captured deps row is
@@ -212,7 +214,8 @@ const depsPins: Record<string, { system: string; package: string }> = (() => {
   }
 })();
 const pinByEntity = new Map<string, { system: string; package: string }>();
-for (const e of entities) {
+// A skipped observation must not discard an older, identity-pinned daily reading.
+for (const { entity: e } of entityUniverse) {
   const pin = depsPins[e.github_repo];
   if (pin) pinByEntity.set(e.entity_id, pin);
 }
@@ -246,7 +249,7 @@ export function buildDepsMap(
   for (const r of dayRows) {
     if (r?.coverage !== 'matched' || r?.status === 'retracted' || !pinOk(r)) continue;
     if (!isCapturedAsOf(r?.captured_at, cutoff)) continue;
-    const sig = toDepsSignal(r?.signals?.deps_dev_dependents);
+    const sig = toDepsSignal(r?.signals?.deps_dev_dependents, r);
     if (sig) m.set(r.entity_id, sig);
   }
   // Fallback: deps are captured daily into per-day folders, so a future weekly
@@ -268,7 +271,7 @@ export function buildDepsMap(
         if (pc !== 0) return pc;
         return normalizeTs(String(a.captured_at ?? '')).localeCompare(normalizeTs(String(b.captured_at ?? '')));
       });
-    const sig = rows.length ? toDepsSignal(rows[rows.length - 1]?.signals?.deps_dev_dependents) : null;
+    const sig = rows.length ? toDepsSignal(rows[rows.length - 1]?.signals?.deps_dev_dependents, rows[rows.length - 1]) : null;
     if (sig) m.set(e.entity_id, sig);
   }
   return m;

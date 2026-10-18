@@ -74,6 +74,6 @@ export const bRecords = entityUniverse.filter(r => isTemplateB(r.entity.entity_i
 // Versioned download and image URLs remain addressable after the next release.
 export function assetRecords(): ArchivedEntity[] {
   return bRecords.flatMap(record => (historyById.get(record.entity.entity_id) ?? []).map(p => ({
-    ...record, ...p, lastSeenSnapshot: p.snapshot.snapshot_date,
+    ...record, ...p,
   })));
 }

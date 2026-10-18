@@ -187,8 +187,8 @@ describe('reproducible artifacts and optional event sinks', () => {
   });
   it('emits feed entries for changed published numbers, not a new date alone', () => {
     const m = render(ids[0]), p = m.history.at(-1)!;
-    const duplicate = { ...p, snapshot: { ...p.snapshot, snapshot_date: '2026-09-20', snapshot_id: 'duplicate', captured_at: '2026-09-20T00:00:00Z' } };
-    const changed = structuredClone(duplicate); changed.snapshot.snapshot_date = '2026-09-21'; changed.snapshot.snapshot_id = 'changed'; changed.entity.axes.github_commit_velocity.stars_not_scored! += 1;
+    const duplicate = { ...p, snapshot: { ...p.snapshot, snapshot_date: '2099-01-01', snapshot_id: 'duplicate', captured_at: '2099-01-01T00:00:00Z' } };
+    const changed = structuredClone(duplicate); changed.snapshot.snapshot_date = '2099-01-02'; changed.snapshot.captured_at = '2099-01-02T00:00:00Z'; changed.snapshot.snapshot_id = 'changed'; changed.entity.axes.github_commit_velocity.stars_not_scored! += 1;
     const feed = systemFeed({ ...m, history: [p, duplicate, changed] });
     expect(feed.items).toHaveLength(2); expect(feed.items[0].id).toContain('changed-b1');
     expect(systemAtom({ ...m, history: [p] })).toContain('<author><name>Evidaxis</name></author>');

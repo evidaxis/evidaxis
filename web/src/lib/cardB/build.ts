@@ -1,10 +1,11 @@
 import type { Entity, Snapshot, DepsSignal } from '../data';
-import type { ArchivedEntity } from '../archive';
+import { recordAvailability, type ArchivedEntity } from '../archive';
 import type { MeasurementState } from '../measurement';
 import { measurementPhrases } from '../measurement';
 import { claimUrnForEntity } from '../claim_urn';
 import { TEMPLATE_VERSION } from './config';
-import { axis3OwnPackages, axis3ReadingDefinition } from '../methodology';
+import { axis3OwnPackages } from '../methodology';
+import { dependentReadings } from '../dependent-readings';
 import { assertPublicText, copy, facet, revealsBannedHandle, selectClasses } from './facets';
 
 export const numeric = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
@@ -62,6 +63,7 @@ export type Reading = {
   key: string; entity_id: string; label: string; value: number | number[] | null; unit: string;
   date: string; source: string; definition: string; median: number | null; n: number;
   delta4: number | null; delta26: number | null; range: [number, number] | null; previous: number | null;
+  role?: string; package_scope?: string | null; verification?: string;
 };
 const span = (values: number[]): [number, number] | null => values.length ? [Math.min(...values), Math.max(...values)] : null;
 const difference = (a: number | null, b: number | null) => a === null || b === null ? null : a - b;
@@ -106,6 +108,11 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     .map(peer => metrics(peer).citations).filter(numeric));
   const ruler = commitRuler(ctx.commits, snap.captured_at);
   const oa = e.axes?.openalex_citation_momentum, dd = e.axes?.deps_direct_dependents_momentum;
+  const dependents = dependentReadings(e, snap, ctx.daily);
+  if (dependents.daily.package_scope && revealsBannedHandle(dependents.daily.package_scope, ctx.bannedOwners)) {
+    dependents.daily.package_scope = 'package not shown';
+    dependents.daily.source = '';
+  }
   const years = Object.entries(oa?.by_year ?? {}).map(([year, value]) => ({ year: +year, value }))
     .filter(row => row.year < +date.slice(0, 4)).sort((a, b) => a.year - b.year);
   const paper = paperRef(e.note);
@@ -120,7 +127,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     total: fmt(own.citations), n_years: years.length, reg_med: fmt(registryMedian),
     by_year: years.map(y => `${y.year}: ${y.value}`).join('; ') || 'no completed yearly reading',
     latest: fmt(own.dependents), partition: dd?.as_of_partition ?? 'not captured', points: dd?.points ?? 'no reading',
-    ts: fmt(dd?.theil_sen ?? null), daily: fmt(ctx.daily?.value ?? null), daily_date: ctx.dailySeries.at(-1)?.period ?? date,
+    ts: fmt(dd?.theil_sen ?? null), daily: fmt(ctx.daily?.value ?? null), daily_date: dependents.daily.date ?? 'not captured',
     period: state.positive_signal.period ?? snap.period, k: e.convergent_axes.length,
     observations: state.history_sufficiency.weekly_observations, stars: fmt(own.stars), paper_ref: paper ?? '',
     gate: phrases.gate, history: phrases.history, coverage: phrases.axis_coverage, urn, url,
@@ -191,10 +198,10 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const definitions = {
     commits: 'GitHub averaged commits per week over the trailing window (12 weeks); deltas compare trailing averages, range spans rolling averages within 52 weeks.',
     citations: 'OpenAlex citing works indexed to date, all years including the current one.',
-    dependents: axis3ReadingDefinition(snap.methodology_version),
+    dependents: dependents.weekly.definition,
     stars: 'GitHub stargazers count; recorded, not scored.',
   };
-  const labels = { commits: 'Commits per week', citations: 'Citing works', dependents: 'Direct dependents', stars: 'Stars' };
+  const labels = { commits: 'Commits per week', citations: 'Citing works', dependents: dependents.weekly.label, stars: 'Stars' };
   const units = { commits: 'commits/wk', citations: 'citing works', dependents: 'packages', stars: 'stars' };
   const readings: Reading[] = (Object.keys(own) as MetricKey[]).map(key => ({
     key, entity_id: e.entity_id, label: labels[key], value: own[key], unit: units[key],
@@ -204,14 +211,16 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     delta26: difference(own[key], key === 'commits' ? trailingAverage(26) : priorValue(key, 26)),
     range: key === 'commits' ? span(averages) : span(history.filter(p => p.snapshot.snapshot_date >= dateAgo(date, 52)).map(p => metrics(p.entity)[key]).filter(numeric)),
     previous: previous ? metrics(previous.entity)[key] : null,
+    ...(key === 'dependents' ? { role: dependents.weekly.role, package_scope: dependents.weekly.package_scope, verification: dependents.weekly.verification } : {}),
   }));
   const seriesReading = (key: string, label: string, value: number[], definition: string): Reading => ({
     key, entity_id: e.entity_id, label, value: value.length ? value : null, unit: key === 'commit_series' ? 'commits' : key === 'dependents_series' ? 'packages' : 'citing works',
     date, source: source(key), definition, median: null, n: value.length, delta4: null, delta26: null, range: span(value), previous: null,
   });
-  readings.splice(3, 0, { key: 'daily', entity_id: e.entity_id, label: 'Daily dependents (unscored)',
-    value: ctx.daily?.value ?? null, unit: 'packages', date: ctx.dailySeries.at(-1)?.period ?? date, source: source('daily'),
-    definition: 'deps.dev REST dependents count, unscored; separate from the weekly package-union axis.', median: null, n: ctx.dailySeries.length,
+  readings.splice(3, 0, { key: 'daily', entity_id: e.entity_id, label: dependents.daily.label,
+    value: ctx.daily?.value ?? null, unit: 'packages', date: dependents.daily.date ?? 'not captured', source: source('daily'),
+    role: dependents.daily.role, package_scope: dependents.daily.package_scope, verification: dependents.daily.verification,
+    definition: dependents.daily.definition, median: null, n: ctx.dailySeries.length,
     delta4: null, delta26: null, range: span(ctx.dailySeries.map(p => p.value)), previous: previous?.daily?.value ?? null });
   readings.push(seriesReading('commit_series', '52-week commit series', ctx.commits, 'GitHub commit_activity weekly totals, captured as one series.'),
     seriesReading('citation_series', 'Completed calendar years', years.map(y => y.value), 'OpenAlex citing works by completed calendar year.'),
@@ -240,11 +249,12 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
     gate_eta: text('gate_eta'), detail: text('detail'), reconstructed: text('reconstructed'),
   };
   const result = { display, facets, readings, changes, texts, entity: { id: e.entity_id, name, type: e.entity_type },
-    release, path, url, urn, date, snapshot_id: snap.snapshot_id, methodology: snap.methodology_version, superseded: record.recordStatus === 'superseded',
+    release, path, url, urn, date, snapshot_id: snap.snapshot_id, methodology: snap.methodology_version,
+    availability: recordAvailability(record),
     cohortLabel, cohortN: cohort.length, nicheAssigned, peers, medians, ruler, years, commitBand, missing, paper,
     repoLabel: ctx.repoLabel, repoUrl: ctx.repoUrl, homepage: ctx.homepage, workIds: e.openalex_work_ids,
     history, dailySeries: ctx.dailySeries, backfill: ctx.backfill, daily: ctx.daily,
-    deps: dd ?? null, state, phrases, valuesUrl: `${path}values-${release}.csv`, historyUrl: `${path}history-${release}.csv`,
+    deps: dd ?? null, dependents, state, phrases, valuesUrl: `${path}values-${release}.csv`, historyUrl: `${path}history-${release}.csv`,
     nicheCsv: `/ai/cohorts/${e.sub_niche}/values-${release}.csv`, feedUrl: `${path}feed.atom`, jsonUrl: `/e/${e.entity_id}.json`,
   };
   // Raw archive rows stay private to the generator; only explicit projections
