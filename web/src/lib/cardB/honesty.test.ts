@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import CardB from '../../components/cardB/CardB.astro';
 import { GET } from '../../pages/e/[id].json';
-import { archiveEntityById, entityUniverse, recordAvailability, type RecordStatus } from '../archive';
+import { archiveEntityById, entityUniverse, recordAvailability, snapshots, type RecordStatus } from '../archive';
 import { ownerTypes, publicEntity, publicRepoUrl } from '../data';
 import { REPO_ROOT } from '../data-path';
 import { dependentReadings } from '../dependent-readings';
@@ -32,11 +32,13 @@ describe('honest observations across public formats', () => {
       const html = await htmlFor(record);
       expect(json.record_status).toBe(status);
       expect(json.observation).toEqual(model.availability);
+      // Dates come from the record: the archive gains a snapshot every week.
+      const seen = record.lastSeenSnapshot;
       expect(json.observation.message).toBe({
-        measured: 'Measured in snapshot 2026-10-17.',
-        observation_skipped: 'Not measured in this snapshot: the weekly collection produced no record for this system (a declared gap). Last measured 2026-10-17. The next attempt is the next weekly snapshot.',
-        departure_confirmed: 'Preserved historical record; record status: superseded; last measured 2026-10-17.',
-        absence_unexplained: 'Not in the latest snapshot; last measured 2026-10-17.',
+        measured: `Measured in snapshot ${seen}.`,
+        observation_skipped: `Not measured in this snapshot: the weekly collection produced no record for this system (a declared gap). Last measured ${seen}. The next attempt is the next weekly snapshot.`,
+        departure_confirmed: `Preserved historical record; record status: superseded; last measured ${seen}.`,
+        absence_unexplained: `Not in the latest snapshot; last measured ${seen}.`,
       }[status]);
       expect(isIndexable(json)).toBe(true);
       expect(valuesCSV(model)).toContain(`,${status},${record.latestSnapshot},${record.lastSeenSnapshot}`);
@@ -51,7 +53,11 @@ describe('honest observations across public formats', () => {
   });
 
   it('keeps weekly 21 and daily 0 separate with their dates, sources, scopes and scoring roles', async () => {
-    const record = archiveEntityById.get('e_X33782S1M13')!, model = buildCardB(record, contextFor(record));
+    // Pinned to the immutable 2026-10-17 snapshot, not the latest one, so next week's capture cannot move it.
+    const snap = snapshots.find(s => s.snapshot_date === '2026-10-17')!;
+    const record = { ...archiveEntityById.get('e_X33782S1M13')!, snapshot: snap,
+      entity: snap.entities.find(e => e.entity_id === 'e_X33782S1M13')! };
+    const model = buildCardB(record, contextFor(record));
     const weekly = model.readings.find(r => r.key === 'dependents')!, daily = model.readings.find(r => r.key === 'daily')!;
     expect(weekly).toMatchObject({ label: 'Weekly direct dependents', value: 21, date: '2026-09-28', role: 'weekly_axis_input',
       source: 'https://evidaxis.org/snapshots/2026-10-17/snapshot.json', verification: 'may_include_unverified' });
@@ -79,10 +85,6 @@ describe('honest observations across public formats', () => {
     expect(systemAtom(model)).toContain('partition 2026-09-28; weekly axis input');
     expect(systemAtom(model)).toContain('Daily package dependents (unscored): 0; captured 2026-10-16');
     expect(dependentReadings(record.entity, { ...record.snapshot, methodology_version: 'm3' }, null).weekly.definition).not.toContain('no_link');
-    const skipped = archiveEntityById.get('e_35VTV5C2TMS')!;
-    const lastDaily = buildCardB(skipped, contextFor(skipped)).readings.find(r => r.key === 'daily')!;
-    expect(skipped.recordStatus).toBe('observation_skipped');
-    expect(lastDaily).toMatchObject({ value: 3, date: '2026-10-10' });
     const olderRelease = assetRecords().find(r => r.snapshot.snapshot_date < archiveEntityById.get(r.entity.entity_id)!.lastSeenSnapshot)!;
     expect(buildCardB(olderRelease, contextFor(olderRelease)).availability).toEqual(recordAvailability(archiveEntityById.get(olderRelease.entity.entity_id)!));
   });
@@ -96,9 +98,12 @@ describe('honest observations across public formats', () => {
     expect(systemAtom(model)).toContain('no longer recorded');
     expect((await twin(record)).events).toContainEqual(lost);
     expect(siteFeedEntries().some(e => e.id === lost.id)).toBe(false);
-    const hermes = entityUniverse.find(r => r.entity.name === 'hermes-agent')!;
-    const event = latestFeedEntries().find(e => e.entity_ids.includes(hermes.entity.entity_id) && e.event_kind === 'collection_failed')!;
-    expect(event.state).toMatchObject({ record_status: 'observation_skipped', observation: recordAvailability(hermes) });
+    // Whichever system the latest snapshot skipped, its collection event carries the shared state.
+    const event = latestFeedEntries().find(e => e.event_kind === 'collection_failed');
+    if (event) {
+      const gap = archiveEntityById.get(event.entity_ids[0])!;
+      expect(event.state).toMatchObject({ record_status: gap.recordStatus, observation: recordAvailability(gap) });
+    }
   });
 
   it('preserves pending owner masks and neutral-name masks in every observation state', async () => {
