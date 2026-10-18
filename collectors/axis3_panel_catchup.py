@@ -315,7 +315,7 @@ def linkage_verdict(aliases: set[str], version: dict | None, *, error: str | Non
     matched = 0
     foreign = 0
     for raw in named:
-        repo = github_repo_from_text(raw if "://" in raw or raw.startswith("github.com/") else raw)
+        repo = github_repo_from_text(raw)
         key = _alias_key(repo) if repo else ""
         bare = raw.casefold().removeprefix("https://").removeprefix("http://").removeprefix("github.com/")
         bare = bare.removesuffix(".git").strip("/")
