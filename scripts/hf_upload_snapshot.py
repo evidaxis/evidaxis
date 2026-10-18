@@ -232,6 +232,15 @@ def verify_public_upload(stage: Path) -> None:
                 raise ValueError(f"HF public content differs: {name}")
 
 
+def snapshot_card(date: str) -> str:
+    """Point the viewer at this upload without maintaining the template weekly."""
+    card, count = re.subn(r'(?m)^(        path: )"\d{4}-\d{2}-\d{2}/entities\.csv"$',
+                         rf'\g<1>"{date}/entities.csv"', CARD.read_text(encoding="utf-8"), count=1)
+    if count != 1:
+        raise ValueError("dataset card must declare a dated entities.csv path")
+    return card
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None)
@@ -273,7 +282,7 @@ def main(argv: list[str] | None = None) -> int:
         # capture layer (github_repos list with personal slugs). The verification chain
         # lives in the canonical git/Zenodo archive (see README). HF = publication
         # projection only: projected snapshot.json + entities.csv.
-        shutil.copy(CARD, Path(td) / "README.md")
+        (Path(td) / "README.md").write_text(snapshot_card(date), encoding="utf-8")
         hits = _person_free_hits(stage.parent)
         if args.dry_run or hits:
             print(_summary(date, stats, len(hits)))

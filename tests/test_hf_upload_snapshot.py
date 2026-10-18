@@ -277,6 +277,32 @@ def test_public_hf_receipt_reads_both_projected_files(tmp_path, monkeypatch):
         hf.verify_public_upload(stage)
 
 
+@pytest.mark.parametrize("date", ["2026-10-17", "2026-10-24"])
+def test_staged_card_selects_uploaded_csv(publication_repo, tmp_path, monkeypatch, date):
+    import yaml
+
+    folder = tmp_path / "snapshots" / date
+    folder.mkdir(parents=True)
+    (folder / "snapshot.json").write_text(json.dumps({"snapshot_date": date, "entities": [
+        {"entity_id": "e_FIXTURE", "name": "Fixture"}]}))
+    monkeypatch.setattr(hf, "SNAPSHOTS", folder.parent)
+    template = hf.CARD.read_bytes()
+
+    def check_stage(stage):
+        card = (stage / "README.md").read_text()
+        metadata = yaml.safe_load(card.split("---", 2)[1])
+        config, = metadata["configs"]
+        assert config["config_name"] == "default" and config["default"] is True
+        files, = config["data_files"]
+        assert files == {"split": "train", "path": f"{date}/entities.csv"}
+        assert (stage / files["path"]).is_file()
+        return []
+
+    monkeypatch.setattr(hf, "_person_free_hits", check_stage)
+    assert hf.main(["--date", date, "--dry-run"]) == 0
+    assert hf.CARD.read_bytes() == template
+
+
 def test_hf_upload_and_receipt_failures_stay_nonzero(publication_repo, tmp_path, monkeypatch):
     from types import SimpleNamespace
 
