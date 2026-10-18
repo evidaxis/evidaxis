@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-03-15T03:17:38Z",
+  "full_name": "fuyuxiang/echo-agent",
+  "private": false,
+  "subscribers_count": 9,
+  "node_id": "R_kgDORnVqmA",
+  "name": "echo-agent",
+  "description": "面向长期运行与桌面协作的开源 AI Agent，提供常驻 Runtime、桌面 Agent、长期记忆与持续学习能力，可用于个人助理、自动化任务与本地工作流。",
+  "network_count": 28,
+  "visibility": "public",
+  "stargazers_count": 1058,
+  "open_issues_count": 5,
+  "id": 1182100120,
+  "size": 76011,
+  "fork": false,
+  "language": "Python",
+  "default_branch": "master",
+  "forks_count": 28,
+  "topics": [
+    "agent",
+    "agent-memory",
+    "memory"
+  ],
+  "homepage": "http://www.ojlab.com/",
+  "disabled": false,
+  "pushed_at": "2026-10-18T11:40:36Z",
+  "updated_at": "2026-10-18T11:40:41Z",
+  "watchers_count": 1058,
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

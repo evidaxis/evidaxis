@@ -1,0 +1,31 @@
+{
+  "created_at": "2025-11-05T00:12:10Z",
+  "full_name": "strands-agents/agent-sop",
+  "private": false,
+  "subscribers_count": 15,
+  "node_id": "R_kgDOQPZO0w",
+  "name": "agent-sop",
+  "description": "Natural language workflows that enable AI agents to perform complex, multi-step tasks with consistency and reliability.",
+  "network_count": 132,
+  "visibility": "public",
+  "stargazers_count": 1191,
+  "open_issues_count": 8,
+  "id": 1089883859,
+  "size": 504,
+  "fork": false,
+  "language": "Python",
+  "default_branch": "main",
+  "forks_count": 132,
+  "topics": [
+    "strands-agents"
+  ],
+  "homepage": "https://aws.amazon.com/blogs/opensource/introducing-strands-agent-sops-natural-language-workflows-for-ai-agents/",
+  "disabled": false,
+  "pushed_at": "2026-10-08T04:13:51Z",
+  "updated_at": "2026-10-18T02:41:59Z",
+  "watchers_count": 1191,
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

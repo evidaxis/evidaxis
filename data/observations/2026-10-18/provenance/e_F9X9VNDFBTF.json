@@ -1,0 +1,32 @@
+{
+  "created_at": "2023-06-01T10:20:23Z",
+  "full_name": "gemelo-ai/vocos",
+  "private": false,
+  "subscribers_count": 30,
+  "node_id": "R_kgDOJqIENw",
+  "name": "vocos",
+  "description": "Vocos: Closing the gap between time-domain and Fourier-based neural vocoders for high-quality audio synthesis",
+  "network_count": 136,
+  "visibility": "public",
+  "stargazers_count": 1164,
+  "open_issues_count": 48,
+  "id": 648152119,
+  "size": 18162,
+  "fork": false,
+  "language": "Python",
+  "default_branch": "main",
+  "forks_count": 136,
+  "topics": [
+    "vocoder",
+    "vocos"
+  ],
+  "homepage": "https://gemelo-ai.github.io/vocos/",
+  "disabled": false,
+  "pushed_at": "2026-08-29T15:52:12Z",
+  "updated_at": "2026-10-17T00:20:55Z",
+  "watchers_count": 1164,
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
