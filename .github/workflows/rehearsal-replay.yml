@@ -1,0 +1,105 @@
+name: rehearsal-replay
+run-name: rehearsal replay ${{ inputs.drill }} from ${{ inputs.source_run }}
+
+# Replays the post-collection checks of one weekly rehearsal. The candidate comes
+# from that run's artifact. A drill fault is injected only on this runner.
+# This workflow does not publish and does not message the keeper.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run:
+        description: "Run id of weekly-snapshot in rehearsal mode"
+        required: true
+        type: string
+      drill:
+        description: "One fault to inject on this runner only"
+        required: false
+        default: none
+        type: choice
+        options:
+          - none
+          - site_test
+          - hf_handle
+          - canary_missing
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: rehearsal-replay
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    # Site verify of one collected candidate, without the weekly collection.
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Download the rehearsal artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "${{ inputs.source_run }}" --pattern 'snapshot-*' --dir "${{ runner.temp }}/replay-src"
+
+      - name: Place the candidate snapshot
+        run: |
+          python3 scripts/rehearsal_drill.py place \
+            --download "${{ runner.temp }}/replay-src" \
+            --summary-dir "${{ runner.temp }}/evx-summary"
+
+      - name: Inject one drill fault
+        run: python3 scripts/rehearsal_drill.py apply --drill "${{ inputs.drill }}" --date "$SNAPSHOT_DATE"
+
+      - name: Check the HF publication projection
+        id: hf
+        continue-on-error: true
+        run: python3 scripts/hf_upload_snapshot.py --date "$SNAPSHOT_DATE" --dry-run
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+
+      - name: Verify the site against this rehearsal candidate
+        id: verify
+        continue-on-error: true
+        env:
+          EVIDAXIS_DATA_DIR: ${{ github.workspace }}/data
+          PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
+          PUBLIC_CLARITY_ID: ${{ vars.PUBLIC_CLARITY_ID }}
+          PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
+          PUBLIC_POSTHOG_HOST: ${{ vars.PUBLIC_POSTHOG_HOST }}
+        run: |
+          cd web
+          npm ci
+          npm run verify
+
+      - name: Rehearsal report
+        id: report
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUT="${{ runner.temp }}/evx-summary"
+          mkdir -p "$OUT"
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" > "$OUT/jobs.json" || rm -f "$OUT/jobs.json"
+          python3 scripts/rehearsal_report.py --date "$SNAPSHOT_DATE" --summary-dir "$OUT"
+
+      - name: Drill verdict
+        if: always()
+        env:
+          DRILL: ${{ inputs.drill }}
+          HF: ${{ steps.hf.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+          REPORT: ${{ steps.report.outcome }}
+        run: python3 scripts/rehearsal_drill.py verdict

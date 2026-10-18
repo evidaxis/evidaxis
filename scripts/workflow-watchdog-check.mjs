@@ -3,6 +3,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { inReminderWindow } from './alert-gate.mjs';
+import { sendTelegram as deliverTelegram } from './telegram.mjs';
 import {
   applyAudienceGate,
   applyDroughtGate,
@@ -43,26 +44,8 @@ const ROSTER = [
 ];
 
 /** @param {string} text */
-async function sendTelegram(text) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chat = process.env.ALERT_CHAT_ID;
-  if (!token || !chat) {
-    console.error('[workflow-watchdog] TELEGRAM_BOT_TOKEN/ALERT_CHAT_ID not set; alert NOT sent');
-    return false;
-  }
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ chat_id: chat, text, disable_web_page_preview: true }),
-      signal: AbortSignal.timeout(10_000),
-    });
-    if (!res.ok) console.error('[workflow-watchdog] telegram HTTP', res.status);
-    return res.ok;
-  } catch (e) {
-    console.error('[workflow-watchdog] telegram send failed', e);
-    return false;
-  }
+function sendTelegram(text) {
+  return deliverTelegram(text, 'workflow-watchdog');
 }
 
 /** @param {string} url */

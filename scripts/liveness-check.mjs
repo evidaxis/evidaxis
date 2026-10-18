@@ -3,6 +3,7 @@
 // plain `node` — no npm install (see liveness.mjs).
 import { previousConclusion, shouldPush } from './alert-gate.mjs';
 import { evaluateLiveness } from './liveness.mjs';
+import { sendTelegram as deliverTelegram } from './telegram.mjs';
 
 /** @param {string} url @param {string} marker */
 async function probe(url, marker) {
@@ -20,26 +21,8 @@ async function probe(url, marker) {
 }
 
 /** @param {string} text */
-async function sendTelegram(text) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chat = process.env.ALERT_CHAT_ID;
-  if (!token || !chat) {
-    console.error('[liveness] TELEGRAM_BOT_TOKEN/ALERT_CHAT_ID not set — alert NOT sent');
-    return false;
-  }
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ chat_id: chat, text, disable_web_page_preview: true }),
-      signal: AbortSignal.timeout(10_000),
-    });
-    if (!res.ok) console.error('[liveness] telegram HTTP', res.status);
-    return res.ok;
-  } catch (e) {
-    console.error('[liveness] telegram send failed', e);
-    return false;
-  }
+function sendTelegram(text) {
+  return deliverTelegram(text, 'liveness');
 }
 
 const url = process.env.SITE_URL;
