@@ -44,6 +44,23 @@ OPENALEX_SELECT = ",".join([
 # publication_date is a day. counts_by_year has no month, so 2026 cannot be
 # matched to the same span of 2025. type distinguishes a journal article.
 WORK_SELECT = OPENALEX_SELECT + ",publication_date,type"
+# Title repair omits locations and every author field. per-page=8 is the
+# existing title-search page size.
+TITLE_SEARCH_SELECT = "id,display_name,doi,ids,publication_year,cited_by_count,counts_by_year"
+# Citation totals in commit e88cf7fbc0, before the 2026-10-18 link correction.
+FIRST_VERSION_CITES = {
+    "Qwen": (1, 131, 251, 325),
+    "DeepSeek": (0, 25, 539, 1046),
+    "Llama": (1205, 3296, 2239, 376),
+    "Gemma": (0, 108, 274, 129),
+    "OLMo": (0, 16, 32, 23),
+    "GLM": (85, 168, 188, 21),
+    "Kimi": (0, 0, 12, 8),
+    "InternLM": (0, 3, 22, 4),
+    "Mistral": (8, 127, 184, 143),
+    "Phi": (23, 119, 175, 74),
+}
+FIRST_VERSION_DENOM_2025 = 3916
 
 # Canonical generation reports: the family's own write-ups, including papers
 # whose title does not contain the words "technical report".
@@ -211,11 +228,14 @@ def parse_feed(xml_bytes: bytes) -> tuple[str, list[dict]]:
         versioned = id_text.split("/abs/")[-1]
         title = " ".join((entry.findtext("a:title", default="", namespaces=ATOM_NS) or "").split())
         journal_doi = (entry.findtext("arxiv:doi", default="", namespaces=ATOM_NS) or "").strip()
+        published = entry.findtext("a:published", default="", namespaces=ATOM_NS) or ""
+        published_year = int(published[:4]) if len(published) >= 4 and published[:4].isdigit() else None
         entries.append({
             "arxiv_id": base_arxiv(versioned),
             "version": versioned,
             "title": title,
             "journal_doi": journal_doi,
+            "published_year": published_year,
         })
     return total, entries
 
@@ -311,6 +331,7 @@ def fetch() -> None:
         )
         write_json(RAW / "openalex" / f"title-{arxiv_id}.json", http_json(title_url))
     fetch_work_links(catalog, pulled)
+    fetch_contaminated_titles(catalog)
     write_json(RAW / "manifest.json", {
         "openalex_pull_date": pulled,
         "arxiv_pull_date": pulled,
@@ -376,6 +397,7 @@ def load_arxiv_catalog() -> dict[str, dict]:
                     "arxiv_id": arxiv_id,
                     "title": "",
                     "journal_doi": "",
+                    "published_year": None,
                     "families": [family["family"]],
                     "roles": ["canonical"],
                     "arxiv_status": "not_found",
@@ -383,6 +405,8 @@ def load_arxiv_catalog() -> dict[str, dict]:
                 continue
             catalog.setdefault(arxiv_id, {**entry, "families": [], "roles": [], "arxiv_status": "found"})
             catalog[arxiv_id]["journal_doi"] = catalog[arxiv_id].get("journal_doi") or entry.get("journal_doi") or ""
+            if not catalog[arxiv_id].get("published_year"):
+                catalog[arxiv_id]["published_year"] = entry.get("published_year")
             catalog[arxiv_id]["families"].append(family["family"])
             if "canonical" not in catalog[arxiv_id]["roles"]:
                 catalog[arxiv_id]["roles"].append("canonical")
@@ -405,6 +429,8 @@ def load_arxiv_catalog() -> dict[str, dict]:
                 catalog[arxiv_id]["roles"].append(role)
             catalog[arxiv_id]["title"] = catalog[arxiv_id]["title"] or entry["title"]
             catalog[arxiv_id]["journal_doi"] = catalog[arxiv_id].get("journal_doi") or entry.get("journal_doi") or ""
+            if not catalog[arxiv_id].get("published_year"):
+                catalog[arxiv_id]["published_year"] = entry.get("published_year")
             catalog[arxiv_id]["title_search_total"] = total
     return catalog
 
@@ -470,58 +496,176 @@ def load_single_work(path: Path) -> dict | None:
     return None
 
 
+def titles_match(work: dict, arxiv_title: str) -> bool:
+    if not arxiv_title:
+        return False
+    return norm_title(work.get("display_name") or "") == norm_title(arxiv_title)
+
+
+# A full-string arXiv id. A DOI, including 10.48550/arxiv.<id>, is not an arXiv id.
+_ARXIV_ID_EXACT = re.compile(
+    r"^(?:https?://arxiv\.org/(?:abs|pdf)/|pmh:oai:arxiv\.org:|arxiv:)?(\d{4}\.\d{4,5})(?:v\d+)?$",
+    re.IGNORECASE,
+)
+
+
+def arxiv_id_exact(work: dict, arxiv_id: str) -> bool:
+    """True when ids or locations carry this arXiv id exactly."""
+    values = []
+    ids = work.get("ids") or {}
+    if isinstance(ids, dict):
+        for key, value in ids.items():
+            if str(key).casefold() == "doi" or value is None:
+                continue
+            values.append(str(value))
+    for loc in work.get("locations") or []:
+        if not isinstance(loc, dict):
+            continue
+        for key in ("id", "landing_page_url", "pdf_url"):
+            if loc.get(key):
+                values.append(str(loc[key]))
+    for value in values:
+        match = _ARXIV_ID_EXACT.match(value.strip())
+        if match and match.group(1) == arxiv_id:
+            return True
+    return False
+
+
 def same_title_works(arxiv_id: str, arxiv_title: str) -> list[dict]:
     payload = load_json(RAW / "openalex" / f"sametitle-{arxiv_id}.json")
     if not payload:
         return []
-    wanted = norm_title(arxiv_title)
     works = []
     for work in payload.get("results") or []:
         if not work.get("id"):
             continue
-        if wanted and norm_title(work.get("display_name") or "") == wanted:
+        if titles_match(work, arxiv_title):
             works.append(work)
     return works
 
 
-def work_is_usable(work: dict, arxiv_id: str, arxiv_title: str, journal_doi: str) -> bool:
+def title_search_hits(
+    arxiv_id: str, arxiv_title: str, published_year: int | None,
+) -> tuple[list[dict], list[int]]:
+    """Exact normalized title and the arXiv publication year, from titlesearch-*.json.
+
+    The second list is publication years of title matches that are a different year.
+    """
+    payload = load_json(RAW / "openalex" / f"titlesearch-{arxiv_id}.json")
+    if not payload or published_year is None:
+        return [], []
+    hits = []
+    other_years = []
+    for work in payload.get("results") or []:
+        if not work.get("id") or not titles_match(work, arxiv_title):
+            continue
+        year = work.get("publication_year")
+        if year == published_year:
+            hits.append(work)
+        elif year is not None:
+            other_years.append(int(year))
+    return hits, other_years
+
+
+def work_is_countable(work: dict, arxiv_id: str, arxiv_title: str, journal_doi: str) -> bool:
+    """Keep a count only when the normalized title matches.
+
+    An arXiv id in ids or locations does not keep a different title. That is
+    the Llama 2 merge: the location names 2307.09288 and the title is another
+    paper. A DOI match is not identity. Extra publisher DOIs still reject.
+    """
     if extra_dois(work, arxiv_id, journal_doi):
         return False
-    title_ok = bool(arxiv_title) and norm_title(work.get("display_name") or "") == norm_title(arxiv_title)
-    own = norm_doi(work.get("doi") or "") == arxiv_doi(arxiv_id)
-    journal = norm_doi(journal_doi)
-    vor = bool(journal) and norm_doi(work.get("doi") or "") == journal
-    return title_ok or own or vor
+    if titles_match(work, arxiv_title):
+        return True
+    return False
 
 
-def resolve_report(arxiv_id: str, arxiv_title: str, journal_doi: str) -> tuple[dict | None, float, str, str]:
+def _strip_people(value):
+    if isinstance(value, dict):
+        for key in list(value.keys()):
+            if "author" in key.casefold():
+                del value[key]
+            else:
+                _strip_people(value[key])
+    elif isinstance(value, list):
+        for item in value:
+            _strip_people(item)
+
+
+def fetch_contaminated_titles(catalog: dict[str, dict]) -> int:
+    """Store title.search responses for reports the DOI link does not keep."""
+    if not os.environ.get("OPENALEX_API_KEY", "").strip():
+        raise SystemExit("OPENALEX_API_KEY is not set")
+    (RAW / "openalex").mkdir(parents=True, exist_ok=True)
+    stored = 0
+    for arxiv_id, entry in sorted(catalog.items()):
+        if entry.get("arxiv_status") == "not_found" or not entry.get("title"):
+            continue
+        _work, _ratio, status, _why = resolve_report(
+            arxiv_id,
+            entry["title"],
+            entry.get("journal_doi") or "",
+            entry.get("published_year"),
+            recover=False,
+        )
+        if status != "contaminated":
+            continue
+        title = entry["title"]
+        # per-page=8 is the existing title-search page size.
+        url = (
+            "https://api.openalex.org/works?filter="
+            + urllib.parse.quote("title.search:" + title, safe="")
+            + f"&per-page=8&select={TITLE_SEARCH_SELECT}"
+        )
+        payload = http_json(url)
+        _strip_people(payload)
+        write_json(RAW / "openalex" / f"titlesearch-{arxiv_id}.json", payload)
+        stored += 1
+        print(f"title search {arxiv_id} results {len(payload.get('results') or [])}")
+    return stored
+
+
+def resolve_report(
+    arxiv_id: str,
+    arxiv_title: str,
+    journal_doi: str,
+    published_year: int | None = None,
+    recover: bool = True,
+) -> tuple[dict | None, float, str, str]:
     # The old 0.55 title-ratio gate is gone: a close title accepted the wrong OpenAlex work.
     """Link via GET /works/doi:10.48550/arXiv.<id>.
 
-    A work that carries this arXiv DOI and any other publisher DOI is a
-    contaminated merge and is not counted. A same-title work, or the journal
-    DOI named on the arXiv record, is a version of the same report. The caller
-    keeps one of them.
+    A work is counted only when its title matches the arXiv title after
+    normalization. An arXiv id in ids or locations, or a matching DOI, does
+    not count a different title: that work is contaminated. A title search
+    may replace it when the title and the year both match.
     """
     bydoi = load_single_work(RAW / "openalex" / f"bydoi-{arxiv_id}.json")
     vor = load_single_work(RAW / "openalex" / f"vordoi-{arxiv_id}.json")
     contaminated = []
     if bydoi is not None:
         contaminated = extra_dois(bydoi, arxiv_id, journal_doi)
+    title_conflict = []
+    for work in (bydoi, vor):
+        if work is None or not arxiv_title or titles_match(work, arxiv_title):
+            continue
+        if work is vor and norm_doi(vor.get("doi") or "") != norm_doi(journal_doi):
+            continue
+        title_conflict.append(work)
     candidates = []
     seen = set()
 
     def add(work: dict | None) -> None:
         if work is None or not work.get("id") or work["id"] in seen:
             return
-        if not work_is_usable(work, arxiv_id, arxiv_title, journal_doi):
+        if not work_is_countable(work, arxiv_id, arxiv_title, journal_doi):
             return
         # A zero-citation same-title stub is not a measured zero when the
         # arXiv-DOI work was merged with unrelated DOIs.
         cites = int(work.get("cited_by_count") or 0)
-        title_ok = bool(arxiv_title) and norm_title(work.get("display_name") or "") == norm_title(arxiv_title)
         own = norm_doi(work.get("doi") or "") == arxiv_doi(arxiv_id)
-        if contaminated and cites == 0 and title_ok and not own:
+        if contaminated and cites == 0 and titles_match(work, arxiv_title) and not own:
             return
         seen.add(work["id"])
         candidates.append(work)
@@ -542,13 +686,10 @@ def resolve_report(arxiv_id: str, arxiv_title: str, journal_doi: str) -> tuple[d
     for work in pool:
         best_ratio = max(best_ratio, title_ratio(work.get("display_name") or "", arxiv_title))
     if not candidates:
-        if contaminated:
-            listed = ", ".join(contaminated)
-            why = (
-                f"OpenAlex merges doi:10.48550/arXiv.{arxiv_id} with unrelated DOI(s): {listed}. "
-                "That count is not used. A same-title work with 0 citations is not entered as zero."
+        if title_conflict or contaminated:
+            return _contaminated_or_recovered(
+                arxiv_id, arxiv_title, published_year, contaminated, title_conflict, best_ratio, recover,
             )
-            return None, best_ratio or 0.0, "contaminated", why
         if not arxiv_title:
             return None, 0.0, "not_found", "The arXiv API did not return this id."
         return None, best_ratio, "not_found", (
@@ -558,7 +699,8 @@ def resolve_report(arxiv_id: str, arxiv_title: str, journal_doi: str) -> tuple[d
         candidates,
         key=lambda item: (
             int(item.get("cited_by_count") or 0),
-            norm_title(item.get("display_name") or "") == norm_title(arxiv_title),
+            titles_match(item, arxiv_title),
+            arxiv_id_exact(item, arxiv_id),
             item.get("id") or "",
         ),
     )
@@ -569,17 +711,64 @@ def resolve_report(arxiv_id: str, arxiv_title: str, journal_doi: str) -> tuple[d
             "Preprint and version of record are separate OpenAlex works. "
             "The higher cited_by_count is kept and the two are not added."
         )
-    elif norm_title(work.get("display_name") or "") != norm_title(arxiv_title):
-        why = (
-            "OpenAlex display_name does not match the arXiv title. "
-            f"The only publisher DOI on the kept work is {norm_doi(work.get('doi') or '')}, so the count is kept."
-        )
     elif contaminated:
         why = (
             "The arXiv-DOI work also carries an unrelated DOI, so that work is not used. "
             "The kept work is the version of record."
         )
     return work, ratio, "linked", why
+
+
+def _contaminated_or_recovered(
+    arxiv_id: str,
+    arxiv_title: str,
+    published_year: int | None,
+    contaminated: list[str],
+    title_conflict: list[dict],
+    best_ratio: float,
+    recover: bool,
+) -> tuple[dict | None, float, str, str]:
+    parts = []
+    if title_conflict:
+        names = [work.get("display_name") or "a different title" for work in title_conflict]
+        shown = " and ".join(f"«{name}»" for name in names)
+        id_note = ""
+        if any(arxiv_id_exact(work, arxiv_id) for work in title_conflict):
+            id_note = " Ids or locations name this arXiv id. That does not make the work this report."
+        verb = "The title does not match." if len(names) == 1 else "Neither title matches."
+        parts.append(
+            f"OpenAlex tied this arXiv id to {shown}. {verb}{id_note} That count is not used."
+        )
+    if contaminated:
+        listed = ", ".join(contaminated)
+        parts.append(
+            f"OpenAlex merges doi:10.48550/arXiv.{arxiv_id} with unrelated DOI(s): {listed}."
+        )
+    if not recover:
+        parts.append("The count is not used.")
+        return None, best_ratio or 0.0, "contaminated", " ".join(parts)
+    hits, other_years = title_search_hits(arxiv_id, arxiv_title, published_year)
+    if hits:
+        work = max(hits, key=lambda item: (int(item.get("cited_by_count") or 0), item.get("id") or ""))
+        parts.append(
+            f"Title search kept the work with this title and publication year {published_year}."
+        )
+        if len(hits) > 1:
+            parts.append("The higher cited_by_count is kept and the matches are not added.")
+        return work, 1.0, "linked", " ".join(parts)
+    if published_year is None:
+        parts.append("Title search could not check the year, because the arXiv record has no publication date.")
+    elif other_years:
+        listed = ", ".join(str(year) for year in sorted(set(other_years)))
+        parts.append(
+            f"Title search found this title in {listed}, not in {published_year}. That work is not used."
+        )
+    else:
+        parts.append(
+            f"Title search found no OpenAlex work with this title and publication year {published_year}."
+        )
+    parts.append("The report stays out of the sum.")
+    return None, best_ratio or 0.0, "contaminated", " ".join(parts)
 
 
 def measured_role(roles: list[str]) -> str | None:
@@ -611,7 +800,10 @@ def build_reports(catalog: dict[str, dict]) -> list[dict]:
         work, ratio, status, why = (None, 0.0, "not_found", "The arXiv API did not return this id.")
         if entry.get("arxiv_status") != "not_found" and entry.get("title"):
             work, ratio, status, why = resolve_report(
-                arxiv_id, entry["title"], entry.get("journal_doi") or "",
+                arxiv_id,
+                entry["title"],
+                entry.get("journal_doi") or "",
+                entry.get("published_year"),
             )
         elif entry.get("arxiv_status") == "not_found":
             status = "not_found"
@@ -821,7 +1013,25 @@ def share_percent(value: str) -> str:
     return f"{float(value) * 100:.1f}%"
 
 
-def finding_sentence(families: list[dict], pull_date: str) -> str:
+def llama_outside_sum(reports: list[dict]) -> list[dict]:
+    return [
+        row for row in reports
+        if row["family"] == "Llama"
+        and row["role"] in ("canonical", "title_search")
+        and row["in_sum"] == "no"
+    ]
+
+
+def llama_report_name(row: dict) -> str:
+    names = {
+        "2302.13971": "Llama",
+        "2307.09288": "Llama 2",
+        "2407.21783": "Llama 3",
+    }
+    return names.get(row["arxiv_id"], row["arxiv_id"])
+
+
+def finding_sentence(families: list[dict], pull_date: str, reports: list[dict]) -> str:
     found = citation_finding(families)
     pull = pull_date
     # The manifest date is YYYY-MM-DD. Say it as a calendar date in the sentence.
@@ -848,18 +1058,32 @@ def finding_sentence(families: list[dict], pull_date: str) -> str:
             f"denominator {hit['denominator']} (that year's sum of citations of the linked "
             f"reports of all 10 families). 2026 is incomplete and is not the basis of this sentence."
         )
-    # No crossover: say what the counts do show. Llama 3 is excluded (contaminated
-    # OpenAlex merge), so Llama's figures are a lower bound. A partial-year count
-    # can only grow, so a partial 2026 count above a full 2025 count holds.
+    # No crossover: say what the counts do show. A partial-year count can only
+    # grow, so a partial 2026 count above a full 2025 count holds.
+    # "Llama's lead is understated" stays only when every excluded Llama report
+    # is outside the sum and adding it cannot reduce Llama's count.
     last = found["complete_years"][-1]
     rows = {row["family"]: row for row in families}
-    lines = [
+    outside = llama_outside_sum(reports)
+    llama_ahead = int(last["llama"]) > int(last["qwen"])
+    understated = bool(outside) and llama_ahead and all(row["in_sum"] == "no" for row in outside)
+    lead = (
         f"Downloads and citations rank these families differently. The ATOM Report shows "
         f"Qwen passing Llama on Hugging Face downloads in September 2025. On the OpenAlex pull "
         f"of {spoken}, Llama's linked technical reports still drew {int(last['llama']):,} citations "
         f"in {last['year']} against Qwen's {int(last['qwen']):,}, of {int(last['denominator']):,} for "
-        f"all ten families; Llama 3 is excluded (see below), so Llama's lead is understated."
-    ]
+        f"all ten families"
+    )
+    if understated:
+        labels = [llama_report_name(row) for row in outside]
+        if len(labels) == 1:
+            excluded = f"{labels[0]} is excluded"
+        else:
+            excluded = ", ".join(labels[:-1]) + " and " + labels[-1] + " are excluded"
+        lead += f"; {excluded} (see below), so Llama's lead is understated."
+    else:
+        lead += "."
+    lines = [lead]
     deep = rows.get("DeepSeek")
     if deep and str(deep.get("cites_2026", "")).isdigit() and str(deep.get("cites_2025", "")).isdigit() \
             and int(deep["cites_2026"]) > int(deep["cites_2025"]):
@@ -927,8 +1151,39 @@ def svg_chart(families: list[dict], pull_date: str) -> str:
     return "\n".join(parts) + "\n"
 
 
+def correction_section(families: list[dict]) -> str:
+    by_name = {row["family"]: row for row in families}
+    changed = []
+    for name, old in FIRST_VERSION_CITES.items():
+        row = by_name[name]
+        new = tuple(int(row[f"cites_{year}"]) for year in YEARS)
+        if new != old:
+            old_text = "/".join(str(value) for value in old)
+            new_text = "/".join(str(value) for value in new)
+            changed.append(f"{name} citations 2023/2024/2025/2026 were {old_text} and are now {new_text}.")
+    denom = int(by_name["Qwen"]["denominator_2025"])
+    lines = [
+        "The first version, commit e88cf7fbc0, linked Llama 2 (arXiv 2307.09288) by DOI to an OpenAlex work about an ICU simulation.",
+        "That work's title is not the Llama 2 report. Its citations were still counted, including 808 in 2025.",
+        f"Llama's 2025 total in that version was 2,239, against Qwen's 251, of {FIRST_VERSION_DENOM_2025:,} for all ten families.",
+        "A matching DOI is not identity. A work is now counted only when its title matches the arXiv title after normalization.",
+        "An arXiv id in ids or locations does not keep a different title. That status is `contaminated`, and the count is not used.",
+        "Each contaminated report was searched on OpenAlex by title. A hit is kept only when the title and the publication year both match.",
+    ]
+    if changed:
+        lines.extend(changed)
+    else:
+        lines.append("No family citation total changed.")
+    if denom != FIRST_VERSION_DENOM_2025:
+        lines.append(
+            f"The 2025 denominator was {FIRST_VERSION_DENOM_2025:,} and is now {denom:,}. "
+            "Shares moved with that denominator."
+        )
+    return "\n".join(lines)
+
+
 def render_readme(families: list[dict], reports: list[dict], pull_date: str, snapshot_date: str) -> str:
-    sentence = finding_sentence(families, pull_date)
+    sentence = finding_sentence(families, pull_date, reports)
     header = (
         "| Family | Reports in the sum | 2023 | 2024 | 2025 | 2026 partial | "
         "Share 2023 | Share 2024 | Share 2025 | Org repos | Median commits/week | Sum of commits/week |\n"
@@ -965,6 +1220,8 @@ def render_readme(families: list[dict], reports: list[dict], pull_date: str, sna
     note_lines = [
         f"- `{row['arxiv_id']}` ({row['family']}). {row['why']}" for row in noted
     ]
+    if not note_lines:
+        note_lines.append("- None.")
     excluded = sum(1 for row in reports if row["role"] == "title_search_excluded")
     denom_2025 = families[0]["denominator_2025"] if families else "not_found"
     deepseek = next(row for row in families if row["family"] == "DeepSeek")
@@ -999,9 +1256,13 @@ Lawyer LLaMA and the FoundationAI Llama reports, stay in `reports.csv` as
 Qwen-Image is arXiv `2508.02324`, from the Qwen title search.
 
 **OpenAlex link.** Each report is looked up at `https://api.openalex.org/works/doi:10.48550/arXiv.<id>`.
-When a preprint and a version of record are separate OpenAlex works, the higher `cited_by_count` is kept and the two are not added.
+A count is kept only when the title matches the arXiv title after normalization (case, punctuation, and spaces).
+A matching DOI is not enough. An arXiv id in `ids` or `locations` does not keep a work whose title is a different paper. That work is `contaminated`, and the count is not used.
+A contaminated report is searched with `https://api.openalex.org/works?filter=title.search:<title>`.
+A hit is kept only when the normalized title and the publication year both match. Otherwise the report stays out of the sum.
+When a preprint and a version of record both match and are separate OpenAlex works, the higher `cited_by_count` is kept and the two are not added.
 A work that carries the arXiv DOI together with any other publisher DOI is a contaminated merge: its count is not used, and a same-title work with 0 citations is not entered as zero.
-The journal DOI named on the arXiv record is the version of record. DeepSeek-R1 names `10.1038/s41586-025-09422-z`.
+The journal DOI named on the arXiv record is checked as a version of record and is kept only when the title matches.
 On a linked work, OpenAlex omits a year that has no citations. Those years are 0 in the sum.
 `counts_by_year` has a year and a count. It has no month. 2026 is therefore not compared with the same months of 2025.
 
@@ -1030,7 +1291,11 @@ GitHub `commit_activity` on the default branch. The slope is the log-slope of th
   repositories. Llama's only match is `meta-llama/prompt-ops`.
 - Default branch only. Work on other branches is outside this snapshot.
 - The old DOI filter responses remain in `raw/openalex/doi-*.json` and `title-*.json`.
-  The sums read `bydoi-*.json`, `sametitle-*.json`, and `vordoi-*.json`.
+  The sums read `bydoi-*.json`, `sametitle-*.json`, `vordoi-*.json`, and `titlesearch-*.json`.
+
+## Correction 2026-10-18
+
+{correction_section(families)}
 
 ## Reproduce
 
@@ -1077,6 +1342,13 @@ def offline() -> None:
     ]
     if missing_why:
         raise SystemExit("reports outside the sum without why: " + ", ".join(missing_why))
+    mismatched = [
+        row["arxiv_id"] for row in reports
+        if row["link_status"] == "linked"
+        and norm_title(row["arxiv_title"]) != norm_title(row["openalex_title"])
+    ]
+    if mismatched:
+        raise SystemExit("linked work title mismatch: " + ", ".join(mismatched))
     write_csv(HERE / "reports.csv", reports)
     write_csv(HERE / "repos.csv", repos)
     write_csv(HERE / "families.csv", families)
