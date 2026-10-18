@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -166,9 +167,99 @@ def panel_for_partition(snapshot: str) -> tuple:
     except ImportError:
         from axis3_m4_identity import M4_ACTIVATION, load_panel_m4, self_names_v2h1
     if snapshot >= M4_ACTIVATION:
-        pkgs, sha = load_panel_m4()
+        pkgs, sha = load_panel_m4(snapshot)
         return pkgs, sha, self_names_v2h1()
     return (*load_panel(), None)
+
+
+_BYTES_RE = re.compile(r"(\d[\d,]*) bytes")
+
+
+def _json_object(text: str) -> dict | None:
+    raw = (text or "").strip()
+    if not raw:
+        return None
+    candidates = [raw]
+    start, end = raw.find("{"), raw.rfind("}")
+    if 0 <= start < end:
+        candidates.append(raw[start:end + 1])
+    seen = set()
+    for item in candidates:
+        if item in seen:
+            continue
+        seen.add(item)
+        try:
+            parsed = json.loads(item)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict):
+            return parsed
+    return None
+
+
+def _byte_count(raw) -> int | None:
+    if isinstance(raw, bool) or raw is None:
+        return None
+    if isinstance(raw, int):
+        return raw if raw >= 0 else None
+    if isinstance(raw, float):
+        if raw < 0 or not raw.is_integer():
+            return None
+        return int(raw)
+    if isinstance(raw, str) and raw.strip().isdigit():
+        return int(raw.strip())
+    return None
+
+
+def _dry_run_bytes(stdout: str, stderr: str) -> int:
+    """Bytes from a bq --format=json dry run.
+
+    The job JSON wins. statistics.query.totalBytesProcessed is a string or a
+    number. A JSON job without that field is an error. Plain text is only the
+    fallback when the process printed no JSON object.
+    """
+    job = _json_object(stdout)
+    if job is None:
+        job = _json_object(stderr)
+    if job is not None:
+        stats = job.get("statistics")
+        query = stats.get("query") if isinstance(stats, dict) else None
+        if not isinstance(query, dict) or "totalBytesProcessed" not in query:
+            raise RuntimeError("bq dry run returned no byte estimate")
+        nbytes = _byte_count(query["totalBytesProcessed"])
+        if nbytes is None:
+            raise RuntimeError("bq dry run returned no byte estimate")
+        return nbytes
+    match = _BYTES_RE.search((stderr or "") + "\n" + (stdout or ""))
+    if not match:
+        raise RuntimeError("bq dry run returned no byte estimate")
+    return int(match.group(1).replace(",", ""))
+
+
+def estimate_query_bytes(sql: str, client=None, *, job_config_cls=None, runner=None) -> int:
+    """Byte estimate for one capture query. Does not read table rows.
+
+    A passed client uses QueryJobConfig(dry_run=True). Otherwise the bq CLI
+    dry run is parsed. Tests pass a fake client or a fake runner.
+    """
+    if client is not None or job_config_cls is not None:
+        if job_config_cls is None:
+            from google.cloud.bigquery import QueryJobConfig
+            job_config_cls = QueryJobConfig
+        if client is None:
+            from google.cloud.bigquery import Client
+            client = Client(project=BQ_PROJECT)
+        config = job_config_cls(dry_run=True, use_query_cache=False)
+        job = client.query(sql, job_config=config)
+        return int(job.total_bytes_processed)
+    if runner is None:
+        runner = subprocess.run
+    cmd = ["bq", f"--project_id={BQ_PROJECT}", "query", "--nouse_legacy_sql",
+           "--dry_run", "--format=json", "--quiet", sql]
+    proc = runner(cmd, capture_output=True, text=True, timeout=600)
+    if proc.returncode != 0:
+        raise RuntimeError(f"bq dry run failed: {(proc.stderr or '').strip()[:400]}")
+    return _dry_run_bytes(proc.stdout or "", proc.stderr or "")
 
 
 def _bq(sql: str, dry_run: bool = False) -> tuple:
@@ -369,9 +460,8 @@ def main() -> int:
         snap = args.snapshot or "2026-07-13"
         pkgs, _sha, names = panel_for_partition(snap)
         sql = build_query(pkgs, snap, names)
-        _bq(sql, dry_run=True)
-        print(f"[{COLLECTOR_VERSION}] DRY-RUN ok — query valid ({len(sql)//1024} KB), "
-              f"partition {snap}")
+        nbytes = estimate_query_bytes(sql)
+        print(f"[{COLLECTOR_VERSION}] DRY-RUN total_bytes_processed={nbytes} partition {snap}")
         return 0
 
     if args.baseline_candidates:

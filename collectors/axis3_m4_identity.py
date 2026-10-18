@@ -22,9 +22,15 @@ except ImportError:
 
 REPO = Path(__file__).resolve().parent.parent
 M4_ACTIVATION = "2026-10-10"
+# Partitions before this date keep the 2026-10-04 m4 panel byte for byte.
+CATCHUP_ACTIVATION = "2026-10-19"
 UNVERIFIED = "unverified"
 AUDIT_PATH = REPO / "data/quarantine/axis3-deps-v2/linkage-audit-2026-10-04.json"
 PRIVATE_PATH = REPO / "data/quarantine/axis3-deps-v2/private-manifests-2026-10-04.json"
+CATCHUP_MANIFEST = REPO / "data/quarantine/axis3-deps-v2/expansion-manifest-2026-10-19.json"
+CATCHUP_AUDIT = REPO / "data/quarantine/axis3-deps-v2/linkage-audit-2026-10-19.json"
+_CATCHUP_ADMIT = ("verified", "no_link")
+_CATCHUP_REFUSE = ("other_repo", "not_admitted")
 
 
 def _pkg_key(pkg: str) -> str:
@@ -98,7 +104,7 @@ def admission_label(entity_id: str, pkg: str) -> str:
     return verdict
 
 
-def _panels() -> tuple[dict, dict[str, set[str]], dict[str, set[str]], str]:
+def _base_panels() -> tuple[dict, dict[str, set[str]], dict[str, set[str]], str]:
     full, sha = deps.load_panel()
     kept: dict[str, set[str]] = {}
     dropped: dict[str, set[str]] = {}
@@ -114,18 +120,81 @@ def _panels() -> tuple[dict, dict[str, set[str]], dict[str, set[str]], str]:
     return full, kept, dropped, sha
 
 
-def m4_mapping_sha(manifest_sha: str) -> str:
-    """Provenance of an m4 mapping: v2h.1 manifest + linkage audit + private-manifest evidence."""
+def _catchup_kept() -> dict[str, set[str]]:
+    """entity -> admitted 'SYS/name' keys from the catchup manifest.
+
+    A published manifest row with no audit verdict stops the caller. That is the
+    weekly capture guard: a new package cannot pass without a verdict.
+    """
+    if not CATCHUP_MANIFEST.is_file() or not CATCHUP_AUDIT.is_file():
+        raise ValueError("m4 catchup manifest or linkage audit is missing")
+    manifest = json.loads(CATCHUP_MANIFEST.read_text(encoding="utf-8"))
+    audit = json.loads(CATCHUP_AUDIT.read_text(encoding="utf-8"))
+    if manifest.get("complete") is not True:
+        raise ValueError("m4 catchup manifest is not complete")
+    viewed = manifest.get("systems_viewed")
+    if type(viewed) is not int or viewed < 0:
+        raise ValueError("m4 catchup manifest has no systems_viewed")
+    verdicts = {}
+    for row in audit.get("packages") or []:
+        verdicts[(row["entity_id"], str(row["system"]).upper(), row["package"])] = row.get("verdict")
+    kept: dict[str, set[str]] = {}
+    for info in (manifest.get("repos") or {}).values():
+        eid = info.get("entity_id")
+        for pkg in info.get("declared_packages") or []:
+            if not pkg.get("depsdev_exists"):
+                continue
+            system = str(pkg["system"]).upper()
+            name = pkg["package"]
+            verdict = verdicts.get((eid, system, name))
+            if verdict is None:
+                raise ValueError(f"m4 catchup: {eid} {system}/{name} has no audit verdict")
+            if verdict in _CATCHUP_ADMIT:
+                kept.setdefault(eid, set()).add(f"{system}/{name}")
+            elif verdict not in _CATCHUP_REFUSE:
+                raise ValueError(f"m4 catchup: {eid} {system}/{name} unknown verdict {verdict}")
+    return kept
+
+
+def _panels(as_of: str | None = None) -> tuple[dict, dict[str, set[str]], dict[str, set[str]], str]:
+    full, kept, dropped, manifest_sha = _base_panels()
+    if as_of is None or as_of < CATCHUP_ACTIVATION:
+        return full, kept, dropped, manifest_sha
+    full2 = {eid: set(pkgs) for eid, pkgs in full.items()}
+    kept2 = {eid: set(keys) for eid, keys in kept.items()}
+    for eid, keys in _catchup_kept().items():
+        full2.setdefault(eid, set())
+        bucket = kept2.setdefault(eid, set())
+        for key in keys:
+            system, name = key.split("/", 1)
+            full2[eid].add((system, name))
+            bucket.add(key)
+    return full2, kept2, dropped, manifest_sha
+
+
+def m4_mapping_sha(manifest_sha: str, as_of: str | None = None) -> str:
+    """Provenance of an m4 mapping: v2h.1 manifest + linkage audit + private-manifest evidence.
+
+    On or after the catchup partition the hash also binds that manifest and its audit.
+    Earlier partitions hash the original three inputs only.
+    """
     h = hashlib.sha256()
-    for part in (manifest_sha.encode(), AUDIT_PATH.read_bytes(), PRIVATE_PATH.read_bytes()):
+    parts = [manifest_sha.encode(), AUDIT_PATH.read_bytes(), PRIVATE_PATH.read_bytes()]
+    if as_of is not None and as_of >= CATCHUP_ACTIVATION:
+        parts.append(CATCHUP_MANIFEST.read_bytes())
+        parts.append(CATCHUP_AUDIT.read_bytes())
+    for part in parts:
         h.update(hashlib.sha256(part).digest())
     return "m4:" + h.hexdigest()
 
 
-def load_panel_m4() -> tuple[dict, str]:
-    """(entity -> admitted packages, m4 mapping sha). Entities with none are absent."""
-    full, kept, _dropped, manifest_sha = _panels()
-    sha = m4_mapping_sha(manifest_sha)
+def load_panel_m4(as_of: str | None = None) -> tuple[dict, str]:
+    """(entity -> admitted packages, m4 mapping sha). Entities with none are absent.
+
+    as_of None and any date before the catchup partition return the pre-catchup panel.
+    """
+    full, kept, _dropped, manifest_sha = _panels(as_of)
+    sha = m4_mapping_sha(manifest_sha, as_of)
     out = {}
     for eid, pkgs in full.items():
         keep = {(system, name) for system, name in pkgs if f"{system}/{name}" in kept.get(eid, ())}
@@ -196,16 +265,29 @@ def partition_cases(as_of: str, observations: Path, captured_at: str | None = No
     """entity_id -> [(date, case, value or None)] after the same custody filter as observation_rows.
 
     Last in-custody capture wins per date. Includes entities whose packages are all excluded.
+    Each observation uses the admission set of its own partition date. A date before
+    the catchup activation keeps the previous set when as_of is later.
     """
-    _full, kept, dropped, _sha = _panels()
+    base = _panels(None)
+    catchup = None
+
+    def panels_for(day: str):
+        nonlocal catchup
+        if day < CATCHUP_ACTIVATION:
+            return base
+        if catchup is None:
+            catchup = _panels(CATCHUP_ACTIVATION)
+        return catchup
+
     latest: dict[tuple[str, str], tuple[str, int | None]] = {}
     cache: dict = {}
     for path, row in evaluator.observation_rows(as_of, observations=observations, captured_at=captured_at):
-        eid = row.get("entity_id")
-        if eid not in kept and eid not in dropped:
-            continue
         day = (row.get("snapshot_at") or "")[:10]
         if not day:
+            continue
+        _full, kept, dropped, _sha = panels_for(day)
+        eid = row.get("entity_id")
+        if eid not in kept and eid not in dropped:
             continue
         grouped = _package_index(path.with_name(path.stem + "-packages.jsonl"), cache)
         keep, drop = kept.get(eid, set()), dropped.get(eid, set())
@@ -274,7 +356,7 @@ def derive_m4_series(as_of: str, observations: Path, captured_at: str | None = N
     those partition dates (the scorer passes CLEAN dates); omitted, every
     in-custody capture is in the sequence.
     """
-    _full, kept, _dropped, _sha = _panels()
+    _full, kept, _dropped, _sha = _panels(as_of)
     series = {}
     cases = partition_cases(as_of, observations, captured_at)
     calendar = sorted({day for points in cases.values() for day, _case, _value in points})

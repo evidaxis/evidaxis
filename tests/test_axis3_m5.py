@@ -26,7 +26,7 @@ def test_snapshot_date_controls_exact_pair(tmp_path, monkeypatch, day, version, 
     evidence = {"relative": "fixture.json", "sha256": "fixture", "commit": "fixture",
                 "committed_at": "2026-10-05T12:00:00Z", "states": dict.fromkeys(parts, "CLEAN")}
     monkeypatch.setattr(scorer.identity, "derive_m4_series", lambda *_args, **_kwargs: series)
-    monkeypatch.setattr(scorer.identity, "load_panel_m4", lambda: (series, "fixture"))
+    monkeypatch.setattr(scorer.identity, "load_panel_m4", lambda *_args, **_kwargs: (series, "fixture"))
     monkeypatch.setattr(scorer.evaluator, "load_series", lambda *_args, **_kwargs: series)
     robust_z = scorer.evaluator._robust_z
     calls = []

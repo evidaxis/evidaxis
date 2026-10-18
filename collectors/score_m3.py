@@ -189,7 +189,7 @@ def score_snapshot(snapshot: dict, *, observations: Path, evidence: dict, panel:
         confirmed = {day for day, status in evidence["states"].items()
                      if status == "CLEAN" and day <= snapshot["snapshot_date"]}
         series = identity.derive_m4_series(snapshot["snapshot_date"], observations, snapshot["captured_at"], confirmed=confirmed)
-        panel = set(identity.load_panel_m4()[0])
+        panel = set(identity.load_panel_m4(snapshot["snapshot_date"])[0])
         version = "m5" if snapshot["snapshot_date"] >= M5_ACTIVATION else "m4"
         description = AXIS3_DESCRIPTION_M4
         if version == "m5":

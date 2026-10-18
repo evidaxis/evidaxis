@@ -250,6 +250,35 @@ def test_forward_capture_uses_m4_mapping_and_fixed_self_names():
 
 # ---------------------------------------------------------------- review fixes 2026-10-04
 
+def test_pre_catchup_observation_keeps_the_old_panel_when_as_of_is_later(tmp_path, monkeypatch):
+    _install(monkeypatch)
+    monkeypatch.setattr(ident, "_catchup_kept", lambda: {"e_new": {"PYPI/new-pkg"}})
+    early, late = "2026-10-12", "2026-10-26"
+    cutoff = "2026-10-27T00:00:00Z"
+    _write(tmp_path, early, [
+        _sys("e_a", early, 9),
+        _sys("e_new", early, 40),
+    ], [
+        _pkg("e_a", "NPM/own-a1", 4, [1, 2, 3, 4]),
+        _pkg("e_a", "NPM/own-a2", 5, [5]),
+        _pkg("e_new", "PYPI/new-pkg", 40, [1]),
+    ], folder=early)
+    _write(tmp_path, late, [_sys("e_new", late, 7)], [
+        _pkg("e_new", "PYPI/new-pkg", 7, [1]),
+    ], folder=late)
+
+    def on_day(as_of, eid, day):
+        rows = ident.partition_cases(as_of, tmp_path, cutoff).get(eid, [])
+        return [row for row in rows if row[0] == day]
+
+    assert on_day(early, "e_new", early) == []
+    assert on_day(late, "e_new", early) == []
+    assert on_day(early, "e_a", early) == [(early, "a", 9)]
+    assert on_day(late, "e_a", early) == [(early, "a", 9)]
+    assert on_day(late, "e_new", late) == [(late, "a", 7)]
+    assert on_day(early, "e_new", late) == []
+
+
 def test_unaudited_panel_package_fails_loudly(monkeypatch):
     monkeypatch.setattr(ident, "_verdicts", lambda: {})
     monkeypatch.setattr(ident, "_legacy_pins", lambda: frozenset({("e_PIN", "PYPI/pinned")}))
