@@ -33,32 +33,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        id: checkout
         with:
           fetch-depth: 0   # append-only guards diff the pushed range
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        id: setup_python
         with:
           python-version: "3.12"
 
       - name: Every snapshot's SHA256SUMS matches its actual bytes
+        id: snapshot_checksums
         run: python3 collectors/refresh_sums.py --verify
 
       - name: Taxonomy v2 remap is idempotent on the committed snapshot
+        id: taxonomy_remap
         run: python3 collectors/taxonomy_v2.py --verify
 
       - name: Methodology m3 matches committed inputs (activation-aware)
+        id: methodology_inputs
         run: python3 collectors/score_m3.py --verify
 
       - name: History ledger resolves (no phantom snapshot ids)
+        id: history_ledger
         run: python3 collectors/history_ledger_check.py
 
       - name: snapshot_id collisions are content-distinct or allowlisted
+        id: snapshot_identity
         # Fail if two snapshot dirs share snapshot_id with different payload hashes,
         # unless the pair is listed in data/observations/errata_snapshot_id.json
         # (known pre-fix collision f1f2495d518d on 2026-07-03 / 2026-07-04).
         run: python3 collectors/snapshot_identity.py --check
 
       - name: Integrity witnesses are append-only (no in-place modification)
+        id: append_only_witnesses
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
         run: |
           MODIFIED=$(git diff --name-status "${{ github.event.before }}" "${{ github.sha }}" -- data/integrity/ | grep -E '^(M|D|R)' || true)
@@ -70,6 +78,7 @@ jobs:
           echo "integrity witnesses untouched or append-only in this push"
 
       - name: Universe expansion requires a discovery-frontier manifest
+        id: universe_change
         # The candidate-pool denominator is un-backfillable: adding/removing a tracked
         # system without a paired dated frontier manifest repeats the 19->103 loss.
         # Trigger ONLY on an actual universe change (the tracked repository set differs),
@@ -81,6 +90,7 @@ jobs:
         run: python3 collectors/universe_change_check.py "${{ github.event.before }}" "${{ github.sha }}"
 
       - name: Genesis snapshot is byte-identical to the immutable deposit
+        id: genesis_bytes
         run: |
           rc=0
           for f in SHA256SUMS snapshot.json manifest.json provenance.json archive-pointers.json; do
@@ -92,3 +102,40 @@ jobs:
             fi
           done
           exit $rc
+
+      - name: Alert Telegram on archive integrity failure
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
+          INTEGRITY_STEPS: ${{ toJSON(steps) }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        # Inline so checkout or Python setup failure can still be reported. The
+        # transport and timeout match scripts/liveness-check.mjs; no site probe.
+        run: |
+          node --input-type=module <<'JS'
+          const token = process.env.TELEGRAM_BOT_TOKEN;
+          const chat = process.env.ALERT_CHAT_ID;
+          if (!token || !chat) {
+            console.error('[archive-integrity] Telegram secrets not set; alert NOT sent');
+            process.exit(1);
+          }
+          const failed = Object.entries(JSON.parse(process.env.INTEGRITY_STEPS))
+            .filter(([, step]) => step.outcome === 'failure').map(([id]) => id);
+          const text = `Evidaxis archive-integrity failed.\nFailed steps: ${failed.join(', ')}\n${process.env.RUN_URL}`;
+          try {
+            const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ chat_id: chat, text, disable_web_page_preview: true }),
+              signal: AbortSignal.timeout(10_000),
+            });
+            if (!res.ok) {
+              console.error('[archive-integrity] Telegram HTTP', res.status);
+              process.exit(1);
+            }
+          } catch {
+            console.error('[archive-integrity] Telegram send failed');
+            process.exit(1);
+          }
+          JS

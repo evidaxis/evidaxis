@@ -329,16 +329,19 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   const formerPersonal = [...bannedOwners].filter(([owner, mode]) => mode === 'slug' && !orgOwners.has(owner)).map(([owner]) => owner);
   const userIndex = buildHandleIndex([...bannedOwners].filter(([, mode]) => mode === 'substring').map(([owner]) => owner));
   const formerIndex = { all: new Set(formerPersonal), words: new Set() };
+  // Archived provenance also names departed repositories outside today's ID map.
+  const provenanceUserIndex = buildHandleIndex([...userIndex.all, ...classifiedRepos.flatMap(repo => {
+    const entry = registry[repo];
+    return entry?.owner_type === 'User' ? [repo.split('/')[0], entry.full_name.split('/')[0]] : [];
+  })]);
   for (const file of distFiles) {
     const r = rel(file);
     // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce
     // accidental matches such as "@f"; they carry no repository metadata.
     if (/\.(woff2?|ttf|otf|png|jpe?g|gif|webp|avif|ico|pdf|zip|gz)$/i.test(r)) continue;
-    // WP-H: verification-bundle artifacts are frozen raw pass-through of the
-    // archive (hash-pinned provenance / dropped lists). They intentionally
-    // retain historical github_repo strings for auditability. Person-free is
-    // enforced on derived HTML/JSON-LD surfaces, not on the integrity files.
-    if (/(^|\/)(provenance\.json|dropped\.json|SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
+    // Public provenance is projected for every date. The remaining canonical
+    // integrity artifacts retain their existing raw-byte exemption.
+    if (/(^|\/)(dropped\.json|SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
       continue;
     }
     const raw = readFileSync(file, 'utf8');
@@ -349,7 +352,8 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
     variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)).toLowerCase()));
     const body = variants.join('\n');
-    for (const owner of handleHitsDecoded(body, userIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
+    const privacyIndex = /(^|\/)provenance\.json$/.test(r) ? provenanceUserIndex : userIndex;
+    for (const owner of handleHitsDecoded(body, privacyIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
     for (const owner of handleHits(body, formerIndex)) errors.push(`${r}: contains former repository owner ${owner} in a GitHub path`);
     for (const slug of staleSlugs) {
       if (body.includes(slug)) errors.push(`${r}: contains stale repository path ${slug}`);

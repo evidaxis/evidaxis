@@ -137,20 +137,22 @@ These URLs are stable and safe to fetch and cache.
 
 ## Integrity
 
-git is the only source of truth; every input is hash-pinned and the raw provenance is published, so every
+git is the only source of truth; every input is hash-pinned and the raw provenance is retained in the git archive, so every
 score is checkable against its hash-pinned inputs. The genesis snapshot bundle is frozen and hash-verified.
 Methodology is versioned. Positive-only (no "worst" list). Systems are scored, never people. Nobody is
 ranked last; lists are not ordered as winners.
 
 ## How to verify
 
-Each snapshot ships a verification bundle of frozen files. For the latest snapshot (${SNAP_DATE}):
+Each snapshot exposes archive checksums and public data projections. For the latest snapshot (${SNAP_DATE}):
 - manifest.json: https://evidaxis.org/snapshots/${SNAP_DATE}/manifest.json
 - provenance.json: https://evidaxis.org/snapshots/${SNAP_DATE}/provenance.json
 - SHA256SUMS: https://evidaxis.org/snapshots/${SNAP_DATE}/SHA256SUMS
 - snapshot.json: https://evidaxis.org/snapshots/${SNAP_DATE}/snapshot.json
 - dropped.json (when present): https://evidaxis.org/snapshots/${SNAP_DATE}/dropped.json
-Download SHA256SUMS and the listed artifacts, then run: sha256sum -c SHA256SUMS
+The site projects snapshot.json and provenance.json to remove personal identifiers.
+Download SHA256SUMS and its listed artifacts from data/snapshots/<date>/ in the git archive,
+then run: sha256sum -c SHA256SUMS. The checksums do not describe the public projections.
 Replace the date segment with any archived date under https://evidaxis.org/snapshots/.
 `;
   return new Response(txt, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
