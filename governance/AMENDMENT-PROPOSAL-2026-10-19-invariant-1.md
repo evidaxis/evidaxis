@@ -1,9 +1,10 @@
 # Amendment proposal: invariant 1, systems not people (2026-10-19)
 
-> status: PROPOSED 2026-10-19, under the Amendment rule of `CONSTITUTION.md`.
-> Freeze: 30 days from the publication of this file on the main branch. Published on
-> 2026-10-19, the earliest valid decision date is **2026-11-18**. If this file reaches
-> main later, both dates move by the same number of days.
+> status: PROPOSED 2026-10-19, under the Amendment rule of `CONSTITUTION.md`. Revised the
+> same day after an independent review (section 12); the revision is material.
+> Freeze: 30 days from the publication of this file on the main branch. Published, in
+> its revised form, on 2026-10-19, so the earliest valid decision date is **2026-11-18**.
+> If the revision reaches main later, both dates move by the same number of days.
 > Touches: invariant 1 (text). Checked and left unchanged: invariants 3, 4 and 6, and
 > the anti-roadmap. Decision: signed with the block-zero key (section 8).
 > In force now, as a separate strengthening covenant: `governance/ERASURE-REQUESTS-2026-10-19.md`.
@@ -15,13 +16,16 @@ archive stores and publishes thousands of repository addresses that contain the 
 names of natural persons. This proposal keeps the promise where it can be kept for
 decades and states plainly where it cannot:
 
-- data about a person is never stored or published, as today;
+- the record holds no data about a person, as today;
 - an account name that is part of a system's address is never published, and the public
   repository counts as publication;
-- collectors may keep such an address in a restricted store that holds locators and
-  nothing else, because they need it to reach the system;
-- published records use account-free identifiers, and the text says that this keeps
-  persons out of the record without making a one-person system unlinkable.
+- collectors use such an address only while a run lasts, to reach the system, and keep
+  nothing of it afterwards: there is no store of these addresses;
+- messages that people send to Evidaxis are kept apart from the record, on a deletion
+  schedule;
+- published records use account-free identifiers that public sources resolve, and the
+  text says that this keeps persons out of the record without making a one-person system
+  unlinkable.
 
 Dated files committed before the switch keep their bytes (invariant 4). Identifiers leave
 them only by tombstone, on request.
@@ -59,7 +63,7 @@ type User and is not one of the 10 project accounts of
 | Expansion manifest of 2026-10-19 (axis 3) | 119 package names in a personal namespace (80 Go modules `github.com/<account>/...`, 39 npm scopes `@<account>/...`), 114 of them verified; 9 more package names equal a personal login |
 | `web/src/data/person-free-handles.json` | 12 personal handles, listed in plain text by the file that keeps them out of publication |
 | Hand-written files and commit messages | 5 documents name a current or former personal owner, among them the owner-transfer records of 2026-10-03 and 2026-10-04 and `governance/CENSUS-AI-V1-PREDICATE-2026-08-03.md`; manual commit messages name such addresses too, for example owner-cache confirmations |
-| CI of the public repository | the frozen collector prints every address it collects; several collectors and both publication guards print addresses or handles in warnings; the rehearsal and any failed weekly run upload the raw snapshot folder as an artifact for 14 days. Logs and artifacts of a public repository are open to any signed-in GitHub user |
+| CI of the public repository | the frozen collector prints every address it collects; several collectors and both publication guards print addresses or handles in warnings; the rehearsal and any failed weekly run upload the raw snapshot folder and a list of addresses (`warm-202.json`) as an artifact for 14 days. Logs and artifacts of a public repository are open to any signed-in GitHub user |
 
 Every surface above is public: it is served by GitHub, mirrored to GitLab and archived by
 Software Heritage. The Hugging Face dataset and the Zenodo versions published since
@@ -114,8 +118,8 @@ Two readings were considered.
 
 **Angle A: a repository address identifies a program, not a person.** This is right
 about the unit and the purpose. Evidaxis observes the program, and it uses the address
-only to reach the program. It never treats the account as a subject. This is why a
-restricted locator store is legitimate.
+only to reach the program. It never treats the account as a subject. This is why
+collectors may use the address while a run lasts.
 
 Read as permission to publish, angle A fails three tests. First, the account part of the
 address is the account holder's online identifier, by the project's own analysis in
@@ -124,29 +128,31 @@ citation, verification and continuity equally well. Third, CC0 bytes in git, mir
 DOIs cannot be called back.
 
 **Angle B as first worded: replace "stored or published" with "published".** This is
-right about publication. Taken literally, it would also lift the storage ban for data about persons,
-which must stay absolute. It would also let the word "person-free" keep implying that the
-records cannot be linked to anyone.
+right about publication. Taken literally, it would also lift the storage ban for data
+about persons, which must stay absolute. It would also let the word "person-free" keep
+implying that the records cannot be linked to anyone.
 
 **The line proposed here** runs between "a program's identifier in someone else's
-registry" and "a personal account as a subject". It decides storage. Publication follows
-a stricter, mechanical test: does the value contain a personal account name? Three
-classes result.
+registry" and "a personal account as a subject". It decides use. Publication follows a
+stricter, mechanical test: does the value contain a personal account name? Keeping
+follows the strictest test: nothing that contains one outlives the run that used it.
 
-| Class | Examples | Stored | Published |
+| Class | Examples | Kept between runs | Published |
 |---|---|---|---|
 | Data about a person | name, email, avatar, bio, followers, contributor list, any measure of a person, any owner-level grouping | never | never |
-| Personal account identifier inside a locator | `<account>/<repository>`, `github.com/<account>/...`, `<account>.github.io`, `@<account>/<package>`, a package named exactly like the login | restricted locator store only, for collection | never |
-| Account-free identifiers of a system | Evidaxis id, numeric GitHub repository id `gh:<id>`, GraphQL node id, repository name that does not reveal the account | yes | yes |
+| Personal account identifier inside a locator | `<account>/<repository>`, `github.com/<account>/...`, `<account>.github.io`, `@<account>/<package>`, a package named exactly like the login | never; used within a run only | never |
+| Account-free identifiers and pointers | Evidaxis id, numeric GitHub repository id `gh:<id>`, GraphQL node id, repository name that does not reveal the account, pointer to the manifest that declares a package | yes | yes |
+| Correspondence | a removal request and its answer | in the project mailbox only, on a deletion schedule | never |
 
-The necessity test decides each case: Evidaxis may use a value where collection needs it,
-and publishes only what citation, verification and continuity need. No published purpose
-needs an account name.
+The necessity test decides each case: Evidaxis uses a value only where collection needs
+it, and publishes only what citation, verification and continuity need. No published
+purpose needs an account name, and no collection step needs to keep one: the platform
+resolves account-free ids to current addresses at the start of each run.
 
 ## 4. Proposed text, was and becomes
 
 These texts change only after the signed decision. Dates in angle brackets are fixed by
-that decision.
+the switch record and the decision.
 
 ### 4.1 `CONSTITUTION.md`, invariant 1
 
@@ -160,32 +166,38 @@ Was:
 
 Becomes:
 
-> 1. **Systems, not people.** Evidaxis observes systems, never persons. No natural
->    person's name, email, avatar, profile or contributor identity, and no measure of a
->    person (such as a per-contributor count), is stored or published. A personal
->    account identifier, meaning the login of a natural person's account or any address
->    or package name that contains it, is never published: the public repository, its
->    mirrors, the website, dataset mirrors, deposits, and CI logs and artifacts are all
->    publication. A collector may hold such an identifier only as the locator of a
->    system it observes or reviews, in a restricted store that holds nothing else, and
->    deletes it when the system leaves the observed set or the account holder asks. Published records of such a system use
->    account-free identifiers. This keeps persons out of the record; it does not make a
->    system run by one person impossible to link to that person. Files committed before
->    the person-free switch (date in the changelog) keep their bytes under invariant 4;
->    an identifier leaves them only by tombstone, on request. Online identifiers are
->    personal data (UK GDPR) even when public, and a CC0 deposit cannot be withdrawn, so
->    the gate is fail-closed: new published bytes that contain a personal account
->    identifier fail CI.
+> 1. **Systems, not people.** Evidaxis observes systems, never persons, and keeps three
+>    kinds of data apart. **The record** (snapshots, observations, registries, system
+>    records and everything derived from them) holds no natural person's name, email,
+>    avatar, profile or contributor identity, and no measure of a person, such as a
+>    per-contributor count. **Locators:** a personal account identifier, meaning the
+>    login of a natural person's account or any address or package name that contains
+>    it, is never published; the public repository, its mirrors, the website, dataset
+>    mirrors, deposits, and CI logs and artifacts are all publication. Collectors and
+>    checks use such an identifier only within a run, to reach a system or to recognize
+>    the identifier, and keep nothing of it after the run; the record names such a
+>    system by account-free identifiers that public sources resolve. **Correspondence**
+>    with people who write to Evidaxis, such as removal requests, is not part of the
+>    record: it stays in the project mailbox and is deleted on the schedule of the
+>    erasure procedure. Account-free identifiers keep persons out of the record; they do
+>    not make a system run by one person impossible to link to that person. Files
+>    committed before the person-free switch (date in the changelog) keep their bytes
+>    under invariant 4; an identifier leaves them only by tombstone, on request. Online
+>    identifiers are personal data (UK GDPR) even when public, and a CC0 deposit cannot be
+>    withdrawn, so automated publication is fail-closed: a check before every push,
+>    upload and deployment stops new bytes that contain a personal account identifier.
 
 ### 4.2 `CONSTITUTION.md`, changelog entry on decision
 
-> - **<decision date>: amendment of invariant 1 (signed).** Personal account identifiers
->   are never published, the public repository included; collectors may keep them only
->   as locators in a restricted store; published records use account-free identifiers;
->   the text states that this is not anonymity. Person-free switch: weekly release
->   <switch date>. Proposal: `governance/AMENDMENT-PROPOSAL-2026-10-19-invariant-1.md`;
->   decision and signature: `governance/AMENDMENT-DECISION-<date>-invariant-1.md`.
->   Invariants 3, 4 and 6 are unchanged (proposal, section 5).
+> - **<decision date>: amendment of invariant 1 (signed).** The record, locators and
+>   correspondence are kept apart. Personal account identifiers are never published, the
+>   public repository included; collectors use them only within a run and keep nothing;
+>   published records use account-free identifiers; the text states that this is not
+>   anonymity; automated publication is checked before it happens. Person-free switch:
+>   weekly release <switch date>. Proposal:
+>   `governance/AMENDMENT-PROPOSAL-2026-10-19-invariant-1.md`; decision and signature:
+>   `governance/AMENDMENT-DECISION-<date>-invariant-1.md`. Invariants 3, 4 and 6 are
+>   unchanged (proposal, section 5).
 
 ### 4.3 `RIGHTS-BASIS.md`
 
@@ -215,28 +227,45 @@ Becomes (appended section):
 >   package name equal to the login. A User-type account is personal unless it is a
 >   project account under `governance/PROJECT-ACCOUNTS-2026-10-05.md`. An
 >   Organization-type account is not personal by default; one later found to stand for a
->   single natural person is treated as personal from the next release.
+>   single natural person is treated as personal from the next release. A package
+>   namespace counts as personal unless it is verified to belong to an organization.
 > - **Published.** Nothing Evidaxis publishes contains a personal account identifier. A
 >   system under a personal account is published with its Evidaxis id, its numeric GitHub
 >   repository id (`gh:<id>`) and node id, and its repository name unless that name
->   reveals the account. Its homepage is omitted. A package name that reveals the account
->   is replaced by a stable opaque key. The numeric id identifies the repository, not its
->   owner: no owner id, login or actor id is published, and no view groups systems by
->   owner.
-> - **Stored.** Personal account identifiers are kept only in the restricted locator
->   store, a private repository of the Evidaxis organization that the collection
->   workflows and the steward read and write. It holds the locators, current and former,
->   of observed systems and of census candidates under review, plus the numeric ids of
->   repositories retired at their account holder's request, and nothing else: no
->   measured or computed value and no attribute of any person. It feeds no product and is
->   never shared, sold or licensed. A locator is deleted within 30 days after its system
->   leaves the observed universe or its candidate is decided, and within one month of an
->   erasure request, from the store's history too. The store can be rebuilt from public
->   numeric ids and the platforms, so its loss loses nothing canonical.
+>   reveals the account. Its homepage is omitted. A package whose name reveals the
+>   account is recorded by an account-free pointer to the manifest that declares it: the
+>   repository id, the file path and the git blob id. The numeric id identifies the
+>   repository, not its owner: no owner id, login or actor id is published, and no view
+>   groups systems by owner.
+> - **Used within a run, never kept.** Collectors and checks obtain personal account
+>   identifiers at run time, from the platform by account-free id or from files committed
+>   before the switch, and use them only within that run, in memory and in the run's
+>   temporary files. No copy is kept between runs, in the repository or anywhere else.
+>   Systems admitted after the switch take `gh:<repository id>` as their natural key, so
+>   their Evidaxis id is not derived from an address.
+> - **Do-not-observe list.** The numeric ids of repositories retired at their account
+>   holder's request are kept, without versions, in a repository secret that every run
+>   reads before any request about those repositories, with an encrypted backup held by
+>   the steward. The list holds numeric ids and nothing else.
+> - **Correspondence.** Messages from people who write to Evidaxis stay in the project
+>   mailbox, outside the record, and are deleted under
+>   `governance/ERASURE-REQUESTS-2026-10-19.md`.
 > - **Not anonymity.** Account-free identifiers are pseudonymous. The platform resolves a
->   numeric id to the current owner, and the Evidaxis ids of systems admitted so far are
->   derived from their original address. Evidaxis does not describe its records as
->   anonymous, and it honors erasure requests (`governance/ERASURE-REQUESTS-2026-10-19.md`).
+>   numeric id to the current owner, and the Evidaxis ids of systems admitted before the
+>   switch are derived from their original address. Evidaxis does not describe its
+>   records as anonymous, and it honors erasure requests.
+> - **Reproducing and continuing.** Every published value, and every link between
+>   published records, can be recomputed and interpreted from public files and public
+>   sources alone; no closed table is needed. Continuing collection depends on the
+>   platform: if a repository, or the manifest behind a package pointer, is deleted
+>   upstream and is not archived elsewhere (for example by Software Heritage), its
+>   further observation, and the package name behind that pointer, can be lost. This
+>   holds for every system.
+> - **Checked before publication.** Automated publication (the weekly and daily commits,
+>   the dataset upload, the Zenodo stage and the website deployment) runs a person-free
+>   check before it pushes, uploads or deploys, and stops on a finding. Hand-made commits
+>   pass a local check before they are pushed. A check after each push catches what
+>   bypasses it, and the steward removes such a finding by tombstone within a day.
 > - **Before the switch.** Dated files keep their captured bytes (invariant 4) and
 >   contain personal account identifiers; the 2026-10-17 snapshot holds 2,766. The genesis
 >   deposit holds 1 and the Zenodo version of 2026-07-10 holds 10, although the genesis
@@ -265,24 +294,18 @@ identifiers and apply person-free checks before publication."
 Becomes: "The unit of observation is a system. From <switch date>, nothing committed to
 this repository names a personal account: a system under a personal account appears by
 its Evidaxis id and its numeric GitHub repository id. This keeps people out of the
-record; it does not make a one-person system unlinkable to its maintainer. Removal
-requests: hello@evidaxis.org
-([procedure](governance/ERASURE-REQUESTS-2026-10-19.md))."
+record; it does not make a one-person system unlinkable to its maintainer."
 
-The last sentence describes a procedure that is in force now and may be added at once.
+The sentence on removal requests has been in the README since 2026-10-19.
 
 ### 4.5 `AGENTS.md`
 
-Was: no person-free rule.
+The section "Person-free (invariant 1)" has been in force since 2026-10-19. On the switch,
+it gains one rule:
 
-Becomes, under "Hard rules":
-
-> - Person-free (invariant 1): never write a repository address, URL or package name of
->   a personal account into a tracked file, commit message, issue, log line or artifact;
->   use the entity id or `gh:<repo_id>`. From <switch date> privacy-gate fails on it.
->   Only collectors read the locator store.
-
-This is a self-restriction and may be added at once.
+> - Install the repository's pre-push check (`git config core.hooksPath scripts/hooks`)
+>   and never bypass it. No store of personal account identifiers exists: collectors
+>   resolve them within a run and keep nothing.
 
 ### 4.6 Changed together with the switch
 
@@ -291,13 +314,12 @@ This is a self-restriction and may be added at once.
 - Website, about page: "with raw provenance published" becomes "with source provenance
   published"; the snapshot page states that for dates from <switch date> the downloaded
   files match `SHA256SUMS`.
-- `TRUST-ROOT-AND-CONTINUITY.md`, copy map: one row for the restricted locator store,
-  marked as not a copy of the archive.
 
 ### 4.7 Not changed
 
-`IDENTITY.md` (it concerns the institution's own identity); `genesis-deposit/` (frozen;
-its statement is corrected by section 2.3 of this record); dated governance records.
+`IDENTITY.md` (it concerns the institution's own identity); `TRUST-ROOT-AND-CONTINUITY.md`
+(no new copy of the archive and no new store); `genesis-deposit/` (frozen; its statement
+is corrected by section 2.3 of this record); dated governance records.
 
 ## 5. Invariants 3 and 6: an amendment, not a fork
 
@@ -311,30 +333,41 @@ is a fork." The relevant texts:
 - Invariant 6: "The record is anchored and byte-reproducible from public inputs, so its
   past integrity does not depend on any living person."
 
-A restricted store keeps this change inside the amendment process only while five
-conditions hold. Each one gets a CI test or a rehearsal check before the switch.
+The change stays an amendment while five conditions hold.
 
-1. **Locators only.** The store holds no measured or computed value, no series and no
-   attribute of a person. Every measurement stays in the public archive at full captured
-   granularity, with package-level rows under opaque keys where a package name would
-   reveal an account.
-2. **No computation reads the store.** Every published value is computed from files in
-   the public repository. The store is used only to fetch.
-3. **Rebuildable.** Every system under a personal account carries its numeric repository
-   id and node id in public. A successor without the store resolves them on the platform
-   and continues the record.
+1. **Nothing about persons is kept.** No store of personal account identifiers exists.
+   The only closed list, the do-not-observe list, holds numeric repository ids. It
+   decides what is collected next and never changes a published value.
+2. **Every computation runs on public files.** Every published value is computed from
+   files in the public repository, at full captured granularity, package-level rows
+   included.
+3. **Every key resolves through public sources.** Each system under a personal account
+   carries its numeric repository id and node id; each package row in a personal
+   namespace carries its manifest pointer. A reader interprets them through the platform
+   or an archive such as Software Heritage. No closed table is needed to read any
+   published series; if one were needed, that would breach invariants 3 and 6.
 4. **Hashes over published bytes.** Checksums, manifest hashes, snapshot ids and Merkle
    roots are computed over the person-free files, so anyone can verify them from public
    files.
-5. **No product.** The store feeds no product, paid or free, and is never shared.
+5. **Nothing closed feeds a product.** The do-not-observe list and the run-time memory of
+   a collector feed no product, paid or free, and are never shared.
 
-The account name is not a computed fact or a metadata field of Evidaxis. It is a third
-party's identifier, and invariant 1 has always kept such identifiers out of the released
-set. Withholding it coarsens no measurement.
+A check confirms the conditions, not a definition of what counts as metadata. The
+archive-integrity workflow runs on the public repository alone, without any secret, after
+every data push. From the switch, it fails if a post-switch record lacks an account-free
+link (a system without `gh:<id>`, a package row in a personal namespace without a
+pointer), or if any recomputation of scores, checksums, snapshot ids or ledgers needs a
+file that is not public.
 
-The change would become a fork if any condition failed: a private copy of measurements, a
-computation that needs the store, a record whose continuation needs the store, a hash
-over private bytes, or a product built on the store.
+Reproducing the past and continuing the record are different promises. Past values and
+links are reproducible from public files indefinitely. Continuing to observe a system
+needs the platform, for every system: if a repository is deleted upstream, its
+observation ends, as it does today.
+
+The change would become a fork if any of these appeared: a private copy of a measurement;
+a computation or an interpretation that needs a closed table; a persistent store of
+personal account identifiers on which a record or its continuation depends; a hash over
+private bytes; a product built on anything closed.
 
 ## 6. Invariant 4 and history
 
@@ -349,32 +382,46 @@ others keep them, and the procedure says so to the requester.
 
 ### 7.1 From 2026-10-19 (strengthening only)
 
-- The erasure procedure is in force once its changelog entry is published.
+- The erasure procedure is in force; its changelog entry was published on 2026-10-19.
 - No personal account identifier is added by hand to tracked files, governance records,
   commit messages, issues or pull requests. Automated data commits continue unchanged
   until the switch.
+- No store of personal account identifiers is created, now or later.
 - Until the switch, the project is out of line with the word "stored" and with the
   publication rule, as it has been since genesis. This record says so; no partial step
   is described as compliance.
 
 ### 7.2 During the freeze (2026-10-19 to 2026-11-17)
 
-The implementation is built and rehearsed on a branch. The restricted store may be seeded
-for rehearsals with copies of identifiers that are public at that time. It becomes their
-only holder at the switch, after the decision. The weekly releases keep their current
-format; release-chain changes follow `governance/RELEASE-SCHEDULE-2026-10-18.md`.
+The implementation is built and rehearsed on a branch. The weekly releases keep their
+current format, and release-chain changes follow `governance/RELEASE-SCHEDULE-2026-10-18.md`.
 
-### 7.3 On the signed decision (not before 2026-11-18)
+### 7.3 The switch
 
-The texts of section 4 change in one commit that cites the decision. The decision fixes
-the switch date: the first weekly release after the decision with a green full rehearsal,
-targeted for **2026-11-21**. A new person-free check in CI goes live on that date and
-fails on any new published byte that contains a personal account identifier.
+The switch is not a change made by this proposal. It brings practice in line with the
+current text of invariant 1 and `RIGHTS-BASIS.md`, which already forbid publishing such
+handles: it publishes less and keeps nothing new. It therefore needs no decision, and
+the texts of section 4 still change only with the decision. A dated record fixes the
+switch date before the switch. The target stays the
+weekly release of **2026-11-21**: the implementation needs about three weeks, and a large
+change to the release chain during the four-release reliability series of
+`governance/RELEASE-SCHEDULE-2026-10-18.md` (2026-10-24 to 2026-11-14) would put that
+series at risk. Preconditions:
 
-### 7.4 If the decision rejects the storage exception
+- a green full rehearsal of the switched chain;
+- the pre-publication checks of section 4.3 in place in the weekly and daily chains, the
+  dataset upload, the Zenodo stage and the website deployment;
+- the shadow layer no longer keeps repository addresses (section 11).
 
-No store is kept. Collectors resolve addresses at run time from public numeric ids and
-keep nothing between runs. The publication rule of section 4 still applies.
+### 7.4 On the signed decision (not before 2026-11-18)
+
+The texts of section 4 change in one commit that cites the decision.
+
+### 7.5 If the decision rejects the amendment
+
+The switch stands, because it complies with the current text. Invariant 1 keeps that text,
+and the gaps that this record discloses (files committed before the switch,
+correspondence) stay open until another proposal resolves them.
 
 ## 8. Signature (step 3 of the Amendment rule)
 
@@ -388,30 +435,60 @@ genesis deposit on Zenodo contains none. The dead-man heartbeat key of
 2026-07-11 were recorded without a cryptographic signature. This amendment is the first act
 that requires one.
 
+The key described below is therefore new. Its key record is its first publication, and it
+authenticates nothing earlier: acts before that record rest on git history and on
+OpenTimestamps stamps where they exist.
+
+**Who does what.** The steward decides. The steward's assistant, software that acts for
+the steward on the steward's own computer, performs the mechanical steps. It acts only on
+the steward's explicit approval of a named file and that file's SHA-256. The key never
+enters CI, a remote machine, a chat, a shared drive or this repository. An air gap is not
+claimed.
+
 **Procedure.**
 
-1. Before 2026-11-18, the steward generates an Ed25519 key offline. The private key never
-   enters CI, a chat, a shared drive or this repository. The steward commits a dated key
-   record (`governance/KEY-REGISTRY-<date>.md` with the public key file and
-   `governance/allowed_signers`): algorithm, public key, fingerprint, and the statement
-   that it is the block-zero key of the governance chain. The record is stamped with
-   OpenTimestamps in the same week. The same key serves as the dead-man heartbeat key, so
-   there is one trust root.
-2. On or after 2026-11-18, the steward writes
+1. **Key, once, early in the freeze.** The assistant generates an Ed25519 key on the
+   steward's computer. The key folder has mode 0700 and the private key file mode 0600.
+   The private key is encrypted with a passphrase stored apart from it, in the steward's
+   encrypted store of project secrets; no interactive prompt and no system keychain are
+   involved. An encrypted copy of the key file goes into the steward's backup of project
+   secrets. The backup is tested once: a copy restored from it signs a test message, and
+   that signature verifies against the published public key.
+2. **Key record.** `governance/KEY-REGISTRY-<date>.md` with `governance/allowed_signers`:
+   algorithm, public key, fingerprint, purpose (governance decisions only), date of first
+   publication, the statement that the key authenticates nothing earlier, and the date of
+   the backup test. The record is stamped with OpenTimestamps in the same week. The
+   dead-man heartbeat keeps its own key and procedure: a heartbeat must show that the
+   steward acts, which an automated signature with this key would not show.
+3. **Decision.** On or after 2026-11-18, the decision is written in
    `governance/AMENDMENT-DECISION-<date>-invariant-1.md`: adopt, adopt with changes, or
-   reject; the final texts; the switch date; the comments received and the answers.
-3. The steward signs that file with the block-zero key and commits the detached
-   signature next to it, with the command that verifies it from public files only. With
-   an OpenSSH key: `ssh-keygen -Y sign -f <key> -n evidaxis-governance <file>` to sign,
-   and `ssh-keygen -Y verify -f governance/allowed_signers -I <signer identity>
-   -n evidaxis-governance -s <file>.sig < <file>` to verify.
-4. The decision file is stamped with OpenTimestamps and the stamp is committed.
-5. The texts of section 4 and the changelog entry follow in one commit citing the
-   decision. The next weekly manifest anchors the new hash of the constitution.
+   reject; the final texts; the switch record it relies on; the comments received and the
+   answers.
+4. **Approval.** The assistant shows the steward the file's path and SHA-256. The
+   steward's approval names that hash. The assistant computes the hash again and signs
+   only if it matches. Any later change to the file needs a new approval.
+5. **Signature.** A detached SSH signature (namespace `evidaxis-governance`) is committed
+   next to the file, with a short note stating the approved SHA-256 and the date of
+   approval.
+6. **Independent check.** A CI job verifies the signature with the standard OpenSSH tool
+   and the committed `allowed_signers`, on GitHub's machines, separately from the signing
+   computer: `ssh-keygen -Y verify -f governance/allowed_signers -I <signer identity>
+   -n evidaxis-governance -s <file>.sig < <file>`. Anyone can repeat it.
+7. **Stamp.** The decision file is stamped with OpenTimestamps and the stamp is committed.
+8. **Texts.** The texts of section 4 and the changelog entry follow in one commit citing
+   the decision. The next weekly manifest anchors the new hash of the constitution.
 
-Only the steward signs; an agent may draft the decision. A decision signed before the
-earliest date, by another key, or without a stamp is not valid. A material change to this
-proposal restarts the freeze; an editorial correction does not.
+What the passphrase protects: a copy of the key file that travels without it, for example
+a stray copy outside the key folder. It does not protect against software running as the
+steward, which can read both, and it adds nothing to the encrypted backup, which holds
+both under its own encryption. On a single computer it adds little beyond disk encryption
+and file permissions; it is kept because it costs nothing. The protections that matter
+are that the key stays off CI, remote machines and this repository, and that the key
+record is public and timestamped, so any later misuse is visible.
+
+A decision is not valid if it is signed before the earliest date, by another key, without
+an approval that names its hash, or without a stamp. A material change to this proposal
+restarts the freeze; an editorial correction does not.
 
 ## 9. Comments during the freeze
 
@@ -422,27 +499,27 @@ its answer, without personal data.
 ## 10. Falsification
 
 This formulation is wrong if, by 2026-12-31, any byte published after the switch contains
-a personal account identifier, a value of a post-switch snapshot cannot be recomputed from
-public files alone, or an erasure request cannot be completed within one month without
-rewriting git history. Checked by the CI person-free check, a rehearsal with an empty
-locator store, a full scan before the next quarterly Zenodo version, and the request
-records of the erasure procedure.
+a personal account identifier, any personal account identifier is found kept between
+runs, a value or link of a post-switch snapshot cannot be recomputed or interpreted from
+public sources alone, or an erasure request cannot be completed within one month without
+rewriting git history. Checked by the pre-publication checks, the archive-integrity
+workflow running without secrets, a full scan before the next quarterly Zenodo version,
+and the records of the erasure procedure.
 
-## 11. Related items not decided here
+## 11. Related items
 
-- **Shadow layer.** `governance/SHADOW-LAYER-2026-08-03.md` keeps, in a private
-  repository, the address (`full_name`) of every repository in the 200 to 499 star band,
-  personal accounts included, and weekly star observations retained indefinitely "for a
-  possible future private data product". That is stored personal account data under the
-  current invariant 1, and a private series that the covenant of 2026-07-02 does not
-  provide for. This proposal does not authorize either. A separate act should address
-  repositories by node id and decide on the private series.
-- **Ids of new admissions.** New systems receive ids derived from their address, because
-  the frozen collector mints them. This is the main link that remains after the switch:
-  with a public list of repository names, anyone can recover the original address from
-  the id, even after the repository is renamed or deleted. Whether systems admitted
-  under personal accounts should receive ids that are not derived from the address is a
-  question for the claim-URN rules, best decided before the switch.
+- **Shadow layer (precondition of the switch).** `governance/SHADOW-LAYER-2026-08-03.md`
+  keeps, in a private repository, the address (`full_name`) of every repository in the
+  200 to 499 star band, personal accounts included. The observation step needs only an
+  account-free node id, so a successor schema under its own dated act keeps numeric ids
+  and node ids and nothing else; the act also decides what happens to the identity sets
+  already kept. The same layer keeps weekly star observations "for a possible future
+  private data product", a private series that the covenant of 2026-07-02 does not
+  provide for. That question is separate and is not decided here.
+- **Ids.** Systems admitted after the switch take `gh:<repository id>` as their natural
+  key, so their ids are not derived from an address and survive renames. Ids of systems
+  admitted before the switch stay as they are: they are permanent, and they remain
+  derivable from the original address (section 2.5).
 - **Invariant 6 wording.** `governance/ERRATUM-2026-09-14-byte-reproducible-claim-on-derived-surfaces.md`
   left the phrase "byte-reproducible from public inputs" open. This proposal does not
   change it.
@@ -450,6 +527,47 @@ records of the erasure procedure.
   descriptions, and `data/observations/` keeps raw rows from the deps.dev BigQuery
   tables, while `RIGHTS-BASIS.md` excludes description prose and upstream response bytes.
   This concerns rights, not persons, and needs its own record.
+
+## 12. Revision 2026-10-19 (second opinion)
+
+An independent review of the first version asked for changes on four points. Each is
+taken up here.
+
+1. **The invariant contradicted the erasure procedure.** The first text banned storing
+   any name or email, while the procedure keeps correspondence for up to two years. The
+   text now separates three kinds of data: the record, locators and correspondence. The
+   review also held that a closed table needed to read published package series would
+   breach invariants 3 and 6. The opaque package keys of the first version needed such a
+   table; they are replaced by account-free pointers to the declaring manifest, which
+   public sources resolve. That the conditions hold is now shown by a check that runs
+   without any secret (section 5), not by a definition.
+2. **Deleting from a restricted store is not reliable.** Rewriting the history of a
+   private repository does not guarantee that every copy and server-side reference is
+   gone. The first version needed the store for original addresses, census candidates,
+   package names and former owners. Each need is now met without one: original addresses
+   of earlier systems come from files committed before the switch; new systems take
+   `gh:<repository id>` as their natural key; candidates and systems are resolved from
+   public ids at run time; package names are read from the manifest that a public pointer
+   names; former owners up to the switch come from the public history, and after the
+   switch a former owner's login never enters public bytes. One gap remains: a login that
+   no longer resolves on the platform, typed by hand into a document, is not recognized.
+   The do-not-observe list, which holds numeric ids only, is kept separately and without
+   versions.
+3. **The signing procedure did not match how the steward works.** The steward's
+   assistant performs the steps on the steward's computer, on an approval that names the
+   file's hash. The procedure now names the file modes, the passphrase and what it really
+   protects, a tested backup, and an independent check of the signature. It marks the key
+   as new, authenticating nothing earlier. It separates the governance key from the
+   dead-man heartbeat.
+4. **Some promises outran their mechanisms.** The erasure stop now takes effect before the
+   next run; deletion is promised for the copies Evidaxis controls, and the remaining
+   copies are named; reproducing the past is separated from continuing collection; and
+   fail-closed now rests on checks that run before every automated push, upload and
+   deployment, with the post-push check stated as a second line.
+
+This revision is material. It was published on the day of the original, so the freeze
+runs from 2026-10-19 and the earliest decision date stays 2026-11-18. A later material
+change restarts the freeze from its own publication.
 
 *Positive-only note: this proposal concerns the project's own handling of identifiers.
 No measurement, score, recognition or system identity is created, changed or withdrawn

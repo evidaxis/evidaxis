@@ -21,7 +21,8 @@
   into a tracked file, commit message, issue or pull request; use the entity id or
   `gh:<repo_id>`. Automated data commits keep their format until the switch set by
   `governance/AMENDMENT-PROPOSAL-2026-10-19-invariant-1.md`; from then privacy-gate fails
-  on any new published byte that contains one. Only collectors read the locator store.
+  on any new published byte that contains one. No store of such identifiers is kept:
+  collectors resolve them from public ids within a run and keep nothing afterwards.
 
 ## Tests
 - Never pin a test to the latest snapshot (its date, current system values, "missing now"). Pin concrete values to a dated snapshot fixture.
