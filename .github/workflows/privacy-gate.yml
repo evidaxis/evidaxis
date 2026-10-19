@@ -21,3 +21,15 @@ jobs:
         env:
           EVX_OWNER_PATTERNS: ${{ secrets.EVX_OWNER_PATTERNS }}
         run: python3 scripts/owner_trace_check.py
+
+  # Dormant until scripts/person_free_switch.json sets switch_date.
+  # The script then exits 0 without reading the tree. Fork pull requests
+  # are excluded: they have no person index, and the job asks for one.
+  person-free-new-bytes:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5  # same bound as owner-traces so a stuck scan cannot hold a runner
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - name: Person-free new bytes
+        run: python3 scripts/person_free_new_bytes.py --require-index

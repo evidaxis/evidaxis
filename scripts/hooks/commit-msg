@@ -1,0 +1,10 @@
+#!/bin/sh
+# The message about to be committed is rejected when it names a personal account.
+# Without EVX_PERSON_INDEX_DIR there is nothing to match, so warn and allow it.
+set -eu
+if [ -z "${EVX_PERSON_INDEX_DIR:-}" ] || [ ! -d "${EVX_PERSON_INDEX_DIR}" ]; then
+  echo "person-free: warning: no local index; skipping" >&2
+  exit 0
+fi
+here=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
+exec python3 "$here/../person_free_new_bytes.py" --message-file "$1"

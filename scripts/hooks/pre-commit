@@ -1,0 +1,11 @@
+#!/bin/sh
+# Staged bytes are rejected when they contain a personal account login.
+# A machine without EVX_PERSON_INDEX_DIR has nothing to match (a fork, or
+# the index has not been built), so warn and allow the commit.
+set -eu
+if [ -z "${EVX_PERSON_INDEX_DIR:-}" ] || [ ! -d "${EVX_PERSON_INDEX_DIR}" ]; then
+  echo "person-free: warning: no local index; skipping" >&2
+  exit 0
+fi
+here=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
+exec python3 "$here/../person_free_new_bytes.py" --staged
