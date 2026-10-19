@@ -672,3 +672,30 @@ are alerting (feed.json 8 days old, newest archive snapshot over budget). Not pa
 not touched; uncommitted edits in `.github/workflows/weekly-snapshot.yml`, `collectors/gh_graphql.py`
 and `collectors/owner_classify.py` in the working tree belong to another session and are not in
 this commit. Artifacts of this tact are committed in the same tact.
+
+## 2026-10-19 — tact: partition 2026-10-12, first m4 partition, 6/6; score_m3 --verify PASS
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-10-12` — panel manifest `026eaa45377a…`
+(90 systems / 628 packages + 12 canaries), job `bqjob_r1b2b94d08593563b_000001a1531f8331_1`.
+The partition is dated after the m4 activation (2026-10-10), so `panel_for_partition` maps only
+admitted packages: **57/79 matched**, 10 canaries. The drop from 64/90 is the mapping switch
+(METHODOLOGY-M4 §4), not a data loss.
+
+**Sidecar** (`--sidecar 2026-10-12`): PV2P 1154 rows, Projects 4457 rows, retention tripwire
+{earliest 20230410 · latest 20261012 · n 182 · rows_total 1,085,558,261,849}.
+
+**Sanity gate** (same calibration, `--series v2h1`): 30 partitions checked; **2026-10-05 promoted
+CLEAN** (cov=64); 2026-10-12 PROVISIONAL (cov=57). KILL-BAR PASS, flagged exactly the two
+known-bad partitions. Artifact `data/quarantine/axis3-deps-v2/sanity-check-c2ee6b575d7d.json`.
+
+**Evaluation** (`--as-of 2026-10-05 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-10-05**, 48 voting / 8 rising, 1 unstable vetoed.
+**c1–c6 PASS — 6/6.** Rising set vs the 2026-09-28 evaluation: Strands Agents (`e_3K17NV4B0JF`)
+and CAMEL (`e_VBBNJDDB0DA`) in; Unsloth (`e_J16JY8N155H`) out by the one-way fragility veto;
+six kept. Artifact `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-10-05-f76e61bc5198.json`.
+
+**`score_m3.py --verify`: PASS** — "files match recomputation". The two-member rounding drift of
+the 2026-10-05 and 2026-10-12 tacts is gone; snapshots 2026-10-10 and 2026-10-17 now exist.
+
+**Next tact:** partition 2026-10-19; the first m4 partition 2026-10-12 becomes eligible for CLEAN.
+Observation files `data/observations/2026-10-19/` and the artifacts above are committed in this tact.
