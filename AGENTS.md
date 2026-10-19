@@ -16,6 +16,10 @@
 - Entity-adjacent language: no verdict-class strings near system names
   (enforced by entity-lexicon guard in check-dist).
 
+## Tests
+- Never pin a test to the latest snapshot (its date, current system values, "missing now"). Pin concrete values to a dated snapshot fixture.
+- After each merge into web/, replay next week's candidate: `gh workflow run rehearsal-replay.yml -f drill=none -f source_run=<rehearsal run id>`. Three Saturday releases broke on this class (12.10 canary sample, 18.10 census timeout, 18.10 observation-state test).
+
 ## Style
 - Comments explain WHY, in English, matching the density of the file you edit.
 - Collectors and scripts/ are pure stdlib (no new deps). Web deps only in web/.
