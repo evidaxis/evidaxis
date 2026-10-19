@@ -37,6 +37,8 @@ YEARS = (2023, 2024, 2025, 2026)
 TECHNICAL_WORD_MAX = 6
 RETRIES = 3  # one dropped connection should not turn a report into "not found"
 ARXIV_PAUSE_S = 3  # export.arxiv.org asks for 3 seconds between requests
+# One arXiv page per family. The build stops when arXiv reports more hits than this.
+TITLE_SEARCH_MAX = 1000
 OPENALEX_SELECT = ",".join([
     "id", "display_name", "publication_year", "doi", "ids",
     "cited_by_count", "counts_by_year", "locations",
@@ -61,10 +63,43 @@ FIRST_VERSION_CITES = {
     "Phi": (23, 119, 175, 74),
 }
 FIRST_VERSION_DENOM_2025 = 3916
+# Citation totals in commit 6dd192ba75 (OpenAlex pull 2026-10-18), before the
+# 2026-10-19 search correction.
+SECOND_VERSION_COMMIT = "6dd192ba75"
+SECOND_VERSION_PULL = "2026-10-18"
+SECOND_VERSION_CITES = {
+    "Qwen": (1, 131, 251, 325),
+    "DeepSeek": (0, 24, 307, 167),
+    "Llama": (957, 1923, 1431, 210),
+    "Gemma": (0, 108, 274, 129),
+    "OLMo": (0, 16, 32, 23),
+    "GLM": (85, 168, 188, 21),
+    "Kimi": (0, 0, 12, 8),
+    "InternLM": (0, 3, 22, 4),
+    "Mistral": (8, 127, 184, 143),
+    "Phi": (23, 119, 175, 74),
+}
+SECOND_VERSION_DENOMS = {2023: 1074, 2024: 2619, 2025: 2876, 2026: 1104}
+# The arXiv ids in that commit's catalog: canonical ids and title-search hits.
+SECOND_VERSION_IDS = frozenset({
+    "2210.02414", "2302.13971", "2305.15062", "2306.11644", "2307.09288", "2309.05463",
+    "2309.16609", "2310.06825", "2401.02954", "2401.04088", "2402.00838", "2403.08295",
+    "2403.17297", "2404.14219", "2405.04434", "2406.12793", "2407.10671", "2407.10759",
+    "2407.21783", "2408.00118", "2412.03223", "2412.08905", "2412.15115", "2412.19437",
+    "2501.00656", "2501.12599", "2501.12948", "2503.01743", "2503.19786", "2504.07491",
+    "2504.18425", "2504.21039", "2504.21318", "2505.09388", "2508.01059", "2508.02324",
+    "2509.17765", "2511.21631", "2512.14291", "2601.15621", "2601.21051", "2601.21337",
+    "2603.00729", "2603.03975", "2603.10910", "2605.10730", "2605.13565", "2606.17030",
+    "2606.17846", "2606.18112", "2606.27608", "2607.02770", "2607.11699", "2607.11738",
+    "2607.27011", "2607.28227", "2609.07549", "2609.25195",
+})
+# The title search in that commit asked arXiv for whole words.
+SECOND_VERSION_QWEN_QUERY = 'ti:"technical report" AND (ti:Qwen OR ti:Qwen2 OR ti:Qwen3)'
 
 # Canonical generation reports: the family's own write-ups, including papers
 # whose title does not contain the words "technical report".
 # Title search adds later reports whose title leads with the family name.
+# The arXiv title query is built from the stems (arxiv_title_query).
 FAMILIES = [
     {
         "family": "Qwen",
@@ -72,7 +107,6 @@ FAMILIES = [
         "orgs": ("qwenlm", "qwenaudio"),
         "name_re": None,
         "canonical": ("2309.16609", "2407.10671", "2412.15115", "2505.09388"),
-        "arxiv_query": 'ti:"technical report" AND (ti:Qwen OR ti:Qwen2 OR ti:Qwen3)',
     },
     {
         "family": "DeepSeek",
@@ -80,7 +114,6 @@ FAMILIES = [
         "orgs": ("deepseek-ai",),
         "name_re": None,
         "canonical": ("2401.02954", "2405.04434", "2412.19437", "2501.12948"),
-        "arxiv_query": 'ti:"technical report" AND (ti:DeepSeek OR ti:DeepSeek-V2 OR ti:DeepSeek-V3 OR ti:DeepSeek-R1)',
     },
     {
         "family": "Llama",
@@ -88,7 +121,6 @@ FAMILIES = [
         "orgs": ("meta-llama",),
         "name_re": None,
         "canonical": ("2302.13971", "2307.09288", "2407.21783"),
-        "arxiv_query": 'ti:"technical report" AND (ti:Llama OR ti:LLaMA)',
     },
     {
         "family": "Gemma",
@@ -96,7 +128,6 @@ FAMILIES = [
         "orgs": ("google", "google-deepmind", "google-research"),
         "name_re": r"gemma",
         "canonical": ("2403.08295", "2408.00118", "2503.19786"),
-        "arxiv_query": 'ti:"technical report" AND ti:Gemma',
     },
     {
         "family": "OLMo",
@@ -104,7 +135,6 @@ FAMILIES = [
         "orgs": ("allenai",),
         "name_re": r"(^|[^A-Za-z])olmo([^A-Za-z]|$)",
         "canonical": ("2402.00838", "2501.00656"),
-        "arxiv_query": 'ti:"technical report" AND (ti:OLMo OR ti:"OLMo 2")',
     },
     {
         "family": "GLM",
@@ -112,7 +142,6 @@ FAMILIES = [
         "orgs": ("zai-org", "thudm"),
         "name_re": r"(^|[^A-Za-z])glm([^A-Za-z]|$)",
         "canonical": ("2210.02414", "2406.12793"),
-        "arxiv_query": 'ti:"technical report" AND (ti:GLM OR ti:ChatGLM OR ti:GLM-4)',
     },
     {
         "family": "Kimi",
@@ -120,7 +149,6 @@ FAMILIES = [
         "orgs": ("moonshotai",),
         "name_re": r"kimi",
         "canonical": ("2501.12599", "2504.07491"),
-        "arxiv_query": 'ti:"technical report" AND ti:Kimi',
     },
     {
         "family": "InternLM",
@@ -128,7 +156,6 @@ FAMILIES = [
         "orgs": ("internlm",),
         "name_re": None,
         "canonical": ("2403.17297",),
-        "arxiv_query": 'ti:"technical report" AND (ti:InternLM OR ti:InternLM2)',
     },
     {
         "family": "Mistral",
@@ -136,7 +163,6 @@ FAMILIES = [
         "orgs": ("mistralai",),
         "name_re": None,
         "canonical": ("2310.06825", "2401.04088"),
-        "arxiv_query": 'ti:"technical report" AND (ti:Mistral OR ti:Mixtral)',
     },
     {
         "family": "Phi",
@@ -144,7 +170,6 @@ FAMILIES = [
         "orgs": ("microsoft",),
         "name_re": r"^phi",
         "canonical": ("2306.11644", "2309.05463", "2404.14219", "2412.08905"),
-        "arxiv_query": 'ti:"technical report" AND (ti:Phi-1 OR ti:Phi-2 OR ti:Phi-3 OR ti:Phi-4 OR ti:"phi-1.5")',
     },
 ]
 
@@ -197,14 +222,33 @@ def num(value) -> str:
     return str(value)
 
 
+def arxiv_title_query(stems: tuple[str, ...]) -> str:
+    # A prefix per family name. arXiv indexes "Qwen2.5-VL" as the word "qwen2.5",
+    # so the whole-word term ti:Qwen2 did not return it. ti:qwen* does.
+    names = " OR ".join(f"ti:{stem}*" for stem in stems)
+    return f'ti:"technical report" AND ({names})'
+
+
+def leads_with_family(word: str, stems: tuple[str, ...]) -> bool:
+    # The family name alone or followed by a version: qwen, qwen2, qwen3guard, phi.
+    # A longer word that only begins with the name (philosophy, glms) is not the family.
+    return any(re.fullmatch(re.escape(stem) + r"(?:\d[a-z0-9]*)?", word) for stem in stems)
+
+
 def technical_report_lead(title: str, stems: tuple[str, ...]) -> bool:
     words = norm_title(title).split()
-    if not words or not any(words[0].startswith(stem) for stem in stems):
+    if not words or not leads_with_family(words[0], stems):
         return False
     for i in range(len(words) - 1):
         if words[i] == "technical" and words[i + 1] == "report":
             return i <= TECHNICAL_WORD_MAX
     return False
+
+
+def check_complete(total: str, entries: list[dict], where: str) -> None:
+    # A page that holds fewer hits than arXiv reports would drop reports silently.
+    if total.isdigit() and int(total) > len(entries):
+        raise SystemExit(f"{where}: arXiv reports {total} hits, the page holds {len(entries)}")
 
 
 def year_counts(work: dict) -> dict[int, int]:
@@ -304,15 +348,16 @@ def fetch() -> None:
     time.sleep(ARXIV_PAUSE_S)
     for family in FAMILIES:
         query_url = "https://export.arxiv.org/api/query?" + urllib.parse.urlencode({
-            "search_query": family["arxiv_query"],
+            "search_query": arxiv_title_query(family["stems"]),
             "start": 0,
-            "max_results": 50,
+            "max_results": TITLE_SEARCH_MAX,
             "sortBy": "submittedDate",
             "sortOrder": "ascending",
         })
-        (RAW / "arxiv" / f"title-{slug(family['family'])}.xml").write_bytes(
-            strip_arxiv_authors(http_bytes(query_url))
-        )
+        page = strip_arxiv_authors(http_bytes(query_url))
+        total, entries = parse_feed(page)
+        check_complete(total, entries, f"title search {family['family']}")
+        (RAW / "arxiv" / f"title-{slug(family['family'])}.xml").write_bytes(page)
         time.sleep(ARXIV_PAUSE_S)
 
     catalog = load_arxiv_catalog()
@@ -411,6 +456,7 @@ def load_arxiv_catalog() -> dict[str, dict]:
             if "canonical" not in catalog[arxiv_id]["roles"]:
                 catalog[arxiv_id]["roles"].append("canonical")
         total, entries = parse_feed((RAW / "arxiv" / f"title-{slug(family['family'])}.xml").read_bytes())
+        check_complete(total, entries, f"raw/arxiv/title-{slug(family['family'])}.xml")
         for entry in entries:
             if entry["title"].casefold() == "error":
                 continue
@@ -1151,17 +1197,23 @@ def svg_chart(families: list[dict], pull_date: str) -> str:
     return "\n".join(parts) + "\n"
 
 
-def correction_section(families: list[dict]) -> str:
-    by_name = {row["family"]: row for row in families}
+def years_text(values) -> str:
+    return "/".join("not_found" if value is None else str(value) for value in values)
+
+
+def family_years(row: dict) -> tuple:
+    return tuple(as_int(row[f"cites_{year}"]) for year in YEARS)
+
+
+def correction_2026_10_18() -> str:
+    # Frozen at commit 6dd192ba75. A later pull does not rewrite these numbers.
     changed = []
     for name, old in FIRST_VERSION_CITES.items():
-        row = by_name[name]
-        new = tuple(int(row[f"cites_{year}"]) for year in YEARS)
+        new = SECOND_VERSION_CITES[name]
         if new != old:
-            old_text = "/".join(str(value) for value in old)
-            new_text = "/".join(str(value) for value in new)
-            changed.append(f"{name} citations 2023/2024/2025/2026 were {old_text} and are now {new_text}.")
-    denom = int(by_name["Qwen"]["denominator_2025"])
+            changed.append(
+                f"{name} citations 2023/2024/2025/2026 were {years_text(old)} and became {years_text(new)}."
+            )
     lines = [
         "The first version, commit e88cf7fbc0, linked Llama 2 (arXiv 2307.09288) by DOI to an OpenAlex work about an ICU simulation.",
         "That work's title is not the Llama 2 report. Its citations were still counted, including 808 in 2025.",
@@ -1169,17 +1221,111 @@ def correction_section(families: list[dict]) -> str:
         "A matching DOI is not identity. A work is now counted only when its title matches the arXiv title after normalization.",
         "An arXiv id in ids or locations does not keep a different title. That status is `contaminated`, and the count is not used.",
         "Each contaminated report was searched on OpenAlex by title. A hit is kept only when the title and the publication year both match.",
+        *changed,
+        f"The 2025 denominator was {FIRST_VERSION_DENOM_2025:,} and became {SECOND_VERSION_DENOMS[2025]:,} "
+        f"in commit {SECOND_VERSION_COMMIT}. Shares moved with that denominator.",
     ]
-    if changed:
-        lines.extend(changed)
-    else:
-        lines.append("No family citation total changed.")
-    if denom != FIRST_VERSION_DENOM_2025:
-        lines.append(
-            f"The 2025 denominator was {FIRST_VERSION_DENOM_2025:,} and is now {denom:,}. "
-            "Shares moved with that denominator."
-        )
     return "\n".join(lines)
+
+
+def correction_2026_10_19(families: list[dict], reports: list[dict], pull_date: str) -> str:
+    order = [family["family"] for family in FAMILIES]
+    by_name = {row["family"]: row for row in families}
+    added = [row for row in reports if row["arxiv_id"] not in SECOND_VERSION_IDS]
+    added_in = [row for row in added if row["role"] in ("canonical", "title_search")]
+    added_out = [row for row in added if row["role"] == "title_search_excluded"]
+    lines = [
+        f"The title search in commit {SECOND_VERSION_COMMIT} asked arXiv for whole words. "
+        f"For Qwen it was `{SECOND_VERSION_QWEN_QUERY}`.",
+        'arXiv indexes a name joined to a version as one word: "Qwen2.5-VL" is "qwen2.5". '
+        "Those titles never reached the title test.",
+    ]
+    gained = [name for name in order if any(row["family"] == name for row in added_in)]
+    for name in gained:
+        mine = [row for row in added_in if row["family"] == name]
+        listed = "; ".join(f"`{row['arxiv_id']}` {row['arxiv_title']}" for row in mine)
+        lines.append(f"{len(mine)} {name} reports were missing: {listed}.")
+    if not gained:
+        lines.append("No report was missing.")
+    for row in added_out:
+        lines.append(
+            f"`{row['arxiv_id']}` ({row['arxiv_title']}) is a new search hit and stays outside the sum: "
+            "its first word is not the family name."
+        )
+    lines.append(
+        "The search now uses a prefix on every family name, for Qwen "
+        f"`{arxiv_title_query(('qwen',))}`, and stores up to {TITLE_SEARCH_MAX:,} hits. "
+        "The build stops when arXiv reports more hits than the page holds."
+    )
+    stems = {family["family"]: family["stems"] for family in FAMILIES}
+    moved = []
+    for row in reports:
+        if row["role"] not in ("title_search", "title_search_excluded") or row["arxiv_id"] in canonical_set():
+            continue
+        words = norm_title(row["arxiv_title"]).split()
+        old_lead = bool(words) and any(words[0].startswith(stem) for stem in stems[row["family"]])
+        new_lead = bool(words) and leads_with_family(words[0], stems[row["family"]])
+        if old_lead != new_lead:
+            moved.append(f"`{row['arxiv_id']}`")
+    effect = (
+        "This moves no row in this pull." if not moved
+        else "This moves " + ", ".join(moved) + " out of the sum."
+    )
+    lines.append(
+        "The first word of a title must be the family name alone or followed by a version, "
+        "such as Qwen2, Qwen3Guard, or Phi. A word that only begins with the name, such as Philosophy, "
+        f"is not a family report. {effect}"
+    )
+    rest = [name for name in order if name not in gained]
+    if gained and rest:
+        lines.append(
+            "All ten families were searched again under this rule. "
+            + name_list(rest) + " gained no report."
+        )
+    lines.append(
+        f"The OpenAlex pull moved from {SECOND_VERSION_PULL} to {pull_date}, so every count was read again."
+    )
+    same = []
+    for name in order:
+        old = SECOND_VERSION_CITES[name]
+        new = family_years(by_name[name])
+        if new == old:
+            same.append(name)
+            continue
+        text = f"{name} citations 2023/2024/2025/2026 were {years_text(old)} and are now {years_text(new)}."
+        mine = [row for row in added_in if row["family"] == name and row["in_sum"] == "yes"]
+        if mine:
+            part = tuple(sum(int(row[f"cites_{year}"]) for row in mine) for year in YEARS)
+            delta = tuple(
+                None if a is None or b is None else b - a for a, b in zip(old, new, strict=True)
+            )
+            if part == delta:
+                text += f" All of the change, {years_text(part)}, comes from the added reports."
+            else:
+                text += f" The added reports account for {years_text(part)}. The rest is the new pull."
+        lines.append(text)
+    if same:
+        lines.append(name_list(same) + " did not change.")
+    denominators_moved = False
+    for year in YEARS:
+        old = SECOND_VERSION_DENOMS[year]
+        new = as_int(by_name[order[0]][f"denominator_{year}"])
+        if new is not None and new != old:
+            denominators_moved = True
+            lines.append(f"The {year} denominator was {old:,} and is now {new:,}.")
+    if denominators_moved:
+        lines.append("Shares moved with the denominators.")
+    return "\n".join(lines)
+
+
+def canonical_set() -> frozenset:
+    return frozenset(arxiv_id for family in FAMILIES for arxiv_id in family["canonical"])
+
+
+def name_list(names: list[str]) -> str:
+    if len(names) == 1:
+        return names[0]
+    return ", ".join(names[:-1]) + " and " + names[-1]
 
 
 def render_readme(families: list[dict], reports: list[dict], pull_date: str, snapshot_date: str) -> str:
@@ -1249,11 +1395,13 @@ ATOM measures model weights on Hugging Face. This note measures citations of the
 technical reports, and commit activity of organization repositories in one Evidaxis snapshot.
 
 **Reports.** Each family has a fixed list of generation reports (arXiv ids in `build.py`)
-plus every arXiv hit whose title leads with the family name and says "technical report"
-within the first six words. Derivative titles that only contain the name later, such as
-Lawyer LLaMA and the FoundationAI Llama reports, stay in `reports.csv` as
-`title_search_excluded` and are not in the sums. {excluded} titles are excluded that way.
-Qwen-Image is arXiv `2508.02324`, from the Qwen title search.
+plus every arXiv title that says "technical report" within the first six words and whose
+first word is the family name, alone or followed by a version (Qwen2.5-VL, Qwen3Guard, Phi-4-Mini).
+The arXiv search uses a prefix on each family name, for Qwen `{arxiv_title_query(('qwen',))}`,
+so a name joined to a version is found. Other search hits stay in `reports.csv` as
+`title_search_excluded` and are not in the sums: Lawyer LLaMA does not lead with the family name,
+and in the FoundationAI Llama reports "technical report" starts after word six.
+{excluded} titles are excluded that way. Qwen-Image is arXiv `2508.02324`, from the Qwen title search.
 
 **OpenAlex link.** Each report is looked up at `https://api.openalex.org/works/doi:10.48550/arXiv.<id>`.
 A count is kept only when the title matches the arXiv title after normalization (case, punctuation, and spaces).
@@ -1292,10 +1440,16 @@ GitHub `commit_activity` on the default branch. The slope is the log-slope of th
 - Default branch only. Work on other branches is outside this snapshot.
 - The old DOI filter responses remain in `raw/openalex/doi-*.json` and `title-*.json`.
   The sums read `bydoi-*.json`, `sametitle-*.json`, `vordoi-*.json`, and `titlesearch-*.json`.
+- The fixed lists stop at the generations in `build.py`. A later generation paper whose title
+  does not say "technical report", such as Kimi K2, GLM-4.5, or Olmo 3, is not counted.
+
+## Correction 2026-10-19
+
+{correction_2026_10_19(families, reports, pull_date)}
 
 ## Correction 2026-10-18
 
-{correction_section(families)}
+{correction_2026_10_18()}
 
 ## Reproduce
 

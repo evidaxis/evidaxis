@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "count": 0,
+    "db_response_time_ms": 9,
+    "page": 1,
+    "per_page": 5,
+    "groups_count": null,
+    "x_query": {
+      "oql": "get works where DOI is https://doi.org/10.48550/arxiv.2510.14276",
+      "x_new_oql": "get works where DOI is https://doi.org/10.48550/arxiv.2510.14276",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "doi",
+            "value": "https://doi.org/10.48550/arxiv.2510.14276"
+          }
+        ]
+      },
+      "url": "/works?filter=doi:https:%2F%2Fdoi.org%2F10.48550%2Farxiv.2510.14276&per_page=5"
+    },
+    "cost_usd": 0.0001
+  },
+  "results": [],
+  "group_by": []
+}

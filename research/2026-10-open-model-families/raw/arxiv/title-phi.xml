@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
-  <id>https://arxiv.org/api/Ba+DVx6jLW0NiMMs0DMYSxlE8VE</id>
-  <title>arXiv Query: search_query=ti:"technical report" AND (ti:Phi-1 OR ti:Phi-2 OR ti:Phi-3 OR ti:Phi-4 OR ti:"phi-1.5")&amp;id_list=&amp;start=0&amp;max_results=50</title>
-  <updated>2026-10-18T20:01:13Z</updated>
-  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:Phi-1+OR+(ti:Phi-2+OR+(ti:Phi-3+OR+(ti:Phi-4+OR+ti:%22phi-1.5%22))))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
-  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <id>https://arxiv.org/api/ICLOZkC9zS59uaaxUVbb4lTp1MM</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND (ti:phi*)&amp;id_list=&amp;start=0&amp;max_results=1000</title>
+  <updated>2026-10-19T12:35:10Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+ti:phi*&amp;start=0&amp;max_results=1000&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>1000</opensearch:itemsPerPage>
   <opensearch:totalResults>6</opensearch:totalResults>
   <opensearch:startIndex>0</opensearch:startIndex>
   <entry>

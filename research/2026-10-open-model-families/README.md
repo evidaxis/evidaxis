@@ -1,27 +1,27 @@
 # Technical reports and repository activity of ten open model families
 
-*Evidaxis research note · OpenAlex pull 2026-10-18 · snapshot 2026-10-17 · data and code CC0-1.0*
+*Evidaxis research note · OpenAlex pull 2026-10-19 · snapshot 2026-10-17 · data and code CC0-1.0*
 
-Downloads and citations rank these families differently. The ATOM Report shows Qwen passing Llama on Hugging Face downloads in September 2025. On the OpenAlex pull of 18 October 2026, Llama's linked technical reports still drew 1,431 citations in 2025 against Qwen's 251, of 2,876 for all ten families; Llama 2 and Llama 3 are excluded (see below), so Llama's lead is understated. Partial-year counts can only grow; 2026 is not otherwise compared.
+Downloads and citations rank these families differently. The ATOM Report shows Qwen passing Llama on Hugging Face downloads in September 2025. On the OpenAlex pull of 19 October 2026, Llama's linked technical reports still drew 1,431 citations in 2025 against Qwen's 328, of 2,953 for all ten families; Llama 2 and Llama 3 are excluded (see below), so Llama's lead is understated. Partial-year counts can only grow; 2026 is not otherwise compared.
 
 ![Share of citations to linked technical reports, 2023–2025](chart.svg)
 
 | Family | Reports in the sum | 2023 | 2024 | 2025 | 2026 partial | Share 2023 | Share 2024 | Share 2025 | Org repos | Median commits/week | Sum of commits/week |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Qwen | 23 of 23 | 1 | 131 | 251 | 325 | 0.1% | 5.0% | 8.7% | 10 | 0.75 | 513.6 |
-| DeepSeek | 3 of 4 | 0 | 24 | 307 | 167 | 0.0% | 0.9% | 10.7% | 4 | 0 | 1334 |
-| Llama | 1 of 3 | 957 | 1923 | 1431 | 210 | 89.1% | 73.4% | 49.8% | 1 | 0 | 0 |
-| Gemma | 4 of 4 | 0 | 108 | 274 | 129 | 0.0% | 4.1% | 9.5% | 3 | 0 | 0.8 |
+| Qwen | 30 of 30 | 1 | 132 | 328 | 449 | 0.1% | 5.0% | 11.1% | 10 | 0.75 | 513.6 |
+| DeepSeek | 3 of 4 | 0 | 24 | 307 | 167 | 0.0% | 0.9% | 10.4% | 4 | 0 | 1334 |
+| Llama | 1 of 3 | 957 | 1923 | 1431 | 210 | 89.1% | 73.4% | 48.5% | 1 | 0 | 0 |
+| Gemma | 4 of 4 | 0 | 108 | 274 | 129 | 0.0% | 4.1% | 9.3% | 3 | 0 | 0.8 |
 | OLMo | 2 of 2 | 0 | 16 | 32 | 23 | 0.0% | 0.6% | 1.1% | 1 | 0 | 0 |
-| GLM | 4 of 4 | 85 | 168 | 188 | 21 | 7.9% | 6.4% | 6.5% | 3 | 0.1 | 0.6 |
+| GLM | 4 of 4 | 85 | 168 | 188 | 21 | 7.9% | 6.4% | 6.4% | 3 | 0.1 | 0.6 |
 | Kimi | 3 of 3 | 0 | 0 | 12 | 8 | 0.0% | 0.0% | 0.4% | 1 | 0 | 0 |
 | InternLM | 1 of 1 | 0 | 3 | 22 | 4 | 0.0% | 0.1% | 0.8% | 7 | 0 | 22.3 |
-| Mistral | 2 of 2 | 8 | 127 | 184 | 143 | 0.7% | 4.9% | 6.4% | not found | not found | not found |
-| Phi | 7 of 7 | 23 | 119 | 175 | 74 | 2.1% | 4.5% | 6.1% | 1 | 1.8 | 1.8 |
+| Mistral | 2 of 2 | 8 | 127 | 184 | 143 | 0.7% | 4.9% | 6.2% | not found | not found | not found |
+| Phi | 7 of 7 | 23 | 119 | 175 | 74 | 2.1% | 4.5% | 5.9% | 1 | 1.8 | 1.8 |
 
 A zero in a citation column is a measured zero on a linked report. `not found` is a gap.
 The share is that family's citations divided by `denominator_{year}` in `families.csv`.
-For 2025 the denominator is 2876. Share columns for 2026 are in the CSV and are not used above.
+For 2025 the denominator is 2953. Share columns for 2026 are in the CSV and are not used above.
 
 ## What was counted
 
@@ -31,11 +31,13 @@ ATOM measures model weights on Hugging Face. This note measures citations of the
 technical reports, and commit activity of organization repositories in one Evidaxis snapshot.
 
 **Reports.** Each family has a fixed list of generation reports (arXiv ids in `build.py`)
-plus every arXiv hit whose title leads with the family name and says "technical report"
-within the first six words. Derivative titles that only contain the name later, such as
-Lawyer LLaMA and the FoundationAI Llama reports, stay in `reports.csv` as
-`title_search_excluded` and are not in the sums. 5 titles are excluded that way.
-Qwen-Image is arXiv `2508.02324`, from the Qwen title search.
+plus every arXiv title that says "technical report" within the first six words and whose
+first word is the family name, alone or followed by a version (Qwen2.5-VL, Qwen3Guard, Phi-4-Mini).
+The arXiv search uses a prefix on each family name, for Qwen `ti:"technical report" AND (ti:qwen*)`,
+so a name joined to a version is found. Other search hits stay in `reports.csv` as
+`title_search_excluded` and are not in the sums: Lawyer LLaMA does not lead with the family name,
+and in the FoundationAI Llama reports "technical report" starts after word six.
+6 titles are excluded that way. Qwen-Image is arXiv `2508.02324`, from the Qwen title search.
 
 **OpenAlex link.** Each report is looked up at `https://api.openalex.org/works/doi:10.48550/arXiv.<id>`.
 A count is kept only when the title matches the arXiv title after normalization (case, punctuation, and spaces).
@@ -70,12 +72,31 @@ GitHub `commit_activity` on the default branch. The slope is the log-slope of th
 ## Limits
 
 - OpenAlex's citation graph is the source. Counts were not scaled to any other index.
-- 2026 runs through the pull on 2026-10-18 and is not a finished year.
+- 2026 runs through the pull on 2026-10-19 and is not a finished year.
 - The archive is the Evidaxis registry of code systems, not a full list of each lab's
   repositories. Llama's only match is `meta-llama/prompt-ops`.
 - Default branch only. Work on other branches is outside this snapshot.
 - The old DOI filter responses remain in `raw/openalex/doi-*.json` and `title-*.json`.
   The sums read `bydoi-*.json`, `sametitle-*.json`, `vordoi-*.json`, and `titlesearch-*.json`.
+- The fixed lists stop at the generations in `build.py`. A later generation paper whose title
+  does not say "technical report", such as Kimi K2, GLM-4.5, or Olmo 3, is not counted.
+
+## Correction 2026-10-19
+
+The title search in commit 6dd192ba75 asked arXiv for whole words. For Qwen it was `ti:"technical report" AND (ti:Qwen OR ti:Qwen2 OR ti:Qwen3)`.
+arXiv indexes a name joined to a version as one word: "Qwen2.5-VL" is "qwen2.5". Those titles never reached the title test.
+7 Qwen reports were missing: `2409.12122` Qwen2.5-Math Technical Report: Toward Mathematical Expert Model via Self-Improvement; `2409.12186` Qwen2.5-Coder Technical Report; `2501.15383` Qwen2.5-1M Technical Report; `2502.13923` Qwen2.5-VL Technical Report; `2503.20215` Qwen2.5-Omni Technical Report; `2510.14276` Qwen3Guard Technical Report; `2604.15804` Qwen3.5-Omni Technical Report.
+`2506.00019` (Amadeus-Verbo Technical Report: The powerful Qwen2.5 family models trained in Portuguese) is a new search hit and stays outside the sum: its first word is not the family name.
+The search now uses a prefix on every family name, for Qwen `ti:"technical report" AND (ti:qwen*)`, and stores up to 1,000 hits. The build stops when arXiv reports more hits than the page holds.
+The first word of a title must be the family name alone or followed by a version, such as Qwen2, Qwen3Guard, or Phi. A word that only begins with the name, such as Philosophy, is not a family report. This moves no row in this pull.
+All ten families were searched again under this rule. DeepSeek, Llama, Gemma, OLMo, GLM, Kimi, InternLM, Mistral and Phi gained no report.
+The OpenAlex pull moved from 2026-10-18 to 2026-10-19, so every count was read again.
+Qwen citations 2023/2024/2025/2026 were 1/131/251/325 and are now 1/132/328/449. All of the change, 0/1/77/124, comes from the added reports.
+DeepSeek, Llama, Gemma, OLMo, GLM, Kimi, InternLM, Mistral and Phi did not change.
+The 2024 denominator was 2,619 and is now 2,620.
+The 2025 denominator was 2,876 and is now 2,953.
+The 2026 denominator was 1,104 and is now 1,228.
+Shares moved with the denominators.
 
 ## Correction 2026-10-18
 
@@ -85,9 +106,9 @@ Llama's 2025 total in that version was 2,239, against Qwen's 251, of 3,916 for a
 A matching DOI is not identity. A work is now counted only when its title matches the arXiv title after normalization.
 An arXiv id in ids or locations does not keep a different title. That status is `contaminated`, and the count is not used.
 Each contaminated report was searched on OpenAlex by title. A hit is kept only when the title and the publication year both match.
-DeepSeek citations 2023/2024/2025/2026 were 0/25/539/1046 and are now 0/24/307/167.
-Llama citations 2023/2024/2025/2026 were 1205/3296/2239/376 and are now 957/1923/1431/210.
-The 2025 denominator was 3,916 and is now 2,876. Shares moved with that denominator.
+DeepSeek citations 2023/2024/2025/2026 were 0/25/539/1046 and became 0/24/307/167.
+Llama citations 2023/2024/2025/2026 were 1205/3296/2239/376 and became 957/1923/1431/210.
+The 2025 denominator was 3,916 and became 2,876 in commit 6dd192ba75. Shares moved with that denominator.
 
 ## Reproduce
 
@@ -107,7 +128,7 @@ Standard library only.
 ## Cite
 
 Evidaxis (2026). *Technical reports and repository activity of ten open model families.*
-Research note, OpenAlex pull 2026-10-18, snapshot 2026-10-17.
+Research note, OpenAlex pull 2026-10-19, snapshot 2026-10-17.
 https://github.com/evidaxis/evidaxis/tree/main/research/2026-10-open-model-families
 
 Questions and corrections: hello@evidaxis.org

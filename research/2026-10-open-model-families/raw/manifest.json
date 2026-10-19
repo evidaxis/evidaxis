@@ -1,7 +1,7 @@
 {
-  "openalex_pull_date": "2026-10-18",
-  "arxiv_pull_date": "2026-10-18",
+  "openalex_pull_date": "2026-10-19",
+  "arxiv_pull_date": "2026-10-19",
   "snapshot_path": "data/snapshots/2026-10-17/snapshot.json",
-  "reports": 58,
+  "reports": 66,
   "work_doi_endpoint": "https://api.openalex.org/works/doi:10.48550/arXiv.{id}"
 }

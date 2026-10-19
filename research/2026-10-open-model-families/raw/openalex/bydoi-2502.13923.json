@@ -1,0 +1,91 @@
+{
+  "id": "https://openalex.org/W4407794264",
+  "display_name": "Qwen2.5-VL Technical Report",
+  "publication_year": 2025,
+  "doi": "https://doi.org/10.48550/arxiv.2502.13923",
+  "ids": {
+    "openalex": "https://openalex.org/W4407794264",
+    "doi": "https://doi.org/10.48550/arxiv.2502.13923"
+  },
+  "cited_by_count": 92,
+  "counts_by_year": [
+    {
+      "year": 2026,
+      "cited_by_count": 58
+    },
+    {
+      "year": 2025,
+      "cited_by_count": 34
+    }
+  ],
+  "locations": [
+    {
+      "id": "pmh:oai:arXiv.org:2502.13923",
+      "doi": null,
+      "is_oa": true,
+      "landing_page_url": "http://arxiv.org/abs/2502.13923",
+      "pdf_url": "https://arxiv.org/pdf/2502.13923",
+      "source": {
+        "id": "https://openalex.org/S4306400194",
+        "display_name": "arXiv (Cornell University)",
+        "issn_l": "2331-8422",
+        "issn": [
+          "2331-8422"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": false,
+        "listed_in": [],
+        "host_organization": "https://openalex.org/I205783295",
+        "host_organization_name": "Cornell University",
+        "host_organization_lineage": [
+          "https://openalex.org/I205783295"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": null,
+      "raw_type": "text"
+    },
+    {
+      "id": "doi:10.48550/arxiv.2502.13923",
+      "doi": "https://doi.org/10.48550/arxiv.2502.13923",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.48550/arxiv.2502.13923",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4306400194",
+        "display_name": "arXiv (Cornell University)",
+        "issn_l": "2331-8422",
+        "issn": [
+          "2331-8422"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": false,
+        "listed_in": [],
+        "host_organization": "https://openalex.org/I205783295",
+        "host_organization_name": "Cornell University",
+        "host_organization_lineage": [
+          "https://openalex.org/I205783295"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": null,
+      "license_id": null,
+      "version": null,
+      "is_accepted": false,
+      "is_published": null,
+      "raw_source_name": null,
+      "raw_type": "Preprint"
+    }
+  ],
+  "publication_date": "2025-02-19",
+  "type": "preprint"
+}

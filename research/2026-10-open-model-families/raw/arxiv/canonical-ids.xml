@@ -2,7 +2,7 @@
 <feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
   <id>https://arxiv.org/api/eCBHI9UxIhUBuIT4801PRHFMPUA</id>
   <title>arXiv Query: search_query=&amp;id_list=2309.16609,2407.10671,2412.15115,2505.09388,2401.02954,2405.04434,2412.19437,2501.12948,2302.13971,2307.09288,2407.21783,2403.08295,2408.00118,2503.19786,2402.00838,2501.00656,2210.02414,2406.12793,2501.12599,2504.07491,2403.17297,2310.06825,2401.04088,2306.11644,2309.05463,2404.14219,2412.08905&amp;start=0&amp;max_results=27</title>
-  <updated>2026-10-18T20:00:40Z</updated>
+  <updated>2026-10-19T12:34:37Z</updated>
   <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=27&amp;id_list=2309.16609,2407.10671,2412.15115,2505.09388,2401.02954,2405.04434,2412.19437,2501.12948,2302.13971,2307.09288,2407.21783,2403.08295,2408.00118,2503.19786,2402.00838,2501.00656,2210.02414,2406.12793,2501.12599,2504.07491,2403.17297,2310.06825,2401.04088,2306.11644,2309.05463,2404.14219,2412.08905" type="application/atom+xml"/>
   <opensearch:itemsPerPage>27</opensearch:itemsPerPage>
   <opensearch:totalResults>27</opensearch:totalResults>

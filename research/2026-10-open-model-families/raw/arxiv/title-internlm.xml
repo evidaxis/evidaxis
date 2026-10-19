@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
-  <id>https://arxiv.org/api/XetKa8vtqTKE1DIb0j4iCaXLz2c</id>
-  <title>arXiv Query: search_query=ti:"technical report" AND (ti:InternLM OR ti:InternLM2)&amp;id_list=&amp;start=0&amp;max_results=50</title>
-  <updated>2026-10-18T20:01:07Z</updated>
-  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:InternLM+OR+ti:InternLM2)&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
-  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <id>https://arxiv.org/api/xNnyCSB0W4UUZ9I2LggzGE4Q2ig</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND (ti:internlm*)&amp;id_list=&amp;start=0&amp;max_results=1000</title>
+  <updated>2026-10-19T12:35:03Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+ti:internlm*&amp;start=0&amp;max_results=1000&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>1000</opensearch:itemsPerPage>
   <opensearch:totalResults>1</opensearch:totalResults>
   <opensearch:startIndex>0</opensearch:startIndex>
   <entry>

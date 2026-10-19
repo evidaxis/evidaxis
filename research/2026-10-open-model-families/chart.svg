@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="560" viewBox="0 0 920 560" font-family="Inter, Helvetica, Arial, sans-serif">
 <rect width="920" height="560" fill="#fcfcfb"/>
 <text x="24" y="32" font-size="16" font-weight="600" fill="#0b0b0b">Share of citations to linked technical reports</text>
-<text x="24" y="54" font-size="13" fill="#52514e">Ten families, OpenAlex pull 2026-10-18. Each bar is that family divided by the ten-family sum.</text>
+<text x="24" y="54" font-size="13" fill="#52514e">Ten families, OpenAlex pull 2026-10-19. Each bar is that family divided by the ten-family sum.</text>
 <text x="24" y="74" font-size="13" fill="#52514e">2026 is not drawn. OpenAlex has no monthly counts, so the year is incomplete.</text>
 <rect x="110" y="84" width="14" height="10" fill="#b7c3ce"/>
 <text x="128" y="93" font-size="12" fill="#52514e">2023</text>
@@ -13,41 +13,41 @@
 <rect x="110" y="108" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="108" width="1.0" height="6" fill="#b7c3ce"/>
 <rect x="110" y="115" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="115" width="22.4" height="6" fill="#6ea0e0"/>
+<rect x="110" y="115" width="22.6" height="6" fill="#6ea0e0"/>
 <rect x="110" y="122" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="122" width="39.2" height="6" fill="#2a78d6"/>
-<text x="582" y="124" font-size="12" fill="#0b0b0b">0.1% · 5.0% · 8.7%</text>
+<rect x="110" y="122" width="49.9" height="6" fill="#2a78d6"/>
+<text x="582" y="124" font-size="12" fill="#0b0b0b">0.1% · 5.0% · 11.1%</text>
 <text x="98" y="164" font-size="14" text-anchor="end" fill="#0b0b0b">DeepSeek</text>
 <rect x="110" y="148" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="148" width="1.0" height="6" fill="#b7c3ce"/>
 <rect x="110" y="155" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="155" width="4.1" height="6" fill="#6ea0e0"/>
 <rect x="110" y="162" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="162" width="47.9" height="6" fill="#2a78d6"/>
-<text x="582" y="164" font-size="12" fill="#0b0b0b">0.0% · 0.9% · 10.7%</text>
+<rect x="110" y="162" width="46.7" height="6" fill="#2a78d6"/>
+<text x="582" y="164" font-size="12" fill="#0b0b0b">0.0% · 0.9% · 10.4%</text>
 <text x="98" y="204" font-size="14" text-anchor="end" fill="#0b0b0b">Llama</text>
 <rect x="110" y="188" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="188" width="400.0" height="6" fill="#b7c3ce"/>
 <rect x="110" y="195" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="195" width="329.6" height="6" fill="#6ea0e0"/>
+<rect x="110" y="195" width="329.5" height="6" fill="#6ea0e0"/>
 <rect x="110" y="202" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="202" width="223.4" height="6" fill="#2a78d6"/>
-<text x="582" y="204" font-size="12" fill="#0b0b0b">89.1% · 73.4% · 49.8%</text>
+<rect x="110" y="202" width="217.5" height="6" fill="#2a78d6"/>
+<text x="582" y="204" font-size="12" fill="#0b0b0b">89.1% · 73.4% · 48.5%</text>
 <text x="98" y="244" font-size="14" text-anchor="end" fill="#0b0b0b">Gemma</text>
 <rect x="110" y="228" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="228" width="1.0" height="6" fill="#b7c3ce"/>
 <rect x="110" y="235" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="235" width="18.5" height="6" fill="#6ea0e0"/>
 <rect x="110" y="242" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="242" width="42.8" height="6" fill="#2a78d6"/>
-<text x="582" y="244" font-size="12" fill="#0b0b0b">0.0% · 4.1% · 9.5%</text>
+<rect x="110" y="242" width="41.7" height="6" fill="#2a78d6"/>
+<text x="582" y="244" font-size="12" fill="#0b0b0b">0.0% · 4.1% · 9.3%</text>
 <text x="98" y="284" font-size="14" text-anchor="end" fill="#0b0b0b">OLMo</text>
 <rect x="110" y="268" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="268" width="1.0" height="6" fill="#b7c3ce"/>
 <rect x="110" y="275" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="275" width="2.7" height="6" fill="#6ea0e0"/>
 <rect x="110" y="282" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="282" width="5.0" height="6" fill="#2a78d6"/>
+<rect x="110" y="282" width="4.8" height="6" fill="#2a78d6"/>
 <text x="582" y="284" font-size="12" fill="#0b0b0b">0.0% · 0.6% · 1.1%</text>
 <text x="98" y="324" font-size="14" text-anchor="end" fill="#0b0b0b">GLM</text>
 <rect x="110" y="308" width="460" height="6" fill="#ecebe8"/>
@@ -55,15 +55,15 @@
 <rect x="110" y="315" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="315" width="28.8" height="6" fill="#6ea0e0"/>
 <rect x="110" y="322" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="322" width="29.4" height="6" fill="#2a78d6"/>
-<text x="582" y="324" font-size="12" fill="#0b0b0b">7.9% · 6.4% · 6.5%</text>
+<rect x="110" y="322" width="28.6" height="6" fill="#2a78d6"/>
+<text x="582" y="324" font-size="12" fill="#0b0b0b">7.9% · 6.4% · 6.4%</text>
 <text x="98" y="364" font-size="14" text-anchor="end" fill="#0b0b0b">Kimi</text>
 <rect x="110" y="348" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="348" width="1.0" height="6" fill="#b7c3ce"/>
 <rect x="110" y="355" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="355" width="1.0" height="6" fill="#6ea0e0"/>
 <rect x="110" y="362" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="362" width="1.9" height="6" fill="#2a78d6"/>
+<rect x="110" y="362" width="1.8" height="6" fill="#2a78d6"/>
 <text x="582" y="364" font-size="12" fill="#0b0b0b">0.0% · 0.0% · 0.4%</text>
 <text x="98" y="404" font-size="14" text-anchor="end" fill="#0b0b0b">InternLM</text>
 <rect x="110" y="388" width="460" height="6" fill="#ecebe8"/>
@@ -79,14 +79,14 @@
 <rect x="110" y="435" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="435" width="21.8" height="6" fill="#6ea0e0"/>
 <rect x="110" y="442" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="442" width="28.7" height="6" fill="#2a78d6"/>
-<text x="582" y="444" font-size="12" fill="#0b0b0b">0.7% · 4.9% · 6.4%</text>
+<rect x="110" y="442" width="28.0" height="6" fill="#2a78d6"/>
+<text x="582" y="444" font-size="12" fill="#0b0b0b">0.7% · 4.9% · 6.2%</text>
 <text x="98" y="484" font-size="14" text-anchor="end" fill="#0b0b0b">Phi</text>
 <rect x="110" y="468" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="468" width="9.6" height="6" fill="#b7c3ce"/>
 <rect x="110" y="475" width="460" height="6" fill="#ecebe8"/>
 <rect x="110" y="475" width="20.4" height="6" fill="#6ea0e0"/>
 <rect x="110" y="482" width="460" height="6" fill="#ecebe8"/>
-<rect x="110" y="482" width="27.3" height="6" fill="#2a78d6"/>
-<text x="582" y="484" font-size="12" fill="#0b0b0b">2.1% · 4.5% · 6.1%</text>
+<rect x="110" y="482" width="26.6" height="6" fill="#2a78d6"/>
+<text x="582" y="484" font-size="12" fill="#0b0b0b">2.1% · 4.5% · 5.9%</text>
 </svg>

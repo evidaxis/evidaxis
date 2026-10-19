@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
-  <id>https://arxiv.org/api/iVuNxLI8uNOKXsL6OUMovIdhXXI</id>
-  <title>arXiv Query: search_query=ti:"technical report" AND (ti:GLM OR ti:ChatGLM OR ti:GLM-4)&amp;id_list=&amp;start=0&amp;max_results=50</title>
-  <updated>2026-10-18T20:01:00Z</updated>
-  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:GLM+OR+(ti:ChatGLM+OR+ti:GLM-4))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
-  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <id>https://arxiv.org/api/4cSEaQCXRFSwwZY82k7DT5z5g1Y</id>
+  <title>arXiv Query: search_query=ti:"technical report" AND (ti:glm* OR ti:chatglm*)&amp;id_list=&amp;start=0&amp;max_results=1000</title>
+  <updated>2026-10-19T12:34:57Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22technical+report%22+AND+(ti:glm*+OR+ti:chatglm*)&amp;start=0&amp;max_results=1000&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>1000</opensearch:itemsPerPage>
   <opensearch:totalResults>2</opensearch:totalResults>
   <opensearch:startIndex>0</opensearch:startIndex>
   <entry>
