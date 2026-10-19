@@ -1,0 +1,80 @@
+#!/bin/sh
+# Commits being pushed are rejected when they contain a personal account login.
+# While scripts/person_free_switch.json has a null switch_date the check is
+# dormant and the push is allowed. A machine without EVX_PERSON_INDEX_DIR has
+# nothing to match (a fork, or the index has not been built), so warn and allow.
+set -eu
+if [ -z "${EVX_PERSON_INDEX_DIR:-}" ] || [ ! -d "${EVX_PERSON_INDEX_DIR}" ]; then
+  echo "person-free: warning: no local index; skipping" >&2
+  exit 0
+fi
+here=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
+script=$here/../person_free_new_bytes.py
+zero=0000000000000000000000000000000000000000
+
+# A parentless commit has no range base. Its tree and message are checked
+# on their own, because parent..commit cannot name that commit.
+scan_root() {
+  commit=$1
+  tmp=$(mktemp -d)
+  msg=$tmp.msg
+  if ! git archive "$commit" > "$tmp.tar"; then
+    rm -rf "$tmp" "$tmp.tar" "$msg"
+    return 2
+  fi
+  if ! tar -xf "$tmp.tar" -C "$tmp"; then
+    rm -rf "$tmp" "$tmp.tar" "$msg"
+    return 2
+  fi
+  rm -f "$tmp.tar"
+  if ! python3 "$script" --dir "$tmp"; then
+    rm -rf "$tmp" "$msg"
+    return 1
+  fi
+  if ! git show -s --format=%B "$commit" > "$msg"; then
+    rm -rf "$tmp" "$msg"
+    return 2
+  fi
+  if ! python3 "$script" --message-file "$msg"; then
+    rm -rf "$tmp" "$msg"
+    return 1
+  fi
+  rm -rf "$tmp" "$msg"
+  return 0
+}
+
+scan_new_ref() {
+  local_sha=$1
+  # --remotes is empty before the first push. Fall back to the whole ref.
+  commits=$(git rev-list --reverse "$local_sha" --not --remotes 2>/dev/null || git rev-list --reverse "$local_sha")
+  for commit in $commits; do
+    parent=$(git rev-parse --verify "${commit}^" 2>/dev/null || true)
+    if [ -n "$parent" ]; then
+      if ! python3 "$script" "$parent" "$commit"; then
+        return 1
+      fi
+    else
+      if ! scan_root "$commit"; then
+        return 1
+      fi
+    fi
+  done
+  return 0
+}
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -n "${local_sha:-}" ] || continue
+  if [ "$local_sha" = "$zero" ]; then
+    continue
+  fi
+  if [ "$remote_sha" = "$zero" ]; then
+    if ! scan_new_ref "$local_sha"; then
+      exit 1
+    fi
+  else
+    if ! python3 "$script" "$remote_sha" "$local_sha"; then
+      exit 1
+    fi
+  fi
+done
+exit 0

@@ -1,0 +1,48 @@
+name: governance-verify
+
+# Outside the Saturday release chain. A push that touches a governance
+# signature is checked with OpenSSH, a different implementation from the
+# Python signer. No signatures and no allowed_signers file: the job passes.
+on:
+  push:
+    paths:
+      # The assignment names governance/**.sig. The next two lines also match
+      # a signature at the top of governance/ and one in a subdirectory.
+      - "governance/**.sig"
+      - "governance/*.sig"
+      - "governance/**/*.sig"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5  # same bound as privacy-gate so a stuck verify cannot hold a runner
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - name: Verify governance signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=0
+          if [ -d governance ]; then
+            while IFS= read -r -d '' sig; do
+              count=$((count + 1))
+              doc="${sig%.sig}"
+              if [ ! -f "$doc" ]; then
+                echo "governance-verify: missing document"
+                exit 1
+              fi
+              if [ ! -f governance/allowed_signers ]; then
+                echo "governance-verify: allowed_signers missing"
+                exit 1
+              fi
+              ssh-keygen -Y verify -f governance/allowed_signers -I governance@evidaxis.org -n evidaxis-governance -s "$sig" < "$doc"
+            done < <(find governance -type f -name '*.sig' -print0)
+          fi
+          if [ "$count" -eq 0 ]; then
+            echo "governance-verify: no signatures"
+            exit 0
+          fi

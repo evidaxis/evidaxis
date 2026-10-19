@@ -8,5 +8,5 @@ mutmut==3.6.0
 ruff==0.15.20
 mypy==2.1.0
 pip-audit==2.10.1
-cryptography==49.0.0   # Ed25519 for the dead-man heartbeat (collectors/heartbeat.py) + its test
+cryptography==49.0.0   # Ed25519 for the dead-man heartbeat (collectors/heartbeat.py), governance_sign.py, and their tests
 PyYAML==6.0.3          # parses workflow files in tests/test_release_guard.py (release guard, 2026-10-17)
