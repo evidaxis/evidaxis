@@ -45,6 +45,15 @@ const errors = [];
 const warns = [];
 const rel = (p) => p.replace(DIST, '');
 
+function hasOwnDeep(value, key) {
+  if (!value || typeof value !== 'object') return false;
+  if (Object.prototype.hasOwnProperty.call(value, key)) return true;
+  for (const child of Object.values(value)) {
+    if (hasOwnDeep(child, key)) return true;
+  }
+  return false;
+}
+
 // Positive-only entity language: every built entity HTML page and JSON twin is
 // checked in a +/-120 character window around every occurrence of its system
 // name. Terminology pages are explicitly allowlisted by the shared scanner.
@@ -339,12 +348,23 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce
     // accidental matches such as "@f"; they carry no repository metadata.
     if (/\.(woff2?|ttf|otf|png|jpe?g|gif|webp|avif|ico|pdf|zip|gz)$/i.test(r)) continue;
-    // Public provenance is projected for every date. The remaining canonical
-    // integrity artifacts retain their existing raw-byte exemption.
-    if (/(^|\/)(dropped\.json|SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
+    // Public provenance and dropped lists are projected for every date.
+    // manifest.json and SHA256SUMS keep their raw-byte exemption.
+    if (/(^|\/)(SHA256SUMS|manifest\.json)(\/|$)/.test(r)) {
       continue;
     }
     const raw = readFileSync(file, 'utf8');
+    if (/(^|\/)dropped\.json$/.test(r)) {
+      try {
+        const doc = JSON.parse(raw);
+        if (doc?.projection !== 'person_free_dropped_1') {
+          errors.push(`${r}: missing projection person_free_dropped_1`);
+        }
+        if (hasOwnDeep(doc, 'github_repo')) errors.push(`${r}: contains github_repo`);
+      } catch (e) {
+        errors.push(`${r}: dropped.json does not parse (${e.message})`);
+      }
+    }
     // Review 2026-07-10: scan decoded variants too (percent / \uXXXX / HTML-entity)
     // and the file's own relative path - an encoded handle is still a handle.
     const variants = [raw.toLowerCase(), relative(DIST, file).toLowerCase()];
