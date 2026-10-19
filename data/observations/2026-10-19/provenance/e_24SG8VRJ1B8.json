@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "full_name": "ARM-software/armnn",
+  "watchers_count": 1320,
+  "open_issues_count": 3,
+  "size": 592322,
+  "id": 124536178,
+  "private": false,
+  "created_at": "2018-03-09T12:11:48Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMjQ1MzYxNzg=",
+  "forks_count": 328,
+  "name": "armnn",
+  "topics": [
+    "machine-learning",
+    "neural-network",
+    "neural-networks"
+  ],
+  "default_branch": "main",
+  "description": "Arm NN ML Software.",
+  "visibility": "public",
+  "disabled": false,
+  "stargazers_count": 1320,
+  "subscribers_count": 87,
+  "language": "C++",
+  "network_count": 328,
+  "homepage": "https://developer.arm.com/products/processors/machine-learning/arm-nn",
+  "pushed_at": "2026-09-29T09:33:09Z",
+  "archived": false,
+  "updated_at": "2026-10-18T19:21:48Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

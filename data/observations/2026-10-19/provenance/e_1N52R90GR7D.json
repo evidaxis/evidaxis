@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "full_name": "ardanlabs/kronk",
+  "watchers_count": 847,
+  "open_issues_count": 23,
+  "size": 123844,
+  "id": 1098774407,
+  "private": false,
+  "created_at": "2025-11-18T06:00:04Z",
+  "node_id": "R_kgDOQX33hw",
+  "forks_count": 62,
+  "name": "kronk",
+  "topics": [
+    "golang",
+    "local-ai",
+    "local-inference"
+  ],
+  "default_branch": "main",
+  "description": "Go With Your Own Intelligence! Use Go for hardware accelerated local inference with llama.cpp, whisper.cpp, and stable-diffusion.cpp directly integrated into your Go applications. Kronk provides a high-level API and production ready model server.",
+  "visibility": "public",
+  "disabled": false,
+  "stargazers_count": 847,
+  "subscribers_count": 9,
+  "language": "Go",
+  "network_count": 62,
+  "homepage": "https://www.kronkai.com/",
+  "pushed_at": "2026-10-16T21:29:08Z",
+  "archived": false,
+  "updated_at": "2026-10-17T21:11:22Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
