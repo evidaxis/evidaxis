@@ -74,7 +74,8 @@ snapshot retains the version under which it was measured.
 
 The unit of observation is a system. Public projections omit personal account
 identifiers and apply person-free checks before publication. The observatory
-offers measured facts, momentum, and positive recognition within niches.
+offers measured facts, momentum, and positive recognition within niches. Removal requests:
+hello@evidaxis.org ([procedure](governance/ERASURE-REQUESTS-2026-10-19.md)).
 
 The [Constitution](CONSTITUTION.md) defines these commitments. Facts, computed
 measurements, and dataset metadata are CC0; code is Apache-2.0 and authored prose

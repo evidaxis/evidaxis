@@ -16,6 +16,13 @@
 - Entity-adjacent language: no verdict-class strings near system names
   (enforced by entity-lexicon guard in check-dist).
 
+## Person-free (invariant 1)
+- Never write by hand a repository address, URL or package name of a personal account
+  into a tracked file, commit message, issue or pull request; use the entity id or
+  `gh:<repo_id>`. Automated data commits keep their format until the switch set by
+  `governance/AMENDMENT-PROPOSAL-2026-10-19-invariant-1.md`; from then privacy-gate fails
+  on any new published byte that contains one. Only collectors read the locator store.
+
 ## Tests
 - Never pin a test to the latest snapshot (its date, current system values, "missing now"). Pin concrete values to a dated snapshot fixture.
 - After each merge into web/, replay next week's candidate: `gh workflow run rehearsal-replay.yml -f drill=none -f source_run=<rehearsal run id>`. Three Saturday releases broke on this class (12.10 canary sample, 18.10 census timeout, 18.10 observation-state test).

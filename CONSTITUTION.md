@@ -107,3 +107,12 @@ year horizon.
   the constitution the architecture rule the project was already built under, and
   matches what the pipelines already do (daily Type-2 captures are committed to
   the public CC0 repository).
+
+- **2026-10-19: additive covenant (erasure requests).** Added a procedure for privacy
+  removal requests (`governance/ERASURE-REQUESTS-2026-10-19.md`): Evidaxis answers within
+  one month, stops observing a system at its sole maintainer's request, and replaces the
+  person's identifiers by tombstones in the current tree and on every surface it
+  controls, without rewriting git history. This is a pure self-restriction under the
+  anti-roadmap's privacy-removal clause; no invariant changes. Separately, an amendment of
+  invariant 1 is proposed (`governance/AMENDMENT-PROPOSAL-2026-10-19-invariant-1.md`);
+  its 30-day freeze runs from 2026-10-19 and it changes nothing until a signed decision.
