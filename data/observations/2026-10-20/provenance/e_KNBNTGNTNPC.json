@@ -1,0 +1,33 @@
+{
+  "size": 48285,
+  "homepage": "https://google.github.io/sentencepiece/",
+  "private": false,
+  "stargazers_count": 12142,
+  "fork": false,
+  "network_count": 1388,
+  "pushed_at": "2026-10-20T11:45:15Z",
+  "default_branch": "master",
+  "subscribers_count": 123,
+  "name": "sentencepiece",
+  "visibility": "public",
+  "disabled": false,
+  "full_name": "google/sentencepiece",
+  "updated_at": "2026-10-20T11:45:26Z",
+  "language": "C++",
+  "open_issues_count": 5,
+  "description": "Unsupervised text tokenizer for Neural Network-based text generation.",
+  "forks_count": 1388,
+  "node_id": "MDEwOlJlcG9zaXRvcnk4NDE4Mzg4Mg==",
+  "created_at": "2017-03-07T10:03:48Z",
+  "id": 84183882,
+  "watchers_count": 12142,
+  "archived": false,
+  "topics": [
+    "natural-language-processing",
+    "neural-machine-translation",
+    "word-segmentation"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

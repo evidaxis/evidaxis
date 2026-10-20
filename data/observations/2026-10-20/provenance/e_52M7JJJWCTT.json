@@ -1,0 +1,33 @@
+{
+  "size": 5009,
+  "homepage": "https://risor.io",
+  "private": false,
+  "stargazers_count": 911,
+  "fork": false,
+  "network_count": 39,
+  "pushed_at": "2026-10-12T21:44:43Z",
+  "default_branch": "main",
+  "subscribers_count": 10,
+  "name": "risor",
+  "visibility": "public",
+  "disabled": false,
+  "full_name": "deepnoodle-ai/risor",
+  "updated_at": "2026-10-19T06:25:09Z",
+  "language": "Go",
+  "open_issues_count": 4,
+  "description": "Risor is a fast, embeddable scripting language for Go applications.  Add dynamic expressions, filters, and user-defined logic to your Go programs without embedding a heavy runtime like V8 or Python. Expressions compile to bytecode and run on a lightweight VM. Pure Go, minimal dependencies.",
+  "forks_count": 39,
+  "node_id": "R_kgDOIXYgeQ",
+  "created_at": "2022-11-03T15:30:27Z",
+  "id": 561389689,
+  "watchers_count": 911,
+  "archived": false,
+  "topics": [
+    "go",
+    "golang",
+    "scripting"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

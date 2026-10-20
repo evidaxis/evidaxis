@@ -1,0 +1,32 @@
+{
+  "size": 430,
+  "homepage": "",
+  "private": false,
+  "stargazers_count": 909,
+  "fork": false,
+  "network_count": 112,
+  "pushed_at": "2025-07-19T06:31:38Z",
+  "default_branch": "main",
+  "subscribers_count": 9,
+  "name": "auto-news",
+  "visibility": "public",
+  "disabled": false,
+  "full_name": "finaldie/auto-news",
+  "updated_at": "2026-10-20T11:20:22Z",
+  "language": "Python",
+  "open_issues_count": 4,
+  "description": "A personal news aggregator to pull information from multi-sources + LLM (ChatGPT/Gemini/Ollama via LangChain) to help us reading efficiently with less noises, the sources including: Tweets, RSS, YouTube, Web Articles, Reddit, and personal Journal notes.",
+  "forks_count": 112,
+  "node_id": "R_kgDOJeLRKQ",
+  "created_at": "2023-05-03T05:07:34Z",
+  "id": 635621673,
+  "watchers_count": 909,
+  "archived": false,
+  "topics": [
+    "ai",
+    "productivity"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

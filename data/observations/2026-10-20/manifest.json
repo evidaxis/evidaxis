@@ -1,0 +1,56 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-10-20T11:52:06Z",
+  "date": "2026-10-20",
+  "period": "2026-w43",
+  "entity_count": 6324,
+  "error_count": 1,
+  "error_rate": 0.0002,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "noahgsolomon/brainrot.js",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "92c1dbba730c56acbb594b6ff19cf98078cdf4abb4e33d1b77b93c89e325229f",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}
