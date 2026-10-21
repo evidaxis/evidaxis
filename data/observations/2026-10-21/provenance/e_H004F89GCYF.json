@@ -1,0 +1,32 @@
+{
+  "language": "Rust",
+  "watchers_count": 1320,
+  "fork": false,
+  "subscribers_count": 15,
+  "full_name": "nullpo-head/WSL-Hello-sudo",
+  "disabled": false,
+  "id": 103874990,
+  "name": "WSL-Hello-sudo",
+  "updated_at": "2026-10-17T15:15:38Z",
+  "description": "Let's sudo by face recognition of Windows Hello on Windows Subsystem for Linux (WSL). It runs on both WSL 1 and WSL 2. This is a PAM module for Linux on WSL.",
+  "forks_count": 53,
+  "archived": false,
+  "open_issues_count": 33,
+  "homepage": "",
+  "visibility": "public",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMDM4NzQ5OTA=",
+  "created_at": "2017-09-18T01:05:26Z",
+  "private": false,
+  "topics": [
+    "linux-pam",
+    "wsl"
+  ],
+  "pushed_at": "2023-05-21T13:53:55Z",
+  "size": 1696,
+  "network_count": 53,
+  "default_branch": "master",
+  "stargazers_count": 1320,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
