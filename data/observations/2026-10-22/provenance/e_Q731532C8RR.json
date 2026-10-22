@@ -1,0 +1,33 @@
+{
+  "name": "navsim",
+  "stargazers_count": 1133,
+  "topics": [
+    "autonomous-driving",
+    "planning",
+    "self-driving"
+  ],
+  "node_id": "R_kgDOLHSPdg",
+  "archived": false,
+  "description": "[CoRL '25] Pseudo-Simulation for Autonomous Driving; [NeurIPS '24] NAVSIM: Data-Driven Non-Reactive Autonomous Vehicle Simulation and Benchmarking",
+  "fork": false,
+  "forks_count": 135,
+  "full_name": "autonomousvision/navsim",
+  "size": 33909,
+  "default_branch": "main",
+  "created_at": "2024-01-20T09:42:31Z",
+  "pushed_at": "2025-10-27T21:19:43Z",
+  "watchers_count": 1133,
+  "network_count": 135,
+  "private": false,
+  "updated_at": "2026-10-21T11:36:45Z",
+  "visibility": "public",
+  "id": 745836406,
+  "disabled": false,
+  "subscribers_count": 16,
+  "language": "Python",
+  "homepage": "",
+  "open_issues_count": 51,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

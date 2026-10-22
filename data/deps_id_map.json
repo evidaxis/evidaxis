@@ -2099,6 +2099,11 @@
       "package": "talisman",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "Zackriya-Solutions/meetily": {
+      "system": "pypi",
+      "package": "meetily",
+      "pinned_at": "2026-10-22T13:14:27Z"
+    },
     "ZimoLiao/scholaraio": {
       "system": "pypi",
       "package": "scholaraio",
@@ -3426,6 +3431,11 @@
       "system": "pypi",
       "package": "tomesd",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "dbt-labs/dbt-charts": {
+      "system": "pypi",
+      "package": "dbt-charts",
+      "pinned_at": "2026-10-22T13:14:27Z"
     },
     "dbt-labs/dbt-mcp": {
       "system": "pypi",
@@ -5411,6 +5421,11 @@
       "system": "pypi",
       "package": "pynndescent",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "localgpt-app/localgpt": {
+      "system": "cargo",
+      "package": "localgpt",
+      "pinned_at": "2026-10-22T13:14:27Z"
     },
     "logicalclocks/hopsworks": {
       "system": "pypi",
@@ -8183,6 +8198,11 @@
       "system": "pypi",
       "package": "emopy",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "thousandbrainsproject/tbp.monty": {
+      "system": "pypi",
+      "package": "tbp.monty",
+      "pinned_at": "2026-10-22T13:14:27Z"
     },
     "thu-ml/SageAttention": {
       "system": "pypi",
