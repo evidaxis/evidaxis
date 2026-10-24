@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "bert-embeddings",
+    "llm",
+    "text-embeddings"
+  ],
+  "description": "Infinity is a high-throughput, low-latency serving engine for text-embeddings, reranking models, clip, clap and colpali",
+  "stargazers_count": 2968,
+  "archived": false,
+  "open_issues_count": 151,
+  "watchers_count": 2968,
+  "forks_count": 216,
+  "network_count": 216,
+  "homepage": "https://michaelfeil.github.io/infinity/",
+  "private": false,
+  "size": 17111,
+  "node_id": "R_kgDOKfFn2Q",
+  "default_branch": "main",
+  "created_at": "2023-10-11T17:53:38Z",
+  "full_name": "michaelfeil/infinity",
+  "pushed_at": "2026-10-24T09:12:26Z",
+  "name": "infinity",
+  "subscribers_count": 21,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-24T09:12:27Z",
+  "language": "Rust",
+  "disabled": false,
+  "id": 703686617,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

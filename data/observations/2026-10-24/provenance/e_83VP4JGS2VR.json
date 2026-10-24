@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "geometric-deep-learning",
+    "molecular-surface",
+    "protein-surface"
+  ],
+  "description": "MaSIF- Molecular surface interaction fingerprints. Geometric deep learning to decipher patterns in molecular surfaces.",
+  "stargazers_count": 785,
+  "archived": false,
+  "open_issues_count": 56,
+  "watchers_count": 785,
+  "forks_count": 176,
+  "network_count": 176,
+  "homepage": "",
+  "private": false,
+  "size": 95909,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNzU1OTk5MDE=",
+  "default_branch": "master",
+  "created_at": "2019-03-14T10:30:07Z",
+  "full_name": "LPDI-EPFL/masif",
+  "pushed_at": "2024-06-19T17:40:17Z",
+  "name": "masif",
+  "subscribers_count": 24,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-24T10:25:37Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 175599901,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "developer-tools",
+    "genai",
+    "rag"
+  ],
+  "description": "A toolkit to create optimal Production-readyRetrieval Augmented Generation(RAG) setup for your data",
+  "stargazers_count": 1539,
+  "archived": false,
+  "open_issues_count": 19,
+  "watchers_count": 1539,
+  "forks_count": 127,
+  "network_count": 127,
+  "homepage": "https://ragbuilder.pages.dev",
+  "private": false,
+  "size": 79460,
+  "node_id": "R_kgDOMNUh2A",
+  "default_branch": "main",
+  "created_at": "2024-06-24T07:25:00Z",
+  "full_name": "KruxAI/ragbuilder",
+  "pushed_at": "2026-10-02T02:28:43Z",
+  "name": "ragbuilder",
+  "subscribers_count": 18,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-08T21:52:17Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 819274200,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

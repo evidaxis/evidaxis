@@ -1,0 +1,32 @@
+{
+  "topics": [
+    "clip",
+    "pytorch"
+  ],
+  "description": "Image to prompt with BLIP and CLIP",
+  "stargazers_count": 2986,
+  "archived": false,
+  "open_issues_count": 60,
+  "watchers_count": 2986,
+  "forks_count": 431,
+  "network_count": 431,
+  "homepage": "",
+  "private": false,
+  "size": 403,
+  "node_id": "R_kgDOHyiINg",
+  "default_branch": "main",
+  "created_at": "2022-08-09T00:31:16Z",
+  "full_name": "pharmapsychotic/clip-interrogator",
+  "pushed_at": "2024-05-15T13:32:52Z",
+  "name": "clip-interrogator",
+  "subscribers_count": 30,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-23T11:37:00Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 522750006,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

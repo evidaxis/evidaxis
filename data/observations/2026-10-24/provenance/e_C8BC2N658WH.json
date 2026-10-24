@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "datetime",
+    "nlp",
+    "parser"
+  ],
+  "description": "Find dates inside text using Python and get back datetime objects",
+  "stargazers_count": 663,
+  "archived": false,
+  "open_issues_count": 8,
+  "watchers_count": 663,
+  "forks_count": 171,
+  "network_count": 171,
+  "homepage": "http://datefinder.readthedocs.org/en/latest/",
+  "private": false,
+  "size": 692,
+  "node_id": "MDEwOlJlcG9zaXRvcnk0ODkyNTg2NQ==",
+  "default_branch": "master",
+  "created_at": "2016-01-02T22:23:12Z",
+  "full_name": "akoumjian/datefinder",
+  "pushed_at": "2026-03-25T21:35:13Z",
+  "name": "datefinder",
+  "subscribers_count": 14,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-08T17:54:02Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 48925865,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

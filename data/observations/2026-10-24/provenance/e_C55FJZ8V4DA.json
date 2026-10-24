@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "computer-vision",
+    "large-language-models",
+    "mllm"
+  ],
+  "description": "Official Repo For Pixel-LLM Codebase: Sa2VA (T-PAMI-26), SAMTok (CVPR-26), VRT (Arxiv-25), SaSaSa2VA (1-st solution for LSVOS)",
+  "stargazers_count": 1690,
+  "archived": false,
+  "open_issues_count": 27,
+  "watchers_count": 1690,
+  "forks_count": 133,
+  "network_count": 133,
+  "homepage": "",
+  "private": false,
+  "size": 84171,
+  "node_id": "R_kgDONmlIfQ",
+  "default_branch": "main",
+  "created_at": "2025-01-06T15:03:53Z",
+  "full_name": "bytedance/Sa2VA",
+  "pushed_at": "2026-09-08T05:44:22Z",
+  "name": "Sa2VA",
+  "subscribers_count": 28,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-23T05:13:48Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 912869501,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

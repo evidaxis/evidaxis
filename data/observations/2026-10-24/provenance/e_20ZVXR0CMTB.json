@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "gym",
+    "llm",
+    "rl"
+  ],
+  "description": "A Gym for Agentic LLMs",
+  "stargazers_count": 511,
+  "archived": false,
+  "open_issues_count": 9,
+  "watchers_count": 511,
+  "forks_count": 34,
+  "network_count": 34,
+  "homepage": "https://arxiv.org/pdf/2510.01051",
+  "private": false,
+  "size": 737,
+  "node_id": "R_kgDOOxM8hw",
+  "default_branch": "main",
+  "created_at": "2025-05-27T06:38:29Z",
+  "full_name": "axon-rl/gem",
+  "pushed_at": "2026-01-21T15:38:39Z",
+  "name": "gem",
+  "subscribers_count": 6,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-24T11:44:31Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 991116423,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

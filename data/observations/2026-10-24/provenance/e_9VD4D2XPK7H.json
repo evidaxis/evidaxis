@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "binding-prediction",
+    "drug-discovery",
+    "protein-structure"
+  ],
+  "description": "Official repository for the Boltz biomolecular interaction models",
+  "stargazers_count": 4268,
+  "archived": false,
+  "open_issues_count": 135,
+  "watchers_count": 4268,
+  "forks_count": 910,
+  "network_count": 910,
+  "homepage": "",
+  "private": false,
+  "size": 15200,
+  "node_id": "R_kgDONQsGxg",
+  "default_branch": "main",
+  "created_at": "2024-11-17T15:10:01Z",
+  "full_name": "jwohlwend/boltz",
+  "pushed_at": "2026-05-29T08:20:25Z",
+  "name": "boltz",
+  "subscribers_count": 68,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-24T04:05:39Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 889915078,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

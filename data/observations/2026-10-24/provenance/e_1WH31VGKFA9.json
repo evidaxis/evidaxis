@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "all-pairs",
+    "set-similarity-search",
+    "similarity-search"
+  ],
+  "description": "All-pair set similarity search on millions of sets in Python and on a laptop ",
+  "stargazers_count": 603,
+  "archived": false,
+  "open_issues_count": 8,
+  "watchers_count": 603,
+  "forks_count": 43,
+  "network_count": 43,
+  "homepage": "",
+  "private": false,
+  "size": 61,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNTc5NTUyNDc=",
+  "default_branch": "master",
+  "created_at": "2018-11-17T05:51:55Z",
+  "full_name": "ekzhu/SetSimilaritySearch",
+  "pushed_at": "2022-10-11T00:40:57Z",
+  "name": "SetSimilaritySearch",
+  "subscribers_count": 16,
+  "visibility": "public",
+  "fork": false,
+  "updated_at": "2026-10-13T18:40:56Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 157955247,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
