@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 4d9867e6f218
-  captured_at: 2026-10-17T12:13:42+00:00
-  period: 2026-w42
-  momentum: 62.0
-  percentile: 76
+  snapshot_id: 9a3f0a2522ac
+  captured_at: 2026-10-24T03:35:10+00:00
+  period: 2026-w43
+  momentum: 58.3
+  percentile: 73
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.011803881666636625, "cohort_z": 0.96, "recent_weekly_commits": 0.9, "stars_not_scored": 749}
+    github_commit_velocity: {"slope": 0.007626618362182359, "cohort_z": 0.666, "recent_weekly_commits": 0.6, "stars_not_scored": 749}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # worker-comfyui
 
-Evidaxis measures **worker-comfyui** on methodology m5. Momentum 62.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **worker-comfyui** on methodology m5. Momentum 58.3/100; 1 axes present, 0 axes converging.

@@ -14,9 +14,9 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 4d9867e6f218
-  captured_at: 2026-10-17T12:13:42+00:00
-  period: 2026-w42
+  snapshot_id: 9a3f0a2522ac
+  captured_at: 2026-10-24T03:35:10+00:00
+  period: 2026-w43
   momentum: 46.2
   percentile: 39
   confidence: medium
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.011, "recent_weekly_commits": 0.0, "stars_not_scored": 1585}
-    openalex_citation_momentum: {"status": "present", "slope": 0.3071831513534158, "cohort_z": -0.592, "total_citations": 362, "by_year": {"2026": 66, "2025": 121, "2024": 109, "2023": 65, "2022": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.013, "recent_weekly_commits": 0.0, "stars_not_scored": 1586}
+    openalex_citation_momentum: {"status": "present", "slope": 0.3071831513534158, "cohort_z": -0.591, "total_citations": 364, "by_year": {"2026": 68, "2025": 121, "2024": 109, "2023": 65, "2022": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: 2210.01776; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

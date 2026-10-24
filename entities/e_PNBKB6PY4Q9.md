@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 4d9867e6f218
-  captured_at: 2026-10-17T12:13:42+00:00
-  period: 2026-w42
-  momentum: 45.0
-  percentile: 27
+  snapshot_id: 9a3f0a2522ac
+  captured_at: 2026-10-24T03:35:10+00:00
+  period: 2026-w43
+  momentum: 42.6
+  percentile: 24
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.0057574917771420885, "cohort_z": -0.398, "recent_weekly_commits": 0.1, "stars_not_scored": 1360}
+    github_commit_velocity: {"slope": -0.008313163311011059, "cohort_z": -0.59, "recent_weekly_commits": 0.1, "stars_not_scored": 1362}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # CrewAI-Studio
 
-Evidaxis measures **CrewAI-Studio** on methodology m5. Momentum 45.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **CrewAI-Studio** on methodology m5. Momentum 42.6/100; 1 axes present, 0 axes converging.

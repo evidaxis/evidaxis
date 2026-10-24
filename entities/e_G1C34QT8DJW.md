@@ -14,20 +14,20 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 4d9867e6f218
-  captured_at: 2026-10-17T12:13:42+00:00
-  period: 2026-w42
+  snapshot_id: 9a3f0a2522ac
+  captured_at: 2026-10-24T03:35:10+00:00
+  period: 2026-w43
   momentum: 87.6
-  percentile: 93
+  percentile: 94
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: ["github_commit_velocity"]
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": 0.13571445393266424, "cohort_z": 3.006, "recent_weekly_commits": 44.5, "stars_not_scored": 1771}
+    github_commit_velocity: {"slope": 0.13961784893778253, "cohort_z": 3.007, "recent_weekly_commits": 47.2, "stars_not_scored": 1778}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 ---
 

@@ -14,10 +14,10 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 4d9867e6f218
-  captured_at: 2026-10-17T12:13:42+00:00
-  period: 2026-w42
-  momentum: 52.0
+  snapshot_id: 9a3f0a2522ac
+  captured_at: 2026-10-24T03:35:10+00:00
+  period: 2026-w43
+  momentum: 51.4
   percentile: 56
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.157, "recent_weekly_commits": 0.0, "stars_not_scored": 70891}
-    openalex_citation_momentum: {"status": "present", "slope": 1.1036374565948606, "cohort_z": null, "total_citations": 214, "by_year": {"2026": 37, "2025": 99, "2024": 68, "2023": 10}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.112, "recent_weekly_commits": 0.0, "stars_not_scored": 70999}
+    openalex_citation_momentum: {"status": "present", "slope": 1.1036374565948606, "cohort_z": null, "total_citations": 215, "by_year": {"2026": 38, "2025": 99, "2024": 68, "2023": 10}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # MetaGPT
 
-Evidaxis measures **MetaGPT** on methodology m5. Momentum 52.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **MetaGPT** on methodology m5. Momentum 51.4/100; 1 axes present, 0 axes converging.

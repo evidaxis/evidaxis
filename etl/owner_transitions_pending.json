@@ -1,15 +1,33 @@
 {
+  "1ay1/agentty": {
+    "detected_at": "2026-10-24T04:45:31Z",
+    "new_full_name": "agentty-org/agentty",
+    "old_full_name": "1ay1/agentty",
+    "repo_id": 1213491458
+  },
   "Hmbown/Codewhale": {
     "detected_at": "2026-10-12T14:01:47Z",
     "new_full_name": "codewhale-hq/Codewhale",
     "old_full_name": "Hmbown/Codewhale",
     "repo_id": 1137711311
   },
+  "MadsLorentzen/ai-job-search": {
+    "detected_at": "2026-10-24T04:45:31Z",
+    "new_full_name": "ai-job-search-dev/ai-job-search",
+    "old_full_name": "MadsLorentzen/ai-job-search",
+    "repo_id": 1185389803
+  },
   "adolfousier/opencrabs": {
     "detected_at": "2026-10-12T14:01:50Z",
     "new_full_name": "opencrabs/opencrabs",
     "old_full_name": "adolfousier/opencrabs",
     "repo_id": 1157543432
+  },
+  "diegosouzapw/OmniRoute": {
+    "detected_at": "2026-10-24T04:45:31Z",
+    "new_full_name": "cheaper-inference/OmniRoute",
+    "old_full_name": "diegosouzapw/OmniRoute",
+    "repo_id": 1157102282
   },
   "luckyPipewrench/pipelock": {
     "detected_at": "2026-10-17T13:35:08Z",
@@ -18,8 +36,8 @@
     "repo_id": 1152497359
   },
   "skyllwt/AutoSci": {
-    "detected_at": "2026-10-17T13:35:08Z",
-    "new_full_name": "DAIR-AutoResearch/AutoSci",
+    "detected_at": "2026-10-24T04:45:32Z",
+    "new_full_name": "PKU-DAIR/AutoSci",
     "old_full_name": "skyllwt/AutoSci",
     "repo_id": 1206036567
   }

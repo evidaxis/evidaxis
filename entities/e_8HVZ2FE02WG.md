@@ -14,9 +14,9 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 4d9867e6f218
-  captured_at: 2026-10-17T12:13:42+00:00
-  period: 2026-w42
+  snapshot_id: 9a3f0a2522ac
+  captured_at: 2026-10-24T03:35:10+00:00
+  period: 2026-w43
   momentum: 65.7
   percentile: 89
   confidence: medium
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.007847761145329405, "cohort_z": 3.017, "recent_weekly_commits": 0.3, "stars_not_scored": 2481}
-    openalex_citation_momentum: {"status": "present", "slope": 0.20868216489774585, "cohort_z": -0.51, "total_citations": 146, "by_year": {"2026": 8, "2025": 31, "2024": 33, "2023": 33, "2022": 29, "2021": 11, "2020": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.006273343987726639, "cohort_z": 3.021, "recent_weekly_commits": 0.3, "stars_not_scored": 2481}
+    openalex_citation_momentum: {"status": "present", "slope": 0.20868216489774585, "cohort_z": -0.508, "total_citations": 146, "by_year": {"2026": 8, "2025": 31, "2024": 33, "2023": 33, "2022": 29, "2021": 11, "2020": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "OpenAlex undercounts; slope declining post-2022."
 ---
