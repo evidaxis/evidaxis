@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "forks_count": 264,
+  "language": "Python",
+  "id": 726570398,
+  "subscribers_count": 16,
+  "updated_at": "2026-10-23T22:59:36Z",
+  "full_name": "Eladlev/AutoPrompt",
+  "description": "A framework for prompt tuning using Intent-based Prompt Calibration ",
+  "pushed_at": "2025-12-02T17:23:20Z",
+  "created_at": "2023-12-02T18:45:14Z",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "watchers_count": 3020,
+  "stargazers_count": 3020,
+  "topics": [
+    "prompt-engineering",
+    "prompt-tuning",
+    "synthetic-dataset-generation"
+  ],
+  "node_id": "R_kgDOK06Vng",
+  "name": "AutoPrompt",
+  "network_count": 264,
+  "private": false,
+  "disabled": false,
+  "size": 27498,
+  "open_issues_count": 23,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

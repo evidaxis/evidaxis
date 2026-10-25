@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "forks_count": 116,
+  "language": "Python",
+  "id": 120684701,
+  "subscribers_count": 13,
+  "updated_at": "2026-10-22T22:35:29Z",
+  "full_name": "lmcinnes/pynndescent",
+  "description": "A Python nearest neighbor descent for approximate nearest neighbors",
+  "pushed_at": "2026-10-20T18:40:06Z",
+  "created_at": "2018-02-07T23:23:54Z",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "watchers_count": 974,
+  "stargazers_count": 974,
+  "topics": [
+    "approximate-nearest-neighbor-search",
+    "knn-graphs",
+    "nearest-neighbor-search"
+  ],
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMjA2ODQ3MDE=",
+  "name": "pynndescent",
+  "network_count": 116,
+  "private": false,
+  "disabled": false,
+  "size": 11008,
+  "open_issues_count": 87,
+  "owner_type": "User",
+  "license_spdx_id": "BSD-2-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

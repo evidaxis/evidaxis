@@ -1,0 +1,33 @@
+{
+  "visibility": "public",
+  "default_branch": "master",
+  "forks_count": 138,
+  "language": "TypeScript",
+  "id": 62111698,
+  "subscribers_count": 25,
+  "updated_at": "2026-10-19T10:24:36Z",
+  "full_name": "synyi/poplar",
+  "description": "A web-based annotation tool for natural language processing (NLP)",
+  "pushed_at": "2022-12-11T06:37:18Z",
+  "created_at": "2016-06-28T05:08:29Z",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://synyi.github.io/poplar/",
+  "watchers_count": 530,
+  "stargazers_count": 530,
+  "topics": [
+    "annotation",
+    "nlp",
+    "svg"
+  ],
+  "node_id": "MDEwOlJlcG9zaXRvcnk2MjExMTY5OA==",
+  "name": "poplar",
+  "network_count": 138,
+  "private": false,
+  "disabled": false,
+  "size": 16050,
+  "open_issues_count": 67,
+  "owner_type": "Organization",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

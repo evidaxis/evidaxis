@@ -1,0 +1,32 @@
+{
+  "visibility": "public",
+  "default_branch": "main",
+  "forks_count": 84,
+  "language": "Python",
+  "id": 1135148452,
+  "subscribers_count": 14,
+  "updated_at": "2026-10-25T02:45:43Z",
+  "full_name": "NVlabs/FastGen",
+  "description": "NVIDIA FastGen: Fast Generation from Diffusion Models",
+  "pushed_at": "2026-08-21T05:21:44Z",
+  "created_at": "2026-01-15T17:50:45Z",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://developer.nvidia.com/blog/accelerating-diffusion-models-with-an-open-plug-and-play-offering/",
+  "watchers_count": 1037,
+  "stargazers_count": 1037,
+  "topics": [
+    "diffusion-models",
+    "distillation"
+  ],
+  "node_id": "R_kgDOQ6j9pA",
+  "name": "FastGen",
+  "network_count": 84,
+  "private": false,
+  "disabled": false,
+  "size": 12717,
+  "open_issues_count": 9,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
