@@ -262,6 +262,12 @@ def estimate_query_bytes(sql: str, client=None, *, job_config_cls=None, runner=N
     return _dry_run_bytes(proc.stdout or "", proc.stderr or "")
 
 
+# Client-side wait for a live query. The 2026-10-19 partition on the caught-up panel
+# (2,432 packages) ran 37 min in BigQuery; the old 600 s wait killed the client while the
+# job kept running. Query text, ceilings and results are unchanged.
+BQ_QUERY_TIMEOUT_S = 3600
+
+
 def _bq(sql: str, dry_run: bool = False) -> tuple:
     cmd = ["bq", f"--project_id={BQ_PROJECT}", "query",
            "--nouse_legacy_sql", "--format=json", "--quiet", "--max_rows", "10000"]
@@ -269,7 +275,7 @@ def _bq(sql: str, dry_run: bool = False) -> tuple:
         cmd.append("--dry_run")
     else:
         cmd.append(f"--maximum_bytes_billed={MAX_BYTES_BILLED}")
-    proc = subprocess.run([*cmd, sql], capture_output=True, text=True, timeout=600)
+    proc = subprocess.run([*cmd, sql], capture_output=True, text=True, timeout=BQ_QUERY_TIMEOUT_S)
     if proc.returncode != 0:
         raise RuntimeError(f"bq failed: {proc.stderr.strip()[:400]}")
     if dry_run:
@@ -367,7 +373,7 @@ def _ceiling_bq(sql: str, ceiling_bytes: int) -> list:
     cmd = ["bq", f"--project_id={BQ_PROJECT}", "query", "--nouse_legacy_sql",
            "--format=json", "--quiet", "--max_rows", "1000000",
            f"--maximum_bytes_billed={ceiling_bytes}"]
-    proc = subprocess.run([*cmd, sql], capture_output=True, text=True, timeout=600)
+    proc = subprocess.run([*cmd, sql], capture_output=True, text=True, timeout=BQ_QUERY_TIMEOUT_S)
     if proc.returncode != 0:
         raise RuntimeError(f"bq failed (ceiling {ceiling_bytes/1e9:.1f}GB): "
                            f"{proc.stderr.strip()[:300]}")

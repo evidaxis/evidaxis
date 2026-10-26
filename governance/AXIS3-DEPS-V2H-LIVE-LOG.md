@@ -699,3 +699,37 @@ the 2026-10-05 and 2026-10-12 tacts is gone; snapshots 2026-10-10 and 2026-10-17
 
 **Next tact:** partition 2026-10-19; the first m4 partition 2026-10-12 becomes eligible for CLEAN.
 Observation files `data/observations/2026-10-19/` and the artifacts above are committed in this tact.
+
+## 2026-10-26 — tact: partition 2026-10-19, caught-up panel, 6/6; score_m3 --verify PASS
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-10-19` — panel manifest `026eaa45377a…`
+(90 systems / 628 frozen packages + 12 canaries); the partition is mapped through the value-blind
+panel catch-up of 1c465c7d6a, so **1200/2432 matched**, 10 canaries. The jump from 57/79 is the
+catch-up (more admitted packages), not a change of the frozen panel.
+
+**Operational incident.** The first live query (`bqjob_r7799fbece0e08c05_000001a177e4bb18_1`) ran
+37 min 16 s in BigQuery (578.5 GB billed). The collector's 600 s client wait killed the client while
+the job kept running. After the job finished, the same command returned the cached result in 3 s
+(0 bytes billed, `bqjob_r109f99af3a851b19_000001a178074045_1`): one billing for the tact. Fix in the
+same commit: the client wait for live queries is `BQ_QUERY_TIMEOUT_S = 3600`; query text, byte
+ceilings and results are unchanged; collector tests pass.
+
+**Sidecar** (`--sidecar 2026-10-19`): PV2P 1154 rows, Projects 4477 rows, retention tripwire
+{earliest 20230410 · latest 20261019 · n 183 · rows_total 1,093,843,533,891}.
+
+**Sanity gate** (same calibration, `--series v2h1`): 31 partitions checked; **2026-10-12 promoted
+CLEAN** (cov=57); 2026-10-19 PROVISIONAL (cov=1200). KILL-BAR PASS, flagged exactly the two
+known-bad partitions. Artifact `data/quarantine/axis3-deps-v2/sanity-check-99573636c5cb.json`.
+
+**Evaluation** (`--as-of 2026-10-12 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-10-12**, 47 voting / 7 rising, 0 unstable vetoed.
+**c1–c6 PASS — 6/6.** Rising set vs the 2026-10-05 evaluation: Unsloth (`e_J16JY8N155H`) back in;
+Strands Agents (`e_3K17NV4B0JF`) and CAMEL (`e_VBBNJDDB0DA`) out; five kept. Artifact
+`data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-10-12-849975d3362a.json`.
+
+**`score_m3.py --verify`: PASS** — "files match recomputation".
+
+**Next tact:** partition 2026-10-26; 2026-10-19 (first caught-up partition, cov=1200) becomes
+eligible for CLEAN — check that the sanity calibration still classifies it on coverage, not as a
+step change. Observation files `data/observations/2026-10-26/` and the artifacts above are
+committed in this tact.
