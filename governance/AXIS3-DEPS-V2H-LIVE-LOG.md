@@ -724,7 +724,7 @@ known-bad partitions. Artifact `data/quarantine/axis3-deps-v2/sanity-check-99573
 **Evaluation** (`--as-of 2026-10-12 --label live`, evaluator `axis3_v2h1_eval_2`): status
 EVALUATED, official cutoff **2026-10-12**, 47 voting / 7 rising, 0 unstable vetoed.
 **c1–c6 PASS — 6/6.** Rising set vs the 2026-10-05 evaluation: Unsloth (`e_J16JY8N155H`) back in;
-Strands Agents (`e_3K17NV4B0JF`) and CAMEL (`e_VBBNJDDB0DA`) out; five kept. Artifact
+Strands Agents (`e_3K17NV4B0JF`) and CAMEL (`e_VBBNJDDB0DA`) out; six kept. Artifact
 `data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-10-12-849975d3362a.json`.
 
 **`score_m3.py --verify`: PASS** — "files match recomputation".
