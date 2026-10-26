@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "name": "SillyTavern",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 6572,
+  "node_id": "R_kgDOI7wDFA",
+  "subscribers_count": 161,
+  "description": "LLM Frontend for Power Users.",
+  "fork": false,
+  "updated_at": "2026-10-26T12:58:49Z",
+  "default_branch": "release",
+  "watchers_count": 34968,
+  "open_issues_count": 681,
+  "created_at": "2023-02-09T10:19:24Z",
+  "stargazers_count": 34968,
+  "language": "JavaScript",
+  "network_count": 6572,
+  "size": 215670,
+  "full_name": "SillyTavern/SillyTavern",
+  "homepage": "https://sillytavern.app",
+  "id": 599524116,
+  "pushed_at": "2026-10-02T22:05:54Z",
+  "topics": [
+    "ai",
+    "chat",
+    "llm"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

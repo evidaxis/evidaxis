@@ -1,0 +1,32 @@
+{
+  "disabled": false,
+  "name": "vision",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 7285,
+  "node_id": "MDEwOlJlcG9zaXRvcnk3MzMyODkwNQ==",
+  "subscribers_count": 435,
+  "description": "Datasets, Transforms and Models specific to Computer Vision",
+  "fork": false,
+  "updated_at": "2026-10-25T15:06:55Z",
+  "default_branch": "main",
+  "watchers_count": 17971,
+  "open_issues_count": 1249,
+  "created_at": "2016-11-09T23:11:43Z",
+  "stargazers_count": 17971,
+  "language": "Python",
+  "network_count": 7285,
+  "size": 1316085,
+  "full_name": "pytorch/vision",
+  "homepage": "https://pytorch.org/vision",
+  "id": 73328905,
+  "pushed_at": "2026-10-26T11:45:12Z",
+  "topics": [
+    "computer-vision",
+    "machine-learning"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "BSD-3-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

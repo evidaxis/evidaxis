@@ -1,0 +1,32 @@
+{
+  "disabled": false,
+  "name": "ComfyUI_UltimateSDUpscale",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 124,
+  "node_id": "R_kgDOJjgknw",
+  "subscribers_count": 5,
+  "description": "ComfyUI nodes for the Ultimate Stable Diffusion Upscale script by Coyote-A.",
+  "fork": false,
+  "updated_at": "2026-10-25T22:14:00Z",
+  "default_branch": "main",
+  "watchers_count": 1580,
+  "open_issues_count": 66,
+  "created_at": "2023-05-16T02:40:34Z",
+  "stargazers_count": 1580,
+  "language": "Python",
+  "network_count": 124,
+  "size": 2651,
+  "full_name": "ssitu/ComfyUI_UltimateSDUpscale",
+  "homepage": "",
+  "id": 641213599,
+  "pushed_at": "2026-06-22T04:09:55Z",
+  "topics": [
+    "comfyui",
+    "stable-diffusion"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

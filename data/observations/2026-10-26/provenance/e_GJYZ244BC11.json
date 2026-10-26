@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "name": "cognetivy",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 64,
+  "node_id": "R_kgDORXGvNg",
+  "subscribers_count": 5,
+  "description": "The open-source state layer for AI coding agents. Turn chaotic agent sessions into structured, traceable workflows with a local workspace for runs, events, and collections.",
+  "fork": false,
+  "updated_at": "2026-10-24T23:48:40Z",
+  "default_branch": "main",
+  "watchers_count": 785,
+  "open_issues_count": 18,
+  "created_at": "2026-02-23T19:57:13Z",
+  "stargazers_count": 785,
+  "language": "TypeScript",
+  "network_count": 64,
+  "size": 23365,
+  "full_name": "meitarbe/cognetivy",
+  "homepage": "https://cognetivy.com",
+  "id": 1165078326,
+  "pushed_at": "2026-05-09T04:51:13Z",
+  "topics": [
+    "agents",
+    "ai",
+    "workflows"
+  ],
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

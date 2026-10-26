@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "name": "GLM-OCR",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 674,
+  "node_id": "R_kgDORGz4iw",
+  "subscribers_count": 29,
+  "description": "GLM-OCR: Accurate ×  Fast × Comprehensive",
+  "fork": false,
+  "updated_at": "2026-10-26T10:36:49Z",
+  "default_branch": "main",
+  "watchers_count": 7539,
+  "open_issues_count": 67,
+  "created_at": "2026-02-02T12:59:43Z",
+  "stargazers_count": 7539,
+  "language": "Python",
+  "network_count": 674,
+  "size": 100577,
+  "full_name": "zai-org/GLM-OCR",
+  "homepage": "",
+  "id": 1147992203,
+  "pushed_at": "2026-10-14T01:46:03Z",
+  "topics": [
+    "glm",
+    "image2text",
+    "ocr"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

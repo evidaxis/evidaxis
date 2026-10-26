@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "name": "self-operating-computer",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 1410,
+  "node_id": "R_kgDOKpD2DQ",
+  "subscribers_count": 129,
+  "description": "A framework to enable a multimodal model to operate a computer.",
+  "fork": false,
+  "updated_at": "2026-10-26T11:49:43Z",
+  "default_branch": "main",
+  "watchers_count": 10292,
+  "open_issues_count": 108,
+  "created_at": "2023-11-04T03:13:45Z",
+  "stargazers_count": 10292,
+  "language": "Python",
+  "network_count": 1410,
+  "size": 12876,
+  "full_name": "OthersideAI/self-operating-computer",
+  "homepage": "https://www.hyperwriteai.com/self-operating-computer",
+  "id": 714143245,
+  "pushed_at": "2026-10-19T21:08:11Z",
+  "topics": [
+    "automation",
+    "openai",
+    "pyautogui"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "disabled": false,
+  "name": "docs.page",
+  "archived": false,
+  "visibility": "public",
+  "private": false,
+  "forks_count": 104,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMTE5Nzk4NDc=",
+  "subscribers_count": 9,
+  "description": "Instantly serve markdown from any GitHub branch as modern, agent-ready docs, with AI chat, MCP, and llms.txt.",
+  "fork": false,
+  "updated_at": "2026-10-26T11:26:40Z",
+  "default_branch": "main",
+  "watchers_count": 677,
+  "open_issues_count": 24,
+  "created_at": "2020-11-11T13:32:06Z",
+  "stargazers_count": 677,
+  "language": "TypeScript",
+  "network_count": 104,
+  "size": 170337,
+  "full_name": "invertase/docs.page",
+  "homepage": "https://docs.page",
+  "id": 311979847,
+  "pushed_at": "2026-10-26T13:41:02Z",
+  "topics": [
+    "documentation",
+    "documentation-generator",
+    "markdown-to-html"
+  ],
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
