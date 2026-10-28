@@ -1,0 +1,33 @@
+{
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzE2MzAyOTk=",
+  "private": false,
+  "id": 131630299,
+  "full_name": "onnx/onnx-tensorrt",
+  "updated_at": "2026-10-23T19:08:42Z",
+  "default_branch": "main",
+  "open_issues_count": 193,
+  "homepage": "",
+  "network_count": 549,
+  "topics": [
+    "deep-learning",
+    "nvidia",
+    "onnx"
+  ],
+  "language": "C++",
+  "forks_count": 549,
+  "description": "ONNX-TensorRT: TensorRT backend for ONNX",
+  "pushed_at": "2026-10-09T16:09:05Z",
+  "watchers_count": 3244,
+  "size": 2911,
+  "name": "onnx-tensorrt",
+  "visibility": "public",
+  "subscribers_count": 62,
+  "archived": false,
+  "fork": false,
+  "disabled": false,
+  "stargazers_count": 3244,
+  "created_at": "2018-04-30T18:11:09Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,64 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-10-28T13:14:36Z",
+  "date": "2026-10-28",
+  "period": "2026-w44",
+  "entity_count": 6319,
+  "error_count": 3,
+  "error_rate": 0.0005,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "friuns2/codex-mobile",
+      "http_status": 404
+    },
+    {
+      "repo": "tradecatlabs/vibe-coding-cn",
+      "http_status": 404
+    },
+    {
+      "repo": "To3akaRin/mac-computer-use",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "9750d14a38242db07b1042a1750cec70c2c861131839ae7d03c4e386697a364b",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}
