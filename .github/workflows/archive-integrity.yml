@@ -103,39 +103,17 @@ jobs:
           done
           exit $rc
 
-      - name: Alert Telegram on archive integrity failure
+      - name: Name the failed integrity steps
         if: failure()
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
           INTEGRITY_STEPS: ${{ toJSON(steps) }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        # Inline so checkout or Python setup failure can still be reported. The
-        # transport and timeout match scripts/liveness-check.mjs; no site probe.
+        # Inline so checkout or Python setup failure can still be named.
         run: |
           node --input-type=module <<'JS'
-          const token = process.env.TELEGRAM_BOT_TOKEN;
-          const chat = process.env.ALERT_CHAT_ID;
-          if (!token || !chat) {
-            console.error('[archive-integrity] Telegram secrets not set; alert NOT sent');
-            process.exit(1);
-          }
+          // No Telegram from CI (29.10.2026): the red run is the alarm and the keeper's
+          // sentinel reads it. This step only names the failed steps in the log.
           const failed = Object.entries(JSON.parse(process.env.INTEGRITY_STEPS))
             .filter(([, step]) => step.outcome === 'failure').map(([id]) => id);
-          const text = `Evidaxis archive-integrity failed.\nFailed steps: ${failed.join(', ')}\n${process.env.RUN_URL}`;
-          try {
-            const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-              method: 'POST',
-              headers: { 'content-type': 'application/json' },
-              body: JSON.stringify({ chat_id: chat, text, disable_web_page_preview: true }),
-              signal: AbortSignal.timeout(10_000),
-            });
-            if (!res.ok) {
-              console.error('[archive-integrity] Telegram HTTP', res.status);
-              process.exit(1);
-            }
-          } catch {
-            console.error('[archive-integrity] Telegram send failed');
-            process.exit(1);
-          }
+          console.log(`::error title=archive-integrity failed::Failed steps: ${failed.join(', ')} ${process.env.RUN_URL}`);
           JS

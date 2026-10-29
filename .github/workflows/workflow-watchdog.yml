@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       selftest:
-        description: Send a green Telegram test signal without evaluating workflows
+        description: Print the test signal without evaluating workflows (no Telegram from CI since 2026-10-29)
         required: false
         default: false
         type: boolean
@@ -35,8 +35,6 @@ jobs:
       - name: Watch all workflow outcomes
         env:
           GH_TOKEN: ${{ github.token }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
           SITE_URL: https://evidaxis.org
           MARKER: 'Evidaxis, the longitudinal map of open AI momentum'
         run: node scripts/workflow-watchdog-check.mjs ${{ inputs.selftest && '--selftest' || '' }}

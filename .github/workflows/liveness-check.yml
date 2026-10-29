@@ -2,8 +2,9 @@ name: Prod liveness check
 # External uptime+integrity sensor (reference pattern from ai-checker, 2026-07-06).
 # Evidaxis is a static site deployed deliberately (vercel --prod from the committed
 # tree, no git auto-deploy), so the watched fact is "is evidaxis.org up and serving
-# its real content" — not freshness vs main. Runs OFF Vercel; pings Telegram + reds
-# the run when the archive is down or serving broken content.
+# its real content" — not freshness vs main. Runs OFF Vercel; reds the run when the
+# archive is down or serving broken content (no Telegram from CI since 2026-10-29:
+# the keeper's Mac sentinel reads red runs).
 on:
   schedule:
     - cron: '*/30 * * * *'
@@ -29,8 +30,6 @@ jobs:
           MARKER: 'Evidaxis, the longitudinal map of open AI momentum'
           SITE_LABEL: evidaxis
           GH_TOKEN: ${{ github.token }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
         run: node scripts/liveness-check.mjs
 
       # Second, independent fact (added 2026-08-10): being UP is not being
@@ -44,6 +43,4 @@ jobs:
           SITE_URL: https://evidaxis.org
           SITE_LABEL: evidaxis
           GH_TOKEN: ${{ github.token }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
         run: node scripts/freshness-check.mjs
