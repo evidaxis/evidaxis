@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 18,
+  "network_count": 154,
+  "updated_at": "2026-10-27T20:07:53Z",
+  "node_id": "R_kgDONuYWxw",
+  "stargazers_count": 1539,
+  "forks_count": 154,
+  "size": 16135,
+  "pushed_at": "2026-04-17T19:39:15Z",
+  "language": "Python",
+  "disabled": false,
+  "archived": false,
+  "full_name": "open-thought/reasoning-gym",
+  "topics": [
+    "gym",
+    "large-language-models",
+    "reinforcement-learning"
+  ],
+  "open_issues_count": 33,
+  "created_at": "2025-01-23T08:39:53Z",
+  "watchers_count": 1539,
+  "visibility": "public",
+  "id": 921048775,
+  "fork": false,
+  "private": false,
+  "name": "reasoning-gym",
+  "default_branch": "main",
+  "homepage": "",
+  "description": "[NeurIPS 2025 Spotlight] Reasoning Environments for Reinforcement Learning with Verifiable Rewards",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "subscribers_count": 22,
+  "network_count": 848,
+  "updated_at": "2026-10-28T09:41:59Z",
+  "node_id": "R_kgDONeea2w",
+  "stargazers_count": 892,
+  "forks_count": 848,
+  "size": 36082,
+  "pushed_at": "2026-10-28T05:30:06Z",
+  "language": "Python",
+  "disabled": false,
+  "archived": false,
+  "full_name": "microsoft/Multi-Agent-Custom-Automation-Engine-Solution-Accelerator",
+  "topics": [
+    "ai-azd-templates",
+    "azd-templates"
+  ],
+  "open_issues_count": 29,
+  "created_at": "2024-12-16T18:56:55Z",
+  "watchers_count": 892,
+  "visibility": "public",
+  "id": 904370907,
+  "fork": false,
+  "private": false,
+  "name": "Multi-Agent-Custom-Automation-Engine-Solution-Accelerator",
+  "default_branch": "main",
+  "homepage": "",
+  "description": "The Multi-Agent Custom Automation Engine Solution Accelerator is an AI-driven system that manages a group of AI agents to accomplish tasks based on user input. Powered by Microsoft Agent Framework, Azure Foundry, Azure Cosmos DB, and infrastructure services, it provides a reference application, allowing you to hit the ground running.",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

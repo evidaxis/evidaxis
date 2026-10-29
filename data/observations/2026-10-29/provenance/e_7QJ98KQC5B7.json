@@ -1,0 +1,32 @@
+{
+  "subscribers_count": 41,
+  "network_count": 398,
+  "updated_at": "2026-10-28T06:54:45Z",
+  "node_id": "R_kgDOKZCPaQ",
+  "stargazers_count": 4360,
+  "forks_count": 398,
+  "size": 1462,
+  "pushed_at": "2024-01-02T04:12:09Z",
+  "language": "Python",
+  "disabled": false,
+  "archived": false,
+  "full_name": "dreamgaussian/dreamgaussian",
+  "topics": [
+    "image-to-3d",
+    "text-to-3d"
+  ],
+  "open_issues_count": 134,
+  "created_at": "2023-09-27T14:27:06Z",
+  "watchers_count": 4360,
+  "visibility": "public",
+  "id": 697339753,
+  "fork": false,
+  "private": false,
+  "name": "dreamgaussian",
+  "default_branch": "main",
+  "homepage": "https://dreamgaussian.github.io/",
+  "description": "[ICLR 2024 Oral] Generative Gaussian Splatting for Efficient 3D Content Creation",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

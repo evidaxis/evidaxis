@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 15,
+  "network_count": 438,
+  "updated_at": "2026-10-29T02:59:23Z",
+  "node_id": "R_kgDORFi1iQ",
+  "stargazers_count": 2155,
+  "forks_count": 438,
+  "size": 2296,
+  "pushed_at": "2026-09-16T14:49:11Z",
+  "language": "TypeScript",
+  "disabled": false,
+  "archived": false,
+  "full_name": "crshdn/mission-control",
+  "topics": [
+    "aiagent",
+    "automation",
+    "openclaw"
+  ],
+  "open_issues_count": 22,
+  "created_at": "2026-01-31T13:27:48Z",
+  "watchers_count": 2155,
+  "visibility": "public",
+  "id": 1146664329,
+  "fork": false,
+  "private": false,
+  "name": "mission-control",
+  "default_branch": "main",
+  "homepage": "https://autensa.com",
+  "description": "The world's first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode, crash recovery, cost tracking, 80+ API endpoints. Self-hosted via OpenClaw Gateway.",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

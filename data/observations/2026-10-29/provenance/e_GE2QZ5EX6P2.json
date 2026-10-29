@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 45,
+  "network_count": 440,
+  "updated_at": "2026-10-29T10:56:52Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNzg4Mzc1MDU=",
+  "stargazers_count": 4420,
+  "forks_count": 440,
+  "size": 92184,
+  "pushed_at": "2026-10-29T10:10:03Z",
+  "language": "Python",
+  "disabled": false,
+  "archived": false,
+  "full_name": "onnxsim/onnxsim",
+  "topics": [
+    "deep-learning",
+    "onnx",
+    "pytorch"
+  ],
+  "open_issues_count": 18,
+  "created_at": "2019-04-01T10:12:34Z",
+  "watchers_count": 4420,
+  "visibility": "public",
+  "id": 178837505,
+  "fork": false,
+  "private": false,
+  "name": "onnxsim",
+  "default_branch": "master",
+  "homepage": "https://onnxsim.github.io/onnxsim/",
+  "description": "Simplify your onnx model",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
