@@ -70,6 +70,32 @@ export function handleHitsDecoded(text, index) {
   return [...new Set([...handleHits(text, index), ...handleHits(lenientDecoded(text), index)])];
 }
 
+// A canonical Organization path may contain an old slug. Exempt only the occurrence
+// at its exact offset, so a separate stale path (including after a JSON escape) fails.
+export function staleSlugHits(text, staleSlugs, canonicalPaths) {
+  const paths = [...canonicalPaths];
+  const hits = new Set();
+  for (const slug of staleSlugs) {
+    let position = text.indexOf(slug);
+    if (position < 0) continue;
+    const exemptions = [];
+    for (const path of paths) {
+      for (let offset = path.indexOf(slug); offset >= 0; offset = path.indexOf(slug, offset + 1)) {
+        exemptions.push({ path, offset });
+      }
+    }
+    for (; position >= 0; position = text.indexOf(slug, position + 1)) {
+      const exempt = exemptions.some(({ path, offset }) =>
+        position >= offset && text.startsWith(path, position - offset));
+      if (!exempt) {
+        hits.add(slug);
+        break;
+      }
+    }
+  }
+  return [...hits];
+}
+
 // A listed User account that is a project's identity is published like an Organization.
 // The owner-types file stays unchanged; callers pass the accounts map (missing file = {}).
 export function applyProjectAccounts(registry, accounts) {

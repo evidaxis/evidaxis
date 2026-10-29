@@ -22,7 +22,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`
@@ -302,6 +302,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
 
   const bannedOwners = new Map();
   const staleSlugs = new Set();   // exact old 'owner/repo' paths of moved repositories
+  const canonicalPaths = new Set();
   const orgOwners = new Set();    // owners that are Organizations today
   // The shared floor survives transfers and cache changes, just as on the cards.
   for (const h of FLOOR_HANDLES) bannedOwners.set(h, 'substring');
@@ -325,7 +326,10 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
       if (!bannedOwners.has(storedOwner.toLowerCase())) bannedOwners.set(storedOwner.toLowerCase(), 'slug');
       staleSlugs.add(storedRepo.toLowerCase());
     }
-    if (entry.owner_type === 'Organization') orgOwners.add(canonicalOwner.toLowerCase());
+    if (entry.owner_type === 'Organization') {
+      orgOwners.add(canonicalOwner.toLowerCase());
+      canonicalPaths.add(entry.full_name.toLowerCase());
+    }
   }
 
   // User owners: whole-handle matching (web/src/lib/personFree.mjs); moved Organization
@@ -375,8 +379,8 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     const privacyIndex = /(^|\/)provenance\.json$/.test(r) ? provenanceUserIndex : userIndex;
     for (const owner of handleHitsDecoded(body, privacyIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
     for (const owner of handleHits(body, formerIndex)) errors.push(`${r}: contains former repository owner ${owner} in a GitHub path`);
-    for (const slug of staleSlugs) {
-      if (body.includes(slug)) errors.push(`${r}: contains stale repository path ${slug}`);
+    for (const slug of staleSlugHits(body, staleSlugs, canonicalPaths)) {
+      errors.push(`${r}: contains stale repository path ${slug}`);
     }
   }
 }

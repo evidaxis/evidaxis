@@ -1,5 +1,44 @@
 import { describe, expect, it } from 'vitest';
-import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, staleSlugHits } from './personFree.mjs';
+
+describe('stale Organization repository paths', () => {
+  const staleSlugs = new Set(['labs/widget']);
+  const canonicalPaths = new Set(['open-labs/widget']);
+
+  it('exempts the stale substring inside an exact canonical path', () => {
+    expect(staleSlugHits('open-labs/widget', staleSlugs, canonicalPaths)).toEqual([]);
+    expect(staleSlugHits('open-labs/widget open-labs/widget', staleSlugs, canonicalPaths)).toEqual([]);
+  });
+
+  it.each([
+    '/labs/widget',
+    '"labs/widget',
+    'labs/widget',
+    'xlabs/widget',
+    JSON.stringify('a\nlabs/widget'),
+    JSON.stringify('a\tlabs/widget'),
+    'open-labs/widget labs/widget',
+    'labs/widget open-labs/widget',
+    'open-labs/widget xlabs/widget',
+    'open-labs/widget-other labs/widget',
+  ])('rejects an occurrence outside a canonical path: %s', (text) => {
+    expect(staleSlugHits(text, staleSlugs, canonicalPaths)).toEqual(['labs/widget']);
+  });
+
+  it('does not exempt a slug using an unrelated canonical path', () => {
+    expect(staleSlugHits('open-labs/gadget labs/widget', staleSlugs, ['open-labs/gadget'])).toEqual(['labs/widget']);
+  });
+
+  it('requires the full canonical path at the exact offset', () => {
+    expect(staleSlugHits('labs/widget open-labs/widget', staleSlugs, ['open-labs/widget-extra'])).toEqual(['labs/widget']);
+    expect(staleSlugHits('open-labs/widget', staleSlugs, ['labs/widget-extra'])).toEqual(['labs/widget']);
+  });
+
+  it('preserves case-sensitive matching of the supplied text', () => {
+    expect(staleSlugHits('LABS/WIDGET', staleSlugs, canonicalPaths)).toEqual([]);
+    expect(staleSlugHits('OPEN-labs/widget', staleSlugs, canonicalPaths)).toEqual(['labs/widget']);
+  });
+});
 
 const index = buildHandleIndex(['f', 'av', '78', '100', 'e', 'rohitg00', 'paul-gauthier', 'hexgrad', 'Q00']);
 
