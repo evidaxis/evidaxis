@@ -67,7 +67,7 @@ def test_signature_verifies_and_one_changed_byte_fails(tmp_path: Path) -> None:
     assert "utc_date: " in approval_text
     signers = tmp_path / "allowed_signers"
     signers.write_text(stdout.splitlines()[1] + "\n", encoding="ascii")
-    assert not (REPO / "governance" / "allowed_signers").exists()
+    # -f below is this throwaway file. The published governance/allowed_signers is not used.
 
     def verify() -> subprocess.CompletedProcess[bytes]:
         return subprocess.run(

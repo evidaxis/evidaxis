@@ -1,4 +1,4 @@
-"""A throwaway ed25519 key signs one file. The repo's allowed_signers stays absent.
+"""A throwaway ed25519 key signs one file. Verification uses that key's signers file.
 
 ssh-keygen is optional on a machine that does not have it: the test skips.
 """
@@ -36,7 +36,7 @@ def test_throwaway_key_verifies_and_a_tampered_file_does_not(tmp_path: Path) -> 
         f'{IDENTITY} namespaces="evidaxis-governance" {public[0]} {public[1]}\n',
         encoding="utf-8",
     )
-    assert not (REPO / "governance" / "allowed_signers").exists()
+    # -f below is this throwaway file. The published governance/allowed_signers is not used.
 
     def verify() -> subprocess.CompletedProcess[str]:
         return subprocess.run(
@@ -52,4 +52,3 @@ def test_throwaway_key_verifies_and_a_tampered_file_does_not(tmp_path: Path) -> 
     rejected = verify()
     assert rejected.returncode == 1
     assert rejected.stdout == "governance signature: rejected\n"
-    assert not (REPO / "governance" / "allowed_signers").exists()

@@ -18,6 +18,13 @@ precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
 SPDX-License-Identifier = "Apache-2.0"
 
+# Key publication 2026-10-19. Same terms as the governance record named above.
+[[annotations]]
+path = ["governance/KEY-REGISTRY-2026-10-19.md.ots", "governance/allowed_signers"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
+SPDX-License-Identifier = "Apache-2.0"
+
 [[annotations]]
 path = ["data/**", "entities/**", "taxonomy/**", "relationships.tsv", "redirects.yaml"]
 precedence = "aggregate"
