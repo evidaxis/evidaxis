@@ -16,6 +16,7 @@
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { assertProductionPaths } from '../src/lib/path-policy.mjs';
 import { controlShellHash } from './canary-shell.mjs';
 import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
@@ -23,6 +24,8 @@ import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './e
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
 import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
+
+assertProductionPaths();
 
 const DIST = process.env.EVIDAXIS_DIST
   ? `${resolve(process.env.EVIDAXIS_DIST)}/`

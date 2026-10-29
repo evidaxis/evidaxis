@@ -6,6 +6,9 @@ import { loadEnv } from 'vite';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { isIndexable } from './src/lib/cardB/policy.mjs';
+import { assertProductionPaths } from './src/lib/path-policy.mjs';
+
+assertProductionPaths();
 
 // Sentry DSN читаем на сборке (loadEnv видит .env файлы + реальный process.env).
 // Сайт статический → Sentry ловит только клиентские (браузерные) ошибки; DSN публичный.

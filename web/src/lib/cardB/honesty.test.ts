@@ -1,12 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import CardB from '../../components/cardB/CardB.astro';
 import { GET } from '../../pages/e/[id].json';
 import { archiveEntityById, entityUniverse, recordAvailability, snapshots, type RecordStatus } from '../archive';
 import { ownerTypes, publicEntity, publicRepoUrl } from '../data';
-import { REPO_ROOT } from '../data-path';
+import { etlPath } from '../data-path';
 import { dependentReadings } from '../dependent-readings';
 import { entityFeedEntries, latestFeedEntries, siteFeedEntries } from '../feed';
 import { isIndexable } from './policy.mjs';
@@ -90,7 +89,8 @@ describe('honest observations across public formats', () => {
   });
 
   it('retains threshold losses in individual feeds and entity JSON, with shared state for repeated declared gaps', async () => {
-    const lost = latestFeedEntries().find(e => e.event_kind === 'axis_threshold_lost')!;
+    // This entity loses the development threshold in the frozen 2026-10-17 pair.
+    const lost = latestFeedEntries().find(e => e.event_kind === 'axis_threshold_lost' && e.entity_ids.includes('e_52RJ4AYNG35'))!;
     expect(lost).toBeDefined();
     const record = archiveEntityById.get(lost.entity_ids[0])!, model = buildCardB(record, contextFor(record));
     expect(entityFeedEntries(record.entity.entity_id)).toContainEqual(lost);
@@ -107,7 +107,7 @@ describe('honest observations across public formats', () => {
   });
 
   it('preserves pending owner masks and neutral-name masks in every observation state', async () => {
-    const pending = JSON.parse(readFileSync(join(REPO_ROOT, 'etl/owner_transitions_pending.json'), 'utf8'));
+    const pending = JSON.parse(readFileSync(etlPath('owner_transitions_pending.json'), 'utf8'));
     const neutral = entityUniverse.filter(r => r.entity.name === `System ${r.entity.entity_id}`);
     expect(neutral.length).toBeGreaterThan(0);
     const records = [...Object.keys(pending).map(repo => entityUniverse.find(r => r.entity.github_repo === repo)!),

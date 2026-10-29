@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { REPO_ROOT, dataPath, repoDataPath } from './data-path';
+import { REPO_ROOT, dataPath, repoDataPath, repoEtlPath, assertUnitPath } from './data-path';
 import type { Entity, Snapshot } from './data';
 import { applyProjectAccounts } from './personFree.mjs';
 import { neutralName, revealsHandle, type OwnerTypes } from './person_free';
@@ -74,7 +74,7 @@ export function recordAvailability(record: ArchivedEntity) {
 }
 
 function readJson(path: string): any {
-  return JSON.parse(readFileSync(path, 'utf8'));
+  return JSON.parse(readFileSync(assertUnitPath(path), 'utf8'));
 }
 
 /** Absolute path to a frozen snapshot artifact (read-only archive layer). */
@@ -102,7 +102,7 @@ export function readSnapshotArtifactRaw(date: string, name: string, repoRoot = R
 }
 
 function projectAccountMap(repoRoot: string): Record<string, unknown> {
-  const path = join(repoRoot, 'etl', 'project_accounts.json');
+  const path = repoEtlPath(repoRoot, 'project_accounts.json');
   if (!existsSync(path)) return {};
   const accounts = readJson(path)?.accounts;
   if (!accounts || typeof accounts !== 'object' || Array.isArray(accounts)) return {};
@@ -112,7 +112,7 @@ function projectAccountMap(repoRoot: string): Record<string, unknown> {
 /** Enumerate immutable snapshot payloads. Exported with a root argument for tests. */
 export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
   const snapshotsDir = repoDataPath(repoRoot, 'snapshots');
-  const registry = readJson(join(repoRoot, 'etl', 'owner_types.json')) as OwnerTypes;
+  const registry = readJson(repoEtlPath(repoRoot, 'owner_types.json')) as OwnerTypes;
   applyProjectAccounts(registry.repos, projectAccountMap(repoRoot));
   return readdirSync(snapshotsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && DATE_RE.test(entry.name))

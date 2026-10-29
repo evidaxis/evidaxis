@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import CardB from '../../components/cardB/CardB.astro';
 import EntityCard from '../../components/EntityCard.astro';
 import { archiveEntityById, snapshots } from '../archive';
@@ -31,35 +34,37 @@ describe('actual Astro Card B render', () => {
 
   it('renders all twelve fixtures twice, preserving raw numeric HTML and the old instruments', async () => {
     const container = await AstroContainer.create();
-    const directory = new URL('../../../.foundation-check/fixtures/', import.meta.url);
-    mkdirSync(directory, { recursive: true });
-    for (const id of ids) {
-      const record = archiveEntityById.get(id)!, model = cardBFor(record), e = record.entity;
-      const measurement = await container.renderToString(EntityCard, { props: { entity: e } });
-      const options = { props: { model, industry: e.industry, industryLabel: e.industry, subNiche: e.sub_niche }, slots: { measurement } };
-      const first = await container.renderToString(CardB, options);
-      const second = await container.renderToString(CardB, options);
-      expect(first).toBe(second);
-      expect(first.match(/<h1\b/g)).toHaveLength(1);
-      expect(first).not.toMatch(/\u2014|\bn\/a\b/);
-      expect(first).toContain('data-b-citation');
-      expect(first.includes('Other indexes count differently')).toBe(model.workIds.length > 0);
-      expect(first).toContain('convergence gate');
-      expect(first).toContain('Gate ETA: never published');
-      expect(first).not.toContain('needs snapshot history (1 snapshot exists)');
-      if (model.nicheAssigned) expect(first).toContain('niche median');
-      else {
-        expect(first.match(/Niche: not yet assigned\./g)).toHaveLength(1);
-        expect(first).not.toContain('niche median');
-        expect(first).not.toContain('card-b-neighbours');
-        expect(first).not.toContain('Peer signals');
+    // Test renders must not overwrite the tracked design review artifacts.
+    const directory = pathToFileURL(mkdtempSync(join(tmpdir(), 'evx-card-render-')) + '/');
+    try {
+      for (const id of ids) {
+        const record = archiveEntityById.get(id)!, model = cardBFor(record), e = record.entity;
+        const measurement = await container.renderToString(EntityCard, { props: { entity: e } });
+        const options = { props: { model, industry: e.industry, industryLabel: e.industry, subNiche: e.sub_niche }, slots: { measurement } };
+        const first = await container.renderToString(CardB, options);
+        const second = await container.renderToString(CardB, options);
+        expect(first).toBe(second);
+        expect(first.match(/<h1\b/g)).toHaveLength(1);
+        expect(first).not.toMatch(/\u2014|\bn\/a\b/);
+        expect(first).toContain('data-b-citation');
+        expect(first.includes('Other indexes count differently')).toBe(model.workIds.length > 0);
+        expect(first).toContain('convergence gate');
+        expect(first).toContain('Gate ETA: never published');
+        expect(first).not.toContain('needs snapshot history (1 snapshot exists)');
+        if (model.nicheAssigned) expect(first).toContain('niche median');
+        else {
+          expect(first.match(/Niche: not yet assigned\./g)).toHaveLength(1);
+          expect(first).not.toContain('niche median');
+          expect(first).not.toContain('card-b-neighbours');
+          expect(first).not.toContain('Peer signals');
+        }
+        if (id === 'e_S7DQ1QJCCMT') expect(/total citations<\/div>\s*<div[^>]*><data value="5">5<\/data>/.test(first)).toBe(true);
+        expect(scanEntityPageWide(first)).toEqual([]);
+        expect(scanEntityLexicon(first, e.name)).toEqual([]);
+        const withoutNiche = first.replace(/<section[^>]*id="niche"[\s\S]*?<\/section>/, '');
+        expect([...withoutNiche.matchAll(/<data value="[\d.]+" data-source="[^"]+" data-date="[^"]+" data-entity="[^"]+"/g)].length).toBeGreaterThanOrEqual(3);
+        writeFileSync(new URL(`${id}.html`, directory), first.replace(/\sdata-astro-source-(?:file|loc)="[^"]*"/g, ''));
       }
-      if (id === 'e_S7DQ1QJCCMT') expect(/total citations<\/div>\s*<div[^>]*><data value="5">5<\/data>/.test(first)).toBe(true);
-      expect(scanEntityPageWide(first)).toEqual([]);
-      expect(scanEntityLexicon(first, e.name)).toEqual([]);
-      const withoutNiche = first.replace(/<section[^>]*id="niche"[\s\S]*?<\/section>/, '');
-      expect([...withoutNiche.matchAll(/<data value="[\d.]+" data-source="[^"]+" data-date="[^"]+" data-entity="[^"]+"/g)].length).toBeGreaterThanOrEqual(3);
-      writeFileSync(new URL(`${id}.html`, directory), first.replace(/\sdata-astro-source-(?:file|loc)="[^"]*"/g, ''));
-    }
+    } finally { rmSync(directory, { recursive: true, force: true }); }
   });
 });

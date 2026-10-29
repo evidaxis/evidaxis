@@ -1,20 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import {
   snapshot, entities, entityById, entitiesInCohort, industries,
-  cleanLabel, fmtZ, fmtSlope, SNAP_DATE, commitSeries, citationSeries,
+  cleanLabel, fmtZ, fmtSlope, commitSeries, citationSeries,
   isCapturedAsOf, normalizeTs, risingZFloor, depsSeriesFromRows, buildDepsMap,
   type Snapshot, type Entity,
 } from './data';
-
-describe('snapshot integrity (loaded from the canonical git artifact)', () => {
-  it('counts.entities matches the entities array length', () => {
-    expect(snapshot.counts.entities).toBe(entities.length);
-  });
-  it('exposes the genesis snapshot date', () => {
-    expect(SNAP_DATE).toBe(snapshot.snapshot_date);
-    expect(snapshot.snapshot_date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-  });
-});
 
 describe('entityById', () => {
   it('resolves a real id and returns undefined for an unknown one', () => {

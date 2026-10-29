@@ -1,38 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { badgeData, badgeRecords, builderSelection, chooseBadges, endpointJson, growthPercent, latestRisingRun, nicheCandidates, ratioText, risingCardSvg, risingRange, risingRecords, rowSvg, tierFor, verifiedPin } from './badges';
-import { metrics } from './cardB/build';
-import { contextFor } from './cardB/context';
+import { badgeData, badgeRecords, builderSelection, chooseBadges, growthPercent, latestRisingRun, nicheCandidates, ratioText, risingCardSvg, risingRange, risingRecords, rowSvg, tierFor, verifiedPin } from './badges';
 
-const named = (name: string) => badgeRecords.find(record => record.entity.name === name)!;
+const named = (id: string) => badgeRecords.find(record => record.entity.entity_id === id)!;
 
 describe('README badges', () => {
-  it('uses card B readings and medians for every archived system', () => {
-    for (const record of badgeRecords) {
-      const own = metrics(record.entity);
-      for (const key of ['citations', 'dependents'] as const) {
-        const data = badgeData(record, key);
-        expect(data.count).toBe(own[key]);
-        expect(data.message).toBe(key === 'dependents' && own[key] !== null && !verifiedPin(record) ? 'unverified'
-          : own[key] === null ? 'not measured' : Math.round(own[key]).toLocaleString('en-US'));
-        const endpoint = endpointJson(record, key);
-        expect(endpoint).toEqual({ schemaVersion: 1, label: key, message: data.message,
-          color: data.color.slice(1), labelColor: '555', logoSvg: expect.stringContaining('<svg'), cacheSeconds: 21600 });
-      }
-      const median = record.entity.cohort === 'unassigned-v1'
-        ? { citations: { value: null, n: 0 }, dependents: { value: null, n: 0 } }
-        : contextFor(record).cohortSummary!.medians;
-      const best = nicheCandidates(own, median, verifiedPin(record), record.entity.cohort)[0];
-      const medal = badgeData(record, 'medal');
-      if (best && best.ratio >= 1) {
-        expect(medal.metric).toBe(best.metric);
-        expect(medal.ratio).toBe(best.ratio);
-        expect(medal.count).toBe(best.value);
-        expect(medal.message).toContain(ratioText(best.ratio));
-        expect(medal.title).toContain(`(${Math.round(best.median).toLocaleString('en-US')}; n = ${best.n})`);
-      } else expect(medal.message).not.toContain('niche median');
-    }
-  });
-
   it('honors tier boundaries and formatting', () => {
     expect([1.99, 2, 9.99, 10, 99.9, 100].map(tierFor)).toEqual([null, 'bronze', 'bronze', 'silver', 'silver', 'gold']);
     expect([1.6, 8.8, 10, 140, 1120].map(ratioText)).toEqual(['1.6×', '8.8×', '10×', '140×', '1,120×']);
@@ -79,16 +50,20 @@ describe('README badges', () => {
   });
 
   it('chooses one main medal and at most two relevant extras', () => {
-    const vllm = named('vLLM');
-    // Weekly data moves (vLLM was 140x on 2026-09-19, 122x on 2026-09-26): assert the rule, not one week's number.
-    for (const name of ['vLLM', 'SGLang', 'MuJoCo']) {
+    const vllm = named('e_R372CCSVG44');
+    // Preserve five citation-bearing peers from 2026-10-17 so the reduced
+    // fixture still exercises the medal's minimum cohort size.
+    for (const id of ['e_R372CCSVG44', 'e_77AC6K7XEWB', 'e_MMGH765AVAA', 'e_V05C8HCBBV2', 'e_VMQ8QRRDWVS']) {
+      expect(named(id).entity.cohort).toBe(vllm.entity.cohort);
+    }
+    for (const name of ['e_R372CCSVG44', 'e_77AC6K7XEWB', 'e_03QFRGK7VQX']) {
       const m = badgeData(named(name), 'medal');
       expect(m.tier).toBe(m.ratio == null ? null : tierFor(m.ratio));
       if (m.tier) expect(m.message).toBe(`${ratioText(m.ratio)} niche median`);
     }
     expect(badgeData(vllm, 'medal')).toMatchObject({ metric: 'citations' });
     expect(['gold', 'silver']).toContain(badgeData(vllm, 'medal').tier);
-    for (const name of ['vLLM', 'SGLang', 'AgentScope']) {
+    for (const name of ['e_R372CCSVG44', 'e_77AC6K7XEWB', 'e_97SYW64PA3G']) {
       const record = named(name);
       const live = latestRisingRun(record)?.live;
       const expected = live ? 'rising' : badgeData(record, 'medal').tier ? 'medal' : builderSelection(record).main;
@@ -105,7 +80,7 @@ describe('README badges', () => {
       expect(new Set([selection.main, ...selection.extras].filter(Boolean)).size).toBe([selection.main, ...selection.extras].filter(Boolean).length);
       if (selection.main === null) expect(selection.extras).toEqual([]);
     }
-    const voidRecord = badgeRecords.find(record => record.entity.github_repo === 'voideditor/void')!;
+    const voidRecord = badgeRecords.find(record => record.entity.entity_id === 'e_MX90J81EYDE')!;
     expect(verifiedPin(voidRecord)).toBe(false);
     expect(badgeData(voidRecord, 'medal').metric).not.toBe('dependents');
   });

@@ -66,14 +66,14 @@ describe('person-free handle matching at registry scale', () => {
 describe('public projection of names that are handles', async () => {
   const { publicName, publicRepoLabel, revealsHandle } = await import('./person_free');
   const registry = { schema_version: 'owner_types_1', repos: {
-    'AlphaAvatar/AlphaAvatar': { owner_type: 'User', repo_id: 1, full_name: 'AlphaAvatar/AlphaAvatar' },
+    'fixture-user-gamma/fixture-user-gamma': { owner_type: 'User', repo_id: 1, full_name: 'fixture-user-gamma/fixture-user-gamma' },
     'vllm-project/vllm': { owner_type: 'Organization', repo_id: 2, full_name: 'vllm-project/vllm' },
   } } as any;
   it('masks a system whose name is a personal handle and keeps organisation names', () => {
-    expect(revealsHandle('AlphaAvatar', registry)).toBe(true);
-    expect(publicName({ name: 'AlphaAvatar', entity_id: 'e_33CWR7PEWV8' }, registry)).toBe('System e_33CWR7PEWV8');
+    expect(revealsHandle('fixture-user-gamma', registry)).toBe(true);
+    expect(publicName({ name: 'fixture-user-gamma', entity_id: 'e_33CWR7PEWV8' }, registry)).toBe('System e_33CWR7PEWV8');
     expect(publicName({ name: 'vLLM', entity_id: 'e_R372CCSVG44' }, registry)).toBe('vLLM');
-    expect(publicRepoLabel({ github_repo: 'AlphaAvatar/AlphaAvatar' } as any, registry)).toBe('repository not shown');
+    expect(publicRepoLabel({ github_repo: 'fixture-user-gamma/fixture-user-gamma' } as any, registry)).toBe('repository not shown');
     expect(publicRepoLabel({ github_repo: 'vllm-project/vllm' } as any, registry)).toBe('vllm-project/vllm');
   });
 });
