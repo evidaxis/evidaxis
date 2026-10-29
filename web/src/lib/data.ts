@@ -3,7 +3,7 @@
  * the site is a pure derived view of these files. No DB, no runtime fetch.
  */
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { REPO_ROOT, dataPath } from './data-path';
+import { REPO_ROOT, dataPath, etlPath } from './data-path';
 import { applyProjectAccounts } from './personFree.mjs';
 import { methodologyEntry } from './methodology';
 export { methodologyAxes } from './methodology';
@@ -25,7 +25,8 @@ import {
 export { archiveEntityById, entityUniverse, latest, manifestForSnapshot, snapshotByDate, snapshots };
 
 const ROOT = REPO_ROOT;
-const sourcePath = (rel: string) => rel.startsWith('data/') ? dataPath(rel.slice(5)) : ROOT + rel;
+const sourcePath = (rel: string) => rel.startsWith('data/') ? dataPath(rel.slice(5))
+  : rel.startsWith('etl/') ? etlPath(rel.slice(4)) : ROOT + rel;
 
 function readJson(rel: string): any {
   return JSON.parse(readFileSync(sourcePath(rel), 'utf8'));
@@ -34,9 +35,10 @@ function readJson(rel: string): any {
 // JSONL reader (one JSON object per non-blank line). Tolerant of a missing file:
 // coverage of side-signals like deps.dev is partial, so absence is normal, not an error.
 function readJsonl(rel: string): any[] {
+  const path = sourcePath(rel);
   let txt: string;
   try {
-    txt = readFileSync(sourcePath(rel), 'utf8');
+    txt = readFileSync(path, 'utf8');
   } catch {
     return [];
   }

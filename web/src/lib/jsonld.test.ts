@@ -78,7 +78,7 @@ describe('entityGraph', () => {
   });
 
   it('models the measured repo as a SoftwareSourceCode node for Organization ownership', () => {
-    const e = entities.find((x) => x.github_repo === 'paul-gauthier/aider')!;
+    const e = entities.find((x) => x.entity_id === 'e_TBARBJKAD2G')!;
     const g = entityGraph(e, snapshot);
     const node = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
     // Entity type may also be SoftwareSourceCode; select the repo node by #source id.
@@ -94,7 +94,7 @@ describe('entityGraph', () => {
   });
 
   it('publishes only an eligible external homepage for User ownership', () => {
-    const e = entities.find((x) => x.github_repo === 'jwohlwend/boltz')!;
+    const e = entities.find((x) => x.entity_id === 'e_9VD4D2XPK7H')!;
     const g = entityGraph(e, snapshot);
     const node = g['@graph'].find((n: any) => n['@id']?.endsWith('#entity'));
     const ds = g['@graph'].find((n: any) => n['@type'] === 'Dataset');
@@ -105,7 +105,7 @@ describe('entityGraph', () => {
     expect(node.url).toBeUndefined();
     expect(node.sameAs).toBeUndefined();
     expect(ds.sameAs).toBeUndefined();
-    expect(JSON.stringify(g)).not.toContain('jwohlwend');
+    expect(JSON.stringify(g)).not.toContain(e.github_repo.split('/')[0]);
   });
 });
 

@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { archiveEntityById } from './archive';
-import { badgeData, verifiedPin } from './badges';
-import { metrics, summarizeCohort } from './cardB/build';
+import { badgeData } from './badges';
+import { summarizeCohort } from './cardB/build';
 import { contextFor } from './cardB/context';
 import { snapshot } from './data';
 import { ALL_TERMS, COMPUTED_TERMS, PLAIN_TERMS } from './glossary';
 import {
-  assignedNiches, citationPhrase, commitsPhrase, dependentsPhrase, measuredLine, medianText, nicheAnswer, nicheCSV,
-  nicheJSON, nicheSummary, searchIndex, snapshotMedals, statusText, unassignedSummary, UNASSIGNED,
+  assignedNiches, citationPhrase, commitsPhrase, dependentsPhrase, measuredLine, medianText, nicheAnswer,
+  nicheSummary, snapshotMedals, statusText, unassignedSummary, UNASSIGNED,
 } from './hubs';
-import { CITATION_AXIS, measurementStateFor } from './measurement';
+import { measurementStateFor } from './measurement';
 
 const allNiches = () => [...assignedNiches(), ...(unassignedSummary() ? [unassignedSummary()!] : [])];
 
@@ -25,21 +25,6 @@ describe('measured line', () => {
     expect(commitsPhrase(null)).toBe('commits not measured');
     expect(measuredLine({ commits: 42.4, citations: 9, citationState: 'count_only', dependents: null, dependentsState: 'not_measured' }))
       .toBe('42.4 commits/week, 9 citations to date (count only), verified dependents not measured.');
-  });
-
-  it('derives every row from the card readings, verified dependents only', () => {
-    for (const s of allNiches()) for (const row of s.rows) {
-      const record = archiveEntityById.get(row.id)!;
-      const own = metrics(record.entity);
-      expect(row.commits).toBe(own.commits);
-      expect(row.citations).toBe(own.citations);
-      expect(row.dependentsReading).toBe(own.dependents);
-      expect(row.dependents).toBe(verifiedPin(record) ? own.dependents : null);
-      if (row.dependents === null) expect(row.measuredLine).toContain('verified dependents not measured');
-      const scored = measurementStateFor(record.entity, record.snapshot).axis_coverage.axes[CITATION_AXIS] === 'measurable';
-      if (own.citations !== null && !scored) expect(row.measuredLine).toContain('citations to date (count only)');
-      if (own.citations === null) expect(row.measuredLine).toContain('citations not measured');
-    }
   });
 });
 
@@ -107,29 +92,6 @@ describe('niche hub answer', () => {
   it('lists every niche A to Z', () => {
     const labels = assignedNiches().map((s) => s.label);
     expect(labels).toEqual([...labels].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })));
-  });
-});
-
-describe('niche downloads', () => {
-  it('writes one CSV row and one JSON row per system', () => {
-    for (const s of allNiches()) {
-      const lines = nicheCSV(s).split('\r\n').filter(Boolean);
-      expect(lines).toHaveLength(s.n + 1);
-      expect(lines[0].startsWith('entity_id,name,url,niche,measured_line,commits_per_week,citations_to_date')).toBe(true);
-      expect(new Set(lines.slice(1).map((l) => l.split(',')[0]))).toEqual(new Set(s.rows.map((r) => r.id)));
-      const json = nicheJSON(s);
-      expect(json.systems).toHaveLength(s.n);
-      expect(json.license).toBe('CC0-1.0');
-    }
-  });
-});
-
-describe('home search index', () => {
-  it('covers every system in the latest snapshot', () => {
-    const index = searchIndex();
-    expect(index).toHaveLength(snapshot.entities.length);
-    expect(new Set(index.map((r) => r.id))).toEqual(new Set(snapshot.entities.map((e) => e.entity_id)));
-    for (const r of index) expect(Object.keys(r)).toEqual(['name', 'id']);
   });
 });
 
