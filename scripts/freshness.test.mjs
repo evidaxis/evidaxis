@@ -257,7 +257,7 @@ test('the release key is the last RELEASE_KEY line in the job log', () => {
   assert.equal(parseActiveWeek('RELEASE_ACTIVE 2026-10-17'), date);
 });
 
-test('17 Oct 13:33 running is late; quiet checks preserve keys and late/released each send once', () => {
+test('17 Oct 13:33 running is late; quiet checks preserve keys; late and released never reach Telegram', () => {
   const facts = { record: record([null, null, null], null), active: true };
   const quiet = evaluateWeeklyRelease({ ...facts, nowIso: early });
   const previousKey = '2026-10-10:released';
@@ -269,7 +269,11 @@ test('17 Oct 13:33 running is late; quiet checks preserve keys and late/released
   assert.match(running.message, /Нужен человек: нет/);
   const released = evaluateWeeklyRelease({ nowIso: late, record: record() });
   for (const release of [running, released]) {
-    assert.equal(decideWeeklyPush({ release, previousKey, nowIso: late }).push, true);
+    // 29 Oct 16:48 UTC the receipt reached the keeper after a failed week; lost keys must not send it either.
+    for (const lost of [previousKey, null, `${date}:failed`]) {
+      assert.deepEqual(decideWeeklyPush({ release, previousKey: lost, previousConclusion: 'failure', nowIso: late }),
+        { push: false, exitCode: 0, notifiedKey: release.key });
+    }
     for (const nowIso of [late, '2026-10-18T06:10:00Z']) {
       assert.deepEqual(decideWeeklyPush({ release, previousKey: release.key, nowIso }),
         { push: false, exitCode: 0, notifiedKey: release.key });

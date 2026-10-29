@@ -85,8 +85,11 @@ export function decideFeedPush(i) {
 }
 
 /**
- * One Telegram push per (week, state); running/publishing share one key.
- * The same state uses alert-gate's daily reminder only when a human is needed or the API could not be read (`remind`).
+ * Telegram carries only states that need the keeper (`remind`): failed, not started, unreadable.
+ * The receipt and "late but moving" stay in the job log, even when the previous keys are lost:
+ * the keeper asked for no "nobody is needed" messages (26.09.2026, again 29.10.2026).
+ * `alert` still lets those states own duplicate snapshot and feed alarms.
+ * One push per (week, state); the same state repeats only through alert-gate's daily reminder.
  * A quiet observation must not overwrite the key of the message already sent,
  * or the late alarm would think it had already fired.
  *
@@ -94,8 +97,6 @@ export function decideFeedPush(i) {
  *   release: { alert: boolean, key: string, remind: boolean },
  *   previousKey?: string|null,
  *   previousConclusion?: string|null,
- *   previousReceiptWeek?: string|null,
- *   previousActiveWeek?: string|null,
  *   nowIso: string,
  * }} i
  * @returns {{ push: boolean, exitCode: 0|1, notifiedKey: string }}
@@ -108,18 +109,11 @@ export function decideWeeklyPush(i) {
   if (!release?.alert) {
     return { push: false, exitCode: 0, notifiedKey: previousKey ?? '' };
   }
-  // Keep the receipt across intervening API errors or a later stage failure.
-  if (release.status === 'released' && i.previousReceiptWeek === release.week) {
-    return { push: false, exitCode: 0, notifiedKey: release.key };
-  }
-  if (['running', 'publishing'].includes(release.status) && i.previousActiveWeek === release.week) {
-    return { push: false, exitCode: 0, notifiedKey: release.key };
-  }
+  if (!release.remind) return { push: false, exitCode: 0, notifiedKey: release.key };
   const same = previousKey === release.key;
-  const gateOpen = shouldPush({ previousConclusion: i.previousConclusion, nowIso: i.nowIso });
   // A missing key means we do not know whether this state was sent. A red previous run may be liveness, not this release, so send.
-  const push = same ? Boolean(release.remind) && gateOpen : true;
-  return { push, exitCode: release.remind ? 1 : 0, notifiedKey: release.key };
+  const push = same ? shouldPush({ previousConclusion: i.previousConclusion, nowIso: i.nowIso }) : true;
+  return { push, exitCode: 1, notifiedKey: release.key };
 }
 
 /**
