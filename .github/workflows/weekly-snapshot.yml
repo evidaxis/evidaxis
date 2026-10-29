@@ -288,6 +288,14 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" > "$OUT/jobs.json" || rm -f "$OUT/jobs.json"
           python3 scripts/rehearsal_report.py --date "$SNAPSHOT_DATE" --summary-dir "$OUT"
 
+      - name: Pack the rehearsal candidate
+        if: ${{ steps.guard.outputs.skip == 'false' && (always() && (inputs.mode == 'rehearsal' || failure())) }}
+        run: |
+          mkdir -p "${{ runner.temp }}/evx-candidate"
+          if [ "$MODE" = "rehearsal" ]; then
+            python3 scripts/rehearsal_drill.py pack --out "${{ runner.temp }}/evx-candidate"
+          fi
+
       - name: Upload snapshot + summary (rehearsal, or any failed run)
         if: ${{ steps.guard.outputs.skip == 'false' && (always() && (inputs.mode == 'rehearsal' || failure())) }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -296,6 +304,7 @@ jobs:
           path: |
             data/snapshots/${{ env.SNAPSHOT_DATE }}/
             ${{ runner.temp }}/evx-summary/
+            ${{ runner.temp }}/evx-candidate/
           if-no-files-found: warn
           retention-days: 14
 
