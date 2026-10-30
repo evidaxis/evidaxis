@@ -1,0 +1,31 @@
+{
+  "private": false,
+  "stargazers_count": 2527,
+  "network_count": 229,
+  "default_branch": "master",
+  "fork": false,
+  "archived": false,
+  "name": "decord",
+  "visibility": "public",
+  "homepage": "",
+  "size": 20424,
+  "pushed_at": "2024-07-17T04:18:40Z",
+  "watchers_count": 2527,
+  "topics": [
+    "video-loader"
+  ],
+  "disabled": false,
+  "full_name": "dmlc/decord",
+  "subscribers_count": 28,
+  "open_issues_count": 221,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNjY0ODM3MTg=",
+  "created_at": "2019-01-18T23:07:31Z",
+  "language": "C++",
+  "description": "An efficient video loader for deep learning with smart shuffling that's super easy to digest",
+  "updated_at": "2026-10-29T06:25:40Z",
+  "id": 166483718,
+  "forks_count": 229,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

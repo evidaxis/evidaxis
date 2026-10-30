@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "stargazers_count": 1911,
+  "network_count": 92,
+  "default_branch": "main",
+  "fork": false,
+  "archived": false,
+  "name": "ocrs",
+  "visibility": "public",
+  "homepage": "",
+  "size": 1257,
+  "pushed_at": "2026-10-27T09:13:14Z",
+  "watchers_count": 1911,
+  "topics": [
+    "computer-vision",
+    "machine-learning",
+    "ocr"
+  ],
+  "disabled": false,
+  "full_name": "robertknight/ocrs",
+  "subscribers_count": 11,
+  "open_issues_count": 22,
+  "node_id": "R_kgDOK_2p3Q",
+  "created_at": "2024-01-02T09:32:23Z",
+  "language": "Rust",
+  "description": "Rust library and CLI tool for OCR (extracting text from images)",
+  "updated_at": "2026-10-30T12:18:24Z",
+  "id": 738044381,
+  "forks_count": 92,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

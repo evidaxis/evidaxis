@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "stargazers_count": 509,
+  "network_count": 24,
+  "default_branch": "main",
+  "fork": false,
+  "archived": false,
+  "name": "rellm",
+  "visibility": "public",
+  "homepage": "",
+  "size": 50,
+  "pushed_at": "2023-08-10T19:42:58Z",
+  "watchers_count": 509,
+  "topics": [
+    "huggingface-transformers",
+    "llm",
+    "transformers"
+  ],
+  "disabled": false,
+  "full_name": "r2d4/rellm",
+  "subscribers_count": 9,
+  "open_issues_count": 5,
+  "node_id": "R_kgDOJfCqlg",
+  "created_at": "2023-05-05T03:51:56Z",
+  "language": "Python",
+  "description": "Exact structure out of any language model completion.",
+  "updated_at": "2026-09-28T08:11:08Z",
+  "id": 636529302,
+  "forks_count": 24,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
