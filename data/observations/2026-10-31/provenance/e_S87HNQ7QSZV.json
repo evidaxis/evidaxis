@@ -1,0 +1,33 @@
+{
+  "size": 1650,
+  "private": false,
+  "pushed_at": "2026-09-06T08:13:51Z",
+  "name": "matmulfreellm",
+  "subscribers_count": 49,
+  "watchers_count": 3102,
+  "description": "Implementation for MatMul-free LM.",
+  "updated_at": "2026-10-31T05:38:26Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 790957648,
+  "fork": false,
+  "forks_count": 204,
+  "created_at": "2024-04-23T20:44:31Z",
+  "default_branch": "master",
+  "full_name": "ridgerchu/matmulfreellm",
+  "stargazers_count": 3102,
+  "open_issues_count": 24,
+  "visibility": "public",
+  "network_count": 204,
+  "topics": [
+    "large-language-model",
+    "linear-transformer",
+    "llm"
+  ],
+  "homepage": "",
+  "node_id": "R_kgDOLyUOUA",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

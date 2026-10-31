@@ -1,0 +1,33 @@
+{
+  "size": 211297,
+  "private": false,
+  "pushed_at": "2026-10-07T10:18:39Z",
+  "name": "lit",
+  "subscribers_count": 58,
+  "watchers_count": 3671,
+  "description": "The Learning Interpretability Tool: Interactively analyze ML models to understand their behavior in an extensible and framework agnostic interface.",
+  "updated_at": "2026-10-30T17:46:19Z",
+  "language": "TypeScript",
+  "disabled": false,
+  "id": 283215238,
+  "fork": false,
+  "forks_count": 365,
+  "created_at": "2020-07-28T13:07:26Z",
+  "default_branch": "main",
+  "full_name": "PAIR-code/lit",
+  "stargazers_count": 3671,
+  "open_issues_count": 138,
+  "visibility": "public",
+  "network_count": 365,
+  "topics": [
+    "machine-learning",
+    "natural-language-processing",
+    "visualization"
+  ],
+  "homepage": "https://pair-code.github.io/lit",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyODMyMTUyMzg=",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "size": 64998,
+  "private": false,
+  "pushed_at": "2026-10-30T13:30:19Z",
+  "name": "compromise",
+  "subscribers_count": 152,
+  "watchers_count": 12168,
+  "description": "modest natural-language processing",
+  "updated_at": "2026-10-29T20:22:18Z",
+  "language": "JavaScript",
+  "disabled": false,
+  "id": 1999522,
+  "fork": false,
+  "forks_count": 672,
+  "created_at": "2011-07-05T09:04:38Z",
+  "default_branch": "master",
+  "full_name": "spencermountain/compromise",
+  "stargazers_count": 12168,
+  "open_issues_count": 94,
+  "visibility": "public",
+  "network_count": 672,
+  "topics": [
+    "named-entity-recognition",
+    "nlp",
+    "part-of-speech"
+  ],
+  "homepage": "http://compromise.cool",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxOTk5NTIy",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

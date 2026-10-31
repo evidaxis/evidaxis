@@ -1,0 +1,33 @@
+{
+  "size": 3946,
+  "private": false,
+  "pushed_at": "2024-05-11T19:18:10Z",
+  "name": "DALLE2-pytorch",
+  "subscribers_count": 115,
+  "watchers_count": 11304,
+  "description": "Implementation of DALL-E 2, OpenAI's updated text-to-image synthesis neural network,  in Pytorch",
+  "updated_at": "2026-10-28T15:20:25Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 478823173,
+  "fork": false,
+  "forks_count": 1065,
+  "created_at": "2022-04-07T04:14:08Z",
+  "default_branch": "main",
+  "full_name": "lucidrains/DALLE2-pytorch",
+  "stargazers_count": 11304,
+  "open_issues_count": 73,
+  "visibility": "public",
+  "network_count": 1065,
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "text-to-image"
+  ],
+  "homepage": "",
+  "node_id": "R_kgDOHIpDBQ",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

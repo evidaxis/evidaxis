@@ -1,0 +1,31 @@
+{
+  "size": 7020,
+  "private": false,
+  "pushed_at": "2026-09-27T10:31:01Z",
+  "name": "bilibili-rag",
+  "subscribers_count": 1,
+  "watchers_count": 1355,
+  "description": "B站收藏夹RAG知识库：收藏不吃灰，B 站收藏夹 → 语音转写 → 向量检索 → 对话问答",
+  "updated_at": "2026-10-31T12:35:39Z",
+  "language": "Python",
+  "disabled": false,
+  "id": 1141780838,
+  "fork": false,
+  "forks_count": 100,
+  "created_at": "2026-01-25T12:24:06Z",
+  "default_branch": "main",
+  "full_name": "via007/bilibili-rag",
+  "stargazers_count": 1355,
+  "open_issues_count": 15,
+  "visibility": "public",
+  "network_count": 100,
+  "topics": [
+    "rag-bilibili-knowledge-base-llm-chroma-qwen"
+  ],
+  "homepage": "",
+  "node_id": "R_kgDORA4xZg",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

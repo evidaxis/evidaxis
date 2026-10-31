@@ -1,0 +1,32 @@
+{
+  "size": 11257,
+  "private": false,
+  "pushed_at": "2026-10-30T17:58:59Z",
+  "name": "ai-dial-core",
+  "subscribers_count": 19,
+  "watchers_count": 662,
+  "description": "The main component of AI DIAL, which provides unified API to different chat completion and embedding models, assistants, and applications",
+  "updated_at": "2026-10-30T14:52:08Z",
+  "language": "Java",
+  "disabled": false,
+  "id": 688398456,
+  "fork": false,
+  "forks_count": 44,
+  "created_at": "2023-09-07T09:10:27Z",
+  "default_branch": "development",
+  "full_name": "epam/ai-dial-core",
+  "stargazers_count": 662,
+  "open_issues_count": 152,
+  "visibility": "public",
+  "network_count": 44,
+  "topics": [
+    "ai-dial",
+    "llm"
+  ],
+  "homepage": "https://dialx.ai",
+  "node_id": "R_kgDOKQggeA",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
