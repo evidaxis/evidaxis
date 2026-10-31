@@ -14,10 +14,10 @@ classification:
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 37.5
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 40.8
   percentile: 15
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.007542105262760299, "cohort_z": -1.001, "recent_weekly_commits": 4.5, "stars_not_scored": 19624}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 12, "by_year": {"2026": 12}, "proxy": null}
+    github_commit_velocity: {"slope": -0.0029562785695825947, "cohort_z": -0.739, "recent_weekly_commits": 4.3, "stars_not_scored": 19649}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 13, "by_year": {"2026": 13}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # KTransformers
 
-Evidaxis measures **KTransformers** on methodology m5. Momentum 37.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **KTransformers** on methodology m5. Momentum 40.8/100; 1 axes present, 0 axes converging.

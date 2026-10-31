@@ -14,22 +14,22 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 55.4
-  percentile: 63
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 59.1
+  percentile: 84
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.429, "recent_weekly_commits": 0.0, "stars_not_scored": 2131}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.732, "recent_weekly_commits": 0.0, "stars_not_scored": 2135}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 24, "by_year": {"2026": 12, "2025": 12}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Agentless
 
-Evidaxis measures **Agentless** on methodology m5. Momentum 55.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Agentless** on methodology m5. Momentum 59.1/100; 1 axes present, 0 axes converging.

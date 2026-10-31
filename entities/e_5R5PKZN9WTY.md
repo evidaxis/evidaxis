@@ -14,10 +14,10 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 46.7
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 46.6
   percentile: 36
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.267, "recent_weekly_commits": 0.0, "stars_not_scored": 8423}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 3, "by_year": {"2026": 3}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.268, "recent_weekly_commits": 0.0, "stars_not_scored": 8435}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 4, "by_year": {"2026": 4}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2508.02324; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Qwen-Image
 
-Evidaxis measures **Qwen-Image** on methodology m5. Momentum 46.7/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Qwen-Image** on methodology m5. Momentum 46.6/100; 1 axes present, 0 axes converging.

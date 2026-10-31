@@ -14,10 +14,10 @@ classification:
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 32.4
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 34.3
   percentile: 0
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.022329455825881275, "cohort_z": -1.408, "recent_weekly_commits": 11.7, "stars_not_scored": 8114}
+    github_commit_velocity: {"slope": -0.023296773092816827, "cohort_z": -1.257, "recent_weekly_commits": 11.6, "stars_not_scored": 8126}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
@@ -33,4 +33,4 @@ note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 
 # LMDeploy
 
-Evidaxis measures **LMDeploy** on methodology m5. Momentum 32.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **LMDeploy** on methodology m5. Momentum 34.3/100; 1 axes present, 0 axes converging.

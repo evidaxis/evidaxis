@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 87.8
-  percentile: 94
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 87.1
+  percentile: 92
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: ["github_commit_velocity"]
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": 0.0441191282510232, "cohort_z": 3.02, "recent_weekly_commits": 26.7, "stars_not_scored": 1564}
+    github_commit_velocity: {"slope": 0.03844656617965329, "cohort_z": 2.967, "recent_weekly_commits": 27.5, "stars_not_scored": 1587}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # hve-core
 
-Evidaxis measures **hve-core** on methodology m5. Momentum 87.8/100; 1 axes present, 1 axes converging.
+Evidaxis measures **hve-core** on methodology m5. Momentum 87.1/100; 1 axes present, 1 axes converging.

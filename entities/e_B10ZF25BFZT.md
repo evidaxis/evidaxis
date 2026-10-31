@@ -14,10 +14,10 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 62.4
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 58.2
   percentile: 73
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.04020462554360653, "cohort_z": 0.991, "recent_weekly_commits": 18.1, "stars_not_scored": 12627}
+    github_commit_velocity: {"slope": 0.03728288438938021, "cohort_z": 0.656, "recent_weekly_commits": 18.8, "stars_not_scored": 12650}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 2, "points": 27, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 2, "points": 28, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Axolotl
 
-Evidaxis measures **Axolotl** on methodology m5. Momentum 62.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Axolotl** on methodology m5. Momentum 58.2/100; 1 axes present, 0 axes converging.

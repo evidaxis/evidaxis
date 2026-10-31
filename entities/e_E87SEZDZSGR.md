@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 59.8
-  percentile: 74
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 61.2
+  percentile: 75
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.014121529042225278, "cohort_z": 0.783, "recent_weekly_commits": 89.0, "stars_not_scored": 40692}
+    github_commit_velocity: {"slope": 0.016154277811096348, "cohort_z": 0.897, "recent_weekly_commits": 93.1, "stars_not_scored": 41210}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # OpenViking
 
-Evidaxis measures **OpenViking** on methodology m5. Momentum 59.8/100; 1 axes present, 0 axes converging.
+Evidaxis measures **OpenViking** on methodology m5. Momentum 61.2/100; 1 axes present, 0 axes converging.

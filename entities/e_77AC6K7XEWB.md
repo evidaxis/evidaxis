@@ -14,9 +14,9 @@ classification:
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
   momentum: 51.0
   percentile: 54
   confidence: medium
@@ -25,9 +25,9 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.03144637389048316, "cohort_z": 0.131, "recent_weekly_commits": 604.6, "stars_not_scored": 37678}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 142, "by_year": {"2026": 129, "2025": 10, "2024": 3}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.028935, "theil_sen": 0.027893, "cohort_z": 0.029, "latest": 14, "points": 27, "points_reconstructable": 15, "as_of_partition": "2026-10-05", "unstable": false, "rising_vote": false}
+    github_commit_velocity: {"slope": 0.03213161306304965, "cohort_z": 0.16, "recent_weekly_commits": 628.8, "stars_not_scored": 38308}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 145, "by_year": {"2026": 132, "2025": 10, "2024": 3}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.028047, "theil_sen": 0.026648, "cohort_z": 0.0, "latest": 14, "points": 28, "points_reconstructable": 15, "as_of_partition": "2026-10-12", "unstable": false, "rising_vote": false}
 note: "paper_ref: 2312.07104; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 

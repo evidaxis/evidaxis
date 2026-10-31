@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 22.2
-  percentile: 13
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 29.1
+  percentile: 16
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.030683918578479852, "cohort_z": -2.226, "recent_weekly_commits": 0.0, "stars_not_scored": 880}
+    github_commit_velocity: {"slope": -0.023145728214548803, "cohort_z": -1.676, "recent_weekly_commits": 0.0, "stars_not_scored": 881}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # terrain-diffusion-mc
 
-Evidaxis measures **terrain-diffusion-mc** on methodology m5. Momentum 22.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **terrain-diffusion-mc** on methodology m5. Momentum 29.1/100; 1 axes present, 0 axes converging.

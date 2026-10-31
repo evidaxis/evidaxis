@@ -14,10 +14,10 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 9a3f0a2522ac
-  captured_at: 2026-10-24T03:35:10+00:00
-  period: 2026-w43
-  momentum: 72.2
+  snapshot_id: d1eb0cec0f6a
+  captured_at: 2026-10-31T03:43:22+00:00
+  period: 2026-w44
+  momentum: 63.5
   percentile: 100
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": 0.032796802839351866, "cohort_z": 0.546, "recent_weekly_commits": 92.0, "stars_not_scored": 8447}
-    openalex_citation_momentum: {"status": "present", "slope": 1.4133279717550284, "cohort_z": 3.0, "total_citations": 263, "by_year": {"2026": 65, "2025": 151, "2024": 39, "2023": 8}, "proxy": "Orbit (the predecessor framework that became Isaac Lab)"}
+    github_commit_velocity: {"slope": 0.026435328210274677, "cohort_z": 0.601, "recent_weekly_commits": 89.8, "stars_not_scored": 8535}
+    openalex_citation_momentum: {"status": "present", "slope": 1.4133279717550284, "cohort_z": 1.563, "total_citations": 269, "by_year": {"2026": 71, "2025": 151, "2024": 39, "2023": 8}, "proxy": "Orbit (the predecessor framework that became Isaac Lab)"}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Isaac Lab
 
-Evidaxis measures **Isaac Lab** on methodology m5. Momentum 72.2/100; 2 axes present, 1 axes converging.
+Evidaxis measures **Isaac Lab** on methodology m5. Momentum 63.5/100; 2 axes present, 1 axes converging.

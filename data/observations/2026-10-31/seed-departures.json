@@ -1,0 +1,28 @@
+{
+ "snapshot_date": "2026-10-31",
+ "departures": [
+  {
+   "github_repo": "adolfousier/opencrabs",
+   "reason": "repo_id_changed",
+   "old_repo_id": 1157543432,
+   "new_repo_id": 1433808972,
+   "detected_at": "2026-10-31T02:27:02Z"
+  },
+  {
+   "github_repo": "friuns2/codex-mobile",
+   "reason": "gone",
+   "detected_at": "2026-10-31T02:27:02Z"
+  },
+  {
+   "github_repo": "To3akaRin/mac-computer-use",
+   "reason": "gone",
+   "detected_at": "2026-10-31T02:27:02Z"
+  },
+  {
+   "github_repo": "tradecatlabs/vibe-coding-cn",
+   "reason": "gone",
+   "detected_at": "2026-10-31T02:27:02Z"
+  }
+ ],
+ "note": "Seeds retired by the weekly preflight (collectors/gh_graphql.py): the repository is gone on GitHub or its name now resolves to a different repository id. Their history and archived cards stay; they are no longer collected."
+}
