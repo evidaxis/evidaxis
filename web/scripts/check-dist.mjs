@@ -23,7 +23,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, personalOwnerHandles, staleSlugHits } from '../src/lib/personFree.mjs';
 
 assertProductionPaths();
 
@@ -346,10 +346,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   const userIndex = buildHandleIndex([...bannedOwners].filter(([, mode]) => mode === 'substring').map(([owner]) => owner));
   const formerIndex = { all: new Set(formerPersonal), words: new Set() };
   // Archived provenance also names departed repositories outside today's ID map.
-  const provenanceUserIndex = buildHandleIndex([...userIndex.all, ...classifiedRepos.flatMap(repo => {
-    const entry = registry[repo];
-    return entry?.owner_type === 'User' ? [repo.split('/')[0], entry.full_name.split('/')[0]] : [];
-  })]);
+  const provenanceUserIndex = buildHandleIndex([...userIndex.all, ...personalOwnerHandles(registry)]);
   for (const file of distFiles) {
     const r = rel(file);
     // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce

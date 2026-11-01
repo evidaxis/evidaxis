@@ -25,3 +25,14 @@ it('replaces personal locators consistently, including encoded package URLs, wit
   for (const original of [owner, repo, pkg, snapshot.entities[0].homepage]) expect(JSON.stringify(outputs)).not.toContain(original);
   expect(snapshot.entities[0].github_repo).toBe(repo);
 });
+
+it('keeps an organisation that handed one repository to a person', () => {
+  const registry = { repos: {
+    'zz-fixture-org/kept': { owner_type: 'Organization', full_name: 'zz-fixture-org/kept' },
+    'zz-fixture-org/given': { owner_type: 'User', full_name: 'zz-fixture-person/given' },
+  } };
+  const provenance = { github_repos: ['zz-fixture-org/kept', 'zz-fixture-org/given'] };
+  const output = fixtureAnonymizer([provenance, registry], registry, {})(provenance);
+  expect(output.github_repos[0]).toBe('zz-fixture-org/kept');
+  expect(output.github_repos[1]).toMatch(/^fixture-user-[a-f0-9]+\/fixture-repo-[a-f0-9]+$/);
+});
