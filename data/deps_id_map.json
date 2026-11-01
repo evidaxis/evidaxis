@@ -6826,6 +6826,11 @@
       "package": "reasoning-gym",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "openMVG/openMVG": {
+      "system": "cargo",
+      "package": "openmvg",
+      "pinned_at": "2026-11-01T14:45:37Z"
+    },
     "openagents-org/openagents": {
       "system": "pypi",
       "package": "openagents",

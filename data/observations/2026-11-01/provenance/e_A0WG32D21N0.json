@@ -1,0 +1,32 @@
+{
+  "full_name": "NVIDIA/NeMo-text-processing",
+  "private": false,
+  "updated_at": "2026-10-29T16:03:45Z",
+  "homepage": "https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/stable/nlp/text_normalization/wfst/wfst_text_normalization.html",
+  "fork": false,
+  "stargazers_count": 516,
+  "archived": false,
+  "pushed_at": "2026-10-29T08:40:16Z",
+  "node_id": "R_kgDOIX5odA",
+  "description": "NeMo text processing for ASR and TTS",
+  "watchers_count": 516,
+  "open_issues_count": 24,
+  "network_count": 193,
+  "visibility": "public",
+  "forks_count": 193,
+  "size": 28048,
+  "name": "NeMo-text-processing",
+  "default_branch": "main",
+  "id": 561932404,
+  "language": "Python",
+  "disabled": false,
+  "topics": [
+    "inverse-text-n",
+    "text-normalization"
+  ],
+  "created_at": "2022-11-04T20:38:24Z",
+  "subscribers_count": 13,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

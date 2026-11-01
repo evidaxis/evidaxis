@@ -1,0 +1,33 @@
+{
+  "full_name": "vita-epfl/CrowdNav",
+  "private": false,
+  "updated_at": "2026-10-25T06:02:17Z",
+  "homepage": "",
+  "fork": false,
+  "stargazers_count": 739,
+  "archived": false,
+  "pushed_at": "2022-08-26T14:04:26Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzk3MjkxNzk=",
+  "description": "[ICRA] Crowd-aware Robot Navigation",
+  "watchers_count": 739,
+  "open_issues_count": 31,
+  "network_count": 184,
+  "visibility": "public",
+  "forks_count": 184,
+  "size": 627,
+  "name": "CrowdNav",
+  "default_branch": "master",
+  "id": 139729179,
+  "language": "Python",
+  "disabled": false,
+  "topics": [
+    "collision-avoidance",
+    "crowd-navigation",
+    "reinforcement-learning"
+  ],
+  "created_at": "2018-07-04T13:57:07Z",
+  "subscribers_count": 11,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
