@@ -42,8 +42,9 @@ values. Registries, snapshot/provenance references, pins and observation history
 share the same replacements, including encoded URLs and former personal owners.
 The replacement dictionary exists only in memory. Organization and approved
 project-account identities may remain. Fixture SHA256SUMS cover the anonymized
-bytes. The data suite scans every fixture file against the live personal-owner
-registry; unit tests exercise cross-file locator consistency with invented input.
+bytes. The hygiene suite scans every fixture file against the live personal-owner
+registry and runs with `npm run test:hygiene`. It is not part of `npm run verify`.
+Unit tests exercise cross-file locator consistency with invented input.
 
 The shared unit preload also guards copy/cp sources, metadata reads and watches.
 Node children and grandchildren receive the preload even with an explicit env;

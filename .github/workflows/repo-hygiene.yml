@@ -1,0 +1,39 @@
+name: repo-hygiene
+
+# The frozen fixture is compared with the live owner registry after each snapshot
+# lands on main. A mismatch opens work. It must not fail the site release.
+on:
+  workflow_run:
+    workflows: ["weekly-snapshot", "t2-daily-snapshot"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixture-hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          # workflow_run checks out the commit before the producer's push.
+          # The registry the fixture is compared with is the one on main.
+          ref: main
+          persist-credentials: false
+
+      - name: Set up Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install (web)
+        working-directory: web
+        run: npm ci
+
+      - name: Fixture hygiene
+        working-directory: web
+        run: npm run test:hygiene

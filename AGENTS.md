@@ -2,7 +2,7 @@
 
 ## Commands
 - Python: `PYTHONPATH=. .venv/bin/pytest tests/` (CI mirrors with requirements-dev.txt).
-- Web: `cd web && npm run verify` = vitest run + astro build + astro check + `node scripts/check-dist.mjs` against dist/.
+- Web: `cd web && npm run verify` = `test:run && test:data && build && check (check-dist) && card-b-consistency && badge-dist`. There is no astro check.
 - Prod sensors are dependency-free Node: `node --test scripts/*.test.mjs`.
 
 ## Hard rules (CI fails loudly on each)
@@ -27,6 +27,7 @@
 
 ## Tests
 - A web unit test (`web/src/**/*.test.ts`) pins concrete values to the frozen fixture `web/test-fixtures/2026-10-17`; the unit harness refuses live `data/` and `etl/`. A check over the whole live archive is a data test (`*.data.test.ts`) that states an invariant for every system. Four Saturday releases broke when unit tests read the newest data.
+- Fixture checks against the live registry are hygiene (`npm run test:hygiene`), never part of `verify`.
 - Regenerate the fixture only on purpose, with `node web/scripts/make-test-fixture.mjs`: byte-identical on rerun, personal-account identifiers replaced.
 
 ## Style

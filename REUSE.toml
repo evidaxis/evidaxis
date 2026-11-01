@@ -7,7 +7,7 @@ SPDX-PackageSupplier = "Evidaxis <hello@evidaxis.org>"
 SPDX-PackageDownloadLocation = "https://github.com/evidaxis/evidaxis"
 
 [[annotations]]
-path = ["etl/**", "web/src/**", "web/scripts/**", "web/.foundation-check/**", "scripts/**", "spine/**.py", "tests/**", "collectors/**", "dead-man/**", ".github/**", "deploy.sh", "deploy-preview.sh", "web/vitest.config.ts", "web/vitest.data.config.ts", "web/test/**", "*.toml", "requirements-dev.txt", "web/test-fixtures/README.md", "web/test-fixtures/*/etl/**"]
+path = ["etl/**", "web/src/**", "web/scripts/**", "web/.foundation-check/**", "scripts/**", "spine/**.py", "tests/**", "collectors/**", "dead-man/**", ".github/**", "deploy.sh", "deploy-preview.sh", "web/vitest.config.ts", "web/vitest.data.config.ts", "web/vitest.hygiene.config.ts", "web/test/**", "*.toml", "requirements-dev.txt", "web/test-fixtures/README.md", "web/test-fixtures/*/etl/**"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
 SPDX-License-Identifier = "Apache-2.0"
