@@ -1,9 +1,11 @@
-// Saturday release score. Four unattended on-time Saturdays are required before
-// the release is called repaired. This file counts them from Actions runs and
-// commit receipts. It prints no logins, deploy URLs, or commit messages.
+// Saturday release score. The first line stays the acceptance window from the
+// 2026-10-18 schedule. The series is a trailing run of clean Saturdays: on time,
+// no person, and no repair. A repair must not count as clean. The claim is
+// allowed only at four clean Saturdays with every failure class closed.
+// Prints no logins, deploy URLs, or commit messages.
 //
 // Pure scoring is everything below loadScorecard. loadScorecard is the only
-// network path.
+// network path. Failure classes are a local file, not a request.
 
 import { readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
@@ -11,7 +13,12 @@ import { pathToFileURL } from 'node:url';
 export const FIRST_SATURDAY = '2026-08-29';
 // The acceptance window named in the 2026-10-18 release schedule.
 export const SCORE_SATURDAYS = ['2026-10-24', '2026-10-31', '2026-11-07', '2026-11-14'];
+// GitHub logins of the repair app. Empty until that app exists.
+// A match is actor.type Bot plus one of these logins. The login is not stored.
+export const REPAIR_ACTORS = [];
 const RELEASE_CONTEXTS = ['captured', 'deployed', 'hf'];
+const CLASS_CLOSERS = new Set(['drill', 'pr-check', 'none']);
+const CLOSED_FAILURE = new Set(['failure', 'cancelled', 'timed_out', 'startup_failure']);
 const DAY_MS = 86400000;
 // Five seconds covers a workflow_run recorded in the same second as the capture.
 const DEPLOY_SKEW_MS = 5000;
@@ -22,6 +29,14 @@ export function actorKind(actor) {
   if (actor?.type === 'Bot') return 'bot';
   if (actor?.type === 'User') return 'human';
   return 'unknown';
+}
+
+function isRepairActor(actor) {
+  return Boolean(actor && typeof actor === 'object' && actor.type === 'Bot' && REPAIR_ACTORS.includes(actor.login));
+}
+
+function launchRepair(run) {
+  return run?.repairLaunch === true || isRepairActor(run?.actor);
 }
 
 /**
@@ -145,6 +160,23 @@ function hfCell(statuses) {
   return receipt(statuses, 'hf')?.state || 'нет записи';
 }
 
+function checkSince(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) throw new Error('Invalid --since');
+  const time = Date.parse(`${value}T00:00:00Z`);
+  if (Number.isNaN(time) || new Date(time).toISOString().slice(0, 10) !== value) throw new Error('Invalid --since');
+  return value;
+}
+
+/** Local list. closed_by is drill, pr-check, or none. */
+export function loadReleaseClasses() {
+  const classes = JSON.parse(readFileSync(new URL('./release-classes.json', import.meta.url), 'utf8'));
+  if (!Array.isArray(classes) || classes.some(item => typeof item?.class !== 'string'
+    || !/^\d{4}-\d{2}-\d{2}$/.test(item?.first_seen || '') || !CLASS_CLOSERS.has(item?.closed_by))) {
+    throw new Error('Invalid release classes');
+  }
+  return classes;
+}
+
 /**
  * @param {{
  *   now: string,
@@ -152,9 +184,13 @@ function hfCell(statuses) {
  *   deploys?: object[],
  *   statuses?: Record<string, object[]>,
  *   edits?: Record<string, { at: string, actor: string }[]>,
+ *   repairPrs?: Record<string, object[]>,
  * }} facts
+ * @param {{ since?: string, classes?: { class: string, first_seen: string, closed_by: string }[] }} [options]
+ * `since` limits the rows and the series. The acceptance score stays on SCORE_SATURDAYS.
  */
-export function buildScorecard(facts) {
+export function buildScorecard(facts, options = {}) {
+  const since = options.since ? checkSince(options.since) : null;
   const days = saturdaysThrough(facts.now);
   const weekly = (facts.weekly || []).map(normalizeWeekly).filter(run => run.saturday && run.branch === 'main' && run.event !== 'pull_request');
   const deploys = (facts.deploys || []).map(normalizeDeploy).filter(run => run.branch === 'main' && run.event !== 'pull_request');
@@ -163,8 +199,33 @@ export function buildScorecard(facts) {
     deploys,
     statuses: facts.statuses?.[saturday] || [],
     edits: facts.edits?.[saturday] || [],
+    repairPrs: repairPrsFor(facts.repairPrs, saturday),
   }));
-  return { score: scoreText(rows, facts.now), rows };
+  const shown = since ? rows.filter(row => row.saturday >= since) : rows;
+  const classes = options.classes || loadReleaseClasses();
+  const classesClosed = classes.filter(item => item.closed_by !== 'none').length;
+  const streak = cleanStreak(shown, facts.now);
+  return {
+    score: scoreText(rows, facts.now),
+    series: `${streak} из 4 подряд чисто`,
+    since,
+    classesClosed,
+    classesTotal: classes.length,
+    claim: claimLine(streak, classes),
+    rows: shown,
+  };
+}
+
+function repairPrsFor(repairPrs, saturday) {
+  if (!repairPrs) return [];
+  return Array.isArray(repairPrs) ? repairPrs.filter(pr => pr?.saturday === saturday) : (repairPrs[saturday] || []);
+}
+
+function hasAutoRepair(list) {
+  return (list || []).some(pr => {
+    const labels = pr?.labels ?? [];
+    return (Array.isArray(labels) ? labels : [labels]).some(label => (label?.name || label) === 'auto-repair');
+  });
 }
 
 function normalizeWeekly(run) {
@@ -182,6 +243,7 @@ function normalizeWeekly(run) {
     branch: run.branch || run.head_branch,
     collected: run.collected !== false && run.conclusion !== 'skipped',
     run_attempt: run.run_attempt,
+    repairLaunch: launchRepair(run),
   };
 }
 
@@ -194,6 +256,7 @@ function normalizeDeploy(run) {
     event: run.event,
     actor: actorKind(run.actor),
     branch: run.branch || run.head_branch,
+    repairLaunch: launchRepair(run),
   };
 }
 
@@ -205,8 +268,12 @@ function scoreSaturday(saturday, facts) {
   const publication = success ? publicationDeploy(facts.deploys, success.completed_at, saturday) : { failure: null, success: null };
   const human = humanWeek(path, success, facts.edits, publication.success);
   const onTime = onTimeWeek(saturday, success, publication.success, facts.statuses);
+  const repair = path.some(attempt => attempt.repairLaunch)
+    || Boolean(publication.success?.repairLaunch)
+    || Boolean(publication.failure?.repairLaunch)
+    || hasAutoRepair(facts.repairPrs);
   const decisive = success || attempts.at(-1) || null;
-  return {
+  const row = {
     saturday,
     capture_start: attempts[0]?.started_at ?? null,
     capture_end: decisive?.completed_at ?? null,
@@ -214,11 +281,23 @@ function scoreSaturday(saturday, facts) {
     hf: hfCell(facts.statuses),
     human,
     on_time: onTime,
-    ok: onTime && !human,
+    repair,
     attempts: attempts.map(publicAttempt),
     deploy_failure: publication.failure ? publicAttempt(publication.failure) : null,
     deploy: publication.success ? publicAttempt(publication.success) : null,
   };
+  row.kind = saturdayKind(row);
+  // Clean means the kind, so a repair cannot stay ok.
+  row.ok = row.kind === 'чисто';
+  return row;
+}
+
+/** One kind: a person, a repair, or a clean on-time Saturday. Late weeks have none. */
+export function saturdayKind(score) {
+  if (score?.human) return 'человек';
+  if (score?.repair) return 'авторемонт';
+  if (score?.on_time) return 'чисто';
+  return null;
 }
 
 function publicationDeploy(deploys, captureEnd, saturday) {
@@ -265,10 +344,20 @@ function onTimeWeek(saturday, success, deploy, statuses) {
   return Boolean(success && deploy && beforeNoon(success.completed_at, saturday) && beforeNoon(deploy.completed_at, saturday));
 }
 
+function saturdayStillOpen(row, saturday, nowIso) {
+  const today = String(nowIso).slice(0, 10);
+  const now = stamp(nowIso);
+  const noon = Date.parse(`${saturday}T12:00:00Z`);
+  if (saturday !== today || now === null || now >= noon) return false;
+  const running = row?.attempts?.some(attempt => attempt.status && attempt.status !== 'completed');
+  const closedFailure = !running && row?.attempts?.some(attempt => CLOSED_FAILURE.has(attempt.conclusion));
+  // Before noon, a Saturday with no closed failure can still finish unattended.
+  return !row?.human && !closedFailure;
+}
+
 /** Current streak inside the four acceptance Saturdays. A miss resets it. */
 export function scoreText(rows, nowIso) {
   const today = String(nowIso).slice(0, 10);
-  const now = stamp(nowIso);
   let streak = 0;
   for (const saturday of SCORE_SATURDAYS) {
     if (saturday > today) break;
@@ -277,14 +366,34 @@ export function scoreText(rows, nowIso) {
       streak += 1;
       continue;
     }
-    const noon = Date.parse(`${saturday}T12:00:00Z`);
-    const running = row?.attempts?.some(attempt => attempt.status && attempt.status !== 'completed');
-    const closedFailure = !running && row?.attempts?.some(attempt => ['failure', 'cancelled', 'timed_out', 'startup_failure'].includes(attempt.conclusion));
-    // Before noon, a Saturday with no closed failure can still finish unattended.
-    const stillOpen = saturday === today && now !== null && now < noon && !row?.human && !closedFailure;
-    if (!stillOpen) streak = 0;
+    if (!saturdayStillOpen(row, saturday, nowIso)) streak = 0;
   }
   return `${streak} из 4`;
+}
+
+/** Consecutive clean Saturdays ending at the latest scored Saturday, capped at 4. */
+export function cleanStreak(rows, nowIso) {
+  const today = String(nowIso).slice(0, 10);
+  let end = rows.length;
+  while (end > 0 && rows[end - 1].saturday > today) end -= 1;
+  // An unfinished Saturday is not a result yet, same as the acceptance streak.
+  if (end > 0 && saturdayStillOpen(rows[end - 1], rows[end - 1].saturday, nowIso) && !rows[end - 1].repair) end -= 1;
+  let streak = 0;
+  for (let i = end - 1; i >= 0; i -= 1) {
+    if (saturdayKind(rows[i]) !== 'чисто') break;
+    streak += 1;
+    if (streak === 4) break;
+  }
+  return streak;
+}
+
+export function claimLine(streak, classes) {
+  const total = classes.length;
+  const closed = classes.filter(item => item.closed_by !== 'none').length;
+  if (streak === 4 && total > 0 && closed === total) {
+    return 'можно говорить: «четыре субботы подряд вышли сами вовремя»';
+  }
+  return `можно говорить: «${streak} из 4 подряд; классов закрыто ${closed} из ${total}»`;
 }
 
 function hm(iso, saturday) {
@@ -297,8 +406,8 @@ function hm(iso, saturday) {
 }
 
 export function toMarkdown(card) {
-  const head = '| суббота | старт сбора UTC | конец сбора | конец выкладки | HF | человек | к 12:00 | итог |';
-  const rule = '| --- | --- | --- | --- | --- | --- | --- | --- |';
+  const head = '| суббота | старт сбора UTC | конец сбора | конец выкладки | HF | человек | к 12:00 | итог | вид |';
+  const rule = '| --- | --- | --- | --- | --- | --- | --- | --- | --- |';
   const lines = card.rows.map(row => `| ${[
     row.saturday,
     row.attempts.length ? row.attempts.map(attempt => `${hm(attempt.started_at, row.saturday)} ${attempt.conclusion || attempt.event || '—'}`).join('; ') : '—',
@@ -308,8 +417,23 @@ export function toMarkdown(card) {
     row.human ? 'да' : 'нет',
     row.on_time ? 'да' : 'нет',
     row.ok ? 'ok' : 'нет',
+    row.kind || '—',
   ].join(' | ')} |`);
-  return [`${card.score}`, '', head, rule, ...lines].join('\n');
+  // Without --since the first line stays the acceptance window. With --since the
+  // table is a different set, so the first line is the series of that set.
+  const summary = card.since
+    ? [card.series]
+    : [card.score, card.series];
+  return [
+    ...summary,
+    `классов закрыто ${card.classesClosed} из ${card.classesTotal}`,
+    '',
+    head,
+    rule,
+    ...lines,
+    '',
+    card.claim,
+  ].join('\n');
 }
 
 function span(startIso, endIso, saturday) {
@@ -432,7 +556,7 @@ async function loadEdits(repo, token, weekly) {
   return edits;
 }
 
-export async function loadScorecard(env = process.env, now = new Date()) {
+export async function loadScorecard(env = process.env, now = new Date(), options = {}) {
   const token = env.GITHUB_TOKEN || env.GH_TOKEN;
   if (!token) throw new Error('GITHUB_TOKEN or GH_TOKEN missing');
   const repo = repoOf(env);
@@ -462,6 +586,7 @@ export async function loadScorecard(env = process.env, now = new Date()) {
       branch: run.head_branch,
       collected,
       run_attempt: run.run_attempt,
+      repairLaunch: isRepairActor(run.actor),
     });
   }
   const deploys = deployRuns.map(run => ({
@@ -472,17 +597,24 @@ export async function loadScorecard(env = process.env, now = new Date()) {
     event: run.event,
     actor: actorKind(run.actor),
     branch: run.head_branch,
+    repairLaunch: isRepairActor(run.actor),
   }));
   const days = saturdaysThrough(nowIso);
   const [statuses, edits] = await Promise.all([
     loadStatuses(repo, token, days),
     loadEdits(repo, token, weekly),
   ]);
-  return buildScorecard({ now: nowIso, weekly, deploys, statuses, edits });
+  return buildScorecard({ now: nowIso, weekly, deploys, statuses, edits }, options);
+}
+
+function sinceFlag(argv) {
+  const index = argv.indexOf('--since');
+  if (index === -1) return undefined;
+  return checkSince(argv[index + 1]);
 }
 
 async function main() {
-  const card = await loadScorecard();
+  const card = await loadScorecard(process.env, new Date(), { since: sinceFlag(process.argv) });
   console.log(process.argv.includes('--json') ? JSON.stringify(card, null, 2) : toMarkdown(card));
 }
 
