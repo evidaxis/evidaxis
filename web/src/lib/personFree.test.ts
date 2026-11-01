@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, personalOwnerHandles, staleSlugHits } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, personalOwnerHandles, personalStalePaths, staleSlugHits } from './personFree.mjs';
 
 describe('stale Organization repository paths', () => {
   const staleSlugs = new Set(['labs/widget']);
@@ -148,5 +148,20 @@ describe('personalOwnerHandles', () => {
   it('keeps a former owner that is not an Organization today', () => {
     const registry = { 'gone-person/given': entry('User', 'a-person/given', 2) };
     expect(personalOwnerHandles(registry).sort()).toEqual(['a-person', 'gone-person']);
+  });
+});
+
+describe('personalStalePaths', () => {
+  const entry = (owner_type: string, full_name: string, repo_id: number) => ({ owner_type, full_name, repo_id });
+
+  it('lists the old path of every repository a person owns under a new owner', () => {
+    const registry = {
+      'big-org/kept': entry('Organization', 'big-org/kept', 1),
+      'Big-Org/Given': entry('User', 'a-person/given', 2),
+      'gone-person/moved': entry('User', 'a-person/moved', 3),
+      'a-person/same': entry('User', 'a-person/same', 4),
+      'old-person/tool': entry('Organization', 'new-lab/tool', 5),
+    };
+    expect(personalStalePaths(registry).sort()).toEqual(['big-org/given', 'gone-person/moved']);
   });
 });

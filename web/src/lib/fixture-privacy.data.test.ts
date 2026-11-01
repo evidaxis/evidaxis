@@ -2,19 +2,25 @@ import { expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { REPO_ROOT, FIXTURE_ROOT } from './path-policy.mjs';
-import { applyProjectAccounts, buildHandleIndex, handleHitsDecoded, personalOwnerHandles, FLOOR_HANDLES } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHitsDecoded, lenientDecoded, personalOwnerHandles, personalStalePaths, staleSlugHits, FLOOR_HANDLES } from './personFree.mjs';
 
 it('stores no live personal owner in any generated fixture file', () => {
   const registry = JSON.parse(readFileSync(join(REPO_ROOT, 'etl/owner_types.json'), 'utf8'));
   const accounts = JSON.parse(readFileSync(join(REPO_ROOT, 'etl/project_accounts.json'), 'utf8')).accounts;
   applyProjectAccounts(registry.repos, accounts);
   const index = buildHandleIndex([...personalOwnerHandles(registry.repos), ...FLOOR_HANDLES]);
+  const stalePaths = new Set(personalStalePaths(registry.repos));
+  const orgPaths = Object.values(registry.repos).filter((entry: any) => entry.owner_type === 'Organization')
+    .map((entry: any) => entry.full_name.toLowerCase());
   const failures: string[] = [];
   function scan(dir: string) {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
       const path = join(dir, entry.name);
       if (entry.isDirectory()) scan(path);
-      else if (handleHitsDecoded(readFileSync(path, 'utf8') + '\n' + relative(FIXTURE_ROOT, path), index).length) {
+      else {
+        const text = readFileSync(path, 'utf8') + '\n' + relative(FIXTURE_ROOT, path);
+        const lower = `${text}\n${lenientDecoded(text)}`.toLowerCase();
+        if (!handleHitsDecoded(text, index).length && !staleSlugHits(lower, stalePaths, orgPaths).length) continue;
         // Report paths only; failures must not create another personal-identifier log.
         failures.push(relative(FIXTURE_ROOT, path));
       }
