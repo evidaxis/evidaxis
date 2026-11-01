@@ -7,7 +7,7 @@ SPDX-PackageSupplier = "Evidaxis <hello@evidaxis.org>"
 SPDX-PackageDownloadLocation = "https://github.com/evidaxis/evidaxis"
 
 [[annotations]]
-path = ["etl/**", "web/src/**", "web/scripts/**", "web/.foundation-check/**", "scripts/**", "spine/**.py", "tests/**", "collectors/**", "dead-man/**", ".github/**", "deploy.sh", "deploy-preview.sh", "web/vitest.config.ts", "*.toml", "requirements-dev.txt"]
+path = ["etl/**", "web/src/**", "web/scripts/**", "web/.foundation-check/**", "scripts/**", "spine/**.py", "tests/**", "collectors/**", "dead-man/**", ".github/**", "deploy.sh", "deploy-preview.sh", "web/vitest.config.ts", "web/vitest.data.config.ts", "web/test/**", "*.toml", "requirements-dev.txt", "web/test-fixtures/README.md", "web/test-fixtures/*/etl/**"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
 SPDX-License-Identifier = "Apache-2.0"
@@ -26,7 +26,7 @@ SPDX-FileCopyrightText = "2026 Evidaxis <hello@evidaxis.org>"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
-path = ["data/**", "entities/**", "taxonomy/**", "relationships.tsv", "redirects.yaml"]
+path = ["data/**", "entities/**", "taxonomy/**", "relationships.tsv", "redirects.yaml", "web/test-fixtures/*/data/**", "web/test-fixtures/*/selection.json"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "NONE"
 SPDX-License-Identifier = "CC0-1.0"
