@@ -16,30 +16,12 @@ on:
   workflow_run:
     workflows: ["weekly-snapshot", "t2-daily-snapshot"]
     types: [completed]
+  # No path filter: test_license_coverage reads every tracked file. A filtered push
+  # let new files outside REUSE.toml land green three times (web/.foundation-check
+  # 2026-09-24, governance key files 2026-10-19, web/test-fixtures 2026-10-29), and
+  # the gate went red only on the next bot snapshot, a day later.
   push:
-    paths:
-      - "etl/**"
-      - "tests/**"
-      - "collectors/**"
-      - "methodology/**"
-      - "web/src/lib/methodology-registry.json"
-      - "data/observations/**"
-      - "genesis-deposit/code/**"
-      - "pyproject.toml"
-      - "REUSE.toml"  # the license-coverage test reads it; changes must re-run the gate
-      - "requirements-dev.txt"
-      - ".github/workflows/python-ci.yml"
   pull_request:
-    paths:
-      - "etl/**"
-      - "tests/**"
-      - "collectors/**"
-      - "methodology/**"
-      - "web/src/lib/methodology-registry.json"
-      - "data/observations/**"
-      - "genesis-deposit/code/**"
-      - "pyproject.toml"
-      - "requirements-dev.txt"
   workflow_dispatch:
 
 jobs:
