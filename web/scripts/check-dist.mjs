@@ -23,7 +23,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, personalOwnerHandles, staleSlugHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, lenientDecoded, personalOwnerHandles, personalStalePaths, staleSlugHits } from '../src/lib/personFree.mjs';
 
 assertProductionPaths();
 
@@ -347,6 +347,9 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   const formerIndex = { all: new Set(formerPersonal), words: new Set() };
   // Archived provenance also names departed repositories outside today's ID map.
   const provenanceUserIndex = buildHandleIndex([...userIndex.all, ...personalOwnerHandles(registry)]);
+  // Archived rows outside today's ID map keep their exact old path banned too: the
+  // Organization that handed a repository to a person is not banned by name.
+  for (const path of personalStalePaths(registry)) staleSlugs.add(path);
   for (const file of distFiles) {
     const r = rel(file);
     // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce
@@ -379,7 +382,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     const privacyIndex = /(^|\/)provenance\.json$/.test(r) ? provenanceUserIndex : userIndex;
     for (const owner of handleHitsDecoded(body, privacyIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
     for (const owner of handleHits(body, formerIndex)) errors.push(`${r}: contains former repository owner ${owner} in a GitHub path`);
-    for (const slug of staleSlugHits(body, staleSlugs, canonicalPaths)) {
+    for (const slug of staleSlugHits(`${body}\n${lenientDecoded(body)}`, staleSlugs, canonicalPaths)) {
       errors.push(`${r}: contains stale repository path ${slug}`);
     }
   }

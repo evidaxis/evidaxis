@@ -48,8 +48,16 @@ export function fixtureAnonymizer(documents, registry, accounts, formerOwners = 
   // are replaced only as exact values or in account contexts, not ordinary prose.
   for (const [owner, replacement] of owners) if (owner.length >= 4 && !/^\d+$/.test(owner)) replacements.set(owner, replacement);
   const escaped = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Up to three encoding rounds, as many as the guards decode (lenientDecoded).
   for (const [source, replacement] of [...replacements]) {
-    replacements.set(encodeURIComponent(source).toLowerCase(), encodeURIComponent(replacement));
+    let key = source, value = replacement;
+    for (let round = 0; round < 3; round += 1) {
+      const next = encodeURIComponent(key).toLowerCase();
+      if (round > 0 && next === key) break;
+      key = next;
+      value = encodeURIComponent(value);
+      replacements.set(key, value);
+    }
   }
   const pattern = new RegExp(`(?<![a-z0-9_-])(?:${[...replacements.keys()].sort((a, b) => b.length - a.length || a.localeCompare(b, 'en')).map(escaped).join('|')})(?![a-z0-9_-])`, 'gi');
   function text(value) {

@@ -8,6 +8,7 @@ import { publicProvenance } from './public_provenance';
 import { snapshots, readSnapshotArtifactRaw } from './archive';
 import { ownerTypes } from './data';
 import handles from '../data/person-free-handles.json';
+import { personalStalePaths } from './personFree.mjs';
 import { GET } from '../pages/snapshots/[date]/provenance.json';
 
 // Real personal handles come from the data at run time; none is written in this file.
@@ -68,3 +69,37 @@ it.each([['ban-list handle', bannedHandle], ['registry personal owner', userLogi
     }
   },
 );
+
+// 2026-11-01: an Organization handed a repository to a person. Its name is not banned,
+// so the exact old path must be, in archived provenance too and after repeated encoding.
+const stalePaths = personalStalePaths(ownerTypes.repos);
+it.runIf(stalePaths.length > 0)('check-dist rejects the old path of every repository a person owns today', () => {
+  const fixture = mkdtempSync(join(tmpdir(), 'evx-stale-provenance-'));
+  try {
+    const dist = join(fixture, 'dist');
+    const data = join(fixture, 'data');
+    const date = '2026-09-26';
+    const archive = join(dist, 'snapshots', date);
+    mkdirSync(archive, { recursive: true });
+    mkdirSync(join(data, 'snapshots'), { recursive: true });
+    writeFileSync(join(data, 'latest.json'), JSON.stringify({ snapshot_date: date }));
+    const path = join(archive, 'provenance.json');
+    const projected = publicProvenance(readSnapshotArtifactRaw(date, 'provenance.json')!, ownerTypes);
+    const twice = (value: string) => encodeURIComponent(encodeURIComponent(value));
+    writeFileSync(path, JSON.stringify({ ...projected, injected: stalePaths, injected_twice: stalePaths.map(twice) }));
+    const run = spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
+      encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },
+    });
+    expect(run.status).toBe(1);
+    // Count, not paths: a failing run must not print personal locators into the CI log.
+    const hits = run.stderr.split('\n').filter((line) => line.includes(`snapshots/${date}/provenance.json: contains stale repository path`));
+    expect(hits.length).toBe(stalePaths.length);
+    writeFileSync(path, JSON.stringify({ ...projected, injected_twice: stalePaths.map(twice) }));
+    const encodedOnly = spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
+      encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },
+    });
+    expect(encodedOnly.stderr.split('\n').filter((line) => line.includes('contains stale repository path')).length).toBe(stalePaths.length);
+  } finally {
+    rmSync(fixture, { recursive: true, force: true });
+  }
+});

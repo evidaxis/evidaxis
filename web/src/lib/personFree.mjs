@@ -114,6 +114,16 @@ export function personalOwnerHandles(registry) {
   return [...handles];
 }
 
+// Stored paths of repositories a person owns today under another owner. GitHub redirects
+// them to the personal repository, so each is a personal locator even when the former
+// owner is a public Organization whose name personalOwnerHandles leaves unbanned.
+export function personalStalePaths(registry) {
+  return Object.entries(registry || {})
+    .filter(([stored, entry]) => entry?.owner_type === 'User' && typeof entry.full_name === 'string'
+      && stored.split('/')[0].toLowerCase() !== entry.full_name.split('/')[0].toLowerCase())
+    .map(([stored]) => stored.toLowerCase());
+}
+
 // A listed User account that is a project's identity is published like an Organization.
 // The owner-types file stays unchanged; callers pass the accounts map (missing file = {}).
 export function applyProjectAccounts(registry, accounts) {

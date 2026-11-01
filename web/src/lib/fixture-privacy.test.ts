@@ -31,8 +31,13 @@ it('keeps an organisation that handed one repository to a person', () => {
     'zz-fixture-org/kept': { owner_type: 'Organization', full_name: 'zz-fixture-org/kept' },
     'zz-fixture-org/given': { owner_type: 'User', full_name: 'zz-fixture-person/given' },
   } };
-  const provenance = { github_repos: ['zz-fixture-org/kept', 'zz-fixture-org/given'] };
+  const provenance = {
+    github_repos: ['zz-fixture-org/kept', 'zz-fixture-org/given'],
+    note: 'zz-fixture-org%2Fgiven zz-fixture-org%252Fgiven zz-fixture-org%25252Fgiven',
+  };
   const output = fixtureAnonymizer([provenance, registry], registry, {})(provenance);
   expect(output.github_repos[0]).toBe('zz-fixture-org/kept');
   expect(output.github_repos[1]).toMatch(/^fixture-user-[a-f0-9]+\/fixture-repo-[a-f0-9]+$/);
+  // The old path is a locator of a personal repository in every encoding the guards decode.
+  expect(output.note.toLowerCase()).not.toContain('zz-fixture-org');
 });
