@@ -142,7 +142,8 @@ def _benign_changes(root: Path, date: str) -> tuple[dict[Path, dict], dict]:
     def peers(path: str) -> list[str]:
         return [p for p in eligible if owner(p) == owner(path)]
 
-    for letter in "abcdefghij":
+    # Reserve multi-system and Pages organizations before an unconstrained rename.
+    for letter in "acbdefghij":
         kind = "Organization" if letter in "abcgh" else "User"
         candidates = [p for p in eligible if p not in used and repos[p]["owner_type"] == kind
                       and (kind != "User" or owner(p) not in accounts)]
@@ -243,7 +244,7 @@ def _benign_changes(root: Path, date: str) -> tuple[dict[Path, dict], dict]:
     changes = {root / "etl/owner_types.json": owners, root / "etl/id_map.json": id_map,
                root / "etl/seeds.json": seeds, root / f"data/snapshots/{date}/snapshot.json": snapshot,
                root / departure_path: record}
-    return changes, {"drill": "benign_all", "date": date, "cases": cases}
+    return changes, {"drill": "benign_all", "date": date, "cases": sorted(cases, key=lambda c: c["class"])}
 
 
 def _apply_benign(root: Path, date: str) -> Path:
@@ -296,8 +297,14 @@ def oracle_findings(dist_dir: Path, hf_dir: Path, manifest: dict) -> list[str]:
                 continue
             file_count += 1
             blob = path.relative_to(folder).as_posix() + "\n" + path.read_bytes().decode("utf-8", errors="replace")
-            blob = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m[1], 16)), blob).replace(r"\/", "/")
-            blob = html.unescape(unquote(blob)).lower()
+            # Bound nested decoding while exposing escapes hidden by another encoding.
+            for _ in range(3):
+                decoded = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m[1], 16)), blob).replace(r"\/", "/")
+                decoded = unquote(html.unescape(decoded))
+                if decoded == blob:
+                    break
+                blob = decoded
+            blob = blob.lower()
             for letter, forbidden, _ in rules:
                 hits[letter] += sum(bool(pattern.search(blob)) for pattern in forbidden)
                 missing[letter] = {pattern for pattern in missing[letter] if not pattern.search(blob)}
