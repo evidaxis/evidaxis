@@ -164,6 +164,8 @@ function checkSince(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) throw new Error('Invalid --since');
   const time = Date.parse(`${value}T00:00:00Z`);
   if (Number.isNaN(time) || new Date(time).toISOString().slice(0, 10) !== value) throw new Error('Invalid --since');
+  // No release runs exist before the first scored Saturday, so an earlier --since would drop rows in silence.
+  if (value < FIRST_SATURDAY) throw new Error(`--since must be on or after ${FIRST_SATURDAY}`);
   return value;
 }
 
@@ -221,10 +223,15 @@ function repairPrsFor(repairPrs, saturday) {
   return Array.isArray(repairPrs) ? repairPrs.filter(pr => pr?.saturday === saturday) : (repairPrs[saturday] || []);
 }
 
-function hasAutoRepair(list) {
+function hasAutoRepair(list, saturday) {
+  const start = Date.parse(`${saturday}T00:00:00Z`);
+  // Same D…D+3 window as a legacy run: Saturday 00:00 through Tuesday 23:59:59 UTC.
+  const end = start + 4 * DAY_MS;
   return (list || []).some(pr => {
     const labels = pr?.labels ?? [];
-    return (Array.isArray(labels) ? labels : [labels]).some(label => (label?.name || label) === 'auto-repair');
+    const labeled = (Array.isArray(labels) ? labels : [labels]).some(label => (label?.name || label) === 'auto-repair');
+    const merged = stamp(pr?.merged_at);
+    return labeled && merged !== null && merged >= start && merged < end;
   });
 }
 
@@ -271,7 +278,7 @@ function scoreSaturday(saturday, facts) {
   const repair = path.some(attempt => attempt.repairLaunch)
     || Boolean(publication.success?.repairLaunch)
     || Boolean(publication.failure?.repairLaunch)
-    || hasAutoRepair(facts.repairPrs);
+    || hasAutoRepair(facts.repairPrs, saturday);
   const decisive = success || attempts.at(-1) || null;
   const row = {
     saturday,
@@ -349,9 +356,11 @@ function saturdayStillOpen(row, saturday, nowIso) {
   const now = stamp(nowIso);
   const noon = Date.parse(`${saturday}T12:00:00Z`);
   if (saturday !== today || now === null || now >= noon) return false;
+  // A successful publication is already a result, even before noon.
+  if (row?.deploy?.conclusion === 'success') return false;
   const running = row?.attempts?.some(attempt => attempt.status && attempt.status !== 'completed');
   const closedFailure = !running && row?.attempts?.some(attempt => CLOSED_FAILURE.has(attempt.conclusion));
-  // Before noon, a Saturday with no closed failure can still finish unattended.
+  // Before noon, a Saturday with no publication and no closed failure can still finish unattended.
   return !row?.human && !closedFailure;
 }
 

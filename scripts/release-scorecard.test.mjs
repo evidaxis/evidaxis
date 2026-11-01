@@ -287,7 +287,7 @@ test('a repair-app deploy is not clean, and the series does not grow', () => {
     assert.equal(saturdayKind(row(stranger, '2026-11-14')), 'чисто');
     assert.equal(JSON.stringify(stranger).includes('not-the-repair-app'), false);
     const viaPr = buildScorecard(releaseFacts([cleanWeek('2026-11-14')], {
-      repairPrs: { '2026-11-14': [{ labels: ['auto-repair'] }] },
+      repairPrs: { '2026-11-14': [{ labels: ['auto-repair'], merged_at: '2026-11-16T12:00:00Z' }] },
     }));
     assert.equal(saturdayKind(row(viaPr, '2026-11-14')), 'авторемонт');
     assert.equal(viaPr.series, '0 из 4 подряд чисто');
@@ -336,6 +336,70 @@ test('four clean Saturdays can be claimed only when every class is closed', () =
   assert.equal(rolled.score, '4 из 4');
   assert.equal(toMarkdown(rolled).startsWith('2 из 4 подряд чисто\n'), true);
   assert.throws(() => buildScorecard(load('streak-four'), { since: '2026-02-31' }), /Invalid --since/);
+  assert.throws(
+    () => buildScorecard(load('streak-four'), { since: '2026-08-28' }),
+    /--since must be on or after 2026-08-29/,
+  );
+  assert.equal(buildScorecard(load('streak-four'), { since: '2026-08-29' }).rows[0].saturday, '2026-08-29');
+});
+
+test('a clean Saturday that already published before noon stays in the series', () => {
+  const early = load('streak-four');
+  early.now = '2026-11-14T11:59:59Z';
+  const card = buildScorecard(early);
+  assert.equal(saturdayKind(row(card, '2026-11-14')), 'чисто');
+  assert.equal(card.series, '4 из 4 подряд чисто');
+
+  const unfinished = load('streak-four');
+  unfinished.now = '2026-11-14T11:59:59Z';
+  unfinished.weekly = unfinished.weekly.filter(attempt => attempt.saturday !== '2026-11-14');
+  unfinished.deploys = unfinished.deploys.filter(attempt => !attempt.started_at.startsWith('2026-11-14'));
+  unfinished.statuses['2026-11-14'] = [];
+  assert.equal(buildScorecard(unfinished).series, '3 из 4 подряд чисто');
+
+  const failed = load('streak-four');
+  failed.now = '2026-11-14T11:59:59Z';
+  failed.weekly = failed.weekly.filter(attempt => attempt.saturday !== '2026-11-14');
+  failed.deploys = failed.deploys.filter(attempt => !attempt.started_at.startsWith('2026-11-14'));
+  failed.statuses['2026-11-14'] = [];
+  failed.weekly.push({
+    saturday: '2026-11-14',
+    started_at: '2026-11-14T02:17:00Z',
+    completed_at: '2026-11-14T02:25:00Z',
+    status: 'completed',
+    conclusion: 'failure',
+    event: 'workflow_dispatch',
+    actor: 'bot',
+    branch: 'main',
+    collected: true,
+    run_attempt: 1,
+  });
+  assert.equal(buildScorecard(failed).series, '0 из 4 подряд чисто');
+});
+
+test('an unmerged auto-repair pull request does not mark the Saturday', () => {
+  const open = load('streak-four');
+  open.repairPrs = { '2026-11-14': [{ labels: ['auto-repair'], state: 'open', merged_at: null }] };
+  const card = buildScorecard(open);
+  assert.equal(saturdayKind(row(card, '2026-11-14')), 'чисто');
+  assert.equal(card.series, '4 из 4 подряд чисто');
+
+  const closed = load('streak-four');
+  closed.repairPrs = { '2026-11-14': [{ labels: ['auto-repair'], state: 'closed', merged_at: null }] };
+  assert.equal(saturdayKind(row(buildScorecard(closed), '2026-11-14')), 'чисто');
+
+  const afterTuesday = load('streak-four');
+  afterTuesday.repairPrs = {
+    '2026-11-14': [{ labels: ['auto-repair'], state: 'closed', merged_at: '2026-11-18T00:00:00Z' }],
+  };
+  assert.equal(saturdayKind(row(buildScorecard(afterTuesday), '2026-11-14')), 'чисто');
+
+  const onTuesday = load('streak-four');
+  onTuesday.repairPrs = {
+    '2026-11-14': [{ labels: [{ name: 'auto-repair' }], state: 'closed', merged_at: '2026-11-17T23:59:59Z' }],
+  };
+  assert.equal(saturdayKind(row(buildScorecard(onTuesday), '2026-11-14')), 'авторемонт');
+  assert.equal(buildScorecard(onTuesday).series, '0 из 4 подряд чисто');
 });
 
 test('a dispatch inside a clock tick window is the clock, not a person', async () => {
