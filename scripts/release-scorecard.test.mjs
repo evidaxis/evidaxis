@@ -4,7 +4,9 @@ import { readFileSync } from 'node:fs';
 import {
   actorKind,
   buildScorecard,
+  REPAIR_ACTORS,
   releaseSaturday,
+  saturdayKind,
   snapshotSkipped,
   toMarkdown,
 } from './release-scorecard.mjs';
@@ -199,6 +201,141 @@ test('four unattended Saturdays from 24 Oct score 4 of 4, and a miss on the thir
   assert.equal(snapshotSkipped({ jobs: [{ name: 'snapshot', conclusion: 'success', steps: [
     { name: 'Collect snapshot (keyed OpenAlex; capture pass + completeness gate)', conclusion: 'success' },
   ] }] }), false);
+});
+
+function cleanWeek(saturday, deploy = {}) {
+  return {
+    weekly: {
+      saturday,
+      started_at: `${saturday}T02:17:00Z`,
+      completed_at: `${saturday}T11:00:00Z`,
+      status: 'completed',
+      conclusion: 'success',
+      event: 'workflow_dispatch',
+      actor: 'bot',
+      branch: 'main',
+      collected: true,
+      run_attempt: 1,
+    },
+    deploy: {
+      started_at: `${saturday}T11:00:01Z`,
+      completed_at: `${saturday}T11:10:00Z`,
+      status: 'completed',
+      conclusion: 'success',
+      event: 'workflow_run',
+      actor: 'bot',
+      branch: 'main',
+      ...deploy,
+    },
+    statuses: ['captured', 'deployed', 'hf'].map(stage => ({
+      context: `evidaxis/release-${stage}`,
+      state: 'success',
+      updated_at: `${saturday}T11:00:00Z`,
+    })),
+  };
+}
+
+function releaseFacts(weeks, extra = {}) {
+  const weekly = [];
+  const deploys = [];
+  const statuses = {};
+  for (const week of weeks) {
+    weekly.push(week.weekly);
+    deploys.push(week.deploy);
+    statuses[week.weekly.saturday] = week.statuses;
+  }
+  return {
+    now: `${weeks.at(-1).weekly.saturday}T18:00:00Z`,
+    weekly,
+    deploys,
+    statuses,
+    edits: {},
+    ...extra,
+  };
+}
+
+test('a human-launched deploy is a person and the clean series stays at 0', () => {
+  const card = buildScorecard(releaseFacts([
+    cleanWeek('2026-10-24', { event: 'workflow_dispatch', actor: 'human' }),
+  ]));
+  assert.equal(saturdayKind(row(card, '2026-10-24')), 'человек');
+  assert.equal(card.series, '0 из 4 подряд чисто');
+  assert.equal(card.claim.includes('починено'), false);
+});
+
+test('a repair-app deploy is not clean, and the series does not grow', () => {
+  REPAIR_ACTORS.push('repair-app[bot]');
+  try {
+    const prior = buildScorecard(releaseFacts([
+      cleanWeek('2026-11-07'),
+      cleanWeek('2026-11-14'),
+    ]));
+    assert.equal(prior.series, '2 из 4 подряд чисто');
+    const repaired = buildScorecard(releaseFacts([
+      cleanWeek('2026-11-07'),
+      cleanWeek('2026-11-14', {
+        event: 'workflow_dispatch',
+        actor: { type: 'Bot', login: 'repair-app[bot]' },
+      }),
+    ]));
+    assert.equal(saturdayKind(row(repaired, '2026-11-14')), 'авторемонт');
+    assert.equal(repaired.series, '0 из 4 подряд чисто');
+    assert.equal(JSON.stringify(repaired).includes('repair-app'), false);
+    const stranger = buildScorecard(releaseFacts([
+      cleanWeek('2026-11-14', { actor: { type: 'Bot', login: 'not-the-repair-app' } }),
+    ]));
+    assert.equal(saturdayKind(row(stranger, '2026-11-14')), 'чисто');
+    assert.equal(JSON.stringify(stranger).includes('not-the-repair-app'), false);
+    const viaPr = buildScorecard(releaseFacts([cleanWeek('2026-11-14')], {
+      repairPrs: { '2026-11-14': [{ labels: ['auto-repair'] }] },
+    }));
+    assert.equal(saturdayKind(row(viaPr, '2026-11-14')), 'авторемонт');
+    assert.equal(viaPr.series, '0 из 4 подряд чисто');
+  } finally {
+    REPAIR_ACTORS.length = 0;
+  }
+});
+
+test('four clean Saturdays can be claimed only when every class is closed', () => {
+  const allClosed = [
+    { class: 'масштаб и лимиты сбора', first_seen: '2026-09-26', closed_by: 'drill' },
+    { class: 'лицензионная карта', first_seen: '2026-09-24', closed_by: 'pr-check' },
+  ];
+  const claimed = buildScorecard(load('streak-four'), { classes: allClosed });
+  assert.equal(claimed.series, '4 из 4 подряд чисто');
+  assert.equal(claimed.claim, 'можно говорить: «четыре субботы подряд вышли сами вовремя»');
+  const text = toMarkdown(claimed);
+  assert.equal(text.endsWith(claimed.claim), true);
+  assert.equal(text.includes('починено'), false);
+  for (const row of claimed.rows.filter(item => item.saturday >= '2026-10-24')) {
+    assert.equal(saturdayKind(row), 'чисто');
+  }
+
+  const oneOpen = [
+    { class: 'масштаб и лимиты сбора', first_seen: '2026-09-26', closed_by: 'drill' },
+    { class: 'страж по слову на масштабе', first_seen: '2026-09-26', closed_by: 'none' },
+  ];
+  const held = buildScorecard(load('streak-four'), { classes: oneOpen });
+  assert.equal(held.series, '4 из 4 подряд чисто');
+  assert.equal(held.claim.includes('четыре субботы подряд вышли сами вовремя'), false);
+  assert.equal(held.claim, 'можно говорить: «4 из 4 подряд; классов закрыто 1 из 2»');
+  assert.equal(toMarkdown(held).includes('починено'), false);
+
+  const seeded = buildScorecard(load('streak-four'));
+  assert.equal(seeded.classesClosed, 5);
+  assert.equal(seeded.classesTotal, 10);
+  assert.equal(seeded.score, '4 из 4');
+  assert.equal(seeded.claim.includes('четыре субботы подряд вышли сами вовремя'), false);
+
+  const history = buildScorecard(load('streak-four'));
+  assert.equal(toMarkdown(history).startsWith('4 из 4\n'), true);
+  assert.ok(history.rows.some(item => item.saturday === '2026-08-29'));
+  const rolled = buildScorecard(load('streak-four'), { since: '2026-11-07' });
+  assert.deepEqual(rolled.rows.map(item => item.saturday), ['2026-11-07', '2026-11-14']);
+  assert.equal(rolled.series, '2 из 4 подряд чисто');
+  assert.equal(rolled.score, '4 из 4');
+  assert.equal(toMarkdown(rolled).startsWith('2 из 4 подряд чисто\n'), true);
+  assert.throws(() => buildScorecard(load('streak-four'), { since: '2026-02-31' }), /Invalid --since/);
 });
 
 test('a dispatch inside a clock tick window is the clock, not a person', async () => {
