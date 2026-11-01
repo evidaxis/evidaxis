@@ -245,7 +245,10 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=None)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--stage-dir", type=Path, help="Retain dry-run publication bytes for an independent oracle")
     args = ap.parse_args(argv)
+    if args.stage_dir is not None and not args.dry_run:
+        ap.error("--stage-dir requires --dry-run")
     date = args.date or sorted(p.name for p in SNAPSHOTS.iterdir() if p.is_dir())[-1]
     src = SNAPSHOTS / date
     if not (src / "snapshot.json").is_file():
@@ -283,6 +286,9 @@ def main(argv: list[str] | None = None) -> int:
         # lives in the canonical git/Zenodo archive (see README). HF = publication
         # projection only: projected snapshot.json + entities.csv.
         (Path(td) / "README.md").write_text(snapshot_card(date), encoding="utf-8")
+        # Retain the exact tested bytes even when the publication guard rejects them.
+        if args.stage_dir is not None:
+            shutil.copytree(td, args.stage_dir)
         hits = _person_free_hits(stage.parent)
         if args.dry_run or hits:
             print(_summary(date, stats, len(hits)))

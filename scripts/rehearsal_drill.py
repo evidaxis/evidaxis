@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""Replay one collected rehearsal candidate and, when asked, inject one fault.
+"""Replay one collected rehearsal candidate and inject a fault or benign drift.
 
-The fault exists only in the directory this process is given. Nothing is committed.
+The drill exists only in the directory this process is given. Nothing is committed.
 """
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import os
 import posixpath
 import re
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
-DRILLS = ("none", "site_test", "hf_handle", "canary_missing")
+DRILLS = ("none", "site_test", "hf_handle", "canary_missing", "benign_all")
 # Projection drops github_repo when that same key is User, so a User row alone stays green.
 # The guard treats a login as personal when any owner_types row is User.
 LEAKED_REPO = "drill-person-handle/repo"
@@ -56,11 +59,15 @@ def current_methodology(root: Path) -> str:
     return current[0]
 
 
-def apply_drill(root: Path, drill: str, date: str | None = None) -> None:
+def apply_drill(root: Path, drill: str, date: str | None = None) -> Path | None:
     if drill not in DRILLS:
         raise SystemExit(f"unknown drill {drill}")
     if drill == "none":
         return
+    if drill == "benign_all":
+        if not date or not _DATE.fullmatch(date):
+            raise SystemExit("benign_all needs --date YYYY-MM-DD")
+        return _apply_benign(root, date)
     if drill == "site_test":
         path = root / DRILL_TEST
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -96,6 +103,213 @@ def apply_drill(root: Path, drill: str, date: str | None = None) -> None:
         raise SystemExit("candidate has no github_repo")
     target["github_repo"] = LEAKED_REPO
     snap_path.write_text(json.dumps(snap, indent=2) + "\n", encoding="utf-8")
+
+
+def _benign_changes(root: Path, date: str) -> tuple[dict[Path, dict], dict]:
+    """Plan in memory so an ineligible archive leaves no partially planted drill."""
+    def read(relative: str) -> dict:
+        return json.loads((root / relative).read_text(encoding="utf-8"))
+
+    owners = read("etl/owner_types.json")
+    repos = owners["repos"]
+    id_map = read("etl/id_map.json")
+    seeds = read("etl/seeds.json")
+    snapshot = read(f"data/snapshots/{date}/snapshot.json")
+    seeded = {e["github_repo"] for v in seeds["verticals"].values() for e in v["entities"]}
+    entities = {e["github_repo"]: e for e in snapshot["entities"] if e.get("github_repo")}
+    eligible = sorted(path for path in entities if path in seeded and path in id_map
+                      and path in repos and repos[path].get("full_name", "").lower() == path.lower())
+    # Confirmed project accounts are not personal records, even if GitHub calls them User.
+    accounts_path = root / "etl/project_accounts.json"
+    accounts = json.loads(accounts_path.read_text()).get("accounts", {}) if accounts_path.exists() else {}
+    used: set[str] = set()
+    known_names = {p.split("/")[0].lower() for p in repos}
+    known_names.update(r["full_name"].split("/")[0].lower() for r in repos.values())
+    cases = []
+    departures = []
+    next_id = max(r["repo_id"] for r in repos.values()) + 1
+
+    def invent(word: str) -> str:
+        name = "zz-drill-" + word
+        while name.lower() in known_names:
+            name += "-next"
+        known_names.add(name.lower())
+        return name
+
+    def owner(path: str) -> str:
+        return repos[path]["full_name"].split("/")[0].lower()
+
+    def peers(path: str) -> list[str]:
+        return [p for p in eligible if owner(p) == owner(path)]
+
+    for letter in "abcdefghij":
+        kind = "Organization" if letter in "abcgh" else "User"
+        candidates = [p for p in eligible if p not in used and repos[p]["owner_type"] == kind
+                      and (kind != "User" or owner(p) not in accounts)]
+        if letter == "a":
+            candidates = [p for p in candidates if len(peers(p)) >= 2]
+        if letter == "c":
+            candidates = [p for p in candidates if urlsplit(entities[p].get("homepage") or "").hostname
+                          == owner(p) + ".github.io"]
+        if not candidates:
+            raise ValueError(f"benign_all class {letter}: no eligible record")
+        path = candidates[0]
+        entity = entities[path]
+        old = dict(repos[path])
+        old_name, repo_name = old["full_name"].split("/")
+        case = {"class": letter, "entity_id": entity["entity_id"], "stored_path": path,
+                "old_path": old["full_name"], "old_repo_id": old["repo_id"],
+                "invented_names": [], "personal_logins": [], "former_logins": [],
+                "forbidden_paths": [], "required_paths": []}
+        used.add(path)
+        if letter in "abc":
+            # Reserve the entire real organization: a later class must not erase its control.
+            group = peers(path)
+            used.update(group)
+            if letter == "a":
+                case["required_paths"] = [repos[p]["full_name"] for p in group if p != path]
+        if letter in "gh":
+            departure = {"github_repo": path, "entity_id": entity["entity_id"],
+                         "reason": "gone" if letter == "g" else "repo_id_changed",
+                         "detected_at": f"{date}T00:00:00Z"}
+            if letter == "h":
+                departure.update(old_repo_id=old["repo_id"], new_repo_id=next_id)
+                case["new_repo_id"] = next_id
+                next_id += 1
+            departures.append(departure)
+            id_map.pop(path)
+            snapshot["entities"] = [e for e in snapshot["entities"] if e["entity_id"] != entity["entity_id"]]
+            for vertical in seeds["verticals"].values():
+                vertical["entities"] = [e for e in vertical["entities"] if e["github_repo"] != path]
+            # Collectors retain the old classification for archived cards, including name reuse.
+        else:
+            if letter == "b":
+                new_name = "zz" + old_name
+                while new_name.lower() in known_names:
+                    new_name = "zz" + new_name
+                known_names.add(new_name.lower())
+            elif letter == "i":
+                templates = "\n".join(p.read_text(encoding="utf-8") for p in sorted((root / "web/src").rglob("*.astro")))
+                words = [w for w in ("about", "archive", "methodology", "snapshot", "systems")
+                         if w not in known_names and re.search(rf"\b{w}\b", templates, re.I)]
+                if not words:
+                    raise ValueError("benign_all class i: no unused template word")
+                new_name = words[0]
+                known_names.add(new_name)
+                case["contextual_logins"] = [new_name]
+            else:
+                new_name = invent({"a": "amber", "c": "birch", "d": "cedar", "e": "dune",
+                                   "f": "elm", "j": "fern"}[letter])
+            new_kind = "Organization" if letter in "bcd" else "User"
+            changed = sorted(p for p in repos if owner(p) == old_name.lower()) if letter in "bc" else [path]
+            case["path_changes"] = []
+            for changed_path in changed:
+                before_path = repos[changed_path]["full_name"]
+                repos[changed_path] = {**repos[changed_path], "owner_type": new_kind,
+                                       "full_name": new_name + "/" + repos[changed_path]["full_name"].split("/", 1)[1]}
+                case["path_changes"].append({"stored_path": changed_path, "old_path": before_path,
+                                             "new_path": repos[changed_path]["full_name"],
+                                             "entity_id": id_map.get(changed_path)})
+            case["new_path"] = new_name + "/" + repo_name
+            case["invented_names"] = [new_name]
+            if new_kind == "User":
+                case["personal_logins"] = [new_name]
+                case["forbidden_paths"] = [path, old["full_name"], case["new_path"]]
+            if old["owner_type"] == "User":
+                case["former_logins"] = [old_name]
+            if letter == "f":
+                # The live archive need not already have this homepage to exercise the move.
+                entity["homepage"] = f"https://{old_name}.github.io/{repo_name}/"
+            if letter in "cf":
+                case["homepage"] = entity["homepage"]
+            if letter == "j":
+                case["package"] = f"widget-{new_name}-plugin"
+                entity["deps"] = {"system": "npm", "package": case["package"]}
+        cases.append(case)
+
+    # Preserve the snapshot's count vocabulary after the two declared departures.
+    if "counts" in snapshot:
+        counts = snapshot["counts"]
+        counts["entities"] = len(snapshot["entities"])
+        for key in ("rising", "watch", "tracked", "single-axis", "calibration"):
+            if key in counts:
+                counts[key] = sum(e.get("status") == key or (key == "tracked" and "single-axis" not in counts
+                                  and e.get("status") == "single-axis") for e in snapshot["entities"])
+        counts["axis2_present"] = sum(e.get("axes", {}).get("openalex_citation_momentum", {}).get("status")
+                                     == "present" for e in snapshot["entities"])
+    departure_path = f"data/observations/{date}/seed-departures.json"
+    record = read(departure_path) if (root / departure_path).exists() else {"snapshot_date": date, "departures": []}
+    record["departures"].extend(departures)
+    changes = {root / "etl/owner_types.json": owners, root / "etl/id_map.json": id_map,
+               root / "etl/seeds.json": seeds, root / f"data/snapshots/{date}/snapshot.json": snapshot,
+               root / departure_path: record}
+    return changes, {"drill": "benign_all", "date": date, "cases": cases}
+
+
+def _apply_benign(root: Path, date: str) -> Path:
+    changes, manifest = _benign_changes(root, date)
+    temp_root = Path(os.environ.get("RUNNER_TEMP") or tempfile.gettempdir()).resolve()
+    if temp_root == root.resolve() or root.resolve() in temp_root.parents:
+        raise ValueError("benign_all manifest must stay outside the repository")
+    folder = Path(tempfile.mkdtemp(prefix="evidaxis-benign-", dir=temp_root))
+    manifest_path = folder / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    for path, payload in changes.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    _write_output("manifest", str(manifest_path))
+    return manifest_path
+
+
+def oracle_findings(dist_dir: Path, hf_dir: Path, manifest: dict) -> list[str]:
+    """Inspect publication bytes using only planted facts, never a production classifier."""
+    cases = manifest.get("cases", [])
+    if manifest.get("drill") != "benign_all" or sorted(c.get("class", "") for c in cases) != list("abcdefghij"):
+        return ["class a: invalid manifest count=1"]
+
+    def path_pattern(path: str) -> re.Pattern:
+        return re.compile(rf"(?<![a-z0-9_.-]){re.escape(path.lower())}(?![a-z0-9_.-])")
+
+    rules = []
+    for case in cases:
+        patterns = []
+        for login in sorted(set(case["personal_logins"] + case["former_logins"])):
+            token = re.escape(login.lower())
+            if login in case.get("contextual_logins", []):
+                # Ordinary prose is not an account identifier. URLs and mentions are.
+                patterns.append(rf"(?:github\.com/|@){token}(?![a-z0-9-])|(?<![a-z0-9-]){token}\.github\.io")
+            elif login in case["personal_logins"]:
+                patterns.append(token)
+            else:
+                patterns.append(rf"(?<![a-z0-9-]){token}(?![a-z0-9-])")
+        forbidden = [re.compile(p) for p in patterns] + [path_pattern(p) for p in sorted(set(case["forbidden_paths"]))]
+        rules.append((case["class"], forbidden, [path_pattern(p) for p in case["required_paths"]]))
+
+    findings = []
+    for label, folder in (("dist", dist_dir), ("hf", hf_dir)):
+        hits = {letter: 0 for letter, _, _ in rules}
+        missing = {letter: set(required) for letter, _, required in rules}
+        file_count = 0
+        # A full archive build can be large; retain counters, not all publication bytes.
+        for path in sorted(folder.rglob("*")):
+            if not path.is_file():
+                continue
+            file_count += 1
+            blob = path.relative_to(folder).as_posix() + "\n" + path.read_bytes().decode("utf-8", errors="replace")
+            blob = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m[1], 16)), blob).replace(r"\/", "/")
+            blob = html.unescape(unquote(blob)).lower()
+            for letter, forbidden, _ in rules:
+                hits[letter] += sum(bool(pattern.search(blob)) for pattern in forbidden)
+                missing[letter] = {pattern for pattern in missing[letter] if not pattern.search(blob)}
+        if not file_count:
+            findings.append(f"class a: {label} missing publication count=1")
+            continue
+        for letter, _, _ in rules:
+            if hits[letter]:
+                findings.append(f"class {letter}: {label} leak count={hits[letter]}")
+            if missing[letter]:
+                findings.append(f"class {letter}: {label} over-masking count={len(missing[letter])}")
+    return findings
 
 
 def _artifact_date(snapshot_json: Path, download_dir: Path) -> str | None:
@@ -457,13 +671,14 @@ def select_replay() -> int:
 def drill_verdict(drill: str, outcomes: dict) -> tuple[str, int]:
     if drill not in DRILLS:
         raise SystemExit(f"unknown drill {drill}")
-    failed = [name for key, name in CHECK_STEPS if outcomes.get(key) == "failure"]
-    if drill == "none":
+    checks = CHECK_STEPS + (("oracle", "Independent benign-drift oracle"),) if drill == "benign_all" else CHECK_STEPS
+    failed = [name for key, name in checks if outcomes.get(key) == "failure"]
+    if drill in {"none", "benign_all"}:
         if failed:
-            return f"drill none: failed at step {failed[0]}", 1
-        if any(outcomes.get(key) != "success" for key, _name in CHECK_STEPS):
-            return "drill none: checks did not run", 1
-        return "drill none: checks passed", 0
+            return f"drill {drill}: failed at step {failed[0]}", 1
+        if any(outcomes.get(key) != "success" for key, _name in checks):
+            return f"drill {drill}: checks did not run", 1
+        return f"drill {drill}: checks passed", 0
     names = dict(CHECK_STEPS)
     expected = EXPECTED[drill]
     if outcomes.get(expected) != "failure":
@@ -504,6 +719,11 @@ def main(argv: list[str] | None = None) -> int:
     apply.add_argument("--date", default=os.environ.get("SNAPSHOT_DATE"))
     apply.add_argument("--root", type=Path, default=Path("."))
 
+    oracle = commands.add_parser("oracle")
+    oracle.add_argument("--manifest", type=Path, required=True)
+    oracle.add_argument("--dist", type=Path, required=True)
+    oracle.add_argument("--hf", type=Path, required=True)
+
     commands.add_parser("select")
     commands.add_parser("verdict")
     args = parser.parse_args(argv)
@@ -518,7 +738,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "apply":
         apply_drill(args.root, args.drill, args.date)
         return 0
+    if args.cmd == "oracle":
+        try:
+            findings = oracle_findings(args.dist, args.hf, json.loads(args.manifest.read_text(encoding="utf-8")))
+        except (OSError, ValueError, KeyError, TypeError):
+            findings = ["class a: unreadable oracle input count=1"]
+        for finding in findings:
+            print(finding)
+        if not findings:
+            print("benign_all oracle: clean")
+        return int(bool(findings))
     outcomes = {key: os.environ.get(key.upper(), "skipped") for key, _name in CHECK_STEPS}
+    outcomes["oracle"] = os.environ.get("ORACLE", "skipped")
     line, code = drill_verdict(os.environ.get("DRILL", ""), outcomes)
     _write_summary(line)
     return code

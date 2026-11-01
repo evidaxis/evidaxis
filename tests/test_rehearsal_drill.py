@@ -348,7 +348,7 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     inputs = triggers["workflow_dispatch"]["inputs"]
     assert inputs["source_run"]["required"] is True
     assert inputs["drill"]["default"] == "none"
-    assert inputs["drill"]["options"] == ["none", "site_test", "hf_handle", "canary_missing"]
+    assert inputs["drill"]["options"] == list(drill.DRILLS)
     push = triggers["push"]
     assert push["branches"] == ["main"]
     assert "web/**" in push["paths"]
@@ -365,6 +365,18 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     assert keeper[0]["if"] == "${{ failure() && github.event_name == 'push' }}"
     assert keeper[0]["env"]["TELEGRAM_BOT_TOKEN"] == "${{ secrets.TELEGRAM_BOT_TOKEN }}"
     assert keeper[0]["env"]["ALERT_CHAT_ID"] == "${{ secrets.ALERT_TG_CHAT_ID }}"
+    assert "continue-on-error" not in replay_text
+    by_id = {step["id"]: step for step in replay_steps if "id" in step}
+    oracle = by_id["oracle"]
+    assert replay_steps.index(oracle) > replay_steps.index(by_id["verify"])
+    assert "inputs.drill == 'benign_all'" in oracle["if"] and "always()" in oracle["if"]
+    assert '--dist web/dist --hf "$RUNNER_TEMP/replay-hf"' in oracle["run"]
+    assert '--stage-dir "$RUNNER_TEMP/replay-hf"' in by_id["hf"]["run"]
+    verdict = next(s for s in replay_steps if s.get("name") == "Drill verdict")
+    assert verdict["env"]["ORACLE"] == "${{ steps.oracle.outcome }}"
+    for key in ("hf", "verify", "report"):
+        assert "outcome=failure" in by_id[key]["run"]
+        assert f"steps.{key}.outputs.outcome" in verdict["env"][key.upper()]
 
 
 def test_ci_on_main_alerts_the_keeper_from_the_existing_secrets():
@@ -386,3 +398,238 @@ def test_ci_on_main_alerts_the_keeper_from_the_existing_secrets():
         uses = [item.get("uses", "") for item in alert["steps"]]
         assert "actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" in uses
         assert "actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020" in uses
+
+
+@pytest.fixture
+def benign_archive(tmp_path, monkeypatch):
+    root = _tree(tmp_path)
+    monkeypatch.setenv("RUNNER_TEMP", str(tmp_path))
+    monkeypatch.delenv("GITHUB_OUTPUT", raising=False)
+    (root / "web/src/template.astro").write_text("<nav>About archive methodology snapshot systems</nav>")
+    rows = [
+        ("drill-org-a/alpha", "Organization", None),
+        ("drill-org-a/beta", "Organization", None),
+        ("drill-org-b/tool", "Organization", None),
+        ("drill-org-c/tool", "Organization", "https://drill-org-c.github.io/tool/"),
+        ("drill-org-d/tool", "Organization", None),
+        ("drill-org-e/tool", "Organization", None),
+        *[(f"drill-user-{n}/tool", "User", None) for n in range(5)],
+    ]
+    repos, entities, id_map = {}, [], {}
+    for n, (path, kind, homepage) in enumerate(rows, 1):
+        repos[path] = {"owner_type": kind, "repo_id": n, "full_name": path}
+        id_map[path] = f"e_DRILL{n}"
+        entities.append({"entity_id": id_map[path], "github_repo": path, "homepage": homepage,
+                         "name": f"Tool {n}", "slug": f"tool-{n}", "status": "tracked", "axes": {}})
+    payloads = {
+        "etl/owner_types.json": {"repos": repos}, "etl/id_map.json": id_map,
+        "etl/seeds.json": {"verticals": {"tools": {"entities": [{"github_repo": p} for p in repos]}}},
+        "data/snapshots/2026-10-17/snapshot.json": {
+            "snapshot_date": "2026-10-17", "entities": entities,
+            "counts": {"entities": len(entities), "tracked": len(entities), "axis2_present": 0},
+        },
+    }
+    for rel, body in payloads.items():
+        (root / rel).write_text(json.dumps(body))
+    return root
+
+
+def _plant_benign(root):
+    path = drill.apply_drill(root, "benign_all", "2026-10-17")
+    assert root.resolve() not in path.resolve().parents
+    return path, json.loads(path.read_text())
+
+
+def test_benign_plants_all_classes_deterministically(benign_archive, capsys):
+    root = benign_archive
+    before = _files(root)
+    planned, expected = drill._benign_changes(root, "2026-10-17")
+    assert _files(root) == before
+    assert drill._benign_changes(root, "2026-10-17") == (planned, expected)
+    path, manifest = _plant_benign(root)
+    assert manifest == expected
+    assert capsys.readouterr().out == ""
+    assert path.parent.stat().st_mode & 0o077 == 0
+    cases = {c["class"]: c for c in manifest["cases"]}
+    assert set(cases) == set("abcdefghij")
+    assert len({c["entity_id"] for c in cases.values()}) == 10
+    owners = json.loads((root / "etl/owner_types.json").read_text())["repos"]
+    snap = json.loads((root / "data/snapshots/2026-10-17/snapshot.json").read_text())
+    entities = {e["entity_id"]: e for e in snap["entities"]}
+    for letter in "abcdefij":
+        case = cases[letter]
+        row = owners[case["stored_path"]]
+        assert row["full_name"] == case["new_path"]
+        assert row["repo_id"] == case["old_repo_id"]
+        assert row["owner_type"] == ("Organization" if letter in "bcd" else "User")
+    assert cases["a"]["stored_path"] == "drill-org-a/alpha"
+    assert cases["a"]["required_paths"] == ["drill-org-a/beta"]
+    assert owners["drill-org-a/beta"]["owner_type"] == "Organization"
+    assert cases["b"]["old_path"] in cases["b"]["new_path"]
+    assert entities[cases["c"]["entity_id"]]["homepage"] == "https://drill-org-c.github.io/tool/"
+    former = cases["f"]["former_logins"][0]
+    assert entities[cases["f"]["entity_id"]]["homepage"] == f"https://{former}.github.io/tool/"
+    assert cases["i"]["personal_logins"] == ["about"]
+    assert cases["j"]["personal_logins"][0] in entities[cases["j"]["entity_id"]]["deps"]["package"]
+    id_map = json.loads((root / "etl/id_map.json").read_text())
+    seeds = json.loads((root / "etl/seeds.json").read_text())["verticals"]["tools"]["entities"]
+    departures = json.loads((root / "data/observations/2026-10-17/seed-departures.json").read_text())["departures"]
+    assert [d["reason"] for d in departures] == ["gone", "repo_id_changed"]
+    for letter in "gh":
+        case = cases[letter]
+        assert case["stored_path"] not in id_map
+        assert not any(e["github_repo"] == case["stored_path"] for e in seeds)
+        assert case["entity_id"] not in entities
+        assert owners[case["stored_path"]]["repo_id"] == case["old_repo_id"]
+    assert departures[1]["new_repo_id"] != departures[1]["old_repo_id"]
+    assert snap["counts"] == {"entities": 9, "tracked": 9, "axis2_present": 0}
+    assert {p.relative_to(root).as_posix() for p in planned} == {
+        "etl/owner_types.json", "etl/id_map.json", "etl/seeds.json",
+        "data/snapshots/2026-10-17/snapshot.json", "data/observations/2026-10-17/seed-departures.json",
+    }
+
+
+def test_benign_refuses_in_repo_manifest_before_mutation(benign_archive, monkeypatch):
+    before = _files(benign_archive)
+    monkeypatch.setenv("RUNNER_TEMP", str(benign_archive))
+    with pytest.raises(ValueError, match="outside the repository"):
+        _plant_benign(benign_archive)
+    assert _files(benign_archive) == before
+
+
+def test_benign_ineligible_archive_does_not_partially_apply(benign_archive):
+    (benign_archive / "web/src/template.astro").write_text("<p>Nothing eligible</p>")
+    before = _files(benign_archive)
+    with pytest.raises(ValueError, match="class i"):
+        _plant_benign(benign_archive)
+    assert _files(benign_archive) == before
+
+
+def test_benign_does_not_mistake_project_accounts_for_people(benign_archive):
+    (benign_archive / "etl/project_accounts.json").write_text(json.dumps({
+        "accounts": {f"drill-user-{n}": {} for n in range(5)},
+    }))
+    before = _files(benign_archive)
+    with pytest.raises(ValueError, match="class d"):
+        _plant_benign(benign_archive)
+    assert _files(benign_archive) == before
+
+
+def test_benign_manifest_records_every_path_of_renamed_organization(benign_archive):
+    owners_path = benign_archive / "etl/owner_types.json"
+    owners = json.loads(owners_path.read_text())
+    owners["repos"]["drill-org-b/archived"] = {
+        "owner_type": "Organization", "repo_id": 99, "full_name": "drill-org-b/archived",
+    }
+    owners_path.write_text(json.dumps(owners))
+    _, manifest = _plant_benign(benign_archive)
+    case = next(c for c in manifest["cases"] if c["class"] == "b")
+    assert [c["old_path"] for c in case["path_changes"]] == ["drill-org-b/archived", "drill-org-b/tool"]
+    owners = json.loads(owners_path.read_text())["repos"]
+    assert all(owners[c["stored_path"]]["full_name"] == c["new_path"] for c in case["path_changes"])
+
+
+@pytest.fixture
+def benign_publication(benign_archive, tmp_path):
+    manifest_path, manifest = _plant_benign(benign_archive)
+    cases = {c["class"]: c for c in manifest["cases"]}
+    dist, mirror = tmp_path / "dist", tmp_path / "hf"
+    # This expected projection is handwritten, never produced by the classifier under test.
+    clean = {"entities": [{"github_repo": p} for p in cases["a"]["required_paths"]] + [
+        {"github_repo": cases[c]["new_path"]} for c in "bcd"
+    ] + [{"entity_id": cases[c]["entity_id"], "repository": {"repo_ref": f"gh:{cases[c]['old_repo_id']}"}}
+         for c in "aefij"]}
+    for folder in (dist, mirror):
+        folder.mkdir()
+        (folder / "snapshot.json").write_text(json.dumps(clean))
+    (dist / "index.html").write_text("<nav>About archive methodology snapshot systems</nav>")
+    return dist, mirror, manifest_path, manifest, cases
+
+
+def test_oracle_accepts_correctly_masked_publication(benign_publication):
+    dist, mirror, _, manifest, _ = benign_publication
+    before = json.dumps(manifest)
+    assert drill.oracle_findings(dist, mirror, manifest) == []
+    assert json.dumps(manifest) == before
+
+
+@pytest.mark.parametrize("surface", ["dist", "hf"])
+@pytest.mark.parametrize("fault,letter", [("invented", "a"), ("old_path", "a"), ("pages", "f"),
+                                        ("former", "d"), ("overmask", "a"), ("word", "i"), ("package", "j")])
+def test_oracle_rejects_each_leak_and_overmask(benign_publication, surface, fault, letter, capsys):
+    dist, mirror, manifest_path, manifest, cases = benign_publication
+    folder = dist if surface == "dist" else mirror
+    if fault == "overmask":
+        path = folder / "snapshot.json"
+        body = json.loads(path.read_text())
+        control = cases["a"]["required_paths"][0]
+        # A substring inside another canonical path is not the surviving organization path.
+        body["entities"][0]["github_repo"] = "zz" + control
+        path.write_text(json.dumps(body))
+    else:
+        leak = {"invented": cases["a"]["personal_logins"][0], "old_path": cases["a"]["old_path"],
+                "pages": "https://" + cases["f"]["former_logins"][0] + ".github.io/tool/",
+                "former": cases["d"]["former_logins"][0], "word": cases["i"]["new_path"],
+                "package": cases["j"]["package"]}[fault]
+        (folder / "leak.txt").write_text(leak)
+    findings = drill.oracle_findings(dist, mirror, manifest)
+    assert any(f"class {letter}: {surface}" in f for f in findings)
+    assert drill.main(["oracle", "--manifest", str(manifest_path), "--dist", str(dist), "--hf", str(mirror)]) == 1
+    output = capsys.readouterr().out
+    for case in cases.values():
+        for private in case["personal_logins"] + case["former_logins"] + [case["stored_path"]]:
+            assert private not in output
+
+
+@pytest.mark.parametrize("encoded", ["ZZ-DRILL-AMBER", "%7A%7A-drill-amber", r"zz\u002ddrill\u002damber", "zz&#45;drill&#45;amber"])
+def test_oracle_decodes_publication_encodings(benign_publication, encoded):
+    dist, mirror, _, manifest, _ = benign_publication
+    (dist / "leak.json").write_text(encoded)
+    assert any("class a: dist leak" in f for f in drill.oracle_findings(dist, mirror, manifest))
+
+
+def test_oracle_fails_closed_on_missing_outputs_and_manifest(benign_publication):
+    dist, mirror, manifest_path, manifest, _ = benign_publication
+    assert drill.oracle_findings(dist / "missing", mirror, manifest)
+    assert drill.oracle_findings(dist, mirror / "missing", manifest)
+    assert drill.oracle_findings(dist, mirror, {})
+    manifest_path.write_text("{}")
+    assert drill.main(["oracle", "--manifest", str(manifest_path), "--dist", str(dist), "--hf", str(mirror)]) == 1
+
+
+@pytest.mark.parametrize("step", ["hf", "verify", "report", "oracle"])
+@pytest.mark.parametrize("outcome", ["failure", "skipped", "cancelled", ""])
+def test_benign_verdict_requires_every_check_and_clean_oracle(step, outcome):
+    outcomes = dict.fromkeys(("hf", "verify", "report", "oracle"), "success")
+    assert drill.drill_verdict("benign_all", outcomes)[1] == 0
+    outcomes[step] = outcome
+    assert drill.drill_verdict("benign_all", outcomes)[1] == 1
+
+
+@pytest.mark.parametrize("plant_leak", [False, True])
+def test_hf_retains_exact_projection_even_when_guard_fails(tmp_path, monkeypatch, plant_leak):
+    root = _tree(tmp_path)
+    card = root / "distribution/hf/README.md"
+    card.parent.mkdir(parents=True)
+    card.write_text('configs:\n  - data_files:\n        path: "2026-10-10/entities.csv"\n')
+    (root / "web/src/data/person-free-handles.json").write_text("[]")
+    monkeypatch.setattr(hf, "REPO", root)
+    monkeypatch.setattr(hf, "SNAPSHOTS", root / "data/snapshots")
+    monkeypatch.setattr(hf, "CARD", card)
+    if plant_leak:
+        drill.apply_drill(root, "hf_handle", "2026-10-17")
+    stage = tmp_path / "retained"
+    assert hf.main(["--date", "2026-10-17", "--dry-run", "--stage-dir", str(stage)]) == (3 if plant_leak else 0)
+    assert (stage / "2026-10-17/entities.csv").is_file()
+    assert (stage / "README.md").read_text() == hf.snapshot_card("2026-10-17")
+    source = json.loads((root / "data/snapshots/2026-10-17/snapshot.json").read_text())
+    assert json.loads((stage / "2026-10-17/snapshot.json").read_text()) == hf.project_person_free(source)
+
+
+def test_apply_cli_exports_only_manifest_location(benign_archive, tmp_path, monkeypatch, capsys):
+    output = tmp_path / "outputs"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    assert drill.main(["apply", "--drill", "benign_all", "--date", "2026-10-17", "--root", str(benign_archive)]) == 0
+    manifest = Path(output.read_text().strip().removeprefix("manifest="))
+    assert manifest.is_file()
+    assert capsys.readouterr().out == ""
