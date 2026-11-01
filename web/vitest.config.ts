@@ -34,7 +34,8 @@ export default getViteConfig({
     env,
     environment: 'node',
     include: ['src/**/*.test.ts'],
-    exclude: ['src/**/*.data.test.ts'],
+    // Hygiene compares the fixture with the live registry. It is not part of verify.
+    exclude: ['src/**/*.data.test.ts', 'src/**/*.hygiene.test.ts'],
     setupFiles: ['./test/unit-setup.ts'],
     // Keep the existing timeout for Astro rendering on shared CI runners.
     testTimeout: 60_000,

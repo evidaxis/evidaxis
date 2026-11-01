@@ -61,6 +61,12 @@ jobs:
         working-directory: web
         run: npm run verify
 
+      # Live-registry fixture drift opens work. It is outside verify, so a red
+      # result here does not stop the site release (deploy-web runs verify only).
+      - name: Fixture hygiene
+        working-directory: web
+        run: npm run test:hygiene
+
   alert:
     needs: build-test-verify
     if: ${{ always() && needs.build-test-verify.result == 'failure' && (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main') }}

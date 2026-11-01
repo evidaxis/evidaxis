@@ -15,6 +15,8 @@ export default getViteConfig({
     env,
     environment: 'node',
     include: ['src/**/*.data.test.ts'],
+    // Hygiene reads the live owner registry and must stay out of the publication gate.
+    exclude: ['src/**/*.hygiene.test.ts'],
     // Census tests walk every archived system; retain the existing CI timeout.
     testTimeout: 60_000,
   },
