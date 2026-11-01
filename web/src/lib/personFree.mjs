@@ -96,6 +96,24 @@ export function staleSlugHits(text, staleSlugs, canonicalPaths) {
   return [...hits];
 }
 
+// Personal handles of a registry (etl/owner_types.json "repos", after applyProjectAccounts):
+// the canonical owner of every User row, plus the stored owner of a moved User row unless
+// that login is an Organization today. Same rule as scripts/person_free.py load_handle_index:
+// an Organization that handed one repository to a person is not personal data.
+export function personalOwnerHandles(registry) {
+  const entries = Object.entries(registry || {}).filter(([, entry]) => entry && typeof entry.full_name === 'string');
+  const orgOwners = new Set(entries.filter(([, entry]) => entry.owner_type === 'Organization')
+    .map(([, entry]) => entry.full_name.split('/')[0].toLowerCase()));
+  const handles = new Set();
+  for (const [stored, entry] of entries) {
+    if (entry.owner_type !== 'User') continue;
+    handles.add(entry.full_name.split('/')[0].toLowerCase());
+    const storedOwner = stored.split('/')[0].toLowerCase();
+    if (!orgOwners.has(storedOwner)) handles.add(storedOwner);
+  }
+  return [...handles];
+}
+
 // A listed User account that is a project's identity is published like an Organization.
 // The owner-types file stays unchanged; callers pass the accounts map (missing file = {}).
 export function applyProjectAccounts(registry, accounts) {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, staleSlugHits } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, personalOwnerHandles, staleSlugHits } from './personFree.mjs';
 
 describe('stale Organization repository paths', () => {
   const staleSlugs = new Set(['labs/widget']);
@@ -121,5 +121,32 @@ describe('applyProjectAccounts', () => {
     expect(registry['already-org/tool']).toEqual({
       owner_type: 'Organization', repo_id: 3, full_name: 'already-org/tool',
     });
+  });
+});
+
+describe('personalOwnerHandles', () => {
+  const entry = (owner_type: string, full_name: string, repo_id: number) => ({ owner_type, full_name, repo_id });
+
+  it('returns the owner of a personal repository and skips organisations', () => {
+    const registry = {
+      'a-person/tool': entry('User', 'a-person/tool', 1),
+      'a-lab/tool': entry('Organization', 'a-lab/tool', 2),
+    };
+    expect(personalOwnerHandles(registry)).toEqual(['a-person']);
+  });
+
+  it('does not treat an organisation that gave one repository to a person as personal', () => {
+    // 2026-10-31: an Organization with many systems handed one repository to a person;
+    // banning its name failed every page that mentions the organisation's other systems.
+    const registry = {
+      'big-org/kept': entry('Organization', 'big-org/kept', 1),
+      'big-org/given': entry('User', 'a-person/given', 2),
+    };
+    expect(personalOwnerHandles(registry)).toEqual(['a-person']);
+  });
+
+  it('keeps a former owner that is not an Organization today', () => {
+    const registry = { 'gone-person/given': entry('User', 'a-person/given', 2) };
+    expect(personalOwnerHandles(registry).sort()).toEqual(['a-person', 'gone-person']);
   });
 });

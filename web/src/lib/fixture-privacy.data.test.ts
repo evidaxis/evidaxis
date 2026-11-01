@@ -2,15 +2,13 @@ import { expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { REPO_ROOT, FIXTURE_ROOT } from './path-policy.mjs';
-import { applyProjectAccounts, buildHandleIndex, handleHitsDecoded, FLOOR_HANDLES } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHitsDecoded, personalOwnerHandles, FLOOR_HANDLES } from './personFree.mjs';
 
 it('stores no live personal owner in any generated fixture file', () => {
   const registry = JSON.parse(readFileSync(join(REPO_ROOT, 'etl/owner_types.json'), 'utf8'));
   const accounts = JSON.parse(readFileSync(join(REPO_ROOT, 'etl/project_accounts.json'), 'utf8')).accounts;
   applyProjectAccounts(registry.repos, accounts);
-  const owners = Object.entries(registry.repos).flatMap(([key, entry]: [string, any]) => entry.owner_type === 'User'
-    ? [key.split('/')[0], entry.full_name.split('/')[0]] : []);
-  const index = buildHandleIndex([...owners, ...FLOOR_HANDLES]);
+  const index = buildHandleIndex([...personalOwnerHandles(registry.repos), ...FLOOR_HANDLES]);
   const failures: string[] = [];
   function scan(dir: string) {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { applyProjectAccounts, personalOwnerHandles } from '../src/lib/personFree.mjs';
 
 // Maps exist only during generation. No source-to-surrogate dictionary is saved.
 export function fixtureAnonymizer(documents, registry, accounts, formerOwners = []) {
@@ -6,12 +7,9 @@ export function fixtureAnonymizer(documents, registry, accounts, formerOwners = 
   const synthetic = (kind, value) => `fixture-${kind}-${digest(value)}`;
   const projectOwners = new Set(Object.keys(accounts).map(owner => owner.toLowerCase()));
   const owners = new Map(formerOwners.map(owner => [owner.toLowerCase(), synthetic('user', owner)]));
-  for (const [repo, entry] of Object.entries(registry.repos)) {
-    if (entry.owner_type !== 'User' || projectOwners.has(entry.full_name.split('/')[0].toLowerCase())) continue;
-    for (const path of [repo, entry.full_name]) {
-      const owner = path.split('/')[0].toLowerCase();
-      owners.set(owner, synthetic('user', owner));
-    }
+  // The shared rule keeps an Organization that handed one repository to a person public.
+  for (const owner of personalOwnerHandles(applyProjectAccounts(structuredClone(registry.repos), accounts))) {
+    owners.set(owner, synthetic('user', owner));
   }
   const replacements = new Map();
   const personalRepo = value => typeof value === 'string' && owners.has(value.split('/')[0].toLowerCase());
@@ -20,8 +18,11 @@ export function fixtureAnonymizer(documents, registry, accounts, formerOwners = 
     return entry ? entry.owner_type === 'User' && !projectOwners.has(entry.full_name.split('/')[0].toLowerCase()) : personalRepo(value);
   };
   for (const [repo, entry] of Object.entries(registry.repos)) {
-    for (const path of [repo, entry.full_name]) if (personalRepo(path)) {
-      replacements.set(path.toLowerCase(), `${owners.get(path.split('/')[0].toLowerCase())}/${synthetic('repo', path)}`);
+    // The stored path of a repository a person owns today is personal even when its
+    // former owner is a public Organization; it takes the current owner's surrogate.
+    const current = owners.get(entry.full_name.split('/')[0].toLowerCase());
+    for (const path of [repo, entry.full_name]) if (personalRepo(path) || (personalRecord(repo) && current)) {
+      replacements.set(path.toLowerCase(), `${owners.get(path.split('/')[0].toLowerCase()) ?? current}/${synthetic('repo', path)}`);
     }
   }
   const personalIds = new Set();
