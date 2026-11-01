@@ -489,6 +489,25 @@ def test_benign_plants_all_classes_deterministically(benign_archive, capsys):
     }
 
 
+def test_benign_reserves_pages_organization_before_unconstrained_rename(benign_archive):
+    snapshot_path = benign_archive / "data/snapshots/2026-10-17/snapshot.json"
+    snapshot = json.loads(snapshot_path.read_text())
+    for entity in snapshot["entities"]:
+        if entity["github_repo"] == "drill-org-b/tool":
+            entity["homepage"] = "https://drill-org-b.github.io/tool/"
+        elif entity["github_repo"] == "drill-org-c/tool":
+            entity["homepage"] = None
+    snapshot_path.write_text(json.dumps(snapshot))
+
+    _, manifest = _plant_benign(benign_archive)
+    assert [case["class"] for case in manifest["cases"]] == list("abcdefghij")
+    cases = {case["class"]: case for case in manifest["cases"]}
+    assert len({case["entity_id"] for case in cases.values()}) == 10
+    assert cases["c"]["stored_path"] == "drill-org-b/tool"
+    assert cases["c"]["homepage"] == "https://drill-org-b.github.io/tool/"
+    assert cases["b"]["stored_path"] == "drill-org-c/tool"
+
+
 def test_benign_refuses_in_repo_manifest_before_mutation(benign_archive, monkeypatch):
     before = _files(benign_archive)
     monkeypatch.setenv("RUNNER_TEMP", str(benign_archive))
@@ -581,11 +600,17 @@ def test_oracle_rejects_each_leak_and_overmask(benign_publication, surface, faul
             assert private not in output
 
 
-@pytest.mark.parametrize("encoded", ["ZZ-DRILL-AMBER", "%7A%7A-drill-amber", r"zz\u002ddrill\u002damber", "zz&#45;drill&#45;amber"])
-def test_oracle_decodes_publication_encodings(benign_publication, encoded):
+@pytest.mark.parametrize("surface", ["dist", "hf"])
+@pytest.mark.parametrize("encoded", [
+    "ZZ-DRILL-AMBER", "%7A%7A-drill-amber", r"zz\u002ddrill\u002damber", "zz&#45;drill&#45;amber",
+    "https://github.com/&#37;7A&#37;7A-drill-amber/repo",
+    "%257A%257A-drill-amber",
+])
+def test_oracle_decodes_publication_encodings(benign_publication, surface, encoded):
     dist, mirror, _, manifest, _ = benign_publication
-    (dist / "leak.json").write_text(encoded)
-    assert any("class a: dist leak" in f for f in drill.oracle_findings(dist, mirror, manifest))
+    folder = dist if surface == "dist" else mirror
+    (folder / "leak.json").write_text(encoded)
+    assert any(f"class a: {surface} leak" in f for f in drill.oracle_findings(dist, mirror, manifest))
 
 
 def test_oracle_fails_closed_on_missing_outputs_and_manifest(benign_publication):
