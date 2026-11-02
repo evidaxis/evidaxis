@@ -1,0 +1,33 @@
+{
+  "forks_count": 45,
+  "homepage": "https://hubertsiuzdak.github.io/snac/",
+  "disabled": false,
+  "language": "Python",
+  "default_branch": "main",
+  "archived": false,
+  "visibility": "public",
+  "created_at": "2024-02-20T02:33:25Z",
+  "node_id": "R_kgDOLVAYvA",
+  "size": 5252,
+  "fork": false,
+  "name": "snac",
+  "network_count": 45,
+  "topics": [
+    "audio",
+    "audio-codec",
+    "deep-learning"
+  ],
+  "private": false,
+  "description": "Multi-Scale Neural Audio Codec (SNAC) compresses audio into discrete codes at a low bitrate",
+  "full_name": "hubertsiuzdak/snac",
+  "watchers_count": 778,
+  "id": 760223932,
+  "pushed_at": "2024-11-19T12:21:57Z",
+  "open_issues_count": 21,
+  "stargazers_count": 778,
+  "subscribers_count": 7,
+  "updated_at": "2026-10-28T05:00:51Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

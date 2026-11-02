@@ -1,0 +1,33 @@
+{
+  "forks_count": 59,
+  "homepage": "https://www.youtube.com/watch?v=Mam1i86n8sU&ab_channel=AbheekGulati",
+  "disabled": false,
+  "language": "Python",
+  "default_branch": "main",
+  "archived": false,
+  "visibility": "public",
+  "created_at": "2024-06-05T16:31:08Z",
+  "node_id": "R_kgDOMFX4Nw",
+  "size": 40159,
+  "fork": false,
+  "name": "LARS",
+  "network_count": 59,
+  "topics": [
+    "genai",
+    "llms",
+    "rag"
+  ],
+  "private": false,
+  "description": "An application for running LLMs locally on your device, with your documents, facilitating detailed citations in generated responses.",
+  "full_name": "abgulati/LARS",
+  "watchers_count": 633,
+  "id": 810940471,
+  "pushed_at": "2024-10-29T01:11:59Z",
+  "open_issues_count": 4,
+  "stargazers_count": 633,
+  "subscribers_count": 14,
+  "updated_at": "2026-10-14T22:44:09Z",
+  "owner_type": "User",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

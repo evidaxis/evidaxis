@@ -1,0 +1,60 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-11-02T16:19:21Z",
+  "date": "2026-11-02",
+  "period": "2026-w45",
+  "entity_count": 6316,
+  "error_count": 2,
+  "error_rate": 0.0003,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "Ar9av/obsidian-wiki",
+      "error": "Remote end closed connection without response"
+    },
+    {
+      "repo": "iamsrikanthnani/pluely",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "8f013f5fbe3a1d83d4749056e8defeedd110b95839699c9ec3ce2bb109a2bb8d",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}

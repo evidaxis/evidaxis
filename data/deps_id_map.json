@@ -1240,6 +1240,11 @@
       "package": "openshell",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "NVIDIA/SkillEvaluator": {
+      "system": "pypi",
+      "package": "skillevaluator",
+      "pinned_at": "2026-11-02T17:27:43Z"
+    },
     "NVIDIA/TensorRT": {
       "system": "pypi",
       "package": "tensorrt",
