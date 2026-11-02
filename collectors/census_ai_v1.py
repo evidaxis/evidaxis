@@ -25,7 +25,12 @@ Phases (checkpointed, resumable):
   emit       - census-run.json + pending-manifest.json + sha256 anchors
 
 Usage: python3 collectors/census_ai_v1.py <phase> [--month YYYY-MM]
-       python3 collectors/census_ai_v1.py emit [--month YYYY-MM] [--stock-census]
+       python3 collectors/census_ai_v1.py deepcheck [--month YYYY-MM] --shard i/8
+
+deepcheck is latency-bound: one process needs ~26 hours for ~80k candidates
+(measured 2026-08-03, again 2026-11-02 at ~37 repos/min). Run eight processes,
+--shard 0/8 .. 7/8, in parallel and emit after all of them exit 0. The cache
+spans every deepcheck*.jsonl, so re-sharding a running census redoes nothing.
 """
 from __future__ import annotations
 
