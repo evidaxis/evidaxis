@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-03T08:30:52Z",
+  "topics": [
+    "alphafold2",
+    "protein-structure",
+    "pytorch"
+  ],
+  "size": 20038,
+  "archived": false,
+  "watchers_count": 3449,
+  "stargazers_count": 3449,
+  "subscribers_count": 48,
+  "disabled": false,
+  "network_count": 699,
+  "homepage": "",
+  "description": "Trainable, memory-efficient, and GPU-friendly PyTorch reproduction of AlphaFold 2",
+  "id": 406555580,
+  "forks_count": 699,
+  "full_name": "aqlaboratory/openfold",
+  "language": "Python",
+  "name": "openfold",
+  "visibility": "public",
+  "fork": false,
+  "open_issues_count": 246,
+  "private": false,
+  "default_branch": "main",
+  "created_at": "2021-09-14T23:59:02Z",
+  "pushed_at": "2025-12-16T09:41:53Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnk0MDY1NTU1ODA=",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

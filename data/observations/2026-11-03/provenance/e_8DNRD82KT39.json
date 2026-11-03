@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-03T14:11:47Z",
+  "topics": [
+    "decision-model",
+    "jev",
+    "qwen3"
+  ],
+  "size": 183053,
+  "archived": false,
+  "watchers_count": 9791,
+  "stargazers_count": 9791,
+  "subscribers_count": 33,
+  "disabled": false,
+  "network_count": 669,
+  "homepage": "",
+  "description": "Jev-like family of decision models built on top of Qwen3.5/3.8 you can train and run on your own",
+  "id": 1375069862,
+  "forks_count": 669,
+  "full_name": "jaredpalmer/kev",
+  "language": "Python",
+  "name": "kev",
+  "visibility": "public",
+  "fork": false,
+  "open_issues_count": 61,
+  "private": false,
+  "default_branch": "main",
+  "created_at": "2026-09-17T20:49:39Z",
+  "pushed_at": "2026-11-03T00:46:58Z",
+  "node_id": "R_kgDOUfXmpg",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
