@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 26,
+  "full_name": "google-deepmind/mctx",
+  "open_issues_count": 22,
+  "updated_at": "2026-11-02T16:16:34Z",
+  "network_count": 222,
+  "default_branch": "main",
+  "name": "mctx",
+  "disabled": false,
+  "id": 464991268,
+  "forks_count": 222,
+  "homepage": "",
+  "fork": false,
+  "archived": false,
+  "description": "Monte Carlo tree search in JAX",
+  "private": false,
+  "created_at": "2022-03-01T17:26:43Z",
+  "watchers_count": 2684,
+  "size": 510,
+  "node_id": "R_kgDOG7c0JA",
+  "topics": [
+    "jax",
+    "monte-carlo-tree-search",
+    "reinforcement-learning"
+  ],
+  "pushed_at": "2026-10-05T22:08:14Z",
+  "stargazers_count": 2684,
+  "visibility": "public",
+  "language": "Python",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

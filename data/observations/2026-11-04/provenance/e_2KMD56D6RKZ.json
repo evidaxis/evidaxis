@@ -1,0 +1,32 @@
+{
+  "subscribers_count": 2,
+  "full_name": "xaspx/hermes-control-interface",
+  "open_issues_count": 6,
+  "updated_at": "2026-11-01T02:19:11Z",
+  "network_count": 129,
+  "default_branch": "main",
+  "name": "hermes-control-interface",
+  "disabled": false,
+  "id": 1205140442,
+  "forks_count": 129,
+  "homepage": "",
+  "fork": false,
+  "archived": false,
+  "description": "A self-hosted web dashboard for the Hermes AI agent stack. Provides a browser-based terminal, file explorer, session overview, cron management, system metrics, and an agent status panel — all behind a single password gate.",
+  "private": false,
+  "created_at": "2026-04-08T17:13:25Z",
+  "watchers_count": 902,
+  "size": 29958,
+  "node_id": "R_kgDOR9T72g",
+  "topics": [
+    "ai-agents",
+    "hermes-agent"
+  ],
+  "pushed_at": "2026-06-28T06:40:10Z",
+  "stargazers_count": 902,
+  "visibility": "public",
+  "language": "JavaScript",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
