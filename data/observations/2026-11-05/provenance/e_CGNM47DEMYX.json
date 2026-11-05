@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "artificial-intelligence",
+    "attention-mechanism",
+    "deep-learning"
+  ],
+  "full_name": "lucidrains/perceiver-pytorch",
+  "open_issues_count": 31,
+  "language": "Python",
+  "default_branch": "main",
+  "created_at": "2021-03-05T02:58:52Z",
+  "fork": false,
+  "watchers_count": 1223,
+  "subscribers_count": 29,
+  "forks_count": 140,
+  "pushed_at": "2026-10-26T16:19:22Z",
+  "name": "perceiver-pytorch",
+  "size": 129,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 1223,
+  "updated_at": "2026-11-05T12:17:21Z",
+  "homepage": "",
+  "id": 344676740,
+  "archived": false,
+  "network_count": 140,
+  "description": "Implementation of Perceiver, General Perception with Iterative Attention, in Pytorch",
+  "disabled": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNDQ2NzY3NDA=",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

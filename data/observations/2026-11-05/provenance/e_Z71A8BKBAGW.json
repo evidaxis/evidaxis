@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "text-to-speech"
+  ],
+  "full_name": "lucidrains/voicebox-pytorch",
+  "open_issues_count": 11,
+  "language": "Python",
+  "default_branch": "main",
+  "created_at": "2023-08-01T13:30:54Z",
+  "fork": false,
+  "watchers_count": 705,
+  "subscribers_count": 46,
+  "forks_count": 58,
+  "pushed_at": "2024-10-01T16:26:02Z",
+  "name": "voicebox-pytorch",
+  "size": 287,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 705,
+  "updated_at": "2026-10-31T23:47:06Z",
+  "homepage": "",
+  "id": 673372387,
+  "archived": false,
+  "network_count": 58,
+  "description": "Implementation of Voicebox, new SOTA Text-to-speech network from MetaAI, in Pytorch",
+  "disabled": false,
+  "node_id": "R_kgDOKCLY4w",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

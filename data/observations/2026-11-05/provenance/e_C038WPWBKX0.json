@@ -1,0 +1,32 @@
+{
+  "topics": [
+    "ai-agents",
+    "cloudflare-workers"
+  ],
+  "full_name": "cloudflare/moltworker",
+  "open_issues_count": 93,
+  "language": "TypeScript",
+  "default_branch": "main",
+  "created_at": "2026-01-27T11:09:39Z",
+  "fork": false,
+  "watchers_count": 9945,
+  "subscribers_count": 45,
+  "forks_count": 1701,
+  "pushed_at": "2026-05-09T02:37:13Z",
+  "name": "moltworker",
+  "size": 610229,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 9945,
+  "updated_at": "2026-11-05T08:06:14Z",
+  "homepage": "https://blog.cloudflare.com/moltworker-self-hosted-ai-agent/",
+  "id": 1143261428,
+  "archived": false,
+  "network_count": 1701,
+  "description": "Run OpenClaw, (formerly Moltbot, formerly Clawdbot) on Cloudflare Workers",
+  "disabled": false,
+  "node_id": "R_kgDORCTI9A",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

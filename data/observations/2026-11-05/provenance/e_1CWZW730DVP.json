@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "ai",
+    "social-network",
+    "stable-diffusion"
+  ],
+  "full_name": "civitai/civitai",
+  "open_issues_count": 274,
+  "language": "TypeScript",
+  "default_branch": "main",
+  "created_at": "2022-10-11T20:03:20Z",
+  "fork": false,
+  "watchers_count": 7312,
+  "subscribers_count": 64,
+  "forks_count": 740,
+  "pushed_at": "2026-11-05T14:54:37Z",
+  "name": "civitai",
+  "size": 402166,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 7312,
+  "updated_at": "2026-11-05T14:54:41Z",
+  "homepage": "https://civitai.com",
+  "id": 549830413,
+  "archived": false,
+  "network_count": 740,
+  "description": "A repository of models, textual inversions, and more",
+  "disabled": false,
+  "node_id": "R_kgDOIMW_DQ",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

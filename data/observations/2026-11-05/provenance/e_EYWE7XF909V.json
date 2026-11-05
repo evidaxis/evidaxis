@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "conditional-random-fields",
+    "neural-networks",
+    "pytorch"
+  ],
+  "full_name": "kmkurn/pytorch-crf",
+  "open_issues_count": 1,
+  "language": "Python",
+  "default_branch": "master",
+  "created_at": "2017-11-25T05:03:44Z",
+  "fork": false,
+  "watchers_count": 979,
+  "subscribers_count": 7,
+  "forks_count": 153,
+  "pushed_at": "2024-06-09T12:30:21Z",
+  "name": "pytorch-crf",
+  "size": 103,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 979,
+  "updated_at": "2026-11-04T17:44:31Z",
+  "homepage": "https://pytorch-crf.readthedocs.io",
+  "id": 111978012,
+  "archived": false,
+  "network_count": 153,
+  "description": "(Linear-chain) Conditional random field in PyTorch.",
+  "disabled": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMTE5NzgwMTI=",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

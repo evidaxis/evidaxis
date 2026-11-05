@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "agent",
+    "ai",
+    "biomedicine"
+  ],
+  "full_name": "snap-stanford/Biomni",
+  "open_issues_count": 131,
+  "language": "Python",
+  "default_branch": "main",
+  "created_at": "2025-03-19T21:06:53Z",
+  "fork": false,
+  "watchers_count": 4057,
+  "subscribers_count": 38,
+  "forks_count": 736,
+  "pushed_at": "2026-11-02T19:39:17Z",
+  "name": "Biomni",
+  "size": 5447,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 4057,
+  "updated_at": "2026-11-05T13:03:24Z",
+  "homepage": "https://biomni.stanford.edu",
+  "id": 951543275,
+  "archived": false,
+  "network_count": 736,
+  "description": "Biomni: a general-purpose biomedical AI agent",
+  "disabled": false,
+  "node_id": "R_kgDOOLdl6w",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

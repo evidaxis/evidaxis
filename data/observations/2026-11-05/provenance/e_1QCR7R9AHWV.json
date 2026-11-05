@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "exponential-moving-average"
+  ],
+  "full_name": "lucidrains/ema-pytorch",
+  "open_issues_count": 8,
+  "language": "Python",
+  "default_branch": "main",
+  "created_at": "2022-06-20T18:18:17Z",
+  "fork": false,
+  "watchers_count": 659,
+  "subscribers_count": 2,
+  "forks_count": 42,
+  "pushed_at": "2026-07-31T15:36:11Z",
+  "name": "ema-pytorch",
+  "size": 99,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 659,
+  "updated_at": "2026-10-22T09:32:26Z",
+  "homepage": "",
+  "id": 505551757,
+  "archived": false,
+  "network_count": 42,
+  "description": "A simple way to keep track of an Exponential Moving Average (EMA) version of your Pytorch model",
+  "disabled": false,
+  "node_id": "R_kgDOHiIbjQ",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

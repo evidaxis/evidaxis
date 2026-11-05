@@ -1,0 +1,32 @@
+{
+  "topics": [
+    "multi-modal-rag",
+    "retrieval-augmented-generation"
+  ],
+  "full_name": "HKUDS/RAG-Anything",
+  "open_issues_count": 102,
+  "language": "Python",
+  "default_branch": "main",
+  "created_at": "2025-06-06T06:47:29Z",
+  "fork": false,
+  "watchers_count": 24436,
+  "subscribers_count": 118,
+  "forks_count": 2861,
+  "pushed_at": "2026-11-02T04:42:10Z",
+  "name": "RAG-Anything",
+  "size": 4411,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 24436,
+  "updated_at": "2026-11-05T10:44:36Z",
+  "homepage": "http://arxiv.org/abs/2510.12323",
+  "id": 997220241,
+  "archived": false,
+  "network_count": 2861,
+  "description": "\"RAG-Anything: All-in-One RAG Framework\"",
+  "disabled": false,
+  "node_id": "R_kgDOO3BfkQ",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "topics": [
+    "agno",
+    "ai-agents",
+    "text-to-sql"
+  ],
+  "full_name": "agno-agi/dash",
+  "open_issues_count": 13,
+  "language": "Python",
+  "default_branch": "main",
+  "created_at": "2026-01-30T13:54:17Z",
+  "fork": false,
+  "watchers_count": 2271,
+  "subscribers_count": 18,
+  "forks_count": 255,
+  "pushed_at": "2026-07-10T10:21:52Z",
+  "name": "dash",
+  "size": 260,
+  "private": false,
+  "visibility": "public",
+  "stargazers_count": 2271,
+  "updated_at": "2026-11-05T07:01:59Z",
+  "homepage": "https://agno.com",
+  "id": 1146004684,
+  "archived": false,
+  "network_count": 255,
+  "description": "A self-learning data agent built with systems engineering principles. It grounds answers in 6 layers of context and improves with every query.",
+  "disabled": false,
+  "node_id": "R_kgDORE6kzA",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
