@@ -1,0 +1,72 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-11-06T14:27:10Z",
+  "date": "2026-11-06",
+  "period": "2026-w45",
+  "entity_count": 6716,
+  "error_count": 5,
+  "error_rate": 0.0007,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "iamsrikanthnani/pluely",
+      "http_status": 404
+    },
+    {
+      "repo": "romgX/openrelay",
+      "http_status": 404
+    },
+    {
+      "repo": "zhongyu09/openchatbi",
+      "http_status": 404
+    },
+    {
+      "repo": "shobcoder/shob",
+      "http_status": 404
+    },
+    {
+      "repo": "trhhubsd/ARTEX",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "ca5262e3aa934386f16ed355f2da1d15884e07ce582b88a8399fe04782cd890c",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}
