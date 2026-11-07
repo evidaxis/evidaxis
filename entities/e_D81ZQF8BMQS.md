@@ -14,9 +14,9 @@ classification:
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: d1eb0cec0f6a
-  captured_at: 2026-10-31T03:43:22+00:00
-  period: 2026-w44
+  snapshot_id: 868e3c39d9c7
+  captured_at: 2026-11-07T03:43:55+00:00
+  period: 2026-w45
   momentum: 49.4
   percentile: 33
   confidence: low
@@ -25,8 +25,8 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.045, "recent_weekly_commits": 0.0, "stars_not_scored": 5392}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 30, "by_year": {"2026": 7, "2025": 23}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.046, "recent_weekly_commits": 0.0, "stars_not_scored": 5397}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 219, "by_year": {"2026": 118, "2025": 101}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2412.10302; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---

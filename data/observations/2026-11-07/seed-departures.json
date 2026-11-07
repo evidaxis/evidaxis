@@ -1,0 +1,43 @@
+{
+ "snapshot_date": "2026-11-07",
+ "departures": [
+  {
+   "github_repo": "cactus-compute/needle",
+   "reason": "repo_id_changed",
+   "old_repo_id": 1165361576,
+   "new_repo_id": 1447361711,
+   "detected_at": "2026-11-07T02:25:44Z"
+  },
+  {
+   "github_repo": "iamsrikanthnani/pluely",
+   "reason": "gone",
+   "detected_at": "2026-11-07T02:25:44Z"
+  },
+  {
+   "github_repo": "PlexPt/chatgpt-java",
+   "reason": "gone",
+   "detected_at": "2026-11-07T02:25:44Z"
+  },
+  {
+   "github_repo": "romgX/openrelay",
+   "reason": "gone",
+   "detected_at": "2026-11-07T02:25:44Z"
+  },
+  {
+   "github_repo": "shobcoder/shob",
+   "reason": "gone",
+   "detected_at": "2026-11-07T02:25:44Z"
+  },
+  {
+   "github_repo": "trhhubsd/ARTEX",
+   "reason": "gone",
+   "detected_at": "2026-11-07T02:25:44Z"
+  },
+  {
+   "github_repo": "zhongyu09/openchatbi",
+   "reason": "gone",
+   "detected_at": "2026-11-07T02:25:44Z"
+  }
+ ],
+ "note": "Seeds retired by the weekly preflight (collectors/gh_graphql.py): the repository is gone on GitHub or its name now resolves to a different repository id. Their history and archived cards stay; they are no longer collected."
+}

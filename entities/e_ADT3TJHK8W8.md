@@ -14,25 +14,25 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: d1eb0cec0f6a
-  captured_at: 2026-10-31T03:43:22+00:00
-  period: 2026-w44
-  momentum: 61.4
-  percentile: 75
+  snapshot_id: 868e3c39d9c7
+  captured_at: 2026-11-07T03:43:55+00:00
+  period: 2026-w45
+  momentum: 55.2
+  percentile: 69
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
-  convergent_axes: ["github_commit_velocity"]
+  convergent_axes: []
   rising: false
-  status: watch
+  status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.047195462991737644, "cohort_z": 1.825, "recent_weekly_commits": 121.2, "stars_not_scored": 22053}
+    github_commit_velocity: {"slope": 0.03883103721459507, "cohort_z": 0.839, "recent_weekly_commits": 119.6, "stars_not_scored": 22127}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.024203, "theil_sen": 0.023768, "cohort_z": 0.0, "latest": 220, "points": 28, "points_reconstructable": 15, "as_of_partition": "2026-10-12", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.023262, "theil_sen": 0.022805, "cohort_z": 0.0, "latest": 220, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": false, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Google ADK
 
-Evidaxis measures **Google ADK** on methodology m5. Momentum 61.4/100; 2 axes present, 1 axes converging.
+Evidaxis measures **Google ADK** on methodology m5. Momentum 55.2/100; 2 axes present, 0 axes converging.
 
 This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

@@ -14,10 +14,10 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: d1eb0cec0f6a
-  captured_at: 2026-10-31T03:43:22+00:00
-  period: 2026-w44
-  momentum: 58.8
+  snapshot_id: 868e3c39d9c7
+  captured_at: 2026-11-07T03:43:55+00:00
+  period: 2026-w45
+  momentum: 57.8
   percentile: 79
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
@@ -25,14 +25,14 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: watch
   axes:
-    github_commit_velocity: {"slope": -0.05029209693437482, "cohort_z": -1.477, "recent_weekly_commits": 395.0, "stars_not_scored": 27807}
+    github_commit_velocity: {"slope": -0.05387807924197859, "cohort_z": -1.46, "recent_weekly_commits": 378.1, "stars_not_scored": 27883}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.070482, "theil_sen": 0.065852, "cohort_z": 2.891, "latest": 17, "points": 28, "points_reconstructable": 15, "as_of_partition": "2026-10-12", "unstable": false, "rising_vote": true}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.068848, "theil_sen": 0.064719, "cohort_z": 2.707, "latest": 17, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": false, "rising_vote": true}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Kilo Code
 
-Evidaxis measures **Kilo Code** on methodology m5. Momentum 58.8/100; 2 axes present, 1 axes converging.
+Evidaxis measures **Kilo Code** on methodology m5. Momentum 57.8/100; 2 axes present, 1 axes converging.
 
 This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

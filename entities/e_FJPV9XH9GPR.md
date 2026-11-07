@@ -14,25 +14,25 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: d1eb0cec0f6a
-  captured_at: 2026-10-31T03:43:22+00:00
-  period: 2026-w44
-  momentum: 42.4
-  percentile: 33
+  snapshot_id: 868e3c39d9c7
+  captured_at: 2026-11-07T03:43:55+00:00
+  period: 2026-w45
+  momentum: 40.3
+  percentile: 27
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.004539973713148048, "cohort_z": -0.536, "recent_weekly_commits": 27.0, "stars_not_scored": 16000}
+    github_commit_velocity: {"slope": -0.0013193321930258823, "cohort_z": -0.878, "recent_weekly_commits": 26.2, "stars_not_scored": 16057}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": -0.008995, "theil_sen": 0.0, "cohort_z": -0.674, "latest": 5, "points": 28, "points_reconstructable": 15, "as_of_partition": "2026-10-12", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": -0.007726, "theil_sen": 0.0, "cohort_z": -0.674, "latest": 5, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": false, "rising_vote": false}
 note: "paper_ref: 2408.05517; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # ms-swift
 
-Evidaxis measures **ms-swift** on methodology m5. Momentum 42.4/100; 2 axes present, 0 axes converging.
+Evidaxis measures **ms-swift** on methodology m5. Momentum 40.3/100; 2 axes present, 0 axes converging.
 
 This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

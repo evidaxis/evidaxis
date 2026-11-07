@@ -14,23 +14,23 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: d1eb0cec0f6a
-  captured_at: 2026-10-31T03:43:22+00:00
-  period: 2026-w44
-  momentum: 86.0
-  percentile: 90
+  snapshot_id: 868e3c39d9c7
+  captured_at: 2026-11-07T03:43:55+00:00
+  period: 2026-w45
+  momentum: 77.1
+  percentile: 83
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.04415136463328974, "cohort_z": 2.884, "recent_weekly_commits": 4.1, "stars_not_scored": 4957}
+    github_commit_velocity: {"slope": 0.03474964266132244, "cohort_z": 2.167, "recent_weekly_commits": 4.2, "stars_not_scored": 4966}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 37, "points": 1, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 ---
 
 # statsforecast
 
-Evidaxis measures **statsforecast** on methodology m5. Momentum 86.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **statsforecast** on methodology m5. Momentum 77.1/100; 1 axes present, 0 axes converging.

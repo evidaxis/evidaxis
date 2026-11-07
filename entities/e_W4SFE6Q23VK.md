@@ -14,23 +14,23 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: d1eb0cec0f6a
-  captured_at: 2026-10-31T03:43:22+00:00
-  period: 2026-w44
-  momentum: 86.8
-  percentile: 79
+  snapshot_id: 868e3c39d9c7
+  captured_at: 2026-11-07T03:43:55+00:00
+  period: 2026-w45
+  momentum: 77.5
+  percentile: 71
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.005624643508808524, "cohort_z": 2.946, "recent_weekly_commits": 0.2, "stars_not_scored": 12697}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 10, "by_year": {"2026": 4, "2025": 6}, "proxy": null}
+    github_commit_velocity: {"slope": 0.003925562038868012, "cohort_z": 2.202, "recent_weekly_commits": 0.2, "stars_not_scored": 12736}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 216, "by_year": {"2026": 156, "2025": 60}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2412.03603; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # HunyuanVideo
 
-Evidaxis measures **HunyuanVideo** on methodology m5. Momentum 86.8/100; 1 axes present, 0 axes converging.
+Evidaxis measures **HunyuanVideo** on methodology m5. Momentum 77.5/100; 1 axes present, 0 axes converging.
