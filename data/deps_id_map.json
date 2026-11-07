@@ -87,6 +87,11 @@
       "package": "finrobot",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "ARCANGEL0/Mitsu": {
+      "system": "pypi",
+      "package": "mitsu",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "ARISE-Initiative/robomimic": {
       "system": "pypi",
       "package": "robomimic",
@@ -142,6 +147,11 @@
       "system": "pypi",
       "package": "tokencost",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "AgentSafeLabs/safelabs-eval": {
+      "system": "pypi",
+      "package": "safelabs-eval",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "AgnostiqHQ/covalent": {
       "system": "pypi",
@@ -428,6 +438,11 @@
       "package": "cloakbrowser",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "CoWork-OS/CoWork-OS": {
+      "system": "npm",
+      "package": "cowork-os",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "CodeBoarding/CodeBoarding": {
       "system": "pypi",
       "package": "codeboarding",
@@ -523,6 +538,11 @@
       "package": "deeplabcut",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "DemonDamon/AgenticX": {
+      "system": "pypi",
+      "package": "agenticx",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "Denys88/rl_games": {
       "system": "pypi",
       "package": "rl_games",
@@ -532,6 +552,16 @@
       "system": "pypi",
       "package": "pytextrank",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "DeusData/codebase-memory-mcp": {
+      "system": "pypi",
+      "package": "codebase-memory-mcp",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
+    "DilawarShafiq/nietzschian-debugger": {
+      "system": "pypi",
+      "package": "nietzschian-debugger",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "DingTalk-Real-AI/dingtalk-workspace-cli": {
       "system": "npm",
@@ -759,6 +789,11 @@
       "package": "claude-real-video",
       "pinned_at": "2026-09-28T15:17:45Z"
     },
+    "Han-1413141/dsh-cost-meter": {
+      "system": "npm",
+      "package": "dsh-cost-meter",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "HarnessRouter/harnessrouter": {
       "system": "pypi",
       "package": "harnessrouter",
@@ -944,6 +979,11 @@
       "package": "proper-pixel-art",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "KevRojo/Dulus": {
+      "system": "pypi",
+      "package": "dulus",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "KevinMusgrave/pytorch-metric-learning": {
       "system": "pypi",
       "package": "pytorch-metric-learning",
@@ -1060,6 +1100,11 @@
       "package": "shapash",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "MIC-DKFZ/batchgenerators": {
+      "system": "pypi",
+      "package": "batchgenerators",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "MIC-DKFZ/nnInteractive": {
       "system": "pypi",
       "package": "nninteractive",
@@ -1089,6 +1134,11 @@
       "system": "npm",
       "package": "markpdfdown",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "Marker-Inc-Korea/AutoRAG": {
+      "system": "pypi",
+      "package": "autorag",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "MatrixAges/polywise": {
       "system": "npm",
@@ -1185,6 +1235,11 @@
       "package": "mushroom-rl",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "Muvon/octocode": {
+      "system": "cargo",
+      "package": "octocode",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "MycroftAI/mycroft-precise": {
       "system": "pypi",
       "package": "mycroft-precise",
@@ -1199,6 +1254,11 @@
       "system": "pypi",
       "package": "npcpy",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "NPC-Worldwide/npcsh": {
+      "system": "pypi",
+      "package": "npcsh",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "NTMC-Community/MatchZoo": {
       "system": "pypi",
@@ -1361,6 +1421,11 @@
       "package": "yt-fts",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "Nour833/StegoForge": {
+      "system": "pypi",
+      "package": "stegoforge",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "NucleoidAI/Nucleoid": {
       "system": "cargo",
       "package": "nucleoid",
@@ -1396,10 +1461,20 @@
       "package": "pyresparser",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "OpenAdaptAI/OpenAdapt": {
+      "system": "pypi",
+      "package": "openadapt",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "OpenBMB/AgentVerse": {
       "system": "pypi",
       "package": "agentverse",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "OpenBMB/MiniCPM-OCR": {
+      "system": "pypi",
+      "package": "minicpm-ocr",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "OpenBMB/VoxCPM": {
       "system": "pypi",
@@ -1410,6 +1485,11 @@
       "system": "pypi",
       "package": "dataflex",
       "pinned_at": "2026-09-30T13:54:20Z"
+    },
+    "OpenGeometry-io/OpenGeometry": {
+      "system": "npm",
+      "package": "opengeometry",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "OpenMined/PySyft": {
       "system": "pypi",
@@ -1700,6 +1780,11 @@
       "package": "gymnax",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "RosettaCommons/RFD4-Proteina": {
+      "system": "pypi",
+      "package": "rfd4-proteina",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "RyanCodrai/turbovec": {
       "system": "pypi",
       "package": "turbovec",
@@ -1959,6 +2044,11 @@
       "package": "torchio",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "Tracer-Cloud/opensre": {
+      "system": "pypi",
+      "package": "opensre",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "Trusted-AI/AIF360": {
       "system": "pypi",
       "package": "aif360",
@@ -2028,6 +2118,11 @@
       "system": "npm",
       "package": "executor",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "V1ki/dsh-plugin-subscriptions": {
+      "system": "npm",
+      "package": "dsh-plugin-subscriptions",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "VHRanger/nodevectors": {
       "system": "pypi",
@@ -2291,6 +2386,11 @@
       "package": "torchani",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "akfamily/aktools": {
+      "system": "pypi",
+      "package": "aktools",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "akitaonrails/ai-jail": {
       "system": "cargo",
       "package": "ai-jail",
@@ -2325,6 +2425,16 @@
       "system": "pypi",
       "package": "albumentationsx",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "alchaincyf/huashu-chrome": {
+      "system": "npm",
+      "package": "huashu-chrome",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
+    "alchaincyf/huashu-motion": {
+      "system": "npm",
+      "package": "huashu-motion",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "alegonz/baikal": {
       "system": "pypi",
@@ -2976,10 +3086,20 @@
       "package": "bub",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "busabase/busabase": {
+      "system": "pypi",
+      "package": "busabase",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "business-science/ai-data-science-team": {
       "system": "pypi",
       "package": "ai-data-science-team",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "bvisible/mcp-ssh-manager": {
+      "system": "npm",
+      "package": "mcp-ssh-manager",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "bytedance/Protenix": {
       "system": "pypi",
@@ -3011,6 +3131,11 @@
       "system": "npm",
       "package": "cali",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "callstackincubator/simlock": {
+      "system": "npm",
+      "package": "simlock",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "can4hou6joeng4/boss-agent-cli": {
       "system": "pypi",
@@ -3077,6 +3202,11 @@
       "package": "seqeval",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "chandra447/pi-hermes-memory": {
+      "system": "npm",
+      "package": "pi-hermes-memory",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "charnley/rmsd": {
       "system": "pypi",
       "package": "rmsd",
@@ -3111,6 +3241,11 @@
       "system": "pypi",
       "package": "pandaprobe",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "chrisryugj/kordoc": {
+      "system": "pypi",
+      "package": "kordoc",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "chrisryugj/korean-law-mcp": {
       "system": "npm",
@@ -3360,6 +3495,11 @@
       "system": "pypi",
       "package": "pymde",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "cyanheads/obsidian-mcp-server": {
+      "system": "npm",
+      "package": "obsidian-mcp-server",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "cyberkaida/reverse-engineering-assistant": {
       "system": "pypi",
@@ -3623,6 +3763,11 @@
       "package": "donsetch",
       "pinned_at": "2026-10-12T16:53:26Z"
     },
+    "dongrixinyu/JioNLP": {
+      "system": "pypi",
+      "package": "jionlp",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "doobidoo/mcp-memory-service": {
       "system": "pypi",
       "package": "mcp-memory-service",
@@ -3757,6 +3902,11 @@
       "system": "pypi",
       "package": "emlearn",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "emo-xiaoyu/harness-mix": {
+      "system": "npm",
+      "package": "harness-mix",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "eosphoros-ai/DB-GPT": {
       "system": "pypi",
@@ -4059,6 +4209,11 @@
       "package": "wechat-acp",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "fraunhoferportugal/tsfel": {
+      "system": "pypi",
+      "package": "tsfel",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "freud14/poutyne": {
       "system": "pypi",
       "package": "poutyne",
@@ -4103,6 +4258,16 @@
       "system": "pypi",
       "package": "stable-worldmodel",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "gatewai-dev/framefields": {
+      "system": "npm",
+      "package": "framefields",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
+    "geekplux/markvis": {
+      "system": "npm",
+      "package": "markvis",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "genicam/harvesters": {
       "system": "pypi",
@@ -4487,6 +4652,11 @@
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
     },
+    "hjanuschka/pi-multi-pass": {
+      "system": "npm",
+      "package": "pi-multi-pass",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "hmorimitsu/ptlflow": {
       "system": "pypi",
       "package": "ptlflow",
@@ -4610,6 +4780,11 @@
       "package": "deepcl",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "humanlayer/humanlayer": {
+      "system": "pypi",
+      "package": "humanlayer",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "hummingbot/hummingbot": {
       "system": "pypi",
       "package": "hummingbot",
@@ -4664,6 +4839,11 @@
       "system": "npm",
       "package": "mcp-searxng",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "ilyautov/humanizer-ru": {
+      "system": "npm",
+      "package": "humanizer-ru",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "im4codes/imcodes": {
       "system": "npm",
@@ -5868,10 +6048,20 @@
       "package": "marimo",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "marionettejs/marionette": {
+      "system": "npm",
+      "package": "marionette",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "marketcalls/openalgo": {
       "system": "pypi",
       "package": "openalgo",
       "pinned_at": "2026-10-12T16:53:26Z"
+    },
+    "markfulton/ai-employees": {
+      "system": "npm",
+      "package": "ai-employees",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "marl/crepe": {
       "system": "pypi",
@@ -5965,6 +6155,11 @@
       "system": "pypi",
       "package": "torchopt",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "metasequoiaime/chinese-ime-lm": {
+      "system": "cargo",
+      "package": "chinese-ime-lm",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "mflux-community/mflux": {
       "system": "pypi",
@@ -6450,6 +6645,11 @@
       "package": "backgroundremover",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "nadimtuhin/claude-token-optimizer": {
+      "system": "npm",
+      "package": "claude-token-optimizer",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "namuan/dr-doc-search": {
       "system": "pypi",
       "package": "dr-doc-search",
@@ -6539,6 +6739,11 @@
       "system": "pypi",
       "package": "nfstream",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "ngafar/llama-scan": {
+      "system": "pypi",
+      "package": "llama-scan",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "nicobailon/pi-mcp-adapter": {
       "system": "npm",
@@ -6725,6 +6930,11 @@
       "package": "explainerdashboard",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "ojuschugh1/sqz": {
+      "system": "pypi",
+      "package": "sqz",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "olistic/warriorjs": {
       "system": "npm",
       "package": "warriorjs",
@@ -6901,6 +7111,11 @@
       "package": "connectonion",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "openqodex/openqodex": {
+      "system": "npm",
+      "package": "openqodex",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "opensandbox-group/OpenSandbox": {
       "system": "pypi",
       "package": "opensandbox",
@@ -6946,6 +7161,11 @@
       "package": "kvcached",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "oxbshw/watch-skill": {
+      "system": "pypi",
+      "package": "watch-skill",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "paean-ai/deeptide": {
       "system": "npm",
       "package": "deeptide",
@@ -6986,6 +7206,11 @@
       "package": "tensor-sensor",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "pathwaycom/serviette": {
+      "system": "pypi",
+      "package": "serviette",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "patrick-kidger/diffrax": {
       "system": "pypi",
       "package": "diffrax",
@@ -7010,6 +7235,11 @@
       "system": "pypi",
       "package": "opentsne",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "pbakaus/impeccable": {
+      "system": "npm",
+      "package": "impeccable",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "pbcquoc/vietocr": {
       "system": "pypi",
@@ -7080,6 +7310,11 @@
       "system": "pypi",
       "package": "pixeltable",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "pixtuoid/pixtuoid": {
+      "system": "npm",
+      "package": "pixtuoid",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "plasma-umass/ChatDBG": {
       "system": "pypi",
@@ -7369,6 +7604,11 @@
       "system": "pypi",
       "package": "ray",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "razzant/claudexor": {
+      "system": "npm",
+      "package": "claudexor",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "readbeyond/aeneas": {
       "system": "pypi",
@@ -7685,6 +7925,11 @@
       "package": "wtpsplit",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "seleniumbase/SeleniumBase": {
+      "system": "pypi",
+      "package": "seleniumbase",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "semantica-agi/semantica": {
       "system": "pypi",
       "package": "semantica",
@@ -7699,6 +7944,11 @@
       "system": "pypi",
       "package": "eo-learn",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "seohongpark/ogbench": {
+      "system": "pypi",
+      "package": "ogbench",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "sepandhaghighi/pycm": {
       "system": "pypi",
@@ -7783,6 +8033,11 @@
       "package": "textgen",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "shinthink/blitzstrike": {
+      "system": "npm",
+      "package": "blitzstrike",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "shroominic/codeinterpreter-api": {
       "system": "pypi",
       "package": "codeinterpreterapi",
@@ -7862,6 +8117,11 @@
       "system": "pypi",
       "package": "skypilot",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "slopus/happy": {
+      "system": "npm",
+      "package": "happy",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "sloria/TextBlob": {
       "system": "pypi",
@@ -8626,6 +8886,11 @@
       "package": "ragas",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "vicoa-ai/vicoa": {
+      "system": "npm",
+      "package": "vicoa",
+      "pinned_at": "2026-11-07T14:28:53Z"
+    },
     "vietanhdev/anylabeling": {
       "system": "pypi",
       "package": "anylabeling",
@@ -8747,6 +9012,11 @@
       "system": "cargo",
       "package": "wasmer",
       "pinned_at": "2026-10-12T16:53:26Z"
+    },
+    "wavyrai/tmux-ide": {
+      "system": "npm",
+      "package": "tmux-ide",
+      "pinned_at": "2026-11-07T14:28:53Z"
     },
     "waybarrios/vllm-mlx": {
       "system": "pypi",
