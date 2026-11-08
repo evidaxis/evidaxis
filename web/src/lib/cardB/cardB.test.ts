@@ -104,6 +104,19 @@ describe('readings, sources and text boundaries', () => {
     expect(() => interpolate('{missing}', {}, 'Example')).toThrow();
     expect(() => assertPublicText('Example is abandoned.', 'Example')).toThrow();
     expect(() => assertPublicText('Value, then a verdict elsewhere.', 'Example')).toThrow();
+    // A third-party system name may contain a guarded word; only our words around it count.
+    for (const name of ['stale-detector', 'dead-letter-queue', 'verdict-ai', 'watch-skill', 'declining-lr']) {
+      expect(() => assertPublicText(`${name} reports 12 weekly commits.`, name)).not.toThrow();
+    }
+    expect(() => assertPublicText('stale-detector is stale.', 'stale-detector')).toThrow();
+    expect(() => assertPublicText('verdict-ai: the verdict is in.', 'verdict-ai')).toThrow();
+    expect(() => assertPublicText('Momentum is losing momentum.', 'Momentum')).toThrow();
+    // The em-dash ban is about our typography, not vocabulary: a name never lifts it.
+    expect(() => assertPublicText('foo—bar reports 12 weekly commits.', 'foo—bar')).toThrow();
+    // Serialized cards: the exemption reads parsed string values, never JSON syntax (Codex review round 3).
+    expect(() => assertPublicText(JSON.stringify({ status: 'stale' }), '"stale"')).toThrow();
+    expect(() => assertPublicText(JSON.stringify({ name: 'stale-detector', note: 'is stale' }), 'stale-detector')).toThrow();
+    expect(() => assertPublicText(JSON.stringify({ name: 'stale-detector', n: 12 }), 'stale-detector')).not.toThrow();
     expect(() => assertPublicText('https://github.com/%70rivateowner/x', 'Example', ['privateowner'])).toThrow(/person_free/);
     expect(() => assertPublicText('{"@type":"Person"}', 'Example')).toThrow(/person_free/);
   });

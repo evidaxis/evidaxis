@@ -1,5 +1,5 @@
 import { FACETS, COPY } from '../../data/card-b-facets';
-import { scanEntityLexicon, scanEntityPageWide } from '../../../scripts/entity-lexicon.mjs';
+import { matchesOutsideOwnNameIn, scanEntityLexicon, scanEntityPageWide } from '../../../scripts/entity-lexicon.mjs';
 import { buildHandleIndex, handleHits } from '../personFree.mjs';
 const INDEXES = new WeakMap<string[], ReturnType<typeof buildHandleIndex>>();
 const handleIndex = (banned: string[]) => { let i = INDEXES.get(banned); if (!i) { i = buildHandleIndex(banned); INDEXES.set(banned, i); } return i; };
@@ -45,8 +45,10 @@ export const revealsBannedHandle = (text: string, banned: string[]) =>
   handleHits(decodeURIComponent(text), handleIndex(banned)).length > 0;
 
 export function assertPublicText(text: string, name: string, banned: string[] = []) {
-  const findings = [...scanEntityLexicon(text, name), ...scanEntityPageWide(text)];
-  if (findings.length || /\u2014|\bn\/a\b|\b(dead|abandoned|dormant|stale|unmaintained|declining|suspended)\b/i.test(text)) {
+  // The system's own name is third-party text: "stale-detector" must not read as "stale".
+  const findings = [...scanEntityLexicon(text, name), ...scanEntityPageWide(text, [name])];
+  if (findings.length || /\u2014|\bn\/a\b/i.test(text)
+    || matchesOutsideOwnNameIn(text, /\b(dead|abandoned|dormant|stale|unmaintained|declining|suspended)\b/i, [name]).length) {
     throw new Error(`Unsafe Card B text for ${name}: ${text}`);
   }
   let decoded = text.replace(/\\u([a-f\d]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
