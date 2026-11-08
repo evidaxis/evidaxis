@@ -121,6 +121,9 @@ describe('readings, sources and text boundaries', () => {
     expect(() => assertPublicText('<p>dead</p>', '<p>dead</p>')).toThrow();
     expect(() => assertPublicText('<p class="dead">ok</p>', 'Example')).toThrow();
     expect(() => assertPublicText('<p>dead &amp; buried ships</p>', 'dead & buried')).not.toThrow();
+    // Adjacent blocks never glue our word to the next one (Codex review round 5).
+    expect(() => assertPublicText('<p>Example has dead</p><p>links</p>', 'Example')).toThrow();
+    expect(() => assertPublicText('<h1>verdict AI</h1> <p>Our verdict <!-- >AI -->.</p>', 'verdict AI')).toThrow();
     expect(() => assertPublicText('https://github.com/%70rivateowner/x', 'Example', ['privateowner'])).toThrow(/person_free/);
     expect(() => assertPublicText('{"@type":"Person"}', 'Example')).toThrow(/person_free/);
   });
