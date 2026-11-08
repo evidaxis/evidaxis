@@ -112,11 +112,15 @@ describe('readings, sources and text boundaries', () => {
     expect(() => assertPublicText('verdict-ai: the verdict is in.', 'verdict-ai')).toThrow();
     expect(() => assertPublicText('Momentum is losing momentum.', 'Momentum')).toThrow();
     // The em-dash ban is about our typography, not vocabulary: a name never lifts it.
-    expect(() => assertPublicText('foo—bar reports 12 weekly commits.', 'foo—bar')).toThrow();
+    expect(() => assertPublicText('foo\u2014bar reports 12 weekly commits.', 'foo\u2014bar')).toThrow();
     // Serialized cards: the exemption reads parsed string values, never JSON syntax (Codex review round 3).
     expect(() => assertPublicText(JSON.stringify({ status: 'stale' }), '"stale"')).toThrow();
     expect(() => assertPublicText(JSON.stringify({ name: 'stale-detector', note: 'is stale' }), 'stale-detector')).toThrow();
     expect(() => assertPublicText(JSON.stringify({ name: 'stale-detector', n: 12 }), 'stale-detector')).not.toThrow();
+    // HTML cards: the exemption reads rendered names, never markup (Codex review round 4).
+    expect(() => assertPublicText('<p>dead</p>', '<p>dead</p>')).toThrow();
+    expect(() => assertPublicText('<p class="dead">ok</p>', 'Example')).toThrow();
+    expect(() => assertPublicText('<p>dead &amp; buried ships</p>', 'dead & buried')).not.toThrow();
     expect(() => assertPublicText('https://github.com/%70rivateowner/x', 'Example', ['privateowner'])).toThrow(/person_free/);
     expect(() => assertPublicText('{"@type":"Person"}', 'Example')).toThrow(/person_free/);
   });

@@ -111,13 +111,20 @@ describe('entity discovery lexicon', () => {
     }
   });
 
+  it('never lets an inserted block mark complete a name (Codex review round 4)', () => {
+    expect(scanEntityPageWide('<p>Our verdict</p> <p>AI results.</p>', ['verdict \ue000AI']).map((f) => f.term))
+      .toEqual(['verdict']);
+    expect(scanEntityLexicon('<h1>Example</h1><!-- <div> -->verdict', 'Example').map((f) => f.term))
+      .toEqual(['verdict']);
+  });
+
   it('keeps a literal U+241E in the text: it is neither a block mark nor removed', () => {
     // Codex review round 2: a literal mark character must not shift name spans or vanish.
-    expect(scanEntityPageWide(JSON.stringify({ text: `${'␞'.repeat(8)}verdict Example` }), ['Example'])
+    expect(scanEntityPageWide(JSON.stringify({ text: `${'\u241e'.repeat(8)}verdict Example` }), ['Example'])
       .map((f) => f.term)).toEqual(['verdict']);
-    expect(scanEntityPageWide(`<p>Example verdict␞AI</p>`, ['Example']).map((f) => f.term))
+    expect(scanEntityPageWide(`<p>Example verdict\u241eAI</p>`, ['Example']).map((f) => f.term))
       .toEqual(['verdict']);
-    expect(scanEntityLexicon(`<p>Example verdict␞AI</p>`, 'Example').map((f) => f.term))
+    expect(scanEntityLexicon(`<p>Example verdict\u241eAI</p>`, 'Example').map((f) => f.term))
       .toEqual(['verdict']);
   });
 
@@ -143,7 +150,8 @@ describe('entity discovery lexicon', () => {
       '<p>gate sh<strong>u</strong>t</p><br/><li>x</li><li>y</li>',
       '<head><title>T</title><style>p{}</style></head><body><script>var a=1</script><p>z</p></body>',
       '<section>\n\t<h2>Sources</h2>\n<ul><li><a href="/e/x/">watch-skill</a></li></ul></section>',
-      '<p>keep ␞ literal</p><fieldset> and </fieldset><x-card>c</x-card><!-- note --><img src="a">',
+      '<p>keep \u241e literal</p><fieldset>\ue000 and \ue001</fieldset><x-card>c</x-card><!-- note --><img src="a">',
+      '<h1>Example</h1><!-- <div> -->verdict',
       'plain text without tags',
     ]) {
       expect(normalizeLexiconSurface(html)).toBe(before(html));

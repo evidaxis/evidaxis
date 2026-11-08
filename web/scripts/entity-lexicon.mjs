@@ -77,8 +77,9 @@ export function matchesOutsideOwnName(surface, pattern, identifiers = [], twin =
 }
 
 /**
- * matchesOutsideOwnName over a text that may be serialized JSON: each parsed
- * string value is its own surface, so JSON syntax never joins a name.
+ * matchesOutsideOwnName over a text that may be serialized JSON or HTML. Each
+ * parsed JSON string value is its own surface, so JSON syntax never joins a
+ * name; in HTML only the rendered text can hold the name, markup never can.
  * @param {string} content
  * @param {RegExp} pattern
  * @param {readonly unknown[]} [identifiers]
@@ -93,7 +94,15 @@ export function matchesOutsideOwnNameIn(content, pattern, identifiers = []) {
       // Not JSON after all: scan the raw text.
     }
   }
-  return matchesOutsideOwnName(content, pattern, identifiers);
+  const twin = markBlocks(content);
+  if (!twin) return matchesOutsideOwnName(content, pattern, identifiers);
+  // HTML: rendered text gets the name exemption; markup (tags, scripts,
+  // styles) is still read raw and never exempt, as before.
+  const markup = content.match(/<script\b[^>]*>[\s\S]*?<\/script>|<style\b[^>]*>[\s\S]*?<\/style>|<[^>]+>/gi) ?? [];
+  return [
+    ...markup.flatMap((piece) => matchesOutsideOwnName(piece, pattern)),
+    ...matchesOutsideOwnName(twin.marked.replaceAll(twin.mark, ''), pattern, identifiers, twin),
+  ];
 }
 
 /**
@@ -162,8 +171,12 @@ function markBlocks(content) {
   const marked = content
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
-    .replace(/<\/?([a-z][^\s/>]*)[^>]*>/gi, (tag, name) => (INLINE_TAGS.has(name.toLowerCase()) ? tag : mark))
-    .replace(/<[^>]+>/g, '')
+    // One pass with the same spans the old `<[^>]+>` removal used: a block
+    // element becomes a mark, everything else (inline, comment, doctype) goes.
+    .replace(/<[^>]+>/g, (tag) => {
+      const name = /^<\/?([a-z][^\s/>]*)/i.exec(tag)?.[1]?.toLowerCase();
+      return name && !INLINE_TAGS.has(name) ? mark : '';
+    })
     .replace(/&nbsp;|&#160;/gi, ' ')
     .replace(/&amp;/gi, '&')
     .replace(/&quot;|&#34;/gi, '"')
@@ -197,6 +210,7 @@ function ownNameSpans(surface, identifiers, twin) {
     for (const m of text.matchAll(entityNamePattern(identifier))) {
       const start = (m.index ?? 0) + m[1].length;
       const end = start + m[2].length;
+      if (twin && m[2].includes(twin.mark)) continue;
       if (toSurface[start] === undefined || toSurface[end - 1] === undefined) continue;
       spans.push([toSurface[start], toSurface[end - 1] + 1]);
     }
