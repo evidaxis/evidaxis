@@ -83,7 +83,7 @@ for (const { id, name } of entityRecords) {
     for (const finding of findings) {
       errors.push(`${r}: forbidden entity-adjacent term "${finding.term}" near ${name}`);
     }
-    for (const finding of scanEntityPageWide(content)) {
+    for (const finding of scanEntityPageWide(content, [name])) {
       errors.push(`${r}: forbidden verdict-class term "${finding.term}" on entity surface (…${finding.context}…)`);
     }
   }
