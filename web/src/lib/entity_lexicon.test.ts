@@ -118,6 +118,16 @@ describe('entity discovery lexicon', () => {
       .toEqual(['verdict']);
   });
 
+  it('gives no name exemption where markup leaves residue text (Codex review round 5)', () => {
+    for (const html of [
+      '<h1>verdict AI</h1> <p>Our verdict <!-- >AI -->.</p>',
+      '<h1>verdict AI</h1> <p>Our verdict <span title="x>AI">.</span></p>',
+    ]) {
+      expect(scanEntityLexicon(html, 'verdict AI').map((f) => f.term)).toContain('verdict');
+      expect(scanEntityPageWide(html, ['verdict AI']).map((f) => f.term)).toContain('verdict');
+    }
+  });
+
   it('keeps a literal U+241E in the text: it is neither a block mark nor removed', () => {
     // Codex review round 2: a literal mark character must not shift name spans or vanish.
     expect(scanEntityPageWide(JSON.stringify({ text: `${'\u241e'.repeat(8)}verdict Example` }), ['Example'])

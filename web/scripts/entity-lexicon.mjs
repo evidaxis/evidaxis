@@ -63,7 +63,7 @@ export const FORBIDDEN_ENTITY_PAGE_WIDE = [
  * @param {string} surface
  * @param {RegExp} pattern
  * @param {readonly unknown[]} [identifiers]
- * @param {{ marked: string, mark: string } | null} [twin] the same surface with HTML block marks
+ * @param {{ marked: string, mark: string, residue: boolean } | null} [twin] the same surface with HTML block marks
  * @returns {RegExpMatchArray[]}
  */
 export function matchesOutsideOwnName(surface, pattern, identifiers = [], twin = null) {
@@ -101,7 +101,9 @@ export function matchesOutsideOwnNameIn(content, pattern, identifiers = []) {
   const markup = content.match(/<script\b[^>]*>[\s\S]*?<\/script>|<style\b[^>]*>[\s\S]*?<\/style>|<[^>]+>/gi) ?? [];
   return [
     ...markup.flatMap((piece) => matchesOutsideOwnName(piece, pattern)),
-    ...matchesOutsideOwnName(twin.marked.replaceAll(twin.mark, ''), pattern, identifiers, twin),
+    // Block boundaries read as spaces here, so adjacent blocks never glue our
+    // word to the next one ("dead</p><p>links").
+    ...matchesOutsideOwnName(twin.marked.replaceAll(twin.mark, ' '), pattern, identifiers, twin),
   ];
 }
 
@@ -113,7 +115,7 @@ export function matchesOutsideOwnNameIn(content, pattern, identifiers = []) {
  * @returns {{ term: string, context: string }[]}
  */
 export function scanEntityPageWide(content, identifiers = []) {
-  /** @type {{ surface: string, twin: { marked: string, mark: string } | null }[]} */
+  /** @type {{ surface: string, twin: { marked: string, mark: string, residue: boolean } | null }[]} */
   const surfaces = [];
   const html = () => {
     const twin = markBlocks(content);
@@ -159,7 +161,9 @@ export function normalizeLexiconSurface(content) {
  * the plain surface (tags dropped, whitespace runs collapsed, ends trimmed).
  * Marks exist only to stop a system name being stitched from two blocks.
  * @param {string} content
- * @returns {{ marked: string, mark: string } | null}
+ * `residue` is set when tag removal leaves markup text behind (a `>` inside a
+ * comment or a quoted attribute); such a surface gets no name exemption.
+ * @returns {{ marked: string, mark: string, residue: boolean } | null}
  */
 function markBlocks(content) {
   if (!/<[a-z!/][\s\S]*>/i.test(content)) return null;
@@ -187,7 +191,8 @@ function markBlocks(content) {
     // plus one mark (if it held a mark); ends are trimmed with their marks.
     .replace(run, (found) => (/\s/.test(found) ? ' ' : '') + (found.includes(mark) ? mark : ''))
     .replace(ends, '');
-  return { marked, mark };
+  const residue = /<!--(?:(?!-->)[\s\S])*?>/.test(content) || /<[a-z][^>]*?=\s*["'][^"'>]*>/i.test(content);
+  return { marked, mark, residue };
 }
 
 /**
@@ -195,14 +200,18 @@ function markBlocks(content) {
  * are found there (a name never crosses a block mark) and mapped back.
  * @param {string} surface
  * @param {readonly unknown[]} identifiers
- * @param {{ marked: string, mark: string } | null} twin
+ * @param {{ marked: string, mark: string, residue: boolean } | null} twin
  * @returns {[number, number][]}
  */
 function ownNameSpans(surface, identifiers, twin) {
+  if (twin?.residue) return [];
   const text = twin ? twin.marked : surface;
+  // Same length means marks were kept as one character each (spaced twin):
+  // indices are shared. Otherwise marks were removed and are skipped.
+  const keepsMarks = text.length === surface.length;
   const toSurface = [];
   for (let i = 0, j = 0; i < text.length; i++) {
-    if (!twin || text[i] !== twin.mark) toSurface[i] = j++;
+    if (!twin || keepsMarks || text[i] !== twin.mark) toSurface[i] = j++;
   }
   const spans = [];
   for (const identifier of identifiers) {
@@ -242,7 +251,7 @@ function jsonStrings(value) {
  * @param {string} surface
  * @param {string} entityName
  * @param {number} windowSize
- * @param {{ marked: string, mark: string } | null} [twin] the surface with HTML block marks
+ * @param {{ marked: string, mark: string, residue: boolean } | null} [twin] the surface with HTML block marks
  * @returns {{ term: string, index: number, context: string }[]}
  */
 function scanSurface(surface, entityName, windowSize, twin = null) {
