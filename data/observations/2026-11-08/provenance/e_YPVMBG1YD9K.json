@@ -1,0 +1,33 @@
+{
+  "name": "windows2usb",
+  "full_name": "ValdikSS/windows2usb",
+  "open_issues_count": 6,
+  "stargazers_count": 772,
+  "pushed_at": "2022-12-08T20:31:11Z",
+  "fork": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzE2MzI0MjU=",
+  "network_count": 58,
+  "updated_at": "2026-11-07T06:55:05Z",
+  "homepage": "",
+  "archived": false,
+  "subscribers_count": 15,
+  "id": 131632425,
+  "topics": [
+    "iso-image",
+    "linux",
+    "windows"
+  ],
+  "description": "Windows 7/8/8.1/10/11 ISO to Flash Drive burning utility for Linux (MBR/GPT, BIOS/UEFI, FAT32/NTFS)",
+  "created_at": "2018-04-30T18:32:38Z",
+  "size": 52,
+  "visibility": "public",
+  "disabled": false,
+  "default_branch": "master",
+  "watchers_count": 772,
+  "language": "Shell",
+  "forks_count": 58,
+  "private": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "name": "local-attention",
+  "full_name": "lucidrains/local-attention",
+  "open_issues_count": 11,
+  "stargazers_count": 505,
+  "pushed_at": "2025-07-16T14:42:30Z",
+  "fork": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNzczNjU4MDU=",
+  "network_count": 52,
+  "updated_at": "2026-10-24T11:42:34Z",
+  "homepage": "",
+  "archived": false,
+  "subscribers_count": 4,
+  "id": 277365805,
+  "topics": [
+    "artificial-intelligence",
+    "attention-mechanisms",
+    "deep-learning"
+  ],
+  "description": "An implementation of local windowed attention for language modeling",
+  "created_at": "2020-07-05T19:03:44Z",
+  "size": 35762,
+  "visibility": "public",
+  "disabled": false,
+  "default_branch": "master",
+  "watchers_count": 505,
+  "language": "Python",
+  "forks_count": 52,
+  "private": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
