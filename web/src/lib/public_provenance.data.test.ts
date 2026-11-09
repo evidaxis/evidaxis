@@ -8,7 +8,7 @@ import { publicProvenance } from './public_provenance';
 import { snapshots, readSnapshotArtifactRaw } from './archive';
 import { ownerTypes } from './data';
 import handles from '../data/person-free-handles.json';
-import { personalStalePaths } from './personFree.mjs';
+import { registryClassification } from './person_free';
 import { GET } from '../pages/snapshots/[date]/provenance.json';
 
 // Real personal handles come from the data at run time; none is written in this file.
@@ -73,7 +73,7 @@ it.each([['ban-list handle', bannedHandle], ['registry personal owner', userLogi
 
 // 2026-11-01: an Organization handed a repository to a person. Its name is not banned,
 // so the exact old path must be, in archived provenance too and after repeated encoding.
-const stalePaths = personalStalePaths(ownerTypes.repos);
+const stalePaths = [...registryClassification(ownerTypes).stalePaths];
 it.runIf(stalePaths.length > 0)('check-dist rejects the old path of every repository a person owns today', () => {
   const fixture = mkdtempSync(join(tmpdir(), 'evx-stale-provenance-'));
   try {

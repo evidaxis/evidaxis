@@ -7,12 +7,13 @@ import { expect, it } from 'vitest';
 import { publicDropped } from './public_dropped';
 import { hasSnapshotArtifact, readSnapshotArtifactRaw, snapshots } from './archive';
 import { ownerTypes } from './data';
-import { buildHandleIndex, classifyRegistry, FLOOR_HANDLES, handleHits } from './personFree.mjs';
+import { handleHits } from './personFree.mjs';
+import { userHandleIndex } from './person_free';
 import { GET } from '../pages/snapshots/[date]/dropped.json';
 
 // Real personal handles come from the data at run time; none is written in this file.
 const diskRegistry = JSON.parse(readFileSync(new URL('../../../etl/owner_types.json', import.meta.url), 'utf8'));
-const userIndex = buildHandleIndex(classifyRegistry(ownerTypes.repos, {}, FLOOR_HANDLES).handles);
+const userIndex = userHandleIndex(ownerTypes);
 
 // Invented login, checked absent from the owner registry before use.
 const FAKE_OWNER = 'zzdroppedfixture';

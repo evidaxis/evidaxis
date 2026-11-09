@@ -12,12 +12,24 @@ ROOT = Path(__file__).resolve().parents[1]
 VECTORS = json.loads((ROOT / "tests/fixtures/person-free-conformance.json").read_text())["cases"]
 
 
+def write_registry(root, case):
+    (root / "etl").mkdir()
+    (root / "web/src/data").mkdir(parents=True)
+    (root / "etl/owner_types.json").write_text(json.dumps({"repos": case["registry"]}))
+    (root / "etl/project_accounts.json").write_text(json.dumps({"accounts": case.get("accounts", {})}))
+    (root / "web/src/data/person-free-handles.json").write_text(json.dumps(case.get("floor", [])))
+
+
+def summary(classified):
+    return {"handles": sorted(classified.handles), "stalePaths": sorted(classified.stale_paths),
+            "publicRepos": sorted(classified.public_repos)}
+
+
 @pytest.mark.parametrize("case", VECTORS, ids=lambda case: case["id"])
 def test_conformance(case):
     original = json.dumps(case)
     c = pf.classify_registry(case["registry"], case.get("accounts", {}), case.get("floor", []))
-    assert {"handles": sorted(c.handles), "stalePaths": sorted(c.stale_paths),
-            "publicRepos": sorted(c.public_repos)} == case["expected"]
+    assert summary(c) == case["expected"]
     index = pf.build_handle_index(c.handles, case.get("templateWords", []))
     for probe in case.get("probes", []):
         assert sorted(set(pf.handle_hits(pf.lenient_decoded(probe["text"]), index))) == probe["hits"]
@@ -26,12 +38,23 @@ def test_conformance(case):
     assert json.dumps(case) == original
 
 
+@pytest.mark.parametrize("case", VECTORS, ids=lambda case: case["id"])
+def test_loaded_classification(case, tmp_path):
+    write_registry(tmp_path, case)
+    assert summary(pf.load_classification(tmp_path)) == case["expected"]
+    index, stale = pf.load_handle_index(tmp_path)
+    assert sorted(index.all) == case["expected"]["handles"]
+    assert list(stale) == case["expected"]["stalePaths"]
+    if "strictExpected" in case:
+        assert summary(pf.load_classification(tmp_path, project_accounts=False)) == case["strictExpected"]
+        strict_index, strict_stale = pf.load_handle_index(tmp_path, project_accounts=False)
+        assert sorted(strict_index.all) == case["strictExpected"]["handles"]
+        assert list(strict_stale) == case["strictExpected"]["stalePaths"]
+
+
 @pytest.mark.parametrize("case", [c for c in VECTORS if "projection" in c], ids=lambda c: c["id"])
 def test_hf_projection_experiments(case, tmp_path, monkeypatch):
-    (tmp_path / "etl").mkdir()
-    (tmp_path / "web/src/data").mkdir(parents=True)
-    (tmp_path / "etl/owner_types.json").write_text(json.dumps({"repos": case["registry"]}))
-    (tmp_path / "web/src/data/person-free-handles.json").write_text(json.dumps(case.get("floor", [])))
+    write_registry(tmp_path, case)
     monkeypatch.setattr(hf, "REPO", tmp_path)
     p = case["projection"]
     result = hf.project_person_free({"entities": [{"entity_id": "e_DRILL", "github_repo": p["repo"], "homepage": p["homepage"]}]})
@@ -40,6 +63,39 @@ def test_hf_projection_experiments(case, tmp_path, monkeypatch):
     stage.mkdir()
     (stage / "snapshot.json").write_text(json.dumps(result))
     assert hf._person_free_hits(stage) == []
+
+
+@pytest.mark.parametrize("case", [c for c in VECTORS if "diagnostics" in c], ids=lambda c: c["id"])
+def test_diagnostic_path_uses_full_classification(case, tmp_path, monkeypatch):
+    write_registry(tmp_path, case)
+    monkeypatch.setattr(hf, "REPO", tmp_path)
+    for n, probe in enumerate(case["diagnostics"]):
+        stage = tmp_path / f"stage-{n}"
+        leak = stage / probe["path"]
+        leak.parent.mkdir(parents=True)
+        leak.write_text(json.dumps({"text": f'@{probe["value"]}'}))
+        findings = hf._person_free_hits(stage)
+        assert findings
+        for line in findings:
+            if probe["privatePath"]:
+                assert re.fullmatch(r"\[path:[0-9a-f]{8}\]: rule=[fd] hash=[0-9a-f]{8}", line)
+            else:
+                assert line.startswith(probe["path"] + ":")
+        assert any(f'rule={probe["rule"]} ' in line for line in findings)
+
+
+@pytest.mark.parametrize("case", [c for c in VECTORS if "decimalEntities" in c], ids=lambda c: c["id"])
+def test_hf_scans_out_of_range_html_entities(case, tmp_path, monkeypatch):
+    write_registry(tmp_path, case)
+    monkeypatch.setattr(hf, "REPO", tmp_path)
+    stage = tmp_path / "stage"
+    stage.mkdir()
+    for probe in case["decimalEntities"]:
+        assert pf.decimal_entities_decoded(probe["text"]) == probe["decoded"]
+        (stage / "page.json").write_text(probe["text"])
+        findings = hf._person_free_hits(stage)
+        assert len(findings) == len(probe["hits"])
+        assert all(re.fullmatch(r"page.json: rule=f hash=[0-9a-f]{8}", line) for line in findings)
 
 
 def test_diagnostic_is_salted_and_does_not_print_identifiers():

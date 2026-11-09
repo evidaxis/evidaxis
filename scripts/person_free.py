@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import math
 import secrets
 from functools import lru_cache
 import re
@@ -121,6 +122,14 @@ def lenient_decoded(text: str) -> str:
             break
         out = nxt
     return out
+
+
+def decimal_entities_decoded(text: str) -> str:
+    # Match check-dist's Number/FromCharCode coercion even outside Unicode's range.
+    def decode(match):
+        value = float(match[1])
+        return chr(int(value) & 0xFFFF) if math.isfinite(value) else "\0"
+    return re.sub(r"&#([0-9]+);", decode, text)
 
 
 def neutral_name(entity_id: str) -> str:
@@ -286,7 +295,9 @@ def classify_registry(registry: dict, accounts=(), floor=()) -> RegistryClassifi
 
 def load_classification(repo: Path, *, project_accounts: bool = True) -> RegistryClassification:
     floor = json.loads((repo / "web/src/data/person-free-handles.json").read_text(encoding="utf-8"))
-    return classify_registry(load_owner_types(repo, project_accounts=project_accounts), floor=floor)
+    accounts = load_project_accounts(repo) if project_accounts else {}
+    # A project account stays public even after its last tracked repository moves.
+    return classify_registry(load_owner_types(repo, project_accounts=False), accounts, floor)
 
 
 def load_handle_index(repo: Path, *, project_accounts: bool = True) -> tuple[HandleIndex, tuple[str, ...]]:
@@ -314,9 +325,9 @@ def stale_slug_hits(text, stale_paths, canonical_paths):
 _DIAGNOSTIC_SALT = secrets.token_bytes(32)
 
 
-def diagnostic(path: str, rule: str, value: str, index=None) -> str:
+def diagnostic(path: str, rule: str, value: str, index=None, classified=None) -> str:
     digest = lambda text: hashlib.sha256(_DIAGNOSTIC_SALT + b"\0" + text.lower().encode()).hexdigest()[:8]
-    if (index and reveals_handle(path, index)) or (rule == 'd' and value.lower() in lenient_decoded(path).lower()):
+    if (index and reveals_handle(path, index, classified)) or (rule == 'd' and value.lower() in lenient_decoded(path).lower()):
         path = f"[path:{digest(path)}]"
     return f"{path}: rule={rule} hash={digest(value)}"
 
@@ -330,7 +341,8 @@ def safe_homepage(homepage, stored, entry, classified, index):
         return None
     decoded = lenient_decoded(homepage).lower()
     owners = {stored.split('/')[0].lower(), entry['full_name'].split('/')[0].lower()}
-    if any(owner in decoded for owner in owners & index.all - index.context_only):
+    # Rule f's prose exemption does not apply to the known owner's own homepage.
+    if any(owner in decoded for owner in owners & index.all):
         return None
     if stored not in classified.public_repos and (is_github_url(homepage) or is_github_url(decoded)):
         return None

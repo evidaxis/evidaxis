@@ -113,7 +113,8 @@ function projectAccountMap(repoRoot: string): Record<string, unknown> {
 export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
   const snapshotsDir = repoDataPath(repoRoot, 'snapshots');
   const registry = readJson(repoEtlPath(repoRoot, 'owner_types.json')) as OwnerTypes;
-  applyProjectAccounts(registry.repos, projectAccountMap(repoRoot));
+  registry.projectAccounts = projectAccountMap(repoRoot);
+  applyProjectAccounts(registry.repos, registry.projectAccounts);
   return readdirSync(snapshotsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && DATE_RE.test(entry.name))
     .map((entry) => {

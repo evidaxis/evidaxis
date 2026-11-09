@@ -13,6 +13,12 @@
         {"text": "zz-drill-lab is public", "hits": []},
         {"text": "github.com%252Fzz-drill-person%252Fgiven", "hits": ["zz-drill-person"]}
       ],
+      "diagnostics": [
+        {"path": "zz-drill-lab/given/page.json", "rule": "f", "value": "zz-drill-person", "privatePath": true},
+        {"path": "zz-drill-lab%252Fgiven/page.json", "rule": "f", "value": "zz-drill-person", "privatePath": true},
+        {"path": "zz-drill-lab/kept/page.json", "rule": "f", "value": "zz-drill-person", "privatePath": false},
+        {"path": "zz-drill-lab/given/page.json", "rule": "d", "value": "zz-drill-lab/given", "privatePath": true}
+      ],
       "projection": {"repo": "zz-drill-lab/given", "homepage": "https://zz-drill-lab.github.io/project", "expectedHomepage": "https://zz-drill-lab.github.io/project"}
     },
     {
@@ -70,7 +76,8 @@
         {"text": "github.com/system/tool", "hits": ["system"]},
         {"text": "https://system.github.io/project", "hits": ["system"]},
         {"text": "@system", "hits": ["system"]}
-      ]
+      ],
+      "projection": {"repo": "system/tool", "homepage": "https://system.example/", "expectedHomepage": null}
     },
     {
       "id": "floor-survives-departure",
@@ -92,6 +99,32 @@
       "registry": {"zz-drill-former/tool": {"owner_type": "User", "repo_id": 14, "full_name": "zz-drill-current/tool"}},
       "expected": {"handles": ["zz-drill-current", "zz-drill-former"], "stalePaths": ["zz-drill-former/tool"], "publicRepos": []},
       "projection": {"repo": "zz-drill-former/tool", "homepage": "https://example.invalid/%257A%257A-drill-former/tool", "expectedHomepage": null}
+    },
+    {
+      "id": "template-word-former-owner-homepage",
+      "registry": {"system/tool": {"owner_type": "User", "repo_id": 15, "full_name": "zz-drill-current/tool"}},
+      "templateWords": ["system"],
+      "expected": {"handles": ["system", "zz-drill-current"], "stalePaths": ["system/tool"], "publicRepos": []},
+      "projection": {"repo": "system/tool", "homepage": "https://system.example/", "expectedHomepage": null}
+    },
+    {
+      "id": "project-account-transfers-last-repository",
+      "registry": {"zz-drill-project/tool": {"owner_type": "Organization", "repo_id": 16, "full_name": "zz-drill-lab/tool"}},
+      "accounts": {"zz-drill-project": {}},
+      "expected": {"handles": [], "stalePaths": [], "publicRepos": ["zz-drill-project/tool"]},
+      "strictExpected": {"handles": ["zz-drill-project"], "stalePaths": ["zz-drill-project/tool"], "publicRepos": ["zz-drill-project/tool"]},
+      "projection": {"repo": "zz-drill-project/tool", "homepage": "https://zz-drill-project.example/", "expectedHomepage": "https://zz-drill-project.example/"}
+    },
+    {
+      "id": "out-of-range-html-decimal-reference",
+      "registry": {"zz-drill-person/tool": {"owner_type": "User", "repo_id": 17, "full_name": "zz-drill-person/tool"}},
+      "expected": {"handles": ["zz-drill-person"], "stalePaths": [], "publicRepos": []},
+      "decimalEntities": [
+        {"text": "&#1114112;", "decoded": "\u0000", "hits": []},
+        {"text": "&#1114112; @zz-drill-person", "decoded": "\u0000 @zz-drill-person", "hits": ["zz-drill-person"]},
+        {"text": "&#1114112; &#64;zz&#45;drill&#45;person", "decoded": "\u0000 @zz-drill-person", "hits": ["zz-drill-person"]},
+        {"text": "&#9007199254740993;", "decoded": "\u0000", "hits": []}
+      ]
     }
   ]
 }
