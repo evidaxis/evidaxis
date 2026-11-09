@@ -23,3 +23,16 @@ it.each(['data', 'etl'])('rejects a default %s symlink to fixtures with both env
     expect(run.stderr).toContain(`Production fixture guard: EVIDAXIS_${dir.toUpperCase()}_DIR`);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+it('the privacy guard registry can be swapped only by the hermetic unit harness', async () => {
+  const { guardRegistryDir, REPO_ROOT } = await import('./path-policy.mjs');
+  const canonical = join(REPO_ROOT, 'etl');
+  const other = join(tmpdir(), 'evx-other-registry');
+  expect(guardRegistryDir({})).toBe(canonical);
+  expect(guardRegistryDir({ EVIDAXIS_ETL_DIR: canonical, EVIDAXIS_UNIT_TEST: '0' })).toBe(canonical);
+  expect(guardRegistryDir({ EVIDAXIS_ETL_DIR: other, EVIDAXIS_UNIT_TEST: '1' })).toBe(other);
+  for (const unit of [undefined, '0', 'true']) {
+    expect(() => guardRegistryDir({ EVIDAXIS_ETL_DIR: other, EVIDAXIS_UNIT_TEST: unit }))
+      .toThrow('EVIDAXIS_ETL_DIR outside unit tests must be the repository etl/');
+  }
+});

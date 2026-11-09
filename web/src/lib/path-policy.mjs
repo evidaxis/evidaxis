@@ -50,3 +50,15 @@ export function assertProductionPaths() {
     }
   }
 }
+
+// The privacy guard reads its registry from etl/. Only the hermetic unit harness
+// (EVIDAXIS_UNIT_TEST=1) may substitute a fictional one; anything else stops.
+export function guardRegistryDir(env = process.env) {
+  const canonical = resolve(REPO_ROOT, 'etl');
+  const requested = env.EVIDAXIS_ETL_DIR ? resolve(env.EVIDAXIS_ETL_DIR) : null;
+  if (!requested || requested === canonical) return canonical;
+  if (env.EVIDAXIS_UNIT_TEST !== '1') {
+    throw new Error('check-dist: EVIDAXIS_ETL_DIR outside unit tests must be the repository etl/');
+  }
+  return requested;
+}
