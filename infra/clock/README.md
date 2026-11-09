@@ -26,9 +26,11 @@ skipped `Collect snapshot (keyed OpenAlex; capture pass + completeness gate)`
 step means the guard admitted no collection. Such a green no-op cannot clear
 an earlier release failure. Unavailable job evidence is unknown, never success.
 
-Friday keeps the same rehearsal title as Wednesday. Wednesday and the Saturday
-ticks still match it across the whole listed history, so a manual rehearsal
-created before Wednesday still blocks the Wednesday tick. Friday counts a run
+Friday keeps the same rehearsal title as Wednesday. Each tick matches only its
+own mode: Saturday ticks look at `weekly release <date>` runs and are never
+suppressed by a rehearsal. Wednesday matches the rehearsal title across the
+whole listed history, so a manual rehearsal created before Wednesday still
+blocks the Wednesday tick. Friday counts a run
 only when `created_at` is at or after 00:00 UTC on the tick's own calendar day.
 A matching run with no parseable `created_at` is incomplete data and stops the
 tick. The tick does not treat that run as absent and does not dispatch.
