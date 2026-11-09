@@ -13,6 +13,8 @@ export async function githubJson(path, body) {
     signal: AbortSignal.timeout(10_000),
   });
   if (!response.ok) throw new Error(`GitHub HTTP ${response.status}`);
+  // Workflow dispatch acknowledges acceptance without a JSON body.
+  if (response.status === 204) return null;
   return response.json();
 }
 

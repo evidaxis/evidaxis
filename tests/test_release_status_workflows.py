@@ -29,7 +29,7 @@ def test_weekly_receipts_follow_commit_and_readback_and_cannot_run_in_rehearsal(
     assert 'capture "$SNAPSHOT_DATE"' in indexed["captured"][1]["run"]
     assert 'hf_upload_snapshot.py --date "$SNAPSHOT_DATE"' in indexed["hf"][1]["run"]
     writers = [step for step in steps if "release-status.mjs" in step.get("run", "")]
-    assert len(writers) == 2
+    assert len(writers) == 3
     for step in writers:
         assert "inputs.mode != 'rehearsal'" in step["if"]
     final = writers[-1]
@@ -77,3 +77,42 @@ def test_deploy_exposes_actual_checkout_before_resolving_or_publishing():
     assert artifact["with"]["name"] == "deploy-checkout-${{ github.run_attempt }}-${{ steps.checkout.outputs.sha }}"
     assert artifact["with"]["path"] == "${{ runner.temp }}/release-checkout.txt"
     assert artifact["with"]["if-no-files-found"] == "error"
+
+
+def test_site_dispatch_precedes_hf_and_hf_failure_stays_red():
+    body = workflow("weekly-snapshot")
+    job = body["jobs"]["snapshot"]
+    assert job["permissions"]["actions"] == "write"
+    steps = job["steps"]
+    indexed = {step["id"]: step for step in steps if "id" in step}
+    dispatch = indexed["dispatch"]
+    assert steps.index(indexed["captured"]) + 1 == steps.index(dispatch)
+    assert steps.index(dispatch) < steps.index(indexed["hf"])
+    assert dispatch["if"] == "${{ inputs.mode != 'rehearsal' && steps.captured.outcome == 'success' }}"
+    assert dispatch["env"]["GH_TOKEN"] == "${{ github.token }}"
+    assert dispatch["run"] == 'node scripts/release-status.mjs dispatch "$SNAPSHOT_DATE"'
+    # HF still runs if dispatch fails, and its error remains a job failure.
+    assert indexed["hf"]["if"] == "${{ always() && inputs.mode != 'rehearsal' && steps.captured.outcome == 'success' }}"
+    assert not job.get("continue-on-error")
+    assert all(not step.get("continue-on-error") for step in steps)
+
+
+def test_fallback_admits_failed_producer_and_serializes_duplicate_receipt_checks():
+    body = workflow("deploy-web")
+    assert body[True]["workflow_run"] == {"workflows": ["weekly-snapshot"], "types": ["completed"]}
+    assert body["concurrency"] == {"group": "deploy-prod", "cancel-in-progress": False, "queue": "max"}
+    job = body["jobs"]["deploy"]
+    assert job["if"] == (
+        "github.event_name != 'workflow_run' || "
+        "(github.event.workflow_run.head_branch == 'main' &&\n "
+        "startsWith(github.event.workflow_run.display_title, 'weekly release ') &&\n "
+        "!endsWith(github.event.workflow_run.display_title, 'resolve-date'))"
+    )
+    steps = job["steps"]
+    indexed = {step["id"]: step for step in steps if "id" in step}
+    assert indexed["release"]["env"]["INPUT_DATE"] == "${{ inputs.release_date }}"
+    for step_id in ["secrets", "node", "build", "deploy", "receipt"]:
+        assert indexed[step_id]["if"] == "${{ steps.release.outputs.skip != 'true' }}"
+    assert "steps.release.outputs.skip != 'true'" in steps[-1]["if"]
+    assert "npm run verify" in indexed["build"]["run"]
+    assert indexed["receipt"]["run"] == "node scripts/deploy-receipt.mjs"

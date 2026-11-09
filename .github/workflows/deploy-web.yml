@@ -56,11 +56,11 @@ jobs:
       contents: read
       statuses: write
     runs-on: ubuntu-latest
-    # A failed or cancelled producer must not publish a half-written snapshot.
+    # Completion is only a fallback. The captured receipt below admits the tree
+    # even when HF or dispatch failed; rehearsal and date-router runs stay out.
     if: >-
       github.event_name != 'workflow_run' ||
-      (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main' &&
+      (github.event.workflow_run.head_branch == 'main' &&
        startsWith(github.event.workflow_run.display_title, 'weekly release ') &&
        !endsWith(github.event.workflow_run.display_title, 'resolve-date'))
     steps:
@@ -99,6 +99,7 @@ jobs:
 
       - name: Require Vercel secrets
         id: secrets
+        if: ${{ steps.release.outputs.skip != 'true' }}
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -112,12 +113,14 @@ jobs:
 
       - id: node
         name: Set up Node
+        if: ${{ steps.release.outputs.skip != 'true' }}
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
 
       - name: Build the static site from the committed tree
         id: build
+        if: ${{ steps.release.outputs.skip != 'true' }}
         # Analytics keys are client-side publishable IDs (ANALYTICS.md), kept as
         # repo variables, not secrets. Without them Analytics.astro renders
         # nothing, which is how prod ran from the CI switch (07-11) to 09-23 with
@@ -135,6 +138,7 @@ jobs:
 
       - name: Deploy prebuilt dist to Vercel production
         id: deploy
+        if: ${{ steps.release.outputs.skip != 'true' }}
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -152,6 +156,7 @@ jobs:
 
       - name: Verify prod serves the snapshot this tree holds
         id: receipt
+        if: ${{ steps.release.outputs.skip != 'true' }}
         # A deploy whose CLI exited 0 while the live host keeps serving last
         # week's snapshot is exactly the silent failure this chain exists to
         # prevent, so publication is confirmed against evidaxis.org itself.
@@ -160,7 +165,7 @@ jobs:
         run: node scripts/deploy-receipt.mjs
 
       - name: Record deployment receipt or failed step
-        if: ${{ always() && steps.release.outcome == 'success' }}
+        if: ${{ always() && steps.release.outcome == 'success' && steps.release.outputs.skip != 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_DATE: ${{ steps.release.outputs.date }}
