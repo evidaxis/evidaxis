@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: read
+      actions: write      # Dispatch deploy-web as soon as the snapshot is captured.
       statuses: write
     concurrency:
       group: data-commits
@@ -344,9 +344,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/release-status.mjs capture "$SNAPSHOT_DATE"
 
+      - name: Start site publication before HF
+        id: dispatch
+        if: ${{ inputs.mode != 'rehearsal' && steps.captured.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/release-status.mjs dispatch "$SNAPSHOT_DATE"
+
       - name: Mirror the dated snapshot to HF and verify public contents
         id: hf
-        if: ${{ steps.guard.outputs.skip == 'false' && (inputs.mode != 'rehearsal') }}
+        # A dispatch outage must not prevent the independent HF publication.
+        if: ${{ always() && inputs.mode != 'rehearsal' && steps.captured.outcome == 'success' }}
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |

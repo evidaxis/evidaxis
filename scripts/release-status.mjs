@@ -57,6 +57,35 @@ export async function releaseTarget(date, get = githubJson) {
   return { date, sha };
 }
 
+export async function deploymentSkipped({ sha, date }, { requireCaptured = false } = {}, request = githubJson) {
+  const body = await request(`commits/${sha}/status?per_page=100`);
+  if (body.sha !== sha) throw new Error('Status commit mismatch');
+  const statuses = releaseStatuses(body, date);
+  // Producer failure after capture (including HF) does not invalidate the tree.
+  if (requireCaptured && statuses.captured?.state !== 'success') {
+    throw new Error('Captured snapshot receipt missing');
+  }
+  return statuses.deployed?.state === 'success';
+}
+
+export async function dispatchDeployment(release, request = githubJson, env = process.env) {
+  if (env.MODE === 'rehearsal') throw new Error('Rehearsal cannot publish');
+  if (await deploymentSkipped(release, { requireCaptured: true }, request)) return false;
+  await request('actions/workflows/deploy-web.yml/dispatches', {
+    ref: 'main', inputs: { release_date: release.date },
+  });
+  return true;
+}
+
+export async function prepareDeployment(release, env = process.env, request = githubJson) {
+  // Ordinary code pushes and undated manual deploys must still rebuild the site.
+  // Dated retries are serialized by deploy-prod before reading this receipt.
+  const fallback = env.GITHUB_EVENT_NAME === 'workflow_run';
+  const dated = env.GITHUB_EVENT_NAME === 'workflow_dispatch' && Boolean(env.INPUT_DATE);
+  return (fallback || dated)
+    ? deploymentSkipped(release, { requireCaptured: fallback }, request) : false;
+}
+
 export async function mirrorSnapshot(date, { target = releaseTarget, run = spawnSync, write = writeReleaseStatus } = {}) {
   const release = await target(date);
   // Each selected date gets its own output file; a prior date's successful
@@ -83,15 +112,19 @@ async function main() {
   if (process.env.MODE === 'rehearsal') throw new Error('Rehearsal cannot publish');
   if (command === 'prepare' || command === 'capture') {
     const release = await releaseTarget(argument);
-    if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `date=${release.date}\nsha=${release.sha}\n`);
+    const skip = command === 'prepare' ? await prepareDeployment(release) : false;
+    if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `date=${release.date}\nsha=${release.sha}\nskip=${skip}\n`);
+    if (skip) console.log(`Already deployed: ${release.date}; skipping publication`);
     if (command === 'capture') await writeReleaseStatus({ ...release, stage: 'captured', state: 'success', description: release.date });
+  } else if (command === 'dispatch') {
+    await dispatchDeployment(await releaseTarget(argument));
   } else if (command === 'record' && ['deployed', 'hf'].includes(argument)) {
     const result = stageResult(argument, JSON.parse(process.env.RELEASE_STEPS));
     if (result) await writeReleaseStatus({ sha: process.env.RELEASE_SHA, date: process.env.RELEASE_DATE, stage: argument, ...result });
   } else if (command === 'hf') {
     await mirrorSnapshot(argument);
   } else {
-    throw new Error('Use prepare [date], capture date, record deployed|hf, or hf date');
+    throw new Error('Use prepare [date], capture date, dispatch date, record deployed|hf, or hf date');
   }
 }
 
