@@ -100,18 +100,20 @@ export function handleHits(text, index) {
 
 // Only dependency values split hyphenated words; prose and repository paths do not.
 export function dependencyHandleHits(text, index) {
-  const decoded = lenientDecoded(text).toLowerCase();
   const hits = new Set(handleHitsDecoded(text, index));
-  const exact = decoded.trim();
-  if (index.all.has(exact) && !index.contextOnly.has(exact)) hits.add(exact);
-  for (const m of decoded.matchAll(DEPENDENCY_WORD)) {
-    const parts = m[0].split('-');
-    for (let start = 0; start < parts.length; start++) {
-      let token = '';
-      for (let end = start; end < parts.length; end++) {
-        token += (end === start ? '' : '-') + parts[end];
-        if (token.length > index.maxWordLength) break;
-        if (index.words.has(token)) hits.add(token);
+  // Decoding can erase a raw token boundary (handle%61 becomes handlea).
+  for (const value of new Set([String(text).toLowerCase(), lenientDecoded(text).toLowerCase()])) {
+    const exact = value.trim();
+    if (index.all.has(exact) && !index.contextOnly.has(exact)) hits.add(exact);
+    for (const m of value.matchAll(DEPENDENCY_WORD)) {
+      const parts = m[0].split('-');
+      for (let start = 0; start < parts.length; start++) {
+        let token = '';
+        for (let end = start; end < parts.length; end++) {
+          token += (end === start ? '' : '-') + parts[end];
+          if (token.length > index.maxWordLength) break;
+          if (index.words.has(token)) hits.add(token);
+        }
       }
     }
   }

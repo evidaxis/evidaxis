@@ -2,7 +2,29 @@ import { expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { REPO_ROOT, FIXTURE_ROOT } from './path-policy.mjs';
-import { applyProjectAccounts, buildHandleIndex, handleHitsDecoded, lenientDecoded, personalOwnerHandles, personalStalePaths, staleSlugHits, FLOOR_HANDLES } from './personFree.mjs';
+import { applyProjectAccounts, buildHandleIndex, handleHitsDecoded, dependencyFieldHits, lenientDecoded, personalOwnerHandles, personalStalePaths, staleSlugHits, FLOOR_HANDLES } from './personFree.mjs';
+
+function hasPrivateFixtureText(raw: string, path: string, index: ReturnType<typeof buildHandleIndex>, stalePaths: Set<string>, orgPaths: string[]) {
+  const text = raw + '\n' + path;
+  const lower = `${text}\n${lenientDecoded(text)}`.toLowerCase();
+  if (handleHitsDecoded(text, index).length || staleSlugHits(lower, stalePaths, orgPaths).length) return true;
+  // Parse fixture rows before selecting deps; prose and paths keep whole words.
+  const documents = path.endsWith('.jsonl') ? raw.split('\n').filter(line => line.trim()).map(line => JSON.parse(line))
+    : path.endsWith('.json') ? [JSON.parse(raw)] : [];
+  return documents.some(document => dependencyFieldHits(document, index).length > 0);
+}
+
+it.each(['json', 'jsonl'])('detects dependency tokens in fixture %s while preserving prose', (extension) => {
+  const index = buildHandleIndex(['zz-drill-person']);
+  const row = { github_repo: 'zz-drill-lab/widget-zz-drill-person-plugin',
+    name: 'widget-zz-drill-person-plugin', description: 'widget-zz-drill-person-plugin' };
+  const encode = (value: unknown) => extension === 'json' ? JSON.stringify({ entities: [value] }, null, 2)
+    : JSON.stringify({ note: 'first row' }) + '\n' + JSON.stringify(value) + '\n';
+  const scan = (value: unknown) => hasPrivateFixtureText(encode(value), `snapshot.${extension}`, index, new Set(), []);
+  expect(scan(row)).toBe(false);
+  expect(scan({ ...row, deps: { package: 'widget-zz-drill-person-plugin' } })).toBe(true);
+  expect(scan({ ...row, deps: { nested: [{ source: 'widget-zz-drill-person%61' }] } })).toBe(true);
+});
 
 it('stores no live personal owner in any generated fixture file', () => {
   const registry = JSON.parse(readFileSync(join(REPO_ROOT, 'etl/owner_types.json'), 'utf8'));
@@ -18,9 +40,7 @@ it('stores no live personal owner in any generated fixture file', () => {
       const path = join(dir, entry.name);
       if (entry.isDirectory()) scan(path);
       else {
-        const text = readFileSync(path, 'utf8') + '\n' + relative(FIXTURE_ROOT, path);
-        const lower = `${text}\n${lenientDecoded(text)}`.toLowerCase();
-        if (!handleHitsDecoded(text, index).length && !staleSlugHits(lower, stalePaths, orgPaths).length) continue;
+        if (!hasPrivateFixtureText(readFileSync(path, 'utf8'), relative(FIXTURE_ROOT, path), index, stalePaths, orgPaths)) continue;
         // Report paths only; failures must not create another personal-identifier log.
         failures.push(relative(FIXTURE_ROOT, path));
       }

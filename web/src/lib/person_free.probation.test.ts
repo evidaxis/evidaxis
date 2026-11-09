@@ -20,6 +20,7 @@ it('limits dependency-token scanning to deps in published JSON', () => {
     writeFileSync(join(data, 'latest.json'), JSON.stringify({ snapshot_date: '2026-10-03' }));
     const pkg = `widget-${banned}-plugin`;
     writeFileSync(join(dist, 'deps-package.json'), JSON.stringify({ deps: { package: pkg } }));
+    writeFileSync(join(dist, 'deps-raw-encoded.json'), JSON.stringify({ deps: { package: `widget-${banned}%61` } }));
     writeFileSync(join(dist, 'deps-system.json'), JSON.stringify({ deps: { system: pkg } }));
     writeFileSync(join(dist, 'deps-nested.json'), JSON.stringify({ records: [{ deps: { nested: [{ alias: pkg }, pkg] } }] }));
     writeFileSync(join(dist, 'safe-prose.json'), JSON.stringify({ description: pkg, signals: [{ package: pkg }], github_repo: `${publicRepo}-${pkg}` }));
@@ -31,7 +32,7 @@ it('limits dependency-token scanning to deps in published JSON', () => {
     expect(result.status).toBe(1);
     expect(result.stderr.toLowerCase()).not.toContain(banned.toLowerCase());
     expect(result.stderr).not.toContain('safe-prose.json:');
-    for (const suffix of ['package', 'system', 'nested']) {
+    for (const suffix of ['package', 'system', 'nested', 'raw-encoded']) {
       expect(result.stderr).toMatch(new RegExp(`deps-${suffix}\\.json: rule=g hash=[0-9a-f]{8} contains private dependency owner`));
       expect(result.stderr).not.toContain(`deps-${suffix}.json: rule=f`);
     }

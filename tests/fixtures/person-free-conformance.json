@@ -130,6 +130,7 @@
       "publicPaths": ["zz-drill-lab/widget-zzdrillfern-plugin"],
       "probes": [
         {"text": "widget-zz-drill-person-plugin", "hits": []},
+        {"text": "widget-zz-drill-person%61", "hits": []},
         {"text": "widget-zz-drill-former-plugin", "hits": []},
         {"text": "widget-zzdrillfern-plugin", "hits": []},
         {"text": "zz-drill-lab/widget-zzdrillfern-plugin", "hits": []},
@@ -141,6 +142,8 @@
       ],
       "dependencyProbes": [
         {"text": "widget-zz-drill-person-plugin", "hits": ["zz-drill-person"]},
+        {"text": "widget-zz-drill-person%61", "hits": ["zz-drill-person"]},
+        {"text": "widget-ZZ-DRILL-PERSON%2561", "hits": ["zz-drill-person"]},
         {"text": "widget-zz-drill-former-plugin", "hits": ["zz-drill-former"]},
         {"text": "widget-zzdrillfern-plugin", "hits": ["zzdrillfern"]},
         {"text": "widget-zz-drill-lab-plugin", "hits": []},
@@ -153,6 +156,9 @@
       ],
       "packages": [
         {"system": "npm", "package": "widget-zz-drill-person-plugin", "masked": true},
+        {"system": "npm", "package": "widget-zz-drill-person%61", "masked": true},
+        {"system": "npm", "package": "widget-ZZ-DRILL-PERSON%2561", "masked": true},
+        {"system": "widget-zz-drill-person%61", "package": "widget", "masked": false, "systemMasked": true},
         {"system": "npm", "package": "widget-zz-drill-former-plugin", "masked": true},
         {"system": "npm", "package": "widget-zzdrillfern-plugin", "masked": true},
         {"system": "npm", "package": "widget-zz-drill-lab-plugin", "masked": false},
