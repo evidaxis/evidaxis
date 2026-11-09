@@ -16,7 +16,7 @@
  * SOFT warnings (reported, exit 0): meta description length, pages with 0 SSR charts.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { assertProductionPaths } from '../src/lib/path-policy.mjs';
+import { assertProductionPaths, guardRegistryDir } from '../src/lib/path-policy.mjs';
 import { controlShellHash } from './canary-shell.mjs';
 import { relative, resolve } from 'node:path';
 import { join } from 'node:path';
@@ -263,11 +263,15 @@ for (const pair of CANARY.pairs ?? []) {
 
 // 0. Person-free repository publication is fail-closed. The internal id-map key
 // remains stable, while public output uses the canonical repository identity.
-// EVIDAXIS_ETL_DIR lets a hermetic test pass a fictional registry. Unset, this
-// stays the repository etl/ the publication guard already reads.
-const ETL_DIR = process.env.EVIDAXIS_ETL_DIR
-  ? resolve(process.env.EVIDAXIS_ETL_DIR)
-  : new URL('../../etl/', import.meta.url).pathname;
+// Only the hermetic unit harness may point this guard at a fictional registry;
+// a release run always validates against the repository etl/ (guardRegistryDir).
+let ETL_DIR;
+try {
+  ETL_DIR = guardRegistryDir();
+} catch (error) {
+  console.error(error.message);
+  process.exit(1);
+}
 const ID_MAP = JSON.parse(readFileSync(join(ETL_DIR, 'id_map.json'), 'utf8'));
 const OWNER_TYPES = JSON.parse(readFileSync(join(ETL_DIR, 'owner_types.json'), 'utf8'));
 const registry = OWNER_TYPES?.repos;
