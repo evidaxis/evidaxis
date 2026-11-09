@@ -1,0 +1,20 @@
+[
+  "scripts/person_free.py",
+  "scripts/person_free_new_bytes.py",
+  "scripts/person_index_build.py",
+  "scripts/hf_upload_snapshot.py",
+  "web/src/lib/**",
+  "web/scripts/**",
+  "web/src/pages/**/*.json.ts",
+  "**/*.data.test.ts",
+  "web/package.json",
+  "web/vitest*.config.ts",
+  "collectors/owner_classify.py",
+  "collectors/gh_graphql.py",
+  ".github/workflows/weekly-snapshot.yml",
+  ".github/workflows/deploy-web.yml",
+  ".github/workflows/rehearsal-replay.yml",
+  ".github/workflows/python-ci.yml",
+  "scripts/gate_change_guard.py",
+  "scripts/gate-paths.json"
+]

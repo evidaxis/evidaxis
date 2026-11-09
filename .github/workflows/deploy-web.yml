@@ -55,6 +55,7 @@ jobs:
     permissions:
       contents: read
       statuses: write
+      issues: write
     runs-on: ubuntu-latest
     # Completion is only a fallback. The captured receipt below admits the tree
     # even when HF or dispatch failed; rehearsal and date-router runs stay out.
@@ -135,6 +136,18 @@ jobs:
           cd web
           npm ci
           npm run verify
+
+      - name: Check probation data tests without blocking publication
+        if: ${{ steps.release.outputs.skip != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd web
+          if ! npm run test:probation; then
+            gh issue create --title "Probation data tests failed" \
+              --body "Probation checks failed in workflow run $GITHUB_RUN_ID. Inspect the run before promoting these checks." || \
+              echo "::warning::Could not create the probation failure issue"
+          fi
 
       - name: Deploy prebuilt dist to Vercel production
         id: deploy

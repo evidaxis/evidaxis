@@ -33,3 +33,9 @@
 ## Style
 - Comments explain WHY, in English, matching the density of the file you edit.
 - Collectors and scripts/ are pure stdlib (no new deps). Web deps only in web/.
+
+## Publication checks
+- Change protected checks only through a pull request. The machine-readable path patterns are in `scripts/gate-paths.json`; `python-ci` rejects unreviewed direct changes to main.
+- Protected paths: `scripts/person_free.py`, `scripts/person_free_new_bytes.py`, `scripts/person_index_build.py`, `scripts/hf_upload_snapshot.py`, `web/src/lib/**`, `web/scripts/**`, `web/src/pages/**/*.json.ts`, `**/*.data.test.ts`, `web/package.json`, `web/vitest*.config.ts`, `collectors/owner_classify.py`, `collectors/gh_graphql.py`, `.github/workflows/weekly-snapshot.yml`, `.github/workflows/deploy-web.yml`, `.github/workflows/rehearsal-replay.yml`, `.github/workflows/python-ci.yml`, `scripts/gate_change_guard.py`, `scripts/gate-paths.json`.
+- The guard reads the policy from the push's `before` commit and compares merges to their first parent. Only the authenticated `github-actions[bot]` push sender is exempt. If the old policy is absent during installation, every incoming commit requires a merged PR.
+- PR replay runs `none`, `benign_all`, `site_test`, `hf_handle`, and `canary_missing` against the latest complete candidate, falling back to main data. New data checks use `*.probation.test.ts`: blocking on PR, advisory during deployment; promote after a successful rehearsal.
