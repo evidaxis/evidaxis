@@ -32,14 +32,17 @@ if str(_REPO_ROOT) not in sys.path:
 from scripts.person_free import (
     FREE_TEXT_KEYS,
     classification_for,
+    classify_registry,
+    diagnostic,
+    load_classification,
+    stale_slug_hits,
+    safe_homepage,
     handle_hits,
     lenient_decoded,
-    is_github_url,
     load_handle_index,
     load_owner_types,
     neutral_name,
     reveals_handle,
-    safe_user_homepage,
 )
 
 REPO = _REPO_ROOT
@@ -60,40 +63,40 @@ def _load_token() -> str:
     return tok
 
 
-def _redact_free_text(node, index, stats: dict) -> None:
+def _redact_free_text(node, index, stats: dict, classified) -> None:
     if isinstance(node, dict):
         for key in list(node.keys()):
             value = node[key]
-            if key in FREE_TEXT_KEYS and isinstance(value, str) and reveals_handle(value, index):
+            if key in FREE_TEXT_KEYS and isinstance(value, str) and reveals_handle(value, index, classified):
                 if key == "note":
                     node.pop(key)
                 else:
                     node[key] = None
                 stats["fields_redacted"] += 1
             else:
-                _redact_free_text(value, index, stats)
+                _redact_free_text(value, index, stats, classified)
     elif isinstance(node, list):
         for item in node:
-            _redact_free_text(item, index, stats)
+            _redact_free_text(item, index, stats, classified)
 
 
-def _redact_packages(node, index, stats: dict) -> None:
+def _redact_packages(node, index, stats: dict, classified) -> None:
     if isinstance(node, dict):
         package = node.get("package")
-        if isinstance(package, str) and reveals_handle(package, index):
+        if isinstance(package, str) and reveals_handle(package, index, classified):
             node["package"] = "package not shown"
             stats["fields_redacted"] += 1
         for value in node.values():
-            _redact_packages(value, index, stats)
+            _redact_packages(value, index, stats, classified)
     elif isinstance(node, list):
         for item in node:
-            _redact_packages(item, index, stats)
+            _redact_packages(item, index, stats, classified)
 
 
-def _project_entity(entity: dict, registry: dict, index, stats: dict) -> None:
+def _project_entity(entity: dict, registry: dict, index, stats: dict, classified) -> None:
     name = entity.get("name") if isinstance(entity.get("name"), str) else None
     slug = entity.get("slug") if isinstance(entity.get("slug"), str) else None
-    if (name and reveals_handle(name, index)) or (slug and reveals_handle(slug, index)):
+    if (name and reveals_handle(name, index, classified)) or (slug and reveals_handle(slug, index, classified)):
         entity_id = entity.get("entity_id")
         if isinstance(entity_id, str) and entity_id:
             entity["name"] = neutral_name(entity_id)
@@ -108,9 +111,9 @@ def _project_entity(entity: dict, registry: dict, index, stats: dict) -> None:
     if github_repo:
         entry = classification_for(github_repo, registry)
         canonical = entry["full_name"]
-        owner, repo_name = canonical.split("/", 1)
-        if entry["owner_type"] == "User":
-            hidden = reveals_handle(repo_name, index)
+        repo_name = canonical.split("/", 1)[1]
+        if github_repo not in classified.public_repos or reveals_handle(canonical, index, classified):
+            hidden = reveals_handle(repo_name, index, classified)
             entity["repository"] = {
                 "repo_name": None if hidden else repo_name,
                 "owner_type": "user",
@@ -119,25 +122,18 @@ def _project_entity(entity: dict, registry: dict, index, stats: dict) -> None:
             if hidden:
                 stats["fields_redacted"] += 1
             entity.pop("github_repo", None)
-            homepage = entity.get("homepage") if isinstance(entity.get("homepage"), str) else None
-            # After a transfer the stored owner can still sit in the homepage (review 2026-10-04).
-            safe = safe_user_homepage(homepage, (owner, github_repo.split("/", 1)[0]))
-            if homepage and safe is None:
-                stats["fields_redacted"] += 1
-                entity.pop("homepage", None)
-            elif safe:
-                entity["homepage"] = safe
         else:
             entity["github_repo"] = canonical
-            homepage = entity.get("homepage") if isinstance(entity.get("homepage"), str) else None
-            if homepage and is_github_url(homepage):
-                rewritten = f"https://github.com/{canonical}"
-                if rewritten != homepage and reveals_handle(homepage, index):
-                    stats["fields_redacted"] += 1
-                entity["homepage"] = rewritten
+        homepage = entity.get("homepage") if isinstance(entity.get("homepage"), str) else None
+        safe = safe_homepage(homepage, github_repo, entry, classified, index)
+        if homepage and safe is None:
+            stats["fields_redacted"] += 1
+            entity.pop("homepage", None)
+        elif safe:
+            entity["homepage"] = safe
 
-    _redact_free_text(entity, index, stats)
-    _redact_packages(entity, index, stats)
+    _redact_free_text(entity, index, stats, classified)
+    _redact_packages(entity, index, stats, classified)
 
 
 def project_person_free(snap: dict, *, project_accounts: bool = True) -> dict:
@@ -153,11 +149,12 @@ def project_person_free(snap: dict, *, project_accounts: bool = True) -> dict:
     """
     index, _stale = load_handle_index(REPO, project_accounts=project_accounts)
     registry = load_owner_types(REPO, project_accounts=project_accounts)
+    classified = classify_registry(registry, floor=index.all)
     out = json.loads(json.dumps(snap))
     stats = {"entities": 0, "names_neutralized": 0, "fields_redacted": 0}
     for entity in out.get("entities", []):
         stats["entities"] += 1
-        _project_entity(entity, registry, index, stats)
+        _project_entity(entity, registry, index, stats, classified)
     project_person_free.last_stats = stats
     return out
 
@@ -186,22 +183,21 @@ def _person_free_hits(folder: Path, *, project_accounts: bool = True) -> list[st
     (scripts/person_free.py). Moved repositories also reject the exact stale
     ``owner/repo`` path."""
     index, stale_paths = load_handle_index(REPO, project_accounts=project_accounts)
+    classified = load_classification(REPO, project_accounts=project_accounts)
     hits: list[str] = []
     for path in sorted(folder.rglob("*")):
         if not path.is_file():
             continue
-        blob = path.read_text(encoding="utf-8", errors="replace")
-        found = handle_hits(blob, index)
-        for handle in handle_hits(lenient_decoded(blob), index):  # percent-encoded leaks
-            if handle not in found:
-                found.append(handle)
-        lower = blob.lower()
-        seen = set(found)
-        for stale in stale_paths:
-            if re.search(rf"(?<![a-z0-9_.-]){re.escape(stale)}(?![a-z0-9_.-])", lower) and stale not in seen:
-                found.append(stale)
-                seen.add(stale)
-        hits.extend(f"{path.name}:{handle}" for handle in found)
+        relative = path.relative_to(folder).as_posix()
+        blob = path.read_text(encoding="utf-8", errors="replace") + "\n" + relative
+        variants = [blob, lenient_decoded(blob),
+                    re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m[1], 16)), blob),
+                    re.sub(r"&#(\d+);", lambda m: chr(int(m[1])), blob)]
+        body = "\n".join(variants).lower()
+        for handle in sorted(set(handle_hits(body, index))):
+            hits.append(diagnostic(relative, "f", handle, index))
+        for stale in sorted(stale_slug_hits(body, stale_paths, classified.canonical_paths)):
+            hits.append(diagnostic(relative, "d", stale, index))
     return hits
 
 

@@ -23,7 +23,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, applyProjectAccounts, buildHandleIndex, handleHits, handleHitsDecoded, lenientDecoded, personalOwnerHandles, personalStalePaths, staleSlugHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, classifyRegistry, validOwnerEntry, privacyDiagnostic, buildHandleIndex, handleHitsDecoded, lenientDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
 
 assertProductionPaths();
 
@@ -290,7 +290,7 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
       if (existsSync(f)) for (const e of JSON.parse(readFileSync(f, 'utf8')).entities) archived.add(e.github_repo);
     }
     const unpublished = extraRepos.filter(r => !archived.has(r));
-    if (unpublished.length) errors.push(`etl/owner_types.json: keeps repositories no snapshot publishes: ${unpublished.join(', ')}`);
+    for (const repo of unpublished) errors.push(privacyDiagnostic('etl/owner_types.json', 'unpublished', repo));
   }
 
   // Key check stays on the file: project accounts become Organization only in memory.
@@ -301,55 +301,16 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     : {};
   const diskShape = new Map(Object.entries(registry).map(([repo, entry]) =>
     [repo, entry && typeof entry === 'object' ? JSON.stringify(Object.keys(entry).sort()) : '']));
-  applyProjectAccounts(registry, accounts);
-
-  const bannedOwners = new Map();
-  const staleSlugs = new Set();   // exact old 'owner/repo' paths of moved repositories
-  const canonicalPaths = new Set();
-  const orgOwners = new Set();    // owners that are Organizations today
-  // The shared floor survives transfers and cache changes, just as on the cards.
-  for (const h of FLOOR_HANDLES) bannedOwners.set(h, 'substring');
-  for (const storedRepo of internalRepos) {
-    const entry = registry[storedRepo];
-    if (!entry || !['Organization', 'User'].includes(entry.owner_type)
-      || !Number.isInteger(entry.repo_id) || entry.repo_id <= 0
-      || typeof entry.full_name !== 'string' || !/^[^/]+\/[^/]+$/.test(entry.full_name)
+  for (const storedRepo of classifiedRepos) {
+    if (!validOwnerEntry(registry[storedRepo])
       || diskShape.get(storedRepo) !== JSON.stringify(['full_name', 'owner_type', 'repo_id'])) {
-      errors.push(`etl/owner_types.json: invalid classification for ${storedRepo}`);
-      continue;
-    }
-    const storedOwner = storedRepo.split('/')[0];
-    const canonicalOwner = entry.full_name.split('/')[0];
-    if (entry.owner_type === 'User') bannedOwners.set(canonicalOwner.toLowerCase(), 'substring');
-    // Moved Organization repositories use slug-context matching. This avoids
-    // ordinary-word collisions such as the former owner "block" while still
-    // rejecting stale repository paths and serialized slugs.
-    if (storedOwner.toLowerCase() !== canonicalOwner.toLowerCase()) {
-      // A move cannot weaken the full handle ban of a known personal owner.
-      if (!bannedOwners.has(storedOwner.toLowerCase())) bannedOwners.set(storedOwner.toLowerCase(), 'slug');
-      staleSlugs.add(storedRepo.toLowerCase());
-    }
-    if (entry.owner_type === 'Organization') {
-      orgOwners.add(canonicalOwner.toLowerCase());
-      canonicalPaths.add(entry.full_name.toLowerCase());
+      errors.push(privacyDiagnostic('etl/owner_types.json', 'classification', storedRepo));
     }
   }
-
-  // User owners: whole-handle matching (web/src/lib/personFree.mjs); moved Organization
-  // owners keep slug-context matching.
-  // A former owner that is an Organization today (e.g. "apple", which still owns other
-  // repositories) is not personal data: only the exact stale path is rejected. A former
-  // owner not known as an Organization may be a person and joins the handle matcher.
-  // Former owners are matched only in GitHub context (github.com/owner/, repos/owner/,
-  // @owner), never as a plain word: "block" was an Organization and is an ordinary word.
-  const formerPersonal = [...bannedOwners].filter(([owner, mode]) => mode === 'slug' && !orgOwners.has(owner)).map(([owner]) => owner);
-  const userIndex = buildHandleIndex([...bannedOwners].filter(([, mode]) => mode === 'substring').map(([owner]) => owner));
-  const formerIndex = { all: new Set(formerPersonal), words: new Set() };
-  // Archived provenance also names departed repositories outside today's ID map.
-  const provenanceUserIndex = buildHandleIndex([...userIndex.all, ...personalOwnerHandles(registry)]);
-  // Archived rows outside today's ID map keep their exact old path banned too: the
-  // Organization that handed a repository to a person is not banned by name.
-  for (const path of personalStalePaths(registry)) staleSlugs.add(path);
+  const classified = classifyRegistry(registry, accounts, FLOOR_HANDLES);
+  const userIndex = buildHandleIndex(classified.handles);
+  const staleSlugs = classified.stalePaths;
+  const canonicalPaths = classified.canonicalPaths;
   for (const file of distFiles) {
     const r = rel(file);
     // Binary assets (fonts, images) are not text: their bytes decoded as UTF-8 produce
@@ -379,11 +340,11 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
     variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)).toLowerCase()));
     const body = variants.join('\n');
-    const privacyIndex = /(^|\/)provenance\.json$/.test(r) ? provenanceUserIndex : userIndex;
-    for (const owner of handleHitsDecoded(body, privacyIndex)) errors.push(`${r}: contains private repository owner ${owner}`);
-    for (const owner of handleHits(body, formerIndex)) errors.push(`${r}: contains former repository owner ${owner} in a GitHub path`);
+    for (const owner of handleHitsDecoded(body, userIndex)) {
+      errors.push(`${privacyDiagnostic(r, 'f', owner, userIndex)} contains private repository owner`);
+    }
     for (const slug of staleSlugHits(`${body}\n${lenientDecoded(body)}`, staleSlugs, canonicalPaths)) {
-      errors.push(`${r}: contains stale repository path ${slug}`);
+      errors.push(`${privacyDiagnostic(r, 'd', slug, userIndex)} contains stale repository path`);
     }
   }
 }

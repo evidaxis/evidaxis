@@ -1,0 +1,97 @@
+{
+  "schema": "person_free_conformance_1",
+  "cases": [
+    {
+      "id": "live-organization-gives-one-repository",
+      "registry": {
+        "zz-drill-lab/kept": {"owner_type": "Organization", "repo_id": 1, "full_name": "zz-drill-lab/kept"},
+        "zz-drill-lab/given": {"owner_type": "User", "repo_id": 2, "full_name": "zz-drill-person/given"}
+      },
+      "floor": ["ZZ-DRILL-LAB"],
+      "expected": {"handles": ["zz-drill-person"], "stalePaths": ["zz-drill-lab/given"], "publicRepos": ["zz-drill-lab/kept"]},
+      "probes": [
+        {"text": "zz-drill-lab is public", "hits": []},
+        {"text": "github.com%252Fzz-drill-person%252Fgiven", "hits": ["zz-drill-person"]}
+      ],
+      "projection": {"repo": "zz-drill-lab/given", "homepage": "https://zz-drill-lab.github.io/project", "expectedHomepage": "https://zz-drill-lab.github.io/project"}
+    },
+    {
+      "id": "person-to-person-former-homepage",
+      "registry": {"zz-drill-former/tool": {"owner_type": "User", "repo_id": 3, "full_name": "zz-drill-current/tool"}},
+      "expected": {"handles": ["zz-drill-current", "zz-drill-former"], "stalePaths": ["zz-drill-former/tool"], "publicRepos": []},
+      "probes": [{"text": "ZZ-DRILL-FORMER", "hits": ["zz-drill-former"]}],
+      "projection": {"repo": "zz-drill-former/tool", "homepage": "https://zz-drill-former.github.io/project", "expectedHomepage": null}
+    },
+    {
+      "id": "organization-rename-former-type-unknown",
+      "registry": {"zz-drill-oldlab/tool": {"owner_type": "Organization", "repo_id": 4, "full_name": "zz-drill-newlab/tool"}},
+      "expected": {"handles": ["zz-drill-oldlab"], "stalePaths": ["zz-drill-oldlab/tool"], "publicRepos": ["zz-drill-oldlab/tool"]},
+      "projection": {"repo": "zz-drill-oldlab/tool", "homepage": "https://zz-drill-oldlab.github.io/project", "expectedHomepage": null}
+    },
+    {
+      "id": "live-organization-to-organization",
+      "registry": {
+        "zz-drill-oldlab/kept": {"owner_type": "Organization", "repo_id": 5, "full_name": "zz-drill-oldlab/kept"},
+        "zz-drill-oldlab/tool": {"owner_type": "Organization", "repo_id": 6, "full_name": "zz-drill-newlab/tool"}
+      },
+      "expected": {"handles": [], "stalePaths": [], "publicRepos": ["zz-drill-oldlab/kept", "zz-drill-oldlab/tool"]},
+      "projection": {"repo": "zz-drill-oldlab/tool", "homepage": "https://zz-drill-oldlab.github.io/project", "expectedHomepage": "https://zz-drill-oldlab.github.io/project"}
+    },
+    {
+      "id": "project-account-exception",
+      "registry": {
+        "zz-drill-former/tool": {"owner_type": "User", "repo_id": 7, "full_name": "ZZ-DRILL-PROJECT/tool"},
+        "zz-drill-project/other": {"owner_type": "User", "repo_id": 8, "full_name": "zz-drill-project/other"}
+      },
+      "accounts": {"zz-drill-project": {}},
+      "floor": ["zz-drill-project", "zz-drill-floor"],
+      "expected": {"handles": ["zz-drill-floor", "zz-drill-former"], "stalePaths": ["zz-drill-former/tool"], "publicRepos": ["zz-drill-former/tool", "zz-drill-project/other"]}
+    },
+    {
+      "id": "same-owner-rename-case-and-short-logins",
+      "registry": {
+        "Q7/old": {"owner_type": "User", "repo_id": 9, "full_name": "q7/new"},
+        "7890/tool": {"owner_type": "User", "repo_id": 10, "full_name": "7890/tool"}
+      },
+      "expected": {"handles": ["7890", "q7"], "stalePaths": [], "publicRepos": []},
+      "probes": [
+        {"text": "q7 and 7890 systems /q7/ /7890/", "hits": []},
+        {"text": "https://q7.github.io github.com/7890", "hits": ["7890", "q7"]},
+        {"text": "@q7", "hits": ["q7"]}
+      ]
+    },
+    {
+      "id": "template-word-only-in-context",
+      "registry": {"system/tool": {"owner_type": "User", "repo_id": 11, "full_name": "system/tool"}},
+      "templateWords": ["system"],
+      "expected": {"handles": ["system"], "stalePaths": [], "publicRepos": []},
+      "probes": [
+        {"text": "System /system/tool system", "hits": []},
+        {"text": "github.com/system/tool", "hits": ["system"]},
+        {"text": "https://system.github.io/project", "hits": ["system"]},
+        {"text": "@system", "hits": ["system"]}
+      ]
+    },
+    {
+      "id": "floor-survives-departure",
+      "registry": {},
+      "floor": ["ZZ-DRILL-FLOOR"],
+      "expected": {"handles": ["zz-drill-floor"], "stalePaths": [], "publicRepos": []},
+      "probes": [{"text": "zz-drill-floor package", "hits": ["zz-drill-floor"]}]
+    },
+    {
+      "id": "public-owner-overrides-inconsistent-user-row",
+      "registry": {
+        "zz-drill-mixed/one": {"owner_type": "User", "repo_id": 12, "full_name": "zz-drill-mixed/one"},
+        "zz-drill-mixed/two": {"owner_type": "Organization", "repo_id": 13, "full_name": "zz-drill-mixed/two"}
+      },
+      "expected": {"handles": [], "stalePaths": [], "publicRepos": ["zz-drill-mixed/one", "zz-drill-mixed/two"]}
+    },
+    {
+      "id": "external-encoded-former-owner",
+      "registry": {"zz-drill-former/tool": {"owner_type": "User", "repo_id": 14, "full_name": "zz-drill-current/tool"}},
+      "expected": {"handles": ["zz-drill-current", "zz-drill-former"], "stalePaths": ["zz-drill-former/tool"], "publicRepos": []},
+      "projection": {"repo": "zz-drill-former/tool", "homepage": "https://example.invalid/%257A%257A-drill-former/tool", "expectedHomepage": null}
+    }
+  ]
+}
