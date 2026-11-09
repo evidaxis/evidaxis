@@ -79,6 +79,10 @@ export function lenientDecoded(text) {
   return out;
 }
 
+export function decimalEntitiesDecoded(text) {
+  return text.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)));
+}
+
 export function handleHits(text, index) {
   const lower = String(text).toLowerCase();
   const hits = new Set();
@@ -166,9 +170,10 @@ export function revealsHandleText(text, index) {
 }
 
 const diagnosticSalt = randomBytes(32);
-export function privacyDiagnostic(path, rule, value, index) {
+export function privacyDiagnostic(path, rule, value, index, classified) {
   const digest = text => createHash('sha256').update(diagnosticSalt).update('\0').update(text.toLowerCase()).digest('hex').slice(0, 8);
   const privatePath = (index && revealsHandleText(path, index))
+    || (classified && staleSlugHits(lenientDecoded(path).toLowerCase(), classified.stalePaths, classified.canonicalPaths).length > 0)
     || (rule === 'd' && lenientDecoded(path).toLowerCase().includes(value.toLowerCase()));
   const safePath = privatePath ? `[path:${digest(path)}]` : path;
   return `${safePath}: rule=${rule} hash=${digest(value)}`;

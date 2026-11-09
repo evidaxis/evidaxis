@@ -23,7 +23,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, classifyRegistry, validOwnerEntry, privacyDiagnostic, buildHandleIndex, handleHitsDecoded, lenientDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, classifyRegistry, validOwnerEntry, privacyDiagnostic, buildHandleIndex, handleHitsDecoded, lenientDecoded, decimalEntitiesDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
 
 assertProductionPaths();
 
@@ -338,13 +338,13 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     const variants = [raw.toLowerCase(), relative(DIST, file).toLowerCase()];
     try { variants.push(decodeURIComponent(raw).toLowerCase()); } catch {}
     variants.push(raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).toLowerCase());
-    variants.push(raw.replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)).toLowerCase()));
+    variants.push(decimalEntitiesDecoded(raw).toLowerCase());
     const body = variants.join('\n');
     for (const owner of handleHitsDecoded(body, userIndex)) {
-      errors.push(`${privacyDiagnostic(r, 'f', owner, userIndex)} contains private repository owner`);
+      errors.push(`${privacyDiagnostic(r, 'f', owner, userIndex, classified)} contains private repository owner`);
     }
     for (const slug of staleSlugHits(`${body}\n${lenientDecoded(body)}`, staleSlugs, canonicalPaths)) {
-      errors.push(`${privacyDiagnostic(r, 'd', slug, userIndex)} contains stale repository path`);
+      errors.push(`${privacyDiagnostic(r, 'd', slug, userIndex, classified)} contains stale repository path`);
     }
   }
 }

@@ -36,23 +36,26 @@ def test_load_owner_types_marks_each_project_account():
         assert set(raw[repo]) == {"owner_type", "repo_id", "full_name"}
 
 
-def test_projection_keeps_project_account_names_and_neutralizes_eleven():
+def test_projection_keeps_project_account_names_and_neutralizes_twelve():
     accounts = _accounts()
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     original = {entity["entity_id"]: entity["name"] for entity in snap["entities"]}
     projected = hf.project_person_free(snap)
-    assert hf.project_person_free.last_stats["names_neutralized"] == 11
+    assert hf.project_person_free.last_stats["names_neutralized"] == 12
     by_id = {entity["entity_id"]: entity for entity in projected["entities"]}
+    # Rule c also covers former owners of rows that are now Organization-owned.
+    assert by_id["e_RYZNSTS8RB1"]["name"] == "System e_RYZNSTS8RB1"
+    assert by_id["e_RYZNSTS8RB1"]["slug"] == "e_ryznsts8rb1"
     for meta in accounts.values():
         entity_id = meta["entity_id"]
         assert by_id[entity_id]["name"] == original[entity_id]
 
 
-def test_empty_accounts_map_neutralizes_21(monkeypatch):
+def test_empty_accounts_map_neutralizes_22(monkeypatch):
     monkeypatch.setattr("scripts.person_free.load_project_accounts", lambda _repo: {})
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     hf.project_person_free(snap)
-    assert hf.project_person_free.last_stats["names_neutralized"] == 21
+    assert hf.project_person_free.last_stats["names_neutralized"] == 22
 
 
 def test_missing_accounts_file_leaves_user_types(tmp_path):

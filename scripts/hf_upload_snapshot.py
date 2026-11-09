@@ -32,14 +32,14 @@ if str(_REPO_ROOT) not in sys.path:
 from scripts.person_free import (
     FREE_TEXT_KEYS,
     classification_for,
-    classify_registry,
+    build_handle_index,
+    decimal_entities_decoded,
     diagnostic,
     load_classification,
     stale_slug_hits,
     safe_homepage,
     handle_hits,
     lenient_decoded,
-    load_handle_index,
     load_owner_types,
     neutral_name,
     reveals_handle,
@@ -147,9 +147,9 @@ def project_person_free(snap: dict, *, project_accounts: bool = True) -> dict:
     handle becomes ``System <entity_id>``. A deps.dev package name that reveals a
     handle becomes ``package not shown``. Free text that reveals a handle is dropped.
     """
-    index, _stale = load_handle_index(REPO, project_accounts=project_accounts)
+    classified = load_classification(REPO, project_accounts=project_accounts)
+    index = build_handle_index(classified.handles)
     registry = load_owner_types(REPO, project_accounts=project_accounts)
-    classified = classify_registry(registry, floor=index.all)
     out = json.loads(json.dumps(snap))
     stats = {"entities": 0, "names_neutralized": 0, "fields_redacted": 0}
     for entity in out.get("entities", []):
@@ -182,8 +182,8 @@ def _person_free_hits(folder: Path, *, project_accounts: bool = True) -> list[st
     """Fail-closed scan of the staged upload. Handle matching is exact
     (scripts/person_free.py). Moved repositories also reject the exact stale
     ``owner/repo`` path."""
-    index, stale_paths = load_handle_index(REPO, project_accounts=project_accounts)
     classified = load_classification(REPO, project_accounts=project_accounts)
+    index = build_handle_index(classified.handles)
     hits: list[str] = []
     for path in sorted(folder.rglob("*")):
         if not path.is_file():
@@ -192,12 +192,12 @@ def _person_free_hits(folder: Path, *, project_accounts: bool = True) -> list[st
         blob = path.read_text(encoding="utf-8", errors="replace") + "\n" + relative
         variants = [blob, lenient_decoded(blob),
                     re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m[1], 16)), blob),
-                    re.sub(r"&#(\d+);", lambda m: chr(int(m[1])), blob)]
+                    decimal_entities_decoded(blob)]
         body = "\n".join(variants).lower()
         for handle in sorted(set(handle_hits(body, index))):
-            hits.append(diagnostic(relative, "f", handle, index))
-        for stale in sorted(stale_slug_hits(body, stale_paths, classified.canonical_paths)):
-            hits.append(diagnostic(relative, "d", stale, index))
+            hits.append(diagnostic(relative, "f", handle, index, classified))
+        for stale in sorted(stale_slug_hits(body, classified.stale_paths, classified.canonical_paths)):
+            hits.append(diagnostic(relative, "d", stale, index, classified))
     return hits
 
 

@@ -10,6 +10,8 @@ export type OwnerEntry = {
 export type OwnerTypes = {
   schema_version: 'owner_types_1';
   repos: Record<string, OwnerEntry>;
+  // Run-local input: former project owners may have no current registry row.
+  projectAccounts?: Record<string, unknown>;
 };
 
 type RepositoryEntity = {
@@ -39,7 +41,7 @@ const CLASSIFICATIONS = new WeakMap<OwnerTypes, ReturnType<typeof classifyRegist
 export function registryClassification(registry: OwnerTypes) {
   let classified = CLASSIFICATIONS.get(registry);
   if (!classified) {
-    classified = classifyRegistry(registry.repos, {}, FLOOR_HANDLES);
+    classified = classifyRegistry(registry.repos, registry.projectAccounts ?? {}, FLOOR_HANDLES);
     CLASSIFICATIONS.set(registry, classified);
   }
   return classified;
@@ -104,7 +106,8 @@ export function publicHomepage(e: RepositoryEntity, registry: OwnerTypes): strin
   if (revealsHandle(e.homepage, registry)) return null;
   const index = userHandleIndex(registry);
   const owners = [e.github_repo.split('/')[0], entry.full_name.split('/')[0]].map(s => s.toLowerCase());
-  if (owners.some(owner => index.all.has(owner) && !index.contextOnly.has(owner) && decoded.includes(owner))) return null;
+  // Rule f's prose exemption does not apply to the known owner's own homepage.
+  if (owners.some(owner => index.all.has(owner) && decoded.includes(owner))) return null;
   if (!isPublicRepo(e, registry) && (isGithubUrl(e.homepage) || isGithubUrl(decoded))) return null;
   return e.homepage;
 }
