@@ -7,7 +7,13 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parent.parent
+def workspace_root():
+    # CI runs a trusted copy of this file from RUNNER_TEMP; git still reads the checkout.
+    workspace = os.environ.get('GITHUB_WORKSPACE')
+    return Path(workspace) if workspace else Path(__file__).resolve().parent.parent
+
+
+ROOT = workspace_root()
 POLICY_PATH = 'scripts/gate-paths.json'
 
 
@@ -32,6 +38,12 @@ def check_push(before, after, repository, sender):
     # Commit authors are user-controlled; only the push event identifies the bot.
     if sender.get('login') == 'github-actions[bot]' and sender.get('type') == 'Bot':
         return 0
+    # A force push back to an ancestor has an empty before..after range yet can roll
+    # back reviewed checks. History rewrites of main are rejected outright.
+    if subprocess.run(['git', 'merge-base', '--is-ancestor', before, after], cwd=ROOT,
+                      capture_output=True).returncode != 0:
+        print(f'non-fast-forward push to main: {before}..{after}', file=sys.stderr)
+        return 1
     if git('ls-tree', '--name-only', before, '--', POLICY_PATH):
         patterns = json.loads(git('show', f'{before}:{POLICY_PATH}'))
     else:

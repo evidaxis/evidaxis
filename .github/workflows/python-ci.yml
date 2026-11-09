@@ -53,7 +53,17 @@ jobs:
       - name: Guard changes to publication checks
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/gate_change_guard.py
+          BEFORE: ${{ github.event.before }}
+        # The guard runs from the commit before the push, so a push cannot disable
+        # its own check. A push that edits this workflow is caught only by the branch
+        # ruleset; this step is a tripwire for accidental direct pushes, not a boundary.
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = push ] && git cat-file -e "$BEFORE:scripts/gate_change_guard.py" 2>/dev/null; then
+            git show "$BEFORE:scripts/gate_change_guard.py" > "$RUNNER_TEMP/gate_change_guard.py"
+            python "$RUNNER_TEMP/gate_change_guard.py"
+          else
+            python scripts/gate_change_guard.py
+          fi
 
       - name: Install dev/QA toolchain
         run: python -m pip install --upgrade pip && pip install -r requirements-dev.txt

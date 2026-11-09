@@ -361,7 +361,9 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     replay_text = replay_path.read_text()
     replay = yaml.safe_load(replay_text)
     assert "rehearsal-alert" not in replay_text
-    assert replay["concurrency"]["group"].startswith("rehearsal-replay-")
+    # PRs get their own lane; push and manual replays keep the single shared queue.
+    group = replay["concurrency"]["group"]
+    assert "rehearsal-replay-pr-" in group and "|| 'rehearsal-replay' }}" in group
     assert "data-commits" not in replay_text
     assert replay["permissions"] == {"contents": "read", "actions": "read"}
     triggers = replay[True]

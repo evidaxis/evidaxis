@@ -43,7 +43,9 @@ permissions:
   actions: read
 
 concurrency:
-  group: rehearsal-replay-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  # Push and manual replays stay serialized as before; each PR gets its own lane so a
+  # PR matrix never waits behind, or cancels, another PR or the weekly replay.
+  group: ${{ github.event_name == 'pull_request' && format('rehearsal-replay-pr-{0}', github.event.pull_request.number) || 'rehearsal-replay' }}
   cancel-in-progress: false
 
 jobs:
@@ -90,6 +92,8 @@ jobs:
       - name: Use main data when no complete candidate exists
         if: ${{ success() && steps.source.outputs.found == 'false' }}
         run: |
+          # Exactly main's data: files the PR added under data/ or etl/ must not survive.
+          rm -rf data etl
           git checkout origin/main -- data etl
           echo "SNAPSHOT_DATE=$(python3 -c 'import json; print(json.load(open("data/latest.json"))["snapshot_date"])')" >> "$GITHUB_ENV"
 
@@ -132,12 +136,18 @@ jobs:
           DRILL: ${{ matrix.drill }}
         run: |
           cd web
-          if (npm ci && { [ "$GITHUB_EVENT_NAME" != pull_request ] || npm run test:probation; } && npm run verify) > "$RUNNER_TEMP/replay-verify.log" 2>&1; then
+          if (npm ci && npm run verify) > "$RUNNER_TEMP/replay-verify.log" 2>&1; then
             echo 'outcome=success' >> "$GITHUB_OUTPUT"
           else
             echo 'outcome=failure' >> "$GITHUB_OUTPUT"
           fi
           if [ "$DRILL" != benign_all ]; then cat "$RUNNER_TEMP/replay-verify.log"; fi
+
+      - name: Probation data tests on PRs
+        # Blocks the PR but stays out of the drill verdict: only production verify may
+        # count as a caught drill (a probation test must not stand in for a real gate).
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.verify.outcome == 'success' }}
+        run: cd web && npm run test:probation
 
       - name: Independent benign-drift oracle
         id: oracle
