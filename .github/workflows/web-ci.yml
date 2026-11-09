@@ -3,6 +3,7 @@ name: web-ci
 # Quality gate for the static site: unit tests, a clean build, and the dist
 # invariants (em-dash = 0, charts server-rendered, JSON-LD valid, head essentials,
 # single h1). Must stay green before the redesign is promoted to production.
+# A red run is the signal. This file does not send a message.
 
 on:
   # Bot-written trees must face the gate too: commits pushed with the default
@@ -66,33 +67,3 @@ jobs:
       - name: Fixture hygiene
         working-directory: web
         run: npm run test:hygiene
-
-  alert:
-    needs: build-test-verify
-    if: ${{ always() && needs.build-test-verify.result == 'failure' && (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main') }}
-    runs-on: ubuntu-latest
-    # Two data commits can finish together. Queue the page so the second sees the first.
-    concurrency:
-      group: web-ci-keeper-alert
-      cancel-in-progress: false
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-        with:
-          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
-          persist-credentials: false
-
-      - name: Set up Node 22
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: "22"
-
-      - name: Tell the keeper the check went red
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
-        run: node scripts/ci-alert.mjs

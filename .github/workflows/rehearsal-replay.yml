@@ -3,8 +3,8 @@ run-name: rehearsal replay ${{ inputs.drill || 'none' }} from ${{ inputs.source_
 
 # Replays the post-collection checks of one weekly rehearsal. The candidate comes
 # from that run's artifact. A drill fault is injected only on this runner.
-# This workflow does not publish. A failed automatic replay messages the keeper.
-# A manual drill does not: the injected fault would page them.
+# This workflow does not publish. A failed automatic replay stays red.
+# This file does not send a message.
 
 on:
   workflow_dispatch:
@@ -155,17 +155,3 @@ jobs:
           REPORT: ${{ steps.report.outputs.outcome || steps.report.outcome }}
           ORACLE: ${{ steps.oracle.outcome }}
         run: python3 scripts/rehearsal_drill.py verdict
-
-      # An early failure skips the verify setup above. The keeper line still needs Node.
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        if: ${{ failure() && github.event_name == 'push' }}
-        with:
-          node-version: "22"
-
-      - name: Tell the keeper the automatic replay failed
-        if: ${{ failure() && github.event_name == 'push' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          ALERT_CHAT_ID: ${{ secrets.ALERT_TG_CHAT_ID }}
-        run: node scripts/ci-alert.mjs
