@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "glance",
+  "language": "Swift",
+  "open_issues_count": 37,
+  "node_id": "R_kgDOTfdchQ",
+  "forks_count": 176,
+  "watchers_count": 1902,
+  "topics": [
+    "computer-vision",
+    "macos"
+  ],
+  "description": "Glance: Face Unlock for Mac",
+  "archived": false,
+  "size": 93036,
+  "homepage": "https://tryglance.app",
+  "disabled": false,
+  "stargazers_count": 1902,
+  "fork": false,
+  "network_count": 176,
+  "subscribers_count": 8,
+  "created_at": "2026-07-21T19:30:34Z",
+  "updated_at": "2026-11-09T17:39:11Z",
+  "id": 1308056709,
+  "default_branch": "main",
+  "full_name": "jonnyoo/glance",
+  "pushed_at": "2026-09-30T01:14:54Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "inference",
+  "language": "Python",
+  "open_issues_count": 206,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNDg1NjY2MTM=",
+  "forks_count": 650,
+  "watchers_count": 1657,
+  "topics": [
+    "benchmark",
+    "machine-learning"
+  ],
+  "description": "Reference implementations of MLPerf® inference benchmarks",
+  "archived": false,
+  "size": 770160,
+  "homepage": "https://mlcommons.org/en/groups/inference",
+  "disabled": false,
+  "stargazers_count": 1657,
+  "fork": false,
+  "network_count": 650,
+  "subscribers_count": 55,
+  "created_at": "2018-09-13T01:53:57Z",
+  "updated_at": "2026-11-09T03:22:18Z",
+  "id": 148566613,
+  "default_branch": "master",
+  "full_name": "mlcommons/inference",
+  "pushed_at": "2026-11-06T17:07:16Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

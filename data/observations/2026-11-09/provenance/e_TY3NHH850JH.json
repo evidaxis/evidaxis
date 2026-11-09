@@ -1,0 +1,31 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "ViLT",
+  "language": "Python",
+  "open_issues_count": 61,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNTEzMTEyMTE=",
+  "forks_count": 228,
+  "watchers_count": 1537,
+  "topics": [
+    "vision-and-language"
+  ],
+  "description": "Code for the ICML 2021 (long talk) paper: \"ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision\"",
+  "archived": false,
+  "size": 1443,
+  "homepage": "",
+  "disabled": false,
+  "stargazers_count": 1537,
+  "fork": false,
+  "network_count": 228,
+  "subscribers_count": 14,
+  "created_at": "2021-03-25T04:44:15Z",
+  "updated_at": "2026-11-04T15:48:39Z",
+  "id": 351311211,
+  "default_branch": "master",
+  "full_name": "dandelin/ViLT",
+  "pushed_at": "2024-04-03T02:07:24Z",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

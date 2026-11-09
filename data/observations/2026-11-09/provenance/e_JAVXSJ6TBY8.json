@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "agent-academy",
+  "language": "JavaScript",
+  "open_issues_count": 6,
+  "node_id": "R_kgDOOG-49Q",
+  "forks_count": 219,
+  "watchers_count": 3689,
+  "topics": [
+    "agents",
+    "copilot"
+  ],
+  "description": "Curated lessons on getting started building agents with Copilot Studio",
+  "archived": false,
+  "size": 4549026,
+  "homepage": "https://aka.ms/agent-academy",
+  "disabled": false,
+  "stargazers_count": 3689,
+  "fork": false,
+  "network_count": 219,
+  "subscribers_count": 22,
+  "created_at": "2025-03-11T19:07:11Z",
+  "updated_at": "2026-11-09T15:23:40Z",
+  "id": 946845941,
+  "default_branch": "main",
+  "full_name": "microsoft/agent-academy",
+  "pushed_at": "2026-11-05T14:35:00Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

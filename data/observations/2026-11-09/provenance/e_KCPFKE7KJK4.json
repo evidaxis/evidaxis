@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "RagTag",
+  "language": "Python",
+  "open_issues_count": 93,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNDI4OTgzMjM=",
+  "forks_count": 58,
+  "watchers_count": 578,
+  "topics": [
+    "gap-filling",
+    "genome-assembly",
+    "scaffolding"
+  ],
+  "description": "Tools for fast and flexible genome assembly scaffolding and improvement",
+  "archived": false,
+  "size": 298,
+  "homepage": "",
+  "disabled": false,
+  "stargazers_count": 578,
+  "fork": false,
+  "network_count": 58,
+  "subscribers_count": 8,
+  "created_at": "2020-02-25T03:13:56Z",
+  "updated_at": "2026-10-23T13:09:18Z",
+  "id": 242898323,
+  "default_branch": "master",
+  "full_name": "malonge/RagTag",
+  "pushed_at": "2026-10-01T19:17:38Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

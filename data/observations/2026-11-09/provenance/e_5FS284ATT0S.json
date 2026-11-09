@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "Index-Translate",
+  "language": "Python",
+  "open_issues_count": 13,
+  "node_id": "R_kgDOUb8ytw",
+  "forks_count": 54,
+  "watchers_count": 1992,
+  "topics": [
+    "llm",
+    "machine-translation"
+  ],
+  "description": "A Multilingual, Multimodal Translation Model Family",
+  "archived": false,
+  "size": 5625,
+  "homepage": "https://index-translate.bilibili.com",
+  "disabled": false,
+  "stargazers_count": 1992,
+  "fork": false,
+  "network_count": 54,
+  "subscribers_count": 3,
+  "created_at": "2026-09-15T13:03:42Z",
+  "updated_at": "2026-11-09T16:03:07Z",
+  "id": 1371484855,
+  "default_branch": "main",
+  "full_name": "bilibili/Index-Translate",
+  "pushed_at": "2026-11-06T10:39:48Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

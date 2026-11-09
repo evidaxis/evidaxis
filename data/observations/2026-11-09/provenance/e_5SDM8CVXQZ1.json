@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "vocotype-cli",
+  "language": "Python",
+  "open_issues_count": 32,
+  "node_id": "R_kgDOQBenXA",
+  "forks_count": 116,
+  "watchers_count": 998,
+  "topics": [
+    "asr",
+    "funasr"
+  ],
+  "description": "VocoType 是一款运行在本地端侧的隐私安全语音输入工具，通过快捷键即可将语音实时转换为文字并自动输入到当前应用。支持语音转文字MCP、AI 优化文本、自定义替换词典、录音视频转文字等功能，让语音输入更高效、更安全。",
+  "archived": false,
+  "size": 9323,
+  "homepage": "https://vocotype.com",
+  "disabled": false,
+  "stargazers_count": 998,
+  "fork": false,
+  "network_count": 116,
+  "subscribers_count": 6,
+  "created_at": "2025-10-13T09:52:12Z",
+  "updated_at": "2026-11-09T09:38:59Z",
+  "id": 1075291996,
+  "default_branch": "master",
+  "full_name": "233stone/vocotype-cli",
+  "pushed_at": "2026-10-14T16:31:46Z",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "sd-face-editor",
+  "language": "Python",
+  "open_issues_count": 7,
+  "node_id": "R_kgDOIG1g8w",
+  "forks_count": 84,
+  "watchers_count": 1068,
+  "topics": [
+    "stable-diffusion",
+    "stable-diffusion-webui"
+  ],
+  "description": "Face Editor for Stable Diffusion",
+  "archived": false,
+  "size": 5725,
+  "homepage": "",
+  "disabled": false,
+  "stargazers_count": 1068,
+  "fork": false,
+  "network_count": 84,
+  "subscribers_count": 10,
+  "created_at": "2022-10-01T13:34:05Z",
+  "updated_at": "2026-10-24T05:29:40Z",
+  "id": 544039155,
+  "default_branch": "main",
+  "full_name": "ototadana/sd-face-editor",
+  "pushed_at": "2024-09-15T23:51:41Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

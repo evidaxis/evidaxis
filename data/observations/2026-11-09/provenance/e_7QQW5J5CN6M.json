@@ -1,0 +1,33 @@
+{
+  "private": false,
+  "visibility": "public",
+  "name": "go-micro",
+  "language": "Go",
+  "open_issues_count": 4,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyOTIxNzA1NA==",
+  "forks_count": 2431,
+  "watchers_count": 23083,
+  "topics": [
+    "go",
+    "golang",
+    "micro"
+  ],
+  "description": "A framework for agents, tools and services",
+  "archived": false,
+  "size": 41256,
+  "homepage": "https://go-micro.dev",
+  "disabled": false,
+  "stargazers_count": 23083,
+  "fork": false,
+  "network_count": 2431,
+  "subscribers_count": 480,
+  "created_at": "2015-01-13T23:30:18Z",
+  "updated_at": "2026-11-09T11:55:21Z",
+  "id": 29217054,
+  "default_branch": "master",
+  "full_name": "micro/go-micro",
+  "pushed_at": "2026-11-09T07:59:24Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
