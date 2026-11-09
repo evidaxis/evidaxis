@@ -58,8 +58,10 @@ describe('person-free handle matching at registry scale', () => {
     expect(handleHits('Built by Paul-Gauthier.', index)).toEqual(['paul-gauthier']);
     expect(handleHits('HEXGRAD model', index)).toEqual(['hexgrad']);
   });
-  it('does not match a distinctive handle inside a longer token', () => {
-    expect(handleHits('hexgrading and paul-gauthier-fan', index)).toEqual([]);
+  it('requires non-alphanumeric boundaries around a distinctive handle', () => {
+    const synthetic = buildHandleIndex(['zz-drill-person']);
+    expect(handleHits('zz-drill-personfan xzz-drill-person zz-drill-person2', synthetic)).toEqual([]);
+    expect(handleHits('widget-zz-drill-person-fan', synthetic)).toEqual(['zz-drill-person']);
   });
 });
 

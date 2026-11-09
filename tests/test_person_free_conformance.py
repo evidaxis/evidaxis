@@ -34,9 +34,40 @@ def test_conformance(case):
     index = pf.build_handle_index(c.handles, case.get("templateWords", []))
     for probe in case.get("probes", []):
         assert sorted(set(pf.handle_hits(pf.lenient_decoded(probe["text"]), index))) == probe["hits"]
+    for probe in case.get("packages", []):
+        expected = "package not shown" if probe["masked"] or probe.get("systemMasked") else f'{probe["system"]}/{probe["package"]}'
+        assert pf.public_package_label(probe["system"], probe["package"], index) == expected
     if p := case.get("projection"):
         assert pf.safe_homepage(p["homepage"], p["repo"], case["registry"][p["repo"]], c, index) == p["expectedHomepage"]
     assert json.dumps(case) == original
+
+
+@pytest.mark.parametrize("case,probe", [(c, p) for c in VECTORS for p in c.get("packages", [])],
+                         ids=lambda value: value.get("id", value.get("package")))
+def test_hf_dependency_token_projection(case, probe, tmp_path, monkeypatch):
+    write_registry(tmp_path, case)
+    monkeypatch.setattr(hf, "REPO", tmp_path)
+    package = probe["package"]
+    original = {"entities": [{"entity_id": "e_DRILL", "github_repo": "zz-drill-former/tool",
+        "deps": {"system": probe["system"], "package": package,
+                 "source": package, "nested": [{"alias": package}, package], "count": 7},
+        "signals": [{"package": package}]}]}
+    before = json.dumps(original)
+    projected = hf.project_person_free(original)
+    expected = "package not shown" if probe["masked"] else package
+    assert projected["entities"][0]["deps"] == {
+        "system": "package not shown" if probe.get("systemMasked") else probe["system"],
+        "package": expected, "source": expected,
+        "nested": [{"alias": expected}, expected], "count": 7}
+    assert projected["entities"][0]["signals"] == [{"package": expected}]
+    assert json.dumps(original) == before
+    stage = tmp_path / "stage"
+    stage.mkdir()
+    path = stage / "snapshot.json"
+    path.write_text(json.dumps(projected))
+    assert hf._person_free_hits(stage) == []
+    path.write_text(json.dumps({"deps": {"system": probe["system"], "package": package}}))
+    assert bool(hf._person_free_hits(stage)) == bool(probe["masked"] or probe.get("systemMasked"))
 
 
 @pytest.mark.parametrize("case", VECTORS, ids=lambda case: case["id"])

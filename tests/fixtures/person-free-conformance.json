@@ -63,7 +63,8 @@
       "probes": [
         {"text": "q7 and 7890 systems /q7/ /7890/", "hits": []},
         {"text": "https://q7.github.io github.com/7890", "hits": ["7890", "q7"]},
-        {"text": "@q7", "hits": ["q7"]}
+        {"text": "@q7", "hits": ["q7"]},
+        {"text": "widget-q7-plugin widget-7890-plugin", "hits": []}
       ]
     },
     {
@@ -114,6 +115,47 @@
       "expected": {"handles": [], "stalePaths": [], "publicRepos": ["zz-drill-project/tool"]},
       "strictExpected": {"handles": ["zz-drill-project"], "stalePaths": ["zz-drill-project/tool"], "publicRepos": ["zz-drill-project/tool"]},
       "projection": {"repo": "zz-drill-project/tool", "homepage": "https://zz-drill-project.example/", "expectedHomepage": "https://zz-drill-project.example/"}
+    },
+    {
+      "id": "dependency-package-token-boundaries",
+      "registry": {
+        "zz-drill-former/tool": {"owner_type": "User", "repo_id": 18, "full_name": "zz-drill-person/tool"},
+        "zz-drill-lab/kept": {"owner_type": "Organization", "repo_id": 19, "full_name": "zz-drill-lab/kept"},
+        "system/tool": {"owner_type": "User", "repo_id": 20, "full_name": "system/tool"},
+        "zz-drill-lab/moved": {"owner_type": "User", "repo_id": 21, "full_name": "zzdrillfern/moved"}
+      },
+      "templateWords": ["system"],
+      "expected": {"handles": ["system", "zz-drill-former", "zz-drill-person", "zzdrillfern"], "stalePaths": ["zz-drill-former/tool", "zz-drill-lab/moved"], "publicRepos": ["zz-drill-lab/kept"]},
+      "probes": [
+        {"text": "widget-zz-drill-person-plugin", "hits": ["zz-drill-person"]},
+        {"text": "widget-zz-drill-former-plugin", "hits": ["zz-drill-former"]},
+        {"text": "widget-zzdrillfern-plugin", "hits": ["zzdrillfern"]},
+        {"text": "widget-zz-drill-lab-plugin", "hits": []},
+        {"text": "widget-system-plugin", "hits": []},
+        {"text": "widget-zz-drill-personx-plugin widget-xzz-drill-person-plugin widget-zz-drill-person2-plugin", "hits": []},
+        {"text": "widget_zz-drill-person.plugin", "hits": ["zz-drill-person"]},
+        {"text": "--zz-drill-person--", "hits": ["zz-drill-person"]},
+        {"text": "widget-zz--drill-person-plugin", "hits": []},
+        {"text": "widget-ZZ-DRILL-PERSON-plugin-zz-drill-former", "hits": ["zz-drill-former", "zz-drill-person"]}
+      ],
+      "packages": [
+        {"system": "npm", "package": "widget-zz-drill-person-plugin", "masked": true},
+        {"system": "npm", "package": "widget-zz-drill-former-plugin", "masked": true},
+        {"system": "npm", "package": "widget-zzdrillfern-plugin", "masked": true},
+        {"system": "npm", "package": "widget-zz-drill-lab-plugin", "masked": false},
+        {"system": "npm", "package": "widget-system-plugin", "masked": false},
+        {"system": "npm", "package": "github.com/system/tool", "masked": true},
+        {"system": "npm", "package": "widget-ZZ-DRILL-PERSON-plugin", "masked": true},
+        {"system": "npm", "package": "widget%252Dzz-drill-person%252Dplugin", "masked": true},
+        {"system": "npm", "package": "widget_zz-drill-person.plugin", "masked": true},
+        {"system": "npm", "package": "--zz-drill-person--", "masked": true},
+        {"system": "npm", "package": "widget---zz-drill-person---plugin", "masked": true},
+        {"system": "npm", "package": "widget-zz--drill-person-plugin", "masked": false},
+        {"system": "npm", "package": "widget-zz-drill-personx-plugin", "masked": false},
+        {"system": "npm", "package": "widget-xzz-drill-person-plugin", "masked": false},
+        {"system": "npm", "package": "widget-zz-drill-person2-plugin", "masked": false},
+        {"system": "widget-zz-drill-person-plugin", "package": "widget", "masked": false, "systemMasked": true}
+      ]
     },
     {
       "id": "out-of-range-html-decimal-reference",
