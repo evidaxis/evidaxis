@@ -8,7 +8,7 @@ GH_REPOSITORY = "evidaxis/evidaxis"
 GH_REF = "main"
 
 [triggers]
-crons = ["17 2 * * SAT", "17 4 * * SAT", "47 6 * * SAT", "17 2 * * WED"]
+crons = ["17 2 * * SAT", "17 4 * * SAT", "47 6 * * SAT", "17 2 * * WED", "17 2 * * FRI"]
 
 [observability]
 enabled = true
