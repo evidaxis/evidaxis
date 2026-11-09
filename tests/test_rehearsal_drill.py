@@ -238,10 +238,10 @@ def _script_repo(tmp_path: Path) -> tuple[Path, str]:
     (root / "scripts").mkdir()
     (root / "data").mkdir()
     (root / "etl").mkdir()
-    (root / "scripts/ci-alert.mjs").write_text("original\n")
+    (root / "scripts/kept.mjs").write_text("original\n")
     (root / "data/ok.txt").write_text("data\n")
     (root / "etl/ok.json").write_text("{}\n")
-    (root / "data/hooked").symlink_to("../scripts/ci-alert.mjs")
+    (root / "data/hooked").symlink_to("../scripts/kept.mjs")
     _git(root, "add", "-A")
     _git(root, "commit", "-m", "base")
     base = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
@@ -265,10 +265,10 @@ def _attack_manifest(tmp_path: Path, base: str, paths: list[dict], blobs: dict[s
 
 def test_apply_candidate_rejects_paths_that_can_overwrite_code(tmp_path):
     root, base = _script_repo(tmp_path)
-    script = root / "scripts/ci-alert.mjs"
+    script = root / "scripts/kept.mjs"
     outside = tmp_path / "abs-target.mjs"
     attacks = [
-        ([{"path": "./scripts/ci-alert.mjs", "status": "M"}], {"scripts/ci-alert.mjs": "pwned\n"}),
+        ([{"path": "./scripts/kept.mjs", "status": "M"}], {"scripts/kept.mjs": "pwned\n"}),
         ([{"path": "data/../scripts/x", "status": "M"}], {"scripts/x": "pwned\n"}),
         ([{"path": str(outside), "status": "M"}], {}),
         ([{"path": "data/hooked", "status": "M"}], {"data/hooked": "pwned\n"}),
@@ -360,11 +360,9 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     assert replay_steps[0]["with"]["ref"] == "${{ github.event_name == 'push' && github.sha || 'main' }}"
     select = next(step for step in replay_steps if step.get("id") == "source")
     assert "rehearsal_drill.py select" in select["run"]
-    keeper = [step for step in replay_steps if "ci-alert.mjs" in step.get("run", "")]
-    assert len(keeper) == 1
-    assert keeper[0]["if"] == "${{ failure() && github.event_name == 'push' }}"
-    assert keeper[0]["env"]["TELEGRAM_BOT_TOKEN"] == "${{ secrets.TELEGRAM_BOT_TOKEN }}"
-    assert keeper[0]["env"]["ALERT_CHAT_ID"] == "${{ secrets.ALERT_TG_CHAT_ID }}"
+    # A red replay stays red here. This workflow must not send its own alarm.
+    assert "ci-alert.mjs" not in replay_text
+    assert "TELEGRAM" not in replay_text
     assert "continue-on-error" not in replay_text
     by_id = {step["id"]: step for step in replay_steps if "id" in step}
     oracle = by_id["oracle"]
@@ -379,25 +377,17 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
         assert f"steps.{key}.outputs.outcome" in verdict["env"][key.upper()]
 
 
-def test_ci_on_main_alerts_the_keeper_from_the_existing_secrets():
+def test_ci_on_main_does_not_page_from_the_workflow():
+    """web-ci and python-ci stay red. These workflow files do not send a message."""
     root = Path(__file__).resolve().parent.parent
-    for name, needed in (("web-ci", "build-test-verify"), ("python-ci", "test")):
-        body = yaml.safe_load((root / ".github/workflows" / f"{name}.yml").read_text())
-        alert = body["jobs"]["alert"]
-        assert alert["needs"] == needed
-        assert "always()" in alert["if"]
-        assert f"needs.{needed}.result == 'failure'" in alert["if"]
-        assert "refs/heads/main" in alert["if"]
-        assert "workflow_run.head_branch == 'main'" in alert["if"]
-        assert alert["permissions"] == {"contents": "read", "actions": "read"}
-        step = alert["steps"][-1]
-        assert step["run"] == "node scripts/ci-alert.mjs"
-        assert step["env"]["TELEGRAM_BOT_TOKEN"] == "${{ secrets.TELEGRAM_BOT_TOKEN }}"
-        assert step["env"]["ALERT_CHAT_ID"] == "${{ secrets.ALERT_TG_CHAT_ID }}"
-        assert "secrets." not in step["run"]
-        uses = [item.get("uses", "") for item in alert["steps"]]
-        assert "actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5" in uses
-        assert "actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020" in uses
+    for name, job in (("web-ci", "build-test-verify"), ("python-ci", "test")):
+        path = root / ".github/workflows" / f"{name}.yml"
+        text = path.read_text()
+        body = yaml.safe_load(text)
+        assert job in body["jobs"]
+        assert "alert" not in body["jobs"]
+        assert "ci-alert.mjs" not in text
+        assert "TELEGRAM" not in text
 
 
 @pytest.fixture

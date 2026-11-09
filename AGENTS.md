@@ -2,7 +2,7 @@
 
 ## Commands
 - Python: `PYTHONPATH=. .venv/bin/pytest tests/` (CI mirrors with requirements-dev.txt).
-- Web: `cd web && npm run verify` = `test:run && test:data && build && check (check-dist) && card-b-consistency && badge-dist`. There is no astro check.
+- Web: `cd web && npm run verify` = `npm run test:run && npm run test:data && npm run build && npm run check && node scripts/card-b-consistency.mjs && node scripts/badge-dist.mjs` (`web/package.json`). `npm run check` is `node scripts/check-dist.mjs`.
 - Prod sensors are dependency-free Node: `node --test scripts/*.test.mjs`.
 
 ## Hard rules (CI fails loudly on each)
