@@ -1,8 +1,4 @@
 import { createHash } from 'node:crypto';
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { expect, it } from 'vitest';
 import { publicDropped } from './public_dropped';
 import { hasSnapshotArtifact, readSnapshotArtifactRaw, snapshots } from './archive';
@@ -12,12 +8,7 @@ import { userHandleIndex } from './person_free';
 import { GET } from '../pages/snapshots/[date]/dropped.json';
 
 // Real personal handles come from the data at run time; none is written in this file.
-const diskRegistry = JSON.parse(readFileSync(new URL('../../../etl/owner_types.json', import.meta.url), 'utf8'));
 const userIndex = userHandleIndex(ownerTypes);
-
-// Invented login, checked absent from the owner registry before use.
-const FAKE_OWNER = 'zzdroppedfixture';
-const FAKE_REPO = `${FAKE_OWNER}/zznotarepo`;
 
 it('projects every actual archive without a User-type owner handle', async () => {
   const dates = snapshots.filter((snapshot) => hasSnapshotArtifact(snapshot.snapshot_date, 'dropped.json'));
@@ -33,47 +24,5 @@ it('projects every actual archive without a User-type owner handle', async () =>
     expect(JSON.stringify(projected)).not.toContain('"github_repo"');
     expect(handleHits(JSON.stringify(projected), userIndex)).toEqual([]);
     expect(readSnapshotArtifactRaw(date, 'dropped.json')!.equals(raw)).toBe(true);
-  }
-});
-it('check-dist rejects a raw dropped.json that still carries an invented User handle', () => {
-  expect(JSON.stringify(diskRegistry).toLowerCase()).not.toContain(FAKE_OWNER);
-  const fixture = mkdtempSync(join(tmpdir(), 'evx-archive-dropped-'));
-  try {
-    const dist = join(fixture, 'dist');
-    const data = join(fixture, 'data');
-    const date = '2026-09-26';
-    const archive = join(dist, 'snapshots', date);
-    mkdirSync(archive, { recursive: true });
-    mkdirSync(join(data, 'snapshots'), { recursive: true });
-    writeFileSync(join(data, 'latest.json'), JSON.stringify({ snapshot_date: date }));
-    const path = join(archive, 'dropped.json');
-    const raw = Buffer.from(JSON.stringify({
-      v: 'dropped_1',
-      snapshot_date: date,
-      note: 'synthetic fixture',
-      dropped: [{
-        entity_id: 'e_FIXTURE',
-        github_repo: FAKE_REPO,
-        previously_tracked: true,
-        reason: `no record for ${FAKE_REPO}`,
-      }],
-    }));
-    writeFileSync(path, raw);
-    const run = () => spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
-      encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },
-    });
-    const broken = run();
-    expect(broken.error).toBeUndefined();
-    expect(broken.status).toBe(1);
-    expect(broken.stderr).toContain(`snapshots/${date}/dropped.json: missing projection person_free_dropped_1`);
-    expect(broken.stderr).toContain(`snapshots/${date}/dropped.json: contains github_repo`);
-    expect(readFileSync(path, 'utf8').toLowerCase()).toContain(FAKE_OWNER);
-    writeFileSync(path, JSON.stringify(publicDropped(raw, ownerTypes)));
-    const repaired = run();
-    expect(repaired.stderr).not.toContain(`snapshots/${date}/dropped.json:`);
-    expect(readFileSync(path, 'utf8').toLowerCase()).not.toContain('"github_repo"');
-    expect(readFileSync(path, 'utf8')).toContain('person_free_dropped_1');
-  } finally {
-    rmSync(fixture, { recursive: true, force: true });
   }
 });

@@ -1,20 +1,9 @@
 import { createHash } from 'node:crypto';
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { expect, it } from 'vitest';
 import { publicProvenance } from './public_provenance';
 import { snapshots, readSnapshotArtifactRaw } from './archive';
 import { ownerTypes } from './data';
-import handles from '../data/person-free-handles.json';
-import { registryClassification } from './person_free';
 import { GET } from '../pages/snapshots/[date]/provenance.json';
-
-// Real personal handles come from the data at run time; none is written in this file.
-const [userRepo] = Object.entries(ownerTypes.repos).find(([, entry]) => entry.owner_type === 'User')!;
-const userLogin = userRepo.split('/')[0];
-const bannedHandle = (handles as string[])[0];
 
 it('projects every actual archive without rewriting raw bytes or losing measurements', async () => {
   for (const snapshot of snapshots) {
@@ -35,73 +24,5 @@ it('projects every actual archive without rewriting raw bytes or losing measurem
     expect(projected.source_manifest.github_repo_refs).toHaveLength(source.source_manifest.github_repos.length);
     expect(projected.source_manifest).not.toHaveProperty('github_repos');
     expect(readSnapshotArtifactRaw(date, 'provenance.json')!.equals(raw)).toBe(true);
-  }
-});
-it.each([['ban-list handle', bannedHandle], ['registry personal owner', userLogin]])(
-  'check-dist rejects a %s in archived provenance', (_kind, owner) => {
-    const fixture = mkdtempSync(join(tmpdir(), 'evx-archive-provenance-'));
-    try {
-      const dist = join(fixture, 'dist');
-      const data = join(fixture, 'data');
-      const date = '2026-09-26';
-      const archive = join(dist, 'snapshots', date);
-      mkdirSync(archive, { recursive: true });
-      mkdirSync(join(data, 'snapshots'), { recursive: true });
-      writeFileSync(join(data, 'latest.json'), JSON.stringify({ snapshot_date: date }));
-      const path = join(archive, 'provenance.json');
-      const raw = readSnapshotArtifactRaw(date, 'provenance.json')!;
-      const projected = publicProvenance(raw, ownerTypes);
-      writeFileSync(path, JSON.stringify({ ...projected, injected: owner }));
-      const run = () => spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
-        encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },
-      });
-      const broken = run();
-      expect(broken.error).toBeUndefined();
-      expect(broken.status).toBe(1);
-      expect(broken.stderr).toMatch(new RegExp(`snapshots/${date}/provenance\\.json: rule=f hash=[0-9a-f]{8} contains private repository owner`));
-      expect(broken.stderr.toLowerCase()).not.toContain(owner.toLowerCase());
-      // The minimal fixture omits site routes; isolate the privacy failure from those.
-      writeFileSync(path, JSON.stringify(projected));
-      const repaired = run();
-      expect(repaired.stderr).not.toContain(`snapshots/${date}/provenance.json:`);
-      expect(readFileSync(path, 'utf8').toLowerCase()).not.toContain(owner.toLowerCase());
-    } finally {
-      rmSync(fixture, { recursive: true, force: true });
-    }
-  },
-);
-
-// 2026-11-01: an Organization handed a repository to a person. Its name is not banned,
-// so the exact old path must be, in archived provenance too and after repeated encoding.
-const stalePaths = [...registryClassification(ownerTypes).stalePaths];
-it.runIf(stalePaths.length > 0)('check-dist rejects the old path of every repository a person owns today', () => {
-  const fixture = mkdtempSync(join(tmpdir(), 'evx-stale-provenance-'));
-  try {
-    const dist = join(fixture, 'dist');
-    const data = join(fixture, 'data');
-    const date = '2026-09-26';
-    const archive = join(dist, 'snapshots', date);
-    mkdirSync(archive, { recursive: true });
-    mkdirSync(join(data, 'snapshots'), { recursive: true });
-    writeFileSync(join(data, 'latest.json'), JSON.stringify({ snapshot_date: date }));
-    const path = join(archive, 'provenance.json');
-    const projected = publicProvenance(readSnapshotArtifactRaw(date, 'provenance.json')!, ownerTypes);
-    const twice = (value: string) => encodeURIComponent(encodeURIComponent(value));
-    writeFileSync(path, JSON.stringify({ ...projected, injected: stalePaths, injected_twice: stalePaths.map(twice) }));
-    const run = spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
-      encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },
-    });
-    expect(run.status).toBe(1);
-    // Count, not paths: a failing run must not print personal locators into the CI log.
-    const hits = run.stderr.split('\n').filter((line) => line.includes(`snapshots/${date}/provenance.json: rule=d hash=`));
-    expect(hits.length).toBe(stalePaths.length);
-    for (const path of stalePaths) expect(run.stderr.toLowerCase()).not.toContain(path);
-    writeFileSync(path, JSON.stringify({ ...projected, injected_twice: stalePaths.map(twice) }));
-    const encodedOnly = spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
-      encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },
-    });
-    expect(encodedOnly.stderr.split('\n').filter((line) => line.includes('contains stale repository path')).length).toBe(stalePaths.length);
-  } finally {
-    rmSync(fixture, { recursive: true, force: true });
   }
 });

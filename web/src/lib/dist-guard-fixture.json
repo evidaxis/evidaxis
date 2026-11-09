@@ -1,0 +1,9 @@
+{
+  "schema_version": "owner_types_1",
+  "repos": {
+    "acme-labs/widget": { "owner_type": "Organization", "repo_id": 101, "full_name": "acme-labs/widget" },
+    "fixtureperson/sampletool": { "owner_type": "User", "repo_id": 102, "full_name": "fixtureperson/sampletool" },
+    "oldorg/gadget": { "owner_type": "User", "repo_id": 103, "full_name": "fixtureperson/gadget" },
+    "fixtureperson/legacy": { "owner_type": "Organization", "repo_id": 104, "full_name": "acme-labs/legacy" }
+  }
+}

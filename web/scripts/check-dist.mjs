@@ -263,8 +263,13 @@ for (const pair of CANARY.pairs ?? []) {
 
 // 0. Person-free repository publication is fail-closed. The internal id-map key
 // remains stable, while public output uses the canonical repository identity.
-const ID_MAP = JSON.parse(readFileSync(new URL('../../etl/id_map.json', import.meta.url), 'utf8'));
-const OWNER_TYPES = JSON.parse(readFileSync(new URL('../../etl/owner_types.json', import.meta.url), 'utf8'));
+// EVIDAXIS_ETL_DIR lets a hermetic test pass a fictional registry. Unset, this
+// stays the repository etl/ the publication guard already reads.
+const ETL_DIR = process.env.EVIDAXIS_ETL_DIR
+  ? resolve(process.env.EVIDAXIS_ETL_DIR)
+  : new URL('../../etl/', import.meta.url).pathname;
+const ID_MAP = JSON.parse(readFileSync(join(ETL_DIR, 'id_map.json'), 'utf8'));
+const OWNER_TYPES = JSON.parse(readFileSync(join(ETL_DIR, 'owner_types.json'), 'utf8'));
 const registry = OWNER_TYPES?.repos;
 if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   || JSON.stringify(Object.keys(OWNER_TYPES).sort()) !== JSON.stringify(['repos', 'schema_version'])
@@ -294,8 +299,8 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
   }
 
   // Key check stays on the file: project accounts become Organization only in memory.
-  const accountsUrl = new URL('../../etl/project_accounts.json', import.meta.url);
-  const accountDoc = existsSync(accountsUrl) ? JSON.parse(readFileSync(accountsUrl, 'utf8')) : {};
+  const accountsPath = join(ETL_DIR, 'project_accounts.json');
+  const accountDoc = existsSync(accountsPath) ? JSON.parse(readFileSync(accountsPath, 'utf8')) : {};
   const accounts = accountDoc && typeof accountDoc.accounts === 'object' && !Array.isArray(accountDoc.accounts)
     ? (accountDoc.accounts ?? {})
     : {};
