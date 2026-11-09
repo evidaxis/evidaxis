@@ -1,9 +1,10 @@
 # Release clock
 
-Dependency-free Cloudflare Worker on the Free plan. Four UTC cron triggers:
+Dependency-free Cloudflare Worker on the Free plan. Five UTC cron triggers:
 Saturday 02:17 (release), 04:17 and 06:47 (retry if no active or successful run),
-Wednesday 02:17 (rehearsal for the next Saturday). The GitHub 06:17 Saturday
-cron remains the fallback. No HTTP dispatch endpoint, KV, or durable state.
+Wednesday 02:17 (rehearsal for the next Saturday, D+3) and Friday 02:17 (second
+rehearsal for that Saturday, D+1). The GitHub 06:17 Saturday cron remains the
+fallback. No HTTP dispatch endpoint, KV, or durable state.
 
 Every tick lists all matching weekly runs on the configured branch. Queued,
 pending, waiting, in-progress and successful attempts prevent dispatch. A failed
@@ -24,6 +25,13 @@ For dated successes, observers also read Jobs API: a skipped `snapshot` job or
 skipped `Collect snapshot (keyed OpenAlex; capture pass + completeness gate)`
 step means the guard admitted no collection. Such a green no-op cannot clear
 an earlier release failure. Unavailable job evidence is unknown, never success.
+
+Friday keeps the same rehearsal title as Wednesday. Wednesday and the Saturday
+ticks still match it across the whole listed history, so a manual rehearsal
+created before Wednesday still blocks the Wednesday tick. Friday counts a run
+only when `created_at` is at or after 00:00 UTC on the tick's own calendar day.
+A matching run with no parseable `created_at` is incomplete data and stops the
+tick. The tick does not treat that run as absent and does not dispatch.
 
 The workflow serializes both modes by date, rechecks the archive after waiting
 for `data-commits`, and refuses a new release outside main. Rehearsal uses the

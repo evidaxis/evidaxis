@@ -1,7 +1,8 @@
-import { findRuns, needsDispatch, tick, validDispatchToken } from './logic.mjs';
+import { createdOnOrAfter, findRuns, needsDispatch, tick, validDispatchToken } from './logic.mjs';
 
 export async function runTick(controller, env, fetcher = fetch, pause = ms => new Promise(resolve => setTimeout(resolve, ms))) {
   const inputs = tick(controller.cron, controller.scheduledTime);
+  const since = createdOnOrAfter(controller.cron, controller.scheduledTime);
   // Header construction can echo malformed values in exceptions; reject before any fetch.
   if (!validDispatchToken(env.GH_DISPATCH_TOKEN)) throw new Error('GH_DISPATCH_TOKEN has invalid format');
   if (inputs.mode === 'release' && env.GH_REF !== 'main') throw new Error('release requires main');
@@ -32,7 +33,7 @@ export async function runTick(controller, env, fetcher = fetch, pause = ms => ne
     }
   }
   const before = await listRuns();
-  if (!needsDispatch(before, inputs, env.GH_REF)) {
+  if (!needsDispatch(before, inputs, env.GH_REF, since)) {
     console.log(JSON.stringify({ ...inputs, outcome: 'already_present' }));
     return;
   }
@@ -47,7 +48,7 @@ export async function runTick(controller, env, fetcher = fetch, pause = ms => ne
   // Three observations over 20 seconds allow for GitHub's asynchronous dispatch indexing.
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt) await pause(10000);
-    const appeared = findRuns(await listRuns(), inputs, env.GH_REF).find(run => !oldIds.has(run.id));
+    const appeared = findRuns(await listRuns(), inputs, env.GH_REF, since).find(run => !oldIds.has(run.id));
     if (appeared) {
       console.log(JSON.stringify({ ...inputs, outcome: 'run_observed', run_id: appeared.id, status: appeared.status }));
       return;

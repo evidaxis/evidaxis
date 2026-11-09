@@ -406,10 +406,11 @@ test('a dispatch inside a clock tick window is the clock, not a person', async (
   const { clockTicks, clockDispatch } = await import('./release-scorecard.mjs');
   const { readFileSync } = await import('node:fs');
   const list = clockTicks(readFileSync(new URL('../infra/clock/wrangler.toml', import.meta.url), 'utf8'));
-  assert.deepEqual(list.map(t => `${t.day} ${t.hour}:${t.min}`), ['SAT 2:17', 'SAT 4:17', 'SAT 6:47', 'WED 2:17']);
+  assert.deepEqual(list.map(t => `${t.day} ${t.hour}:${t.min}`), ['SAT 2:17', 'SAT 4:17', 'SAT 6:47', 'WED 2:17', 'FRI 2:17']);
   assert.equal(clockDispatch('2026-10-24T02:19:05Z', list), true);
   assert.equal(clockDispatch('2026-10-24T06:50:00Z', list), true);
   assert.equal(clockDispatch('2026-10-24T03:30:00Z', list), false);
   assert.equal(clockDispatch('2026-10-22T02:19:00Z', list), false);
   assert.equal(clockDispatch('2026-10-21T02:20:00Z', list), true);
+  assert.equal(clockDispatch('2026-11-13T02:19:00Z', list), true);
 });

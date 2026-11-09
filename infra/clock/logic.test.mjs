@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { tick, findRuns, needsDispatch, validDispatchToken } from './logic.mjs';
+import { tick, createdOnOrAfter, findRuns, needsDispatch, validDispatchToken } from './logic.mjs';
 import worker, { runTick } from './worker.js';
 
 const release = { mode: 'release', release_date: '2026-10-24' };
@@ -91,6 +91,93 @@ test('pagination finds a queued run beyond the first page', async () => {
       ? [{ ...run, display_title: 'weekly release 2026-10-17' }] : [run] });
   });
   assert.equal(calls, 2);
+});
+
+test('Friday rehearsal targets the next Saturday and must fall on Friday', () => {
+  const when = Date.parse('2026-11-13T02:17:00Z');
+  assert.deepEqual(tick('17 2 * * FRI', when), { mode: 'rehearsal', release_date: '2026-11-14' });
+  assert.deepEqual(tick('17 2 * * FRI', Date.parse('2027-01-01T02:17:00Z')),
+    { mode: 'rehearsal', release_date: '2027-01-02' });
+  assert.equal(createdOnOrAfter('17 2 * * FRI', when), Date.parse('2026-11-13T00:00:00Z'));
+  assert.equal(createdOnOrAfter('17 2 * * WED', Date.parse('2026-11-11T02:17:00Z')), undefined);
+  assert.equal(createdOnOrAfter('17 2 * * SAT', controller.scheduledTime), undefined);
+  assert.throws(() => tick('17 2 * * FRI', Date.parse('2026-11-11T02:17:00Z')),
+    { message: 'cron weekday mismatch' });
+});
+
+test('Friday counts only runs created on its own UTC day', () => {
+  const when = Date.parse('2026-11-13T02:17:00Z');
+  const inputs = tick('17 2 * * FRI', when);
+  const since = createdOnOrAfter('17 2 * * FRI', when);
+  const wednesday = {
+    id: 1, display_title: 'weekly rehearsal 2026-11-14', head_branch: 'main',
+    status: 'completed', conclusion: 'success', created_at: '2026-11-11T02:17:00Z',
+  };
+  assert.equal(needsDispatch([wednesday], inputs, 'main', since), true);
+  assert.equal(needsDispatch([{ ...wednesday, created_at: '2026-11-12T23:59:59Z' }], inputs, 'main', since), true);
+  for (const state of [
+    { status: 'queued', conclusion: null },
+    { status: 'in_progress', conclusion: null },
+    { status: 'completed', conclusion: 'success' },
+  ]) {
+    assert.equal(needsDispatch([
+      wednesday,
+      { ...wednesday, id: 2, ...state, created_at: '2026-11-13T00:00:00Z' },
+    ], inputs, 'main', since), false);
+  }
+  assert.equal(needsDispatch([
+    { ...wednesday, status: 'completed', conclusion: 'failure', created_at: '2026-11-13T02:17:00Z' },
+  ], inputs, 'main', since), true);
+  assert.throws(() => needsDispatch([{ ...wednesday, created_at: undefined }], inputs, 'main', since),
+    { message: 'incomplete data' });
+  assert.equal(needsDispatch([
+    { display_title: 'weekly release 2026-11-14', head_branch: 'main', status: 'completed', conclusion: 'success' },
+  ], inputs, 'main', since), true);
+});
+
+test('a successful Wednesday rehearsal does not block Friday', async () => {
+  let posts = 0;
+  const wednesday = {
+    id: 1, display_title: 'weekly rehearsal 2026-11-14', head_branch: 'main',
+    status: 'completed', conclusion: 'success', created_at: '2026-11-11T02:17:00Z',
+  };
+  const friday = { ...wednesday, id: 2, status: 'queued', conclusion: null, created_at: '2026-11-13T02:17:05Z' };
+  await runTick({ cron: '17 2 * * FRI', scheduledTime: Date.parse('2026-11-13T02:17:00Z') }, env,
+    async (url, options) => {
+      if (options.method === 'POST') {
+        posts++;
+        assert.deepEqual(JSON.parse(options.body).inputs, { mode: 'rehearsal', release_date: '2026-11-14' });
+        return new Response(null, { status: 204 });
+      }
+      return Response.json({ total_count: posts ? 2 : 1, workflow_runs: posts ? [wednesday, friday] : [wednesday] });
+    }, async () => {});
+  assert.equal(posts, 1);
+});
+
+test('an active or successful Friday run blocks another Friday dispatch', async () => {
+  for (const state of [
+    { status: 'in_progress', conclusion: null },
+    { status: 'completed', conclusion: 'success' },
+  ]) {
+    let posts = 0;
+    await runTick({ cron: '17 2 * * FRI', scheduledTime: Date.parse('2026-11-13T02:17:00Z') }, env,
+      async (url, options) => {
+        if (options.method === 'POST') { posts++; return new Response(null, { status: 204 }); }
+        return Response.json({ total_count: 1, workflow_runs: [{
+          id: 2, display_title: 'weekly rehearsal 2026-11-14', head_branch: 'main',
+          created_at: '2026-11-13T01:00:00Z', ...state,
+        }] });
+      }, async () => {});
+    assert.equal(posts, 0);
+  }
+});
+
+test('Friday refuses a matching run that has no created_at', async () => {
+  await assert.rejects(runTick({ cron: '17 2 * * FRI', scheduledTime: Date.parse('2026-11-13T02:17:00Z') }, env,
+    async () => Response.json({ total_count: 1, workflow_runs: [{
+      id: 1, display_title: 'weekly rehearsal 2026-11-14', head_branch: 'main',
+      status: 'completed', conclusion: 'success',
+    }] })), { message: 'incomplete data' });
 });
 
 test('a manual rehearsal before Wednesday still prevents another dispatch', async () => {
