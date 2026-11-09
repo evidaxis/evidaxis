@@ -10,19 +10,47 @@
 // so the guard failed every build without finding a single real handle.
 // Keep known personal owners banned after a transfer or cache change. The HF
 // exporter reads the same data; removal requires a deliberate, reviewed record.
+import { readFileSync, readdirSync } from 'node:fs';
+import { createHash, randomBytes } from 'node:crypto';
+import { join } from 'node:path';
+import { REPO_ROOT } from './path-policy.mjs';
 import floorHandles from '../data/person-free-handles.json' with { type: 'json' };
 export const FLOOR_HANDLES = Object.freeze(floorHandles);
 
-export function buildHandleIndex(handles) {
+let vocabulary;
+export function templateWords() {
+  if (!vocabulary) {
+    vocabulary = new Set();
+    const walk = dir => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const path = join(dir, entry.name);
+        if (entry.isDirectory()) walk(path);
+        else if (/\.(astro|ts)$/.test(entry.name) && !entry.name.includes('.test.')) {
+          for (const token of readFileSync(path, 'utf8').toLowerCase().match(/[a-z0-9]+(?:-[a-z0-9]+)*/g) ?? []) vocabulary.add(token);
+        }
+      }
+    };
+    // Template source only: never derive ordinary words from the owner registry.
+    // REPO_ROOT is stable for source modules and Astro's dist/chunks modules.
+    walk(join(REPO_ROOT, 'web/src'));
+  }
+  return vocabulary;
+}
+
+export function buildHandleIndex(handles, templateVocabulary = templateWords()) {
   const all = new Set();
   const words = new Set();
+  const contextOnly = new Set();
   for (const handle of handles) {
     const key = String(handle || '').trim().toLowerCase();
     if (!key) continue;
     all.add(key);
-    if (key.length >= 4 && !/^\d+$/.test(key)) words.add(key);
+    // Rule f exempts distinctive template words, not exact short field values.
+    if (key.length >= 4 && !/^\d+$/.test(key)) {
+      (templateVocabulary.has(key) ? contextOnly : words).add(key);
+    }
   }
-  return { all, words };
+  return { all, words, contextOnly };
 }
 
 const SLUG = /(?<![a-z0-9_.-])([a-z0-9][a-z0-9-]{0,38})(?=\/)/g;
@@ -96,32 +124,54 @@ export function staleSlugHits(text, staleSlugs, canonicalPaths) {
   return [...hits];
 }
 
-// Personal handles of a registry (etl/owner_types.json "repos", after applyProjectAccounts):
-// the canonical owner of every User row, plus the stored owner of a moved User row unless
-// that login is an Organization today. Same rule as scripts/person_free.py load_handle_index:
-// an Organization that handed one repository to a person is not personal data.
-export function personalOwnerHandles(registry) {
-  const entries = Object.entries(registry || {}).filter(([, entry]) => entry && typeof entry.full_name === 'string');
-  const orgOwners = new Set(entries.filter(([, entry]) => entry.owner_type === 'Organization')
-    .map(([, entry]) => entry.full_name.split('/')[0].toLowerCase()));
-  const handles = new Set();
+// Rules a-e. The same pure classifier is exercised by the Python/JS vectors.
+export function classifyRegistry(registry, accounts = {}, floor = []) {
+  const entries = Object.entries(registry ?? {}).filter(([, entry]) => entry && typeof entry.full_name === 'string');
+  const organizations = new Set(Object.keys(accounts).map(owner => owner.toLowerCase()));
+  for (const [, entry] of entries) if (entry.owner_type === 'Organization') organizations.add(entry.full_name.split('/')[0].toLowerCase());
+  const handles = new Set(floor.filter(Boolean).map(owner => String(owner).trim().toLowerCase()));
   for (const [stored, entry] of entries) {
-    if (entry.owner_type !== 'User') continue;
-    handles.add(entry.full_name.split('/')[0].toLowerCase());
-    const storedOwner = stored.split('/')[0].toLowerCase();
-    if (!orgOwners.has(storedOwner)) handles.add(storedOwner);
+    const current = entry.full_name.split('/')[0].toLowerCase();
+    const former = stored.split('/')[0].toLowerCase();
+    if (entry.owner_type === 'User') handles.add(current);
+    if (former !== current) handles.add(former);
   }
-  return [...handles];
+  for (const owner of organizations) handles.delete(owner);
+  const stalePaths = new Set(), personalPaths = new Set(), canonicalPaths = new Set(), publicRepos = new Set();
+  for (const [stored, entry] of entries) {
+    const path = entry.full_name.toLowerCase();
+    const current = path.split('/')[0], former = stored.split('/')[0].toLowerCase();
+    if (organizations.has(current)) { publicRepos.add(stored); canonicalPaths.add(path); }
+    if (handles.has(current)) { personalPaths.add(path); personalPaths.add(stored.toLowerCase()); }
+    if (former !== current && (handles.has(former) || handles.has(current))) {
+      stalePaths.add(stored.toLowerCase()); personalPaths.add(stored.toLowerCase());
+    }
+  }
+  return { handles, organizations, stalePaths, personalPaths, canonicalPaths, publicRepos };
 }
 
-// Stored paths of repositories a person owns today under another owner. GitHub redirects
-// them to the personal repository, so each is a personal locator even when the former
-// owner is a public Organization whose name personalOwnerHandles leaves unbanned.
-export function personalStalePaths(registry) {
-  return Object.entries(registry || {})
-    .filter(([stored, entry]) => entry?.owner_type === 'User' && typeof entry.full_name === 'string'
-      && stored.split('/')[0].toLowerCase() !== entry.full_name.split('/')[0].toLowerCase())
-    .map(([stored]) => stored.toLowerCase());
+export const personalOwnerHandles = registry => [...classifyRegistry(registry).handles];
+export const personalStalePaths = registry => [...classifyRegistry(registry).stalePaths];
+
+export function validOwnerEntry(entry) {
+  return !!entry && ['Organization', 'User'].includes(entry.owner_type)
+    && Number.isInteger(entry.repo_id) && entry.repo_id > 0
+    && typeof entry.full_name === 'string' && /^[^/]+\/[^/]+$/.test(entry.full_name);
+}
+
+export function revealsHandleText(text, index) {
+  if (!text) return false;
+  const exact = lenientDecoded(text).trim().toLowerCase();
+  return (index.all.has(exact) && !index.contextOnly?.has(exact)) || handleHitsDecoded(text, index).length > 0;
+}
+
+const diagnosticSalt = randomBytes(32);
+export function privacyDiagnostic(path, rule, value, index) {
+  const digest = text => createHash('sha256').update(diagnosticSalt).update('\0').update(text.toLowerCase()).digest('hex').slice(0, 8);
+  const privatePath = (index && revealsHandleText(path, index))
+    || (rule === 'd' && lenientDecoded(path).toLowerCase().includes(value.toLowerCase()));
+  const safePath = privatePath ? `[path:${digest(path)}]` : path;
+  return `${safePath}: rule=${rule} hash=${digest(value)}`;
 }
 
 // A listed User account that is a project's identity is published like an Organization.

@@ -162,6 +162,6 @@ describe('personalStalePaths', () => {
       'a-person/same': entry('User', 'a-person/same', 4),
       'old-person/tool': entry('Organization', 'new-lab/tool', 5),
     };
-    expect(personalStalePaths(registry).sort()).toEqual(['big-org/given', 'gone-person/moved']);
+    expect(personalStalePaths(registry).sort()).toEqual(['big-org/given', 'gone-person/moved', 'old-person/tool']);
   });
 });

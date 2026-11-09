@@ -79,16 +79,17 @@ def test_hf_handle_is_caught_and_a_clean_candidate_is_not(tmp_path, monkeypatch)
     monkeypatch.setattr(hf, "SNAPSHOTS", root / "data/snapshots")
     monkeypatch.setattr(hf, "CARD", card / "README.md")
     assert hf.main(["--date", "2026-10-17", "--dry-run"]) == 0
-    before_other = json.loads((root / "data/snapshots/2026-10-17/snapshot.json").read_text())["entities"][1]
+    before_entities = json.loads((root / "data/snapshots/2026-10-17/snapshot.json").read_text())["entities"]
     drill.apply_drill(root, "hf_handle", "2026-10-17")
     snap = json.loads((root / "data/snapshots/2026-10-17/snapshot.json").read_text())
-    assert snap["entities"][0]["github_repo"] == "drill-person-handle/repo"
-    assert snap["entities"][1] == before_other
+    assert snap["drill_person_locator"] == drill.LEAKED_REPO
+    assert snap["entities"] == before_entities
     owners = json.loads((root / "etl/owner_types.json").read_text())["repos"]
     assert owners["acme/widget"]["owner_type"] == "Organization"
     user = owners["drill-person-handle/home"]
     assert user["owner_type"] == "User"
     assert user["full_name"].startswith("drill-person-handle/")
+    assert drill.LEAKED_REPO not in owners
     assert hf.main(["--date", "2026-10-17", "--dry-run"]) == 3
 
 

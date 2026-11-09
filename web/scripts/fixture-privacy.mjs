@@ -1,27 +1,28 @@
 import { createHash } from 'node:crypto';
-import { applyProjectAccounts, personalOwnerHandles } from '../src/lib/personFree.mjs';
+import { classifyRegistry, buildHandleIndex, FLOOR_HANDLES } from '../src/lib/personFree.mjs';
 
 // Maps exist only during generation. No source-to-surrogate dictionary is saved.
 export function fixtureAnonymizer(documents, registry, accounts, formerOwners = []) {
   const digest = value => createHash('sha256').update(value.toLowerCase()).digest('hex').slice(0, 16);
   const synthetic = (kind, value) => `fixture-${kind}-${digest(value)}`;
-  const projectOwners = new Set(Object.keys(accounts).map(owner => owner.toLowerCase()));
-  const owners = new Map(formerOwners.map(owner => [owner.toLowerCase(), synthetic('user', owner)]));
+  const classified = classifyRegistry(registry.repos, accounts, [...FLOOR_HANDLES, ...formerOwners]);
+  const index = buildHandleIndex(classified.handles);
+  const owners = new Map();
   // The shared rule keeps an Organization that handed one repository to a person public.
-  for (const owner of personalOwnerHandles(applyProjectAccounts(structuredClone(registry.repos), accounts))) {
+  for (const owner of classified.handles) {
     owners.set(owner, synthetic('user', owner));
   }
   const replacements = new Map();
   const personalRepo = value => typeof value === 'string' && owners.has(value.split('/')[0].toLowerCase());
   const personalRecord = value => {
     const entry = registry.repos[value];
-    return entry ? entry.owner_type === 'User' && !projectOwners.has(entry.full_name.split('/')[0].toLowerCase()) : personalRepo(value);
+    return entry ? !classified.publicRepos.has(value) : personalRepo(value);
   };
   for (const [repo, entry] of Object.entries(registry.repos)) {
     // The stored path of a repository a person owns today is personal even when its
     // former owner is a public Organization; it takes the current owner's surrogate.
     const current = owners.get(entry.full_name.split('/')[0].toLowerCase());
-    for (const path of [repo, entry.full_name]) if (personalRepo(path) || (personalRecord(repo) && current)) {
+    for (const path of [repo, entry.full_name]) if (classified.personalPaths.has(path.toLowerCase()) || personalRepo(path)) {
       replacements.set(path.toLowerCase(), `${owners.get(path.split('/')[0].toLowerCase()) ?? current}/${synthetic('repo', path)}`);
     }
   }
@@ -46,7 +47,7 @@ export function fixtureAnonymizer(documents, registry, accounts, formerOwners = 
   });
   // Distinctive handles also occur in titles, notes and provenance. Short handles
   // are replaced only as exact values or in account contexts, not ordinary prose.
-  for (const [owner, replacement] of owners) if (owner.length >= 4 && !/^\d+$/.test(owner)) replacements.set(owner, replacement);
+  for (const [owner, replacement] of owners) if (index.words.has(owner)) replacements.set(owner, replacement);
   const escaped = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   // Up to three encoding rounds, as many as the guards decode (lenientDecoded).
   for (const [source, replacement] of [...replacements]) {

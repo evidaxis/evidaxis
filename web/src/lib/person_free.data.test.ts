@@ -24,7 +24,8 @@ it('keeps the dist guard strict for a former personal owner outside GitHub paths
     // The tiny fixture omits site routes; assert the specific privacy failure.
     expect(result.error).toBeUndefined();
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain(`leak.json: contains private repository owner ${banned.toLowerCase()}`);
+    expect(result.stderr).toMatch(/leak\.json: rule=f hash=[0-9a-f]{8} contains private repository owner/);
+    expect(result.stderr.toLowerCase()).not.toContain(banned.toLowerCase());
     expect(result.stderr).not.toContain('safe.json:');
   } finally {
     rmSync(fixture, { recursive: true, force: true });

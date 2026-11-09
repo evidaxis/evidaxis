@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { REPO_ROOT, dataPath, repoDataPath, repoEtlPath, assertUnitPath } from './data-path';
 import type { Entity, Snapshot } from './data';
 import { applyProjectAccounts } from './personFree.mjs';
-import { neutralName, revealsHandle, type OwnerTypes } from './person_free';
+import { neutralName, revealsHandle, publicFields, type OwnerTypes } from './person_free';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -123,7 +123,7 @@ export function enumerateSnapshots(repoRoot = REPO_ROOT): Snapshot[] {
       }
       // Public projection at load: a name or slug that is a person's GitHub handle never
       // reaches a page, feed, badge or JSON twin (person_free.ts). Archive files stay canonical.
-      snap.entities = snap.entities.map((e) => revealsHandle(e.name, registry) || revealsHandle(e.slug, registry)
+      snap.entities = snap.entities.map(e => publicFields(e, registry)).map((e) => revealsHandle(e.name, registry) || revealsHandle(e.slug, registry)
         ? { ...e, name: neutralName(e.entity_id), slug: e.entity_id.toLowerCase() } : e);
       return snap;
     })

@@ -1,5 +1,5 @@
 import { snapshots, entityUniverse, provenanceForSnapshot, type ArchivedEntity } from '../archive';
-import { buildDepsMap, depsSeries, backfillSeries, ownerTypes, publicRepoLabel, publicRepoUrl, publicHomepage } from '../data';
+import { buildDepsMap, depsSeries, backfillSeries, ownerTypes, publicRepoLabel, publicRepoUrl, publicHomepage, publicOwnerType } from '../data';
 import { measurementStateFor } from '../measurement';
 import { userHandleIndex } from '../person_free';
 import { isTemplateB } from './policy.mjs';
@@ -57,7 +57,7 @@ export function contextFor(record: ArchivedEntity): Context {
     // are withheld even though the current archive may contain newer captures.
     backfill: backfillSeries(e.entity_id).filter(p => p.period <= snap.period),
     repoLabel: e.github_repo ? publicRepoLabel(e) : 'not linked', repoUrl: e.github_repo ? publicRepoUrl(e) : null,
-    repoApi: entry ? entry.owner_type === 'Organization' ? `https://api.github.com/repos/${entry.full_name}` : `https://api.github.com/repositories/${entry.repo_id}` : null,
+    repoApi: entry ? publicOwnerType(e) === 'Organization' ? `https://api.github.com/repos/${entry.full_name}` : `https://api.github.com/repositories/${entry.repo_id}` : null,
     homepage: e.github_repo ? publicHomepage(e) : null, bannedOwners,
     paperWorks: e.openalex_work_ids.map(id => ({ id, title: papersByDate.get(snap.snapshot_date)?.[e.entity_id]?.raw?.[id]?.title?.replace(/\u2014/g, '-') ?? null })),
   };

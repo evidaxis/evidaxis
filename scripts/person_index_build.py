@@ -26,7 +26,13 @@ import os
 import re
 import secrets
 import subprocess
+import sys
 from pathlib import Path
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+from scripts.person_free import classify_registry
 
 _LOGIN = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?")
 _COMMIT = re.compile(r"[0-9a-fA-F]{7,64}")
@@ -106,18 +112,12 @@ def project_logins(document: dict | list | None) -> set[str]:
 def registry_logins(document: dict | list | None, projects: set[str]) -> set[str]:
     if not isinstance(document, dict) or not isinstance(document.get("repos"), dict):
         raise BuildError("registry unreadable")
-    found: set[str] = set()
     for key, entry in document["repos"].items():
         if not isinstance(entry, dict) or entry.get("owner_type") not in _OWNER_TYPES:
             raise BuildError("registry unreadable")
-        if entry["owner_type"] != "User":
-            continue
-        login = _login_from_full_name(entry.get("full_name")) or _login_from_full_name(key)
-        if login is None:
+        if _login_from_full_name(entry.get("full_name")) is None or _login_from_full_name(key) is None:
             raise BuildError("registry unreadable")
-        if login not in projects:
-            found.add(login)
-    return found
+    return set(classify_registry(document["repos"], projects).handles)
 
 
 def _nodes(document: dict | list) -> list:
@@ -155,16 +155,16 @@ def _node_login(node: dict) -> tuple[str, str]:
 def current_logins(document: dict | list | None, projects: set[str]) -> set[str]:
     if document is None:
         raise BuildError("owners unreadable")
-    found: set[str] = set()
-    for node in _nodes(document):
+    registry = {}
+    for number, node in enumerate(_nodes(document)):
         if node is None:
             continue
         if not isinstance(node, dict):
             raise BuildError("owners unreadable")
         login, owner_type = _node_login(node)
-        if owner_type == "User" and login not in projects:
-            found.add(login)
-    return found
+        path = f"{login}/node-{number}"
+        registry[path] = {"owner_type": owner_type, "full_name": path}
+    return set(classify_registry(registry, projects).handles)
 
 
 def _inside(path: Path, root: Path) -> bool:

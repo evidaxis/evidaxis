@@ -58,7 +58,8 @@ it.each([['ban-list handle', bannedHandle], ['registry personal owner', userLogi
       const broken = run();
       expect(broken.error).toBeUndefined();
       expect(broken.status).toBe(1);
-      expect(broken.stderr).toContain(`snapshots/${date}/provenance.json: contains private repository owner ${owner.toLowerCase()}`);
+      expect(broken.stderr).toMatch(new RegExp(`snapshots/${date}/provenance\\.json: rule=f hash=[0-9a-f]{8} contains private repository owner`));
+      expect(broken.stderr.toLowerCase()).not.toContain(owner.toLowerCase());
       // The minimal fixture omits site routes; isolate the privacy failure from those.
       writeFileSync(path, JSON.stringify(projected));
       const repaired = run();
@@ -92,8 +93,9 @@ it.runIf(stalePaths.length > 0)('check-dist rejects the old path of every reposi
     });
     expect(run.status).toBe(1);
     // Count, not paths: a failing run must not print personal locators into the CI log.
-    const hits = run.stderr.split('\n').filter((line) => line.includes(`snapshots/${date}/provenance.json: contains stale repository path`));
+    const hits = run.stderr.split('\n').filter((line) => line.includes(`snapshots/${date}/provenance.json: rule=d hash=`));
     expect(hits.length).toBe(stalePaths.length);
+    for (const path of stalePaths) expect(run.stderr.toLowerCase()).not.toContain(path);
     writeFileSync(path, JSON.stringify({ ...projected, injected_twice: stalePaths.map(twice) }));
     const encodedOnly = spawnSync(process.execPath, ['scripts/check-dist.mjs'], {
       encoding: 'utf8', env: { ...process.env, EVIDAXIS_DIST: dist, EVIDAXIS_DATA_DIR: data },

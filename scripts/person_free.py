@@ -9,6 +9,9 @@ all-digit handles count only in an explicit GitHub context (``github.com/`` or
 from __future__ import annotations
 
 import json
+import hashlib
+import secrets
+from functools import lru_cache
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -36,19 +39,32 @@ FREE_TEXT_KEYS = frozenset({"note", "proxy", "description", "summary"})
 class HandleIndex:
     all: frozenset[str]
     words: frozenset[str]
+    context_only: frozenset[str] = frozenset()
 
 
-def build_handle_index(handles) -> HandleIndex:
+@lru_cache(maxsize=1)
+def template_words() -> frozenset[str]:
+    # Source vocabulary, never registry data: template words need GitHub context.
+    root = Path(__file__).resolve().parents[1] / "web" / "src"
+    return frozenset(token for path in root.rglob("*")
+                     if path.suffix in {".astro", ".ts"} and ".test." not in path.name
+                     for token in re.findall(r"[a-z0-9]+(?:-[a-z0-9]+)*", path.read_text().lower()))
+
+
+def build_handle_index(handles, template_vocabulary=None) -> HandleIndex:
+    vocabulary = template_words() if template_vocabulary is None else set(template_vocabulary)
     all_handles: set[str] = set()
     words: set[str] = set()
+    context_only: set[str] = set()
     for handle in handles:
         key = str(handle or "").strip().lower()
         if not key:
             continue
         all_handles.add(key)
+        # Rule f exempts distinctive template words, not exact short field values.
         if len(key) >= 4 and not key.isdigit():
-            words.add(key)
-    return HandleIndex(frozenset(all_handles), frozenset(words))
+            (context_only if key in vocabulary else words).add(key)
+    return HandleIndex(frozenset(all_handles), frozenset(words), frozenset(context_only))
 
 
 def handle_hits(text: str, index: HandleIndex) -> list[str]:
@@ -83,13 +99,16 @@ def handle_hits(text: str, index: HandleIndex) -> list[str]:
     return hits
 
 
-def reveals_handle(text: str | None, index: HandleIndex) -> bool:
+def reveals_handle(text: str | None, index: HandleIndex, classified=None) -> bool:
     if not text:
         return False
     # A whole value equal to a handle reveals it, short or all-digit ones included.
-    if str(text).strip().lower() in index.all:
+    decoded = lenient_decoded(str(text))
+    if decoded.strip().lower() in index.all - index.context_only:
         return True
-    return bool(handle_hits(text, index))
+    return bool(handle_hits(text, index) or handle_hits(decoded, index)
+                or (classified and stale_slug_hits(decoded.lower(), classified.stale_paths,
+                                                  classified.canonical_paths)))
 
 
 def lenient_decoded(text: str) -> str:
@@ -222,42 +241,106 @@ def load_owner_types(repo: Path, *, project_accounts: bool = True) -> dict:
     return apply_project_accounts(registry, load_project_accounts(repo)) if project_accounts else registry
 
 
-def load_handle_index(repo: Path, *, project_accounts: bool = True) -> tuple[HandleIndex, tuple[str, ...]]:
-    """Floor list plus every User owner: stored slug and canonical full_name owner.
+@dataclass(frozen=True)
+class RegistryClassification:
+    handles: frozenset[str]
+    organizations: frozenset[str]
+    stale_paths: frozenset[str]
+    personal_paths: frozenset[str]
+    canonical_paths: frozenset[str]
+    public_repos: frozenset[str]
 
-    A stored slug whose login is an Organization today is not a personal handle
-    (the site matches that case only as the exact stale ``owner/repo`` path).
-    Canonical User owners stay in the handle index either way.
-    """
-    floor = json.loads((repo / "web" / "src" / "data" / "person-free-handles.json").read_text(encoding="utf-8"))
-    registry = load_owner_types(repo, project_accounts=project_accounts)
-    org_owners: set[str] = set()
-    for stored, entry in registry.items():
-        if isinstance(entry, dict) and entry.get("owner_type") == "Organization":
-            full_name = entry.get("full_name") or stored
-            org_owners.add(str(full_name).split("/")[0].lower())
-    handles = list(floor)
-    stale: list[str] = []
-    for stored, entry in registry.items():
-        if not isinstance(entry, dict):
+
+def classify_registry(registry: dict, accounts=(), floor=()) -> RegistryClassification:
+    """Rules a-e. Inputs and outputs stay in memory; no identifier store is written."""
+    projects = {str(owner).lower() for owner in accounts}
+    entries = [(stored, entry) for stored, entry in registry.items()
+               if isinstance(entry, dict) and isinstance(entry.get("full_name"), str)]
+    organizations = {entry["full_name"].split("/")[0].lower() for _, entry in entries
+                     if entry.get("owner_type") == "Organization"} | projects
+    handles = {str(owner).strip().lower() for owner in floor if owner}
+    for stored, entry in entries:
+        current = entry["full_name"].split("/")[0].lower()
+        former = stored.split("/")[0].lower()
+        if entry.get("owner_type") == "User":
+            handles.add(current)
+        if former != current:
+            handles.add(former)
+    handles -= organizations
+    stale, personal, canonical, public = set(), set(), set(), set()
+    for stored, entry in entries:
+        path = entry["full_name"].lower()
+        current, former = path.split("/")[0], stored.split("/")[0].lower()
+        if current in organizations:
+            public.add(stored)
+            canonical.add(path)
+        if current in handles:
+            personal.add(path)
+            personal.add(stored.lower())
+        if former != current and (former in handles or current in handles):
+            stale.add(stored.lower())
+            personal.add(stored.lower())
+    return RegistryClassification(*(frozenset(s) for s in
+        (handles, organizations, stale, personal, canonical, public)))
+
+
+def load_classification(repo: Path, *, project_accounts: bool = True) -> RegistryClassification:
+    floor = json.loads((repo / "web/src/data/person-free-handles.json").read_text(encoding="utf-8"))
+    return classify_registry(load_owner_types(repo, project_accounts=project_accounts), floor=floor)
+
+
+def load_handle_index(repo: Path, *, project_accounts: bool = True) -> tuple[HandleIndex, tuple[str, ...]]:
+    classified = load_classification(repo, project_accounts=project_accounts)
+    return build_handle_index(classified.handles), tuple(sorted(classified.stale_paths))
+
+
+def stale_slug_hits(text, stale_paths, canonical_paths):
+    hits = []
+    for slug in stale_paths:
+        start = text.find(slug)
+        if start < 0:
             continue
-        full_name = str(entry.get("full_name") or stored)
-        # Same rule as web/scripts/check-dist.mjs: only an owner change leaves a
-        # stale owner/repo path. A rename under the same owner must not match as
-        # a prefix of the canonical path.
-        if stored.split("/")[0].lower() != full_name.split("/")[0].lower():
-            stale.append(stored.lower())
-        if entry.get("owner_type") != "User":
-            continue
-        handles.append(full_name.split("/")[0])
-        stored_owner = stored.split("/")[0]
-        if stored_owner.lower() not in org_owners:
-            handles.append(stored_owner)
-    return build_handle_index(handles), tuple(stale)
+        exemptions = [(path, offset) for path in canonical_paths
+                      for offset in range(len(path)) if path.startswith(slug, offset)]
+        while start >= 0:
+            if not any(start >= offset and text.startswith(path, start - offset)
+                       for path, offset in exemptions):
+                hits.append(slug)
+                break
+            start = text.find(slug, start + 1)
+    return hits
+
+
+_DIAGNOSTIC_SALT = secrets.token_bytes(32)
+
+
+def diagnostic(path: str, rule: str, value: str, index=None) -> str:
+    digest = lambda text: hashlib.sha256(_DIAGNOSTIC_SALT + b"\0" + text.lower().encode()).hexdigest()[:8]
+    if (index and reveals_handle(path, index)) or (rule == 'd' and value.lower() in lenient_decoded(path).lower()):
+        path = f"[path:{digest(path)}]"
+    return f"{path}: rule={rule} hash={digest(value)}"
+
+
+def safe_homepage(homepage, stored, entry, classified, index):
+    if not homepage:
+        return None
+    if stored in classified.public_repos and is_github_url(homepage):
+        return None if reveals_handle(entry['full_name'], index, classified) else f"https://github.com/{entry['full_name']}"
+    if not is_valid_url(homepage) or reveals_handle(homepage, index):
+        return None
+    decoded = lenient_decoded(homepage).lower()
+    owners = {stored.split('/')[0].lower(), entry['full_name'].split('/')[0].lower()}
+    if any(owner in decoded for owner in owners & index.all - index.context_only):
+        return None
+    if stored not in classified.public_repos and (is_github_url(homepage) or is_github_url(decoded)):
+        return None
+    if stale_slug_hits(decoded, classified.stale_paths, classified.canonical_paths):
+        return None
+    return homepage
 
 
 def classification_for(github_repo: str, registry: dict) -> dict:
     entry = registry.get(github_repo)
     if not _valid_entry(entry):
-        raise ValueError(f"repository publication classification is unavailable for {github_repo}")
+        raise ValueError(diagnostic("registry", "classification", github_repo))
     return entry

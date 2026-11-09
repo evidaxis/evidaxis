@@ -18,8 +18,8 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 DRILLS = ("none", "site_test", "hf_handle", "canary_missing", "benign_all")
-# Projection drops github_repo when that same key is User, so a User row alone stays green.
-# The guard treats a login as personal when any owner_types row is User.
+# An unprojected field exercises the final byte guard independently of the mask.
+# A contradictory Organization row would make the login public under rule a.
 LEAKED_REPO = "drill-person-handle/repo"
 USER_ROW = "drill-person-handle/home"
 # classification_for rejects a row without a positive int repo_id; this id is not fetched.
@@ -85,11 +85,6 @@ def apply_drill(root: Path, drill: str, date: str | None = None) -> Path | None:
     owners_path = root / "etl" / "owner_types.json"
     owners = json.loads(owners_path.read_text(encoding="utf-8"))
     repos = owners["repos"]
-    repos[LEAKED_REPO] = {
-        "owner_type": "Organization",
-        "repo_id": FICTIONAL_REPO_ID,
-        "full_name": LEAKED_REPO,
-    }
     repos[USER_ROW] = {
         "owner_type": "User",
         "repo_id": FICTIONAL_REPO_ID + 1,
@@ -98,10 +93,9 @@ def apply_drill(root: Path, drill: str, date: str | None = None) -> Path | None:
     owners_path.write_text(json.dumps(owners, indent=2) + "\n", encoding="utf-8")
     snap_path = root / "data" / "snapshots" / date / "snapshot.json"
     snap = json.loads(snap_path.read_text(encoding="utf-8"))
-    target = next((entity for entity in snap.get("entities", []) if isinstance(entity, dict) and entity.get("github_repo")), None)
-    if target is None:
+    if not any(isinstance(entity, dict) and entity.get("github_repo") for entity in snap.get("entities", [])):
         raise SystemExit("candidate has no github_repo")
-    target["github_repo"] = LEAKED_REPO
+    snap["drill_person_locator"] = LEAKED_REPO
     snap_path.write_text(json.dumps(snap, indent=2) + "\n", encoding="utf-8")
 
 

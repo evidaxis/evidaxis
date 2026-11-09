@@ -65,7 +65,7 @@ def test_former_personal_owner_stays_banned(publication_repo, tmp_path, leak, re
     stage = tmp_path / "upload"
     stage.mkdir()
     (stage / "snapshot.json").write_text(json.dumps({"homepage": leak}))
-    with pytest.raises(SystemExit, match="mensfeld"):
+    with pytest.raises(SystemExit, match=r"rule=f hash=[0-9a-f]{8}"):
         hf._assert_person_free(stage)
 
 
@@ -81,7 +81,7 @@ def test_user_owned_projection_and_guard_remain_active(publication_repo, tmp_pat
     (stage / "snapshot.json").write_text(json.dumps(projected))
     hf._assert_person_free(stage)
     (stage / "snapshot.json").write_text("current-person")
-    with pytest.raises(SystemExit, match="current-person"):
+    with pytest.raises(SystemExit, match=r"rule=f hash=[0-9a-f]{8}"):
         hf._assert_person_free(stage)
 
 
@@ -143,14 +143,14 @@ def test_guard_ignores_ordinary_text_and_catches_a_real_handle(tmp_path, monkeyp
     blob.write_text("A free weekly archive of 100 systems, 78 of them with a figure; av. commits")
     hf._assert_person_free(stage)
     blob.write_text("synth-owner/widget")
-    with pytest.raises(SystemExit, match="synth-owner") as caught:
+    with pytest.raises(SystemExit, match=r"rule=f hash=[0-9a-f]{8}") as caught:
         hf._assert_person_free(stage)
     assert caught.value.code == 3
     blob.write_text("thanks @synth-owner")
-    with pytest.raises(SystemExit, match="synth-owner"):
+    with pytest.raises(SystemExit, match=r"rule=f hash=[0-9a-f]{8}"):
         hf._assert_person_free(stage)
     blob.write_text("Built by Synth-Owner.")
-    with pytest.raises(SystemExit, match="synth-owner"):
+    with pytest.raises(SystemExit, match=r"rule=f hash=[0-9a-f]{8}"):
         hf._assert_person_free(stage)
 
 
