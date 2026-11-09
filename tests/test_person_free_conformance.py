@@ -2,6 +2,7 @@
 import json
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -105,7 +106,7 @@ def test_diagnostic_is_salted_and_does_not_print_identifiers():
     assert re.fullmatch(r"\[path:[0-9a-f]{8}\]: rule=f hash=[0-9a-f]{8}", line)
     assert line == pf.diagnostic("zz-drill-secret/page.json", "f", "zz-drill-secret", index)
     script = "from scripts.person_free import diagnostic; print(diagnostic('page.json', 'f', 'zz-drill-secret'))"
-    outputs = [subprocess.check_output([str(ROOT / '.venv/bin/python'), '-c', script], cwd=ROOT) for _ in range(2)]
+    outputs = [subprocess.check_output([sys.executable, '-c', script], cwd=ROOT) for _ in range(2)]
     assert outputs[0] != outputs[1]
     line = pf.diagnostic("zz-drill-lab/given/page.json", "d", "zz-drill-lab/given", index)
     assert re.fullmatch(r"\[path:[0-9a-f]{8}\]: rule=d hash=[0-9a-f]{8}", line)
