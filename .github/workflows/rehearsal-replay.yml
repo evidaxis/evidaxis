@@ -146,7 +146,9 @@ jobs:
       - name: Probation data tests on PRs
         # Blocks the PR but stays out of the drill verdict: only production verify may
         # count as a caught drill (a probation test must not stand in for a real gate).
-        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.verify.outcome == 'success' }}
+        # Runs only on a candidate that should be valid (no drill, or benign drift) and
+        # verified: leak drills break data on purpose, so probation results there say nothing.
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.verify.outputs.outcome == 'success' && (matrix.drill == 'none' || matrix.drill == 'benign_all') }}
         run: cd web && npm run test:probation
 
       - name: Independent benign-drift oracle
