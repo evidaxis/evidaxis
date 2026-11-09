@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { expect, it } from 'vitest';
 import { classifyRegistry, buildHandleIndex, handleHitsDecoded, privacyDiagnostic, applyProjectAccounts, revealsHandleText, decimalEntitiesDecoded } from './personFree.mjs';
-import { publicEntity, publicHomepage, publicPackageLabel, publicName, revealsHandle, registryClassification } from './person_free';
+import { publicEntity, publicFields, publicHomepage, publicPackageLabel, publicName, revealsHandle, registryClassification } from './person_free';
 import { publicDropped } from './public_dropped';
 import { fixtureAnonymizer } from '../../scripts/fixture-privacy.mjs';
 import { enumerateSnapshots } from './archive';
@@ -28,8 +28,33 @@ it.each(vectors)('shared rules: $id', (c) => {
   expect(summary(classified)).toEqual(c.expected);
   const index = buildHandleIndex(classified.handles, new Set(c.templateWords ?? []));
   for (const probe of c.probes ?? []) expect(handleHitsDecoded(probe.text, index).sort()).toEqual(probe.hits);
+  for (const probe of c.packages ?? []) {
+    expect(publicPackageLabel(probe.system, probe.package, registryFor(c)))
+      .toBe(probe.masked || probe.systemMasked ? 'package not shown' : `${probe.system}/${probe.package}`);
+  }
   expect(JSON.stringify(c)).toBe(before);
 });
+
+it.each(vectors.flatMap((c: any) => (c.packages ?? []).map((p: any) => ({ c, ...p }))))(
+  'dependency token projection: $package', (probe) => {
+    const registry = registryFor(probe.c);
+    const pkg = probe.package;
+    const entity = { entity_id: 'e_DRILL', github_repo: 'zz-drill-former/tool',
+      deps: { system: probe.system, package: pkg, source: pkg, nested: [{ alias: pkg }, pkg], count: 7 },
+      signals: [{ package: pkg }] };
+    const before = structuredClone(entity);
+    const expected = probe.masked ? 'package not shown' : pkg;
+    for (const projected of [publicEntity(entity, registry), publicFields(entity, registry)]) {
+      expect(projected.deps).toEqual({ system: probe.systemMasked ? 'package not shown' : probe.system,
+        package: expected, source: expected,
+        nested: [{ alias: expected }, expected], count: 7 });
+      expect(projected.signals).toEqual([{ package: expected }]);
+    }
+    expect(entity).toEqual(before);
+    expect(publicPackageLabel(probe.system, pkg, registry))
+      .toBe(probe.masked || probe.systemMasked ? 'package not shown' : `${probe.system}/${pkg}`);
+  },
+);
 
 it.each(vectors.filter((c: any) => c.strictExpected))('loaded classification: $id', (c) => {
   const registry = registryFor(c);
