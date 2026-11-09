@@ -34,6 +34,8 @@ from scripts.person_free import (
     classification_for,
     build_handle_index,
     decimal_entities_decoded,
+    dependency_handle_hits,
+    dependency_field_hits,
     diagnostic,
     load_classification,
     stale_slug_hits,
@@ -82,12 +84,16 @@ def _redact_free_text(node, index, stats: dict, classified) -> None:
 
 def _redact_packages(node, index, stats: dict, classified, dependency=False):
     # Every string in deps reaches snapshot bytes, including nested metadata.
-    if dependency and isinstance(node, str) and reveals_handle(node, index, classified):
+    if dependency and isinstance(node, str) and (dependency_handle_hits(node, index) or reveals_handle(node, index, classified)):
         stats["fields_redacted"] += 1
         return "package not shown"
     if isinstance(node, dict):
         for key, value in node.items():
-            node[key] = _redact_packages(value, index, stats, classified, dependency or key in {"deps", "package"})
+            if key == "package" and isinstance(value, str) and reveals_handle(value, index, classified):
+                node[key] = "package not shown"
+                stats["fields_redacted"] += 1
+            else:
+                node[key] = _redact_packages(value, index, stats, classified, dependency or key == "deps")
     elif isinstance(node, list):
         for pos, item in enumerate(node):
             node[pos] = _redact_packages(item, index, stats, classified, dependency)
@@ -190,13 +196,21 @@ def _person_free_hits(folder: Path, *, project_accounts: bool = True) -> list[st
         if not path.is_file():
             continue
         relative = path.relative_to(folder).as_posix()
-        blob = path.read_text(encoding="utf-8", errors="replace") + "\n" + relative
+        raw = path.read_text(encoding="utf-8", errors="replace")
+        blob = raw + "\n" + relative
         variants = [blob, lenient_decoded(blob),
                     re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m[1], 16)), blob),
                     decimal_entities_decoded(blob)]
         body = "\n".join(variants).lower()
         for handle in sorted(set(handle_hits(body, index))):
             hits.append(diagnostic(relative, "f", handle, index, classified))
+        if path.suffix == '.json':
+            try:
+                document = json.loads(raw)
+            except ValueError:
+                document = None  # Non-JSON bytes still receive the general scan above.
+            for handle in dependency_field_hits(document, index):
+                hits.append(diagnostic(relative, "g", handle, index, classified))
         for stale in sorted(stale_slug_hits(body, classified.stale_paths, classified.canonical_paths)):
             hits.append(diagnostic(relative, "d", stale, index, classified))
     return hits

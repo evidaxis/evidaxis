@@ -122,11 +122,24 @@
         "zz-drill-former/tool": {"owner_type": "User", "repo_id": 18, "full_name": "zz-drill-person/tool"},
         "zz-drill-lab/kept": {"owner_type": "Organization", "repo_id": 19, "full_name": "zz-drill-lab/kept"},
         "system/tool": {"owner_type": "User", "repo_id": 20, "full_name": "system/tool"},
-        "zz-drill-lab/moved": {"owner_type": "User", "repo_id": 21, "full_name": "zzdrillfern/moved"}
+        "zz-drill-lab/moved": {"owner_type": "User", "repo_id": 21, "full_name": "zzdrillfern/moved"},
+        "zz-drill-lab/widget-zzdrillfern-plugin": {"owner_type": "Organization", "repo_id": 22, "full_name": "zz-drill-lab/widget-zzdrillfern-plugin"}
       },
       "templateWords": ["system"],
-      "expected": {"handles": ["system", "zz-drill-former", "zz-drill-person", "zzdrillfern"], "stalePaths": ["zz-drill-former/tool", "zz-drill-lab/moved"], "publicRepos": ["zz-drill-lab/kept"]},
+      "expected": {"handles": ["system", "zz-drill-former", "zz-drill-person", "zzdrillfern"], "stalePaths": ["zz-drill-former/tool", "zz-drill-lab/moved"], "publicRepos": ["zz-drill-lab/kept", "zz-drill-lab/widget-zzdrillfern-plugin"]},
+      "publicPaths": ["zz-drill-lab/widget-zzdrillfern-plugin"],
       "probes": [
+        {"text": "widget-zz-drill-person-plugin", "hits": []},
+        {"text": "widget-zz-drill-former-plugin", "hits": []},
+        {"text": "widget-zzdrillfern-plugin", "hits": []},
+        {"text": "zz-drill-lab/widget-zzdrillfern-plugin", "hits": []},
+        {"text": "https://github.com/zz-drill-lab/widget-zzdrillfern-plugin", "hits": []},
+        {"text": "--zz-drill-person--", "hits": []},
+        {"text": "widget-ZZ-DRILL-PERSON-plugin-zz-drill-former", "hits": []},
+        {"text": "widget_zz-drill-person.plugin", "hits": ["zz-drill-person"]},
+        {"text": "zz-drill-person zz-drill-former zzdrillfern", "hits": ["zz-drill-former", "zz-drill-person", "zzdrillfern"]}
+      ],
+      "dependencyProbes": [
         {"text": "widget-zz-drill-person-plugin", "hits": ["zz-drill-person"]},
         {"text": "widget-zz-drill-former-plugin", "hits": ["zz-drill-former"]},
         {"text": "widget-zzdrillfern-plugin", "hits": ["zzdrillfern"]},
@@ -144,17 +157,18 @@
         {"system": "npm", "package": "widget-zzdrillfern-plugin", "masked": true},
         {"system": "npm", "package": "widget-zz-drill-lab-plugin", "masked": false},
         {"system": "npm", "package": "widget-system-plugin", "masked": false},
-        {"system": "npm", "package": "github.com/system/tool", "masked": true},
+        {"system": "npm", "package": "github.com/system/tool", "masked": true, "textMasked": true},
         {"system": "npm", "package": "widget-ZZ-DRILL-PERSON-plugin", "masked": true},
         {"system": "npm", "package": "widget%252Dzz-drill-person%252Dplugin", "masked": true},
-        {"system": "npm", "package": "widget_zz-drill-person.plugin", "masked": true},
+        {"system": "npm", "package": "widget_zz-drill-person.plugin", "masked": true, "textMasked": true},
         {"system": "npm", "package": "--zz-drill-person--", "masked": true},
         {"system": "npm", "package": "widget---zz-drill-person---plugin", "masked": true},
         {"system": "npm", "package": "widget-zz--drill-person-plugin", "masked": false},
         {"system": "npm", "package": "widget-zz-drill-personx-plugin", "masked": false},
         {"system": "npm", "package": "widget-xzz-drill-person-plugin", "masked": false},
         {"system": "npm", "package": "widget-zz-drill-person2-plugin", "masked": false},
-        {"system": "widget-zz-drill-person-plugin", "package": "widget", "masked": false, "systemMasked": true}
+        {"system": "widget-zz-drill-person-plugin", "package": "widget", "masked": false, "systemMasked": true},
+        {"system": "npm", "package": "zz-drill-person", "masked": true, "textMasked": true}
       ]
     },
     {
