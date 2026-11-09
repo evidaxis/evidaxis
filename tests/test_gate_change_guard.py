@@ -162,3 +162,18 @@ def test_guard_script_stays_stdlib_only():
         env={'GITHUB_EVENT_NAME': 'pull_request'}, capture_output=True, text=True,
     )
     assert result.returncode == 0, result.stderr
+
+
+def test_non_fast_forward_push_is_rejected(repo, monkeypatch):
+    # Review 2026-11-09: a force push back to an ancestor has an empty before..after
+    # range, yet it can roll back reviewed checks.
+    ancestor = guard.git('rev-parse', 'HEAD~1')
+    before = guard.git('rev-parse', 'HEAD')
+    monkeypatch.setattr(guard, 'api', lambda endpoint: pytest.fail(endpoint))
+    assert guard.check_push(before, ancestor, 'evidaxis/evidaxis', HUMAN) == 1
+
+
+def test_guard_root_follows_the_workspace(monkeypatch, tmp_path):
+    # The workflow runs the trusted copy from RUNNER_TEMP; git must still read the checkout.
+    monkeypatch.setenv('GITHUB_WORKSPACE', str(tmp_path))
+    assert guard.workspace_root() == tmp_path
