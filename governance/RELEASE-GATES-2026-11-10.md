@@ -16,10 +16,12 @@ as it stands from Thursday through Friday. Wednesday still runs before the
 Thursday cutoff, so it does not see later chain changes.
 
 Both rehearsals keep the title `weekly rehearsal <Saturday>`. Observers that
-read that title, including the release scoreboard, are unchanged. Wednesday
-and the Saturday ticks still treat any active or successful run with that
-title as the attempt, including a manual rehearsal created earlier in the week.
-Friday counts only runs whose `created_at` is at or after 00:00 UTC on Friday.
+read that title, including the release scoreboard, are unchanged. Each tick
+matches only runs of its own mode. The Wednesday tick treats any active or
+successful `weekly rehearsal <Saturday>` run in the listed history as the
+attempt, including a manual rehearsal created earlier in the week. The Saturday
+ticks match only `weekly release <Saturday>` runs, so no rehearsal, green or
+red, suppresses the release. Friday counts only runs whose `created_at` is at or after 00:00 UTC on Friday.
 A matching run with no parseable `created_at` is incomplete data. The tick
 stops. It does not skip the run and it does not dispatch.
 
