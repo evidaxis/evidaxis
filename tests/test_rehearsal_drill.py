@@ -307,6 +307,26 @@ def test_select_source_uses_the_newest_live_rehearsal():
     assert drill.select_source(runs, lambda run_id: False) is None
 
 
+@pytest.mark.parametrize('manifests', [0, 1, 2])
+def test_automatic_replay_requires_one_complete_candidate_manifest(monkeypatch, manifests):
+    monkeypatch.setenv('GITHUB_REPOSITORY', 'evidaxis/evidaxis')
+    monkeypatch.setattr(drill.subprocess, 'check_output', lambda *args, **kwargs: json.dumps({
+        'artifacts': [{'name': 'snapshot-test', 'expired': False}],
+    }))
+
+    def download(args, **kwargs):
+        assert args[:6] == ['gh', 'run', 'download', '42', '--name', 'snapshot-test']
+        directory = Path(args[-1])
+        (directory / 'snapshot.json').write_text('{}')
+        for index in range(manifests):
+            candidate = directory / str(index)
+            candidate.mkdir()
+            (candidate / 'candidate-manifest.json').write_text('{}')
+
+    monkeypatch.setattr(drill.subprocess, 'run', download)
+    assert drill._snapshot_artifact_live(42) == (manifests == 1)
+
+
 def test_select_keeps_an_explicit_run_and_notices_when_none_are_live(tmp_path, monkeypatch, capsys):
     out = tmp_path / "gh-out"
     monkeypatch.setenv("GITHUB_OUTPUT", str(out))
@@ -341,7 +361,7 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     replay_text = replay_path.read_text()
     replay = yaml.safe_load(replay_text)
     assert "rehearsal-alert" not in replay_text
-    assert replay["concurrency"]["group"] == "rehearsal-replay"
+    assert replay["concurrency"]["group"].startswith("rehearsal-replay-")
     assert "data-commits" not in replay_text
     assert replay["permissions"] == {"contents": "read", "actions": "read"}
     triggers = replay[True]
@@ -357,7 +377,7 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     replay_steps = replay["jobs"]["replay"]["steps"]
     assert replay_steps[0]["with"]["fetch-depth"] == 0
     # A queued push must replay the commit that triggered it, not whatever main is now.
-    assert replay_steps[0]["with"]["ref"] == "${{ github.event_name == 'push' && github.sha || 'main' }}"
+    assert replay_steps[0]["with"]["ref"] == "${{ github.event_name == 'workflow_dispatch' && 'main' || github.sha }}"
     select = next(step for step in replay_steps if step.get("id") == "source")
     assert "rehearsal_drill.py select" in select["run"]
     # A red replay stays red here. This workflow must not send its own alarm.
@@ -367,7 +387,7 @@ def test_replay_workflow_does_not_alert_and_weekly_alerts_once():
     by_id = {step["id"]: step for step in replay_steps if "id" in step}
     oracle = by_id["oracle"]
     assert replay_steps.index(oracle) > replay_steps.index(by_id["verify"])
-    assert "inputs.drill == 'benign_all'" in oracle["if"] and "always()" in oracle["if"]
+    assert "matrix.drill == 'benign_all'" in oracle["if"] and "always()" in oracle["if"]
     assert '--dist web/dist --hf "$RUNNER_TEMP/replay-hf"' in oracle["run"]
     assert '--stage-dir "$RUNNER_TEMP/replay-hf"' in by_id["hf"]["run"]
     verdict = next(s for s in replay_steps if s.get("name") == "Drill verdict")

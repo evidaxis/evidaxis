@@ -15,7 +15,8 @@
     "test:data": "vitest run --config vitest.data.config.ts",
     "test:hygiene": "vitest run --config vitest.hygiene.config.ts",
     "check": "node scripts/check-dist.mjs",
-    "verify": "npm run test:run && npm run test:data && npm run build && npm run check && node scripts/card-b-consistency.mjs && node scripts/badge-dist.mjs"
+    "verify": "npm run test:run && npm run test:data && npm run build && npm run check && node scripts/card-b-consistency.mjs && node scripts/badge-dist.mjs",
+    "test:probation": "vitest run --config vitest.probation.config.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

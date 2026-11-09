@@ -59,5 +59,12 @@ def test_every_tracked_file_has_a_license_annotation():
     )
 
 
+def test_vitest_configs_have_license_annotations_before_staging():
+    # New configs must be covered even while they are still untracked locally.
+    globs = _annotation_globs()
+    for path in (REPO / 'web').glob('vitest*.config.ts'):
+        assert _covered(path.relative_to(REPO).as_posix(), globs), path.name
+
+
 if __name__ == "__main__":
     sys.exit(test_every_tracked_file_has_a_license_annotation() or 0)

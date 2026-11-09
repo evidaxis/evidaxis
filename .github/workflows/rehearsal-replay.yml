@@ -24,6 +24,13 @@ on:
           - hf_handle
           - canary_missing
           - benign_all
+  pull_request:
+    paths:
+      - "**/*.data.test.ts"
+      - "web/**"
+      - "scripts/**"
+      - "collectors/**"
+      - ".github/workflows/**"
   push:
     branches: [main]
     paths:
@@ -36,18 +43,22 @@ permissions:
   actions: read
 
 concurrency:
-  group: rehearsal-replay
+  group: rehearsal-replay-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: false
 
 jobs:
   replay:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        drill: ${{ fromJSON(github.event_name == 'pull_request' && '["none","benign_all","site_test","hf_handle","canary_missing"]' || format('["{0}"]', inputs.drill || 'none')) }}
     # Site verify of one collected candidate, without the weekly collection.
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          ref: ${{ github.event_name == 'push' && github.sha || 'main' }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.sha }}
           fetch-depth: 0   # candidate data is the rehearsal base commit plus the packed changes
           persist-credentials: false
 
@@ -76,19 +87,25 @@ jobs:
             --download "${{ runner.temp }}/replay-src" \
             --summary-dir "${{ runner.temp }}/evx-summary"
 
+      - name: Use main data when no complete candidate exists
+        if: ${{ success() && steps.source.outputs.found == 'false' }}
+        run: |
+          git checkout origin/main -- data etl
+          echo "SNAPSHOT_DATE=$(python3 -c 'import json; print(json.load(open("data/latest.json"))["snapshot_date"])')" >> "$GITHUB_ENV"
+
       - name: Apply the rehearsal drill
         id: apply
-        if: ${{ success() && steps.source.outputs.found == 'true' }}
-        run: python3 scripts/rehearsal_drill.py apply --drill "${{ inputs.drill || 'none' }}" --date "$SNAPSHOT_DATE"
+        if: ${{ success() }}
+        run: python3 scripts/rehearsal_drill.py apply --drill "${{ matrix.drill }}" --date "$SNAPSHOT_DATE"
 
       - name: Check the HF publication projection
         id: hf
-        if: ${{ success() && steps.source.outputs.found == 'true' }}
+        if: ${{ success() }}
         # Keep raw diagnostics private for benign_all: a planted move can expose real
         # former owners. Other drills print the log as before. The verdict consumes
         # every outcome and fails on unexpected errors.
         env:
-          DRILL: ${{ inputs.drill || 'none' }}
+          DRILL: ${{ matrix.drill }}
         run: |
           if python3 scripts/hf_upload_snapshot.py --date "$SNAPSHOT_DATE" --dry-run \
               --stage-dir "$RUNNER_TEMP/replay-hf" > "$RUNNER_TEMP/replay-hf.log" 2>&1; then
@@ -99,23 +116,23 @@ jobs:
           if [ "$DRILL" != benign_all ]; then cat "$RUNNER_TEMP/replay-hf.log"; fi
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        if: ${{ success() && steps.source.outputs.found == 'true' }}
+        if: ${{ success() }}
         with:
           node-version: "22"
 
       - name: Verify the site against this rehearsal candidate
         id: verify
-        if: ${{ success() && steps.source.outputs.found == 'true' }}
+        if: ${{ success() }}
         env:
           EVIDAXIS_DATA_DIR: ${{ github.workspace }}/data
           PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
           PUBLIC_CLARITY_ID: ${{ vars.PUBLIC_CLARITY_ID }}
           PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
           PUBLIC_POSTHOG_HOST: ${{ vars.PUBLIC_POSTHOG_HOST }}
-          DRILL: ${{ inputs.drill || 'none' }}
+          DRILL: ${{ matrix.drill }}
         run: |
           cd web
-          if (npm ci && npm run verify) > "$RUNNER_TEMP/replay-verify.log" 2>&1; then
+          if (npm ci && { [ "$GITHUB_EVENT_NAME" != pull_request ] || npm run test:probation; } && npm run verify) > "$RUNNER_TEMP/replay-verify.log" 2>&1; then
             echo 'outcome=success' >> "$GITHUB_OUTPUT"
           else
             echo 'outcome=failure' >> "$GITHUB_OUTPUT"
@@ -124,7 +141,7 @@ jobs:
 
       - name: Independent benign-drift oracle
         id: oracle
-        if: ${{ always() && inputs.drill == 'benign_all' && steps.apply.outcome == 'success' && steps.source.outputs.found == 'true' }}
+        if: ${{ always() && matrix.drill == 'benign_all' && steps.apply.outcome == 'success' }}
         env:
           BENIGN_MANIFEST: ${{ steps.apply.outputs.manifest }}
         run: |
@@ -133,10 +150,14 @@ jobs:
 
       - name: Rehearsal report
         id: report
-        if: ${{ always() && steps.apply.outcome == 'success' && steps.source.outputs.found == 'true' }}
+        if: ${{ always() && steps.apply.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          if [ "${{ steps.source.outputs.found }}" = false ]; then
+            echo 'outcome=success' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           OUT="${{ runner.temp }}/evx-summary"
           mkdir -p "$OUT"
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" > "$OUT/jobs.json" || rm -f "$OUT/jobs.json"
@@ -147,9 +168,9 @@ jobs:
           fi
 
       - name: Drill verdict
-        if: ${{ always() && steps.source.outputs.found == 'true' }}
+        if: ${{ always() }}
         env:
-          DRILL: ${{ inputs.drill || 'none' }}
+          DRILL: ${{ matrix.drill }}
           HF: ${{ steps.hf.outputs.outcome || steps.hf.outcome }}
           VERIFY: ${{ steps.verify.outputs.outcome || steps.verify.outcome }}
           REPORT: ${{ steps.report.outputs.outcome || steps.report.outcome }}

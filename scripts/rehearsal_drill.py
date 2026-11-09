@@ -46,7 +46,7 @@ _CANDIDATE_MANIFEST = "candidate-manifest.json"
 SNAPSHOT_ONLY_NOTICE = (
     "notice: snapshot-only artifact; replay places the snapshot directory, not the captured data and etl tree"
 )
-NO_CANDIDATE_NOTICE = "notice: no rehearsal candidate with a live snapshot artifact; replay skipped"
+NO_CANDIDATE_NOTICE = "notice: no complete rehearsal candidate; replay uses main data"
 # 40 covers the 14-day artifact window at a weekly cadence with room for reruns.
 _RUN_LIST_LIMIT = 40
 
@@ -645,7 +645,11 @@ def _snapshot_artifact_live(run_id: int) -> bool:
     for artifact in body.get("artifacts") or []:
         name = str(artifact.get("name") or "")
         if name.startswith("snapshot-") and not artifact.get("expired"):
-            return True
+            with tempfile.TemporaryDirectory() as directory:
+                subprocess.run(["gh", "run", "download", str(run_id), "--name", name,
+                                "--dir", directory], check=True)
+                if len(_candidate_manifests(Path(directory))) == 1:
+                    return True
     return False
 
 
@@ -678,7 +682,7 @@ def select_replay() -> int:
 def drill_verdict(drill: str, outcomes: dict) -> tuple[str, int]:
     if drill not in DRILLS:
         raise SystemExit(f"unknown drill {drill}")
-    checks = CHECK_STEPS + (("oracle", "Independent benign-drift oracle"),) if drill == "benign_all" else CHECK_STEPS
+    checks = (*CHECK_STEPS, ("oracle", "Independent benign-drift oracle")) if drill == "benign_all" else CHECK_STEPS
     failed = [name for key, name in checks if outcomes.get(key) == "failure"]
     if drill in {"none", "benign_all"}:
         if failed:
