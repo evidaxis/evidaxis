@@ -111,9 +111,9 @@ def test_mention_and_standalone_distinctive_handle():
     assert handle_hits("LONGHANDLE model", _SCALE) == ["longhandle"]
 
 
-def test_distinctive_handle_requires_non_alphanumeric_boundaries():
+def test_distinctive_handle_requires_whole_hyphenated_word():
     assert handle_hits("longhandling and synth-ownerfan and xsynth-owner and synth-owner2", _SCALE) == []
-    assert handle_hits("widget-synth-owner-fan", _SCALE) == ["synth-owner"]
+    assert handle_hits("widget-synth-owner-fan", _SCALE) == []
 
 
 def _tiny_repo(tmp_path, repos):

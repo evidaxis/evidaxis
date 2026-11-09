@@ -3,8 +3,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { expect, it } from 'vitest';
-import { classifyRegistry, buildHandleIndex, handleHitsDecoded, privacyDiagnostic, applyProjectAccounts, revealsHandleText, decimalEntitiesDecoded } from './personFree.mjs';
-import { publicEntity, publicFields, publicHomepage, publicPackageLabel, publicName, revealsHandle, registryClassification } from './person_free';
+import { classifyRegistry, buildHandleIndex, handleHitsDecoded, dependencyHandleHits, dependencyFieldHits, privacyDiagnostic, applyProjectAccounts, revealsHandleText, decimalEntitiesDecoded } from './personFree.mjs';
+import { publicEntity, publicFields, publicHomepage, publicPackageLabel, publicName, publicRepoLabel, publicRepoUrl, revealsHandle, registryClassification } from './person_free';
 import { publicDropped } from './public_dropped';
 import { fixtureAnonymizer } from '../../scripts/fixture-privacy.mjs';
 import { enumerateSnapshots } from './archive';
@@ -28,6 +28,7 @@ it.each(vectors)('shared rules: $id', (c) => {
   expect(summary(classified)).toEqual(c.expected);
   const index = buildHandleIndex(classified.handles, new Set(c.templateWords ?? []));
   for (const probe of c.probes ?? []) expect(handleHitsDecoded(probe.text, index).sort()).toEqual(probe.hits);
+  for (const probe of c.dependencyProbes ?? []) expect(dependencyHandleHits(probe.text, index).sort()).toEqual(probe.hits);
   for (const probe of c.packages ?? []) {
     expect(publicPackageLabel(probe.system, probe.package, registryFor(c)))
       .toBe(probe.masked || probe.systemMasked ? 'package not shown' : `${probe.system}/${probe.package}`);
@@ -41,20 +42,43 @@ it.each(vectors.flatMap((c: any) => (c.packages ?? []).map((p: any) => ({ c, ...
     const pkg = probe.package;
     const entity = { entity_id: 'e_DRILL', github_repo: 'zz-drill-former/tool',
       deps: { system: probe.system, package: pkg, source: pkg, nested: [{ alias: pkg }, pkg], count: 7 },
-      signals: [{ package: pkg }] };
+      description: pkg, signals: [{ package: pkg }] };
     const before = structuredClone(entity);
     const expected = probe.masked ? 'package not shown' : pkg;
     for (const projected of [publicEntity(entity, registry), publicFields(entity, registry)]) {
       expect(projected.deps).toEqual({ system: probe.systemMasked ? 'package not shown' : probe.system,
         package: expected, source: expected,
         nested: [{ alias: expected }, expected], count: 7 });
-      expect(projected.signals).toEqual([{ package: expected }]);
+      expect(projected.signals).toEqual([{ package: probe.textMasked ? 'package not shown' : pkg }]);
+      expect(projected.description).toBe(probe.textMasked ? null : pkg);
     }
     expect(entity).toEqual(before);
     expect(publicPackageLabel(probe.system, pkg, registry))
       .toBe(probe.masked || probe.systemMasked ? 'package not shown' : `${probe.system}/${pkg}`);
+    const index = buildHandleIndex(classifyRegistry(probe.c.registry).handles, new Set(probe.c.templateWords));
+    for (const [document, masked] of [
+      [{ deps: { system: probe.system } }, !!probe.systemMasked],
+      [{ deps: { package: pkg } }, probe.masked],
+      [{ wrapper: [{ deps: { nested: [{ alias: pkg }, pkg] } }] }, probe.masked],
+    ] as const) {
+      expect(dependencyFieldHits(JSON.parse(JSON.stringify(document)), index).length > 0).toBe(masked);
+    }
+    expect(dependencyFieldHits({ description: pkg, signals: [{ package: pkg }] }, index)).toEqual([]);
+    expect(dependencyFieldHits(publicEntity(entity, registry), index)).toEqual([]);
   },
 );
+
+it.each(vectors.filter((c: any) => c.publicPaths))('hyphenated public paths remain public: $id', (c) => {
+  const registry = registryFor(c);
+  for (const repo of c.publicPaths) {
+    const entity = { entity_id: 'e_DRILL', name: repo.split('/')[1], slug: repo.split('/')[1],
+      github_repo: repo, homepage: `https://github.com/${repo}`, description: repo };
+    expect(publicEntity(entity, registry)).toEqual(entity);
+    expect(publicRepoLabel(entity, registry)).toBe(repo);
+    expect(publicRepoUrl(entity, registry)).toBe(entity.homepage);
+    expect(revealsHandle(repo, registry)).toBe(false);
+  }
+});
 
 it.each(vectors.filter((c: any) => c.strictExpected))('loaded classification: $id', (c) => {
   const registry = registryFor(c);

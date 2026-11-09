@@ -34,6 +34,8 @@ def test_conformance(case):
     index = pf.build_handle_index(c.handles, case.get("templateWords", []))
     for probe in case.get("probes", []):
         assert sorted(set(pf.handle_hits(pf.lenient_decoded(probe["text"]), index))) == probe["hits"]
+    for probe in case.get("dependencyProbes", []):
+        assert pf.dependency_handle_hits(probe["text"], index) == probe["hits"]
     for probe in case.get("packages", []):
         expected = "package not shown" if probe["masked"] or probe.get("systemMasked") else f'{probe["system"]}/{probe["package"]}'
         assert pf.public_package_label(probe["system"], probe["package"], index) == expected
@@ -51,7 +53,7 @@ def test_hf_dependency_token_projection(case, probe, tmp_path, monkeypatch):
     original = {"entities": [{"entity_id": "e_DRILL", "github_repo": "zz-drill-former/tool",
         "deps": {"system": probe["system"], "package": package,
                  "source": package, "nested": [{"alias": package}, package], "count": 7},
-        "signals": [{"package": package}]}]}
+        "description": package, "signals": [{"package": package}]}]}
     before = json.dumps(original)
     projected = hf.project_person_free(original)
     expected = "package not shown" if probe["masked"] else package
@@ -59,15 +61,40 @@ def test_hf_dependency_token_projection(case, probe, tmp_path, monkeypatch):
         "system": "package not shown" if probe.get("systemMasked") else probe["system"],
         "package": expected, "source": expected,
         "nested": [{"alias": expected}, expected], "count": 7}
-    assert projected["entities"][0]["signals"] == [{"package": expected}]
+    assert projected["entities"][0]["signals"] == [{"package": "package not shown" if probe.get("textMasked") else package}]
+    assert projected["entities"][0]["description"] == (None if probe.get("textMasked") else package)
     assert json.dumps(original) == before
     stage = tmp_path / "stage"
     stage.mkdir()
     path = stage / "snapshot.json"
     path.write_text(json.dumps(projected))
     assert hf._person_free_hits(stage) == []
-    path.write_text(json.dumps({"deps": {"system": probe["system"], "package": package}}))
-    assert bool(hf._person_free_hits(stage)) == bool(probe["masked"] or probe.get("systemMasked"))
+    for document, masked in [
+        ({"deps": {"system": probe["system"]}}, probe.get("systemMasked", False)),
+        ({"deps": {"package": package}}, probe["masked"]),
+        ({"wrapper": [{"deps": {"nested": [{"alias": package}, package]}}]}, probe["masked"]),
+        ({"description": package, "signals": [{"package": package}]}, probe.get("textMasked", False)),
+    ]:
+        path.write_text(json.dumps(document))
+        findings = hf._person_free_hits(stage)
+        assert bool(findings) == masked
+        assert all(re.fullmatch(r"snapshot.json: rule=[fg] hash=[0-9a-f]{8}", line) for line in findings)
+
+
+@pytest.mark.parametrize("case", [c for c in VECTORS if "publicPaths" in c], ids=lambda c: c["id"])
+def test_hyphenated_public_paths_remain_public(case, tmp_path, monkeypatch):
+    write_registry(tmp_path, case)
+    monkeypatch.setattr(hf, "REPO", tmp_path)
+    stage = tmp_path / "stage"
+    for repo in case["publicPaths"]:
+        entity = {"entity_id": "e_DRILL", "name": repo.split('/')[1], "slug": repo.split('/')[1],
+                  "github_repo": repo, "homepage": f"https://github.com/{repo}", "description": repo}
+        projected = hf.project_person_free({"entities": [entity]})
+        assert projected["entities"] == [entity]
+        path = stage / repo / 'page.json'
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps(projected))
+    assert hf._person_free_hits(stage) == []
 
 
 @pytest.mark.parametrize("case", VECTORS, ids=lambda case: case["id"])
