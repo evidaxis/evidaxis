@@ -468,6 +468,11 @@
       "package": "composio",
       "pinned_at": "2026-09-27T13:18:03Z"
     },
+    "ComputerUseAgent/AutoCua": {
+      "system": "pypi",
+      "package": "autocua",
+      "pinned_at": "2026-11-10T16:16:29Z"
+    },
     "ContextualAI/gritlm": {
       "system": "pypi",
       "package": "gritlm",
@@ -1809,6 +1814,11 @@
       "system": "npm",
       "package": "osgrep",
       "pinned_at": "2026-09-27T13:18:03Z"
+    },
+    "SAIL-Research-Lab/cheetahclaws": {
+      "system": "pypi",
+      "package": "cheetahclaws",
+      "pinned_at": "2026-11-10T16:16:29Z"
     },
     "SHI-Labs/NATTEN": {
       "system": "pypi",
@@ -6990,6 +7000,11 @@
       "package": "ollama",
       "pinned_at": "2026-07-02T16:30:00Z",
       "linkage": "verified"
+    },
+    "omdsh-dev/dsh-mnemon": {
+      "system": "npm",
+      "package": "dsh-mnemon",
+      "pinned_at": "2026-11-10T16:16:29Z"
     },
     "omnuron/omniclaw": {
       "system": "pypi",

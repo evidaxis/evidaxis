@@ -1,0 +1,32 @@
+{
+  "default_branch": "main",
+  "homepage": "https://hojoai.com",
+  "description": "Hojo-TTS-Light is a lightweight speech generation model series developed by HojoAI, currently comprising a 0.04B and a 0.08B model.",
+  "updated_at": "2026-11-09T08:43:50Z",
+  "disabled": false,
+  "forks_count": 9,
+  "name": "Hojo-TTS-Light",
+  "created_at": "2026-05-08T07:11:32Z",
+  "visibility": "public",
+  "topics": [
+    "speech-synthesis",
+    "tts"
+  ],
+  "size": 1951,
+  "private": false,
+  "fork": false,
+  "subscribers_count": 4,
+  "open_issues_count": 9,
+  "language": "Python",
+  "full_name": "HojoAI/Hojo-TTS-Light",
+  "node_id": "R_kgDOSXlmTQ",
+  "pushed_at": "2026-11-05T07:09:55Z",
+  "stargazers_count": 615,
+  "archived": false,
+  "id": 1232692813,
+  "watchers_count": 615,
+  "network_count": 9,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

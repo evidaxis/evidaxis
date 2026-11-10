@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "homepage": "https://incubator.callstack.com/simlock/",
+  "description": "A control plane so parallel coding agents stop fighting over the same simulator.",
+  "updated_at": "2026-11-10T16:02:30Z",
+  "disabled": false,
+  "forks_count": 30,
+  "name": "simlock",
+  "created_at": "2026-07-17T19:34:16Z",
+  "visibility": "public",
+  "topics": [
+    "agents",
+    "emulators",
+    "simulators"
+  ],
+  "size": 33951,
+  "private": false,
+  "fork": false,
+  "subscribers_count": 0,
+  "open_issues_count": 75,
+  "language": "TypeScript",
+  "full_name": "callstackincubator/simlock",
+  "node_id": "R_kgDOTb6FGg",
+  "pushed_at": "2026-11-10T14:49:58Z",
+  "stargazers_count": 641,
+  "archived": false,
+  "id": 1304331546,
+  "watchers_count": 641,
+  "network_count": 30,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
