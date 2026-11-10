@@ -1,6 +1,6 @@
 import { FACETS, COPY } from '../../data/card-b-facets';
 import { matchesOutsideOwnNameIn, scanEntityLexicon, scanEntityPageWide } from '../../../scripts/entity-lexicon.mjs';
-import { buildHandleIndex, handleHits, dependencyHandleHits } from '../personFree.mjs';
+import { buildHandleIndex, handleHits } from '../personFree.mjs';
 const INDEXES = new WeakMap<string[], ReturnType<typeof buildHandleIndex>>();
 const handleIndex = (banned: string[]) => { let i = INDEXES.get(banned); if (!i) { i = buildHandleIndex(banned); INDEXES.set(banned, i); } return i; };
 
@@ -41,8 +41,8 @@ export function selectClasses(f: FacetInput) {
 // A public package name can equal its owner's personal GitHub handle (a pypi
 // package named like its User owner, 2026-10-03); such a link must be dropped
 // before the card text is assembled, not caught after it.
-export const revealsBannedDependency = (text: string, banned: string[]) =>
-  dependencyHandleHits(text, handleIndex(banned)).length > 0;
+export const revealsBannedHandle = (text: string, banned: string[]) =>
+  handleHits(decodeURIComponent(text), handleIndex(banned)).length > 0;
 
 export function assertPublicText(text: string, name: string, banned: string[] = []) {
   // The system's own name is third-party text: "stale-detector" must not read as "stale".

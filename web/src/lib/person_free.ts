@@ -1,4 +1,4 @@
-import { FLOOR_HANDLES, buildHandleIndex, classifyRegistry, validOwnerEntry, privacyDiagnostic, revealsHandleText, dependencyHandleHits, lenientDecoded, staleSlugHits } from './personFree.mjs';
+import { FLOOR_HANDLES, buildHandleIndex, classifyRegistry, validOwnerEntry, privacyDiagnostic, revealsHandleText, lenientDecoded, staleSlugHits } from './personFree.mjs';
 export type OwnerType = 'Organization' | 'User';
 
 export type OwnerEntry = {
@@ -79,12 +79,8 @@ export function publicRepoLabel(e: RepositoryEntity, registry: OwnerTypes): stri
 }
 
 // Dependency labels can embed personal tokens in either published component.
-function revealsDependency(text: string, registry: OwnerTypes): boolean {
-  return revealsHandle(text, registry) || dependencyHandleHits(text, userHandleIndex(registry)).length > 0;
-}
-
 export function publicPackageLabel(system: string, pkg: string, registry: OwnerTypes): string {
-  return revealsDependency(system, registry) || revealsDependency(pkg, registry) ? 'package not shown' : `${system}/${pkg}`;
+  return revealsHandle(system, registry) || revealsHandle(pkg, registry) ? 'package not shown' : `${system}/${pkg}`;
 }
 
 export function publicOwnerType(e: RepositoryEntity, registry: OwnerTypes): OwnerType {
@@ -117,7 +113,7 @@ export function publicHomepage(e: RepositoryEntity, registry: OwnerTypes): strin
 
 // Apply to nested text and packages too: JSON twins must be no wider than cards.
 export function publicFields<T>(value: T, registry: OwnerTypes, dependency = false): T {
-  if (dependency && typeof value === 'string' && revealsDependency(value, registry)) return 'package not shown' as T;
+  if (dependency && typeof value === 'string' && revealsHandle(value, registry)) return 'package not shown' as T;
   if (Array.isArray(value)) return value.map(v => publicFields(v, registry, dependency)) as T;
   if (!value || typeof value !== 'object') return value;
   const out: Record<string, unknown> = {};

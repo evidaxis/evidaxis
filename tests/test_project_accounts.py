@@ -36,32 +36,32 @@ def test_load_owner_types_marks_each_project_account():
         assert set(raw[repo]) == {"owner_type", "repo_id", "full_name"}
 
 
-def test_projection_keeps_project_account_names_and_neutralizes_twelve():
+def test_projection_keeps_project_account_names_and_neutralizes_eighteen():
     accounts = _accounts()
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
-    original = {entity["entity_id"]: entity for entity in snap["entities"]}
+    original = {entity["entity_id"]: entity["name"] for entity in snap["entities"]}
     projected = hf.project_person_free(snap)
-    assert hf.project_person_free.last_stats["names_neutralized"] == 12
+    assert hf.project_person_free.last_stats["names_neutralized"] == 18
     by_id = {entity["entity_id"]: entity for entity in projected["entities"]}
     # Rule c also covers former owners of rows that are now Organization-owned.
     assert by_id["e_RYZNSTS8RB1"]["name"] == "System e_RYZNSTS8RB1"
     assert by_id["e_RYZNSTS8RB1"]["slug"] == "e_ryznsts8rb1"
-    # Dependency-only token matching must not neutralize hyphenated prose names.
+    # Rule g also masks personal tokens embedded between hyphens in names.
     for entity_id in ("e_C7XBRXBQQ1A", "e_SZKD4NSDYWH", "e_P8DR6F4BC0K",
                       "e_R60YV8ENRHB", "e_25NRZ6KAYTE", "e_34ZSW4G3AHD"):
-        assert by_id[entity_id]["name"] == original[entity_id]["name"]
-        assert by_id[entity_id]["slug"] == original[entity_id]["slug"]
-        assert by_id[entity_id]["repository"]["repo_name"] == original[entity_id]["github_repo"].split('/')[1]
+        assert by_id[entity_id]["name"] == f"System {entity_id}"
+        assert by_id[entity_id]["slug"] == entity_id.lower()
+        assert by_id[entity_id]["repository"]["repo_name"] is None
     for meta in accounts.values():
         entity_id = meta["entity_id"]
-        assert by_id[entity_id]["name"] == original[entity_id]["name"]
+        assert by_id[entity_id]["name"] == original[entity_id]
 
 
-def test_empty_accounts_map_neutralizes_22(monkeypatch):
+def test_empty_accounts_map_neutralizes_28(monkeypatch):
     monkeypatch.setattr("scripts.person_free.load_project_accounts", lambda _repo: {})
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     hf.project_person_free(snap)
-    assert hf.project_person_free.last_stats["names_neutralized"] == 22
+    assert hf.project_person_free.last_stats["names_neutralized"] == 28
 
 
 def test_missing_accounts_file_leaves_user_types(tmp_path):

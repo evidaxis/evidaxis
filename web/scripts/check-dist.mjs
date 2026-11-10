@@ -23,7 +23,7 @@ import { join } from 'node:path';
 import { entityLexiconAllowed, scanEntityLexicon, scanEntityPageWide } from './entity-lexicon.mjs';
 import { isIndexable, isTemplateB } from '../src/lib/cardB/policy.mjs';
 import { parseHTML, elements, cardArticle, hasClass, plainText } from './card-b-html.mjs';
-import { FLOOR_HANDLES, classifyRegistry, validOwnerEntry, privacyDiagnostic, buildHandleIndex, handleHitsDecoded, dependencyFieldHits, lenientDecoded, decimalEntitiesDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
+import { FLOOR_HANDLES, classifyRegistry, validOwnerEntry, privacyDiagnostic, buildHandleIndex, handleHitsDecoded, lenientDecoded, decimalEntitiesDecoded, staleSlugHits } from '../src/lib/personFree.mjs';
 
 assertProductionPaths();
 
@@ -351,13 +351,6 @@ if (OWNER_TYPES?.schema_version !== 'owner_types_1'
     const body = variants.join('\n');
     for (const owner of handleHitsDecoded(body, userIndex)) {
       errors.push(`${privacyDiagnostic(r, 'f', owner, userIndex, classified)} contains private repository owner`);
-    }
-    if (r.endsWith('.json')) {
-      let document;
-      try { document = JSON.parse(raw); } catch { /* General byte scan still applies. */ }
-      for (const owner of dependencyFieldHits(document, userIndex)) {
-        errors.push(`${privacyDiagnostic(r, 'g', owner, userIndex, classified)} contains private dependency owner`);
-      }
     }
     for (const slug of staleSlugHits(`${body}\n${lenientDecoded(body)}`, staleSlugs, canonicalPaths)) {
       errors.push(`${privacyDiagnostic(r, 'd', slug, userIndex, classified)} contains stale repository path`);

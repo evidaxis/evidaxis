@@ -6,7 +6,7 @@ import { claimUrnForEntity } from '../claim_urn';
 import { TEMPLATE_VERSION } from './config';
 import { axis3OwnPackages } from '../methodology';
 import { dependentReadings } from '../dependent-readings';
-import { assertPublicText, copy, facet, revealsBannedDependency, selectClasses } from './facets';
+import { assertPublicText, copy, facet, revealsBannedHandle, selectClasses } from './facets';
 
 export const numeric = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
 export const fmt = (n: number | null): string => n === null ? 'no reading' : Number(n.toFixed(3)).toLocaleString('en-US', { maximumFractionDigits: 3 });
@@ -109,7 +109,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const ruler = commitRuler(ctx.commits, snap.captured_at);
   const oa = e.axes?.openalex_citation_momentum, dd = e.axes?.deps_direct_dependents_momentum;
   const dependents = dependentReadings(e, snap, ctx.daily);
-  if (dependents.daily.package_scope && revealsBannedDependency(dependents.daily.package_scope, ctx.bannedOwners)) {
+  if (dependents.daily.package_scope && revealsBannedHandle(dependents.daily.package_scope, ctx.bannedOwners)) {
     dependents.daily.package_scope = 'package not shown';
     dependents.daily.source = '';
   }
@@ -189,7 +189,7 @@ export function buildCardB(record: ArchivedEntity, ctx: Context) {
   const averages = ctx.commits.slice(11).map((_, i) => roundedAverage(ctx.commits.slice(i, i + 12)));
   const dailyUrl = ctx.daily ? `https://api.deps.dev/v3alpha/systems/${encodeURIComponent(ctx.daily.system)}/packages/${encodeURIComponent(ctx.daily.package)}` : '';
   // No source link rather than one that names a person (empty is the existing no-API case).
-  const dailySource = dailyUrl && !revealsBannedDependency(dailyUrl, ctx.bannedOwners) ? dailyUrl : '';
+  const dailySource = dailyUrl && !revealsBannedHandle(dailyUrl, ctx.bannedOwners) ? dailyUrl : '';
   const source = (key: string) => key === 'citations' || key === 'citation_series'
     ? `https://api.openalex.org/works?filter=openalex:${e.openalex_work_ids.join('|')}`
     : key === 'dependents' || key === 'dependents_series' ? `https://evidaxis.org/snapshots/${date}/snapshot.json`
