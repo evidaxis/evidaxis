@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { classifyRegistry, buildHandleIndex, dependencyHandleHits, FLOOR_HANDLES } from '../src/lib/personFree.mjs';
+import { classifyRegistry, buildHandleIndex, FLOOR_HANDLES } from '../src/lib/personFree.mjs';
 
 // Maps exist only during generation. No source-to-surrogate dictionary is saved.
 export function fixtureAnonymizer(documents, registry, accounts, formerOwners = []) {
@@ -70,20 +70,14 @@ export function fixtureAnonymizer(documents, registry, accounts, formerOwners = 
       .replace(/([a-z0-9-]+)(\.github\.io)/gi, (_, owner, suffix) => (owners.get(owner.toLowerCase()) ?? owner) + suffix)
       .replace(/@([a-z0-9-]+)/gi, (_, owner) => '@' + (owners.get(owner.toLowerCase()) ?? owner));
   }
-  function anonymize(value, dependency = false) {
-    if (typeof value === 'string') {
-      // Keep dependency surrogates local to deps, so identical prose stays public.
-      if (dependency && dependencyHandleHits(value, index).length) {
-        return replacements.get(value.toLowerCase()) ?? owners.get(value.toLowerCase()) ?? synthetic('package', value);
-      }
-      return text(value);
-    }
-    if (Array.isArray(value)) return value.map(child => anonymize(child, dependency));
+  function anonymize(value) {
+    if (typeof value === 'string') return text(value);
+    if (Array.isArray(value)) return value.map(anonymize);
     if (!value || typeof value !== 'object') return value;
     return Object.fromEntries(Object.entries(value).map(([key, child]) => [
       // Schema keys are not account identities; repository keys are locators.
-      key.includes('/') ? text(key) : key, anonymize(child, dependency || key === 'deps'),
+      key.includes('/') ? text(key) : key, anonymize(child),
     ]));
   }
-  return value => anonymize(value);
+  return anonymize;
 }

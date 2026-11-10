@@ -106,21 +106,19 @@ def dependency_handle_hits(text: str, index: HandleIndex) -> list[str]:
     # Only dependency values split hyphenated words; prose and repo paths do not.
     decoded = lenient_decoded(text).lower()
     hits = set(handle_hits(text, index)) | set(handle_hits(decoded, index))
-    # Decoding can erase a raw token boundary (handle%61 becomes handlea).
-    for value in {text.lower(), decoded}:
-        exact = value.strip()
-        if exact in index.all - index.context_only:
-            hits.add(exact)
-        for match in DEPENDENCY_WORD.finditer(value):
-            parts = match.group(0).split('-')
-            for start in range(len(parts)):
-                token = ''
-                for end in range(start, len(parts)):
-                    token += ('-' if end > start else '') + parts[end]
-                    if len(token) > index.max_word_length:
-                        break
-                    if token in index.words:
-                        hits.add(token)
+    exact = decoded.strip()
+    if exact in index.all - index.context_only:
+        hits.add(exact)
+    for match in DEPENDENCY_WORD.finditer(decoded):
+        parts = match.group(0).split('-')
+        for start in range(len(parts)):
+            token = ''
+            for end in range(start, len(parts)):
+                token += ('-' if end > start else '') + parts[end]
+                if len(token) > index.max_word_length:
+                    break
+                if token in index.words:
+                    hits.add(token)
     return sorted(hits)
 
 

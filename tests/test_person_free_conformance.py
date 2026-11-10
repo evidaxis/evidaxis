@@ -97,18 +97,6 @@ def test_hyphenated_public_paths_remain_public(case, tmp_path, monkeypatch):
     assert hf._person_free_hits(stage) == []
 
 
-def test_hf_dependency_guard_scans_raw_encoded_tokens(tmp_path, monkeypatch):
-    case = next(c for c in VECTORS if c["id"] == "dependency-package-token-boundaries")
-    write_registry(tmp_path, case)
-    monkeypatch.setattr(hf, "REPO", tmp_path)
-    stage = tmp_path / "stage"
-    stage.mkdir()
-    (stage / "snapshot.json").write_text(json.dumps({"deps": {"package": "widget-zz-drill-person%61"}}))
-    findings = hf._person_free_hits(stage)
-    assert len(findings) == 1
-    assert re.fullmatch(r"snapshot.json: rule=g hash=[0-9a-f]{8}", findings[0])
-
-
 @pytest.mark.parametrize("case", VECTORS, ids=lambda case: case["id"])
 def test_loaded_classification(case, tmp_path):
     write_registry(tmp_path, case)

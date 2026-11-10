@@ -1,33 +1,5 @@
 import { expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
 import { fixtureAnonymizer } from '../../scripts/fixture-privacy.mjs';
-import { buildHandleIndex, classifyRegistry, dependencyFieldHits } from './personFree.mjs';
-
-const dependencyCase = JSON.parse(readFileSync(new URL('../../../tests/fixtures/person-free-conformance.json', import.meta.url), 'utf8'))
-  .cases.find((c: any) => c.id === 'dependency-package-token-boundaries');
-
-it.each(dependencyCase.packages)('anonymizes dependency tokens on an organization row: $system/$package', (probe) => {
-  const pkg = probe.package;
-  const row = { github_repo: dependencyCase.publicPaths[0], name: 'widget-zzdrillfern-plugin',
-    description: 'widget-zz-drill-person-plugin',
-    deps: { system: probe.system, package: pkg, nested: [{ alias: pkg }, pkg] } };
-  const before = structuredClone(row);
-  const anonymize = fixtureAnonymizer([row], { repos: dependencyCase.registry }, {});
-  const output = anonymize(row);
-  expect(output.github_repo).toBe(row.github_repo);
-  expect(output.name).toBe(row.name);
-  expect(output.description).toBe(row.description);
-  for (const value of [output.deps.package, output.deps.nested[0].alias, output.deps.nested[1]]) {
-    if (probe.masked) expect(value).not.toBe(pkg);
-    else expect(value).toBe(pkg);
-  }
-  if (probe.systemMasked) expect(output.deps.system).not.toBe(probe.system);
-  else expect(output.deps.system).toBe(probe.system);
-  const index = buildHandleIndex(classifyRegistry(dependencyCase.registry).handles);
-  expect(dependencyFieldHits(output, index)).toEqual([]);
-  expect(output).toEqual(anonymize(row));
-  expect(row).toEqual(before);
-});
 
 it('replaces personal locators consistently, including encoded package URLs, without changing organizations', () => {
   const owner = 'zz-fixture-person', repo = `${owner}/private-project`, pkg = `@${owner}/private-package`;

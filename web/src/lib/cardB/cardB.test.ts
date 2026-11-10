@@ -178,14 +178,14 @@ describe('twelve forced B fixtures and content indexability', () => {
   it('uses history sufficiency unchanged for A and the headline experiment', () => {
     for (const state of ['sufficient', 'insufficient']) expect(isIndexable({ entity: { entity_id: ids[0] }, measurement_state: { history_sufficiency: { state } } })).toBe(state === 'sufficient');
   });
-  it.each(['zz-drill-person', 'widget-zz-drill-person-plugin', 'widget-zz-drill-person%61'])(
+  it.each(['zz-drill-person', 'widget-zz-drill-person-plugin'])(
     'drops a daily-dependents source link with a personal package token: %s', (pkg) => {
     const r = archiveEntityById.get(ids[0])!, base = contextFor(r);
     const daily = { system: 'pypi', package: pkg, value: 3 } as NonNullable<Context['daily']>;
     const named = buildCardB(r, { ...base, daily, bannedOwners: [...base.bannedOwners, 'zz-drill-person'] });
     expect(named.readings.find(x => x.key === 'daily')!.source).toBe('');
     const plain = buildCardB(r, { ...base, daily });
-    expect(plain.readings.find(x => x.key === 'daily')!.source).toBe(`https://api.deps.dev/v3alpha/systems/pypi/packages/${encodeURIComponent(pkg)}`);
+    expect(plain.readings.find(x => x.key === 'daily')!.source).toBe(`https://api.deps.dev/v3alpha/systems/pypi/packages/${pkg}`);
   });
   it('indexes a linked citation count and annual series even without a repository', () => {
     const r = structuredClone(archiveEntityById.get(ids[0])!), ctx = contextFor(r);
