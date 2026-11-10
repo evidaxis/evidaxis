@@ -50,12 +50,12 @@ export function buildHandleIndex(handles, templateVocabulary = templateWords()) 
       (templateVocabulary.has(key) ? contextOnly : words).add(key);
     }
   }
-  return { all, words, contextOnly, maxWordLength: Math.max(0, ...[...words].map(word => word.length)) };
+  return { all, words, contextOnly };
 }
 
 const SLUG = /(?<![a-z0-9_.-])([a-z0-9][a-z0-9-]{0,38})(?=\/)/g;
 const MENTION = /(?<![a-z0-9_.-])@([a-z0-9][a-z0-9-]{0,38})(?![a-z0-9-])/g;
-const WORD = /[a-z0-9]+(?:-+[a-z0-9]+)*/g;
+const WORD = /(?<![a-z0-9-])[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?![a-z0-9-])/g;
 
 // Short (under 4 characters) or all-digit handles collide with the site's own paths
 // ("/e/", "/ai/", "/page/12/"); they count only in an explicit GitHub context.
@@ -92,18 +92,7 @@ export function handleHits(text, index) {
     if (index.words.has(handle) || GITHUB_CONTEXT.test(lower.slice(Math.max(0, m.index - 11), m.index))) hits.add(handle);
   }
   for (const m of lower.matchAll(MENTION)) if (index.all.has(m[1])) hits.add(m[1]);
-  // Rule g: hyphens delimit tokens but may also belong to a login.
-  for (const m of lower.matchAll(WORD)) {
-    const parts = m[0].split('-');
-    for (let start = 0; start < parts.length; start++) {
-      let token = '';
-      for (let end = start; end < parts.length; end++) {
-        token += (end === start ? '' : '-') + parts[end];
-        if (token.length > index.maxWordLength) break;
-        if (index.words.has(token)) hits.add(token);
-      }
-    }
-  }
+  for (const m of lower.matchAll(WORD)) if (index.words.has(m[0])) hits.add(m[0]);
   for (const re of [GH_PROFILE, GH_PAGES, GH_RAW]) for (const m of lower.matchAll(re)) if (index.all.has(m[1])) hits.add(m[1]);
   return [...hits];
 }

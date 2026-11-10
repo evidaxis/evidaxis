@@ -80,18 +80,17 @@ def _redact_free_text(node, index, stats: dict, classified) -> None:
             _redact_free_text(item, index, stats, classified)
 
 
-def _redact_packages(node, index, stats: dict, classified, dependency=False):
-    # Every string in deps reaches snapshot bytes, including nested metadata.
-    if dependency and isinstance(node, str) and reveals_handle(node, index, classified):
-        stats["fields_redacted"] += 1
-        return "package not shown"
+def _redact_packages(node, index, stats: dict, classified) -> None:
     if isinstance(node, dict):
-        for key, value in node.items():
-            node[key] = _redact_packages(value, index, stats, classified, dependency or key in {"deps", "package"})
+        package = node.get("package")
+        if isinstance(package, str) and reveals_handle(package, index, classified):
+            node["package"] = "package not shown"
+            stats["fields_redacted"] += 1
+        for value in node.values():
+            _redact_packages(value, index, stats, classified)
     elif isinstance(node, list):
-        for pos, item in enumerate(node):
-            node[pos] = _redact_packages(item, index, stats, classified, dependency)
-    return node
+        for item in node:
+            _redact_packages(item, index, stats, classified)
 
 
 def _project_entity(entity: dict, registry: dict, index, stats: dict, classified) -> None:

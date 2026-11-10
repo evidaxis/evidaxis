@@ -78,9 +78,10 @@ export function publicRepoLabel(e: RepositoryEntity, registry: OwnerTypes): stri
   return revealsHandle(repoName, registry) ? 'repository not shown' : repoName;
 }
 
-// Dependency labels can embed personal tokens in either published component.
+// deps.dev package names can equal the owner's personal handle (pypi packages
+// named like their User repositories, 2026-10-03); hide those like repo labels.
 export function publicPackageLabel(system: string, pkg: string, registry: OwnerTypes): string {
-  return revealsHandle(system, registry) || revealsHandle(pkg, registry) ? 'package not shown' : `${system}/${pkg}`;
+  return revealsHandle(pkg, registry) ? 'package not shown' : `${system}/${pkg}`;
 }
 
 export function publicOwnerType(e: RepositoryEntity, registry: OwnerTypes): OwnerType {
@@ -112,9 +113,8 @@ export function publicHomepage(e: RepositoryEntity, registry: OwnerTypes): strin
 }
 
 // Apply to nested text and packages too: JSON twins must be no wider than cards.
-export function publicFields<T>(value: T, registry: OwnerTypes, dependency = false): T {
-  if (dependency && typeof value === 'string' && revealsHandle(value, registry)) return 'package not shown' as T;
-  if (Array.isArray(value)) return value.map(v => publicFields(v, registry, dependency)) as T;
+export function publicFields<T>(value: T, registry: OwnerTypes): T {
+  if (Array.isArray(value)) return value.map(v => publicFields(v, registry)) as T;
   if (!value || typeof value !== 'object') return value;
   const out: Record<string, unknown> = {};
   for (const [key, child] of Object.entries(value)) {
@@ -123,7 +123,7 @@ export function publicFields<T>(value: T, registry: OwnerTypes, dependency = fal
       if (['proxy', 'description', 'summary'].includes(key)) { out[key] = null; continue; }
       if (key === 'package') { out[key] = 'package not shown'; continue; }
     }
-    out[key] = publicFields(child, registry, dependency || key === 'deps');
+    out[key] = publicFields(child, registry);
   }
   return out as T;
 }

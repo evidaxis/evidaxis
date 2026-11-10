@@ -20,7 +20,7 @@ from urllib.parse import unquote, urlsplit
 
 SLUG = re.compile(r"(?<![a-z0-9_.-])([a-z0-9][a-z0-9-]{0,38})(?=/)")
 MENTION = re.compile(r"(?<![a-z0-9_.-])@([a-z0-9][a-z0-9-]{0,38})(?![a-z0-9-])")
-WORD = re.compile(r"[a-z0-9]+(?:-+[a-z0-9]+)*")
+WORD = re.compile(r"(?<![a-z0-9-])[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?![a-z0-9-])")
 GITHUB_CONTEXT = re.compile(r"(?:github\.com/|repos/)$")
 # Explicit GitHub contexts count ANY handle, whatever its length (review 2026-10-04):
 # a profile URL without a trailing slash, a Pages host, a raw-content path.
@@ -41,7 +41,6 @@ class HandleIndex:
     all: frozenset[str]
     words: frozenset[str]
     context_only: frozenset[str] = frozenset()
-    max_word_length: int = 0
 
 
 @lru_cache(maxsize=1)
@@ -66,15 +65,13 @@ def build_handle_index(handles, template_vocabulary=None) -> HandleIndex:
         # Rule f exempts distinctive template words, not exact short field values.
         if len(key) >= 4 and not key.isdigit():
             (context_only if key in vocabulary else words).add(key)
-    return HandleIndex(frozenset(all_handles), frozenset(words), frozenset(context_only),
-                       max(map(len, words), default=0))
+    return HandleIndex(frozenset(all_handles), frozenset(words), frozenset(context_only))
 
 
 def handle_hits(text: str, index: HandleIndex) -> list[str]:
     lower = str(text).lower()
     hits: list[str] = []
     seen: set[str] = set()
-    max_length = index.max_word_length
 
     def add(handle: str) -> None:
         if handle not in seen:
@@ -93,16 +90,9 @@ def handle_hits(text: str, index: HandleIndex) -> list[str]:
         if handle in index.all:
             add(handle)
     for match in WORD.finditer(lower):
-        # Rule g: hyphens delimit tokens but may also belong to a login.
-        parts = match.group(0).split('-')
-        for start in range(len(parts)):
-            token = ''
-            for end in range(start, len(parts)):
-                token += ('-' if end > start else '') + parts[end]
-                if len(token) > max_length:
-                    break
-                if token in index.words:
-                    add(token)
+        token = match.group(0)
+        if token in index.words:
+            add(token)
     for pattern in (GH_PROFILE, GH_PAGES, GH_RAW):
         for match in pattern.finditer(lower):
             if match.group(1) in index.all:
@@ -147,7 +137,7 @@ def neutral_name(entity_id: str) -> str:
 
 
 def public_package_label(system: str, package: str, index: HandleIndex) -> str:
-    if reveals_handle(system, index) or reveals_handle(package, index):
+    if reveals_handle(package, index):
         return "package not shown"
     return f"{system}/{package}"
 
