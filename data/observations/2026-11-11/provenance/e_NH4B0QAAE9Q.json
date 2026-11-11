@@ -1,0 +1,33 @@
+{
+  "network_count": 236,
+  "description": "Set of methods to ensemble boxes from different object detection models, including implementation of \"Weighted boxes fusion (WBF)\" method.",
+  "topics": [
+    "boxes",
+    "ensemble-prediction",
+    "object-detection"
+  ],
+  "stargazers_count": 1833,
+  "private": false,
+  "pushed_at": "2026-10-09T06:50:48Z",
+  "name": "Weighted-Boxes-Fusion",
+  "forks_count": 236,
+  "default_branch": "master",
+  "id": 217881799,
+  "visibility": "public",
+  "size": 15356,
+  "watchers_count": 1833,
+  "updated_at": "2026-11-10T09:05:10Z",
+  "full_name": "ZFTurbo/Weighted-Boxes-Fusion",
+  "fork": false,
+  "open_issues_count": 39,
+  "archived": false,
+  "homepage": "",
+  "created_at": "2019-10-27T16:17:58Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMTc4ODE3OTk=",
+  "language": "Python",
+  "subscribers_count": 13,
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

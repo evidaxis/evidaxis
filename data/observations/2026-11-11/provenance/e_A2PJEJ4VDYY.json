@@ -1,0 +1,33 @@
+{
+  "network_count": 258,
+  "description": "[ACL2026] \"MiniRAG: Making RAG Simpler with Small and Open-Sourced Language Models\"",
+  "topics": [
+    "large-language-models",
+    "rag",
+    "retrieval-augmented-generation"
+  ],
+  "stargazers_count": 2034,
+  "private": false,
+  "pushed_at": "2025-10-16T07:43:16Z",
+  "name": "MiniRAG",
+  "forks_count": 258,
+  "default_branch": "main",
+  "id": 915291641,
+  "visibility": "public",
+  "size": 5758,
+  "watchers_count": 2034,
+  "updated_at": "2026-11-11T09:22:56Z",
+  "full_name": "HKUDS/MiniRAG",
+  "fork": false,
+  "open_issues_count": 59,
+  "archived": false,
+  "homepage": "https://arxiv.org/abs/2501.06713",
+  "created_at": "2025-01-11T13:24:14Z",
+  "node_id": "R_kgDONo49-Q",
+  "language": "Python",
+  "subscribers_count": 18,
+  "disabled": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

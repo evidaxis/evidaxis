@@ -1,0 +1,32 @@
+{
+  "network_count": 418,
+  "description": "qpdf: A content-preserving PDF document transformer",
+  "topics": [
+    "pdf",
+    "pdf-document-processor"
+  ],
+  "stargazers_count": 5574,
+  "private": false,
+  "pushed_at": "2026-09-26T23:55:04Z",
+  "name": "qpdf",
+  "forks_count": 418,
+  "default_branch": "main",
+  "id": 4539167,
+  "visibility": "public",
+  "size": 43690,
+  "watchers_count": 5574,
+  "updated_at": "2026-11-11T13:47:00Z",
+  "full_name": "qpdf/qpdf",
+  "fork": false,
+  "open_issues_count": 193,
+  "archived": false,
+  "homepage": "https://qpdf.sourceforge.io/",
+  "created_at": "2012-06-03T17:40:19Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnk0NTM5MTY3",
+  "language": "C++",
+  "subscribers_count": 75,
+  "disabled": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

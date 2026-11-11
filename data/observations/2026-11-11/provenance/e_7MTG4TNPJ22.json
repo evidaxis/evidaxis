@@ -1,0 +1,33 @@
+{
+  "network_count": 17,
+  "description": "Fast transformer inference for Ruby",
+  "topics": [
+    "named-entity-recognition",
+    "question-answering",
+    "sentiment-analysis"
+  ],
+  "stargazers_count": 616,
+  "private": false,
+  "pushed_at": "2026-06-29T19:07:38Z",
+  "name": "informers",
+  "forks_count": 17,
+  "default_branch": "master",
+  "id": 300489205,
+  "visibility": "public",
+  "size": 2583,
+  "watchers_count": 616,
+  "updated_at": "2026-11-06T14:08:07Z",
+  "full_name": "ankane/informers",
+  "fork": false,
+  "open_issues_count": 1,
+  "archived": false,
+  "homepage": "",
+  "created_at": "2020-10-02T03:20:32Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMDA0ODkyMDU=",
+  "language": "Ruby",
+  "subscribers_count": 10,
+  "disabled": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

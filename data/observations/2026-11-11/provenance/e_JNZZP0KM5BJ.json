@@ -1,0 +1,33 @@
+{
+  "network_count": 221,
+  "description": "Implementations of few-shot object detection benchmarks",
+  "topics": [
+    "few-shot-learning",
+    "few-shot-object-detection",
+    "icml-2020"
+  ],
+  "stargazers_count": 1218,
+  "private": false,
+  "pushed_at": "2023-11-21T16:16:32Z",
+  "name": "few-shot-object-detection",
+  "forks_count": 221,
+  "default_branch": "master",
+  "id": 247790202,
+  "visibility": "public",
+  "size": 803,
+  "watchers_count": 1218,
+  "updated_at": "2026-10-08T17:54:12Z",
+  "full_name": "ucbdrive/few-shot-object-detection",
+  "fork": false,
+  "open_issues_count": 69,
+  "archived": false,
+  "homepage": null,
+  "created_at": "2020-03-16T18:35:33Z",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNDc3OTAyMDI=",
+  "language": "Python",
+  "subscribers_count": 26,
+  "disabled": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
