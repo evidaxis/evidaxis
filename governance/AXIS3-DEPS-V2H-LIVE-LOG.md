@@ -757,3 +757,31 @@ CAMEL (`e_VBBNJDDB0DA`) and `e_SV60T2QMXGE` in; `e_X33782S1M13` out; six kept. A
 **`score_m3.py --verify`: PASS** — "files match recomputation".
 
 **Next tact:** partition 2026-11-02; 2026-10-26 becomes eligible for CLEAN.
+
+## 2026-11-12 — tact: partition 2026-11-02 (late: the 2026-11-09 tact was missed), 6/6; score_m3 --verify PASS
+
+**Late tact.** The weekly tact due 2026-11-09 did not run; `axis-staleness-check` flagged 9 days on
+2026-11-11. This tact captures the partition that tact would have captured (2026-11-02); no partition
+is skipped. Files land under `data/observations/2026-11-12/`.
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-11-02` — panel manifest `026eaa45377a…`
+(90 systems / 628 frozen packages + 12 canaries): **1208/2432 matched**, 10 canaries
+(`bqjob_r63be485d7ebb1599_000001a1cfd9f646_1`). Coverage holds at the caught-up level (1206 → 1208).
+
+**Sidecar** (`--sidecar 2026-11-02`): PV2P 1155 rows, Projects 4614 rows. The retention tripwire
+values were not printed by this run and are not recorded here.
+
+**Sanity gate** (same calibration `sanity-calibration-3e51319d9817.json`, `--series v2h1`): 33 partitions
+checked; **2026-10-26 promoted CLEAN** (cov=1206); 2026-11-02 PROVISIONAL (cov=1208). KILL-BAR PASS,
+flagged exactly the two known-bad partitions. Artifact
+`data/quarantine/axis3-deps-v2/sanity-check-788c1364ad04.json`.
+
+**Evaluation** (`--as-of 2026-10-26 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-10-26**, 48 voting / 8 rising, 0 unstable vetoed.
+**c1–c6 PASS — 6/6.** Rising set vs the 2026-10-19 evaluation: `e_Z7YDNC4F139` in;
+`e_JA1TAYFFAHR` and `e_JBM5J6NVTF7` out; seven kept. Artifact
+`data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-10-26-46448ac54749.json`.
+
+**`score_m3.py --verify`: PASS** — "files match recomputation".
+
+**Next tact:** Monday 2026-11-16, partition 2026-11-09; 2026-11-02 becomes eligible for CLEAN.
