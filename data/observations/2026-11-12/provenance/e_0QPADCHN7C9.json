@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-12T08:39:00Z",
+  "created_at": "2021-02-27T15:10:30Z",
+  "name": "qiskit-machine-learning",
+  "open_issues_count": 30,
+  "id": 342885422,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 457,
+  "size": 88905,
+  "homepage": "https://stfc.github.io/qiskit-machine-learning/",
+  "subscribers_count": 18,
+  "language": "Python",
+  "watchers_count": 1116,
+  "stargazers_count": 1116,
+  "archived": false,
+  "forks_count": 457,
+  "pushed_at": "2026-11-12T07:38:53Z",
+  "description": "An open-source library built on Qiskit for quantum machine learning tasks at scale on quantum hardware and classical simulators",
+  "topics": [
+    "machine-learning",
+    "qiskit",
+    "quantum-computing"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzNDI4ODU0MjI=",
+  "full_name": "stfc/qiskit-machine-learning",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

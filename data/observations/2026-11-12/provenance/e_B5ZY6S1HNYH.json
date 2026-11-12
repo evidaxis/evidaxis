@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-12T12:10:06Z",
+  "created_at": "2025-02-28T08:40:42Z",
+  "name": "SuperAutoStudy",
+  "open_issues_count": 21,
+  "id": 940475236,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 69,
+  "size": 16055,
+  "homepage": "",
+  "subscribers_count": 3,
+  "language": "Java",
+  "watchers_count": 815,
+  "stargazers_count": 815,
+  "archived": false,
+  "forks_count": 69,
+  "pushed_at": "2026-07-14T04:15:38Z",
+  "description": "超星学习通/学习通/泛雅学习通自动云端刷课的Springboot项目,支持多级倍速播放和自动答题，已接入Super题库+大模型答题。",
+  "topics": [
+    "java",
+    "llm",
+    "springboot"
+  ],
+  "private": false,
+  "default_branch": "master",
+  "node_id": "R_kgDOOA6DZA",
+  "full_name": "Dainoar/SuperAutoStudy",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

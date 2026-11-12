@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-12T12:21:40Z",
+  "created_at": "2026-03-13T15:19:35Z",
+  "name": "kotlin-agent-skills",
+  "open_issues_count": 22,
+  "id": 1180940534,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 45,
+  "size": 286,
+  "homepage": "https://kotlinlang.org",
+  "subscribers_count": 14,
+  "language": "Shell",
+  "watchers_count": 1119,
+  "stargazers_count": 1119,
+  "archived": false,
+  "forks_count": 45,
+  "pushed_at": "2026-10-30T21:37:54Z",
+  "description": "A collection of AI agent skills useful for projects using Kotlin language",
+  "topics": [
+    "kotlin",
+    "skills"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "R_kgDORmO49g",
+  "full_name": "Kotlin/kotlin-agent-skills",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

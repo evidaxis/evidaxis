@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-09T12:05:37Z",
+  "created_at": "2023-07-24T10:17:55Z",
+  "name": "webarena",
+  "open_issues_count": 106,
+  "id": 670111980,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 250,
+  "size": 6232,
+  "homepage": "https://webarena.dev",
+  "subscribers_count": 17,
+  "language": "Python",
+  "watchers_count": 1642,
+  "stargazers_count": 1642,
+  "archived": false,
+  "forks_count": 250,
+  "pushed_at": "2025-11-26T21:16:00Z",
+  "description": "Code repo for \"WebArena: A Realistic Web Environment for Building Autonomous Agents\"",
+  "topics": [
+    "agent",
+    "nlp"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "R_kgDOJ_EY7A",
+  "full_name": "web-arena-x/webarena",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

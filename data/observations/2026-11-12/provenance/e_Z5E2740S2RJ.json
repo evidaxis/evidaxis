@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-12T14:01:27Z",
+  "created_at": "2022-09-06T02:11:00Z",
+  "name": "diffusionbee-stable-diffusion-ui",
+  "open_issues_count": 399,
+  "id": 533127272,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 728,
+  "size": 219307,
+  "homepage": "https://diffusionbee.com",
+  "subscribers_count": 117,
+  "language": "JavaScript",
+  "watchers_count": 13591,
+  "stargazers_count": 13591,
+  "archived": false,
+  "forks_count": 728,
+  "pushed_at": "2024-10-30T16:56:14Z",
+  "description": "Diffusion Bee is the easiest way to run Stable Diffusion locally on your M1 Mac. Comes with a one-click installer. No dependencies or technical knowledge needed.",
+  "topics": [
+    "electron-app",
+    "macos",
+    "stable-diffusion"
+  ],
+  "private": false,
+  "default_branch": "master",
+  "node_id": "R_kgDOH8bgaA",
+  "full_name": "divamgupta/diffusionbee-stable-diffusion-ui",
+  "owner_type": "User",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

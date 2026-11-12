@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-12T00:53:29Z",
+  "created_at": "2019-04-20T15:04:58Z",
+  "name": "bert_score",
+  "open_issues_count": 48,
+  "id": 182419862,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 238,
+  "size": 1362,
+  "homepage": "",
+  "subscribers_count": 18,
+  "language": "Jupyter Notebook",
+  "watchers_count": 1924,
+  "stargazers_count": 1924,
+  "archived": false,
+  "forks_count": 238,
+  "pushed_at": "2024-07-30T09:41:28Z",
+  "description": "BERT score for text generation",
+  "topics": [
+    "machine-learning",
+    "natural-language-processing"
+  ],
+  "private": false,
+  "default_branch": "master",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxODI0MTk4NjI=",
+  "full_name": "Tiiiger/bert_score",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

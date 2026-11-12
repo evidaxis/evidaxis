@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-12T08:57:06Z",
+  "created_at": "2026-03-29T04:19:41Z",
+  "name": "flocks",
+  "open_issues_count": 21,
+  "id": 1194990993,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 103,
+  "size": 99075,
+  "homepage": "",
+  "subscribers_count": 2,
+  "language": "Python",
+  "watchers_count": 518,
+  "stargazers_count": 518,
+  "archived": false,
+  "forks_count": 103,
+  "pushed_at": "2026-11-12T13:19:42Z",
+  "description": "Flocks is an agentic SecOps platform.",
+  "topics": [
+    "agent",
+    "flocks",
+    "secops"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "R_kgDORzodkQ",
+  "full_name": "AgentFlocks/flocks",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

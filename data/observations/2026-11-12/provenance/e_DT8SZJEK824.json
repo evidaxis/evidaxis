@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-10T11:00:59Z",
+  "created_at": "2023-12-02T08:48:18Z",
+  "name": "chatllm.cpp",
+  "open_issues_count": 11,
+  "id": 726390185,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 76,
+  "size": 10364,
+  "homepage": "",
+  "subscribers_count": 22,
+  "language": "C++",
+  "watchers_count": 942,
+  "stargazers_count": 942,
+  "archived": false,
+  "forks_count": 76,
+  "pushed_at": "2026-10-27T14:43:07Z",
+  "description": "Pure C++ implementation of several models for real-time chatting on your computer (CPU & GPU)",
+  "topics": [
+    "llm",
+    "llm-inference"
+  ],
+  "private": false,
+  "default_branch": "master",
+  "node_id": "R_kgDOK0vVqQ",
+  "full_name": "foldl/chatllm.cpp",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

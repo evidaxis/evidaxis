@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-12T15:31:58Z",
+  "created_at": "2025-08-23T20:34:39Z",
+  "name": "software-agent-sdk",
+  "open_issues_count": 817,
+  "id": 1043426082,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 775,
+  "size": 68922,
+  "homepage": "",
+  "subscribers_count": 12,
+  "language": "Python",
+  "watchers_count": 1387,
+  "stargazers_count": 1387,
+  "archived": false,
+  "forks_count": 775,
+  "pushed_at": "2026-11-12T15:21:54Z",
+  "description": "A clean, modular SDK for building AI agents with OpenHands V1.",
+  "topics": [
+    "agent",
+    "sdk"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "R_kgDOPjFrIg",
+  "full_name": "OpenHands/software-agent-sdk",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

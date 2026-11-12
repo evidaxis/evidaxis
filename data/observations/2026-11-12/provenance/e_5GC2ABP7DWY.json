@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-12T02:47:20Z",
+  "created_at": "2022-06-06T07:46:00Z",
+  "name": "rotate-captcha-crack",
+  "open_issues_count": 3,
+  "id": 500338860,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 116,
+  "size": 101164,
+  "homepage": "",
+  "subscribers_count": 5,
+  "language": "Python",
+  "watchers_count": 503,
+  "stargazers_count": 503,
+  "archived": false,
+  "forks_count": 116,
+  "pushed_at": "2026-07-09T00:11:17Z",
+  "description": "基于CNN的旋转验证码解决方案✨Predict the rotation angle of given captcha picture through CNN",
+  "topics": [
+    "convolutional-neural-networks",
+    "pytorch"
+  ],
+  "private": false,
+  "default_branch": "master",
+  "node_id": "R_kgDOHdKQrA",
+  "full_name": "lumina37/rotate-captcha-crack",
+  "owner_type": "User",
+  "license_spdx_id": "Unlicense",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

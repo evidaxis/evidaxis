@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-11T04:30:21Z",
+  "created_at": "2025-12-06T14:12:30Z",
+  "name": "beans",
+  "open_issues_count": 57,
+  "id": 1111221079,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 76,
+  "size": 2393,
+  "homepage": "",
+  "subscribers_count": 11,
+  "language": "Go",
+  "watchers_count": 965,
+  "stargazers_count": 965,
+  "archived": false,
+  "forks_count": 76,
+  "pushed_at": "2026-04-06T12:41:56Z",
+  "description": "A CLI-based, flat-file issue tracker for humans and robots. 🤖",
+  "topics": [
+    "agentic-ai",
+    "issue-tracker",
+    "markdown"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "R_kgDOQjvjVw",
+  "full_name": "hmans/beans",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

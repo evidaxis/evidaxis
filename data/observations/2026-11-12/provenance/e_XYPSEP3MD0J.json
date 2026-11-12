@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-07T16:45:20Z",
+  "created_at": "2024-01-01T22:52:25Z",
+  "name": "instructor-js",
+  "open_issues_count": 14,
+  "id": 737903080,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 72,
+  "size": 2804,
+  "homepage": "https://js.useinstructor.com",
+  "subscribers_count": 10,
+  "language": "TypeScript",
+  "watchers_count": 805,
+  "stargazers_count": 805,
+  "archived": false,
+  "forks_count": 72,
+  "pushed_at": "2025-01-27T23:44:58Z",
+  "description": "structured extraction for llms",
+  "topics": [
+    "llm",
+    "openai",
+    "zod"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "R_kgDOK_uB6A",
+  "full_name": "567-labs/instructor-js",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

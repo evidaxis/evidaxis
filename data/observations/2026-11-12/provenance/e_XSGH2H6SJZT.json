@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-11-12T14:56:27Z",
+  "created_at": "2023-09-07T09:11:16Z",
+  "name": "ai-dial-chat",
+  "open_issues_count": 111,
+  "id": 688398751,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 63,
+  "size": 129380,
+  "homepage": "https://chat.dialx.ai",
+  "subscribers_count": 14,
+  "language": "TypeScript",
+  "watchers_count": 501,
+  "stargazers_count": 501,
+  "archived": false,
+  "forks_count": 63,
+  "pushed_at": "2026-11-12T16:34:51Z",
+  "description": "A default UI for AI DIAL",
+  "topics": [
+    "ai-dial",
+    "llm"
+  ],
+  "private": false,
+  "default_branch": "development",
+  "node_id": "R_kgDOKQghnw",
+  "full_name": "epam/ai-dial-chat",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

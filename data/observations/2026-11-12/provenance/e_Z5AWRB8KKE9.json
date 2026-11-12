@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-11-12T11:20:45Z",
+  "created_at": "2019-11-01T23:36:34Z",
+  "name": "pyserini",
+  "open_issues_count": 84,
+  "id": 219078084,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 668,
+  "size": 12448,
+  "homepage": "http://pyserini.io/",
+  "subscribers_count": 13,
+  "language": "Python",
+  "watchers_count": 2211,
+  "stargazers_count": 2211,
+  "archived": false,
+  "forks_count": 668,
+  "pushed_at": "2026-11-11T14:29:31Z",
+  "description": "Pyserini is a Python toolkit for reproducible information retrieval research with sparse and dense representations.",
+  "topics": [
+    "information-retrieval"
+  ],
+  "private": false,
+  "default_branch": "master",
+  "node_id": "MDEwOlJlcG9zaXRvcnkyMTkwNzgwODQ=",
+  "full_name": "castorini/pyserini",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

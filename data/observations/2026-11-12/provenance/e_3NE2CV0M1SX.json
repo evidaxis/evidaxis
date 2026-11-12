@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-10T18:56:50Z",
+  "created_at": "2021-07-01T14:04:11Z",
+  "name": "godot_rl_agents",
+  "open_issues_count": 27,
+  "id": 382052734,
+  "disabled": false,
+  "fork": false,
+  "visibility": "public",
+  "network_count": 124,
+  "size": 265740,
+  "homepage": "",
+  "subscribers_count": 27,
+  "language": "Python",
+  "watchers_count": 1636,
+  "stargazers_count": 1636,
+  "archived": false,
+  "forks_count": 124,
+  "pushed_at": "2026-07-10T20:19:17Z",
+  "description": "An Open Source package that allows video game creators, AI researchers and hobbyists the opportunity to learn complex behaviors for their Non Player Characters or agents",
+  "topics": [
+    "godot",
+    "reinforcement-learning",
+    "simulation"
+  ],
+  "private": false,
+  "default_branch": "main",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzODIwNTI3MzQ=",
+  "full_name": "edbeeching/godot_rl_agents",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
