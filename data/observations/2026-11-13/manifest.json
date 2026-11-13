@@ -1,0 +1,64 @@
+{
+  "collector_version": "t2_m0",
+  "captured_at": "2026-11-13T14:44:49Z",
+  "date": "2026-11-13",
+  "period": "2026-w46",
+  "entity_count": 6711,
+  "error_count": 3,
+  "error_rate": 0.0004,
+  "max_error_rate": 0.2,
+  "degraded": false,
+  "errors": [
+    {
+      "repo": "zoicware/RemoveWindowsAI",
+      "http_status": 404
+    },
+    {
+      "repo": "YuJunZhiXue/dsh-purge",
+      "http_status": 404
+    },
+    {
+      "repo": "410979729/scope-recall-hermes",
+      "http_status": 404
+    }
+  ],
+  "observations_sha256": "314ee9ce37fc4f6c032ddeb9b3388b191b88de8c6b6acfd7bbc7a219f2f193bc",
+  "signal_spec": [
+    {
+      "name": "watchers",
+      "github_field": "subscribers_count",
+      "reconstructable": "false"
+    },
+    {
+      "name": "open_issues",
+      "github_field": "open_issues_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "forks",
+      "github_field": "forks_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "network",
+      "github_field": "network_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "stars_reference_not_scored",
+      "github_field": "stargazers_count",
+      "reconstructable": "partial"
+    },
+    {
+      "name": "size_kb",
+      "github_field": "size",
+      "reconstructable": "true"
+    },
+    {
+      "name": "pushed_at",
+      "github_field": "pushed_at",
+      "reconstructable": "true"
+    }
+  ],
+  "note": "Type-2 (non-reconstructable) point-in-time capture; NOT scored; additive to frozen etl/."
+}

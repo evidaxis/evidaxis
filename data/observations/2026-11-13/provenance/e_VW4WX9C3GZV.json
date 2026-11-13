@@ -1,0 +1,32 @@
+{
+  "language": "Go",
+  "pushed_at": "2026-11-12T16:02:10Z",
+  "archived": false,
+  "created_at": "2024-02-22T05:07:17Z",
+  "private": false,
+  "homepage": "https://lws.sigs.k8s.io",
+  "default_branch": "main",
+  "updated_at": "2026-11-12T17:02:26Z",
+  "fork": false,
+  "forks_count": 211,
+  "subscribers_count": 9,
+  "id": 761580012,
+  "watchers_count": 908,
+  "description": "LeaderWorkerSet & DisaggregatedSet: Kubernetes APIs for Distributed and Disaggregated AI Serving",
+  "visibility": "public",
+  "disabled": false,
+  "name": "lws",
+  "stargazers_count": 908,
+  "topics": [
+    "llm-inference",
+    "sig-apps"
+  ],
+  "node_id": "R_kgDOLWTJ7A",
+  "network_count": 211,
+  "full_name": "kubernetes-sigs/lws",
+  "size": 29769,
+  "open_issues_count": 41,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

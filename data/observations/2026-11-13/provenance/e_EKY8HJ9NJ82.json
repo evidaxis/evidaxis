@@ -1,0 +1,33 @@
+{
+  "language": "Python",
+  "pushed_at": "2025-06-26T21:29:10Z",
+  "archived": false,
+  "created_at": "2016-03-29T23:58:12Z",
+  "private": false,
+  "homepage": "http://www.deepermind-pokerbot.com",
+  "default_branch": "master",
+  "updated_at": "2026-11-12T15:25:46Z",
+  "fork": false,
+  "forks_count": 586,
+  "subscribers_count": 149,
+  "id": 55018634,
+  "watchers_count": 2498,
+  "description": "Fully functional Pokerbot that works on PartyPoker, PokerStars and GGPoker, scraping tables with Open-CV (adaptable via gui) or neural network and making decisions based on a genetic algorithm and montecarlo simulation for poker equity calculation. Binaries can be downloaded with this link:",
+  "visibility": "public",
+  "disabled": false,
+  "name": "Poker",
+  "stargazers_count": 2498,
+  "topics": [
+    "artificial-intelligence",
+    "poker",
+    "pokerstars"
+  ],
+  "node_id": "MDEwOlJlcG9zaXRvcnk1NTAxODYzNA==",
+  "network_count": 586,
+  "full_name": "dickreuter/Poker",
+  "size": 155507,
+  "open_issues_count": 34,
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

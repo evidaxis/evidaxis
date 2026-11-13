@@ -1,0 +1,32 @@
+{
+  "language": "Python",
+  "pushed_at": "2026-11-10T20:10:50Z",
+  "archived": false,
+  "created_at": "2026-05-08T06:41:01Z",
+  "private": false,
+  "homepage": "https://aka.ms/skillopt",
+  "default_branch": "main",
+  "updated_at": "2026-11-13T12:28:21Z",
+  "fork": false,
+  "forks_count": 1824,
+  "subscribers_count": 66,
+  "id": 1232669890,
+  "watchers_count": 19059,
+  "description": "SkillOpt is a text-space optimizer that trains reusable natural-language skills for frozen LLM agents through trajectory-driven edits, validation-gated updates, and deployable best_skill.md artifacts.",
+  "visibility": "public",
+  "disabled": false,
+  "name": "SkillOpt",
+  "stargazers_count": 19059,
+  "topics": [
+    "agent-skills",
+    "self-evolving-agents"
+  ],
+  "node_id": "R_kgDOSXkMwg",
+  "network_count": 1824,
+  "full_name": "microsoft/SkillOpt",
+  "size": 24354,
+  "open_issues_count": 92,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

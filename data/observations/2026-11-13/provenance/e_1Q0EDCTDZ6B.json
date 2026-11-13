@@ -1,0 +1,32 @@
+{
+  "language": "Python",
+  "pushed_at": "2026-11-10T19:07:39Z",
+  "archived": false,
+  "created_at": "2018-12-21T18:46:46Z",
+  "private": false,
+  "homepage": "",
+  "default_branch": "master",
+  "updated_at": "2026-11-11T11:53:33Z",
+  "fork": false,
+  "forks_count": 477,
+  "subscribers_count": 60,
+  "id": 162747292,
+  "watchers_count": 2037,
+  "description": "Library for training machine learning models with privacy for training data",
+  "visibility": "public",
+  "disabled": false,
+  "name": "privacy",
+  "stargazers_count": 2037,
+  "topics": [
+    "machine-learning",
+    "privacy"
+  ],
+  "node_id": "MDEwOlJlcG9zaXRvcnkxNjI3NDcyOTI=",
+  "network_count": 477,
+  "full_name": "tensorflow/privacy",
+  "size": 3280,
+  "open_issues_count": 138,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
