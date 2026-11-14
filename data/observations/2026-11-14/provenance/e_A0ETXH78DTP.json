@@ -1,0 +1,33 @@
+{
+  "created_at": "2022-03-23T22:30:45Z",
+  "name": "DeepSpeed-MII",
+  "private": false,
+  "size": 6836,
+  "topics": [
+    "deep-learning",
+    "inference",
+    "pytorch"
+  ],
+  "pushed_at": "2025-06-30T16:21:45Z",
+  "watchers_count": 2118,
+  "description": "MII makes low-latency and high-throughput inference possible, powered by DeepSpeed.",
+  "language": "Python",
+  "open_issues_count": 210,
+  "id": 473378688,
+  "disabled": false,
+  "node_id": "R_kgDOHDcvgA",
+  "fork": false,
+  "default_branch": "main",
+  "network_count": 192,
+  "stargazers_count": 2118,
+  "archived": false,
+  "visibility": "public",
+  "homepage": "",
+  "subscribers_count": 41,
+  "forks_count": 192,
+  "full_name": "deepspeedai/DeepSpeed-MII",
+  "updated_at": "2026-11-09T11:30:04Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
