@@ -14,9 +14,9 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
   momentum: 37.6
   percentile: 12
   confidence: medium
@@ -25,9 +25,9 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.69, "recent_weekly_commits": 0.0, "stars_not_scored": 17255}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.67, "recent_weekly_commits": 0.0, "stars_not_scored": 17259}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.007614, "theil_sen": 0.0, "cohort_z": -1.287, "latest": 8, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": true, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.007291, "theil_sen": 0.0, "cohort_z": -1.307, "latest": 8, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": true, "rising_vote": false}
 note: "No canonical paper / paper has 0 citations indexed; axis-2 structurally absent."
 ---
 

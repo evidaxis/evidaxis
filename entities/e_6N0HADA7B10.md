@@ -13,19 +13,19 @@ classification:
   industry: ai
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
-  methodology_version: m3
-  snapshot_id: 0641434ff686
-  captured_at: 2026-10-04T02:32:12+00:00
-  period: 2026-w40
-  momentum: 21.4
-  percentile: 16
+  methodology_version: m5
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 36.3
+  percentile: 18
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.027019599869132348, "cohort_z": -2.288, "recent_weekly_commits": 0.0, "stars_not_scored": 664}
+    github_commit_velocity: {"slope": -0.018023876520578085, "cohort_z": -1.097, "recent_weekly_commits": 0.0, "stars_not_scored": 629}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # LinJun
 
-Evidaxis measures **LinJun** on methodology m3. Momentum 21.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **LinJun** on methodology m5. Momentum 36.3/100; 1 axes present, 0 axes converging.

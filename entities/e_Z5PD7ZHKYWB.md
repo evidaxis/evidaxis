@@ -14,10 +14,10 @@ classification:
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 68.3
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 79.0
   percentile: 83
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,11 +25,11 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.015836346137472472, "cohort_z": 1.467, "recent_weekly_commits": 1.7, "stars_not_scored": 12896}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 19, "by_year": {"2026": 13, "2025": 6}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 1, "points": 1, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    github_commit_velocity: {"slope": 0.021513821678940455, "cohort_z": 2.318, "recent_weekly_commits": 1.7, "stars_not_scored": 12967}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 131, "by_year": {"2026": 70, "2025": 58, "2024": 3}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 1, "points": 2, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Agent S
 
-Evidaxis measures **Agent S** on methodology m5. Momentum 68.3/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Agent S** on methodology m5. Momentum 79.0/100; 1 axes present, 0 axes converging.

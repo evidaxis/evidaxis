@@ -14,22 +14,22 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 55.3
-  percentile: 61
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 50.8
+  percentile: 44
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.193, "recent_weekly_commits": 0.0, "stars_not_scored": 538}
-    openalex_citation_momentum: {"status": "present", "slope": 0.779072309023275, "cohort_z": 0.652, "total_citations": 385, "by_year": {"2026": 180, "2025": 113, "2024": 68, "2023": 23, "2022": 1}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.253, "recent_weekly_commits": 0.0, "stars_not_scored": 541}
+    openalex_citation_momentum: {"status": "present", "slope": 0.5022916695099167, "cohort_z": -0.131, "total_citations": 540, "by_year": {"2026": 233, "2025": 141, "2024": 113, "2023": 51, "2022": 2}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # DiffSBDD
 
-Evidaxis measures **DiffSBDD** on methodology m5. Momentum 55.3/100; 2 axes present, 0 axes converging.
+Evidaxis measures **DiffSBDD** on methodology m5. Momentum 50.8/100; 2 axes present, 0 axes converging.

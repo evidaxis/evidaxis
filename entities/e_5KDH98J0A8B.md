@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 9.4
-  percentile: 0
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 29.3
+  percentile: 14
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.07096510128711778, "cohort_z": -3.25, "recent_weekly_commits": 44.1, "stars_not_scored": 35453}
+    github_commit_velocity: {"slope": -0.01989415215719824, "cohort_z": -1.657, "recent_weekly_commits": 50.1, "stars_not_scored": 35543}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # qdrant
 
-Evidaxis measures **qdrant** on methodology m5. Momentum 9.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **qdrant** on methodology m5. Momentum 29.3/100; 1 axes present, 0 axes converging.

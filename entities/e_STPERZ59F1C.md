@@ -14,23 +14,23 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 56.2
-  percentile: 69
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 55.1
+  percentile: 68
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0059692354130028635, "cohort_z": 0.5, "recent_weekly_commits": 0.8, "stars_not_scored": 541}
+    github_commit_velocity: {"slope": 0.003992912843501211, "cohort_z": 0.41, "recent_weekly_commits": 0.7, "stars_not_scored": 545}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 8, "points": 1, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 9, "points": 2, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 ---
 
 # Perth
 
-Evidaxis measures **Perth** on methodology m5. Momentum 56.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Perth** on methodology m5. Momentum 55.1/100; 1 axes present, 0 axes converging.

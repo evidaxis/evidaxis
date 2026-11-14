@@ -14,22 +14,22 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 44.8
-  percentile: 27
-  confidence: low
-  axes_present: ["github_commit_velocity"]
-  convergent_axes: []
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 65.7
+  percentile: 87
+  confidence: medium
+  axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
+  convergent_axes: ["openalex_citation_momentum"]
   rising: false
-  status: single-axis
+  status: watch
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.416, "recent_weekly_commits": 0.0, "stars_not_scored": 7272}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 346, "by_year": {"2026": 211, "2025": 128, "2024": 7}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.356, "recent_weekly_commits": 0.0, "stars_not_scored": 7300}
+    openalex_citation_momentum: {"status": "present", "slope": 3.031310870712155, "cohort_z": 2.873, "total_citations": 2937, "by_year": {"2026": 1995, "2025": 858, "2024": 83, "2023": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # OpenVLA
 
-Evidaxis measures **OpenVLA** on methodology m5. Momentum 44.8/100; 1 axes present, 0 axes converging.
+Evidaxis measures **OpenVLA** on methodology m5. Momentum 65.7/100; 2 axes present, 1 axes converging.

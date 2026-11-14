@@ -14,22 +14,22 @@ classification:
   sub_niche: gui-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 35.2
-  percentile: 0
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 42.0
+  percentile: 33
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -1.187, "recent_weekly_commits": 0.0, "stars_not_scored": 1253}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 31, "by_year": {"2026": 15, "2025": 16}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.64, "recent_weekly_commits": 0.0, "stars_not_scored": 1254}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 97, "by_year": {"2026": 41, "2025": 48, "2024": 8}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Agent-E
 
-Evidaxis measures **Agent-E** on methodology m5. Momentum 35.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Agent-E** on methodology m5. Momentum 42.0/100; 1 axes present, 0 axes converging.

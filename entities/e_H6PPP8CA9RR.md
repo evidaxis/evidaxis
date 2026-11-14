@@ -14,20 +14,20 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
   momentum: 52.1
-  percentile: 53
+  percentile: 33
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.0289879926267077, "cohort_z": 0.487, "recent_weekly_commits": 19.1, "stars_not_scored": 28723}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 3, "by_year": {"2026": 3}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.016658, "theil_sen": 0.016905, "cohort_z": -0.15, "latest": 86, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": false, "rising_vote": false}
+    github_commit_velocity: {"slope": 0.03143959620722167, "cohort_z": 0.446, "recent_weekly_commits": 20.1, "stars_not_scored": 28868}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 66, "by_year": {"2026": 66}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.016378, "theil_sen": 0.016532, "cohort_z": -0.108, "latest": 87, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
 note: "Paper exists but 0 citations indexed; axis-2 not yet usable."
 ---
 

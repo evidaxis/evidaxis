@@ -14,23 +14,23 @@ classification:
   sub_niche: post-training-rl
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 40.4
-  percentile: 33
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 45.6
+  percentile: 36
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.0021785020129432638, "cohort_z": -0.765, "recent_weekly_commits": 2.5, "stars_not_scored": 10144}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 11, "by_year": {"2026": 9, "2025": 2}, "proxy": null}
+    github_commit_velocity: {"slope": -0.00633459279685485, "cohort_z": -0.349, "recent_weekly_commits": 2.3, "stars_not_scored": 10152}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 24, "by_year": {"2026": 22, "2025": 2}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: 2405.11143; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # OpenRLHF
 
-Evidaxis measures **OpenRLHF** on methodology m5. Momentum 40.4/100; 1 axes present, 0 axes converging.
+Evidaxis measures **OpenRLHF** on methodology m5. Momentum 45.6/100; 1 axes present, 0 axes converging.

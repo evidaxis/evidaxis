@@ -14,9 +14,9 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
   momentum: 49.9
   percentile: 36
   confidence: medium
@@ -25,9 +25,9 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.012, "recent_weekly_commits": 0.0, "stars_not_scored": 9945}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.009, "recent_weekly_commits": 0.0, "stars_not_scored": 10104}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.032164, "theil_sen": 0.028587, "cohort_z": 0.0, "latest": 130, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.031581, "theil_sen": 0.027938, "cohort_z": 0.0, "latest": 135, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
 note: "batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 

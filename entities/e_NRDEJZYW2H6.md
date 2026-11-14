@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 88.5
-  percentile: 97
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 85.9
+  percentile: 88
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.050624148643354246, "cohort_z": 3.077, "recent_weekly_commits": 2.2, "stars_not_scored": 798}
+    github_commit_velocity: {"slope": 0.04111094643295508, "cohort_z": 2.874, "recent_weekly_commits": 2.2, "stars_not_scored": 849}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-11; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-11; axis-2 unresolved."
 
 # HERO-Anti-OverDefense
 
-Evidaxis measures **HERO-Anti-OverDefense** on methodology m5. Momentum 88.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **HERO-Anti-OverDefense** on methodology m5. Momentum 85.9/100; 1 axes present, 0 axes converging.

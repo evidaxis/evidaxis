@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 31.3
-  percentile: 15
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 41.0
+  percentile: 21
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.024799909148067185, "cohort_z": -1.494, "recent_weekly_commits": 0.0, "stars_not_scored": 527}
+    github_commit_velocity: {"slope": -0.012743111024553848, "cohort_z": -0.72, "recent_weekly_commits": 0.0, "stars_not_scored": 528}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # OpenUBA
 
-Evidaxis measures **OpenUBA** on methodology m5. Momentum 31.3/100; 1 axes present, 0 axes converging.
+Evidaxis measures **OpenUBA** on methodology m5. Momentum 41.0/100; 1 axes present, 0 axes converging.

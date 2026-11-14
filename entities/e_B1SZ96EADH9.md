@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
-  momentum: 36.6
-  percentile: 18
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
+  momentum: 49.4
+  percentile: 37
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.01797702223763678, "cohort_z": -1.071, "recent_weekly_commits": 2.5, "stars_not_scored": 653}
+    github_commit_velocity: {"slope": -0.002432276489095639, "cohort_z": -0.045, "recent_weekly_commits": 2.7, "stars_not_scored": 652}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # matchlock
 
-Evidaxis measures **matchlock** on methodology m5. Momentum 36.6/100; 1 axes present, 0 axes converging.
+Evidaxis measures **matchlock** on methodology m5. Momentum 49.4/100; 1 axes present, 0 axes converging.

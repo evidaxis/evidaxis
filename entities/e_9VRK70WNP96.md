@@ -14,9 +14,9 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 868e3c39d9c7
-  captured_at: 2026-11-07T03:43:55+00:00
-  period: 2026-w45
+  snapshot_id: 04724603bccf
+  captured_at: 2026-11-14T03:45:26+00:00
+  period: 2026-w46
   momentum: 31.4
   percentile: 0
   confidence: medium
@@ -25,9 +25,9 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: calibration
   axes:
-    github_commit_velocity: {"slope": -0.01368666053964306, "cohort_z": -2.97, "recent_weekly_commits": 20.0, "stars_not_scored": 34883}
+    github_commit_velocity: {"slope": -0.009211384055588587, "cohort_z": -2.976, "recent_weekly_commits": 19.9, "stars_not_scored": 34919}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.007718, "theil_sen": 0.007524, "cohort_z": 0.0, "latest": 389, "points": 29, "points_reconstructable": 15, "as_of_partition": "2026-10-19", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.007596, "theil_sen": 0.007411, "cohort_z": 0.0, "latest": 392, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
 note: "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
