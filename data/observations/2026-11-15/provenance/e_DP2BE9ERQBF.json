@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-01-31T09:19:35Z",
+  "updated_at": "2026-11-15T09:46:44Z",
+  "id": 1146547653,
+  "forks_count": 60,
+  "stargazers_count": 510,
+  "default_branch": "main",
+  "node_id": "R_kgDORFbtxQ",
+  "visibility": "public",
+  "description": "A modern, cross-platform client for the Agent Client Protocol (ACP) on desktop, mobile, and the web — connect to any ACP-compatible AI agent (Claude, Codex, Copilot, Qwen, Gemini, OpenCode, OpenClaw and more)",
+  "full_name": "formulahendry/acp-ui",
+  "subscribers_count": 6,
+  "homepage": "https://acp-ui.github.io/",
+  "topics": [
+    "acp",
+    "agent-client-protocol",
+    "agentclientprotocol"
+  ],
+  "language": "Vue",
+  "open_issues_count": 16,
+  "network_count": 60,
+  "fork": false,
+  "size": 1220,
+  "private": false,
+  "watchers_count": 510,
+  "name": "acp-ui",
+  "pushed_at": "2026-05-25T08:34:35Z",
+  "disabled": false,
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

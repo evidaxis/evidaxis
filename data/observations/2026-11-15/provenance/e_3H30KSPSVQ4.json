@@ -1,0 +1,31 @@
+{
+  "created_at": "2025-04-08T20:53:33Z",
+  "updated_at": "2026-11-15T07:12:33Z",
+  "id": 962894449,
+  "forks_count": 292,
+  "stargazers_count": 958,
+  "default_branch": "main",
+  "node_id": "R_kgDOOWSacQ",
+  "visibility": "public",
+  "description": "A unified library for building, evaluating, and storing speculative decoding algorithms for LLM inference in vLLM",
+  "full_name": "vllm-project/speculators",
+  "subscribers_count": 13,
+  "homepage": "https://docs.vllm.ai/projects/speculators",
+  "topics": [
+    "speculative-decoding"
+  ],
+  "language": "Python",
+  "open_issues_count": 179,
+  "network_count": 292,
+  "fork": false,
+  "size": 56346,
+  "private": false,
+  "watchers_count": 958,
+  "name": "speculators",
+  "pushed_at": "2026-11-14T04:05:44Z",
+  "disabled": false,
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
