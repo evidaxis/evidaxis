@@ -8,6 +8,8 @@
 > Touches: invariant 1 (text). Checked and left unchanged: invariants 3, 4 and 6, and
 > the anti-roadmap. Decision: signed with the block-zero key (section 8).
 > In force now, as a separate strengthening covenant: `governance/ERASURE-REQUESTS-2026-10-19.md`.
+> 2026-11-16: the decision is deferred to the switch record, control date 2026-12-31:
+> `governance/AMENDMENT-DEFERRAL-2026-11-16-invariant-1.md`.
 
 ## 1. Summary
 
