@@ -1,0 +1,32 @@
+{
+  "node_id": "R_kgDOOG6IBg",
+  "archived": false,
+  "pushed_at": "2026-11-06T11:23:26Z",
+  "network_count": 1192,
+  "stargazers_count": 7669,
+  "created_at": "2025-03-11T16:38:30Z",
+  "description": "Run LLMs with MLX",
+  "updated_at": "2026-11-16T15:01:26Z",
+  "visibility": "public",
+  "id": 946767878,
+  "open_issues_count": 294,
+  "name": "mlx-lm",
+  "forks_count": 1192,
+  "disabled": false,
+  "fork": false,
+  "watchers_count": 7669,
+  "full_name": "ml-explore/mlx-lm",
+  "homepage": "",
+  "private": false,
+  "size": 3104,
+  "language": "Python",
+  "topics": [
+    "llms",
+    "mlx"
+  ],
+  "default_branch": "main",
+  "subscribers_count": 58,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

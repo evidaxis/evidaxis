@@ -1,0 +1,32 @@
+{
+  "node_id": "R_kgDOK9CWhg",
+  "archived": false,
+  "pushed_at": "2026-10-14T18:27:50Z",
+  "network_count": 107,
+  "stargazers_count": 749,
+  "created_at": "2023-12-23T16:20:07Z",
+  "description": "RewardBench: the first evaluation tool for reward models.",
+  "updated_at": "2026-11-05T13:33:27Z",
+  "visibility": "public",
+  "id": 735090310,
+  "open_issues_count": 7,
+  "name": "reward-bench",
+  "forks_count": 107,
+  "disabled": false,
+  "fork": false,
+  "watchers_count": 749,
+  "full_name": "allenai/reward-bench",
+  "homepage": "https://huggingface.co/spaces/allenai/reward-bench",
+  "private": false,
+  "size": 28944,
+  "language": "Python",
+  "topics": [
+    "preference-learning",
+    "rlhf"
+  ],
+  "default_branch": "main",
+  "subscribers_count": 6,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

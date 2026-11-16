@@ -1,0 +1,33 @@
+{
+  "node_id": "R_kgDOSt4eIQ",
+  "archived": false,
+  "pushed_at": "2026-11-06T12:27:31Z",
+  "network_count": 295,
+  "stargazers_count": 2253,
+  "created_at": "2026-06-01T12:39:40Z",
+  "description": "An open-source coding agent for your terminal, powered by MiniMax.",
+  "updated_at": "2026-11-16T17:00:23Z",
+  "visibility": "public",
+  "id": 1256070689,
+  "open_issues_count": 169,
+  "name": "minimax-code",
+  "forks_count": 295,
+  "disabled": false,
+  "fork": false,
+  "watchers_count": 2253,
+  "full_name": "MiniMax-AI/minimax-code",
+  "homepage": "https://agent.minimax.io/download",
+  "private": false,
+  "size": 33355,
+  "language": "TypeScript",
+  "topics": [
+    "coding-agents",
+    "harness",
+    "minimax"
+  ],
+  "default_branch": "main",
+  "subscribers_count": 11,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "node_id": "R_kgDOLTnLfw",
+  "archived": false,
+  "pushed_at": "2026-03-05T11:16:52Z",
+  "network_count": 136,
+  "stargazers_count": 1592,
+  "created_at": "2024-02-17T02:36:45Z",
+  "description": "Stanford NLP Python library for Representation Finetuning (ReFT)",
+  "updated_at": "2026-11-13T06:21:23Z",
+  "visibility": "public",
+  "id": 758762367,
+  "open_issues_count": 43,
+  "name": "pyreft",
+  "forks_count": 136,
+  "disabled": false,
+  "fork": false,
+  "watchers_count": 1592,
+  "full_name": "stanfordnlp/pyreft",
+  "homepage": "https://arxiv.org/abs/2404.03592",
+  "private": false,
+  "size": 109472,
+  "language": "Python",
+  "topics": [
+    "interpretability",
+    "reft",
+    "representation-finetuning"
+  ],
+  "default_branch": "main",
+  "subscribers_count": 14,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
