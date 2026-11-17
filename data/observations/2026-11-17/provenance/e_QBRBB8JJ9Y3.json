@@ -1,0 +1,33 @@
+{
+  "id": 973180254,
+  "visibility": "public",
+  "subscribers_count": 22,
+  "watchers_count": 6835,
+  "name": "stagewise",
+  "updated_at": "2026-11-16T18:15:05Z",
+  "node_id": "R_kgDOOgGNXg",
+  "private": false,
+  "pushed_at": "2026-11-16T19:01:01Z",
+  "homepage": "https://stagewise.io",
+  "description": "The Open Source Agentic IDE. Create and orchestrate coding agents, show app previews and run git workflows. Use your favorite models across all providers.",
+  "full_name": "stagewise-io/stagewise",
+  "created_at": "2025-04-26T12:43:16Z",
+  "language": "TypeScript",
+  "size": 107594,
+  "open_issues_count": 40,
+  "network_count": 512,
+  "topics": [
+    "agent",
+    "agent-orchestration",
+    "ide"
+  ],
+  "disabled": false,
+  "default_branch": "main",
+  "archived": false,
+  "forks_count": 512,
+  "fork": false,
+  "stargazers_count": 6835,
+  "owner_type": "Organization",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

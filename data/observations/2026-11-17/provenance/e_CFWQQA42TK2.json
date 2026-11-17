@@ -1,0 +1,33 @@
+{
+  "id": 983246568,
+  "visibility": "public",
+  "subscribers_count": 123,
+  "watchers_count": 16849,
+  "name": "DeepCode",
+  "updated_at": "2026-11-17T12:49:54Z",
+  "node_id": "R_kgDOOpsm6A",
+  "private": false,
+  "pushed_at": "2026-11-17T13:29:49Z",
+  "homepage": "http://arxiv.org/abs/2512.07921",
+  "description": "\"DeepCode: Open Agentic Coding (Agent Harness & Loop Engineering & Multi-Agent Orchestration)\"",
+  "full_name": "HKUDS/DeepCode",
+  "created_at": "2025-05-14T05:23:02Z",
+  "language": "Python",
+  "size": 95574,
+  "open_issues_count": 26,
+  "network_count": 2193,
+  "topics": [
+    "agentic-coding",
+    "harness-engineering",
+    "llm-agent"
+  ],
+  "disabled": false,
+  "default_branch": "main",
+  "archived": false,
+  "forks_count": 2193,
+  "fork": false,
+  "stargazers_count": 16849,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

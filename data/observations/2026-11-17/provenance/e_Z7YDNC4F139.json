@@ -1,0 +1,31 @@
+{
+  "id": 612354784,
+  "visibility": "public",
+  "subscribers_count": 974,
+  "watchers_count": 135584,
+  "name": "llama.cpp",
+  "updated_at": "2026-11-17T16:15:59Z",
+  "node_id": "R_kgDOJH_K4A",
+  "private": false,
+  "pushed_at": "2026-11-17T16:03:22Z",
+  "homepage": "https://llama.app",
+  "description": "LLM inference in C/C++",
+  "full_name": "ggml-org/llama.cpp",
+  "created_at": "2023-03-10T18:58:00Z",
+  "language": "C++",
+  "size": 504308,
+  "open_issues_count": 2612,
+  "network_count": 25750,
+  "topics": [
+    "ggml"
+  ],
+  "disabled": false,
+  "default_branch": "master",
+  "archived": false,
+  "forks_count": 25750,
+  "fork": false,
+  "stargazers_count": 135584,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

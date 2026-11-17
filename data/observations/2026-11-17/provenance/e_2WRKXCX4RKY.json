@@ -1,0 +1,33 @@
+{
+  "id": 810707714,
+  "visibility": "public",
+  "subscribers_count": 92,
+  "watchers_count": 1394,
+  "name": "KVCache-Factory",
+  "updated_at": "2026-11-04T10:59:30Z",
+  "node_id": "R_kgDOMFJrAg",
+  "private": false,
+  "pushed_at": "2026-08-13T07:35:40Z",
+  "homepage": "",
+  "description": "Unified KV Cache Compression Methods for Auto-Regressive Models",
+  "full_name": "Zefan-Cai/KVCache-Factory",
+  "created_at": "2024-06-05T08:02:23Z",
+  "language": "Python",
+  "size": 191449,
+  "open_issues_count": 4,
+  "network_count": 181,
+  "topics": [
+    "kv-cache",
+    "kv-cache-compression",
+    "llm"
+  ],
+  "disabled": false,
+  "default_branch": "main",
+  "archived": false,
+  "forks_count": 181,
+  "fork": false,
+  "stargazers_count": 1394,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

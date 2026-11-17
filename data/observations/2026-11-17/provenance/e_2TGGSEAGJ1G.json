@@ -1,0 +1,33 @@
+{
+  "id": 862040420,
+  "visibility": "public",
+  "subscribers_count": 13,
+  "watchers_count": 956,
+  "name": "MAC-VO",
+  "updated_at": "2026-11-17T06:33:08Z",
+  "node_id": "R_kgDOM2GxZA",
+  "private": false,
+  "pushed_at": "2025-11-24T08:19:39Z",
+  "homepage": "https://mac-vo.github.io/",
+  "description": "[ICRA 2025 Best Paper] MAC-VO: Metrics-aware Covariance for Learning-based Stereo Visual Odometry",
+  "full_name": "MAC-VO/MAC-VO",
+  "created_at": "2024-09-23T23:48:25Z",
+  "language": "Python",
+  "size": 45409,
+  "open_issues_count": 5,
+  "network_count": 68,
+  "topics": [
+    "computer-vision",
+    "slam-algorithms",
+    "visual-odometry"
+  ],
+  "disabled": false,
+  "default_branch": "main",
+  "archived": false,
+  "forks_count": 68,
+  "fork": false,
+  "stargazers_count": 956,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
