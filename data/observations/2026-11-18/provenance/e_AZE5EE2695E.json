@@ -1,0 +1,32 @@
+{
+  "fork": false,
+  "updated_at": "2026-11-17T05:12:44Z",
+  "open_issues_count": 41,
+  "topics": [
+    "embedding",
+    "visualization"
+  ],
+  "description": "Embedding Atlas is a tool that provides interactive visualizations for large embeddings. It allows you to visualize, cross-filter, and search embeddings and metadata.",
+  "homepage": "https://apple.github.io/embedding-atlas/",
+  "node_id": "R_kgDOOluM0g",
+  "name": "embedding-atlas",
+  "forks_count": 344,
+  "full_name": "apple/embedding-atlas",
+  "size": 35542,
+  "visibility": "public",
+  "archived": false,
+  "subscribers_count": 34,
+  "id": 979078354,
+  "pushed_at": "2026-11-16T20:03:51Z",
+  "created_at": "2025-05-07T00:56:44Z",
+  "language": "TypeScript",
+  "stargazers_count": 5036,
+  "watchers_count": 5036,
+  "default_branch": "main",
+  "network_count": 344,
+  "disabled": false,
+  "private": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

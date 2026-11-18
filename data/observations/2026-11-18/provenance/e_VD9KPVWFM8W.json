@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "updated_at": "2026-11-18T10:25:31Z",
+  "open_issues_count": 123,
+  "topics": [
+    "mapping",
+    "not-matlab",
+    "slam"
+  ],
+  "description": "A Modular and Multi-Modal Mapping Framework",
+  "homepage": "https://maplab.asl.ethz.ch",
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMTIyNTM0MDM=",
+  "name": "maplab",
+  "forks_count": 750,
+  "full_name": "ethz-asl/maplab",
+  "size": 76671,
+  "visibility": "public",
+  "archived": false,
+  "subscribers_count": 143,
+  "id": 112253403,
+  "pushed_at": "2024-05-31T08:49:33Z",
+  "created_at": "2017-11-27T21:58:23Z",
+  "language": "C++",
+  "stargazers_count": 2891,
+  "watchers_count": 2891,
+  "default_branch": "master",
+  "network_count": 750,
+  "disabled": false,
+  "private": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

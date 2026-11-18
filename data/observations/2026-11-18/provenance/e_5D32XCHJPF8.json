@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "updated_at": "2026-11-13T07:00:06Z",
+  "open_issues_count": 59,
+  "topics": [
+    "genai",
+    "llms",
+    "prompting"
+  ],
+  "description": "Executable GenAI prompt templates",
+  "homepage": "https://google.github.io/dotprompt/",
+  "node_id": "R_kgDOMpIFiA",
+  "name": "dotprompt",
+  "forks_count": 74,
+  "full_name": "google/dotprompt",
+  "size": 10639,
+  "visibility": "public",
+  "archived": false,
+  "subscribers_count": 4,
+  "id": 848430472,
+  "pushed_at": "2026-11-18T16:09:08Z",
+  "created_at": "2024-08-27T18:41:13Z",
+  "language": "Dart",
+  "stargazers_count": 577,
+  "watchers_count": 577,
+  "default_branch": "main",
+  "network_count": 74,
+  "disabled": false,
+  "private": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

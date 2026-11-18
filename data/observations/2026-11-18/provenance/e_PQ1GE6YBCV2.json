@@ -1,0 +1,33 @@
+{
+  "fork": false,
+  "updated_at": "2026-11-18T09:49:47Z",
+  "open_issues_count": 102,
+  "topics": [
+    "machine-learning",
+    "pytorch",
+    "reinforcement-learning"
+  ],
+  "description": "A repo for distributed training of language models with Reinforcement Learning via Human Feedback (RLHF)",
+  "homepage": "",
+  "node_id": "R_kgDOIH2glw",
+  "name": "trlx",
+  "forks_count": 485,
+  "full_name": "CarperAI/trlx",
+  "size": 47806,
+  "visibility": "public",
+  "archived": false,
+  "subscribers_count": 47,
+  "id": 545104023,
+  "pushed_at": "2024-01-08T20:07:19Z",
+  "created_at": "2022-10-03T19:42:40Z",
+  "language": "Python",
+  "stargazers_count": 4756,
+  "watchers_count": 4756,
+  "default_branch": "main",
+  "network_count": 485,
+  "disabled": false,
+  "private": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
