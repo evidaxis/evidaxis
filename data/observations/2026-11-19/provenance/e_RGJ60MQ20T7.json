@@ -1,0 +1,33 @@
+{
+  "network_count": 1057,
+  "updated_at": "2026-11-17T05:18:38Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "open_issues_count": 274,
+  "disabled": false,
+  "forks_count": 1057,
+  "watchers_count": 5894,
+  "created_at": "2022-06-08T02:44:22Z",
+  "stargazers_count": 5894,
+  "name": "YOLOv6",
+  "description": "YOLOv6: a single-stage object detection framework dedicated to industrial applications.",
+  "size": 37809,
+  "pushed_at": "2024-08-07T18:20:33Z",
+  "fork": false,
+  "language": "Jupyter Notebook",
+  "node_id": "R_kgDOHd3Qaw",
+  "id": 501076075,
+  "topics": [
+    "object-detection",
+    "pytorch",
+    "yolo"
+  ],
+  "homepage": "",
+  "subscribers_count": 58,
+  "private": false,
+  "full_name": "meituan/YOLOv6",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

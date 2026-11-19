@@ -1,0 +1,33 @@
+{
+  "network_count": 71,
+  "updated_at": "2026-11-19T13:45:52Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "open_issues_count": 29,
+  "disabled": false,
+  "forks_count": 71,
+  "watchers_count": 828,
+  "created_at": "2021-06-29T19:05:39Z",
+  "stargazers_count": 828,
+  "name": "rotary-embedding-torch",
+  "description": "Implementation of Rotary Embeddings, from the Roformer paper, in Pytorch",
+  "size": 125,
+  "pushed_at": "2026-11-07T14:09:29Z",
+  "fork": false,
+  "language": "Python",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzODE0NzAzNTA=",
+  "id": 381470350,
+  "topics": [
+    "artificial-intelligence",
+    "deep-learning",
+    "positional-encoding"
+  ],
+  "homepage": "",
+  "subscribers_count": 9,
+  "private": false,
+  "full_name": "lucidrains/rotary-embedding-torch",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

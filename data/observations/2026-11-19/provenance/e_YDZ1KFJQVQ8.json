@@ -1,0 +1,33 @@
+{
+  "network_count": 67,
+  "updated_at": "2026-10-20T02:58:54Z",
+  "visibility": "public",
+  "default_branch": "master",
+  "open_issues_count": 16,
+  "disabled": false,
+  "forks_count": 67,
+  "watchers_count": 587,
+  "created_at": "2021-08-24T06:36:48Z",
+  "stargazers_count": 587,
+  "name": "BMInf",
+  "description": "Efficient Inference for Big Models",
+  "size": 2613,
+  "pushed_at": "2026-07-07T14:11:51Z",
+  "fork": false,
+  "language": "Python",
+  "node_id": "MDEwOlJlcG9zaXRvcnkzOTkzNjExMzA=",
+  "id": 399361130,
+  "topics": [
+    "deep-learning",
+    "gpu",
+    "pretrained-language-models"
+  ],
+  "homepage": "",
+  "subscribers_count": 17,
+  "private": false,
+  "full_name": "OpenBMB/BMInf",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

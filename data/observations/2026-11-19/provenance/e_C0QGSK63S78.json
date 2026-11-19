@@ -1,0 +1,31 @@
+{
+  "network_count": 110,
+  "updated_at": "2026-11-16T14:30:26Z",
+  "visibility": "public",
+  "default_branch": "master",
+  "open_issues_count": 16,
+  "disabled": false,
+  "forks_count": 110,
+  "watchers_count": 925,
+  "created_at": "2022-06-08T03:13:34Z",
+  "stargazers_count": 925,
+  "name": "hok_env",
+  "description": "Honor of Kings AI Open Environment of Tencent",
+  "size": 239352,
+  "pushed_at": "2026-05-18T05:55:21Z",
+  "fork": false,
+  "language": "Python",
+  "node_id": "R_kgDOHd3qSg",
+  "id": 501082698,
+  "topics": [
+    "reinforcement-learning"
+  ],
+  "homepage": "https://aiarena.tencent.com/aiarena/en/open-gamecore",
+  "subscribers_count": 14,
+  "private": false,
+  "full_name": "tencent-ailab/hok_env",
+  "archived": false,
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

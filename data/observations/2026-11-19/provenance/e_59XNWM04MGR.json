@@ -1,0 +1,33 @@
+{
+  "network_count": 455,
+  "updated_at": "2026-11-18T07:38:00Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "open_issues_count": 57,
+  "disabled": false,
+  "forks_count": 455,
+  "watchers_count": 3077,
+  "created_at": "2025-10-31T03:56:27Z",
+  "stargazers_count": 3077,
+  "name": "Mini-Agent",
+  "description": "A minimal yet professional single agent demo project that showcases the core execution pipeline and production-grade features of agents.",
+  "size": 4305,
+  "pushed_at": "2026-02-14T04:00:26Z",
+  "fork": false,
+  "language": "Python",
+  "node_id": "R_kgDOQMiVkg",
+  "id": 1086887314,
+  "topics": [
+    "agent",
+    "llm",
+    "minimax"
+  ],
+  "homepage": "https://www.minimax.io/",
+  "subscribers_count": 16,
+  "private": false,
+  "full_name": "MiniMax-AI/Mini-Agent",
+  "archived": false,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
