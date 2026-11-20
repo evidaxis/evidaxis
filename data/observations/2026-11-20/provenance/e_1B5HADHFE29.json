@@ -1,0 +1,33 @@
+{
+  "pushed_at": "2026-06-08T02:14:37Z",
+  "homepage": "https://research.nvidia.com/labs/dir/cosmos-predict2.5",
+  "default_branch": "main",
+  "open_issues_count": 34,
+  "disabled": false,
+  "updated_at": "2026-11-18T15:47:16Z",
+  "network_count": 200,
+  "watchers_count": 1403,
+  "description": "Cosmos-Predict2.5, the latest version of the Cosmos World Foundation Models (WFMs) family, specialized for simulating and predicting the future state of the world in the form of video.",
+  "topics": [
+    "foundational-models",
+    "video-generation",
+    "world-models"
+  ],
+  "fork": false,
+  "node_id": "R_kgDOP26xMQ",
+  "language": "Python",
+  "id": 1064218929,
+  "archived": false,
+  "full_name": "nvidia-cosmos/cosmos-predict2.5",
+  "visibility": "public",
+  "name": "cosmos-predict2.5",
+  "size": 155440,
+  "created_at": "2025-09-25T17:58:52Z",
+  "private": false,
+  "forks_count": 200,
+  "stargazers_count": 1403,
+  "subscribers_count": 5,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

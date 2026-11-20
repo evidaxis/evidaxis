@@ -1,0 +1,33 @@
+{
+  "pushed_at": "2026-11-06T14:32:51Z",
+  "homepage": "https://www.interstice.cloud",
+  "default_branch": "main",
+  "open_issues_count": 138,
+  "disabled": false,
+  "updated_at": "2026-11-20T12:11:37Z",
+  "network_count": 666,
+  "watchers_count": 10919,
+  "description": "Streamlined interface for generating images with AI in Krita. Inpaint and outpaint with optional text prompt, no tweaking required.",
+  "topics": [
+    "generative-ai",
+    "krita-plugin",
+    "stable-diffusion"
+  ],
+  "fork": false,
+  "node_id": "R_kgDOKOX-yw",
+  "language": "Python",
+  "id": 686161611,
+  "archived": false,
+  "full_name": "Acly/krita-ai-diffusion",
+  "visibility": "public",
+  "name": "krita-ai-diffusion",
+  "size": 33505,
+  "created_at": "2023-09-01T22:52:13Z",
+  "private": false,
+  "forks_count": 666,
+  "stargazers_count": 10919,
+  "subscribers_count": 90,
+  "owner_type": "User",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
