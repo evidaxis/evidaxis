@@ -1,0 +1,31 @@
+{
+  "subscribers_count": 38,
+  "description": "Persistent memory system for AI coding agents. Agent-agnostic Go binary with SQLite + FTS5, MCP server, HTTP API, CLI, and TUI.",
+  "watchers_count": 8250,
+  "homepage": "https://engram.gentlemanprogramming.com/",
+  "disabled": false,
+  "private": false,
+  "id": 1159234860,
+  "forks_count": 831,
+  "topics": [
+    "gentle-shell-package"
+  ],
+  "archived": false,
+  "fork": false,
+  "node_id": "R_kgDORRiFLA",
+  "updated_at": "2026-11-21T14:14:49Z",
+  "full_name": "Gentleman-Programming/engram",
+  "stargazers_count": 8250,
+  "language": "Go",
+  "pushed_at": "2026-11-21T14:52:44Z",
+  "name": "engram",
+  "open_issues_count": 69,
+  "visibility": "public",
+  "default_branch": "main",
+  "network_count": 831,
+  "size": 39236,
+  "created_at": "2026-02-16T13:38:41Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
