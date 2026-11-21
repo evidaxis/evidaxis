@@ -339,12 +339,10 @@ function humanWeek(path, success, edits, deploy) {
 }
 
 function onTimeWeek(saturday, success, deploy, statuses) {
-  const recorded = RELEASE_CONTEXTS.map(stage => receipt(statuses, stage)).filter(Boolean);
-  if (recorded.length) {
-    const site = receipt(statuses, 'deployed');
-    const hf = receipt(statuses, 'hf');
-    return Boolean(site?.state === 'success' && hf?.state === 'success'
-      && beforeNoon(site.updated_at, saturday) && beforeNoon(hf.updated_at, saturday));
+  if (saturday >= '2026-10-18' || RELEASE_CONTEXTS.some(stage => receipt(statuses, stage))) {
+    // GitHub lists statuses newest first. A later redeploy cannot rewrite Saturday's result.
+    const atDeadline = statuses.filter(status => beforeNoon(status.updated_at, saturday));
+    return ['deployed', 'hf'].every(stage => receipt(atDeadline, stage)?.state === 'success');
   }
   // Before 2026-10-18 there is no receipt. The HF upload is inside the weekly
   // run, so that run's end is the HF time and the deploy end is the site time.
@@ -533,9 +531,9 @@ async function loadStatuses(repo, token, days) {
       statuses[day] = [];
       continue;
     }
-    const { body } = await github(repo, `commits/${sha}/status?per_page=100`, token);
-    if (!Array.isArray(body?.statuses) || body.total_count !== body.statuses.length) throw new Error('Incomplete commit statuses');
-    statuses[day] = body.statuses
+    // The combined status endpoint drops earlier receipts for the same context.
+    const history = await githubList(repo, `commits/${sha}/statuses`, token);
+    statuses[day] = history
       .filter(status => RELEASE_CONTEXTS.some(stage => status?.context === `evidaxis/release-${stage}`))
       .map(status => ({ context: status.context, state: status.state, updated_at: status.updated_at }));
   }

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import {
   actorKind,
   buildScorecard,
+  loadScorecard,
   REPAIR_ACTORS,
   releaseSaturday,
   saturdayKind,
@@ -253,6 +254,41 @@ function releaseFacts(weeks, extra = {}) {
     ...extra,
   };
 }
+
+test('the noon score uses both publication receipts as they stood at the deadline', () => {
+  const day = '2026-11-14';
+  const week = cleanWeek(day);
+  const scored = statuses => row(buildScorecard(releaseFacts([{ ...week, statuses }])), day).on_time;
+  assert.equal(scored([]), false, 'modern releases require publication receipts');
+  for (const stage of ['deployed', 'hf']) {
+    const later = { context: `evidaxis/release-${stage}`, state: 'success', updated_at: '2026-11-16T09:14:05Z' };
+    const history = [later, ...week.statuses];
+    assert.equal(scored(history), true, `a later ${stage} receipt cannot move an on-time release`);
+    const failed = { ...later, state: 'failure', updated_at: '2026-11-14T11:57:00Z' };
+    assert.equal(scored([later, failed, ...week.statuses]), false, `${stage} was failing at noon`);
+    assert.equal(scored([later, ...week.statuses.filter(s => s.context !== later.context)]), false,
+      `the first successful ${stage} receipt came after noon`);
+  }
+});
+
+test('the loader reads all pages of commit status history for the dated snapshot', async t => {
+  const day = '2026-11-14';
+  const sha = 'a'.repeat(40);
+  const historyUrl = `https://api.github.com/repos/evidaxis/evidaxis/commits/${sha}/statuses`;
+  t.mock.method(globalThis, 'fetch', async input => {
+    const url = new URL(input);
+    if (url.pathname.endsWith('/runs')) return Response.json({ total_count: 0, workflow_runs: [] });
+    if (url.pathname.endsWith('/commits')) {
+      return Response.json(url.searchParams.get('path') === `data/snapshots/${day}/snapshot.json` ? [{ sha }] : []);
+    }
+    assert.equal(url.origin + url.pathname, historyUrl);
+    if (url.searchParams.get('page') === '2') return Response.json(cleanWeek(day).statuses);
+    const later = { context: 'evidaxis/release-deployed', state: 'success', updated_at: '2026-11-16T09:14:05Z' };
+    return Response.json([later], { headers: { link: `<${historyUrl}?page=2>; rel="next"` } });
+  });
+  const card = await loadScorecard({ GH_TOKEN: 'test' }, new Date('2026-11-16T12:00:00Z'));
+  assert.equal(row(card, day).on_time, true);
+});
 
 test('a human-launched deploy is a person and the clean series stays at 0', () => {
   const card = buildScorecard(releaseFacts([
