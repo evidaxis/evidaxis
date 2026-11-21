@@ -164,6 +164,19 @@ describe('typed feeds and immutable signal ids', () => {
     expect(receipt([...axes].reverse())).toEqual(together);
   });
 
+  it('preserves both published receipts when one axis rises and another falls in the same week', () => {
+    const previous = snapshots.find(s => s.snapshot_date === '2026-09-12')!;
+    const current = snapshots.find(s => s.snapshot_date === '2026-09-19')!;
+    const receipts = diffFeedEntries(previous, current).filter(entry =>
+      entry.entity_ids.includes('e_N0ZEZQYXT6K') && entry.event_kind.startsWith('axis_threshold_'));
+    expect(receipts.map(({ event_kind, url, source_fields }) => [event_kind, url, source_fields])).toEqual([
+      ['axis_threshold_lost', 'https://evidaxis.org/signals/observation-2026-w38-5f20e11a1fb36c4e/',
+        ['/entities/e_N0ZEZQYXT6K/convergent_axes/openalex_citation_momentum']],
+      ['axis_threshold_recorded', 'https://evidaxis.org/signals/observation-2026-w38-b2f2f99d1e38f2f8/',
+        ['/entities/e_N0ZEZQYXT6K/convergent_axes/github_commit_velocity']],
+    ]);
+  });
+
   it('records threshold loss in feed without publishing a moment', () => {
     const priorEntity = { ...entity('e_1', [DEVELOPMENT_AXIS]), convergent_axes: [DEVELOPMENT_AXIS] };
     const currentEntity = entity('e_1', [DEVELOPMENT_AXIS]);
