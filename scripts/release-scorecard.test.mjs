@@ -271,6 +271,38 @@ test('the noon score uses both publication receipts as they stood at the deadlin
   }
 });
 
+test('the live score sees only runs and receipts available at its observation time', () => {
+  const day = '2026-11-14';
+  const facts = load('streak-four');
+  const week = facts.weekly.at(-1);
+  week.completed_at = day + 'T05:00:00Z';
+  const deploy = facts.deploys.at(-1);
+  deploy.started_at = day + 'T05:00:01Z';
+  deploy.completed_at = day + 'T05:34:00Z';
+  facts.statuses[day] = [
+    { context: 'evidaxis/release-deployed', state: 'success', updated_at: day + 'T05:33:10Z' },
+    { context: 'evidaxis/release-hf', state: 'success', updated_at: day + 'T05:00:27Z' },
+  ];
+  facts.now = day + 'T05:15:00Z';
+  const early = buildScorecard(facts);
+  assert.equal(row(early, day).on_time, false);
+  assert.equal(row(early, day).deploy_end, null);
+  assert.equal(early.series, '3 из 4 подряд чисто');
+  facts.now = day + 'T05:33:10Z';
+  assert.equal(buildScorecard(facts).series, '4 из 4 подряд чисто');
+});
+
+test('a green deployment with outstanding receipts keeps the Saturday open until noon', () => {
+  const facts = load('streak-four');
+  facts.statuses['2026-11-14'] = [];
+  facts.now = '2026-11-14T11:59:59Z';
+  const early = buildScorecard(facts);
+  assert.equal(early.score, '3 из 4');
+  assert.equal(early.series, '3 из 4 подряд чисто');
+  facts.now = '2026-11-14T12:00:00Z';
+  assert.equal(buildScorecard(facts).series, '0 из 4 подряд чисто');
+});
+
 test('the loader reads all pages of commit status history for the dated snapshot', async t => {
   const day = '2026-11-14';
   const sha = 'a'.repeat(40);

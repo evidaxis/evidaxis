@@ -140,6 +140,13 @@ function byStart(a, b) {
   return stamp(a.started_at) - stamp(b.started_at);
 }
 
+function visibleRuns(runs, normalize, observedAt) {
+  return (runs || []).map(normalize)
+    .filter(run => run.branch === 'main' && run.event !== 'pull_request' && Date.parse(run.started_at) <= observedAt)
+    .map(run => Date.parse(run.completed_at) > observedAt
+      ? { ...run, status: 'in_progress', conclusion: null, completed_at: null } : run);
+}
+
 function publicAttempt(attempt) {
   const skipped = attempt.conclusion === 'success' && attempt.collected === false;
   return {
@@ -194,12 +201,13 @@ export function loadReleaseClasses() {
 export function buildScorecard(facts, options = {}) {
   const since = options.since ? checkSince(options.since) : null;
   const days = saturdaysThrough(facts.now);
-  const weekly = (facts.weekly || []).map(normalizeWeekly).filter(run => run.saturday && run.branch === 'main' && run.event !== 'pull_request');
-  const deploys = (facts.deploys || []).map(normalizeDeploy).filter(run => run.branch === 'main' && run.event !== 'pull_request');
+  const observedAt = Date.parse(facts.now);
+  const weekly = visibleRuns(facts.weekly, normalizeWeekly, observedAt);
+  const deploys = visibleRuns(facts.deploys, normalizeDeploy, observedAt);
   const rows = days.map(saturday => scoreSaturday(saturday, {
     weekly: weekly.filter(run => run.saturday === saturday).sort(byStart),
     deploys,
-    statuses: facts.statuses?.[saturday] || [],
+    statuses: (facts.statuses?.[saturday] || []).filter(status => Date.parse(status?.updated_at) <= observedAt),
     edits: facts.edits?.[saturday] || [],
     repairPrs: repairPrsFor(facts.repairPrs, saturday),
   }));
@@ -354,8 +362,8 @@ function saturdayStillOpen(row, saturday, nowIso) {
   const now = stamp(nowIso);
   const noon = Date.parse(`${saturday}T12:00:00Z`);
   if (saturday !== today || now === null || now >= noon) return false;
-  // A successful publication is already a result, even before noon.
-  if (row?.deploy?.conclusion === 'success') return false;
+  // A green job may still be waiting for a publication receipt.
+  if (row?.on_time || CLOSED_FAILURE.has(row?.hf)) return false;
   const running = row?.attempts?.some(attempt => attempt.status && attempt.status !== 'completed');
   const closedFailure = !running && row?.attempts?.some(attempt => CLOSED_FAILURE.has(attempt.conclusion));
   // Before noon, a Saturday with no publication and no closed failure can still finish unattended.
