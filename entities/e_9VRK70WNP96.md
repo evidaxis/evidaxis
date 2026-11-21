@@ -14,10 +14,10 @@ classification:
   sub_niche: diffusion-media-gen
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
-  momentum: 31.4
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
+  momentum: 29.3
   percentile: 0
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
@@ -25,14 +25,14 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: calibration
   axes:
-    github_commit_velocity: {"slope": -0.009211384055588587, "cohort_z": -2.976, "recent_weekly_commits": 19.9, "stars_not_scored": 34919}
+    github_commit_velocity: {"slope": -0.011768476120311693, "cohort_z": -3.318, "recent_weekly_commits": 17.3, "stars_not_scored": 34959}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.007596, "theil_sen": 0.007411, "cohort_z": 0.0, "latest": 392, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.007449, "theil_sen": 0.007205, "cohort_z": 0.0, "latest": 392, "points": 31, "points_reconstructable": 15, "as_of_partition": "2026-11-02", "unstable": false, "rising_vote": false}
 note: "incumbent (calibration); batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Diffusers
 
-Evidaxis measures **Diffusers** on methodology m5. Momentum 31.4/100; 2 axes present, 0 axes converging.
+Evidaxis measures **Diffusers** on methodology m5. Momentum 29.3/100; 2 axes present, 0 axes converging.
 
 This axis measures the trajectory of a system's own packages: declared in its own tree, published under that name, and not attributed by deps.dev to another repository. A package with no repository link is unverified and stays. The self-name exclusion list is fixed at the v2h.1 panel. Systems with no admitted package are not measured on this axis. Points that cannot be derived exactly are withheld, and the series restarts after a withheld point.

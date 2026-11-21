@@ -14,9 +14,9 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
   momentum: 46.5
   percentile: 20
   confidence: medium
@@ -25,9 +25,9 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.017636530161209616, "cohort_z": 0.766, "recent_weekly_commits": 53.6, "stars_not_scored": 4081}
+    github_commit_velocity: {"slope": 0.015827892504805135, "cohort_z": 0.664, "recent_weekly_commits": 55.8, "stars_not_scored": 4100}
     openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 1, "by_year": {"2026": 1}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.009676, "theil_sen": 0.009002, "cohort_z": -1.322, "latest": 86, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.009499, "theil_sen": 0.008849, "cohort_z": -1.229, "latest": 86, "points": 31, "points_reconstructable": 15, "as_of_partition": "2026-11-02", "unstable": false, "rising_vote": false}
 note: "Title-matching OpenAlex record had author mismatch; treated as axis-2 absent."
 ---
 

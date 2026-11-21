@@ -14,20 +14,20 @@ classification:
   sub_niche: coding-agents
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
   momentum: 40.2
-  percentile: 21
+  percentile: 11
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": -0.030211564850422805, "cohort_z": -0.996, "recent_weekly_commits": 56.7, "stars_not_scored": 71598}
+    github_commit_velocity: {"slope": -0.04177237815641139, "cohort_z": -1.042, "recent_weekly_commits": 50.8, "stars_not_scored": 71793}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.01145, "theil_sen": 0.012361, "cohort_z": -0.569, "latest": 21, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.011453, "theil_sen": 0.012198, "cohort_z": -0.519, "latest": 21, "points": 31, "points_reconstructable": 15, "as_of_partition": "2026-11-02", "unstable": false, "rising_vote": false}
 note: "No academic paper; axis-2 absent."
 ---
 

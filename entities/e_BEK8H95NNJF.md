@@ -14,9 +14,9 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
   momentum: 11.5
   percentile: 2
   confidence: low
@@ -25,7 +25,7 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.1459591796880816, "cohort_z": -3.076, "recent_weekly_commits": 0.3, "stars_not_scored": 3723}
+    github_commit_velocity: {"slope": -0.13533902788615126, "cohort_z": -3.081, "recent_weekly_commits": 0.1, "stars_not_scored": 3722}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."

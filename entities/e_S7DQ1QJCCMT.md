@@ -14,23 +14,23 @@ classification:
   sub_niche: embodied-ai
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
-  momentum: 54.2
-  percentile: 60
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
+  momentum: 52.5
+  percentile: 47
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.333, "recent_weekly_commits": 0.0, "stars_not_scored": 1819}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 630, "by_year": {"2026": 387, "2025": 238, "2024": 5}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": 0.201, "recent_weekly_commits": 0.0, "stars_not_scored": 1821}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 782, "by_year": {"2026": 493, "2025": 284, "2024": 5}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: 2410.07864; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # RDT-1B
 
-Evidaxis measures **RDT-1B** on methodology m5. Momentum 54.2/100; 1 axes present, 0 axes converging.
+Evidaxis measures **RDT-1B** on methodology m5. Momentum 52.5/100; 1 axes present, 0 axes converging.

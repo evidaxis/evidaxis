@@ -14,20 +14,20 @@ classification:
   sub_niche: agent-frameworks
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
   momentum: 42.6
-  percentile: 19
+  percentile: 33
   confidence: medium
   axes_present: ["github_commit_velocity", "deps_direct_dependents_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.00543130065401631, "cohort_z": -0.512, "recent_weekly_commits": 35.2, "stars_not_scored": 43182}
+    github_commit_velocity: {"slope": 0.00828917119410546, "cohort_z": -0.522, "recent_weekly_commits": 35.1, "stars_not_scored": 43248}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.013124, "theil_sen": 0.012688, "cohort_z": -0.674, "latest": 120, "points": 30, "points_reconstructable": 15, "as_of_partition": "2026-10-26", "unstable": false, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "scored", "slope": 0.013114, "theil_sen": 0.012738, "cohort_z": -0.655, "latest": 122, "points": 31, "points_reconstructable": 15, "as_of_partition": "2026-11-02", "unstable": false, "rising_vote": false}
 note: "batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 

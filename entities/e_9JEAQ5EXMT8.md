@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
-  momentum: 86.0
-  percentile: 89
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
+  momentum: 81.9
+  percentile: 84
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.043196458238490366, "cohort_z": 2.877, "recent_weekly_commits": 2.0, "stars_not_scored": 2911}
+    github_commit_velocity: {"slope": 0.03836235627031356, "cohort_z": 2.55, "recent_weekly_commits": 2.0, "stars_not_scored": 2946}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-11; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-11; axis-2 unresolved."
 
 # Matrix-Game
 
-Evidaxis measures **Matrix-Game** on methodology m5. Momentum 86.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Matrix-Game** on methodology m5. Momentum 81.9/100; 1 axes present, 0 axes converging.

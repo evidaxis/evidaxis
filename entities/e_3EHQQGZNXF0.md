@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
-  momentum: 31.5
-  percentile: 15
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
+  momentum: 26.8
+  percentile: 13
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.022042885206161735, "cohort_z": -1.482, "recent_weekly_commits": 0.2, "stars_not_scored": 1708}
+    github_commit_velocity: {"slope": -0.027489412093771984, "cohort_z": -1.853, "recent_weekly_commits": 0.2, "stars_not_scored": 1715}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # agent-skills
 
-Evidaxis measures **agent-skills** on methodology m5. Momentum 31.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **agent-skills** on methodology m5. Momentum 26.8/100; 1 axes present, 0 axes converging.

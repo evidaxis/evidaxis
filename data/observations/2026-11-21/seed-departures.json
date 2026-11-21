@@ -1,0 +1,41 @@
+{
+ "snapshot_date": "2026-11-21",
+ "departures": [
+  {
+   "github_repo": "FlowElement-xinliuyuansu/m_flow",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  },
+  {
+   "github_repo": "InfinitiBit/graphbit",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  },
+  {
+   "github_repo": "microsoft/agent-framework",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  },
+  {
+   "github_repo": "microsoft/Olive",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  },
+  {
+   "github_repo": "microsoft/onnxruntime",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  },
+  {
+   "github_repo": "microsoft/onnxruntime-inference-examples",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  },
+  {
+   "github_repo": "replicate/keepsake",
+   "reason": "gone",
+   "detected_at": "2026-11-21T02:23:26Z"
+  }
+ ],
+ "note": "Seeds retired by the weekly preflight (collectors/gh_graphql.py): the repository is gone on GitHub or its name now resolves to a different repository id. Their history and archived cards stay; they are no longer collected."
+}

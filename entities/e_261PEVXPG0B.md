@@ -14,23 +14,23 @@ classification:
   sub_niche: multimodal-vlm
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 04724603bccf
-  captured_at: 2026-11-14T03:45:26+00:00
-  period: 2026-w46
-  momentum: 90.5
-  percentile: 92
+  snapshot_id: 63819f13c9c7
+  captured_at: 2026-11-21T03:40:14+00:00
+  period: 2026-w47
+  momentum: 17.2
+  percentile: 0
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.0005366647628354329, "cohort_z": 3.238, "recent_weekly_commits": 0.2, "stars_not_scored": 3953}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 341, "by_year": {"2026": 238, "2025": 103}, "proxy": null}
+    github_commit_velocity: {"slope": -0.0011624167071050797, "cohort_z": -2.62, "recent_weekly_commits": 0.2, "stars_not_scored": 3960}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 449, "by_year": {"2026": 313, "2025": 136}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: arXiv:2504.05299; batch#02 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # SmolVLM
 
-Evidaxis measures **SmolVLM** on methodology m5. Momentum 90.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **SmolVLM** on methodology m5. Momentum 17.2/100; 1 axes present, 0 axes converging.
