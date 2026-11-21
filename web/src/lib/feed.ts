@@ -221,24 +221,28 @@ export function diffFeedEntries(
     }
     const priorThresholds = new Set(prior.convergent_axes ?? []);
     const currentThresholds = new Set(entity.convergent_axes ?? []);
-    for (const axis of [...currentThresholds].filter((value) => !priorThresholds.has(value)).sort()) {
+    // Each direction has one published receipt ID per system and week.
+    // Axes are evidence on that receipt, including when several change together.
+    const gained = [...currentThresholds].filter(axis => !priorThresholds.has(axis));
+    const lost = [...priorThresholds].filter(axis => !currentThresholds.has(axis));
+    if (gained.length) {
       entries.push(typedObservation(
         current,
         entity,
         state,
         'axis_threshold_recorded',
         `Axis threshold event: ${entity.name}`,
-        [entityPointer(entity, `/convergent_axes/${axis}`)],
+        gained.map(axis => entityPointer(entity, `/convergent_axes/${axis}`)),
       ));
     }
-    for (const axis of [...priorThresholds].filter((value) => !currentThresholds.has(value)).sort()) {
+    if (lost.length) {
       entries.push(typedObservation(
         current,
         entity,
         state,
         'axis_threshold_lost',
         `Axis threshold no longer recorded: ${entity.name}`,
-        [entityPointer(entity, `/convergent_axes/${axis}`)],
+        lost.map(axis => entityPointer(entity, `/convergent_axes/${axis}`)),
       ));
     }
     if (entity.incumbent && entity.rising === true && prior.rising !== true) {

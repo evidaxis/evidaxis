@@ -142,6 +142,28 @@ describe('typed feeds and immutable signal ids', () => {
     } });
   });
 
+  it.each([
+    ['axis_threshold_recorded', false],
+    ['axis_threshold_lost', true],
+  ] as const)('keeps one immutable %s receipt with every changed axis', (kind, losing) => {
+    const axes = [CITATION_AXIS, DEVELOPMENT_AXIS];
+    const receipt = (changed: string[]) => {
+      const base = entity('e_1', axes);
+      const before = { ...base, convergent_axes: losing ? changed : [] };
+      const after = { ...base, convergent_axes: losing ? [] : changed };
+      return diffFeedEntries(
+        snap('2026-08-08', '2026-w32', [before]), snap('2026-08-15', '2026-w33', [after]),
+        { resolveState: (record, snapshot) => deriveMeasurementState(record, snapshot, 4), dropped: new Set() },
+      ).filter(entry => entry.event_kind === kind);
+    };
+    const single = receipt([CITATION_AXIS]);
+    const together = receipt(axes);
+    expect(single).toHaveLength(1);
+    expect(together.map(entry => entry.url)).toEqual([single[0].url]);
+    expect(together[0].source_fields).toEqual(axes.map(axis => `/entities/e_1/convergent_axes/${axis}`).sort());
+    expect(receipt([...axes].reverse())).toEqual(together);
+  });
+
   it('records threshold loss in feed without publishing a moment', () => {
     const priorEntity = { ...entity('e_1', [DEVELOPMENT_AXIS]), convergent_axes: [DEVELOPMENT_AXIS] };
     const currentEntity = entity('e_1', [DEVELOPMENT_AXIS]);
