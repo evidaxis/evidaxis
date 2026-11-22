@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 18,
+  "default_branch": "main",
+  "archived": false,
+  "description": "Soul-driven AI agent with permission-hardened tools, token budgets, and multi-channel access. Runs 24/7 from CLI, Telegram or More.",
+  "node_id": "R_kgDOSHpN1A",
+  "visibility": "public",
+  "homepage": "https://mercuryagent.sh/",
+  "size": 69514,
+  "full_name": "cosmicstack-labs/mercury-agent",
+  "open_issues_count": 33,
+  "name": "mercury-agent",
+  "watchers_count": 4057,
+  "private": false,
+  "created_at": "2026-04-20T12:46:31Z",
+  "network_count": 415,
+  "topics": [
+    "ai-agent",
+    "ai-assistant",
+    "llm"
+  ],
+  "id": 1215974868,
+  "fork": false,
+  "language": "TypeScript",
+  "disabled": false,
+  "updated_at": "2026-11-22T06:58:36Z",
+  "forks_count": 415,
+  "stargazers_count": 4057,
+  "pushed_at": "2026-11-22T14:33:36Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

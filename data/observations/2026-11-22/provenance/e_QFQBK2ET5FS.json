@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 32,
+  "default_branch": "main",
+  "archived": false,
+  "description": "A Jest transformer with source map support that lets you use Jest to test projects written in TypeScript.",
+  "node_id": "MDEwOlJlcG9zaXRvcnk2Njk0NDU5MA==",
+  "visibility": "public",
+  "homepage": "https://kulshekhar.github.io/ts-jest",
+  "size": 287265,
+  "full_name": "kulshekhar/ts-jest",
+  "open_issues_count": 78,
+  "name": "ts-jest",
+  "watchers_count": 7073,
+  "private": false,
+  "created_at": "2016-08-30T13:47:17Z",
+  "network_count": 474,
+  "topics": [
+    "jest",
+    "testing",
+    "typescript"
+  ],
+  "id": 66944590,
+  "fork": false,
+  "language": "TypeScript",
+  "disabled": false,
+  "updated_at": "2026-11-19T20:07:40Z",
+  "forks_count": 474,
+  "stargazers_count": 7073,
+  "pushed_at": "2026-11-19T19:42:43Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

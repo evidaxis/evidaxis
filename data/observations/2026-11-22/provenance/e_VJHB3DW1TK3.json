@@ -1,0 +1,31 @@
+{
+  "subscribers_count": 6,
+  "default_branch": "main",
+  "archived": false,
+  "description": "A local AI gateway for AI agents, unifying your subscriptions and API providers with smart routing and on-device privacy protection.",
+  "node_id": "R_kgDOUk5agw",
+  "visibility": "public",
+  "homepage": "https://astrlink.com",
+  "size": 22658,
+  "full_name": "Calcium-Ion/AstrLink",
+  "open_issues_count": 24,
+  "name": "AstrLink",
+  "watchers_count": 603,
+  "private": false,
+  "created_at": "2026-09-22T04:20:28Z",
+  "network_count": 64,
+  "topics": [
+    "ai-gateway"
+  ],
+  "id": 1380866691,
+  "fork": false,
+  "language": "Go",
+  "disabled": false,
+  "updated_at": "2026-11-22T15:16:26Z",
+  "forks_count": 64,
+  "stargazers_count": 603,
+  "pushed_at": "2026-11-21T11:32:29Z",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "subscribers_count": 10,
+  "default_branch": "main",
+  "archived": false,
+  "description": "A desktop app for isolated, parallel agentic development",
+  "node_id": "R_kgDOPxxmWA",
+  "visibility": "public",
+  "homepage": "https://xum.coder.com",
+  "size": 193965,
+  "full_name": "coder/xum",
+  "open_issues_count": 480,
+  "name": "xum",
+  "watchers_count": 2081,
+  "private": false,
+  "created_at": "2025-09-17T15:45:53Z",
+  "network_count": 142,
+  "topics": [
+    "agent",
+    "ide"
+  ],
+  "id": 1058825816,
+  "fork": false,
+  "language": "TypeScript",
+  "disabled": false,
+  "updated_at": "2026-11-21T20:13:52Z",
+  "forks_count": 142,
+  "stargazers_count": 2081,
+  "pushed_at": "2026-11-21T08:44:48Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

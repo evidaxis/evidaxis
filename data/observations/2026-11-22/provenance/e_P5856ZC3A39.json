@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 60,
+  "default_branch": "main",
+  "archived": false,
+  "description": "Access large language models from the command-line",
+  "node_id": "R_kgDOJRhX7A",
+  "visibility": "public",
+  "homepage": "https://llm.datasette.io",
+  "size": 2989,
+  "full_name": "simonw/llm",
+  "open_issues_count": 797,
+  "name": "llm",
+  "watchers_count": 12797,
+  "private": false,
+  "created_at": "2023-04-01T21:16:57Z",
+  "network_count": 1108,
+  "topics": [
+    "ai",
+    "llms",
+    "openai"
+  ],
+  "id": 622352364,
+  "fork": false,
+  "language": "Python",
+  "disabled": false,
+  "updated_at": "2026-11-22T12:48:32Z",
+  "forks_count": 1108,
+  "stargazers_count": 12797,
+  "pushed_at": "2026-11-17T19:00:39Z",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

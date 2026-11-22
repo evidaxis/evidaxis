@@ -1,0 +1,33 @@
+{
+  "subscribers_count": 4,
+  "default_branch": "main",
+  "archived": false,
+  "description": "Fast, accurate OCR with correctness assessment.",
+  "node_id": "R_kgDOVZP6Hg",
+  "visibility": "public",
+  "homepage": "",
+  "size": 67289,
+  "full_name": "OpenBMB/MiniCPM-OCR",
+  "open_issues_count": 5,
+  "name": "MiniCPM-OCR",
+  "watchers_count": 1010,
+  "private": false,
+  "created_at": "2026-10-27T13:22:00Z",
+  "network_count": 76,
+  "topics": [
+    "image2text",
+    "minicpm-v",
+    "ocr"
+  ],
+  "id": 1435761182,
+  "fork": false,
+  "language": "TypeScript",
+  "disabled": false,
+  "updated_at": "2026-11-22T04:50:06Z",
+  "forks_count": 76,
+  "stargazers_count": 1010,
+  "pushed_at": "2026-11-19T14:58:22Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
