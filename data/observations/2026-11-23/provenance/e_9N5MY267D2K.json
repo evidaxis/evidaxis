@@ -1,0 +1,32 @@
+{
+  "default_branch": "main",
+  "size": 92537,
+  "created_at": "2025-09-01T12:14:45Z",
+  "network_count": 575,
+  "open_issues_count": 89,
+  "fork": false,
+  "updated_at": "2026-11-23T16:23:46Z",
+  "id": 1048418394,
+  "node_id": "R_kgDOPn2YWg",
+  "language": "Go",
+  "description": "AI Agent Builder and Runtime by Docker Engineering",
+  "watchers_count": 4705,
+  "subscribers_count": 17,
+  "visibility": "public",
+  "forks_count": 575,
+  "full_name": "docker/docker-agent",
+  "homepage": "https://docker.github.io/docker-agent/",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 4705,
+  "topics": [
+    "agents",
+    "ai"
+  ],
+  "private": false,
+  "name": "docker-agent",
+  "pushed_at": "2026-11-23T17:03:09Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

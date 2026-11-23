@@ -1,0 +1,33 @@
+{
+  "default_branch": "Develop",
+  "size": 544419,
+  "created_at": "2019-05-08T15:03:37Z",
+  "network_count": 133,
+  "open_issues_count": 33,
+  "fork": false,
+  "updated_at": "2026-11-23T19:24:58Z",
+  "id": 185628775,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxODU2Mjg3NzU=",
+  "language": "Python",
+  "description": " NASLib is a Neural Architecture Search (NAS) library for facilitating NAS research for the community by providing interfaces to several state-of-the-art NAS search spaces and optimizers.",
+  "watchers_count": 597,
+  "subscribers_count": 16,
+  "visibility": "public",
+  "forks_count": 133,
+  "full_name": "automl/NASLib",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 597,
+  "topics": [
+    "automl",
+    "nas",
+    "neural-architecture-search"
+  ],
+  "private": false,
+  "name": "NASLib",
+  "pushed_at": "2024-11-11T15:56:07Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

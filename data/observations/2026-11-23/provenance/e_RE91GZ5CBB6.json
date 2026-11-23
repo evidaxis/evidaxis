@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "size": 67750,
+  "created_at": "2024-07-06T17:57:11Z",
+  "network_count": 105,
+  "open_issues_count": 4,
+  "fork": false,
+  "updated_at": "2026-11-12T08:17:29Z",
+  "id": 825079672,
+  "node_id": "R_kgDOMS23eA",
+  "language": "Python",
+  "description": "We build KGs the way nature builds matter",
+  "watchers_count": 980,
+  "subscribers_count": 19,
+  "visibility": "public",
+  "forks_count": 105,
+  "full_name": "AuvaLab/itext2kg",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 980,
+  "topics": [
+    "knowledge-graph",
+    "llms",
+    "temporal-knowledge-graph"
+  ],
+  "private": false,
+  "name": "itext2kg",
+  "pushed_at": "2026-09-04T16:26:43Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

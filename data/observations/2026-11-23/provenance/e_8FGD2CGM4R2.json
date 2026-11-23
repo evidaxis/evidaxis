@@ -1,0 +1,33 @@
+{
+  "default_branch": "dev",
+  "size": 9249,
+  "created_at": "2025-08-20T06:18:02Z",
+  "network_count": 263,
+  "open_issues_count": 2,
+  "fork": false,
+  "updated_at": "2026-11-23T15:49:27Z",
+  "id": 1041202099,
+  "node_id": "R_kgDOPg97sw",
+  "language": "TypeScript",
+  "description": "GitHub Copilot, OpenAI Codex, OpenCode Go, and third-party AI provider gateway with OpenAI and Anthropic API compatibility.",
+  "watchers_count": 1130,
+  "subscribers_count": 4,
+  "visibility": "public",
+  "forks_count": 263,
+  "full_name": "caozhiyuan/copilot-api",
+  "homepage": "https://caozhiyuan.github.io/copilot-api/",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 1130,
+  "topics": [
+    "anthropic-compatible",
+    "github-copilot",
+    "openai-responses"
+  ],
+  "private": false,
+  "name": "copilot-api",
+  "pushed_at": "2026-11-23T14:21:47Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

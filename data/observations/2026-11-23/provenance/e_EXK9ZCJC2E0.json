@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "size": 38674,
+  "created_at": "2025-09-20T10:20:54Z",
+  "network_count": 215,
+  "open_issues_count": 38,
+  "fork": false,
+  "updated_at": "2026-11-18T06:18:56Z",
+  "id": 1060656097,
+  "node_id": "R_kgDOPzhT4Q",
+  "language": "Python",
+  "description": "VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model",
+  "watchers_count": 2347,
+  "subscribers_count": 30,
+  "visibility": "public",
+  "forks_count": 215,
+  "full_name": "OpenHelix-Team/VLA-Adapter",
+  "homepage": "https://vla-adapter.github.io/",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 2347,
+  "topics": [
+    "embodied-ai",
+    "robotics",
+    "vision-language-action-model"
+  ],
+  "private": false,
+  "name": "VLA-Adapter",
+  "pushed_at": "2026-03-19T14:09:37Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

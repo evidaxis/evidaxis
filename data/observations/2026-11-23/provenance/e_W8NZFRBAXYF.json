@@ -1,0 +1,33 @@
+{
+  "default_branch": "master",
+  "size": 9723,
+  "created_at": "2017-06-13T04:03:54Z",
+  "network_count": 173,
+  "open_issues_count": 5,
+  "fork": false,
+  "updated_at": "2026-11-03T18:43:14Z",
+  "id": 94167466,
+  "node_id": "MDEwOlJlcG9zaXRvcnk5NDE2NzQ2Ng==",
+  "language": "C++",
+  "description": "O-CNN: Octree-based Convolutional Neural Networks for 3D Shape Analysis",
+  "watchers_count": 757,
+  "subscribers_count": 33,
+  "visibility": "public",
+  "forks_count": 173,
+  "full_name": "microsoft/O-CNN",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 757,
+  "topics": [
+    "convolutional-neural-networks",
+    "o-cnn",
+    "octree"
+  ],
+  "private": false,
+  "name": "O-CNN",
+  "pushed_at": "2022-08-30T09:45:52Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

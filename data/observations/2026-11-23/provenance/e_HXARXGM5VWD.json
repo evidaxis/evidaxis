@@ -1,0 +1,33 @@
+{
+  "default_branch": "master",
+  "size": 7092,
+  "created_at": "2020-05-01T09:18:12Z",
+  "network_count": 553,
+  "open_issues_count": 113,
+  "fork": false,
+  "updated_at": "2026-11-23T10:36:09Z",
+  "id": 260420185,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNjA0MjAxODU=",
+  "language": "Python",
+  "description": "A library of reinforcement learning components and agents",
+  "watchers_count": 4090,
+  "subscribers_count": 77,
+  "visibility": "public",
+  "forks_count": 553,
+  "full_name": "google-deepmind/acme",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 4090,
+  "topics": [
+    "agents",
+    "reinforcement-learning",
+    "research"
+  ],
+  "private": false,
+  "name": "acme",
+  "pushed_at": "2026-11-12T08:10:29Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

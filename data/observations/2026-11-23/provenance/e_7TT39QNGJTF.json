@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "size": 77497,
+  "created_at": "2020-10-22T01:01:33Z",
+  "network_count": 52,
+  "open_issues_count": 73,
+  "fork": false,
+  "updated_at": "2026-11-19T22:01:01Z",
+  "id": 306185690,
+  "node_id": "MDEwOlJlcG9zaXRvcnkzMDYxODU2OTA=",
+  "language": "C++",
+  "description": "BanditPAM C++ implementation and Python package",
+  "watchers_count": 658,
+  "subscribers_count": 7,
+  "visibility": "public",
+  "forks_count": 52,
+  "full_name": "motiwari/BanditPAM",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 658,
+  "topics": [
+    "clustering",
+    "machine-learning",
+    "python"
+  ],
+  "private": false,
+  "name": "BanditPAM",
+  "pushed_at": "2025-08-25T15:48:28Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

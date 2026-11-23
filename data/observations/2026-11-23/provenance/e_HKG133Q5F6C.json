@@ -1,0 +1,32 @@
+{
+  "default_branch": "main",
+  "size": 83245,
+  "created_at": "2021-12-08T22:52:35Z",
+  "network_count": 73,
+  "open_issues_count": 7,
+  "fork": false,
+  "updated_at": "2026-11-06T03:13:15Z",
+  "id": 436415334,
+  "node_id": "R_kgDOGgMrZg",
+  "language": "Python",
+  "description": "Implementation of https://srush.github.io/annotated-s4",
+  "watchers_count": 520,
+  "subscribers_count": 8,
+  "visibility": "public",
+  "forks_count": 73,
+  "full_name": "srush/annotated-s4",
+  "homepage": "https://srush.github.io/annotated-s4",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 520,
+  "topics": [
+    "deep-learning",
+    "jax"
+  ],
+  "private": false,
+  "name": "annotated-s4",
+  "pushed_at": "2025-06-20T13:42:10Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "size": 32099,
+  "created_at": "2017-04-21T08:25:33Z",
+  "network_count": 167,
+  "open_issues_count": 21,
+  "fork": false,
+  "updated_at": "2026-11-19T20:26:03Z",
+  "id": 88960601,
+  "node_id": "MDEwOlJlcG9zaXRvcnk4ODk2MDYwMQ==",
+  "language": "TypeScript",
+  "description": "React Unity WebGL provides a modern solution for embedding Unity WebGL builds in your React Application while providing advanced APIs for two way communication and interaction between Unity and React.",
+  "watchers_count": 1887,
+  "subscribers_count": 32,
+  "visibility": "public",
+  "forks_count": 167,
+  "full_name": "jeffreylanters/react-unity-webgl",
+  "homepage": "https://react-unity-webgl.dev",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 1887,
+  "topics": [
+    "react",
+    "unity",
+    "wegl"
+  ],
+  "private": false,
+  "name": "react-unity-webgl",
+  "pushed_at": "2026-05-08T14:18:39Z",
+  "owner_type": "User",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

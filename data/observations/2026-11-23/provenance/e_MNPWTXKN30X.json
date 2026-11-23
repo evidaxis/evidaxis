@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "size": 62197,
+  "created_at": "2023-05-31T14:42:46Z",
+  "network_count": 168,
+  "open_issues_count": 2,
+  "fork": false,
+  "updated_at": "2026-11-23T17:51:55Z",
+  "id": 647799211,
+  "node_id": "R_kgDOJpyhqw",
+  "language": "Python",
+  "description": "支持GPT/Claude/Deepseek/Sakura等大语言模型的Galgame自动化翻译解决方案  Automated translation solution for visual novels supporting GPT/Claude/Deepseek/Sakura",
+  "watchers_count": 2418,
+  "subscribers_count": 10,
+  "visibility": "public",
+  "forks_count": 168,
+  "full_name": "GalTransl/GalTransl",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 2418,
+  "topics": [
+    "ai",
+    "galgame",
+    "translater"
+  ],
+  "private": false,
+  "name": "GalTransl",
+  "pushed_at": "2026-11-22T22:57:06Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "GPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

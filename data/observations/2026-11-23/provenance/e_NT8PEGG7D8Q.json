@@ -1,0 +1,32 @@
+{
+  "default_branch": "main",
+  "size": 72196,
+  "created_at": "2026-07-26T15:11:49Z",
+  "network_count": 48,
+  "open_issues_count": 24,
+  "fork": false,
+  "updated_at": "2026-11-23T09:13:55Z",
+  "id": 1312904757,
+  "node_id": "R_kgDOTkFWNQ",
+  "language": "JavaScript",
+  "description": "阿墨的字幕工作台：Moy 的 ASR 字幕转写工作流（简称 MAW）",
+  "watchers_count": 617,
+  "subscribers_count": 0,
+  "visibility": "public",
+  "forks_count": 48,
+  "full_name": "Moyf/moys-asr-workflow",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 617,
+  "topics": [
+    "asr",
+    "workflow"
+  ],
+  "private": false,
+  "name": "moys-asr-workflow",
+  "pushed_at": "2026-11-23T18:09:42Z",
+  "owner_type": "User",
+  "license_spdx_id": "AGPL-3.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "size": 2807,
+  "created_at": "2024-11-12T13:00:20Z",
+  "network_count": 108,
+  "open_issues_count": 64,
+  "fork": false,
+  "updated_at": "2026-11-23T04:44:08Z",
+  "id": 887265538,
+  "node_id": "R_kgDONOKZAg",
+  "language": "TypeScript",
+  "description": "Deprecated and no longer maintained. Langfuse is the recommended replacement: see the README.",
+  "watchers_count": 1738,
+  "subscribers_count": 17,
+  "visibility": "public",
+  "forks_count": 108,
+  "full_name": "mattpocock/evalite",
+  "homepage": "https://www.evalite.dev/",
+  "archived": true,
+  "disabled": false,
+  "stargazers_count": 1738,
+  "topics": [
+    "ai",
+    "evals",
+    "typescript"
+  ],
+  "private": false,
+  "name": "evalite",
+  "pushed_at": "2026-11-09T12:06:11Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

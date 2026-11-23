@@ -1,0 +1,31 @@
+{
+  "default_branch": "main",
+  "size": 104,
+  "created_at": "2024-05-05T14:21:09Z",
+  "network_count": 97,
+  "open_issues_count": 19,
+  "fork": false,
+  "updated_at": "2026-11-21T23:49:10Z",
+  "id": 796293295,
+  "node_id": "R_kgDOL3Z4rw",
+  "language": "Python",
+  "description": "Text to speech alignment using CTC forced alignment",
+  "watchers_count": 577,
+  "subscribers_count": 8,
+  "visibility": "public",
+  "forks_count": 97,
+  "full_name": "MahmoudAshraf97/ctc-forced-aligner",
+  "homepage": "",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 577,
+  "topics": [
+    "forced-alignment"
+  ],
+  "private": false,
+  "name": "ctc-forced-aligner",
+  "pushed_at": "2026-11-17T00:30:54Z",
+  "owner_type": "User",
+  "license_spdx_id": "BSD-2-Clause",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

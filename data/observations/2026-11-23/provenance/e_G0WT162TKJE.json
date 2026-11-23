@@ -1,0 +1,33 @@
+{
+  "default_branch": "master",
+  "size": 677,
+  "created_at": "2016-06-05T03:31:05Z",
+  "network_count": 202,
+  "open_issues_count": 21,
+  "fork": false,
+  "updated_at": "2026-11-22T03:41:51Z",
+  "id": 60441516,
+  "node_id": "MDEwOlJlcG9zaXRvcnk2MDQ0MTUxNg==",
+  "language": "Python",
+  "description": "Poker engine for poker AI development in Python",
+  "watchers_count": 724,
+  "subscribers_count": 35,
+  "visibility": "public",
+  "forks_count": 202,
+  "full_name": "ishikota/PyPokerEngine",
+  "homepage": "https://ishikota.github.io/PyPokerEngine/",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 724,
+  "topics": [
+    "ai-poker-game",
+    "poker-engine",
+    "reinforcement-learning"
+  ],
+  "private": false,
+  "name": "PyPokerEngine",
+  "pushed_at": "2024-04-10T13:40:46Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

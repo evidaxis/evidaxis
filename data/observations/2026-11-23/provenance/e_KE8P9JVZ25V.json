@@ -1,0 +1,32 @@
+{
+  "default_branch": "main",
+  "size": 38263,
+  "created_at": "2026-09-18T07:28:36Z",
+  "network_count": 153,
+  "open_issues_count": 7,
+  "fork": false,
+  "updated_at": "2026-11-23T15:56:54Z",
+  "id": 1375530874,
+  "node_id": "R_kgDOUfzveg",
+  "language": "TypeScript",
+  "description": "Run many coding agents across machines from a phone, tablet or desktop. A herdr plugin.",
+  "watchers_count": 1183,
+  "subscribers_count": 0,
+  "visibility": "public",
+  "forks_count": 153,
+  "full_name": "eliasstravik/shepherdr",
+  "homepage": "https://herdr.dev",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 1183,
+  "topics": [
+    "herdr",
+    "herdr-layout"
+  ],
+  "private": false,
+  "name": "shepherdr",
+  "pushed_at": "2026-11-23T19:37:33Z",
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

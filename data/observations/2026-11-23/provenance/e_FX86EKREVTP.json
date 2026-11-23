@@ -1,0 +1,32 @@
+{
+  "default_branch": "main",
+  "size": 172032,
+  "created_at": "2024-07-21T21:25:49Z",
+  "network_count": 839,
+  "open_issues_count": 91,
+  "fork": false,
+  "updated_at": "2026-11-23T14:54:07Z",
+  "id": 831872524,
+  "node_id": "R_kgDOMZVeDA",
+  "language": "TypeScript",
+  "description": "OCR & Document Extraction using vision models",
+  "watchers_count": 12245,
+  "subscribers_count": 59,
+  "visibility": "public",
+  "forks_count": 839,
+  "full_name": "getomni-ai/zerox",
+  "homepage": "https://getomni.ai/ocr-demo",
+  "archived": false,
+  "disabled": false,
+  "stargazers_count": 12245,
+  "topics": [
+    "ocr",
+    "pdf"
+  ],
+  "private": false,
+  "name": "zerox",
+  "pushed_at": "2025-05-20T00:39:18Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
