@@ -813,3 +813,32 @@ EVALUATED, official cutoff **2026-11-02**, 48 voting / 7 rising, 1 unstable veto
 **`score_m3.py --verify`: PASS** — "files match recomputation".
 
 **Next tact:** Monday 2026-11-23, partition 2026-11-16; 2026-11-09 becomes eligible for CLEAN.
+
+## 2026-11-23 — tact: partition 2026-11-16, 6/6; score_m3 --verify PASS
+
+On schedule (weekly ritual). Files land under `data/observations/2026-11-23/`.
+
+**Capture.** `t2_deps_v2h1_collect.py --snapshot 2026-11-16` — panel manifest `026eaa45377a…`
+(90 systems / 628 frozen packages + 12 canaries): **1207/2432 matched**, 10 canaries
+(`bqjob_r71251b0050b569ae_000001a20836d7a3_1`, ~51 min). Manifest
+`deps_v2h1-2026-11-16-manifest.json`: `captured_at` 2026-11-23T12:33:51Z, `partition_day`
+2026-11-16, upstream SnapshotAt 2026-11-16 21:01:07, observations sha256 `5ce02f48b9bb…`.
+Coverage 1210 → 1207.
+
+**Sidecar** (`--sidecar 2026-11-16`): PV2P 1156 rows, Projects 4620 rows. Retention tripwire:
+earliest 20230410, latest 20261116, n 187.
+
+**Sanity gate** (calibration `sanity-calibration-3e51319d9817.json`, `--series v2h1`): 35 partitions
+checked; **2026-11-09 promoted CLEAN** (cov=1210); 2026-11-16 PROVISIONAL (cov=1207). KILL-BAR PASS,
+flagged exactly the two known-bad partitions. Artifact
+`data/quarantine/axis3-deps-v2/sanity-check-4ea14ad0e01c.json`.
+
+**Evaluation** (`--as-of 2026-11-09 --label live`, evaluator `axis3_v2h1_eval_2`): status
+EVALUATED, official cutoff **2026-11-09**, 48 voting / 7 rising, 1 unstable vetoed
+(`e_J16JY8N155H`, same as 2026-11-02). **c1–c6 PASS — 6/6.** Rising set identical to the
+2026-11-02 evaluation (none in, none out). Artifact
+`data/quarantine/axis3-deps-v2/eval/v2h1-live-2026-11-09-090e72ee3197.json`.
+
+**`score_m3.py --verify`: PASS** — "files match recomputation".
+
+**Next tact:** Monday 2026-11-30, partition 2026-11-23; 2026-11-16 becomes eligible for CLEAN.
