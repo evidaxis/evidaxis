@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 10,
+  "default_branch": "main",
+  "topics": [
+    "agent-memory",
+    "context-graph",
+    "neo4j"
+  ],
+  "homepage": "https://create-context-graph.dev",
+  "language": "Python",
+  "private": false,
+  "visibility": "public",
+  "network_count": 107,
+  "forks_count": 107,
+  "node_id": "R_kgDORtz6sQ",
+  "full_name": "neo4j-labs/create-context-graph",
+  "fork": false,
+  "watchers_count": 751,
+  "id": 1188887217,
+  "subscribers_count": 5,
+  "stargazers_count": 751,
+  "archived": false,
+  "updated_at": "2026-11-24T12:58:15Z",
+  "size": 10484,
+  "created_at": "2026-03-22T18:04:44Z",
+  "name": "create-context-graph",
+  "disabled": false,
+  "description": "AI agents with graph based reasoning memory, scaffolded in seconds",
+  "pushed_at": "2026-10-09T14:51:27Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

@@ -1,0 +1,32 @@
+{
+  "open_issues_count": 611,
+  "default_branch": "master",
+  "topics": [
+    "deep-learning",
+    "graph-neural-networks"
+  ],
+  "homepage": "http://dgl.ai",
+  "language": "Python",
+  "private": false,
+  "visibility": "public",
+  "network_count": 3056,
+  "forks_count": 3056,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzAzNzU3OTc=",
+  "full_name": "dmlc/dgl",
+  "fork": false,
+  "watchers_count": 14299,
+  "id": 130375797,
+  "subscribers_count": 170,
+  "stargazers_count": 14299,
+  "archived": false,
+  "updated_at": "2026-11-24T17:47:23Z",
+  "size": 30768,
+  "created_at": "2018-04-20T14:49:09Z",
+  "name": "dgl",
+  "disabled": false,
+  "description": "Python package built to ease deep learning on graph, on top of existing DL frameworks.",
+  "pushed_at": "2025-07-31T23:53:10Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

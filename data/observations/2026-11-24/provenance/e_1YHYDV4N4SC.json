@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 25,
+  "default_branch": "main",
+  "topics": [
+    "ai",
+    "ai-tools",
+    "on-premise"
+  ],
+  "homepage": "https://www.zylon.ai/private-gpt",
+  "language": "Python",
+  "private": false,
+  "visibility": "public",
+  "network_count": 7626,
+  "forks_count": 7626,
+  "node_id": "R_kgDOJd0Akg",
+  "full_name": "zylon-ai/private-gpt",
+  "fork": false,
+  "watchers_count": 57653,
+  "id": 635240594,
+  "subscribers_count": 448,
+  "stargazers_count": 57653,
+  "archived": false,
+  "updated_at": "2026-11-24T16:20:47Z",
+  "size": 226998,
+  "created_at": "2023-05-02T09:15:31Z",
+  "name": "private-gpt",
+  "disabled": false,
+  "description": "Complete API layer for private AI applications on local models: RAG, skills, tools, MCP, text-to-sql, and more. Works with any OpenAI-compatible inference server.",
+  "pushed_at": "2026-11-24T10:22:27Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

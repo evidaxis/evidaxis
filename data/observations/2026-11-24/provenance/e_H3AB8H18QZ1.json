@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 17,
+  "default_branch": "main",
+  "topics": [
+    "dotnet",
+    "wasmtime",
+    "webassembly"
+  ],
+  "homepage": "",
+  "language": "C#",
+  "private": false,
+  "visibility": "public",
+  "network_count": 73,
+  "forks_count": 73,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNTIyNTQwNDE=",
+  "full_name": "bytecodealliance/wasmtime-dotnet",
+  "fork": false,
+  "watchers_count": 523,
+  "id": 252254041,
+  "subscribers_count": 21,
+  "stargazers_count": 523,
+  "archived": false,
+  "updated_at": "2026-11-23T09:01:32Z",
+  "size": 2125,
+  "created_at": "2020-04-01T18:21:12Z",
+  "name": "wasmtime-dotnet",
+  "disabled": false,
+  "description": ".NET embedding of Wasmtime https://bytecodealliance.github.io/wasmtime-dotnet/",
+  "pushed_at": "2026-11-06T14:41:52Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

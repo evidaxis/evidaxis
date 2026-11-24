@@ -1,0 +1,33 @@
+{
+  "open_issues_count": 46,
+  "default_branch": "master",
+  "topics": [
+    "benchmarking",
+    "machine-learning",
+    "security"
+  ],
+  "homepage": "",
+  "language": "Jupyter Notebook",
+  "private": false,
+  "visibility": "public",
+  "network_count": 1387,
+  "forks_count": 1387,
+  "node_id": "MDEwOlJlcG9zaXRvcnk2ODI1NDQ5OA==",
+  "full_name": "cleverhans-lab/cleverhans",
+  "fork": false,
+  "watchers_count": 6457,
+  "id": 68254498,
+  "subscribers_count": 182,
+  "stargazers_count": 6457,
+  "archived": false,
+  "updated_at": "2026-11-22T11:44:38Z",
+  "size": 9369,
+  "created_at": "2016-09-15T00:28:04Z",
+  "name": "cleverhans",
+  "disabled": false,
+  "description": "An adversarial example library for constructing attacks, building defenses, and benchmarking both",
+  "pushed_at": "2024-04-10T13:26:10Z",
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
