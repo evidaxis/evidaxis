@@ -1,0 +1,33 @@
+{
+  "archived": false,
+  "name": "deepsnap",
+  "private": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkyNzAxMDY4NDE=",
+  "open_issues_count": 24,
+  "forks_count": 56,
+  "pushed_at": "2025-11-24T05:17:02Z",
+  "visibility": "public",
+  "default_branch": "master",
+  "full_name": "snap-stanford/deepsnap",
+  "homepage": "https://snap.stanford.edu/deepsnap/",
+  "id": 270106841,
+  "description": "Python library assists deep learning on graphs",
+  "language": "Python",
+  "size": 1838,
+  "updated_at": "2026-11-19T21:51:27Z",
+  "created_at": "2020-06-06T21:17:38Z",
+  "fork": false,
+  "subscribers_count": 57,
+  "disabled": false,
+  "network_count": 56,
+  "topics": [
+    "deep-learning",
+    "graph-neural-networks",
+    "pytorch"
+  ],
+  "watchers_count": 573,
+  "stargazers_count": 573,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

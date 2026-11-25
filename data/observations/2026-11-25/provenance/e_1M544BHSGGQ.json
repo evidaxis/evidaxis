@@ -1,0 +1,31 @@
+{
+  "archived": false,
+  "name": "nnUNet",
+  "private": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxODE4NDYzNzE=",
+  "open_issues_count": 19,
+  "forks_count": 2521,
+  "pushed_at": "2026-11-25T09:15:57Z",
+  "visibility": "public",
+  "default_branch": "master",
+  "full_name": "MIC-DKFZ/nnUNet",
+  "homepage": null,
+  "id": 181846371,
+  "description": null,
+  "language": "Python",
+  "size": 10489,
+  "updated_at": "2026-11-25T14:27:21Z",
+  "created_at": "2019-04-17T08:10:56Z",
+  "fork": false,
+  "subscribers_count": 83,
+  "disabled": false,
+  "network_count": 2521,
+  "topics": [
+    "segmentation"
+  ],
+  "watchers_count": 9069,
+  "stargazers_count": 9069,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

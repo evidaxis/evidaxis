@@ -1,0 +1,33 @@
+{
+  "archived": false,
+  "name": "tcav",
+  "private": false,
+  "node_id": "MDEwOlJlcG9zaXRvcnkxMzk2MTg2MTg=",
+  "open_issues_count": 17,
+  "forks_count": 149,
+  "pushed_at": "2026-07-22T05:37:20Z",
+  "visibility": "public",
+  "default_branch": "master",
+  "full_name": "tensorflow/tcav",
+  "homepage": "",
+  "id": 139618618,
+  "description": "Code for the TCAV ML interpretability project",
+  "language": "Jupyter Notebook",
+  "size": 590,
+  "updated_at": "2026-11-23T19:03:00Z",
+  "created_at": "2018-07-03T17:45:35Z",
+  "fork": false,
+  "subscribers_count": 28,
+  "disabled": false,
+  "network_count": 149,
+  "topics": [
+    "interpretability",
+    "machine-learning",
+    "tcav"
+  ],
+  "watchers_count": 654,
+  "stargazers_count": 654,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

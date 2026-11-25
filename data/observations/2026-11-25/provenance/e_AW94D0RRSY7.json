@@ -1,0 +1,33 @@
+{
+  "archived": false,
+  "name": "ProG",
+  "private": false,
+  "node_id": "R_kgDOJ7AcoA",
+  "open_issues_count": 0,
+  "forks_count": 73,
+  "pushed_at": "2026-06-02T02:16:54Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "full_name": "sheldonresearch/ProG",
+  "homepage": "",
+  "id": 665853088,
+  "description": "A Unified Python Library for Graph Prompting",
+  "language": "Python",
+  "size": 519135,
+  "updated_at": "2026-11-19T23:00:22Z",
+  "created_at": "2023-07-13T06:39:07Z",
+  "fork": false,
+  "subscribers_count": 10,
+  "disabled": false,
+  "network_count": 73,
+  "topics": [
+    "graph-neural-networks",
+    "graph-prompt",
+    "prompt-learning"
+  ],
+  "watchers_count": 586,
+  "stargazers_count": 586,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

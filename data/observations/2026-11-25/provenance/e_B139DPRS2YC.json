@@ -1,0 +1,33 @@
+{
+  "archived": false,
+  "name": "hallucination-leaderboard",
+  "private": false,
+  "node_id": "R_kgDOKnnbiQ",
+  "open_issues_count": 24,
+  "forks_count": 108,
+  "pushed_at": "2026-11-24T20:57:35Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "full_name": "vectara/hallucination-leaderboard",
+  "homepage": "https://vectara.com",
+  "id": 712629129,
+  "description": "Leaderboard Comparing LLM Performance at Producing Hallucinations when Summarizing Short Documents",
+  "language": "Python",
+  "size": 540702,
+  "updated_at": "2026-11-24T14:24:07Z",
+  "created_at": "2023-10-31T21:19:12Z",
+  "fork": false,
+  "subscribers_count": 61,
+  "disabled": false,
+  "network_count": 108,
+  "topics": [
+    "generative-ai",
+    "hallucinations",
+    "llm"
+  ],
+  "watchers_count": 3331,
+  "stargazers_count": 3331,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

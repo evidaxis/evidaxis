@@ -1,0 +1,32 @@
+{
+  "archived": false,
+  "name": "Medusa",
+  "private": false,
+  "node_id": "R_kgDOKRmRMA",
+  "open_issues_count": 57,
+  "forks_count": 207,
+  "pushed_at": "2024-06-25T12:23:04Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "full_name": "FasterDecoding/Medusa",
+  "homepage": "https://sites.google.com/view/medusa-llm",
+  "id": 689541424,
+  "description": "Medusa: Simple Framework for Accelerating LLM Generation with Multiple Decoding Heads",
+  "language": "Jupyter Notebook",
+  "size": 4996,
+  "updated_at": "2026-11-19T23:03:51Z",
+  "created_at": "2023-09-10T06:14:07Z",
+  "fork": false,
+  "subscribers_count": 29,
+  "disabled": false,
+  "network_count": 207,
+  "topics": [
+    "llm",
+    "llm-inference"
+  ],
+  "watchers_count": 2774,
+  "stargazers_count": 2774,
+  "owner_type": "Organization",
+  "license_spdx_id": "Apache-2.0",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}

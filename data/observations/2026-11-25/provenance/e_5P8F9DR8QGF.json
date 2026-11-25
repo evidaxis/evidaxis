@@ -1,0 +1,31 @@
+{
+  "archived": false,
+  "name": "whichllm",
+  "private": false,
+  "node_id": "R_kgDOReQROg",
+  "open_issues_count": 7,
+  "forks_count": 380,
+  "pushed_at": "2026-11-19T13:47:29Z",
+  "visibility": "public",
+  "default_branch": "main",
+  "full_name": "Andyyyy64/whichllm",
+  "homepage": "",
+  "id": 1172574522,
+  "description": "Find the local LLM that actually runs and performs best on your hardware. Ranked by real, recency-aware benchmarks, not parameter count. One command, run it instantly.",
+  "language": "Python",
+  "size": 10759,
+  "updated_at": "2026-11-25T17:25:39Z",
+  "created_at": "2026-03-04T13:16:00Z",
+  "fork": false,
+  "subscribers_count": 23,
+  "disabled": false,
+  "network_count": 380,
+  "topics": [
+    "localllm"
+  ],
+  "watchers_count": 6862,
+  "stargazers_count": 6862,
+  "owner_type": "User",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
