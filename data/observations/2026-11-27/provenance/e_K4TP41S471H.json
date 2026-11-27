@@ -1,0 +1,33 @@
+{
+  "language": "Python",
+  "node_id": "R_kgDOIH4Hdg",
+  "archived": false,
+  "default_branch": "main",
+  "updated_at": "2026-11-18T07:46:05Z",
+  "open_issues_count": 25,
+  "name": "tuned-lens",
+  "network_count": 78,
+  "pushed_at": "2025-08-07T20:51:42Z",
+  "visibility": "public",
+  "private": false,
+  "description": "Tools for understanding how transformer predictions are built layer-by-layer",
+  "disabled": false,
+  "fork": false,
+  "topics": [
+    "machine-learning",
+    "pytorch",
+    "transformers"
+  ],
+  "created_at": "2022-10-03T20:48:40Z",
+  "subscribers_count": 4,
+  "forks_count": 78,
+  "full_name": "AlignmentResearch/tuned-lens",
+  "size": 6267,
+  "homepage": "https://tuned-lens.readthedocs.io/en/latest/",
+  "watchers_count": 623,
+  "stargazers_count": 623,
+  "id": 545130358,
+  "owner_type": "Organization",
+  "license_spdx_id": "MIT",
+  "_note": "person-free filtered; response_sha256 (in observations.jsonl) is of the full upstream body"
+}
