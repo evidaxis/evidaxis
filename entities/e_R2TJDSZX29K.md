@@ -14,22 +14,22 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 72.2
-  percentile: 94
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 73.7
+  percentile: 89
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.01013198132031288, "cohort_z": 3.043, "recent_weekly_commits": 1.2, "stars_not_scored": 1332}
-    openalex_citation_momentum: {"status": "present", "slope": 1.3776443055820062, "cohort_z": 0.502, "total_citations": 3155, "by_year": {"2026": 1362, "2025": 963, "2024": 592, "2023": 190, "2022": 43, "2020": 2, "2016": 1, "2012": 2}, "proxy": null}
+    github_commit_velocity: {"slope": 0.023543343404681758, "cohort_z": 3.109, "recent_weekly_commits": 2.5, "stars_not_scored": 1333}
+    openalex_citation_momentum: {"status": "present", "slope": 1.4097419862805043, "cohort_z": 0.679, "total_citations": 3177, "by_year": {"2026": 1404, "2025": 959, "2024": 582, "2023": 186, "2022": 43, "2020": 1, "2016": 1, "2012": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Foldseek
 
-Evidaxis measures **Foldseek** on methodology m5. Momentum 72.2/100; 2 axes present, 0 axes converging.
+Evidaxis measures **Foldseek** on methodology m5. Momentum 73.7/100; 2 axes present, 0 axes converging.

@@ -14,10 +14,10 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 27.0
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 25.0
   percentile: 13
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.02867378080265073, "cohort_z": -1.838, "recent_weekly_commits": 0.0, "stars_not_scored": 778}
+    github_commit_velocity: {"slope": -0.031991408333535934, "cohort_z": -2.001, "recent_weekly_commits": 0.0, "stars_not_scored": 782}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 1, "points": 3, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 1, "points": 4, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 ---
 
 # llama-benchy
 
-Evidaxis measures **llama-benchy** on methodology m5. Momentum 27.0/100; 1 axes present, 0 axes converging.
+Evidaxis measures **llama-benchy** on methodology m5. Momentum 25.0/100; 1 axes present, 0 axes converging.

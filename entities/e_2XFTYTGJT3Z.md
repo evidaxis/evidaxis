@@ -14,10 +14,10 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 83.6
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 87.3
   percentile: 100
   confidence: low
   axes_present: ["github_commit_velocity"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.006872228456833645, "cohort_z": 2.686, "recent_weekly_commits": 0.2, "stars_not_scored": 2016}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 790, "by_year": {"2026": 491, "2025": 290, "2024": 9}, "proxy": null}
+    github_commit_velocity: {"slope": 0.005450388086454271, "cohort_z": 2.984, "recent_weekly_commits": 0.2, "stars_not_scored": 2019}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 802, "by_year": {"2026": 515, "2025": 278, "2024": 9}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "paper_ref: biorxiv:10.1101/2024.10.10.615955; batch#01 2026-07-01 (taxonomy v1, provisional, not-yet-deployed)"
 ---
 
 # Chai-1
 
-Evidaxis measures **Chai-1** on methodology m5. Momentum 83.6/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Chai-1** on methodology m5. Momentum 87.3/100; 1 axes present, 0 axes converging.

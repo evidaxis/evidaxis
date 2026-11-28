@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 56.5
-  percentile: 70
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 54.4
+  percentile: 69
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.006425920774950031, "cohort_z": 0.523, "recent_weekly_commits": 0.8, "stars_not_scored": 923}
+    github_commit_velocity: {"slope": 0.0039036100370943485, "cohort_z": 0.35, "recent_weekly_commits": 0.8, "stars_not_scored": 928}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # lime
 
-Evidaxis measures **lime** on methodology m5. Momentum 56.5/100; 1 axes present, 0 axes converging.
+Evidaxis measures **lime** on methodology m5. Momentum 54.4/100; 1 axes present, 0 axes converging.

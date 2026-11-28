@@ -14,22 +14,22 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 40.0
-  percentile: 17
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 33.0
+  percentile: 11
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
   convergent_axes: []
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": -0.003987724003469436, "cohort_z": -1.488, "recent_weekly_commits": 0.3, "stars_not_scored": 1029}
-    openalex_citation_momentum: {"status": "present", "slope": 0.7340537607614925, "cohort_z": -0.118, "total_citations": 1178, "by_year": {"2026": 425, "2025": 313, "2024": 196, "2023": 174, "2022": 55, "2021": 14, "2019": 1}, "proxy": null}
+    github_commit_velocity: {"slope": -0.006787275840886256, "cohort_z": -2.816, "recent_weekly_commits": 0.3, "stars_not_scored": 1036}
+    openalex_citation_momentum: {"status": "present", "slope": 0.7603770853866167, "cohort_z": 0.092, "total_citations": 1176, "by_year": {"2026": 435, "2025": 309, "2024": 193, "2023": 172, "2022": 54, "2021": 12, "2019": 1}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # gnina
 
-Evidaxis measures **gnina** on methodology m5. Momentum 40.0/100; 2 axes present, 0 axes converging.
+Evidaxis measures **gnina** on methodology m5. Momentum 33.0/100; 2 axes present, 0 axes converging.

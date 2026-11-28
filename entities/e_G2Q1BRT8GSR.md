@@ -14,10 +14,10 @@ classification:
   sub_niche: drug-discovery
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 46.9
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 47.5
   percentile: 28
   confidence: medium
   axes_present: ["github_commit_velocity", "openalex_citation_momentum"]
@@ -25,12 +25,12 @@ score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   rising: false
   status: tracked
   axes:
-    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.071, "recent_weekly_commits": 0.0, "stars_not_scored": 3459}
-    openalex_citation_momentum: {"status": "present", "slope": 0.5296406883028428, "cohort_z": -0.43, "total_citations": 1248, "by_year": {"2026": 514, "2025": 348, "2024": 258, "2023": 120, "2022": 8}, "proxy": null}
+    github_commit_velocity: {"slope": 0.0, "cohort_z": -0.179, "recent_weekly_commits": 0.0, "stars_not_scored": 3461}
+    openalex_citation_momentum: {"status": "present", "slope": 0.5493061443340546, "cohort_z": -0.22, "total_citations": 1248, "by_year": {"2026": 532, "2025": 350, "2024": 242, "2023": 116, "2022": 8}, "proxy": null}
     deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": 0, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Published + bioRxiv preprint summed by year."
 ---
 
 # OpenFold
 
-Evidaxis measures **OpenFold** on methodology m5. Momentum 46.9/100; 2 axes present, 0 axes converging.
+Evidaxis measures **OpenFold** on methodology m5. Momentum 47.5/100; 2 axes present, 0 axes converging.

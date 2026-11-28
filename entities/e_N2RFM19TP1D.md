@@ -14,22 +14,22 @@ classification:
   sub_niche: llm-inference-serving
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 50.9
-  percentile: 62
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 47.6
+  percentile: 54
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": 0.023210222494207296, "cohort_z": 0.07, "recent_weekly_commits": 71.8, "stars_not_scored": 7093}
-    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 346, "by_year": {"2026": 209, "2025": 117, "2024": 20}, "proxy": null}
-    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 0, "points": 31, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
+    github_commit_velocity: {"slope": 0.017733140802947217, "cohort_z": -0.189, "recent_weekly_commits": 70.5, "stars_not_scored": 7151}
+    openalex_citation_momentum: {"status": "insufficient", "slope": null, "cohort_z": null, "total_citations": 360, "by_year": {"2026": 227, "2025": 116, "2024": 17}, "proxy": null}
+    deps_direct_dependents_momentum: {"status": "below_floor", "slope": null, "theil_sen": null, "cohort_z": null, "latest": 0, "points": 32, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 ---
 
 # Mooncake
 
-Evidaxis measures **Mooncake** on methodology m5. Momentum 50.9/100; 1 axes present, 0 axes converging.
+Evidaxis measures **Mooncake** on methodology m5. Momentum 47.6/100; 1 axes present, 0 axes converging.

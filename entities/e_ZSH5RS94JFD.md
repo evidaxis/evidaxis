@@ -14,18 +14,18 @@ classification:
   sub_niche: unassigned
 score:  # DERIVED — never edited by hand; rebuilt from data each snapshot
   methodology_version: m5
-  snapshot_id: 63819f13c9c7
-  captured_at: 2026-11-21T03:40:14+00:00
-  period: 2026-w47
-  momentum: 42.3
-  percentile: 22
+  snapshot_id: 7bf8281671a3
+  captured_at: 2026-11-28T03:40:51+00:00
+  period: 2026-w48
+  momentum: 24.1
+  percentile: 12
   confidence: low
   axes_present: ["github_commit_velocity"]
   convergent_axes: []
   rising: false
   status: single-axis
   axes:
-    github_commit_velocity: {"slope": -0.007533694698740252, "cohort_z": -0.619, "recent_weekly_commits": 4.5, "stars_not_scored": 4631}
+    github_commit_velocity: {"slope": -0.029603899684395477, "cohort_z": -2.071, "recent_weekly_commits": 4.5, "stars_not_scored": 4632}
     openalex_citation_momentum: {"status": "absent", "slope": null, "cohort_z": null, "total_citations": 0, "by_year": null, "proxy": null}
     deps_direct_dependents_momentum: {"status": "out_of_panel", "slope": null, "theil_sen": null, "cohort_z": null, "latest": null, "points": null, "points_reconstructable": null, "as_of_partition": null, "unstable": null, "rising_vote": false}
 note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
@@ -33,4 +33,4 @@ note: "Admitted by AI-v1 census 2026-09; axis-2 unresolved."
 
 # objectbox-java
 
-Evidaxis measures **objectbox-java** on methodology m5. Momentum 42.3/100; 1 axes present, 0 axes converging.
+Evidaxis measures **objectbox-java** on methodology m5. Momentum 24.1/100; 1 axes present, 0 axes converging.
